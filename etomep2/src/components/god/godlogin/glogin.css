@@ -1,0 +1,120 @@
+.form {
+    background-color: #fff;
+    display: block;
+    padding: 1rem;
+    width: 435px;
+    height: 480px;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    padding-top: 60px;
+    
+  }
+  
+  .form-title {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    text-align: center;
+    color: #000;
+  }
+  
+  .input-container {
+    position: relative;
+  }
+  
+  .input-container input, .form button {
+    outline: none;
+    border: 1px solid #e5e7eb;
+    margin: 8px 0;
+  }
+  
+  .input-container input {
+    background-color: #fff;
+    padding: 1rem;
+    padding-right: 3rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    width: 400px;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  .input-container span {
+    display: grid;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    place-content: center;
+  }
+  
+  .input-container span svg {
+    color: #9CA3AF;
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .submit_btn {
+    display: block;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    background-color: #526D82;
+    color: #ffffff;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    width:100%;
+    border-radius: 0.5rem;
+   
+  }
+  
+  .signup-link {
+    color: #6B7280;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    text-align: center;
+  }
+  
+  .signup-link a {
+    text-decoration: underline;
+  }
+  @media (max-width: 1000px) {
+
+    .godlgin_maindiv{
+
+     height: 100% !important;
+     display: flex !important;
+     justify-content: center !important;
+     text-align: center !important; 
+
+    }
+    
+    .form {
+      padding-top: 0 !important;
+      width: 100%;
+      height: 60%;
+    }
+    .gd_contant_dv{
+
+     justify-content:start!important;
+     text-align: center !important;
+     align-items: center!important;
+     margin-top: 100px;
+     z-index: 10;
+    }
+    .gd_login_dv{
+margin-top: -550px!important;
+z-index: 1;
+    }
+    .gd_login_logo{
+      margin-left:0px !important;
+      margin-top: 50px;
+    }
+    .input-container input {
+      width: 90%;
+    }
+  }
