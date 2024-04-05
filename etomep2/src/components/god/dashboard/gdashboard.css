@@ -1,0 +1,146 @@
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    width: 21.5em;
+    border-radius: 30px;
+    background-color: #f4f2f2;
+    height: 38px;
+    margin-right: 6px;
+    
+  }
+  .dboption_col{
+  
+    justify-content: flex-end;
+
+}
+  .search__input {
+    font-family: inherit;
+    font-size: inherit;
+    background-color: #f4f2f2;
+    border: none;
+    color: #000000;
+    padding: 0.7rem 1rem;
+    border-radius: 30px;
+    width: 22em;
+    transition: all ease-in-out .5s;
+    margin-right: -2rem;
+    height: 38px;
+  }
+  
+  .search__input:hover, .search__input:focus {
+    box-shadow: 0 0 2em #00000013;
+  }
+  
+  .search__input:focus {
+    outline: none;
+    background-color: #f0eeee;
+  }
+  
+  .search__input::-webkit-input-placeholder {
+    font-weight: 200;
+    color: #acabab;
+  }
+  
+  .search__input:focus + .search__button {
+    background-color: #f0eeee;
+  }
+  
+  .search__button {
+    border: none;
+    background-color: #f4f2f2;
+    margin-right: 10px;
+    
+  }
+  
+  .search__button:hover {
+    cursor: pointer;
+  }
+  
+  .search__icon {
+    height: 1.3em;
+    width: 1.3em;
+    fill: #b4b4b4;
+   
+  }
+  .dboption_col{
+display: flex;
+flex-direction: row;
+justify-content: flex-end;
+
+   
+  }
+
+
+  .menu_gd_dash {
+    display: flex;
+
+    align-items: center;
+  }
+  
+  .menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin-left: 20px;
+  }
+  
+  .icon_gd_dashicon {
+    margin-bottom: 8px;
+   color: #526D82;
+    width: 25px;
+    height: 25px;
+  }
+  
+  /* You need to replace the following background URLs with the actual paths to your icons */
+
+  
+  .label {
+    text-align: center;
+    color: #526D82;
+  }
+  
+  /* Styles for the active tab */
+  .active .label {
+    border-bottom: 2px solid #333;
+    padding-bottom: 4px;
+  }
+
+  
+
+  @media (max-width: 1000px) {
+    .search{
+        width: 10em;
+    }
+    .search__input {
+        width: 5.5em;
+    }
+    .dbheading{
+        display: flex;
+        justify-content: center;
+    }
+
+    .dboption_col{
+       
+        justify-content: center;
+    
+    }
+    .dbiconsbtn{
+        width:95px !important;
+        margin-right: 5px !important;
+        margin-left: 5px !important;
+        
+    }
+   
+    .hide-on-mobile {
+      display: none;
+    }
+    .dbcardrow{
+        display: flex;
+        justify-content: center;
+    }
+  }
+  
