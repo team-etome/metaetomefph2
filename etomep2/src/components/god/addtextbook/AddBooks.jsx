@@ -3,12 +3,13 @@ import "../addtextbook/addbooks.css";
 
 function AddBooks() {
   return (
-    <div>
+    <div style={{ backgroundColor: "#DDE6ED"}}>
       <div
         style={{
           display: "flex",
           paddingTop: "33px",
           paddingBottom: "16px",
+          backgroundColor: "#FFFFFF"
         }}
       >
         <div style={{ marginLeft: "20px" }}>

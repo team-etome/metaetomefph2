@@ -7,6 +7,12 @@
     color: #526D82;
   }
 
+  body {
+    background-color: #DDE6ED;
+    margin: 0; /* Resetting default margin */
+  }
+  
+
   .text-backButton {
     background-color: transparent;
     border: none;
