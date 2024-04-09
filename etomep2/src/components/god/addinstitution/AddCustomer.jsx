@@ -4,7 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 
 function AddCustomer() {
   return (
-    <div>
+    <div style={{backgroundColor:'#DDE6ED', border:'2px solid white'}}>
       <div style={{}} className="form">
         <div
           style={{
