@@ -89,7 +89,7 @@
 
 .form-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
   padding: 10px;
   padding-left: 50px;
@@ -153,10 +153,31 @@
 }
 /* ************************************************ */
 
-@media (max-width: 1000px) {
-  .form{
+@media (max-width: 500px) {
+  /* .form{
     width: 100px;
+  } */
+  .form-col {
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin-top: 10px;
+      padding-left: 20px;
   }
+  .form-row{
+      display: flex;
+      flex-direction: column;
+  }
+  .form{
+    width: 500px;
+  }
+
+}
+/* ************************************************ */
+
+@media (max-width: 1200px) {
+  /* .form{
+    width: 100px;
+  } */
   .form-col {
       flex: 0 0 100%;
       max-width: 100%;

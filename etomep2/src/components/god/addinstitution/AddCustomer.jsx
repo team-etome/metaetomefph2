@@ -4,8 +4,8 @@ import { FaArrowLeft } from "react-icons/fa";
 
 function AddCustomer() {
   return (
-    <div>
-      <div style={{}} className="form">
+    <div style={{backgroundColor:'#DDE6ED', border:'2px solid white'}}>
+      <div  className="form">
         <div
           style={{
             display: "flex",
@@ -63,26 +63,6 @@ function AddCustomer() {
                     Institution Logo
                   </label>
                   <div className="image-upload-container">
-                  {/* <div className="Simage-display-container">
-                    <img
-                      src=''
-                      alt="Uploaded"
-                      className="Suploaded-image"
-                    />
-                    <label
-                      htmlFor="image-upload-refresh"
-                      className="Simage-refresh-label"
-                    >
-                      🔄
-                      <input
-                        id="image-upload-refresh"
-                        type="file"
-                        accept="image/*" 
-                        className="Supload-input"
-                        style={{ display: "none" }}
-                      />
-                    </label>
-                  </div> */}
                   <div className="upload-placeholder">
                     <label htmlFor="image-upload" className="upload-label" >
                       Upload Image
@@ -227,8 +207,7 @@ function AddCustomer() {
                   </label>
                   <input type="text" id="password" name="password" />
                 </div>
-                <div
-                  className="input-container"
+                <div className="input-container"
                   style={{ marginBottom: "110px" }}
                 >
                   <label for="confirmPassword" style={{ fontWeight: "600" }}>
