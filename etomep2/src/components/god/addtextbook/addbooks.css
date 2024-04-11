@@ -22,7 +22,7 @@
   .textbook_button_container button {
     background-color: #526D82; 
     color: #DDE6ED;
-    width: 450px; 
+    width: 400px; 
     height: 50px;
     font-size: large;
     border-radius: 4px;
@@ -122,7 +122,7 @@
     justify-content: center;
     align-items: center;
     height: 210px;
-    width: 450px;
+    width: 400px;
     border: 2px dashed #526D82;
     border-radius: 12px;
     margin-bottom: 15px;
@@ -172,6 +172,7 @@
         max-width: 100%;
         margin-top: 10px;
         padding-left: 20px;
+        
     }
     .textbook_row{
         display: flex;
@@ -179,6 +180,8 @@
     }
     .textbook{
       width: 500px;
+      margin-top: 0px;
+      margin-bottom: 0px;
     }
     .textbook_input_container {
         padding: 15px;
@@ -197,14 +200,14 @@
         flex: 0 0 100%;
         max-width: 100%;
         margin-top: 10px;
-        padding-left: 20px;
+        padding-left: 1px;
     }
     .textbook_row{
         display: flex;
         flex-direction: column;
     }
     .textbook{
-      width: 600px;
+      width: 500px;
     }
     .textbook_input_container {
         padding: 15px;
@@ -212,5 +215,6 @@
       .bottom_right_col{
         margin-top:10px;
       }
+      
   }
   

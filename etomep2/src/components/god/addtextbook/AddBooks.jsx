@@ -103,7 +103,7 @@ function AddBooks() {
                           style={{
                             border: "none",
                             borderBottom: "1px solid black",
-                            width: "200px",
+                            width: "180px",
                           }}
                         />
                       </label>
@@ -116,7 +116,7 @@ function AddBooks() {
                           style={{
                             border: "none",
                             borderBottom: "1px solid black",
-                            width: "200px",
+                            width: "180px",
                           }}
                         />
                       </label>
@@ -139,7 +139,7 @@ function AddBooks() {
                           style={{
                             border: "none",
                             borderBottom: "1px solid black",
-                            width: "200px",
+                            width: "180px",
                           }}
                         />
                       </label>
@@ -152,7 +152,7 @@ function AddBooks() {
                           style={{
                             border: "none",
                             borderBottom: "1px solid black",
-                            width: "200px",
+                            width: "180px",
                           }}
                         />
                       </label>
