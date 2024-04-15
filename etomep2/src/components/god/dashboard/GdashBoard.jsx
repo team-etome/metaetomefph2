@@ -4,6 +4,7 @@ import etomelogo from '../../../assets/etomelogo.png';
 import { IoIosSearch} from "react-icons/io";
 import "../dashboard/gdashboard.css";
 import { IoAddSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 
 
@@ -141,8 +142,9 @@ function GdashBoard() {
     </Col>
     
 </Row>
+<Link to='/addcustomer'>
 <button variant="primary" className="add-button-xs d-block d-sm-block">+ Add</button>         
-            
+</Link>         
 
             </Container>
         </div>
