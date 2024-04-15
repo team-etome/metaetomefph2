@@ -10,11 +10,7 @@
     margin-right: 6px;
     
   }
-  .dboption_col{
-  
-    justify-content: flex-end;
 
-}
   .search__input {
     font-family: inherit;
     font-size: inherit;
@@ -64,37 +60,13 @@
     fill: #b4b4b4;
    
   }
-  .dboption_col{
-display: flex;
-flex-direction: row;
-justify-content: flex-end;
-
-   
-  }
 
 
-  .menu_gd_dash {
-    display: flex;
 
-    align-items: center;
-  }
+
+
   
-  .menu-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Arial', sans-serif;
-    color: #333;
-    margin-left: 20px;
-  }
-  
-  .icon_gd_dashicon {
-    margin-bottom: 8px;
-   color: #526D82;
-    width: 25px;
-    height: 25px;
-  }
-  
+
   /* You need to replace the following background URLs with the actual paths to your icons */
 
   
@@ -108,39 +80,26 @@ justify-content: flex-end;
     border-bottom: 2px solid #333;
     padding-bottom: 4px;
   }
-
-  
-
-  @media (max-width: 1000px) {
-    .search{
-        width: 10em;
-    }
-    .search__input {
-        width: 5.5em;
-    }
-    .dbheading{
-        display: flex;
-        justify-content: center;
-    }
-
-    .dboption_col{
-       
-        justify-content: center;
+  .card-container {
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: hidden; /* Hides horizontal scrollbar */
+    max-height: calc(100vh - 160px); /* Adjust the height as needed */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     
-    }
-    .dbiconsbtn{
-        width:95px !important;
-        margin-right: 5px !important;
-        margin-left: 5px !important;
-        
-    }
-   
-    .hide-on-mobile {
-      display: none;
-    }
-    .dbcardrow{
-        display: flex;
-        justify-content: center;
-    }
+  }
+
+  .add-button-xs {
+    position: fixed;
+    right: 50px; 
+    bottom: 30px;
+    z-index: 999; 
+    width: 125px;
+    height:48px;
+    border-radius:  8px;
+    border: 1px solid #526D82;
+    background-color: rgb(114, 218, 197);
+
   }
   

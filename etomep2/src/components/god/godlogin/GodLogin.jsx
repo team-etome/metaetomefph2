@@ -14,9 +14,10 @@ function GodLogin() {
           style={{
             display: "flex",
             justifyContent: "center",
-            height: "100vh",
+            
             flexDirection:"column",
-            position:"relative",
+           
+           
             
           }}>
           
@@ -48,7 +49,10 @@ function GodLogin() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "100vh",
+              height: "auto",
+             
+              marginTop:"150px",
+             paddingBottom:"50px"
             }}>
 
             <form className="form">

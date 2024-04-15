@@ -82,39 +82,19 @@
   .signup-link a {
     text-decoration: underline;
   }
-  @media (max-width: 1000px) {
+  @media (max-width: 950px) {
 
     .godlgin_maindiv{
 
-     height: 100% !important;
-     display: flex !important;
-     justify-content: center !important;
-     text-align: center !important; 
+     height:auto !important;
 
-    }
-    
-    .form {
-      padding-top: 0 !important;
-      width: 100%;
-      height: 60%;
     }
     .gd_contant_dv{
-
-     justify-content:start!important;
-     text-align: center !important;
-     align-items: center!important;
-     margin-top: 100px;
-     z-index: 10;
+      margin: 15px;
+      padding-top: 50px;
     }
     .gd_login_dv{
-margin-top: -550px!important;
-z-index: 1;
+      margin-top: 80px !important;
     }
-    .gd_login_logo{
-      margin-left:0px !important;
-      margin-top: 50px;
-    }
-    .input-container input {
-      width: 90%;
-    }
+    
   }
