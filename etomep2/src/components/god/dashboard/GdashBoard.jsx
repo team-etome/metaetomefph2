@@ -143,7 +143,7 @@ function GdashBoard() {
     
 </Row>
 <Link to='/addcustomer'>
-<button variant="primary" className="add-button-xs d-block d-sm-block">+ Add</button>         
+<button className="add-button-xs d-block d-sm-block">+ Add</button>         
 </Link>         
 
             </Container>

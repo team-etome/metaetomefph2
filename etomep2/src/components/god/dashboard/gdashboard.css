@@ -92,14 +92,14 @@
 
   .add-button-xs {
     position: fixed;
-    right: 50px; 
-    bottom: 30px;
+    right: 125px; 
+    top: 120px;
     z-index: 999; 
     width: 125px;
     height:48px;
     border-radius:  8px;
     border: 1px solid #526D82;
-    background-color: rgb(114, 218, 197);
-
+   background-color:transparent;
+  
   }
   
