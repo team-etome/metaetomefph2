@@ -22,7 +22,7 @@ function App() {
   <Route path="/godlogin" element={<GodloginPage/>}/>
   <Route path="/goddashboard" element={<GoddashboardPage/>}/>
   <Route path="/addcustomer" element={<AddCustomer/>}/>
-  <Route path='addbooks' element={<AddBooks/>}/>
+  <Route path='/addbooks' element={<AddBooks/>}/>
   
 
 
