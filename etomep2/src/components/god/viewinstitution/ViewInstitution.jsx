@@ -71,26 +71,26 @@ function ViewInstitution() {
                 </div>
                 <div className="col-md-6">
                   <div class="mb-3">
-                    <label for="formGroupExampleInput" class="form-label" style={{color:'#727272', fontWeight:'500px'}}>
+                    <label for="institutionName" class="form-label" style={{color:'#727272', fontWeight:'500px'}}>
                       Institution Name
                     </label>
                     <input
                       type="text"
                       class="form-control"
-                      id="formGroupExampleInput"
+                      id="institutionName"
                       placeholder=""
                       style={{ marginBottom: '50px' }}
                     />
                   </div>
                   <div class="mb-3" >
-                    <label for="formGroupExampleInput2" class="form-label" style={{color:'#727272', fontWeight:'500px'}}>
+                    <label for="educationBoard" class="form-label" style={{color:'#727272', fontWeight:'500px'}}>
                       Board Of Education
                     </label>
                     <input
                       type="text"
                       class="form-control"
                       id="formGroupExampleInput2"
-                      placeholder="Another input placeholder"
+                      placeholder=""
                       style={{ marginBottom: '50px' }}
                     />
                   </div>
@@ -105,7 +105,7 @@ function ViewInstitution() {
                     type="text"
                     class="form-control"
                     id="formGroupExampleInput"
-                    placeholder="Example input placeholder"
+                    placeholder=""
                     style={{ marginBottom: '25px' }}
                   />
                 </div>
@@ -117,7 +117,7 @@ function ViewInstitution() {
                     type="text"
                     class="form-control"
                     id="formGroupExampleInput2"
-                    placeholder="Another input placeholder"
+                    placeholder=""
                     style={{ marginTop: '0px' }}
                   />
                 </div>
@@ -132,7 +132,7 @@ function ViewInstitution() {
                   type="text"
                   class="form-control"
                   id="formGroupExampleInput"
-                  placeholder="Example input placeholder"
+                  placeholder=""
                   style={{ marginBottom: '50px' }}
                 />
               </div>
@@ -144,7 +144,7 @@ function ViewInstitution() {
                   type="text"
                   class="form-control"
                   id="formGroupExampleInput2"
-                  placeholder="Another input placeholder"
+                  placeholder=""
                   style={{ marginBottom: '50px' }}
                 />
               </div>
@@ -156,7 +156,7 @@ function ViewInstitution() {
                   type="text"
                   class="form-control"
                   id="formGroupExampleInput"
-                  placeholder="Example input placeholder"
+                  placeholder=""
                   style={{ marginBottom: '40px' }}
                 />
               </div>
@@ -168,7 +168,7 @@ function ViewInstitution() {
                   type="text"
                   class="form-control"
                   id="formGroupExampleInput2"
-                  placeholder="Another input placeholder"
+                  placeholder=""
                   style={{ marginBottom: '10px', }}
                 />
               </div>
