@@ -18,14 +18,25 @@ function GodLogin() {
       style={{ height: "100vh", backgroundColor: "#DAE2E9" }}
     >
       <Container>
-        <Row md={12}>
-          <Col
-            className="gd_contant_dv"
-            md={6}
-            xs={12}
-            style={{
-              display: "flex",
-              justifyContent: "center",
+
+        <Row md={12} style={{display:"flex",justifyContent:"center", alignItems:"center", }}>
+          <Col className='gd_contant_dv' md={6}  xs={12}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection:"column",
+          
+           
+            
+          }}>
+          
+
+            
+            <h1 style={{
+              color: "#526D82",
+              fontSize: "64px",
+
+       
 
               flexDirection: "column",
             }}
@@ -69,31 +80,40 @@ function GodLogin() {
               alignItems: "center",
               height: "auto",
 
+              marginTop:"100px",
+             paddingBottom:"50px",
+             width:"50%"
+            }}>
+
+
               marginTop: "150px",
               paddingBottom: "50px",
             }}
           >
             <form className="form">
-              <img
-                src={etomelogo}
-                alt="etome logo"
-                className="gd_login_logo"
-                style={{
-                  width: "170px",
-                  height: "70px",
-                  marginLeft: "120px",
-                }}
-              />
+
+
+            <img src={etomelogo} alt="etome logo" className='gd_login_logo'
+
+style=
+{{
+  width: "170px",
+  height: "70px",
+  marginTop:"25px",
+  marginBottom:"15px"
+  
+}} />
 
               <p className="form-title">Sign in to your account</p>
               <div className="input-container">
-                <input placeholder="Enter email" type="email" />
-                <span>
+                <input placeholder="Enter email" type="email" style={{width:"100%",paddingLeft:"20px"}} />
+                <span >
+
                   <MdOutlineAlternateEmail />
                 </span>
               </div>
               <div className="input-container">
-                <input placeholder="Enter password" type="password" />
+                <input placeholder="Enter password" type="password" style={{width:"100%",paddingLeft:"20px"}} />
 
                 <span>
                   <FaRegEye />
@@ -104,7 +124,10 @@ function GodLogin() {
                 Sign in
               </button>
 
-              <p class="signup-link">
+
+              <p className="signup-link">
+
+
                 <a href="">Forgot Password?</a>
               </p>
             </form>
