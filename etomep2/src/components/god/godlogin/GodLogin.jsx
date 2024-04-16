@@ -4,8 +4,14 @@ import { Col, Container, Row } from "react-bootstrap";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FaRegEye } from "react-icons/fa";
 import etomelogo from "../../../assets/etomelogo.png";
+import { useSelector } from "react-redux";
+
 
 function GodLogin() {
+
+
+  const APIURL = useSelector((state) => state.APIURL.url);
+  console.log(APIURL,"Api")
   return (
     <div
       className="godlgin_maindiv"

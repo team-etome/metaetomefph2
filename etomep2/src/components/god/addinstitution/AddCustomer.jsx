@@ -1,8 +1,20 @@
-import React from "react";
+import React , {useState} from "react";
 import "../addinstitution/addcustomer.css";
 import { FaArrowLeft } from "react-icons/fa";
 
 function AddCustomer() {
+
+  const [institutionName, setInstitutionName] = useState("");
+  const [institutionCode, setInstitutionCode] = useState("");
+  const [email, setEmail] = useState("");
+  const [board, setboard] = useState("");
+
+
+
+
+
+
+
   return (
     <div style={{backgroundColor:'#DDE6ED', border:'2px solid white'}}>
       <div  className="form">

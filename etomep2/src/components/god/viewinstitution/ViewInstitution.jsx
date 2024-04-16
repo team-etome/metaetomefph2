@@ -14,25 +14,13 @@ function ViewInstitution() {
           backgroundColor: "#fff",
           marginTop: "80px",
           borderRadius: "17px",
-          marginBottom:'70px'
+          marginBottom: "70px",
         }}
       >
         <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container-fluid">
             <IoIosArrowRoundBack style={{ height: "30px", width: "30px" }} />
-            <a className="navbar-brand" href="#">
-              <img
-                src=""
-                alt=""
-                width="40"
-                height="40"
-                style={{
-                  borderRadius: "100%",
-                  backgroundColor: "#DAE2E9",
-                  marginLeft: "20px",
-                }}
-              />
-            </a>
+
             <a
               className="navbar-brand"
               href="#"
@@ -64,7 +52,7 @@ function ViewInstitution() {
                 </button>
               </form>
             </div>
-<button
+            <button
               className="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
@@ -80,18 +68,24 @@ function ViewInstitution() {
           </div>
         </nav>
         <hr />
-        
+
         <div className="container" style={{}}>
-          <div className="row" style={{ padding: "30px"}}>
+          <div className="row" style={{ padding: "30px" }}>
             <div className="col-md-6" style={{}}>
               <div className="row">
                 <div className="col-md-6" style={{ marginBottom: "30px" }}>
                   <div
                     className="clearfix"
-                    style={{ backgroundColor: "#DAE2E9", height: "180px" }}
+                    style={{
+                      backgroundColor: "#DAE2E9",
+                      height: "180px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
                   >
                     <img
-                      src="..."
+                      src="https://dt19wmazj2dns.cloudfront.net/wp-content/uploads/2024/04/amrita-vishwa-vidyapeetham-university-logo-colored-version.svg"
                       className="col-md-6 float-md-end mb-3 ms-md-3"
                       alt="logo"
                     />
@@ -102,7 +96,7 @@ function ViewInstitution() {
                     <label
                       for="institutionName"
                       className="form-label"
-                      style={{ color: "#727272", fontWeight: "500px",  }}
+                      style={{ color: "#727272", fontWeight: "500px" }}
                     >
                       Institution Name
                     </label>
@@ -131,7 +125,6 @@ function ViewInstitution() {
                     />
                   </div>
                 </div>
-                
               </div>
               <div className="row">
                 <div className="mb-3">
@@ -182,7 +175,7 @@ function ViewInstitution() {
                   className="form-control"
                   id="institutionCode"
                   placeholder=""
-                  style={{ marginBottom: "50px", }}
+                  style={{ marginBottom: "50px" }}
                 />
               </div>
               <div className="mb-3">
