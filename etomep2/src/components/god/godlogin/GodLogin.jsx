@@ -5,21 +5,27 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FaRegEye } from "react-icons/fa";
 import etomelogo from "../../../assets/etomelogo.png";
 import { useSelector } from "react-redux";
+
 import Swal from "sweetalert2";
 import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 
 
 function GodLogin() {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
   const APIURL = useSelector((state) => state.APIURL.url);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!email || !password) {
+
       Swal.fire({
         title: "Error!",
         text: "All fields are required",
@@ -32,11 +38,13 @@ function GodLogin() {
     try {
       const data = {
         email: email,
+
         password: password,
       };
 
       const response = await axios.post(`${APIURL}/api/godLogin`, data);
       navigate("/goddashboard");
+
 
       Swal.fire({
         title: "Success!",
@@ -44,6 +52,7 @@ function GodLogin() {
         icon: "success",
         confirmButtonText: "Ok",
       });
+
     } catch (error) {
       Swal.fire({
         title: "Error!",
@@ -54,10 +63,6 @@ function GodLogin() {
     }
   };
 
-  // console.log(APIURL,"Api")
-
-
- 
 
   return (
     <div
@@ -150,16 +155,23 @@ function GodLogin() {
 
               <p className="form-title">Sign in to your account</p>
               <div className="input-container">
+
                 <input placeholder="Enter email" type="email" 
                 style={{ width: "100%", paddingLeft: "20px" }}
                 onChange={(e) => setEmail(e.target.value)}
                 />
                 <span >
 
+
+              
+                <span>
+                 <input style={{width:"100%",paddingLeft:"20px"}} placeholder="Enter email" type="email" onChange={(e) => setEmail(e.target.value)}/>
+                <span >
                   <MdOutlineAlternateEmail />
                 </span>
               </div>
               <div className="input-container">
+
                 <input placeholder="Enter password"
                   type="password"
                   onChange={(e) => setPassword(e.target.value)}
@@ -168,17 +180,20 @@ function GodLogin() {
 
                 />
 
+
                 <span>
                   <FaRegEye />
                   {/* < FaRegEyeSlash */}
                 </span>
               </div>
+
               <button 
               className="submit_btn" 
               type="submit"
               onClick={handleSubmit}
               
               >
+
                 Sign in
               </button>
 
