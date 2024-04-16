@@ -10,11 +10,6 @@ function AddCustomer() {
   const [board, setboard] = useState("");
 
 
-
-
-
-
-
   return (
     <div style={{backgroundColor:'#DDE6ED', border:'2px solid white'}}>
       <div  className="form">
@@ -25,15 +20,16 @@ function AddCustomer() {
             paddingBottom: "16px",
             borderBottom: "1px solid #DDE6ED", 
             marginBottom: "20px", 
+            width:'100%'
           }}
         >
           <div style={{ marginLeft: "20px" }}>
             <FaArrowLeft  style={{height:'32px', width:'20px'}}/>
           </div>
-          <div style={{ marginLeft: "30px", color: "#526D82" }}>
+          <div style={{ marginLeft: "30px", color: "#526D82"}}>
             <h3>Add Institution</h3>
           </div>
-          <div style={{color:'2px solid black'}}></div>
+          {/* <div style={{color:'2px solid black'}}></div> */}
         </div>
         <div className="form-container" style={{paddingLeft:'50px', paddingRight:'50px'}}>
           <div>

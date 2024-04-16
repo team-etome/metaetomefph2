@@ -1,6 +1,7 @@
 import React from "react";
 import "../addtextbook/addbooks.css";
 import { FaArrowLeft } from "react-icons/fa";
+import { Nav } from "react-bootstrap";
 
 function AddBooks() {
   return (
@@ -61,7 +62,16 @@ function AddBooks() {
                   <label for="publisherName" style={{ fontWeight: "600" }}>
                     Publisher Name
                   </label>
-                  <input type="text" id="publisherName" name="publisherName" />
+                  <input
+                    type="text"
+                    id="publisherName"
+                    name="publisherName"
+                    list="data"
+                  />
+                  <datalist id="data">
+                    <option>NCERT</option>
+                    <option>S Chand</option>
+                  </datalist>
                 </div>
               </div>
             </div>
@@ -162,7 +172,7 @@ function AddBooks() {
               </div>
 
               <div className="textbook_col">
-                <div className="bottom_right_col" >
+                <div className="bottom_right_col">
                   <div style={{ marginBottom: "100px", marginTop: "0px" }}>
                     <label
                       for="mediaLibrary"
@@ -176,9 +186,10 @@ function AddBooks() {
                       Media Library
                     </label>
                   </div>
-                  <div style={{ marginLeft: "10px", marginTop: "-10px" }}>
-                    <div style={{ display: "flex" }}>
-                      <div
+                  <div>
+                    <div style={{ marginLeft: "10px", marginTop: "-10px" }}>
+                      <div style={{ display: "flex" }}>
+                        <div
                         className="textbutton-container"
                         style={{ marginTop: "-80px" }}
                       >
@@ -201,24 +212,27 @@ function AddBooks() {
                           Textbook Front Page
                         </button>
                       </div>
+
+                      </div>
                     </div>
-                  </div>
-                  <div style={{ marginLeft: "10px", marginTop: "-50px" }}>
-                    <label for="photo" style={{}}></label>
-                    <div className="textbook_image_upload_container">
-                      <div className="textbook_upload_placeholder">
-                        <label
-                          htmlFor="image-upload"
-                          className="textbook_upload_label"
-                        >
-                          Select File
-                        </label>
-                        <input
-                          id="image-upload"
-                          type="file"
-                          accept="image/*"
-                          className="textbook_upload_input"
-                        />
+
+                    <div style={{ marginLeft: "10px", marginTop: "-50px" }}>
+                      <label for="photo" style={{}}></label>
+                      <div className="textbook_image_upload_container">
+                        <div className="textbook_upload_placeholder">
+                          <label
+                            htmlFor="image-upload"
+                            className="textbook_upload_label"
+                          >
+                            Select File
+                          </label>
+                          <input
+                            id="image-upload"
+                            type="file"
+                            accept="image/*"
+                            className="textbook_upload_input"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
