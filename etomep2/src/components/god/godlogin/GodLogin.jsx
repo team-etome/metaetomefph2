@@ -69,13 +69,13 @@ style=
 
               <p className="form-title">Sign in to your account</p>
               <div className="input-container">
-                <input placeholder="Enter email" type="email" style={{width:"100%"}} />
+                <input placeholder="Enter email" type="email" style={{width:"100%",paddingLeft:"20px"}} />
                 <span >
                   <MdOutlineAlternateEmail />
                 </span>
               </div>
               <div className="input-container">
-                <input placeholder="Enter password" type="password" style={{width:"100%"}} />
+                <input placeholder="Enter password" type="password" style={{width:"100%",paddingLeft:"20px"}} />
 
                 <span>
                   <FaRegEye />
