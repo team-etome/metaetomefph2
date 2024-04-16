@@ -1,75 +1,88 @@
-import React from 'react'
-import "../godlogin/glogin.css"
-import { Col, Container, Row } from 'react-bootstrap'
+import React from "react";
+import "../godlogin/glogin.css";
+import { Col, Container, Row } from "react-bootstrap";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FaRegEye } from "react-icons/fa";
-import etomelogo from "../../../assets/etomelogo.png"
+import etomelogo from "../../../assets/etomelogo.png";
 
 function GodLogin() {
   return (
-    <div className='godlgin_maindiv' style={{ height: "100vh", backgroundColor: "#DAE2E9" }}>
+    <div
+      className="godlgin_maindiv"
+      style={{ height: "100vh", backgroundColor: "#DAE2E9" }}
+    >
       <Container>
         <Row md={12}>
-          <Col className='gd_contant_dv' md={6} xs={12}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            
-            flexDirection:"column",
-           
-           
-            
-          }}>
-          
-
-            
-            <h1 style={{
-              color: "#526D82",
-              fontSize: "64px",
-
-            }}>Hello!</h1>
-
-            <p style={{ color: "#526D82", }}>Etome, working with EInk, wants to change education by using digital technology to replace heavy textbooks and notebooks, making learning easier and more fun.
-            </p>
-            <button 
+          <Col
+            className="gd_contant_dv"
+            md={6}
+            xs={12}
             style={{
-              display: "block", 
-              width: "224px", 
-              height: "53px", 
-              backgroundColor: "#526D82",
-              color:"#ffff", 
-              borderRadius: '0.5rem',
-              border:"none"
-              }} type="submit">
+              display: "flex",
+              justifyContent: "center",
+
+              flexDirection: "column",
+            }}
+          >
+            <h1
+              style={{
+                color: "#526D82",
+                fontSize: "64px",
+              }}
+            >
+              Hello!
+            </h1>
+
+            <p style={{ color: "#526D82" }}>
+              Etome, working with EInk, wants to change education by using
+              digital technology to replace heavy textbooks and notebooks,
+              making learning easier and more fun.
+            </p>
+            <button
+              style={{
+                display: "block",
+                width: "224px",
+                height: "53px",
+                backgroundColor: "#526D82",
+                color: "#ffff",
+                borderRadius: "0.5rem",
+                border: "none",
+              }}
+              type="submit"
+            >
               Learn More
             </button>
           </Col>
-          <Col md={6} xs={12} className='gd_login_dv'
+          <Col
+            md={6}
+            xs={12}
+            className="gd_login_dv"
             style={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               height: "auto",
-             
-              marginTop:"150px",
-             paddingBottom:"50px"
-            }}>
 
+              marginTop: "150px",
+              paddingBottom: "50px",
+            }}
+          >
             <form className="form">
-
-            <img src={etomelogo} alt="etome logo" className='gd_login_logo'
-
-style=
-{{
-  width: "170px",
-  height: "70px",
-  marginLeft:"120px"
-}} />
+              <img
+                src={etomelogo}
+                alt="etome logo"
+                className="gd_login_logo"
+                style={{
+                  width: "170px",
+                  height: "70px",
+                  marginLeft: "120px",
+                }}
+              />
 
               <p className="form-title">Sign in to your account</p>
               <div className="input-container">
                 <input placeholder="Enter email" type="email" />
-                <span >
+                <span>
                   <MdOutlineAlternateEmail />
                 </span>
               </div>
@@ -86,18 +99,14 @@ style=
               </button>
 
               <p class="signup-link">
-
                 <a href="">Forgot Password?</a>
               </p>
             </form>
-
-
           </Col>
         </Row>
       </Container>
-
     </div>
-  )
+  );
 }
 
-export default GodLogin
+export default GodLogin;
