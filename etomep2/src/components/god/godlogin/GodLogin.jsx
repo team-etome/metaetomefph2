@@ -71,28 +71,28 @@ function GodLogin() {
     >
       <Container>
 
-        <Row md={12} style={{ display: "flex", justifyContent: "center", alignItems: "center", }}>
-          <Col className='gd_contant_dv' md={6} xs={12}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
+        <Row md={12} style={{display:"flex",justifyContent:"center", alignItems:"center", }}>
+          <Col className='gd_contant_dv' md={6}  xs={12}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection:"column",
+          
+           
+            
+          }}>
+          
 
-
-
-            }}>
-
-
-
+            
             <h1 style={{
               color: "#526D82",
               fontSize: "64px",
 
-
+       
 
               flexDirection: "column",
             }}
-            />
+          />
             <h1
               style={{
                 color: "#526D82",
@@ -132,68 +132,48 @@ function GodLogin() {
               alignItems: "center",
               height: "auto",
 
-              marginTop: "100px",
-              paddingBottom: "50px",
-              width: "50%"
+              marginTop:"100px",
+             paddingBottom:"50px",
+             width:"50%"
             }}>
 
 
-
+           
             <form className="form">
 
 
-              <img src={etomelogo} alt="etome logo" className='gd_login_logo'
+            <img src={etomelogo} alt="etome logo" className='gd_login_logo'
 
-                style=
-                {{
-                  width: "170px",
-                  height: "70px",
-                  marginTop: "25px",
-                  marginBottom: "15px"
-
-                }} />
+style=
+{{
+  width: "170px",
+  height: "70px",
+  marginTop:"25px",
+  marginBottom:"15px"
+  
+}} />
 
               <p className="form-title">Sign in to your account</p>
               <div className="input-container">
-
-                <input placeholder="Enter email" type="email" 
-                style={{ width: "100%", paddingLeft: "20px" }}
+                <input placeholder="Enter email" type="email" style={{width:"100%",paddingLeft:"20px"}}
                 onChange={(e) => setEmail(e.target.value)}
                 />
                 <span >
 
-
-              
-                <span>
-                 <input style={{width:"100%",paddingLeft:"20px"}} placeholder="Enter email" type="email" onChange={(e) => setEmail(e.target.value)}/>
-                <span >
                   <MdOutlineAlternateEmail />
                 </span>
               </div>
               <div className="input-container">
-
-                <input placeholder="Enter password"
-                  type="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  style={{ width: "100%", paddingLeft: "20px" }}
-                 
-
+                <input placeholder="Enter password" type="password" style={{width:"100%",paddingLeft:"20px"}} 
+                 onChange={(e) => setPassword(e.target.value)}
                 />
-
 
                 <span>
                   <FaRegEye />
                   {/* < FaRegEyeSlash */}
                 </span>
               </div>
-
-              <button 
-              className="submit_btn" 
-              type="submit"
-              onClick={handleSubmit}
-              
-              >
-
+              <button className="submit_btn" type="submit" onClick={handleSubmit}>
                 Sign in
               </button>
 
@@ -208,6 +188,7 @@ function GodLogin() {
         </Row>
       </Container>
     </div>
+    
   );
 }
 
