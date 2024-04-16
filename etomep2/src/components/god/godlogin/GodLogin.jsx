@@ -9,14 +9,13 @@ function GodLogin() {
   return (
     <div className='godlgin_maindiv' style={{ height: "100vh", backgroundColor: "#DAE2E9" }}>
       <Container>
-        <Row md={12}>
-          <Col className='gd_contant_dv' md={6} xs={12}
+        <Row md={12} style={{display:"flex",justifyContent:"center", alignItems:"center", }}>
+          <Col className='gd_contant_dv' md={6}  xs={12}
           style={{
             display: "flex",
             justifyContent: "center",
-            
             flexDirection:"column",
-           
+          
            
             
           }}>
@@ -50,9 +49,9 @@ function GodLogin() {
               justifyContent: "center",
               alignItems: "center",
               height: "auto",
-             
-              marginTop:"150px",
-             paddingBottom:"50px"
+              marginTop:"100px",
+             paddingBottom:"50px",
+             width:"50%"
             }}>
 
             <form className="form">
@@ -63,18 +62,20 @@ style=
 {{
   width: "170px",
   height: "70px",
-  marginLeft:"120px"
+  marginTop:"25px",
+  marginBottom:"15px"
+  
 }} />
 
               <p className="form-title">Sign in to your account</p>
               <div className="input-container">
-                <input placeholder="Enter email" type="email" />
+                <input placeholder="Enter email" type="email" style={{width:"100%"}} />
                 <span >
                   <MdOutlineAlternateEmail />
                 </span>
               </div>
               <div className="input-container">
-                <input placeholder="Enter password" type="password" />
+                <input placeholder="Enter password" type="password" style={{width:"100%"}} />
 
                 <span>
                   <FaRegEye />
@@ -85,7 +86,7 @@ style=
                 Sign in
               </button>
 
-              <p class="signup-link">
+              <p className="signup-link">
 
                 <a href="">Forgot Password?</a>
               </p>
