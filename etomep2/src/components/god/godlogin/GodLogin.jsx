@@ -1,17 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import "../godlogin/glogin.css";
 import { Col, Container, Row } from "react-bootstrap";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FaRegEye } from "react-icons/fa";
 import etomelogo from "../../../assets/etomelogo.png";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 function GodLogin() {
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const APIURL = useSelector((state) => state.APIURL.url);
-  console.log(APIURL,"Api")
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      Swal.fire({
+        title: "Error!",
+        text: "All fields are required",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
+
+    try {
+      const data = {
+        email: email,
+        password: password,
+      };
+
+      const response = await axios.post(`${APIURL}/api/godLogin`, data);
+      navigate("/goddashboard");
+
+      Swal.fire({
+        title: "Success!",
+        text: "Added Successfully",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Technical Error",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  };
+
+  // console.log(APIURL,"Api")
+
+
+ 
+
   return (
     <div
       className="godlgin_maindiv"
@@ -19,28 +66,28 @@ function GodLogin() {
     >
       <Container>
 
-        <Row md={12} style={{display:"flex",justifyContent:"center", alignItems:"center", }}>
-          <Col className='gd_contant_dv' md={6}  xs={12}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection:"column",
-          
-           
-            
-          }}>
-          
+        <Row md={12} style={{ display: "flex", justifyContent: "center", alignItems: "center", }}>
+          <Col className='gd_contant_dv' md={6} xs={12}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
 
-            
+
+
+            }}>
+
+
+
             <h1 style={{
               color: "#526D82",
               fontSize: "64px",
 
-       
+
 
               flexDirection: "column",
             }}
-          >
+            />
             <h1
               style={{
                 color: "#526D82",
@@ -80,47 +127,58 @@ function GodLogin() {
               alignItems: "center",
               height: "auto",
 
-              marginTop:"100px",
-             paddingBottom:"50px",
-             width:"50%"
+              marginTop: "100px",
+              paddingBottom: "50px",
+              width: "50%"
             }}>
 
 
-              marginTop: "150px",
-              paddingBottom: "50px",
-            }}
-          >
+
             <form className="form">
 
 
-            <img src={etomelogo} alt="etome logo" className='gd_login_logo'
+              <img src={etomelogo} alt="etome logo" className='gd_login_logo'
 
-style=
-{{
-  width: "170px",
-  height: "70px",
-  marginTop:"25px",
-  marginBottom:"15px"
-  
-}} />
+                style=
+                {{
+                  width: "170px",
+                  height: "70px",
+                  marginTop: "25px",
+                  marginBottom: "15px"
+
+                }} />
 
               <p className="form-title">Sign in to your account</p>
               <div className="input-container">
-                <input placeholder="Enter email" type="email" style={{width:"100%",paddingLeft:"20px"}} />
+                <input placeholder="Enter email" type="email" 
+                style={{ width: "100%", paddingLeft: "20px" }}
+                onChange={(e) => setEmail(e.target.value)}
+                />
                 <span >
 
                   <MdOutlineAlternateEmail />
                 </span>
               </div>
               <div className="input-container">
-                <input placeholder="Enter password" type="password" style={{width:"100%",paddingLeft:"20px"}} />
+                <input placeholder="Enter password"
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{ width: "100%", paddingLeft: "20px" }}
+                 
+
+                />
 
                 <span>
                   <FaRegEye />
                   {/* < FaRegEyeSlash */}
                 </span>
               </div>
-              <button className="submit_btn" type="submit">
+              <button 
+              className="submit_btn" 
+              type="submit"
+              onClick={handleSubmit}
+              
+              >
                 Sign in
               </button>
 
@@ -139,3 +197,4 @@ style=
 }
 
 export default GodLogin;
+
