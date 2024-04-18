@@ -36,10 +36,12 @@ function GodLogin() {
     }
 
     try {
-      const data = {
-        email: email,
 
+      const data = {
+        
+        email: email,
         password: password,
+
       };
 
       const response = await axios.post(`${APIURL}/api/godLogin`, data);
