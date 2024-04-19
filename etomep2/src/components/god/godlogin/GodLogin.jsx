@@ -45,7 +45,7 @@ function GodLogin() {
       };
 
       const response = await axios.post(`${APIURL}/api/godLogin`, data);
-      navigate("/goddashboard");
+      navigate("/header");
 
 
       Swal.fire({

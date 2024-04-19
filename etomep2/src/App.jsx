@@ -9,6 +9,8 @@ import AddBooks from './components/god/addtextbook/AddBooks';
 import ViewInstitution from './components/god/viewinstitution/ViewInstitution';
 import BookdashBoard from './components/god/textbookdashboard/BookdashBoard';
 import ViewTextbook from './components/god/viewtextbook/ViewTextbook';
+import Header from './components/god/header/Header';
+import Customerdashboard from './components/god/customerdashboard/Customerdashboard';
 
 
 
@@ -29,6 +31,10 @@ function App() {
   <Route path='/viewinstitution' element={<ViewInstitution/>}/>
   <Route path='/textbookdashboard' element={<BookdashBoard/>}/>
   <Route path='/viewtextbook' element={<ViewTextbook/>}/>
+  <Route path="/header" element={<Header/>}/>
+  <Route path="/customerdashboard" element={<Customerdashboard/>}/>
+
+
 
 
 
