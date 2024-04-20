@@ -1,4 +1,5 @@
-.custom-modal .modal-dialog {
-    max-width: 100px; /* Adjust the width as needed */
-  }
-  
+.custom-dialog { 
+    max-width: 50% ;  
+}
+
+
