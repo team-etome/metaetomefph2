@@ -18,8 +18,8 @@ function GdashBoard() {
        
         { name: 'Amrita Vishwa Vidyapeedam', board: 'CBSE', id: '024234' },
         { name: 'Amrita Vishwa Vidyapeedam', board: 'CBSE', id: '024234' },
-        { name: 'Amrita Vishwa Vidyapeedam', board: 'CBSE', id: '024234' },
-        { name: 'Amritadcvdsvgbsdgvbdsgsdgsdvgdxsvdsvsdgfeasegfswdgfsd Vishwa Vidyapeedam', board: 'CBSE', id: '024234' },
+        { name: 'Amrita Vishwa Vidyapeedam xczvfbbbbbbbbb1111111111111111111111111111111111111', board: 'CBSE', id: '024234' },
+        { name: 'Amritadcvdsvgbsdgvbdsgsdgsdvgdxsdsgsdgsdgswrgdsdvdsvsdgfeasegfswdgfsd Vishwa Vidyapeedam', board: 'CBSE', id: '024234' },
         { name: 'Amrita Vishwa Vidyapeedam', board: 'CBSE', id: '024234' },
         { name: 'Amrita Vishwa Vidyapeedam', board: 'CBSE', id: '024234' },
         { name: 'Amrita Vishwa Vidyapeedam', board: 'CBSE', id: '024234' },
@@ -32,10 +32,11 @@ function GdashBoard() {
         // ... Array of textbooks
     ];
     const renderInstitutions = () => (
-        <Row className="card-container">
-        {institutions.map((inst, index) => (
-
-<Col key={index} md={4} lg={3} className="mb-4" style={{
+        <>
+           
+            <Row className="card-container">
+                {institutions.map((inst, index) => (
+                    <Col key={index} md={4} lg={3} className="mb-4" style={{
                         width: "304px",
                         height: "150px",
                         borderRadius: "11px",
@@ -47,14 +48,9 @@ function GdashBoard() {
                         padding: '20px',
                         boxSizing: 'border-box',
                         display: 'flex',
-                        flexDirection: 'column',
-                       
-                        
+                        flexDirection: 'column'
                     }}>
-                        <Row style={{
-                            maxHeight: '60px',
-                            overflow: 'hidden'
-                        }}>
+                        <Row style={{ maxHeight: '60px', overflow: 'hidden' }}>
                             <p style={{
                                 fontWeight: "600",
                                 textAlign: "start",
@@ -66,86 +62,73 @@ function GdashBoard() {
                                 WebkitLineClamp: '2',
                                 WebkitBoxOrient: 'vertical'
                             }}>
-                                St Johns Residential HSS 
+                                {inst.name}
                             </p>
                         </Row>
                         <Row style={{ display: "flex", justifyContent: "space-between", height: '70px', paddingTop: "40px" }}>
                             <Col style={{ display: "flex", justifyContent: "start" }}>
-                                <p style={{ margin: '0' }}>ICSE</p>
+                                <p style={{ margin: '0' }}>{inst.board}</p>
                             </Col>
                             <Col style={{ display: "flex", justifyContent: "end" }}>
-                                <p style={{ margin: '0' }}>024234</p>
+                                <p style={{ margin: '0' }}>{inst.id}</p>
                             </Col>
                         </Row>
                     </Col>
-
-        //   <Col key={index} md={4} lg={3} className="mb-4">
-        //     <div className="card">
-        //       <div className="card-body">
-        //         <h5 className="card-title">{inst.name}</h5>
-        //         <p className="card-text">{inst.board}</p>
-        //         <p className="card-id">{inst.id}</p>
-        //       </div>
-        //     </div>
-        //   </Col>
-        ))}
-      </Row>
+                ))}
+            </Row>
+        </>
     );
 
     const renderTextbooks = () => (
-        // Replace with actual textbook rendering logic
-        <Row>
-            {/* Placeholder for textbooks */}
-        </Row>
+        <>
+           
+            <Row>
+                {/* Placeholder for textbooks */}
+            </Row>
+        </>
     );
 
     return (
         <div style={{ backgroundColor: "#DDE6ED", height: "100vh", overflowY: "hidden" }}>
-           
             <Container>
-                <Row md={12}  >
+                <Row md={12}>
                     <Col md={6} xs={4}>
-                        <img src={etomelogo} alt="logo"
-                            style=
-                            {{
-                                width: "114px",
-                                height: "45px",
-                                marginTop: "45px"
-                            }}
-                        /></Col>
-                    <Col className='gd_dash_src_col' md={6} xs={8}
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "flex-end",
-                            marginTop: "47px",
-                        }}>
+                        <img src={etomelogo} alt="logo" style={{
+                            width: "114px",
+                            height: "45px",
+                            marginTop: "45px"
+                        }} />
+                    </Col>
+                    <Col className='gd_dash_src_col' md={6} xs={8} style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                        marginTop: "47px",
+                    }}>
                         <div className="search">
                             <input type="text" className="search__input" placeholder="Search school here" />
                             <button className="search__button">
-                                <IoIosSearch className="search__icon" aria-hidden="true" /> </button>
+                                <IoIosSearch className="search__icon" aria-hidden="true" />
+                            </button>
                         </div>
                     </Col>
                 </Row>
-
-               
                 <Row>
-    <Col md={12} style={{marginTop:"30px"}}>
-        <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} className="mb-3">
-            <Tab eventKey="Institution" title="Institution">
-                {renderInstitutions()}
-            </Tab>
-            <Tab eventKey="Textbook" title="Textbook">
-                {renderTextbooks()}
-            </Tab>
-        </Tabs>
-    </Col>
-    
-</Row>
-<Link to='/addcustomer'>
-<button className="add-button-xs d-block d-sm-block">+ Add</button>         
-</Link>         
-
+               <button className='add-button'>Add customer</button>
+                    <Col md={12} style={{ marginTop: "30px" }}>
+                        <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} className="mb-3">
+                            <Tab eventKey="Institution" title="Institution">
+                                {renderInstitutions()}
+                            </Tab>
+                            <Tab eventKey="Textbook" title="Textbook">
+                                {renderTextbooks()}
+                            </Tab>
+                        </Tabs>
+                       
+                    </Col>
+                   
+                    
+                </Row>
             </Container>
         </div>
     )
@@ -155,118 +138,3 @@ export default GdashBoard
 
 
 
-
-// import React from 'react'
-// import { Col, Container, Row } from 'react-bootstrap'
-// import etomelogo from '../../../assets/etomelogo.png'
-// import { IoIosSearch } from "react-icons/io";
-// import "../dashboard/gdashboard.css"
-// import { IoAddSharp } from "react-icons/io5";
-// import { PiChalkboardTeacher } from "react-icons/pi";
-// import { GoBook } from "react-icons/go";
-
-
-// function GdashBoard() {
-//     return (
-//         <div style={{ backgroundColor: "#DDE6ED", height: "100vh", overflowY: "hidden" }}>
-           
-//             <Container>
-//                 <Row md={12}  >
-//                     <Col md={6} xs={4}>
-//                         <img src={etomelogo} alt="logo"
-//                             style=
-//                             {{
-//                                 width: "114px",
-//                                 height: "45px",
-//                                 marginTop: "45px"
-//                             }}
-//                         /></Col>
-//                     <Col className='gd_dash_src_col' md={6} xs={8}
-//                         style={{
-//                             display: "flex",
-//                             flexDirection: "row",
-//                             justifyContent: "flex-end",
-//                             marginTop: "47px",
-//                         }}>
-//                         <div className="search">
-//                             <input type="text" className="search__input" placeholder="Search school here" />
-//                             <button className="search__button">
-//                                 <IoIosSearch className="search__icon" aria-hidden="true" /> </button>
-//                         </div>
-//                     </Col>
-//                 </Row>
-
-               
-// <Row md={12}>
-//     <Col md={6}></Col>
-//     <Col md={6}></Col>
-
-// </Row>
-                  
-            
-
-//                 <Row className='dbcardrow' md={12}
-//                     style={{
-//                         paddingLeft: "20px",
-//                         paddingTop: "15px",
-//                         overflowY: "scroll",
-//                         height: "500px"
-//                     }}>
-
-
-
-//                     <Col md={3} xs={12} style={{
-//                         width: "304px",
-//                         height: "150px",
-//                         borderRadius: "11px",
-//                         color: "#526D82",
-//                         border: "2px solid #526D82",
-//                         backgroundColor: "#ffff",
-//                         marginRight: "20px",
-//                         marginBottom: "20px",
-//                         padding: '10px',
-//                         boxSizing: 'border-box',
-//                         display: 'flex',
-//                         flexDirection: 'column',
-//                         justifyContent: 'space-between'
-//                     }}>
-//                         <Row style={{
-//                             maxHeight: '60px',
-//                             overflow: 'hidden'
-//                         }}>
-//                             <p style={{
-//                                 fontWeight: "600",
-//                                 textAlign: "start",
-//                                 margin: "2px 0",
-//                                 lineHeight: '1.2',
-//                                 overflow: 'hidden',
-//                                 textOverflow: 'ellipsis',
-//                                 display: '-webkit-box',
-//                                 WebkitLineClamp: '2',
-//                                 WebkitBoxOrient: 'vertical'
-//                             }}>
-//                                 St Johns Residential HSS g
-//                             </p>
-//                         </Row>
-//                         <Row style={{ display: "flex", justifyContent: "space-between", height: '70px', paddingTop: "40px" }}>
-//                             <Col style={{ display: "flex", justifyContent: "start" }}>
-//                                 <p style={{ margin: '0' }}>ICSE</p>
-//                             </Col>
-//                             <Col style={{ display: "flex", justifyContent: "end" }}>
-//                                 <p style={{ margin: '0' }}>024234</p>
-//                             </Col>
-//                         </Row>
-//                     </Col>
-
-
-
-                   
-
-
-//                 </Row>
-//             </Container>
-//         </div>
-//     )
-// }
-
-// export default GdashBoard
