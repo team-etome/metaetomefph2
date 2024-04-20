@@ -25,6 +25,7 @@ function AddCustomer() {
             paddingBottom: "16px",
             borderBottom: "1px solid #DDE6ED", 
             marginBottom: "20px", 
+            
           }}
         >
           <div style={{ marginLeft: "20px" }}>
