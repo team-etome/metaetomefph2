@@ -1,0 +1,47 @@
+.card:hover {
+    transform: scale(1.1);
+  }
+  .card {
+    transition: transform 0.5s;
+  }
+  /* .image-container:hover {
+    transform: scale(1.1); 
+  }
+  
+  .image-container {
+    transition: transform 0.5s; 
+  } */
+
+  
+  /* .custom-search {
+    max-width: 80%; 
+  } */
+
+  
+  /* <div style={{ backgroundColor: "#DDE6ED", minHeight: "100vh", overflowY: "auto" }}>
+  <Navbar expand="lg" className="bg-body-tertiary" style={{ marginBottom: "20px",  marginTop:'40px', borderR:'8px' }}>
+  <Navbar.Brand href="#home">Library</Navbar.Brand>
+    <Container>
+      
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="me-auto">
+          <NavDropdown title="Class" id="basic-nav-dropdown">
+            <NavDropdown.Item href="#action/3.1">XII</NavDropdown.Item>
+          </NavDropdown>
+          <NavDropdown title="Subject" id="basic-nav-dropdown">
+            <NavDropdown.Item href="#action/3.1">Science</NavDropdown.Item>
+          </NavDropdown>
+          <NavDropdown title="Board" id="basic-nav-dropdown">
+            <NavDropdown.Item href="#action/3.1">CBSE</NavDropdown.Item>
+          </NavDropdown>
+        </Nav>
+        <Form className="d-flex">
+          <div className="position-relative">
+            <BsSearch className="position-absolute top-50 translate-middle-y ms-3" style={{ height: "20px", width: "20px", color: "#D8D4D4" }} />
+            <Form.Control type="search" placeholder="Search by name" className="me-5 ps-5" aria-label="Search" style={{ width: "500px", borderRadius: "12px", fontWeight: "400px" }} />
+          </div>
+        </Form>
+      </Navbar.Collapse>
+    </Container>
+  </Navbar> */
