@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { BsFilterRight, BsSearch } from "react-icons/bs";
 import {Container, Row, Nav, Navbar, NavDropdown, Form,Card , Col, Pagination} from "react-bootstrap";
 import chemistryImage from "../../../assets/chemistry.png";
-import "../textbookdashboard/bookdashboard.css";
+// import "../textbookdashboard/bookdashboard.css";
 import ViewTextbook from "../viewtextbook/ViewTextbook.jsx";
+import { Link } from "react-router-dom";
+import { BiBookAdd } from "react-icons/bi";
 
 function BookdashBoard() {
   const [showModal, setShowModal] = useState(false);
@@ -23,48 +25,52 @@ function BookdashBoard() {
         overflowY: "auto",
       }}
     >
-      <Navbar
-        expand="lg"
-        className="bg-body-tertiary"
-        style={{ marginBottom: "20px" }}
-      >
-        <Container>
-          <Navbar.Brand href="#home">Library</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <NavDropdown title="Class" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">XII</NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown title="Subject" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Science</NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown title="Board" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">CBSE</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-            <Form className="d-flex">
-              <div className="position-relative">
-                <BsSearch
-                  className="position-absolute top-50 translate-middle-y ms-3"
-                  style={{ height: "20px", width: "20px", color: "#D8D4D4" }}
-                />
-                <Form.Control
-                  type="search"
-                  placeholder="Search by name"
-                  className="me-5 ps-5"
-                  aria-label="Search"
-                  style={{
-                    width: "500px",
-                    borderRadius: "12px",
-                    fontWeight: "400px",
-                  }}
-                />
-              </div>
-            </Form>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <Container>
+        <Navbar
+          expand="lg"
+          className="bg-body-tertiary book"
+          style={{ marginBottom: "20px", marginTop:'20px',borderRadius: "17px",}}
+        >
+          <Container>
+            {/* <Navbar.Brand href="#home" style={{ color:"#526D82", fontSize:'20px'}}>Library</Navbar.Brand> */}
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav" >
+              <Nav className="me-auto">
+                <NavDropdown title="Class" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">XII</NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown title="Subject" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">
+                    Science
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown title="Board" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">CBSE</NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+              <Form className="d-flex">
+                <div className="position-relative">
+                  <BsSearch
+                    className="position-absolute top-50 translate-middle-y ms-3"
+                    style={{ height: "20px", width: "20px", color: "#D8D4D4" }}
+                  />
+                  <Form.Control
+                    type="search"
+                    placeholder="Search by name"
+                    className="me-5 ps-5"
+                    aria-label="Search"
+                    style={{
+                      width: "300px",
+                      borderRadius: "12px",
+                      fontWeight: "400px",
+                    }}
+                  />
+                </div>
+              </Form>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+      </Container>
       <Container
         style={{
           backgroundColor: "#fff",
@@ -110,13 +116,17 @@ function BookdashBoard() {
             <Pagination.Ellipsis />
             <Pagination.Next />
           </Pagination>
+          <div style={{}}>
+            <Link to='/addbooks'>
+              <BiBookAdd className="add-button-xs d-block d-sm-block" style={{ position: "fixed", top: "650px", right: "40px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 4px 20px rgba(0, 0, 0, 1)" }} />
+            </Link>
+          </div>
         </Container>
       </Container>
-      <ViewTextbook show={showModal} handleClose={handleCloseModal} />
+      <ViewTextbook show={showModal} handleClose={handleCloseModal} />  
     </div>
   );
 }
-
 export default BookdashBoard;
 
 // <div
@@ -230,7 +240,8 @@ export default BookdashBoard;
 //       </Navbar>
 //     </Container>
 
-          {/* <Row>
+{
+  /* <Row>
             <div style={{ display: "flex", justifyContent: "space-evenly" }}>
               {Array.from({ length: 4 }, (_, index) => (
                 <div key={index} style={{ display: "flex" }}>
@@ -259,9 +270,11 @@ export default BookdashBoard;
                 </div>
               ))}
             </div>
-          </Row> */}
+          </Row> */
+}
 
-          {/* <Row xs={1} sm={2} md={3} lg={4} className="g-4" style={{}}>
+{
+  /* <Row xs={1} sm={2} md={3} lg={4} className="g-4" style={{}}>
             {Array.from({ length: 10 }).map((_, index) => (
               <Col key={index}>
                 <Card style={{width:'200px', marginTop: "20px",marginBottom: "30px",border:'none', display:'flex',alignItems:'center', justifyContent:'center',}}>
@@ -275,4 +288,5 @@ export default BookdashBoard;
                 </Card>
               </Col>
             ))}
-          </Row> */}
+          </Row> */
+}
