@@ -8,27 +8,24 @@ import { MdAddHomeWork } from "react-icons/md";
 
 
 function Customerdashboard() {
-  const handleCardClick = () => {
-    setShowModal(true);
-  };
+  const handleCardClick = () => {setShowModal(true);};
   return (
     <div
       style={{
         // backgroundColor: "#DDE6ED",
-        minHeight: "100vh",
+        Height: "100vh",
         overflowY: "auto",
       }}
     >
       <Container>
       <Navbar
           expand="lg"
-          className="bg-body-tertiary custom_navbar"
+          className="bg-body-tertiary book"
           style={{ marginBottom: "20px", marginTop:'20px', backgroundColor: "#fff", borderRadius: "17px",}}
         >
-
           <Container>
             {/* <Navbar.Brand href="#home" style={{ color:"#526D82", fontSize:'20px'}}>Library</Navbar.Brand> */}
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
               </Nav>
@@ -51,10 +48,30 @@ function Customerdashboard() {
                   />
                 </div>
               </Form>
-            </Navbar.Collapse>
+            </Navbar.Collapse> */}
+            <Form className="ms-auto d-flex">
+              <div className="position-relative">
+                <BsSearch
+                  className="position-absolute top-50 translate-middle-y ms-3"
+                  style={{ height: "20px", width: "20px", color: "#D8D4D4" }}
+                />
+                <Form.Control
+                  type="search"
+                  placeholder="Search School here"
+                  className="me-5 ps-5"
+                  aria-label="Search"
+                  style={{
+                    width: "300px",
+                    borderRadius: "12px",
+                    fontWeight: "400px",
+                  }}
+                />
+              </div>
+            </Form>
           </Container>
         </Navbar>
       </Container>
+      <div>
       <Container
         style={{
           backgroundColor: "#DDE6ED",
@@ -66,6 +83,7 @@ function Customerdashboard() {
           <Row xs={1} sm={1} md={2} lg={3}  >
             {Array.from({ length: 10}).map((_, index) => (
               <Col key={index} className="d-flex justify-content-center mb-4">
+                <Link to="/viewinstitution" style={{textDecoration:'none'}}>
                 <div onClick={handleCardClick}>
                   <Card
                     style={{
@@ -91,6 +109,7 @@ function Customerdashboard() {
                   </Card.Body>
                   </Card>
                 </div>
+                </Link>
               </Col>
             ))}
           </Row>
@@ -110,6 +129,7 @@ function Customerdashboard() {
           </div>
         </Container>
       </Container> 
+      </div>
     </div>
   )
 }

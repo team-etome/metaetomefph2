@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BsFilterRight, BsSearch } from "react-icons/bs";
 import {Container, Row, Nav, Navbar, NavDropdown, Form,Card , Col, Pagination} from "react-bootstrap";
 import chemistryImage from "../../../assets/chemistry.png";
-import "../textbookdashboard/bookdashboard.css";
+// import "../textbookdashboard/bookdashboard.css";
 import ViewTextbook from "../viewtextbook/ViewTextbook.jsx";
 import { Link } from "react-router-dom";
 import { BiBookAdd } from "react-icons/bi";
@@ -28,13 +28,13 @@ function BookdashBoard() {
       <Container>
         <Navbar
           expand="lg"
-          className="bg-body-tertiary custom_navbar"
-          style={{ marginBottom: "20px", marginTop:'20px', backgroundColor: "#fff", borderRadius: "17px",}}
+          className="bg-body-tertiary book"
+          style={{ marginBottom: "20px", marginTop:'20px',borderRadius: "17px",}}
         >
           <Container>
             {/* <Navbar.Brand href="#home" style={{ color:"#526D82", fontSize:'20px'}}>Library</Navbar.Brand> */}
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav" >
               <Nav className="me-auto">
                 <NavDropdown title="Class" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">XII</NavDropdown.Item>
@@ -60,7 +60,7 @@ function BookdashBoard() {
                     className="me-5 ps-5"
                     aria-label="Search"
                     style={{
-                      width: "500px",
+                      width: "300px",
                       borderRadius: "12px",
                       fontWeight: "400px",
                     }}

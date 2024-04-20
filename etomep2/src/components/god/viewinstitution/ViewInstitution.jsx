@@ -6,7 +6,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 function ViewInstitution() {
   return (
     <div
-      style={{ backgroundColor: "#DDE6ED", height: "100vh", overflowY: "auto" }}
+      style={{  height: "100vh", overflowY: "auto" }}
     >
       <div
         className="container"
@@ -17,13 +17,13 @@ function ViewInstitution() {
           marginBottom: "70px",
         }}
       >
-        <nav className="navbar navbar-expand-lg navbar-light">
-          <div className="container-fluid">
+        <div>
+        <nav className="navbar navbar-expand-lg navbar-light" >
+          <div className="container-fluid" style={{backgroundColor:'#fff',}}>
             <IoIosArrowRoundBack style={{ height: "30px", width: "30px" }} />
 
             <a
               className="navbar-brand"
-              href="#"
               style={{
                 color: "#526D82",
                 fontWeight: "500",
@@ -68,6 +68,7 @@ function ViewInstitution() {
           </div>
         </nav>
         <hr />
+        </div>
 
         <div className="container" style={{}}>
           <div className="row" style={{ padding: "30px" }}>

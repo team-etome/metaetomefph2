@@ -11,12 +11,11 @@
   .image-container {
     transition: transform 0.5s; 
   } */
-  .custom_navbar {
-    background-color:#DDE6ED !important;
-  }
-  .custom-search {
+
+  
+  /* .custom-search {
     max-width: 80%; 
-  }
+  } */
 
   
   /* <div style={{ backgroundColor: "#DDE6ED", minHeight: "100vh", overflowY: "auto" }}>
