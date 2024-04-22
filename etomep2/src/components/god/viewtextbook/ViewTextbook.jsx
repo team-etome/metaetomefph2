@@ -1,98 +1,174 @@
 import React from "react";
-import { Modal, Button, Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Modal, Button, Row, Col, Image, Form } from "react-bootstrap";
 import chemistryImage from "../../../assets/chemistry.png";
 import { AiOutlineClose } from "react-icons/ai";
+import "../viewtextbook/viewtextbook.css";
+import { Link } from "react-router-dom";
+
 
 function ViewTextbook({ show, handleClose }) {
   return (
-    <div style={{}}>
-      <Container>
-        <Modal show={show} onHide={handleClose} centered>
-          <div style={{ width: "100%", height: "100%",  }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                padding: "10px",
-              }}
-            >
-              <AiOutlineClose
-                size={20}
-                onClick={handleClose}
-                style={{ cursor: "pointer" }}
-              />
+    <Modal show={show} onHide={handleClose} centered size="lg">
+      <Modal.Body>
+      <div style={{display:'flex', justifyContent:'flex-end'}}>
+        <AiOutlineClose size={20} onClick={handleClose} style={{cursor:'pointer'}}/>
+      </div>
+        <Row style={{}}>
+            <Modal.Header  style={{display:'flex', justifyContent:'center', border:'none'}}>
+              <Modal.Title>Chemistry Textbook</Modal.Title>
+          </Modal.Header>
+        <Col md={4} className="d-flex justify-content-center align-items-center">
+            <div style={{}}>
+              <Image src={chemistryImage} fluid style={{ width: '180px', height: '220px',  }} />
             </div>
-            {/* <Modal.Header closeButton >
-            <Modal.Title>Chemistry Textbook for Class XII</Modal.Title>
-            </Modal.Header> */}
-            <div style={{ display: "flex", justifyContent: "center" }}>
-                <Row md={12}>
-                    <Col md={6} style={{border:'1px solid #526D82', width:'200px', height:'240px', display:'flex',  justifyContent:'center'}}>
-                    <div style={{ }}>
-                        {/* <div> */}
-                        <img
-                            src={chemistryImage}
-                            alt="Chemistry Textbook"
-                            style={{
-                            width: "160px",
-                            height: "auto",
-                            marginTop: "20px",
-                            }}
-                        />
-                        {/* </div> */}
-                    </div>
-                    </Col>
-                    <Col md={6}>
-                            
-                        <div style={{ }}>
-                            <Modal.Body style={{ }}>
-                            <h5> TextBook Title </h5>
-                            <Row>
-                            <Col md={6}>
-                            <div style={{ }}>
-                                <p> Class </p>
-                                <p> Publication Name </p>
-                                <p> Volume</p>
-                                <p> Total No. of Chapters</p>
-                            </div>
-                            </Col>
-                            <Col md={6}>
-                            <div style={{ }}>
-                                <p> Class </p>
-                                <p> Publication Name </p>
-                                <p> Volume II </p>
-                                <p> Total No. of Chapters</p>
-                            </div>
-                            </Col>
-                            </Row>
-                            </Modal.Body>
-                        </div>
-                    </Col>
-                    
-              </Row>
-            </div>
-            <div style={{marginLeft:'20px', marginRight:"20px", marginBottom:'20px', }}>
-            {/* <Modal.Footer> */}
-                <Row>
-                    <Col style={{marginLeft:'40px',}}>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Edit
-                        </Button>
-                    </Col>
-                    <Col style={{marginLeft:'100px'}}>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Preview
-                        </Button>
-                    </Col>
-              </Row>
-            {/* </Modal.Footer> */}
-            </div>
-          </div>
-        </Modal>
-      </Container>
-    </div>
+          </Col>
+
+          <Col md={8} style={{width: '300px' , marginLeft:'10px'}}>
+            <Form>
+              {/* <Form.Group controlId="formTitle">
+                <Form.Label style={{ display: 'flex', justifyContent: 'center', fontSize: '20px' }}>CHEMISTRY</Form.Label>
+              </Form.Group> */}
+              <Form.Group controlId="formTitle">
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Title"
+                  value='chemistry'
+                  readOnly
+                />
+              </Form.Group>
+              <Form.Group controlId="formPublisher">
+                <Form.Label>Publisher</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Publisher"
+                  value='S.chand'
+                  readOnly
+                />
+              </Form.Group>
+              <Form.Group controlId="formChapters">
+                <Form.Label>Total Chapters</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Total Chapters"
+                  value='10'
+                  readOnly
+                />
+              </Form.Group>
+              <Form.Group controlId="formVolume">
+                <Form.Label>Volume</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Volume"
+                  value='II'
+                  readOnly
+                />
+              </Form.Group>
+            </Form>
+          </Col>
+        </Row>
+      </Modal.Body>
+      <Modal.Footer style={{border:'none', borderRadius:'8px', }}>
+        <Link to='/addbooks'>
+        <Button variant="secondary" >
+          Edit
+        </Button>
+        </Link>
+        <Button variant="secondary"  style={{backgroundColor:'#5C7689', }}>
+          Preview
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 }
 
 export default ViewTextbook;
+
+// import React from "react";
+// import { Modal, Button, Container, Row, Col } from "react-bootstrap";
+// import { Link } from "react-router-dom";
+// import chemistryImage from "../../../assets/chemistry.png";
+// import { AiOutlineClose } from "react-icons/ai";
+// import "../viewtextbook/viewtextbook.css";
+ 
+
+// function ViewTextbook({ show, handleClose }) {
+//   return (
+    
+//       <Container>
+//         <Modal show={show} onHide={handleClose} centered  size="lg" >
+//           <div >
+            // <div
+            //   style={{
+            //     display: "flex",
+            //     justifyContent: "flex-end",
+            //     padding: "10px",
+            //   }}
+            // >
+            //   <AiOutlineClose
+            //     size={20}
+            //     onClick={handleClose}
+            //     style={{ cursor: "pointer" }}
+            //   />
+            // </div>
+//             <div style={{ display: "flex",justifyContent:'left' }}>
+//                 <Row >
+//                     <Col style={{border:'0.2px solid #526D82', display:'flex', marginLeft:'40px', width:'180px', height:'230px',   }}>
+//                     <div style={{ }}>
+//                         <img
+//                             src={chemistryImage}
+//                             alt="Chemistry Textbook"
+//                             style={{
+//                             width: "160px",
+//                             height: "auto",
+//                             marginTop: "20px",
+//                             marginRight:'150px',
+//                             }}
+//                         />
+//                     </div>
+//                     </Col>
+//                     <Col >   
+                      
+//                             <Modal.Body style={{ }}>
+//                             <h5 style={{display:'flex',  marginBottom:'20px'}}> Textbook Title </h5>
+//                             <div style={{ }}>
+//                             <Row>
+//                             <Col md={6}>
+//                             <div style={{color:'#727272',  }}>
+//                                 <p > Class </p>
+//                                 <p style={{width:'200px'}}> Publication Name</p>
+//                                 <p> Volume</p>
+//                                 <p style={{width:'200px'}}> Total No. od Chapters</p>
+//                                 <Link to='/addbooks'>
+//                                 <Button variant="secondary" >
+//                                     Edit
+//                                 </Button>
+//                                 </Link>
+//                             </div>
+//                             </Col>
+//                             <Col md={6}>
+//                             <div style={{ color:'#000000',}}>
+//                                 <p style={{marginLeft:'20px'}}> Class </p>
+//                                 <p style={{width:'200px', marginLeft:'20px'}}> Publication Name </p>
+//                                 <p style={{marginLeft:'20px'}}> Volume II </p>
+//                                 <p style={{width:'200px', marginLeft:'20px'}}>Total No. of Chapters </p>
+//                                 <Button variant="secondary" >
+//                                     Preview
+//                                 </Button>
+//                             </div>
+//                             </Col>
+//                             </Row>
+//                             </div>
+//                             </Modal.Body>
+                        
+//                     </Col>  
+//               </Row>
+//             </div>
+//           </div>
+//         </Modal>
+//       </Container>
+   
+//   );
+// }
+
+// export default ViewTextbook;

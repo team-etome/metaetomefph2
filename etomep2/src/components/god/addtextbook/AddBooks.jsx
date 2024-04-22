@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import "../addtextbook/addbooks.css";
+
+
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { Nav } from "react-bootstrap";
+
+import { Link } from "react-router-dom";
+
+
+
 import { FaArrowLeft, FaSpinner, FaRedo } from "react-icons/fa";
 import axios from "axios";
+
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
@@ -255,7 +265,10 @@ function AddBooks() {
           }}
         >
           <div style={{ marginLeft: "20px" }}>
-            <FaArrowLeft style={{ height: "32px", width: "20px" }} />
+            <Link to='/header' style={{color:'black'}}>
+            <FaArrowLeft style={{ height: "20px", width: "30px" }} />
+            {/* <IoIosArrowRoundBack style={{ height: "30px", width: "30px" }} /> */}
+            </Link>
           </div>
           <div style={{ marginLeft: "30px", color: "#526D82" }}>
             <h3>Add Textbook</h3>

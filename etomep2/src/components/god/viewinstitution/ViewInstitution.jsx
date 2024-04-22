@@ -2,6 +2,8 @@ import React from "react";
 import "../viewinstitution/viewinstitution.css";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { Link } from "react-router-dom";
+
 
 function ViewInstitution() {
   return (
@@ -20,8 +22,9 @@ function ViewInstitution() {
         <div>
         <nav className="navbar navbar-expand-lg navbar-light" >
           <div className="container-fluid" style={{backgroundColor:'#fff',}}>
+            <Link to='/header' style={{color:'black'}}>
             <IoIosArrowRoundBack style={{ height: "30px", width: "30px" }} />
-
+            </Link>
             <a
               className="navbar-brand"
               style={{
