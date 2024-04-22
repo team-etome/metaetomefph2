@@ -1,17 +1,10 @@
 import React, { useState } from "react";
 import "../addtextbook/addbooks.css";
-
-
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Nav } from "react-bootstrap";
-
 import { Link } from "react-router-dom";
-
-
-
 import { FaArrowLeft, FaSpinner, FaRedo } from "react-icons/fa";
 import axios from "axios";
-
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
@@ -19,7 +12,6 @@ function AddBooks() {
   const [selectedTab, setSelectedTab] = useState("pdf");
   const [totalChaptersInput, setTotalChaptersInput] = useState("");
   const [chapters, setChapters] = useState([]);
-
   const [classValue, setClassValue] = useState("");
   const [textbookName, setTextbookName] = useState("");
   const [medium, setMedium] = useState("");
@@ -27,6 +19,8 @@ function AddBooks() {
   const [publisherName, setPublisherName] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
+
+  // console.log(classValue)
 
   const [loading, setLoading] = useState(false);
 
@@ -252,6 +246,7 @@ function AddBooks() {
       setLoading(false); // Ensure loading state is cleared
     }
   };
+
   return (
     <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white " }}>
       <div className="textbook">
@@ -282,17 +277,17 @@ function AddBooks() {
         >
           <div>
             <div className="textbook_row">
-              <div className="textbook_col">
+              <div className="textbook_col" style={{textTransform: 'capitalize'}}>
                 <div className="textbook_input_container">
                   <label htmlFor="class" style={{ fontWeight: "600" }}>
                     Class
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     id="class"
                     name="class"
                     value={classValue}
-                    style={{ textTransform: 'capitalize' }}
+                    style={{  }}
                     onChange={(e) => setClassValue(e.target.value)}
                   />
                 </div>
