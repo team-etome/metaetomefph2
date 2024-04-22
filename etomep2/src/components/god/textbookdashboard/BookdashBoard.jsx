@@ -38,13 +38,33 @@ function BookdashBoard() {
               <Nav className="me-auto">
                 <NavDropdown title="Class" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">XII</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">XII</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">XII</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">XII</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">XII</NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="Subject" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">
                     Science
                   </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">
+                    Science
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">
+                    Science
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">
+                    Science
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">
+                    Science
+                  </NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="Board" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">CBSE</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">CBSE</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">CBSE</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">CBSE</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.1">CBSE</NavDropdown.Item>
                 </NavDropdown>
               </Nav>

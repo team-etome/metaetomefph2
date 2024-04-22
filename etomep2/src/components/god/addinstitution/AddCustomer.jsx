@@ -1,6 +1,8 @@
 import React , {useState} from "react";
 import "../addinstitution/addcustomer.css";
 import { FaArrowLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
 
 function AddCustomer() {
 
@@ -24,7 +26,9 @@ function AddCustomer() {
           }}
         >
           <div style={{ marginLeft: "20px" }}>
+            <Link to='/header' style={{color:'black'}}>
             <FaArrowLeft  style={{height:'32px', width:'20px'}}/>
+            </Link>
           </div>
           <div style={{ marginLeft: "30px", color: "#526D82"}}>
             <h3>Add Institution</h3>
