@@ -90,10 +90,10 @@
     
   }
 
-  .add-button-xs {
+  .add-button{
     position: fixed;
-    right: 125px; 
-    top: 120px;
+    right: 10%;
+    top:15%;
     z-index: 999; 
     width: 125px;
     height:48px;
@@ -103,3 +103,11 @@
   
   }
   
+  @media (max-width: 700px) {
+
+    .add-button{
+      right: 10%;
+    top:0;
+    bottom:20%;
+    }
+  }

@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import "../addtextbook/addbooks.css";
-import { FaArrowLeft } from "react-icons/fa";
+
+
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Nav } from "react-bootstrap";
-import axios from "axios";
+
 import { Link } from "react-router-dom";
 
+
+
+import { FaArrowLeft, FaSpinner, FaRedo } from "react-icons/fa";
+import axios from "axios";
 
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
@@ -17,30 +22,87 @@ function AddBooks() {
 
   const [classValue, setClassValue] = useState("");
   const [textbookName, setTextbookName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [medium, setMedium] = useState("");
   const [volume, setVolume] = useState("");
   const [publisherName, setPublisherName] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
 
-  console.log("Class Value:", classValue);
-  console.log("Textbook Name:", textbookName);
-  console.log("Phone:", phone);
-  console.log("Volume:", volume);
-  console.log("Publisher Name:", publisherName);
-  console.log("Image File:", imageFile);
-  console.log("PDF File:", pdfFile);
+  const [loading, setLoading] = useState(false);
+
+  const publishers = [
+    "MADHUBAN",
+    "GOYAL",
+    "VIVA - EDUCATION",
+    "ANAND",
+    "UGS",
+    "INDIANNICA",
+    "BOSEM",
+    "GLOBAL",
+    "ANAND BOOKS",
+    "APC",
+    "BOARD",
+    "NEW SARASWATI",
+    "Cambridge",
+    "Amenta",
+    "Marina Publication",
+    "Bharati Bhavan",
+    "Inspiration Publication",
+    "Saraswati Publication",
+    "Goyal Brothers",
+    "Jay Cee",
+    "Kips",
+    "Assam Book Dipo",
+    "NEDSSS Publication",
+    "ASTPPCL",
+    "Assam Book depot",
+    "NEDSSS Publi.",
+    "CBSE/Dhanpat Raj & C",
+    "TYCHEE",
+    "Progress",
+    "Headword Publishing Company",
+    "Acevision Publisher Pvt Ltd",
+    "Arya Publishing Company",
+    "Edutree Publishers Pvt Ltd",
+    "Evergreen Publications Ltd",
+    "Orient BlackSwan",
+    "Full Marks Pvt Ltd",
+    "Langers International",
+    "Vision Publications",
+    "Avichal Publishing Co.",
+    "Prachi India Pvt. Ltd.",
+    "O. U. P.",
+    "Black Pearl Publications",
+    "Selina Publications",
+    "Goyal Prakashan",
+    "Dhanpat Rai & Co.",
+    "Unisec Publications",
+    "Morning Star",
+    "Avichal Publishing Co.",
+    "Huda Publications",
+    "I. U. P.",
+    "NCERT",
+  ];
 
   const APIURL = useSelector((state) => state.APIURL.url);
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
+    console.log("Selected Tab: ", tab);
   };
 
   const handleChapterInputChange = (index, fieldName, value) => {
     const updatedChapters = [...chapters];
     updatedChapters[index][fieldName] = value;
     setChapters(updatedChapters);
+  };
+
+  const clearPdfFile = () => {
+    setPdfFile(null);
+  };
+
+  const clearImageFile = () => {
+    setImageFile(null);
   };
 
   const renderChapterInputs = () => {
@@ -115,19 +177,52 @@ function AddBooks() {
   };
 
   const handleSubmit = async () => {
+    // Check if all required fields are filled
+    if (
+      !classValue ||
+      !textbookName ||
+      !medium ||
+      !volume ||
+      !publisherName ||
+      !pdfFile ||
+      !imageFile
+    ) {
+      let missingFields = [];
+      if (!classValue) missingFields.push("class");
+      if (!textbookName) missingFields.push("textbook name");
+      if (!medium) missingFields.push("medium");
+      if (!volume) missingFields.push("volume");
+      if (!publisherName) missingFields.push("publisher name");
+      if (!pdfFile) missingFields.push("PDF file");
+      if (!imageFile) missingFields.push("image file");
+
+      // Notify user which fields are missing
+      Swal.fire({
+        icon: "error",
+        title: "Missing Required Information",
+        text: `Please complete the following fields: ${missingFields.join(
+          ", "
+        )}.`,
+      });
+      setLoading(false); // Ensure loading is reset even if submission does not proceed
+      return; // Stop the function if there are missing fields
+    }
+
+    // All fields are filled, proceed with form submission
+    setLoading(true);
     try {
       const formData = new FormData();
       formData.append("class_name", classValue);
       formData.append("text_name", textbookName);
-      formData.append("medium", phone);
+      formData.append("medium", medium);
       formData.append("volume", volume);
       formData.append("publisher_name", publisherName);
       formData.append("textbook_pdf", pdfFile);
       formData.append("textbook_front_page", imageFile);
 
       chapters.forEach((chapter, index) => {
-        formData.append(`chapters[${index}][chapter_name]`, chapter.name);
-        formData.append(`chapters[${index}][page_no]`, chapter.pageNo);
+        formData.append("chapter_name", chapter.name);
+        formData.append("page_no", chapter.pageNo);
       });
 
       const response = await axios.post(
@@ -141,6 +236,11 @@ function AddBooks() {
       );
 
       console.log(response.data);
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Textbook created successfully!",
+      });
     } catch (error) {
       console.error("Error creating textbook:", error);
       Swal.fire({
@@ -148,11 +248,12 @@ function AddBooks() {
         title: "Oops...",
         text: "Something went wrong!",
       });
+    } finally {
+      setLoading(false); // Ensure loading state is cleared
     }
   };
-
   return (
-    <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white" }}>
+    <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white " }}>
       <div className="textbook">
         <div
           style={{
@@ -191,6 +292,7 @@ function AddBooks() {
                     id="class"
                     name="class"
                     value={classValue}
+                    style={{ textTransform: 'capitalize' }}
                     onChange={(e) => setClassValue(e.target.value)}
                   />
                 </div>
@@ -203,19 +305,21 @@ function AddBooks() {
                     id="textbookName"
                     name="textbookName"
                     value={textbookName}
+                    style={{ textTransform: 'capitalize' }}
                     onChange={(e) => setTextbookName(e.target.value)}
                   />
                 </div>
                 <div className="textbook_input_container">
-                  <label htmlFor="phone" style={{ fontWeight: "600" }}>
-                    Phone No
+                  <label htmlFor="Medium" style={{ fontWeight: "600" }}>
+                    Medium
                   </label>
                   <input
                     type="text"
-                    id="phone"
-                    name="phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    id="medium"
+                    name="medium"
+                    value={medium}
+                    style={{ textTransform: 'capitalize' }}
+                    onChange={(e) => setMedium(e.target.value)}
                   />
                 </div>
               </div>
@@ -229,6 +333,7 @@ function AddBooks() {
                     id="volume"
                     name="volume"
                     value={volume}
+                    style={{ textTransform: 'capitalize' }}
                     onChange={(e) => setVolume(e.target.value)}
                   />
                 </div>
@@ -240,13 +345,15 @@ function AddBooks() {
                     type="text"
                     id="publisherName"
                     name="publisherName"
-                    list="data"
+                    list="publishers-list"
                     value={publisherName}
+                    style={{ textTransform: 'capitalize' }}
                     onChange={(e) => setPublisherName(e.target.value)}
                   />
-                  <datalist id="data">
-                    <option>NCERT</option>
-                    <option>S Chand</option>
+                  <datalist id="publishers-list">
+                    {publishers.map((publisher, index) => (
+                      <option key={index} value={publisher} />
+                    ))}
                   </datalist>
                 </div>
               </div>
@@ -343,26 +450,44 @@ function AddBooks() {
                         <label htmlFor="pdf" style={{}}></label>
                         <div className="textbook_image_upload_container">
                           <div className="textbook_upload_placeholder">
-                            <label
-                              htmlFor="pdf-upload"
-                              className="textbook_upload_label"
-                            >
-                              Upload PDF
-                            </label>
-                            <input
-                              id="pdf-upload"
-                              type="file"
-                              accept=".pdf"
-                              className="textbook_upload_input"
-                              onChange={handlePdfUpload}
-                            />
-                            {pdfFile && (
-                              <embed
-                                src={URL.createObjectURL(pdfFile)}
-                                type="application/pdf"
-                                width="100%"
-                                height="600px"
-                              />
+                            {pdfFile ? (
+                              <>
+                                <embed
+                                  src={URL.createObjectURL(pdfFile)}
+                                  type="application/pdf"
+                                  width="100%"
+                                  height="200px"
+                                />
+                                <button
+                                  onClick={clearPdfFile}
+                                  style={{
+                                    border: "none",
+                                    background: "none",
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  <FaRedo
+                                    style={{ color: "blue", fontSize: "20px" }}
+                                    title="Change PDF"
+                                  />
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                <label
+                                  htmlFor="pdf-upload"
+                                  className="textbook_upload_label"
+                                >
+                                  Upload PDF
+                                </label>
+                                <input
+                                  id="pdf-upload"
+                                  type="file"
+                                  accept=".pdf"
+                                  className="textbook_upload_input"
+                                  onChange={handlePdfUpload}
+                                />
+                              </>
                             )}
                           </div>
                         </div>
@@ -374,27 +499,47 @@ function AddBooks() {
                         <label htmlFor="photo" style={{}}></label>
                         <div className="textbook_image_upload_container">
                           <div className="textbook_upload_placeholder">
-                            <label
-                              htmlFor="image-upload"
-                              className="textbook_upload_label"
-                            >
-                              Upload Image
-                            </label>
-                            <input
-                              id="image-upload"
-                              type="file"
-                              accept="image/*"
-                              className="textbook_upload_input"
-                              onChange={handleImageUpload}
-                            />
-
-                            {imageFile && (
-                              <img
-                                src={URL.createObjectURL(imageFile)}
-                                alt="Uploaded Image"
-                                className="uploaded_image"
-                                style={{ maxWidth: "100%", maxHeight: "600px" }}
-                              />
+                            {imageFile ? (
+                              <>
+                                <img
+                                  src={URL.createObjectURL(imageFile)}
+                                  alt="Uploaded Image"
+                                  className="uploaded_image"
+                                  style={{
+                                    maxWidth: "100%",
+                                    maxHeight: "200px",
+                                  }}
+                                />
+                                <button
+                                  onClick={clearImageFile}
+                                  style={{
+                                    border: "none",
+                                    background: "none",
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  <FaRedo
+                                    style={{ color: "blue", fontSize: "20px" }}
+                                    title="Change Image"
+                                  />
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                <label
+                                  htmlFor="image-upload"
+                                  className="textbook_upload_label"
+                                >
+                                  Upload Image
+                                </label>
+                                <input
+                                  id="image-upload"
+                                  type="file"
+                                  accept="image/*"
+                                  className="textbook_upload_input"
+                                  onChange={handleImageUpload}
+                                />
+                              </>
                             )}
                           </div>
                         </div>
@@ -406,7 +551,17 @@ function AddBooks() {
                     style={{ marginBottom: "50px", marginTop: "30px" }}
                   >
                     <button onClick={handleSubmit} type="submit" value="submit">
-                      Submit
+                      {loading ? (
+                        <>
+                          <FaSpinner
+                            className="spinner"
+                            style={{ animation: "spin 2s linear infinite" }}
+                          />
+                          &nbsp;Saving...
+                        </>
+                      ) : (
+                        "Submit"
+                      )}
                     </button>
                   </div>
                 </div>
