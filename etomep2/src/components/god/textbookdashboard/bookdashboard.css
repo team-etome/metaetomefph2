@@ -11,18 +11,13 @@
   .image-container {
     transition: transform 0.5s; 
   } */
-  .custom_navbar {
-    background-color: #DAE2E9 !important;
-    border-radius: 10px !important;
-    height: 70px !important;
-    border: none !important;
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
-  }
-  .custom-search {
+
+  
+  /* .custom-search {
     max-width: 80%; 
-  }
+  } */
+
+  
   /* <div style={{ backgroundColor: "#DDE6ED", minHeight: "100vh", overflowY: "auto" }}>
   <Navbar expand="lg" className="bg-body-tertiary" style={{ marginBottom: "20px",  marginTop:'40px', borderR:'8px' }}>
   <Navbar.Brand href="#home">Library</Navbar.Brand>
