@@ -176,6 +176,7 @@ function AddCustomer() {
                     id="institutionName"
                     name="institutionName"
                     value={institutionName}
+                    style={{ textTransform: 'capitalize' }}
                     onChange={(e) => setInstitutionName(e.target.value)}
                   />
                 </div>
@@ -188,6 +189,7 @@ function AddCustomer() {
                     id="institutionCode"
                     name="institutionCode"
                     value={institutionCode}
+                    style={{ textTransform: 'capitalize' }}
                     onChange={(e) => setInstitutionCode(e.target.value)}
                   />
                 </div>
@@ -195,7 +197,8 @@ function AddCustomer() {
                   <label for="email" style={{ fontWeight: "600" }}>
                     Email
                   </label>
-                  <input type="text" id="email" name="email"  value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    
+                  <input type="text" id="email" name="email"  value={email}  onChange={(e) => setEmail(e.target.value)}/>
                 </div>
               </div>
               <div className="form-col">
@@ -277,6 +280,7 @@ function AddCustomer() {
                     id="educationBoard"
                     name="educationBoard"
                     value={board}
+                    style={{ textTransform: 'capitalize' }}
                     onChange={(e) => setBoard(e.target.value)}
                   />
                 </div>
@@ -284,17 +288,17 @@ function AddCustomer() {
                   <label for="databaseCode" style={{ fontWeight: "600" }}>
                     Database Code
                   </label>
-                  <input type="text" id="databaseCode" name="databaseCode" value={databaseCode} onChange={(e) => setDatabaseCode(e.target.value)}/>
+                  <input type="text" id="databaseCode" name="databaseCode" value={databaseCode} style={{textTransform:'capitalize'}} onChange={(e) => setDatabaseCode(e.target.value)}/>
                 </div>
                 <div className="input-container" style={{ fontWeight: "600" }}>
                   <label for="address">Address</label>
-                  <input type="text" id="address" name="address" value={address} onChange={(e) => setAddress(e.target.value)}/>
+                  <input type="text" id="address" name="address" value={address} style={{textTransform:'capitalize'}} onChange={(e) => setAddress(e.target.value)}/>
                 </div>
                 <div className="input-container">
                   <label for="region" style={{ fontWeight: "600" }}>
                     Region
                   </label>
-                  <input type="text" id="region" name="region" value={region} onChange={(e) => setRegion(e.target.value)}/>
+                  <input type="text" id="region" name="region" value={region} style={{textTransform:'capitalize'}} onChange={(e) => setRegion(e.target.value)}/>
                 </div>
                 <div style={{ marginLeft: "20px" }}>
                   <label
@@ -394,19 +398,19 @@ function AddCustomer() {
                   <label for="phone" style={{ fontWeight: "600" }}>
                     Phone Number
                   </label>
-                  <input type="text" id="phone" name="phone" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
+                  <input type="text" id="phone" name="phone" value={phoneNumber} style={{textTransform:'capitalize'}} onChange={(e) => setPhoneNumber(e.target.value)}/>
                 </div>
                 <div className="input-container">
                   <label for="publisherName" style={{ fontWeight: "600" }}>
                     Publisher Name
                   </label>
-                  <input type="text" id="publisherName" name="publisherName" value={publisherName} onChange={(e) => setPublisherName(e.target.value)}/>
+                  <input type="text" id="publisherName" name="publisherName" value={publisherName}  style={{textTransform:'capitalize'}} onChange={(e) => setPublisherName(e.target.value)}/>
                 </div>
                 <div className="input-container">
                   <label for="password" style={{ fontWeight: "600" }}>
                     Password
                   </label>
-                  <input type="text" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                  <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className="input-container"
                   style={{ marginBottom: "110px" }}
@@ -415,7 +419,7 @@ function AddCustomer() {
                     Confirm Password
                   </label>
                   <input
-                    type="text"
+                    type="password"
                     id="confirmPassword"
                     name="confirmPassword"
                     value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
