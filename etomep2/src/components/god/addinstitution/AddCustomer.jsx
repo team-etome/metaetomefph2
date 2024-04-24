@@ -16,7 +16,7 @@ function AddCustomer() {
   const [databaseCode, setDatabaseCode] = useState("");
   const [address, setAddress] = useState("");
   const [region, setRegion] = useState("");
-  const [medium, setMedium] = useState("english");
+  const [medium, setMedium] = useState("");
   const [institutionType, setInstitutionType] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -25,6 +25,7 @@ function AddCustomer() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
+  
 
   const APIURL = useSelector((state) => state.APIURL.url);
 
