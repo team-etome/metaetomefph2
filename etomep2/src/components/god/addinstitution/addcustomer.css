@@ -55,7 +55,12 @@
   /* margin-bottom: 35px;  */
   
 }
-
+.input-container_select {
+  position: relative;
+  padding: 15px;
+  /* margin-bottom: 35px;  */
+  
+}
 .input-container input {
   padding: 8px 8px 8px 4px;
   border: 1px solid #526D82;
@@ -67,7 +72,17 @@
   box-sizing: border-box;
   /* margin-bottom: 20px; */
 }
-
+.input-container_select Select {
+  padding: 8px 8px 8px 4px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  background: #fff; 
+  width: 100px;
+  height: 10px;
+  box-sizing: border-box;
+  border-color: white; 
+}
 .input-container label {
   position: absolute;
   top: 10px;
@@ -79,7 +94,17 @@
   transition: all 0.3s;
   pointer-events: none;
 }
-
+.input-container_select label {
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  padding: 0 4px;
+  background: #fff;
+  color:#526D82;
+  font-size: 16px;
+  transition: all 0.3s;
+  pointer-events: none;
+}
 .input-container input:focus + label,
 .input-container input:not(:placeholder-shown) + label {
   top: -10px;
@@ -87,7 +112,13 @@
   font-size: 12px;
   color: #333;
 }
-
+.input-container_select Select:focus + label,
+.input-container_select Select:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 4px;
+  font-size: 12px;
+  color: #333;
+}
 
 .form-container {
   width: 100%;
