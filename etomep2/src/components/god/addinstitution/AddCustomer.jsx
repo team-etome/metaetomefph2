@@ -483,7 +483,7 @@ function AddCustomer() {
                   </label>
                   <input type="text" id="phone" name="phone" value={phoneNumber} style={{textTransform:'capitalize'}}  maxLength={10} onChange={(e) => setPhoneNumber(e.target.value)}/>
                 </div>
-                <div className="input-container" style={{}}>
+                <div className="input-container_select" style={{width:'400px',border:'1px solid #526D82' , marginLeft:'15px', borderRadius:'4px', marginTop:'20px', marginBottom:'10px'}}>
                   <label for="publisherName" style={{ fontWeight: "600" }}>
                     Publisher Name
                   </label>
@@ -502,16 +502,23 @@ function AddCustomer() {
                       <option key={index} value={publisher} />
                     ))}
                   </datalist> */}
-                  <Select
-                    id="publisherName"
-                    name="publisherName"
-                    options={publisherOptions}
-                    isMulti
-                    value={publisherName}
-                    onChange={handlePublisherChange}
-                    // className="react-select-container"
-                    // classNamePrefix="react-select"
-                  />
+            <Select
+              id="publisherName"
+              name="publisherName"
+              options={publisherOptions}
+              placeholder=''
+              isMulti
+              value={publisherName}
+              onChange={handlePublisherChange}
+              // className="custom-select"
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none', 
+                  boxShadow: state.isFocused ? 'none' : 'none', 
+                }),
+              }}
+            />
                 </div>
                 <div className="input-container">
                   <label for="password" style={{ fontWeight: "600" }}>
