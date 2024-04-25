@@ -15,6 +15,8 @@ import {
 import chemistryImage from "../../../assets/chemistry.png";
 import "../textbookdashboard/bookdashboard.css";
 import axios from "axios";
+import { BiBookAdd } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 function BookdashBoard() {
   const [books, setBooks] = useState([]);
@@ -112,8 +114,6 @@ function BookdashBoard() {
                   <Card.Body>
                     <Card.Title>{book.text_name}</Card.Title>
                     <Card.Text>{book.publisher_name}</Card.Text>
-                 
-                
                   </Card.Body>
                 </Card>
              
@@ -128,6 +128,11 @@ function BookdashBoard() {
             <Pagination.Ellipsis />
             <Pagination.Next />
           </Pagination>
+          <div style={{}}>
+            <Link to='/addbooks'>
+              <BiBookAdd style={{ position: "fixed", top: "650px", right: "25px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)" }}/>
+            </Link>
+          </div>
         </Container>
       </Container>
     </div>

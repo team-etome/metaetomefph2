@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-
+import Select from "react-select";
 
 function AddCustomer() {
 
@@ -20,7 +20,7 @@ function AddCustomer() {
   const [institutionType, setInstitutionType] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [publisherName, setPublisherName] = useState("");
+  const [publisherName, setPublisherName] = useState([]);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -45,7 +45,9 @@ function AddCustomer() {
   const handleInstitutionChange = (e) => {
     setInstitutionType(e.target.value);
   };
-  
+  const handlePublisherChange = (selectedOptions) => {
+    setPublisherName(selectedOptions);
+  };
 
 
   const handleSubmit = async () => {
@@ -55,7 +57,7 @@ function AddCustomer() {
       !institutionCode ||
       !medium ||
       !email ||
-      !publisherName ||
+      !publisherName.length  ||
       !board ||
       !databaseCode ||
       !address ||
@@ -71,7 +73,7 @@ function AddCustomer() {
       if (!institutionCode) missingFields.push("institution code");
       if (!medium) missingFields.push("medium");
       if (!email) missingFields.push("email");
-      if (!publisherName) missingFields.push("publisher name");
+      if (!publisherName.length ) missingFields.push("publisher name");
       if (!board) missingFields.push("board of education");
       if (!imageFile) missingFields.push("image file");
       if (!databaseCode) missingFields.push("database code");
@@ -94,6 +96,28 @@ function AddCustomer() {
       return; 
     }
 
+    // if (!/^\d{10}$/.test(phoneNumber)) {
+    //   Swal.fire({
+    //     title: "Error!",
+    //     text: "Phone Number must be exactly 10 digits and contain only numbers.",
+    //     icon: "error",
+    //     confirmButtonText: "Ok",
+    //   });
+    //   setLoading(false);
+    //   return;
+    // }
+    if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Phone Number",
+        text: "Please enter a valid 10-digit phone number.",
+      });
+      setLoading(false);
+      return;
+    }
+
+  
+
     setLoading(true);
     try {
       const formData = new FormData();
@@ -101,7 +125,7 @@ function AddCustomer() {
       formData.append("institute_code", institutionCode);
       formData.append("medium", medium);
       formData.append("email_id", email);
-      formData.append("publisher_name", publisherName);
+      formData.append("publisher_name", JSON.stringify(publisherName));
       formData.append("eduational_body", board);
       formData.append("logo", imageFile);
       formData.append("database_code", databaseCode);
@@ -139,6 +163,64 @@ function AddCustomer() {
       setLoading(false); 
     }
   };
+
+  const publishers = [
+    "MADHUBAN",
+    "GOYAL",
+    "VIVA - EDUCATION",
+    "ANAND",
+    "UGS",
+    "INDIANNICA",
+    "BOSEM",
+    "GLOBAL",
+    "ANAND BOOKS",
+    "APC",
+    "BOARD",
+    "NEW SARASWATI",
+    "Cambridge",
+    "Amenta",
+    "Marina Publication",
+    "Bharati Bhavan",
+    "Inspiration Publication",
+    "Saraswati Publication",
+    "Goyal Brothers",
+    "Jay Cee",
+    "Kips",
+    "Assam Book Dipo",
+    "NEDSSS Publication",
+    "ASTPPCL",
+    "Assam Book depot",
+    "NEDSSS Publi.",
+    "CBSE/Dhanpat Raj & C",
+    "TYCHEE",
+    "Progress",
+    "Headword Publishing Company",
+    "Acevision Publisher Pvt Ltd",
+    "Arya Publishing Company",
+    "Edutree Publishers Pvt Ltd",
+    "Evergreen Publications Ltd",
+    "Orient BlackSwan",
+    "Full Marks Pvt Ltd",
+    "Langers International",
+    "Vision Publications",
+    "Avichal Publishing Co.",
+    "Prachi India Pvt. Ltd.",
+    "O. U. P.",
+    "Black Pearl Publications",
+    "Selina Publications",
+    "Goyal Prakashan",
+    "Dhanpat Rai & Co.",
+    "Unisec Publications",
+    "Morning Star",
+    "Avichal Publishing Co.",
+    "Huda Publications",
+    "I. U. P.",
+    "NCERT",
+  ];
+  const publisherOptions = publishers.map((publisher) => ({
+    value: publisher,
+    label: publisher,
+  }));
 
   return (
     <div style={{backgroundColor:'#DDE6ED', border:'2px solid white'}}>
@@ -399,13 +481,37 @@ function AddCustomer() {
                   <label for="phone" style={{ fontWeight: "600" }}>
                     Phone Number
                   </label>
-                  <input type="text" id="phone" name="phone" value={phoneNumber} style={{textTransform:'capitalize'}} onChange={(e) => setPhoneNumber(e.target.value)}/>
+                  <input type="text" id="phone" name="phone" value={phoneNumber} style={{textTransform:'capitalize'}}  maxLength={10} onChange={(e) => setPhoneNumber(e.target.value)}/>
                 </div>
-                <div className="input-container">
+                <div className="input-container" style={{}}>
                   <label for="publisherName" style={{ fontWeight: "600" }}>
                     Publisher Name
                   </label>
-                  <input type="text" id="publisherName" name="publisherName" value={publisherName}  style={{textTransform:'capitalize'}} onChange={(e) => setPublisherName(e.target.value)}/>
+                  {/* <input type="text" id="publisherName" name="publisherName" value={publisherName}  style={{textTransform:'capitalize'}} onChange={(e) => setPublisherName(e.target.value)}/> */}
+                  {/* <input
+                    type="text"
+                    id="publisherName"
+                    name="publisherName"
+                    list="publishers-list"
+                    value={publisherName}
+                    style={{ textTransform: "capitalize" }}
+                    onChange={(e) => setPublisherName(e.target.value)}
+                  />
+                  <datalist id="publishers-list">
+                    {publishers.map((publisher, index) => (
+                      <option key={index} value={publisher} />
+                    ))}
+                  </datalist> */}
+                  <Select
+                    id="publisherName"
+                    name="publisherName"
+                    options={publisherOptions}
+                    isMulti
+                    value={publisherName}
+                    onChange={handlePublisherChange}
+                    // className="react-select-container"
+                    // classNamePrefix="react-select"
+                  />
                 </div>
                 <div className="input-container">
                   <label for="password" style={{ fontWeight: "600" }}>
