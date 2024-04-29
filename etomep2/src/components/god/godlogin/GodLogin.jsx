@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../godlogin/glogin.css";
 import { Col, Container, Row } from "react-bootstrap";
 import { MdOutlineAlternateEmail } from "react-icons/md";
-import { FaRegEye } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import etomelogo from "../../../assets/etomelogo.png";
 import { useSelector } from "react-redux";
 
@@ -16,10 +16,17 @@ function GodLogin() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const navigate = useNavigate();
 
   const APIURL = useSelector((state) => state.APIURL.url);
+
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -166,14 +173,17 @@ style=
                 </span>
               </div>
               <div className="input-container">
-                <input placeholder="Enter password" type="password" style={{width:"100%",paddingLeft:"20px"}} 
+                <input placeholder="Enter passwordd" type={showPassword ? 'text' : 'password'} id="password" name="password"style={{width:"100%",paddingLeft:"20px"}} 
                  onChange={(e) => setPassword(e.target.value)}
                 />
 
-                <span>
+                {/* <span>
                   <FaRegEye />
-                  {/* < FaRegEyeSlash */}
-                </span>
+                  < FaRegEyeSlash />
+                </span> */}
+                  <span  onClick={togglePasswordVisibility}>
+                    {showPassword ? < FaRegEye/> : < FaRegEyeSlash />}
+                  </span>
               </div>
               <button className="submit_btn" type="submit" onClick={handleSubmit}>
                 Sign in

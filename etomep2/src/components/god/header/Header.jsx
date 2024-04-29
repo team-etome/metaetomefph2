@@ -12,7 +12,7 @@ function Header() {
   const [activeTab, setActiveTab] = useState("Institution");
 
   return (
-    <div>
+    <div className="header-container">
       <Container>
         <Row>
           <Col md={12} style={{ marginTop: "30px" }}>
@@ -31,8 +31,10 @@ function Header() {
                 <Nav.Link eventKey="Textbook">Textbook</Nav.Link>
               </Nav.Item>
             </Nav>
+            <div className="dashboard-container">
             {activeTab === "Institution" && <Customerdashboard />}
             {activeTab === "Textbook" && <BookdashBoard />}
+            </div>
           </Col>
         </Row>
       </Container>

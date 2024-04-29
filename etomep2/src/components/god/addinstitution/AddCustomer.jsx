@@ -1,6 +1,6 @@
 import React , {useState} from "react";
 import "../addinstitution/addcustomer.css";
-import { FaArrowLeft, FaSpinner, FaRedo  } from "react-icons/fa";
+import { FaArrowLeft, FaSpinner, FaRedo, FaEye, FaEyeSlash  } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -23,6 +23,9 @@ function AddCustomer() {
   const [publisherName, setPublisherName] = useState([]);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const publisherValues = publisherName.map(option => option.value);
 
   const [loading, setLoading] = useState(false);
   
@@ -44,13 +47,38 @@ function AddCustomer() {
 
   const handleInstitutionChange = (e) => {
     setInstitutionType(e.target.value);
+    if (e.target.value === "college") {
+      // selectedType
+      setMedium(""); 
+    }
   };
   const handlePublisherChange = (selectedOptions) => {
     setPublisherName(selectedOptions);
   };
+  const handleEducationBoard = (selectedOptions) => {
+    setBoard(selectedOptions);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
 
   const handleSubmit = async () => {
+
+    if (password !== confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Password Mismatch",
+        text: "Password and confirm password do not match.",
+      });
+      setLoading(false);
+      return;
+    }
     // Check if all required fields are filled
     if (
       !institutionName ||
@@ -84,7 +112,6 @@ function AddCustomer() {
       if (!password) missingFields.push("password");
       if (!confirmPassword) missingFields.push("confirm password");
 
-
       Swal.fire({
         icon: "error",
         title: "Missing Required Information",
@@ -96,16 +123,6 @@ function AddCustomer() {
       return; 
     }
 
-    // if (!/^\d{10}$/.test(phoneNumber)) {
-    //   Swal.fire({
-    //     title: "Error!",
-    //     text: "Phone Number must be exactly 10 digits and contain only numbers.",
-    //     icon: "error",
-    //     confirmButtonText: "Ok",
-    //   });
-    //   setLoading(false);
-    //   return;
-    // }
     if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
       Swal.fire({
         icon: "error",
@@ -116,8 +133,6 @@ function AddCustomer() {
       return;
     }
 
-  
-
     setLoading(true);
     try {
       const formData = new FormData();
@@ -125,7 +140,7 @@ function AddCustomer() {
       formData.append("institute_code", institutionCode);
       formData.append("medium", medium);
       formData.append("email_id", email);
-      formData.append("publisher_name", JSON.stringify(publisherName));
+      formData.append("publisher_name", JSON.stringify(publisherValues));
       formData.append("eduational_body", board);
       formData.append("logo", imageFile);
       formData.append("database_code", databaseCode);
@@ -222,6 +237,19 @@ function AddCustomer() {
     label: publisher,
   }));
 
+  const educationboard = [
+    'CENTRAL BOARD OF SECONDARY EDUCATION (CBSE) ',
+    'KERALA BOARD OF PUBLIC EXAMINATION , KERALA',
+    'KERALA BOARD OF HIGHER SECONDARY EDUCATION',
+    'BOARD OF VOCATIONAL HIGHER SECONDARY EDUCATION, KERALA',
+    'BOARD OF SECONDARY EDUCATION, MADHYA PRADESH',
+    'ICSE BOARD',
+  ];
+  const boardOptions = educationboard.map((eduboard) => ({
+    value: eduboard,
+    label: eduboard,
+  }));
+
   return (
     <div style={{backgroundColor:'#DDE6ED', border:'2px solid white'}}>
       <div  className="form">
@@ -260,6 +288,7 @@ function AddCustomer() {
                     name="institutionName"
                     value={institutionName}
                     style={{ textTransform: 'capitalize' }}
+                    maxLength="100"
                     onChange={(e) => setInstitutionName(e.target.value)}
                   />
                 </div>
@@ -354,17 +383,26 @@ function AddCustomer() {
 
             <div className="form-row">
               <div className="form-col">
-                <div className="input-container">
+                <div className="input-container_select" style={{width:'400px',border:'1px solid #526D82' , marginLeft:'15px', borderRadius:'4px', marginTop:'20px', marginBottom:'10px'}}>
                   <label for="educationBoard" style={{ fontWeight: "600" }}>
                     Board of Education
                   </label>
-                  <input
+                  <Select
                     type="text"
                     id="educationBoard"
                     name="educationBoard"
+                    list="board-list"
+                    options={boardOptions}
                     value={board}
-                    style={{ textTransform: 'capitalize' }}
-                    onChange={(e) => setBoard(e.target.value)}
+                    // onChange={(e) => setBoard(e.target.value)}
+                    onChange={handleEducationBoard}
+                    styles={{
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        border: 'none', 
+                        boxShadow: state.isFocused ? 'none' : 'none', 
+                      }),
+                    }}
                   />
                 </div>
                 <div className="input-container">
@@ -384,51 +422,7 @@ function AddCustomer() {
                   <input type="text" id="region" name="region" value={region} style={{textTransform:'capitalize'}} onChange={(e) => setRegion(e.target.value)}/>
                 </div>
                 <div style={{ marginLeft: "20px" }}>
-                  <label
-                    for="medium"
-                    style={{ color: "#707070", fontWeight: "600" }}
-                  >
-                    Medium
-                  </label>
-                  <div style={{ display: "flex", color: "#5C7689" }}>
-                    <div style={{ display: "flex", padding: "10px" }}>
-                      <div>
-                        <input
-                          style={{ marginRight: "1px", marginTop: "4px" }}
-                          type="radio"
-                          id="english"
-                          name="medium"
-                          value="english"
-                          checked={medium === "english"}
-                          onChange={handleMediumChange}
-                        />
-                      </div>
-                      <div
-                        style={{
-                          padding: "10px",
-                          marginTop: "-10px",
-                          fontWeight: "600",
-                        }}
-                      >
-                        English
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", padding: "10px" }}>
-                      <div>
-                        <input
-                          style={{ marginRight: "10px", marginTop: "4px" }}
-                          type="radio"
-                          id="english"
-                          name="medium"
-                          value="malayalam"
-                          checked={medium === "malayalam"}
-                          onChange={handleMediumChange}
-                        />
-                      </div>
-                      <div style={{ fontWeight: "600" }}>Malayalam</div>
-                    </div>
-                  </div>
-                  <div>
+                <div>
                     <label
                       for="institutionType"
                       style={{ color: "#707070", fontWeight: "600" }}
@@ -474,57 +468,108 @@ function AddCustomer() {
                       </div>
                     </div>
                   </div>
+                  {institutionType === "school" && (
+                    <div>
+                      <label
+                        for="medium"
+                        style={{ color: "#707070", fontWeight: "600" }}
+                      >
+                        Medium
+                      </label>
+                      <div style={{ display: "flex", color: "#5C7689" }}>
+                        <div style={{ display: "flex", padding: "10px" }}>
+                          <div>
+                            <input
+                              style={{ marginRight: "1px", marginTop: "4px" }}
+                              type="radio"
+                              id="english"
+                              name="medium"
+                              value="english"
+                              checked={medium === "english"}
+                              onChange={handleMediumChange}
+                              // disabled={institutionType === "college"}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              padding: "10px",
+                              marginTop: "-10px",
+                              fontWeight: "600",
+                            }}
+                          >
+                            English
+                          </div>
+                        </div>
+                        <div style={{ display: "flex", padding: "10px" }}>
+                          <div>
+                            <input
+                              style={{ marginRight: "10px", marginTop: "4px" }}
+                              type="radio"
+                              id="english"
+                              name="medium"
+                              value="malayalam"
+                              checked={medium === "malayalam"}
+                              onChange={handleMediumChange}
+                              // disabled={institutionType === "college"}
+                            />
+                          </div>
+                          <div style={{ fontWeight: "600" }}>Malayalam</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="form-col" style={{ marginTop: "1px", }}> 
+              <div className="input-container_select" style={{width:'400px',border:'1px solid #526D82' , marginLeft:'15px', borderRadius:'4px', marginTop:'20px', marginBottom:'10px'}}>
+                  <label for="publisherName" style={{ fontWeight: "600" }}>
+                    Publisher Name
+                  </label>
+                  {/* <input type="text" id="publisherName" name="publisherName" value={publisherName}  style={{textTransform:'capitalize'}} onChange={(e) => setPublisherName(e.target.value)}/> */}
+                  <Select
+                    id="publisherName"
+                    name="publisherName"
+                    options={publisherOptions}
+                    placeholder=''
+                    isMulti
+                    value={publisherName}
+                    onChange={handlePublisherChange}
+                    styles={{
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        border: 'none', 
+                        boxShadow: state.isFocused ? 'none' : 'none', 
+                      }),
+                    }}
+                  />
+                </div>
                 <div className="input-container">
                   <label for="phone" style={{ fontWeight: "600" }}>
                     Phone Number
                   </label>
                   <input type="text" id="phone" name="phone" value={phoneNumber} style={{textTransform:'capitalize'}}  maxLength={10} onChange={(e) => setPhoneNumber(e.target.value)}/>
                 </div>
-                <div className="input-container_select" style={{width:'400px',border:'1px solid #526D82' , marginLeft:'15px', borderRadius:'4px', marginTop:'20px', marginBottom:'10px'}}>
-                  <label for="publisherName" style={{ fontWeight: "600" }}>
-                    Publisher Name
-                  </label>
-                  {/* <input type="text" id="publisherName" name="publisherName" value={publisherName}  style={{textTransform:'capitalize'}} onChange={(e) => setPublisherName(e.target.value)}/> */}
-                  {/* <input
-                    type="text"
-                    id="publisherName"
-                    name="publisherName"
-                    list="publishers-list"
-                    value={publisherName}
-                    style={{ textTransform: "capitalize" }}
-                    onChange={(e) => setPublisherName(e.target.value)}
-                  />
-                  <datalist id="publishers-list">
-                    {publishers.map((publisher, index) => (
-                      <option key={index} value={publisher} />
-                    ))}
-                  </datalist> */}
-            <Select
-              id="publisherName"
-              name="publisherName"
-              options={publisherOptions}
-              placeholder=''
-              isMulti
-              value={publisherName}
-              onChange={handlePublisherChange}
-              // className="custom-select"
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  border: 'none', 
-                  boxShadow: state.isFocused ? 'none' : 'none', 
-                }),
-              }}
-            />
-                </div>
+
                 <div className="input-container">
                   <label for="password" style={{ fontWeight: "600" }}>
                     Password
                   </label>
-                  <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                  <input type={showPassword ? 'text' : 'password'} id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                  {/* <div
+                    style={{
+                      position: 'absolute',
+                      right: '50px', 
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      cursor: 'pointer',
+                    }}
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? < FaEye/> : < FaEyeSlash />}
+                  </div> */}
+                  <div className="eye_icon" onClick={togglePasswordVisibility}>
+                    {showPassword ? < FaEye/> : < FaEyeSlash />}
+                  </div>
                 </div>
                 <div className="input-container"
                   style={{ marginBottom: "110px" }}
@@ -533,11 +578,16 @@ function AddCustomer() {
                     Confirm Password
                   </label>
                   <input
-                    type="password"
+                    type={showConfirmPassword ? 'text' : 'password'}
                     id="confirmPassword"
                     name="confirmPassword"
-                    value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
+                    value={confirmPassword} 
+                    onChange={(e) => setConfirmPassword(e.target.value)} 
+                    onPaste={(e) => e.preventDefault()}
                   />
+                  <div className="eye_icon" onClick={toggleConfirmPasswordVisibility}>
+                    {showConfirmPassword ? < FaEye/> : < FaEyeSlash />}
+                  </div>
                 </div>
                 <div className="button-container">
                   <button type="submit" value="submit" onClick={handleSubmit}>

@@ -7,6 +7,8 @@ import { FaArrowLeft, FaSpinner, FaRedo } from "react-icons/fa";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import Select from "react-select";
+
 
 function AddBooks() {
   const [selectedTab, setSelectedTab] = useState("pdf");
@@ -23,6 +25,10 @@ function AddBooks() {
   // console.log(classValue)
 
   const [loading, setLoading] = useState(false);
+
+  const handlePublisherChange = (selectedOptions) => {
+    setPublisherName(selectedOptions);
+  };
 
   const publishers = [
     "MADHUBAN",
@@ -77,12 +83,33 @@ function AddBooks() {
     "I. U. P.",
     "NCERT",
   ];
+  const publisherOptions = publishers.map((publisher) => ({
+    value: publisher,
+    label: publisher,
+  }));
 
   const APIURL = useSelector((state) => state.APIURL.url);
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
     console.log("Selected Tab: ", tab);
+  };
+  const handleClassValueChange = (e) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value > 0) {
+      setClassValue(value);
+    } else {
+      setClassValue(""); // Reset to empty string if the input is not a positive number
+    }
+  };
+
+  const handleVolumeChange = (e) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value > 0) {
+      setVolume(value);
+    } else {
+      setVolume(""); // Reset to empty string if the input is not a positive number
+    }
   };
 
   const handleChapterInputChange = (index, fieldName, value) => {
@@ -118,6 +145,7 @@ function AddBooks() {
                 border: "none",
                 borderBottom: "1px solid black",
                 width: "180px",
+                outline: "none"
               }}
               value={chapter.name}
               onChange={(e) =>
@@ -135,6 +163,7 @@ function AddBooks() {
                 border: "none",
                 borderBottom: "1px solid black",
                 width: "180px",
+                outline:'none',
               }}
               value={chapter.pageNo}
               onChange={(e) =>
@@ -176,7 +205,7 @@ function AddBooks() {
       !classValue ||
       !textbookName ||
       !medium ||
-      !volume ||
+      // !volume ||
       !publisherName ||
       !pdfFile ||
       !imageFile
@@ -185,7 +214,7 @@ function AddBooks() {
       if (!classValue) missingFields.push("class");
       if (!textbookName) missingFields.push("textbook name");
       if (!medium) missingFields.push("medium");
-      if (!volume) missingFields.push("volume");
+      // if (!volume) missingFields.push("volume");
       if (!publisherName) missingFields.push("publisher name");
       if (!pdfFile) missingFields.push("PDF file");
       if (!imageFile) missingFields.push("image file");
@@ -283,12 +312,12 @@ function AddBooks() {
                     Class
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     id="class"
                     name="class"
                     value={classValue}
-                    style={{  }}
-                    onChange={(e) => setClassValue(e.target.value)}
+                    style={{}}
+                    onChange={handleClassValueChange}
                   />
                 </div>
                 <div className="textbook_input_container">
@@ -329,14 +358,14 @@ function AddBooks() {
                     name="volume"
                     value={volume}
                     style={{ textTransform: 'capitalize' }}
-                    onChange={(e) => setVolume(e.target.value)}
+                    onChange={handleVolumeChange}
                   />
                 </div>
-                <div className="textbook_input_container">
-                  <label htmlFor="publisherName" style={{ fontWeight: "600" }}>
+                <div className="textbook_input_container_select" style={{width:'400px',border:'1px solid #526D82' , borderRadius:'4px',marginTop:'20px', marginBottom:'10px' }}>
+                  <label htmlFor="publisherName" style={{ fontWeight: "600",  }}>
                     Publisher Name
                   </label>
-                  <input
+                  {/* <input
                     type="text"
                     id="publisherName"
                     name="publisherName"
@@ -349,7 +378,23 @@ function AddBooks() {
                     {publishers.map((publisher, index) => (
                       <option key={index} value={publisher} />
                     ))}
-                  </datalist>
+                  </datalist> */}
+                  <Select
+                    id="publisherName"
+                    name="publisherName"
+                    options={publisherOptions}
+                    placeholder=''
+                    isMulti
+                    value={publisherName}
+                    onChange={handlePublisherChange}
+                    styles={{
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        border: 'none', 
+                        boxShadow: state.isFocused ? 'none' : 'none', 
+                      }),
+                    }}
+                  />
                 </div>
               </div>
             </div>
