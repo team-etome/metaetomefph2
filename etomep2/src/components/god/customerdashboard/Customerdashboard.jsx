@@ -66,7 +66,7 @@ function Customerdashboard() {
               </Col>
             </Row> */}
           <Row xs={1} sm={1} md={2} lg={3}  >
-            {Array.from({ length: 10}).map((_, index) => (
+            {Array.from({ length: 5}).map((_, index) => (
               <Col key={index} className="d-flex justify-content-center mb-4">
                 <Link to="/viewinstitution" style={{textDecoration:'none'}}>
                 <div onClick={handleCardClick}>
@@ -99,7 +99,7 @@ function Customerdashboard() {
             ))}
           </Row>
         
-          <Pagination className="cust_pagination_custom">
+          <Pagination className="cust_pagination_custom" style={{position: "fixed", top: "610px",bottom:'500px', left: "50px",}}>
             <Pagination.Prev />
             <Pagination.Item>{1}</Pagination.Item>
             <Pagination.Item>{2}</Pagination.Item>
@@ -109,7 +109,7 @@ function Customerdashboard() {
           </Pagination>
           <div >
             <Link to='/addcustomer'>
-              <MdAddHomeWork style={{ position: "fixed", top: "650px", right: "25px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)" }}/>
+              <MdAddHomeWork style={{ position: "fixed", top: "600px", right: "35px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)" }}/>
             </Link>
           </div>
         </Container>
