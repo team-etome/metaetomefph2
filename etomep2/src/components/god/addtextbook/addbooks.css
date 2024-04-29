@@ -76,6 +76,7 @@
     /* margin-bottom: 20px; */
   }
   
+  
   .textbook_input_container label {
     position: absolute;
     top: 5px;
@@ -96,6 +97,44 @@
     color: #333;
   }
   
+  .textbook_input_container_select {
+    position: relative;
+    padding-top: 15px;
+    /* margin-bottom: 35px;  */
+    margin-left: 30px;
+  }
+  .textbook_input_container_select Select {
+    padding: 8px 8px 8px 4px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    background: #fff; 
+    width: 100px;
+    height: 10px;
+    box-sizing: border-box;
+    border-color: white; 
+    
+  }
+  .textbook_input_container_select label {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    padding: 0 4px;
+    background: #fff;
+    color:#526D82;
+    font-size: 16px;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+.itextbook_input_container_select Select:focus + label,
+.textbook_input_container_select Select:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 4px;
+  font-size: 12px;
+  color: #333;
+}
+
+
   .textbook_container {
     width: 100%;
     max-width: 1500px;
@@ -217,8 +256,12 @@
       .bottom_right_col{
         margin-top:10px;
       }
+      .textbook_input_container_select {
+        margin-left: 15px;
+      }
       
   }
+
   
   @keyframes spin {
     0% { transform: rotate(0deg); }

@@ -44,13 +44,13 @@ function BookdashBoard() {
       <Navbar
         expand="lg"
         className="bg-body-tertiary"
-        style={{ marginBottom: "20px" }}
+        style={{ marginBottom: "20px" , marginTop:'10px', backgroundColor: "red ", borderRadius: "17px",}}
       >
-        <Container>
-          <Navbar.Brand href="#home">Library</Navbar.Brand>
+        <Container style={{}}>
+          <Navbar.Brand href="#home" style={{color:'#526D82', fontSize:'23px', fontWeight: 'bold'}}>Library</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+            <Nav className="me-auto" >
               <NavDropdown title="Class" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">XII</NavDropdown.Item>
               </NavDropdown>
@@ -83,14 +83,21 @@ function BookdashBoard() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Container
-        style={{
+      <Container>
+        <Container style={{
           backgroundColor: "#fff",
           borderRadius: "17px",
           marginBottom: "70px",
-        }}
-      >
-        <Container>
+          }}>
+          {books.length === 0 ? (
+            <Row className="justify-content-center">
+              <Col>
+                <Card className="text-center p-4" style={{backgroundColor:'transparent', border:'none', color:'#526D82'}}>
+                  <h5>No data to be shown</h5>
+                </Card>
+              </Col>
+            </Row>
+          ) : (
           <Row xs={1} sm={2} md={3} lg={4} className="justify-content-center">
           {books.map((book, index) => (
               <Col className="d-flex justify-content-center mb-4">
@@ -116,11 +123,13 @@ function BookdashBoard() {
                     <Card.Text>{book.publisher_name}</Card.Text>
                   </Card.Body>
                 </Card>
-             
               </Col>
              ))}
           </Row>
-          <Pagination>
+          )}
+          </Container>
+         
+          <Pagination className="book_pagination_custom" style={{position: "fixed", top: "650px", left: "50px",}}>
             <Pagination.Prev />
             <Pagination.Item>{1}</Pagination.Item>
             <Pagination.Item>{2}</Pagination.Item>
@@ -128,12 +137,13 @@ function BookdashBoard() {
             <Pagination.Ellipsis />
             <Pagination.Next />
           </Pagination>
-          <div style={{}}>
+          
+          <div>
             <Link to='/addbooks'>
               <BiBookAdd style={{ position: "fixed", top: "650px", right: "25px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)" }}/>
             </Link>
           </div>
-        </Container>
+        
       </Container>
     </div>
   );

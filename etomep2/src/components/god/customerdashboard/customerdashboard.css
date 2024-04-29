@@ -7,3 +7,7 @@
   .book {
     background-color:#DDE6ED !important;
   }
+  .cust_pagination_custom .page-item .page-link {
+    background-color: transparent !important;
+    color: #526D82;
+  }
