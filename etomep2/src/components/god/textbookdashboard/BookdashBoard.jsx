@@ -129,7 +129,7 @@ function BookdashBoard() {
           )}
           </Container>
          
-          <Pagination className="book_pagination_custom" style={{position: "fixed", top: "650px", left: "50px",}}>
+          <Pagination className="book_pagination_custom" style={{position: "fixed", top: "600px", left: "50px",}}>
             <Pagination.Prev />
             <Pagination.Item>{1}</Pagination.Item>
             <Pagination.Item>{2}</Pagination.Item>
@@ -140,7 +140,7 @@ function BookdashBoard() {
           
           <div>
             <Link to='/addbooks'>
-              <BiBookAdd style={{ position: "fixed", top: "650px", right: "25px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)" }}/>
+              <BiBookAdd style={{ position: "fixed", top: "600px", right: "25px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)" }}/>
             </Link>
           </div>
         
