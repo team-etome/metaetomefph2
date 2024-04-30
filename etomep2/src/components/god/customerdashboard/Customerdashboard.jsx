@@ -11,6 +11,8 @@ function Customerdashboard() {
   const handleCardClick = () => {setShowModal(true);};
   // const [customers, setCustomers] = useState([]);
   const [institutionName] = useState("St Johns Residential HSS");
+  const [board] = useState("ICSEeeeeeeeeeeeeeeeeeeeeICSEeeeeeeeeeeeeeeeeeeeeICSEeeeeeeeeeeeeeeeeeeeeICSEeeeeeeeeeeeeeeeeeeee")
+  const [instid] = useState("1234567890123456789012345678901234567890123456789012345678901234567890")
   // const institutions =[
   //   {name: 'St Johns Residential HSS', board: 'ICSE', id: '024234' },
   // ];
@@ -90,8 +92,8 @@ function Customerdashboard() {
                         <Card.Title   title={institutionName}  style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize:'20px' }}>{institutionName}</Card.Title>
                       </div>
                       <div style={{display:'flex', justifyContent: "space-between"}}> 
-                        <Card.Text>ICSE</Card.Text>
-                        <Card.Text>123456</Card.Text>
+                        <Card.Text title={board} style={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',maxWidth: "20%" }}>{board}</Card.Text>
+                        <Card.Text title={instid} style={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',maxWidth: "20%" }}>{instid}</Card.Text>
                       </div>
                   </Card.Body>
                   </Card>

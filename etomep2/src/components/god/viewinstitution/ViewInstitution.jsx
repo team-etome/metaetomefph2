@@ -112,6 +112,7 @@ function ViewInstitution() {
                       id="institutionName"
                       placeholder=""
                       style={{ marginBottom: "50px", width: "100%" }}
+                      readOnly
                     />
                   </div>
                   <div className="mb-3">
@@ -128,6 +129,7 @@ function ViewInstitution() {
                       id="educationBoard"
                       placeholder=""
                       style={{ marginBottom: "50px" }}
+                      readOnly
                     />
                   </div>
                 </div>
@@ -147,6 +149,7 @@ function ViewInstitution() {
                     id="emailId"
                     placeholder=""
                     style={{ marginBottom: "35px" }}
+                    readOnly
                   />
                 </div>
                 <div className="mb-3">
@@ -163,6 +166,7 @@ function ViewInstitution() {
                     id="address"
                     placeholder=""
                     style={{ marginTop: "0px" }}
+                    readOnly
                   />
                 </div>
               </div>
@@ -182,6 +186,7 @@ function ViewInstitution() {
                   id="institutionCode"
                   placeholder=""
                   style={{ marginBottom: "50px" }}
+                  readOnly
                 />
               </div>
               <div className="mb-3">
@@ -198,6 +203,7 @@ function ViewInstitution() {
                   id="phoneNo"
                   placeholder=""
                   style={{ marginBottom: "50px" }}
+                  readOnly
                 />
               </div>
               <div className="mb-3">
@@ -214,6 +220,7 @@ function ViewInstitution() {
                   id="databaseCode"
                   placeholder=""
                   style={{ marginBottom: "50px" }}
+                  readOnly
                 />
               </div>
               <div className="mb-3">
@@ -230,6 +237,7 @@ function ViewInstitution() {
                   id="medium"
                   placeholder=""
                   style={{ marginBottom: "30px" }}
+                  readOnly
                 />
               </div>
             </div>

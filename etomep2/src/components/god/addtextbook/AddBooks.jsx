@@ -102,6 +102,9 @@ function AddBooks() {
       setClassValue(""); // Reset to empty string if the input is not a positive number
     }
   };
+  const handleMediumChange = (selectedOptions) => {
+    setBoard(selectedOptions);
+  };
 
   const handleVolumeChange = (e) => {
     const value = parseInt(e.target.value);
@@ -198,6 +201,7 @@ function AddBooks() {
     const file = e.target.files[0];
     setPdfFile(file);
   };
+  
 
   const handleSubmit = async () => {
     // Check if all required fields are filled
@@ -275,7 +279,20 @@ function AddBooks() {
       setLoading(false); // Ensure loading state is cleared
     }
   };
-
+  const mediumbook = [
+      'Malayalam',
+      'english',
+      'hindi', 
+      'kannada',
+      'urudu',
+      'telgu',
+      'tamil',
+      'konkani',
+  ];
+  const textbookMeium = mediumbook.map((bookmedium) => ({
+    value: bookmedium,
+    label: bookmedium,
+  }));
   return (
     <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white " }}>
       <div className="textbook">
@@ -333,17 +350,26 @@ function AddBooks() {
                     onChange={(e) => setTextbookName(e.target.value)}
                   />
                 </div>
-                <div className="textbook_input_container">
+                <div className="textbook_input_container_select"  style={{width:'400px',border:'1px solid #526D82' , borderRadius:'4px',marginTop:'20px', marginBottom:'10px' }}>
                   <label htmlFor="Medium" style={{ fontWeight: "600" }}>
                     Medium
                   </label>
-                  <input
+                  <Select
                     type="text"
                     id="medium"
                     name="medium"
+                    // list=''
+                    options={textbookMeium}
                     value={medium}
                     style={{ textTransform: 'capitalize' }}
-                    onChange={(e) => setMedium(e.target.value)}
+                    onChange={handleMediumChange}
+                    styles={{
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        border: 'none', 
+                        boxShadow: state.isFocused ? 'none' : 'none', 
+                      }),
+                    }}
                   />
                 </div>
               </div>
