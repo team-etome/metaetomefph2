@@ -43,11 +43,11 @@ function BookdashBoard() {
     >
       <Navbar
         expand="lg"
-        className="bg-body-tertiary"
-        style={{ marginBottom: "20px" , marginTop:'10px', backgroundColor: "red ", borderRadius: "17px",}}
+        className="bg-body-tertiary book"
+        style={{ marginBottom: "20px" , marginTop:'10px',borderRadius: "17px",}}
       >
         <Container style={{}}>
-          <Navbar.Brand href="#home" style={{color:'#526D82', fontSize:'23px', fontWeight: 'bold'}}>Library</Navbar.Brand>
+          <Navbar.Brand href="#home" style={{color:'#526D82', fontSize:'23px',}}>Library</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto" >

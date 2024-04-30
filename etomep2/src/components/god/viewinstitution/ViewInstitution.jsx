@@ -1,6 +1,7 @@
 import React from "react";
 import "../viewinstitution/viewinstitution.css";
-import { IoIosArrowRoundBack } from "react-icons/io";
+// import { IoIosArrowRoundBack } from "react-icons/io";
+import { FaArrowLeft} from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
@@ -8,7 +9,7 @@ import { Link } from "react-router-dom";
 function ViewInstitution() {
   return (
     <div
-      style={{  height: "100vh", overflowY: "auto" }}
+      style={{  minheight: "100vh", overflowY: "auto" }}
     >
       <div
         className="container"
@@ -23,7 +24,8 @@ function ViewInstitution() {
         <nav className="navbar navbar-expand-lg navbar-light" >
           <div className="container-fluid" style={{backgroundColor:'#fff',}}>
             <Link to='/header' style={{color:'black'}}>
-            <IoIosArrowRoundBack style={{ height: "30px", width: "30px" }} />
+            {/* <IoIosArrowRoundBack style={{ height: "30px", width: "30px" }} /> */}
+            <FaArrowLeft   style={{ height:'30px', width:'20px' }} />
             </Link>
             <a
               className="navbar-brand"
@@ -239,3 +241,10 @@ function ViewInstitution() {
 }
 
 export default ViewInstitution;
+
+
+
+
+
+
+

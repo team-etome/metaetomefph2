@@ -4,7 +4,7 @@
   .card {
     transition: transform 0.5s;
   }
-  .book {
+  .customer {
     background-color:#DDE6ED !important;
   }
   .cust_pagination_custom .page-item .page-link {
