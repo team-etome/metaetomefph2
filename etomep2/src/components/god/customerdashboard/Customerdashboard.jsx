@@ -10,19 +10,21 @@ import { MdAddHomeWork } from "react-icons/md";
 function Customerdashboard() {
   const handleCardClick = () => {setShowModal(true);};
   // const [customers, setCustomers] = useState([]);
-
   const [institutionName] = useState("St Johns Residential HSS");
+  // const institutions =[
+  //   {name: 'St Johns Residential HSS', board: 'ICSE', id: '024234' },
+  // ];
   return (
     <div
       style={{
-        Height: "100vh",
+        minHeight: "100vh",
         overflowY: "auto",
       }}
     >
       <Container>
       <Navbar
           expand="lg"
-          className="bg-body-tertiary book"
+          className="bg-body-tertiary customer"
           style={{ marginBottom: "20px", marginTop:'20px', backgroundColor: "#fff", borderRadius: "17px",}}
         >
           <Container>
@@ -65,14 +67,14 @@ function Customerdashboard() {
                 </Card>
               </Col>
             </Row> */}
-          <Row xs={1} sm={1} md={2} lg={3}  >
-            {Array.from({ length: 5}).map((_, index) => (
+          <Row xs={1} sm={1} md={2} lg={3} xl={4} >
+            {Array.from({ length: 6}).map((_, index) => (
               <Col key={index} className="d-flex justify-content-center mb-4">
                 <Link to="/viewinstitution" style={{textDecoration:'none'}}>
                 <div onClick={handleCardClick}>
                   <Card
                     style={{
-                      width: "300px",
+                      width: "270px",
                       height:'170px',
                       // alignItems: "center",
                       border: "none",
@@ -84,8 +86,8 @@ function Customerdashboard() {
                     }}
                   >
                   <Card.Body style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", }}>
-                      <div style={{fontSize:'200px' }}>
-                        <Card.Title   title={institutionName}  style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{institutionName}</Card.Title>
+                      <div style={{ }}>
+                        <Card.Title   title={institutionName}  style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize:'20px' }}>{institutionName}</Card.Title>
                       </div>
                       <div style={{display:'flex', justifyContent: "space-between"}}> 
                         <Card.Text>ICSE</Card.Text>
@@ -99,7 +101,7 @@ function Customerdashboard() {
             ))}
           </Row>
         
-          <Pagination className="cust_pagination_custom" style={{position: "fixed", top: "610px",bottom:'500px', left: "50px",}}>
+          <Pagination className="cust_pagination_custom" style={{top: "630px",bottom:'100px', left: "50px",}}>
             <Pagination.Prev />
             <Pagination.Item>{1}</Pagination.Item>
             <Pagination.Item>{2}</Pagination.Item>
