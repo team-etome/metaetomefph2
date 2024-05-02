@@ -103,7 +103,7 @@ function AddBooks() {
     }
   };
   const handleMediumChange = (selectedOptions) => {
-    setBoard(selectedOptions);
+    setMedium(selectedOptions);
   };
 
   const handleVolumeChange = (e) => {
@@ -351,13 +351,13 @@ function AddBooks() {
                   />
                 </div>
                 <div className="textbook_input_container_select"  style={{width:'400px',border:'1px solid #526D82' , borderRadius:'4px',marginTop:'20px', marginBottom:'10px' }}>
-                  <label htmlFor="Medium" style={{ fontWeight: "600" }}>
+                  <label htmlFor="mediumbook" style={{ fontWeight: "600" }}>
                     Medium
                   </label>
                   <Select
                     type="text"
-                    id="medium"
-                    name="medium"
+                    id="mediumbook"
+                    name="mediumbook"
                     // list=''
                     options={textbookMeium}
                     value={medium}
@@ -452,7 +452,9 @@ function AddBooks() {
                     onChange={handleTotalChaptersChange}
                   />
                 </div>
+                <div style={{border:'1px solid black', width:'390px', marginLeft:'30px', }}>
                 {renderChapterInputs()}
+                </div>
               </div>
               <div className="textbook_col">
                 <div className="bottom_right_col">
