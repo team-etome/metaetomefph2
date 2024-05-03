@@ -1,18 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
 import {Container, Row, Nav, Navbar, Form,Card , Col, Pagination} from "react-bootstrap";
-import chemistryImage from "../../../assets/chemistry.png";
 import "../customerdashboard/customerdashboard.css";
 import { Link } from "react-router-dom";
 import { MdAddHomeWork } from "react-icons/md";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 
 function Customerdashboard() {
+
+  const APIURL = useSelector((state) => state.APIURL.url);
+
   const handleCardClick = () => {setShowModal(true);};
-  // const [customers, setCustomers] = useState([]);
-  const [institutionName] = useState("St Johns Residential HSS");
-  const [board] = useState("ICSEeeeeeeeeeeeeeeeeeeeeICSEeeeeeeeeeeeeeeeeeeeeICSEeeeeeeeeeeeeeeeeeeeeICSEeeeeeeeeeeeeeeeeeeee")
-  const [instid] = useState("1234567890123456789012345678901234567890123456789012345678901234567890")
+  
+  const [customers, setCustomers] = useState([]);
+
+  console.log(customers,"dddddddddddd")
+
+  useEffect(() => {
+    axios.get(`${APIURL}/api/addadmin`)
+   
+      .then((response) => {
+        setCustomers(response.data);
+      })
+      .catch((error) => console.error("Error fetching books:", error));
+  }, []);
+
+  // const [institutionName] = useState("St Johns Residential HSS");
+  // const [board] = useState("ICSEeeeeeeeeeeeeeeeeeeeeICSEeeeeeeeeeeeeeeeeeeeeICSEeeeeeeeeeeeeeeeeeeeeICSEeeeeeeeeeeeeeeeeeeee")
+  // const [instid] = useState("1234567890123456789012345678901234567890123456789012345678901234567890")
   // const institutions =[
   //   {name: 'St Johns Residential HSS', board: 'ICSE', id: '024234' },
   // ];
@@ -62,17 +79,22 @@ function Customerdashboard() {
         }}
       >
         <Container>
-        {/* <Row className="justify-content-center">
+            {customers.length === 0 ? (
+            <Row className="justify-content-center" style={{backgroundColor:'white', borderRadius:'15px'}}>
               <Col>
                 <Card className="text-center p-4" style={{backgroundColor:'transparent', border:'none', color:'#526D82'}}>
                   <h5>No data to be shown</h5>
                 </Card>
               </Col>
-            </Row> */}
+            </Row>
+          ) : (
           <Row xs={1} sm={1} md={2} lg={3} xl={4} >
-            {Array.from({ length: 6}).map((_, index) => (
+            {customers.map((customer, index) => (
               <Col key={index} className="d-flex justify-content-center mb-4">
-                <Link to="/viewinstitution" style={{textDecoration:'none'}}>
+                {/* <Link to={`/viewinstitution/${customer.id}`} style={{textDecoration:'none'}}> */}
+                <Link to={{ pathname: `/viewinstitution/${customer.id}`, state: { customer } }} style={{textDecoration:'none'}}>
+
+                {/* {`/viewinstitution/${customer.id}`} */}
                 <div onClick={handleCardClick}>
                   <Card
                     style={{
@@ -89,11 +111,11 @@ function Customerdashboard() {
                   >
                   <Card.Body style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", }}>
                       <div style={{ }}>
-                        <Card.Title   title={institutionName}  style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize:'20px' }}>{institutionName}</Card.Title>
+                        <Card.Title     style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize:'20px' }}>{customer.institute_name}</Card.Title>
                       </div>
                       <div style={{display:'flex', justifyContent: "space-between"}}> 
-                        <Card.Text title={board} style={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',maxWidth: "20%" }}>{board}</Card.Text>
-                        <Card.Text title={instid} style={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',maxWidth: "20%" }}>{instid}</Card.Text>
+                        <Card.Text  style={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',maxWidth: "20%" }}>{customer.eduational_body}</Card.Text>
+                        <Card.Text  style={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',maxWidth: "20%" }}>{customer.institute_code}</Card.Text>
                       </div>
                   </Card.Body>
                   </Card>
@@ -102,8 +124,8 @@ function Customerdashboard() {
               </Col>
             ))}
           </Row>
-        
-          <Pagination className="cust_pagination_custom" style={{top: "630px",bottom:'100px', left: "50px",}}>
+        )}
+          <Pagination className="cust_pagination_custom" style={{position: "fixed", top: "600px", left: "50px",}}>
             <Pagination.Prev />
             <Pagination.Item>{1}</Pagination.Item>
             <Pagination.Item>{2}</Pagination.Item>

@@ -12,14 +12,17 @@ import {
   Col,
   Pagination,
 } from "react-bootstrap";
-import chemistryImage from "../../../assets/chemistry.png";
 import "../textbookdashboard/bookdashboard.css";
 import axios from "axios";
 import { BiBookAdd } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import ViewTextbook from "../viewtextbook/ViewTextbook"; 
 
 function BookdashBoard() {
   const [books, setBooks] = useState([]);
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
 
   const APIURL = useSelector((state) => state.APIURL.url);
 
@@ -32,6 +35,11 @@ function BookdashBoard() {
       })
       .catch((error) => console.error("Error fetching books:", error));
   }, []);
+
+  const handleCardClick = (book) => {
+    setSelectedBook(book);
+    setShowModal(true);
+  };
 
   return (
     <div
@@ -92,7 +100,7 @@ function BookdashBoard() {
           {books.length === 0 ? (
             <Row className="justify-content-center">
               <Col>
-                <Card className="text-center p-4" style={{backgroundColor:'transparent', border:'none', color:'#526D82'}}>
+                <Card  className="text-center p-4" style={{backgroundColor:'transparent', border:'none', color:'#526D82'}}>
                   <h5>No data to be shown</h5>
                 </Card>
               </Col>
@@ -100,8 +108,10 @@ function BookdashBoard() {
           ) : (
           <Row xs={1} sm={2} md={3} lg={4} className="justify-content-center">
           {books.map((book, index) => (
-              <Col className="d-flex justify-content-center mb-4">
+              <Col key={index} className="d-flex justify-content-center mb-4">
+                {/* <Link to={{ pathname: `/ViewTextbook`, state: { book } }} style={{textDecoration:'none'}}> */}
                 <Card
+                
                   style={{
                     width: "200px",
                     alignItems: "center",
@@ -110,6 +120,7 @@ function BookdashBoard() {
                     marginBottom: "30px",
                     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                   }}
+                  onClick={() => handleCardClick(book)}
                 >
                   <Card.Img
                     variant="top"
@@ -123,6 +134,7 @@ function BookdashBoard() {
                     <Card.Text>{book.publisher_name}</Card.Text>
                   </Card.Body>
                 </Card>
+                {/* </Link> */}
               </Col>
              ))}
           </Row>
@@ -143,7 +155,10 @@ function BookdashBoard() {
               <BiBookAdd style={{ position: "fixed", top: "600px", right: "25px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)" }}/>
             </Link>
           </div>
-        
+          {showModal && selectedBook && (
+          <ViewTextbook show={showModal} handleClose={() => setShowModal(false)} book={selectedBook} />
+          
+        )}
       </Container>
     </div>
   );
