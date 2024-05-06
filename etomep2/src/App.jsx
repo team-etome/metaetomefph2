@@ -28,9 +28,9 @@ function App() {
   <Route path="/goddashboard" element={<GoddashboardPage/>}/>
   <Route path="/addcustomer" element={<AddCustomer/>}/>
   <Route path='/addbooks' element={<AddBooks/>}/>
-  <Route path='/viewinstitution' element={<ViewInstitution/>}/>
+  <Route path='/viewinstitution/:id' element={<ViewInstitution/>}/>
   <Route path='/textbookdashboard' element={<BookdashBoard/>}/>
-  <Route path='/viewtextbook' element={<ViewTextbook/>}/>
+  <Route path='/ViewTextbook' element={<ViewTextbook/>}/>
   <Route path="/header" element={<Header/>}/>
   <Route path="/customerdashboard" element={<Customerdashboard/>}/>
   

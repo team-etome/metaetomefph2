@@ -330,8 +330,9 @@ function AddCustomer() {
                                   alt="Uploaded Image"
                                   className="uploaded_image"
                                   style={{
-                                    maxWidth: "100%",
+                                    maxWidth: "250px",
                                     maxHeight: "200px",
+                                    marginLeft:'15px'
                                   }}
                                 />
                                 <button
