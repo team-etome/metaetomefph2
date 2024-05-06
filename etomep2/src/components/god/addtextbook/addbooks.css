@@ -79,8 +79,8 @@
   
   .textbook_input_container label {
     position: absolute;
-    top: 5px;
-    left: 30px;
+    top: 17px;
+    left: 50px;
     padding: 0 4px;
     background: #fff;
     color:#526D82;
@@ -117,7 +117,7 @@
   }
   .textbook_input_container_select label {
     position: absolute;
-    top: -10px;
+    top: -12px;
     left: 20px;
     padding: 0 4px;
     background: #fff;
