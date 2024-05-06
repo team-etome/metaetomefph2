@@ -397,7 +397,7 @@ function AddCustomer() {
                     border: "1px solid #526D82",
                     marginLeft: "15px",
                     borderRadius: "4px",
-                    marginTop: "20px",
+                    marginTop: "10px",
                     marginBottom: "10px",
                   }}
                 >
