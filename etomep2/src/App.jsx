@@ -24,7 +24,7 @@ function App() {
 
 
   {/* godside */}
-  <Route path="/godlogin" element={<GodloginPage/>}/>
+  <Route path="/" element={<GodloginPage/>}/>
   <Route path="/goddashboard" element={<GoddashboardPage/>}/>
   <Route path="/addcustomer" element={<AddCustomer/>}/>
   <Route path='/addbooks' element={<AddBooks/>}/>

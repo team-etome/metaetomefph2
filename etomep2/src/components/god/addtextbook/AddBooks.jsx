@@ -24,6 +24,8 @@ function AddBooks() {
 
   // console.log(classValue)
 
+  console.log(volume ,"aaaaaaaaaaaaaaaaaaaaaaa")
+
   const [loading, setLoading] = useState(false);
 
   const handlePublisherChange = (selectedOptions) => {
@@ -106,15 +108,7 @@ function AddBooks() {
     setMedium(selectedOptions);
   };
 
-  const handleVolumeChange = (e) => {
-    const value = parseInt(e.target.value);
-    if (!isNaN(value) && value > 0) {
-      setVolume(value);
-    } else {
-      setVolume(""); // Reset to empty string if the input is not a positive number
-    }
-  };
-
+ 
   const handleChapterInputChange = (index, fieldName, value) => {
     const updatedChapters = [...chapters];
     updatedChapters[index][fieldName] = value;
@@ -384,7 +378,7 @@ function AddBooks() {
                     name="volume"
                     value={volume}
                     style={{ textTransform: 'capitalize' }}
-                    onChange={handleVolumeChange}
+                    onChange={(e) => setVolume(e.target.value)}
                   />
                 </div>
                 <div className="textbook_input_container_select" style={{width:'400px',border:'1px solid #526D82' , borderRadius:'4px',marginTop:'20px', marginBottom:'10px' }}>
