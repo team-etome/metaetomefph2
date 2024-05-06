@@ -31,7 +31,7 @@ function AddBooks() {
   const handlePublisherChange = (selectedOptions) => {
     setPublisherName(selectedOptions);
   };
-
+console.log(medium,'kkkkklkkkklkkk')
   const publishers = [
     "MADHUBAN",
     "GOYAL",
@@ -568,8 +568,9 @@ function AddBooks() {
                                   alt="Uploaded Image"
                                   className="uploaded_image"
                                   style={{
-                                    maxWidth: "100%",
-                                    maxHeight: "200px",
+                                    maxWidth: "300px",
+                                    maxHeight: "100%",
+                                    marginLeft:'30px'
                                   }}
                                 />
                                 <button

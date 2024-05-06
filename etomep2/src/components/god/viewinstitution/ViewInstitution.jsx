@@ -1,17 +1,38 @@
-import React from "react";
+import React, {useEffect,useState} from "react";
 import "../viewinstitution/viewinstitution.css";
 // import { IoIosArrowRoundBack } from "react-icons/io";
 import { FaArrowLeft} from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 
 function ViewInstitution() {
+
+  const APIURL = useSelector((state) => state.APIURL.url);
+  
+  const [institution, setInstitution] = useState([]);
+
+  console.log(institution,"institutionnnnnnnnnnnnnnnnn")
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    axios.get(`${APIURL}/api/adminLogin/${id}`)
+      .then((response) => {
+        console.log(response.data); 
+        setInstitution(response.data);
+      })
+      .catch((error) => console.error("Error fetching institution:", error));
+  }, [APIURL, id]);
+
   return (
-    <div
-      style={{  minheight: "100vh", overflowY: "auto" }}
-    >
+    <div style={{  minheight: "100vh", overflowY: "auto" }} >
+      {institution.map((institution, index) => (
+
       <div
+      key={index}
         className="container"
         style={{
           backgroundColor: "#fff",
@@ -34,9 +55,10 @@ function ViewInstitution() {
                 fontWeight: "500",
                 marginRight: "auto",
                 marginLeft: "20px",
+                overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',maxWidth: "20%"
               }}
             >
-              Institution Name
+              {institution.institute_name}
             </a>
             <div
               className="collapse navbar-collapse"
@@ -91,9 +113,11 @@ function ViewInstitution() {
                     }}
                   >
                     <img
-                      src="https://dt19wmazj2dns.cloudfront.net/wp-content/uploads/2024/04/amrita-vishwa-vidyapeetham-university-logo-colored-version.svg"
+                      // src="https://dt19wmazj2dns.cloudfront.net/wp-content/uploads/2024/04/amrita-vishwa-vidyapeetham-university-logo-colored-version.svg"
+                      src={institution.logo}
                       className="col-md-6 float-md-end mb-3 ms-md-3"
                       alt="logo"
+                      style={{ maxHeight: "100%", maxWidth: "100%" }}
                     />
                   </div>
                 </div>
@@ -110,7 +134,7 @@ function ViewInstitution() {
                       type="text"
                       className="form-control"
                       id="institutionName"
-                      placeholder=""
+                      value={institution?.institute_name}
                       style={{ marginBottom: "50px", width: "100%" }}
                       readOnly
                     />
@@ -127,7 +151,7 @@ function ViewInstitution() {
                       type="text"
                       className="form-control"
                       id="educationBoard"
-                      placeholder=""
+                      value={institution.eduational_body}
                       style={{ marginBottom: "50px" }}
                       readOnly
                     />
@@ -147,7 +171,7 @@ function ViewInstitution() {
                     type="text"
                     className="form-control"
                     id="emailId"
-                    placeholder=""
+                    value={institution.email_id}
                     style={{ marginBottom: "35px" }}
                     readOnly
                   />
@@ -164,7 +188,7 @@ function ViewInstitution() {
                     type="text"
                     className="form-control"
                     id="address"
-                    placeholder=""
+                    value={institution.address}
                     style={{ marginTop: "0px" }}
                     readOnly
                   />
@@ -184,7 +208,7 @@ function ViewInstitution() {
                   type="text"
                   className="form-control"
                   id="institutionCode"
-                  placeholder=""
+                  value={institution.institute_code}
                   style={{ marginBottom: "50px" }}
                   readOnly
                 />
@@ -201,7 +225,7 @@ function ViewInstitution() {
                   type="text"
                   className="form-control"
                   id="phoneNo"
-                  placeholder=""
+                  value={institution.phn_number}
                   style={{ marginBottom: "50px" }}
                   readOnly
                 />
@@ -218,7 +242,7 @@ function ViewInstitution() {
                   type="text"
                   className="form-control"
                   id="databaseCode"
-                  placeholder=""
+                  value={institution.database_code}
                   style={{ marginBottom: "50px" }}
                   readOnly
                 />
@@ -235,7 +259,7 @@ function ViewInstitution() {
                   type="text"
                   className="form-control"
                   id="medium"
-                  placeholder=""
+                  value={institution.medium}
                   style={{ marginBottom: "30px" }}
                   readOnly
                 />
@@ -244,6 +268,8 @@ function ViewInstitution() {
           </div>
         </div>
       </div>
+      
+       ))}
     </div>
   );
 }
