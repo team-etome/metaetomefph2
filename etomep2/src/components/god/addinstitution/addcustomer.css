@@ -49,17 +49,17 @@
 
 /* ************************************************ */
  
-.input-container {
+.input_container {
   position: relative;
   padding: 15px;
 }
-.input-container_select {
+.input_container_select {
   position: relative;
   padding-top: 15px;
   /* margin-bottom: 35px;  */
   
 }
-.input-container input {
+.input_container input {
   padding: 8px 8px 8px 4px;
   border: 1px solid #526D82;
   border-radius: 4px;
@@ -70,7 +70,7 @@
   box-sizing: border-box;
   /* margin-bottom: 20px; */
 }
-.input-container_select Select {
+.input_container_select Select {
   padding: 8px 8px 8px 4px;
   border: none;
   border-radius: 4px;
@@ -81,9 +81,9 @@
   box-sizing: border-box;
   border-color: white; 
 }
-.input-container label {
+.input_container label {
   position: absolute;
-  top: 10px;
+  top: 5px;
   left: 30px;
   padding: 0 4px;
   background: #fff;
@@ -92,9 +92,9 @@
   transition: all 0.3s;
   pointer-events: none;
 }
-.input-container_select label {
+.input_container_select label {
   position: absolute;
-  top: -10px;
+  top: -12px;
   left: 20px;
   padding: 0 4px;
   background: #fff;
@@ -103,28 +103,29 @@
   transition: all 0.3s;
   pointer-events: none;
 }
-.input-container input:focus + label,
-.input-container input:not(:placeholder-shown) + label {
+.input_container input:focus + label,
+.input_container input:not(:placeholder-shown) + label {
   top: -10px;
   left: 4px;
   font-size: 12px;
   color: #333;
 }
-.input-container_select Select:focus + label,
-.input-container_select Select:not(:placeholder-shown) + label {
+.input_container_select Select:focus + label,
+.input_container_select Select:not(:placeholder-shown) + label {
   top: -10px;
   left: 4px;
   font-size: 12px;
   color: #333;
 }
 
-.input-container .eye_icon {
+/* .input-container.eye_icon {
   position: absolute;
   top: 50%;
-  right: 50px; 
+  right: 10px; 
   transform: translateY(-50%);
   cursor: pointer;
-}
+} */
+
 
 .form-container {
   width: 100%;
@@ -204,6 +205,18 @@
 .upload-label:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
+.input_container span {
+  position: absolute;
+  top: 50%;
+  right: 10px; 
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.input_container span svg {
+  color: #9CA3AF;
+  width: 1rem;
+  height: 1rem;
+}
 /* ************************************************ */
 
 @media (max-width: 500px) {
@@ -225,8 +238,8 @@
     margin-top: 0px;
     margin-bottom: 0px;
   }
-  .input-container .eye_icon {
-    right: 20px;
+  .input_container span {
+    right: 200px;
   }
 
 }
@@ -249,10 +262,27 @@
   .form{
     width: 500px;
   }
-  .input-container .eye_icon {
-    right: -150px;
+  .input_container span {
+    right: -100px;
+  }
+
+}
+@media (min-width: 1600px) and (max-width: 3000px) {
+  .input_container span {
+    right: 260px; /* Adjusted position to be inside the field */
   }
 }
+
+@media (min-width: 1201px) and (max-width: 1599px) {
+  .input_container span {
+    right: 170px; /* Adjusted position to be inside the field */
+  }
+
+}
+
+
+
+
 
 
 
