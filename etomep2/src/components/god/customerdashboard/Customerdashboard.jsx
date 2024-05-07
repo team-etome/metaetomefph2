@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
-import {Container, Row, Nav, Navbar, Form,Card , Col, Pagination} from "react-bootstrap";
+import {Container, Row, Nav, Navbar, Form,Card , Col, Pagination, Button} from "react-bootstrap";
 import "../customerdashboard/customerdashboard.css";
 import { Link } from "react-router-dom";
 import { MdAddHomeWork } from "react-icons/md";
@@ -15,6 +15,15 @@ function Customerdashboard() {
   const handleCardClick = () => {setShowModal(true);};
   
   const [customers, setCustomers] = useState([]);
+  const [showOptions, setShowOptions] = useState(false);
+
+  const handleAddHomeWorkClick = () => {
+    setShowOptions(!showOptions);
+  };
+
+  const handleOptionClick = (option) => {
+    console.log("Selected option:", option);
+  };
 
   console.log(customers,"dddddddddddd")
 
@@ -134,9 +143,37 @@ function Customerdashboard() {
             <Pagination.Next />
           </Pagination>
           <div >
+            {/* <Link to='/addcustomer'> */}
+              <MdAddHomeWork style={{ position: "fixed", top: "600px", right: "35px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)" , cursor: "pointer"}} onClick={handleAddHomeWorkClick}/>
+              {showOptions && (
+          <div
+            style={{
+              position: "fixed",
+              top: "500px",
+              right: "25px",
+              borderRadius: "5px",
+              padding: "10px",
+              zIndex: "999", // Increase z-index to make it appear above other elements
+            }}
+          >
+            <div>
             <Link to='/addcustomer'>
-              <MdAddHomeWork style={{ position: "fixed", top: "600px", right: "35px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)" }}/>
+            <Button onClick={() => handleOptionClick("College")} style={{marginBottom: "10px",backgroundColor:'white', border:'none' , color:'#526D82', width:'100px'}}>College</Button>
             </Link>
+            </div>
+            <div>
+            <Link to='/addcustomer'>
+            <Button
+                onClick={() => handleOptionClick("School")}
+                style={{  backgroundColor:'white', border:'none' , color:'#526D82', width:'100px'}}
+              >
+                School
+              </Button>
+            </Link>
+            </div>
+          </div>
+        )}
+            {/* </Link> */}
           </div>
         </Container>
       </Container> 
