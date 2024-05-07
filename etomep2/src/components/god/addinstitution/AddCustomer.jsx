@@ -163,10 +163,10 @@ function AddCustomer() {
       Swal.fire({
         icon: "success",
         title: "Success!",
-        text: "Textbook created successfully!",
+        text: "Institution created successfully!",
       });
     } catch (error) {
-      console.error("Error creating textbook:", error);
+      console.error("Error creating institution:", error);
       Swal.fire({
         icon: "error",
         title: "Oops...",

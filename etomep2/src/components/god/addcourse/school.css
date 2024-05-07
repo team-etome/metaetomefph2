@@ -1,0 +1,85 @@
+.school_input {
+    position: relative;
+    padding: 15px;
+  }
+  .school_input_select {
+    position: relative;
+    padding-top: 15px;
+    /* margin-bottom: 35px;  */
+    
+  }
+  .school_input input {
+    padding: 8px 8px 8px 4px;
+    border: 1px solid #526D82;
+    border-radius: 4px;
+    outline: none;
+    background: #fff;
+    width: 480px; 
+    height: 50px;
+    box-sizing: border-box;
+    /* margin-bottom: 20px; */
+  }
+  .school_input_select Select {
+    padding: 8px 8px 8px 4px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    background: #fff; 
+    /* width: 100px; */
+    /* height: 10px; */
+    box-sizing: border-box;
+    border-color: white; 
+  }
+  .school_input label {
+    position: absolute;
+    top: 5px;
+    left: 30px;
+    padding: 0 4px;
+    background: #fff;
+    color:#526D82;
+    font-size: 16px;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  .school_input_select label {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    padding: 0 4px;
+    background: #fff;
+    color:#526D82;
+    font-size: 16px;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  .school_input input:focus + label,
+  .school_input input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 4px;
+    font-size: 12px;
+    color: #333;
+  }
+  .school_input_select Select:focus + label,
+  .school_input_select Select:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 4px;
+    font-size: 12px;
+    color: #333;
+  }
+  .school_button{
+    padding: 0 0 0 0;
+    margin-top: 60px;
+    margin-left: 15px;
+    /* border: 2px solid black; */
+    margin-bottom: 30px;
+  }
+  .school_button button {
+    background-color: #526D82; 
+    color: #DDE6ED;
+    width: 400px; 
+    height: 50px;
+    font-size: large;
+    border-radius: 4px;
+    border: none;
+  }
+  
