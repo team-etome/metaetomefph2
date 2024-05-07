@@ -6,6 +6,7 @@ import { IoAddSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import BookdashBoard from "../textbookdashboard/BookdashBoard";
 import Customerdashboard from "../customerdashboard/Customerdashboard";
+import Coursedashboard from "../coursedashboard/Coursedashboard";
 import "../header/header.css";
 
 function Header() {
@@ -25,15 +26,18 @@ function Header() {
             >
               <Nav.Item>
                 <Nav.Link eventKey="Institution">Institution</Nav.Link>
-                
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey="Textbook">Textbook</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="Course">Course</Nav.Link>
               </Nav.Item>
             </Nav>
             <div className="dashboard-container">
             {activeTab === "Institution" && <Customerdashboard />}
             {activeTab === "Textbook" && <BookdashBoard />}
+            {activeTab === "Course" && <Coursedashboard />}
             </div>
           </Col>
         </Row>
