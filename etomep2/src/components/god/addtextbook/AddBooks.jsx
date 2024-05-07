@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import Select from "react-select";
 
-
 function AddBooks() {
   const [selectedTab, setSelectedTab] = useState("pdf");
   const [totalChaptersInput, setTotalChaptersInput] = useState("");
@@ -17,6 +16,7 @@ function AddBooks() {
   const [classValue, setClassValue] = useState("");
   const [textbookName, setTextbookName] = useState("");
   const [medium, setMedium] = useState("");
+  const [m, setM] = useState("");
   const [volume, setVolume] = useState("");
   const [publisherName, setPublisherName] = useState("");
   const [imageFile, setImageFile] = useState(null);
@@ -24,14 +24,16 @@ function AddBooks() {
 
   // console.log(classValue)
 
-  console.log(volume ,"aaaaaaaaaaaaaaaaaaaaaaa")
+  console.log(publisherName, "publisher name");
 
   const [loading, setLoading] = useState(false);
 
   const handlePublisherChange = (selectedOptions) => {
     setPublisherName(selectedOptions);
   };
-console.log(medium,'kkkkklkkkklkkk')
+
+  console.log(medium, "medium");
+
   const publishers = [
     "MADHUBAN",
     "GOYAL",
@@ -92,6 +94,8 @@ console.log(medium,'kkkkklkkkklkkk')
 
   const APIURL = useSelector((state) => state.APIURL.url);
 
+  console.log(APIURL, "aaaaaaaaaaaaaaaaaaaaa");
+
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
     console.log("Selected Tab: ", tab);
@@ -105,10 +109,10 @@ console.log(medium,'kkkkklkkkklkkk')
     }
   };
   const handleMediumChange = (selectedOptions) => {
+    setM(selectedOptions.value)
     setMedium(selectedOptions);
   };
 
- 
   const handleChapterInputChange = (index, fieldName, value) => {
     const updatedChapters = [...chapters];
     updatedChapters[index][fieldName] = value;
@@ -142,7 +146,7 @@ console.log(medium,'kkkkklkkkklkkk')
                 border: "none",
                 borderBottom: "1px solid black",
                 width: "180px",
-                outline: "none"
+                outline: "none",
               }}
               value={chapter.name}
               onChange={(e) =>
@@ -160,7 +164,7 @@ console.log(medium,'kkkkklkkkklkkk')
                 border: "none",
                 borderBottom: "1px solid black",
                 width: "180px",
-                outline:'none',
+                outline: "none",
               }}
               value={chapter.pageNo}
               onChange={(e) =>
@@ -195,7 +199,6 @@ console.log(medium,'kkkkklkkkklkkk')
     const file = e.target.files[0];
     setPdfFile(file);
   };
-  
 
   const handleSubmit = async () => {
     // Check if all required fields are filled
@@ -235,11 +238,18 @@ console.log(medium,'kkkkklkkkklkkk')
       const formData = new FormData();
       formData.append("class_name", classValue);
       formData.append("text_name", textbookName);
-      formData.append("medium", medium);
       formData.append("volume", volume);
-      formData.append("publisher_name", publisherName);
       formData.append("textbook_pdf", pdfFile);
       formData.append("textbook_front_page", imageFile);
+      formData.append("medium", m);
+
+      // medium.forEach((mediumValue, index) => {
+      //   formData.append(`medium[${index}]`, mediumValue.value);
+      // });
+
+      publisherName.forEach((publisherValue, index) => {
+        formData.append(`publisher_name[${index}]`, publisherValue.value);
+      });
 
       chapters.forEach((chapter, index) => {
         formData.append("chapter_name", chapter.name);
@@ -256,7 +266,6 @@ console.log(medium,'kkkkklkkkklkkk')
         }
       );
 
-      console.log(response.data);
       Swal.fire({
         icon: "success",
         title: "Success!",
@@ -274,19 +283,21 @@ console.log(medium,'kkkkklkkkklkkk')
     }
   };
   const mediumbook = [
-      'Malayalam',
-      'english',
-      'hindi', 
-      'kannada',
-      'urudu',
-      'telgu',
-      'tamil',
-      'konkani',
+    "Malayalam",
+    "english",
+    "hindi",
+    "kannada",
+    "urudu",
+    "telgu",
+    "tamil",
+    "konkani",
   ];
+
   const textbookMeium = mediumbook.map((bookmedium) => ({
     value: bookmedium,
     label: bookmedium,
   }));
+
   return (
     <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white " }}>
       <div className="textbook">
@@ -300,9 +311,9 @@ console.log(medium,'kkkkklkkkklkkk')
           }}
         >
           <div style={{ marginLeft: "20px" }}>
-            <Link to='/header' style={{color:'black'}}>
-            <FaArrowLeft style={{ height: "20px", width: "30px" }} />
-            {/* <IoIosArrowRoundBack style={{ height: "30px", width: "30px" }} /> */}
+            <Link to="/header" style={{ color: "black" }}>
+              <FaArrowLeft style={{ height: "20px", width: "30px" }} />
+              {/* <IoIosArrowRoundBack style={{ height: "30px", width: "30px" }} /> */}
             </Link>
           </div>
           <div style={{ marginLeft: "30px", color: "#526D82" }}>
@@ -317,7 +328,10 @@ console.log(medium,'kkkkklkkkklkkk')
         >
           <div>
             <div className="textbook_row">
-              <div className="textbook_col" style={{textTransform: 'capitalize'}}>
+              <div
+                className="textbook_col"
+                style={{ textTransform: "capitalize" }}
+              >
                 <div className="textbook_input_container">
                   <label htmlFor="class" style={{ fontWeight: "600" }}>
                     Class
@@ -340,11 +354,20 @@ console.log(medium,'kkkkklkkkklkkk')
                     id="textbookName"
                     name="textbookName"
                     value={textbookName}
-                    style={{ textTransform: 'capitalize' }}
+                    style={{ textTransform: "capitalize" }}
                     onChange={(e) => setTextbookName(e.target.value)}
                   />
                 </div>
-                <div className="textbook_input_container_select"  style={{width:'400px',border:'1px solid #526D82' , borderRadius:'4px',marginTop:'20px', marginBottom:'10px' }}>
+                <div
+                  className="textbook_input_container_select"
+                  style={{
+                    width: "400px",
+                    border: "1px solid #526D82",
+                    borderRadius: "4px",
+                    marginTop: "20px",
+                    marginBottom: "10px",
+                  }}
+                >
                   <label htmlFor="mediumbook" style={{ fontWeight: "600" }}>
                     Medium
                   </label>
@@ -355,13 +378,13 @@ console.log(medium,'kkkkklkkkklkkk')
                     // list=''
                     options={textbookMeium}
                     value={medium}
-                    style={{ textTransform: 'capitalize' }}
+                    style={{ textTransform: "capitalize" }}
                     onChange={handleMediumChange}
                     styles={{
                       control: (baseStyles, state) => ({
                         ...baseStyles,
-                        border: 'none', 
-                        boxShadow: state.isFocused ? 'none' : 'none', 
+                        border: "none",
+                        boxShadow: state.isFocused ? "none" : "none",
                       }),
                     }}
                   />
@@ -377,41 +400,37 @@ console.log(medium,'kkkkklkkkklkkk')
                     id="volume"
                     name="volume"
                     value={volume}
-                    style={{ textTransform: 'capitalize' }}
+                    style={{ textTransform: "capitalize" }}
                     onChange={(e) => setVolume(e.target.value)}
                   />
                 </div>
-                <div className="textbook_input_container_select" style={{width:'400px',border:'1px solid #526D82' , borderRadius:'4px',marginTop:'20px', marginBottom:'10px' }}>
-                  <label htmlFor="publisherName" style={{ fontWeight: "600",  }}>
+                <div
+                  className="textbook_input_container_select"
+                  style={{
+                    width: "400px",
+                    border: "1px solid #526D82",
+                    borderRadius: "4px",
+                    marginTop: "20px",
+                    marginBottom: "10px",
+                  }}
+                >
+                  <label htmlFor="publisherName" style={{ fontWeight: "600" }}>
                     Publisher Name
                   </label>
-                  {/* <input
-                    type="text"
-                    id="publisherName"
-                    name="publisherName"
-                    list="publishers-list"
-                    value={publisherName}
-                    style={{ textTransform: 'capitalize' }}
-                    onChange={(e) => setPublisherName(e.target.value)}
-                  />
-                  <datalist id="publishers-list">
-                    {publishers.map((publisher, index) => (
-                      <option key={index} value={publisher} />
-                    ))}
-                  </datalist> */}
+                
                   <Select
                     id="publisherName"
                     name="publisherName"
                     options={publisherOptions}
-                    placeholder=''
+                    placeholder=""
                     isMulti
                     value={publisherName}
                     onChange={handlePublisherChange}
                     styles={{
                       control: (baseStyles, state) => ({
                         ...baseStyles,
-                        border: 'none', 
-                        boxShadow: state.isFocused ? 'none' : 'none', 
+                        border: "none",
+                        boxShadow: state.isFocused ? "none" : "none",
                       }),
                     }}
                   />
@@ -446,8 +465,14 @@ console.log(medium,'kkkkklkkkklkkk')
                     onChange={handleTotalChaptersChange}
                   />
                 </div>
-                <div style={{border:'1px solid black', width:'390px', marginLeft:'30px', }}>
-                {renderChapterInputs()}
+                <div
+                  style={{
+                    border: "1px solid black",
+                    width: "390px",
+                    marginLeft: "30px",
+                  }}
+                >
+                  {renderChapterInputs()}
                 </div>
               </div>
               <div className="textbook_col">
@@ -568,9 +593,9 @@ console.log(medium,'kkkkklkkkklkkk')
                                   alt="Uploaded Image"
                                   className="uploaded_image"
                                   style={{
-                                    maxWidth: "300px",
-                                    maxHeight: "100%",
-                                    marginLeft:'30px'
+                                    width: "100%",
+                                    height: "200px",
+                                    marginLeft: "30px",
                                   }}
                                 />
                                 <button
