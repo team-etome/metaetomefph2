@@ -25,7 +25,7 @@ function School() {
       }));
   return (
     <div style={{ backgroundColor: "#fff", border: "2px solid white ", borderRadius:'20px', marginTop:'30px',  }}>
-    <Container style={{marginLeft:'20px', marginRight:'40px'}}>
+    <Container style={{}}>
         <Row>
         <div
           style={{
