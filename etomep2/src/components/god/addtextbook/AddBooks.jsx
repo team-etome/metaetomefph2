@@ -16,9 +16,10 @@ function AddBooks() {
   const [classValue, setClassValue] = useState("");
   const [textbookName, setTextbookName] = useState("");
   const [medium, setMedium] = useState("");
-  const [m, setM] = useState("");
+  const [textMedium, setTextMedium] = useState("");
   const [volume, setVolume] = useState("");
   const [publisherName, setPublisherName] = useState("");
+  const [bookPublisher, setBookPublisher] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
 
@@ -29,6 +30,7 @@ function AddBooks() {
   const [loading, setLoading] = useState(false);
 
   const handlePublisherChange = (selectedOptions) => {
+    setBookPublisher(selectedOptions.value)
     setPublisherName(selectedOptions);
   };
 
@@ -108,8 +110,9 @@ function AddBooks() {
       setClassValue(""); // Reset to empty string if the input is not a positive number
     }
   };
+
   const handleMediumChange = (selectedOptions) => {
-    setM(selectedOptions.value)
+    setTextMedium(selectedOptions.value)
     setMedium(selectedOptions);
   };
 
@@ -241,15 +244,17 @@ function AddBooks() {
       formData.append("volume", volume);
       formData.append("textbook_pdf", pdfFile);
       formData.append("textbook_front_page", imageFile);
-      formData.append("medium", m);
+      formData.append("medium", textMedium);
+      formData.append("publisher_name", bookPublisher);
+
 
       // medium.forEach((mediumValue, index) => {
       //   formData.append(`medium[${index}]`, mediumValue.value);
       // });
 
-      publisherName.forEach((publisherValue, index) => {
-        formData.append(`publisher_name[${index}]`, publisherValue.value);
-      });
+      // publisherName.forEach((publisherValue, index) => {
+      //   formData.append(`publisher_name[${index}]`, publisherValue.value);
+      // });
 
       chapters.forEach((chapter, index) => {
         formData.append("chapter_name", chapter.name);
@@ -423,7 +428,7 @@ function AddBooks() {
                     name="publisherName"
                     options={publisherOptions}
                     placeholder=""
-                    isMulti
+                    // isMulti
                     value={publisherName}
                     onChange={handlePublisherChange}
                     styles={{

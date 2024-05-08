@@ -18,6 +18,7 @@ function AddCustomer() {
   const [institutionCode, setInstitutionCode] = useState("");
   const [email, setEmail] = useState("");
   const [board, setBoard] = useState("");
+  const [custboard, setCustBoard] = useState("");
   const [databaseCode, setDatabaseCode] = useState("");
   const [address, setAddress] = useState("");
   const [region, setRegion] = useState("");
@@ -60,6 +61,7 @@ function AddCustomer() {
     setPublisherName(selectedOptions);
   };
   const handleEducationBoard = (selectedOptions) => {
+    setCustBoard(selectedOptions.value)
     setBoard(selectedOptions);
   };
 
@@ -143,7 +145,7 @@ function AddCustomer() {
       formData.append("medium", medium);
       formData.append("email_id", email);
       formData.append("publisher_name", JSON.stringify(publisherValues));
-      formData.append("eduational_body", board);
+      formData.append("eduational_body", custboard);
       formData.append("logo", imageFile);
       formData.append("database_code", databaseCode);
       formData.append("address", address);
