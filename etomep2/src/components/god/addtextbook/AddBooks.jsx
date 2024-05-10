@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../addtextbook/addbooks.css";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Nav } from "react-bootstrap";
-import { Link , useNavigate} from "react-router-dom";
+import { Link , useNavigate,useParams} from "react-router-dom";
 import { FaArrowLeft, FaSpinner, FaRedo } from "react-icons/fa";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -21,12 +21,18 @@ function AddBooks() {
   const [publisherName, setPublisherName] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
+  const [data, setData] = useState("");
+
+
+  console.log(classValue,"qqqqqqqq")
 
   // console.log(classValue)
   
   const navigate = useNavigate()
 
-  console.log(publisherName, "publisher name");
+  console.log(data, "data");
+
+  const { id } = useParams();
 
   const [loading, setLoading] = useState(false);
 
@@ -111,7 +117,7 @@ function AddBooks() {
     }
   };
   const handleMediumChange = (selectedOptions) => {
-    setM(selectedOptions.value)
+    setM(selectedOptions.value);
     setMedium(selectedOptions);
   };
 
@@ -303,366 +309,428 @@ function AddBooks() {
     label: bookmedium,
   }));
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${APIURL}/api/detail-textbook/${id}`);
+        // Use the id parameter in the URL
+
+        console.log(response.data,"responseeeeeeeeee")
+        setData(response.data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.error("Error fetching textbook data:", error);
+      }
+    };
+
+    fetchData(); // Call the fetchData function when the component mounts
+  }, [id]);
+  console.log(data.class_name); 
+  console.log(data.medium); 
+  console.log(data.text_name); 
+  console.log(data.textbook_image);
+  console.log(data.textbook_pdf); 
+  console.log(data.volume); 
+  console.log(data.publisher_name);
+
+
+  useEffect(() => {
+    // Update state with fetched data if available
+    if (data && data.chapter_info) {
+      setClassValue(data.class_name[0] || "");
+      setTextbookName(data.text_name || "");
+      setVolume(data.volume || "");
+      setMedium({ value: data.medium, label: data.medium } || "");
+      setPublisherName(data.publisher_name || []);
+      setChapters(
+        data.chapter_info.map((chapter) => ({
+          name: chapter.name || "",
+          pageNo: chapter.page_no || "", 
+        })) || []
+      );
+    }
+  }, [data]);
+
   return (
     <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white " }}>
-      <div className="textbook">
-        <div
-          style={{
-            display: "flex",
-            paddingTop: "33px",
-            paddingBottom: "16px",
-            borderBottom: "1px solid #DDE6ED",
-            marginBottom: "20px",
-          }}
-        >
-          <div style={{ marginLeft: "20px" }}>
-            <Link to="/header" style={{ color: "black" }}>
-              <FaArrowLeft style={{ height: "20px", width: "30px" }} />
-              {/* <IoIosArrowRoundBack style={{ height: "30px", width: "30px" }} /> */}
-            </Link>
-          </div>
-          <div style={{ marginLeft: "30px", color: "#526D82" }}>
-            <h3>Add Textbook</h3>
-          </div>
-          <div style={{ color: "2px solid black" }}></div>
-        </div>
-
-        <div
-          className="textbook_container"
-          style={{ paddingLeft: "50px", paddingRight: "50px" }}
-        >
-          <div>
-            <div className="textbook_row">
-              <div
-                className="textbook_col"
-                style={{ textTransform: "capitalize" }}
-              >
-                <div className="textbook_input_container">
-                  <label htmlFor="class" style={{ fontWeight: "600" }}>
-                    Class
-                  </label>
-                  <input
-                    type="text"
-                    id="class"
-                    name="class"
-                    value={classValue}
-                    style={{}}
-                    onChange={handleClassValueChange}
-                  />
-                </div>
-                <div className="textbook_input_container">
-                  <label htmlFor="textbookName" style={{ fontWeight: "600" }}>
-                    Textbook Name
-                  </label>
-                  <input
-                    type="text"
-                    id="textbookName"
-                    name="textbookName"
-                    value={textbookName}
-                    style={{ textTransform: "capitalize" }}
-                    onChange={(e) => setTextbookName(e.target.value)}
-                  />
-                </div>
-                <div
-                  className="textbook_input_container_select"
-                  style={{
-                    width: "400px",
-                    border: "1px solid #526D82",
-                    borderRadius: "4px",
-                    marginTop: "20px",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <label htmlFor="mediumbook" style={{ fontWeight: "600" }}>
-                    Medium
-                  </label>
-                  <Select
-                    type="text"
-                    id="mediumbook"
-                    name="mediumbook"
-                    // list=''
-                    options={textbookMeium}
-                    value={medium}
-                    style={{ textTransform: "capitalize" }}
-                    onChange={handleMediumChange}
-                    styles={{
-                      control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        border: "none",
-                        boxShadow: state.isFocused ? "none" : "none",
-                      }),
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="textbook_col">
-                <div className="textbook_input_container">
-                  <label htmlFor="volume" style={{ fontWeight: "600" }}>
-                    Volume
-                  </label>
-                  <input
-                    type="text"
-                    id="volume"
-                    name="volume"
-                    value={volume}
-                    style={{ textTransform: "capitalize" }}
-                    onChange={(e) => setVolume(e.target.value)}
-                  />
-                </div>
-                <div
-                  className="textbook_input_container_select"
-                  style={{
-                    width: "400px",
-                    border: "1px solid #526D82",
-                    borderRadius: "4px",
-                    marginTop: "20px",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <label htmlFor="publisherName" style={{ fontWeight: "600" }}>
-                    Publisher Name
-                  </label>
-                
-                  <Select
-                    id="publisherName"
-                    name="publisherName"
-                    options={publisherOptions}
-                    placeholder=""
-                    isMulti
-                    value={publisherName}
-                    onChange={handlePublisherChange}
-                    styles={{
-                      control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        border: "none",
-                        boxShadow: state.isFocused ? "none" : "none",
-                      }),
-                    }}
-                  />
-                </div>
-              </div>
+      {data && (
+        <div className="textbook">
+         
+          <div
+            style={{
+              display: "flex",
+              paddingTop: "33px",
+              paddingBottom: "16px",
+              borderBottom: "1px solid #DDE6ED",
+              marginBottom: "20px",
+            }}
+          >
+            <div style={{ marginLeft: "20px" }}>
+              <Link to="/header" style={{ color: "black" }}>
+                <FaArrowLeft style={{ height: "20px", width: "30px" }} />
+                {/* <IoIosArrowRoundBack style={{ height: "30px", width: "30px" }} /> */}
+              </Link>
             </div>
+            <div style={{ marginLeft: "30px", color: "#526D82" }}>
+              <h3>Add Textbook</h3>
+            </div>
+            <div style={{ color: "2px solid black" }}></div>
+          </div>
 
-            <div className="textbook_row">
-              <div className="textbook_col">
-                <div>
-                  <label
-                    htmlFor="indexAdding"
-                    style={{
-                      marginLeft: "20px",
-                      fontSize: "25px",
-                      marginBottom: "20px",
-                      marginTop: "20px",
-                    }}
-                  >
-                    Index Adding
-                  </label>
-                </div>
-                <div className="textbook_input_container">
-                  <label htmlFor="totalChapters" style={{ fontWeight: "600" }}>
-                    Total no of Chapters
-                  </label>
-                  <input
-                    type="number"
-                    id="totalChapters"
-                    name="totalChapters"
-                    value={totalChaptersInput}
-                    onChange={handleTotalChaptersChange}
-                  />
-                </div>
+          <div
+            className="textbook_container"
+            style={{ paddingLeft: "50px", paddingRight: "50px" }}
+          >
+            <div>
+              <div className="textbook_row">
                 <div
-                  style={{
-                    border: "1px solid black",
-                    width: "390px",
-                    marginLeft: "30px",
-                  }}
+                  className="textbook_col"
+                  style={{ textTransform: "capitalize" }}
                 >
-                  {renderChapterInputs()}
-                </div>
-              </div>
-              <div className="textbook_col">
-                <div className="bottom_right_col">
-                  <div style={{ marginBottom: "100px", marginTop: "0px" }}>
-                    <label
-                      htmlFor="mediaLibrary"
-                      style={{
-                        marginLeft: "20px",
-                        marginBottom: "10px",
-                        fontSize: "25px",
-                        padding: "0px",
-                      }}
-                    >
-                      Media Library
+                  <div className="textbook_input_container">
+                    <label htmlFor="class" style={{ fontWeight: "600" }}>
+                      Class
                     </label>
+                    <input
+                      type="text"
+                      id="class"
+                      name="class"
+                      value={classValue}
+                      style={{}}
+                      onChange={handleClassValueChange}
+                    />
                   </div>
-                  <div>
-                    <div style={{ marginLeft: "10px", marginTop: "-10px" }}>
-                      <div style={{ display: "flex" }}>
-                        <div
-                          className="textbutton-container"
-                          style={{ marginTop: "-80px" }}
-                        >
-                          <button
-                            style={{
-                              marginTop: "-80px",
-                              ...(selectedTab === "pdf"
-                                ? { border: "4px solid black" }
-                                : {}),
-                            }}
-                            onClick={() => handleTabChange("pdf")}
-                            className={selectedTab === "pdf" ? "active" : ""}
-                          >
-                            Textbook Pdf
-                          </button>
-                        </div>
-                        <div
-                          className="textbutton-container"
-                          style={{ marginTop: "-80px" }}
-                        >
-                          <button
-                            style={{
-                              marginTop: "-80px",
-                              ...(selectedTab === "frontPage"
-                                ? { border: "4px solid black" }
-                                : {}),
-                            }}
-                            onClick={() => handleTabChange("frontPage")}
-                            className={
-                              selectedTab === "frontPage" ? "active" : ""
-                            }
-                          >
-                            Textbook Front Page
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    {selectedTab === "pdf" && (
-                      <div style={{ marginLeft: "10px", marginTop: "-50px" }}>
-                        <label htmlFor="pdf" style={{}}></label>
-                        <div className="textbook_image_upload_container">
-                          <div className="textbook_upload_placeholder">
-                            {pdfFile ? (
-                              <>
-                                <embed
-                                  src={URL.createObjectURL(pdfFile)}
-                                  type="application/pdf"
-                                  width="100%"
-                                  height="200px"
-                                />
-                                <button
-                                  onClick={clearPdfFile}
-                                  style={{
-                                    border: "none",
-                                    background: "none",
-                                    cursor: "pointer",
-                                  }}
-                                >
-                                  <FaRedo
-                                    style={{ color: "blue", fontSize: "20px" }}
-                                    title="Change PDF"
-                                  />
-                                </button>
-                              </>
-                            ) : (
-                              <>
-                                <label
-                                  htmlFor="pdf-upload"
-                                  className="textbook_upload_label"
-                                >
-                                  Upload PDF
-                                </label>
-                                <input
-                                  id="pdf-upload"
-                                  type="file"
-                                  accept=".pdf"
-                                  className="textbook_upload_input"
-                                  onChange={handlePdfUpload}
-                                />
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {selectedTab === "frontPage" && (
-                      <div style={{ marginLeft: "10px", marginTop: "-50px" }}>
-                        <label htmlFor="photo" style={{}}></label>
-                        <div className="textbook_image_upload_container">
-                          <div className="textbook_upload_placeholder">
-                            {imageFile ? (
-                              <>
-                                <img
-                                  src={URL.createObjectURL(imageFile)}
-                                  alt="Uploaded Image"
-                                  className="uploaded_image"
-                                  style={{
-                                    width: "100%",
-                                    height: "200px",
-                                    marginLeft: "30px",
-                                  }}
-                                />
-                                <button
-                                  onClick={clearImageFile}
-                                  style={{
-                                    border: "none",
-                                    background: "none",
-                                    cursor: "pointer",
-                                  }}
-                                >
-                                  <FaRedo
-                                    style={{ color: "blue", fontSize: "20px" }}
-                                    title="Change Image"
-                                  />
-                                </button>
-                              </>
-                            ) : (
-                              <>
-                                <label
-                                  htmlFor="image-upload"
-                                  className="textbook_upload_label"
-                                >
-                                  Upload Image
-                                </label>
-                                <input
-                                  id="image-upload"
-                                  type="file"
-                                  accept="image/*"
-                                  className="textbook_upload_input"
-                                  onChange={handleImageUpload}
-                                />
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                  <div className="textbook_input_container">
+                    <label htmlFor="textbookName" style={{ fontWeight: "600" }}>
+                      Textbook Name
+                    </label>
+                    <input
+                      type="text"
+                      id="textbookName"
+                      name="textbookName"
+                      value={textbookName}
+                      style={{ textTransform: "capitalize" }}
+                      onChange={(e) => setTextbookName(e.target.value)}
+                    />
                   </div>
                   <div
-                    className="textbook_button_container"
-                    style={{ marginBottom: "50px", marginTop: "30px" }}
+                    className="textbook_input_container_select"
+                    style={{
+                      width: "400px",
+                      border: "1px solid #526D82",
+                      borderRadius: "4px",
+                      marginTop: "20px",
+                      marginBottom: "10px",
+                    }}
                   >
-                    <button onClick={handleSubmit} type="submit" value="submit">
-                      {loading ? (
-                        <>
-                          <FaSpinner
-                            className="spinner"
-                            style={{ animation: "spin 2s linear infinite" }}
-                          />
-                          &nbsp;Saving...
-                        </>
-                      ) : (
-                        "Submit"
+                    <label htmlFor="mediumbook" style={{ fontWeight: "600" }}>
+                      Medium
+                    </label>
+                    <Select
+                      type="text"
+                      id="mediumbook"
+                      name="mediumbook"
+                      // list=''
+                      options={textbookMeium}
+                      value={medium}
+                      style={{ textTransform: "capitalize" }}
+                      onChange={handleMediumChange}
+                      styles={{
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          border: "none",
+                          boxShadow: state.isFocused ? "none" : "none",
+                        }),
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="textbook_col">
+                  <div className="textbook_input_container">
+                    <label htmlFor="volume" style={{ fontWeight: "600" }}>
+                      Volume
+                    </label>
+                    <input
+                      type="text"
+                      id="volume"
+                      name="volume"
+                      value={volume}
+                      style={{ textTransform: "capitalize" }}
+                      onChange={(e) => setVolume(e.target.value)}
+                    />
+                  </div>
+                  <div
+                    className="textbook_input_container_select"
+                    style={{
+                      width: "400px",
+                      border: "1px solid #526D82",
+                      borderRadius: "4px",
+                      marginTop: "20px",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <label
+                      htmlFor="publisherName"
+                      style={{ fontWeight: "600" }}
+                    >
+                      Publisher Name
+                    </label>
+
+                    <Select
+                      id="publisherName"
+                      name="publisherName"
+                      options={publisherOptions}
+                      placeholder=""
+                      isMulti
+                      value={publisherName}
+                      onChange={handlePublisherChange}
+                      styles={{
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          border: "none",
+                          boxShadow: state.isFocused ? "none" : "none",
+                        }),
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="textbook_row">
+                <div className="textbook_col">
+                  <div>
+                    <label
+                      htmlFor="indexAdding"
+                      style={{
+                        marginLeft: "20px",
+                        fontSize: "25px",
+                        marginBottom: "20px",
+                        marginTop: "20px",
+                      }}
+                    >
+                      Index Adding
+                    </label>
+                  </div>
+                  <div className="textbook_input_container">
+                    <label
+                      htmlFor="totalChapters"
+                      style={{ fontWeight: "600" }}
+                    >
+                      Total no of Chapters
+                    </label>
+                    <input
+                      type="number"
+                      id="totalChapters"
+                      name="totalChapters"
+                      value={totalChaptersInput}
+                      onChange={handleTotalChaptersChange}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      border: "1px solid black",
+                      width: "390px",
+                      marginLeft: "30px",
+                    }}
+                  >
+                    {renderChapterInputs()}
+                  </div>
+                </div>
+                <div className="textbook_col">
+                  <div className="bottom_right_col">
+                    <div style={{ marginBottom: "100px", marginTop: "0px" }}>
+                      <label
+                        htmlFor="mediaLibrary"
+                        style={{
+                          marginLeft: "20px",
+                          marginBottom: "10px",
+                          fontSize: "25px",
+                          padding: "0px",
+                        }}
+                      >
+                        Media Library
+                      </label>
+                    </div>
+                    <div>
+                      <div style={{ marginLeft: "10px", marginTop: "-10px" }}>
+                        <div style={{ display: "flex" }}>
+                          <div
+                            className="textbutton-container"
+                            style={{ marginTop: "-80px" }}
+                          >
+                            <button
+                              style={{
+                                marginTop: "-80px",
+                                ...(selectedTab === "pdf"
+                                  ? { border: "4px solid black" }
+                                  : {}),
+                              }}
+                              onClick={() => handleTabChange("pdf")}
+                              className={selectedTab === "pdf" ? "active" : ""}
+                            >
+                              Textbook Pdf
+                            </button>
+                          </div>
+                          <div
+                            className="textbutton-container"
+                            style={{ marginTop: "-80px" }}
+                          >
+                            <button
+                              style={{
+                                marginTop: "-80px",
+                                ...(selectedTab === "frontPage"
+                                  ? { border: "4px solid black" }
+                                  : {}),
+                              }}
+                              onClick={() => handleTabChange("frontPage")}
+                              className={
+                                selectedTab === "frontPage" ? "active" : ""
+                              }
+                            >
+                              Textbook Front Page
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {selectedTab === "pdf" && (
+                        <div style={{ marginLeft: "10px", marginTop: "-50px" }}>
+                          <label htmlFor="pdf" style={{}}></label>
+                          <div className="textbook_image_upload_container">
+                            <div className="textbook_upload_placeholder">
+                              {pdfFile ? (
+                                <>
+                                  <embed
+                                    src={URL.createObjectURL(pdfFile)}
+                                    type="application/pdf"
+                                    width="100%"
+                                    height="200px"
+                                  />
+                                  <button
+                                    onClick={clearPdfFile}
+                                    style={{
+                                      border: "none",
+                                      background: "none",
+                                      cursor: "pointer",
+                                    }}
+                                  >
+                                    <FaRedo
+                                      style={{
+                                        color: "blue",
+                                        fontSize: "20px",
+                                      }}
+                                      title="Change PDF"
+                                    />
+                                  </button>
+                                </>
+                              ) : (
+                                <>
+                                  <label
+                                    htmlFor="pdf-upload"
+                                    className="textbook_upload_label"
+                                  >
+                                    Upload PDF
+                                  </label>
+                                  <input
+                                    id="pdf-upload"
+                                    type="file"
+                                    accept=".pdf"
+                                    className="textbook_upload_input"
+                                    onChange={handlePdfUpload}
+                                  />
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </div>
                       )}
-                    </button>
+
+                      {selectedTab === "frontPage" && (
+                        <div style={{ marginLeft: "10px", marginTop: "-50px" }}>
+                          <label htmlFor="photo" style={{}}></label>
+                          <div className="textbook_image_upload_container">
+                            <div className="textbook_upload_placeholder">
+                              {imageFile ? (
+                                <>
+                                  <img
+                                    src={URL.createObjectURL(imageFile)}
+                                    alt="Uploaded Image"
+                                    className="uploaded_image"
+                                    style={{
+                                      width: "100%",
+                                      height: "200px",
+                                      marginLeft: "30px",
+                                    }}
+                                  />
+                                  <button
+                                    onClick={clearImageFile}
+                                    style={{
+                                      border: "none",
+                                      background: "none",
+                                      cursor: "pointer",
+                                    }}
+                                  >
+                                    <FaRedo
+                                      style={{
+                                        color: "blue",
+                                        fontSize: "20px",
+                                      }}
+                                      title="Change Image"
+                                    />
+                                  </button>
+                                </>
+                              ) : (
+                                <>
+                                  <label
+                                    htmlFor="image-upload"
+                                    className="textbook_upload_label"
+                                  >
+                                    Upload Image
+                                  </label>
+                                  <input
+                                    id="image-upload"
+                                    type="file"
+                                    accept="image/*"
+                                    className="textbook_upload_input"
+                                    onChange={handleImageUpload}
+                                  />
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div
+                      className="textbook_button_container"
+                      style={{ marginBottom: "50px", marginTop: "30px" }}
+                    >
+                      <button
+                        onClick={handleSubmit}
+                        type="submit"
+                        value="submit"
+                      >
+                        {loading ? (
+                          <>
+                            <FaSpinner
+                              className="spinner"
+                              style={{ animation: "spin 2s linear infinite" }}
+                            />
+                            &nbsp;Saving...
+                          </>
+                        ) : (
+                          "Submit"
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
