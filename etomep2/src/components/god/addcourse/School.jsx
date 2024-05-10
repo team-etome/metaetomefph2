@@ -2,14 +2,18 @@ import React , { useState }from 'react'
 import {Container, Row, Form,Col, Button} from "react-bootstrap";
 import Select from "react-select";
 import "../addcourse/school.css"
-import { Link } from "react-router-dom";
 import { FaArrowLeft} from "react-icons/fa";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function School() {
-    const [eboard, setBoard] = useState("");
+    const APIURL = useSelector((state) => state.APIURL.url);
+
+    const [eboard, setEboard] = useState("");
+    const [subject, setSubject] = useState("");
 
     const handleBoardofEducation = (selectedOptions) => {
-        setBoard(selectedOptions);
+        setEboard(selectedOptions);
       };
     const eeducationboard = [
         "CENTRAL BOARD OF SECONDARY EDUCATION (CBSE) ",
