@@ -16,6 +16,9 @@ function Customerdashboard() {
   
   const [customers, setCustomers] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [customerPerPage] = useState(8);
+
 
   const handleAddHomeWorkClick = () => {
     setShowOptions(!showOptions);
@@ -42,6 +45,14 @@ function Customerdashboard() {
   // const institutions =[
   //   {name: 'St Johns Residential HSS', board: 'ICSE', id: '024234' },
   // ];
+
+  const indexOfLastCustomer = currentPage * customerPerPage;
+  const indexOfFirstCustomer = indexOfLastCustomer - customerPerPage;
+  const currentCustomer = customers.slice(indexOfFirstCustomer, indexOfLastCustomer);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div
       style={{
@@ -88,7 +99,7 @@ function Customerdashboard() {
         }}
       >
         <Container>
-            {customers.length === 0 ? (
+            {currentCustomer.length === 0 ? (
             <Row className="justify-content-center" style={{backgroundColor:'white', borderRadius:'15px'}}>
               <Col>
                 <Card className="text-center p-4" style={{backgroundColor:'transparent', border:'none', color:'#526D82'}}>
@@ -98,7 +109,7 @@ function Customerdashboard() {
             </Row>
           ) : (
           <Row xs={1} sm={1} md={2} lg={3} xl={4} >
-            {customers.map((customer, index) => (
+            {currentCustomer.map((customer, index) => (
               <Col key={index} className="d-flex justify-content-center mb-4">
                 {/* <Link to={`/viewinstitution/${customer.id}`} style={{textDecoration:'none'}}> */}
                 <Link to={{ pathname: `/viewinstitution/${customer.id}`, state: { customer } }} style={{textDecoration:'none'}}>
@@ -134,14 +145,19 @@ function Customerdashboard() {
             ))}
           </Row>
         )}
-          <Pagination className="cust_pagination_custom" style={{position: "fixed", top: "600px", left: "50px",}}>
-            <Pagination.Prev />
-            <Pagination.Item>{1}</Pagination.Item>
-            {/* <Pagination.Item>{2}</Pagination.Item>
-            <Pagination.Item>{3}</Pagination.Item>
-            <Pagination.Ellipsis />
-            <Pagination.Next /> */}
+
+        {currentCustomer.length > 0 && (
+          <Pagination className="cust_pagination_custom" style={{justifyContent:'center'}}>
+          <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
+          {Array.from({ length: Math.ceil(customers.length / customerPerPage) }, (_, i) => (
+            <Pagination.Item key={i} active={i + 1 === currentPage} onClick={() => paginate(i + 1)} style={{ backgroundColor: i + 1 === currentPage ? "#526D82" : "" }}>
+              {i + 1}
+            </Pagination.Item>
+          ))}
+          <Pagination.Next onClick={() => paginate(currentPage + 1)} disabled={currentPage === Math.ceil(customers.length / customerPerPage)} />
           </Pagination>
+
+        )}
           <div >
             {/* <Link to='/addcustomer'> */}
               <MdAddHomeWork style={{ position: "fixed", top: "600px", right: "35px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)" , cursor: "pointer"}} onClick={handleAddHomeWorkClick}/>

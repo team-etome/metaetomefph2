@@ -7,7 +7,18 @@
   .customer {
     background-color:#DDE6ED !important;
   }
-  .cust_pagination_custom .page-item .page-link {
+  /* .cust_pagination_custom .page-item .page-link {
     background-color: transparent !important;
     color: #526D82;
+  } */
+  .cust_pagination_custom .page-item.active .page-link {
+    background-color: #ffffff;
+    color:#526d82 ; /* Change text color when active */
+    border-color: #526d82;
+  }
+  
+  .cust_pagination_custom .page-link {
+    background-color: transparent;
+    color: #526d82;
+    border-color: #526d82;
   }

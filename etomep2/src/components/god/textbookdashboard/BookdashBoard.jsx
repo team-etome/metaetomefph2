@@ -19,9 +19,12 @@ import { Link } from "react-router-dom";
 import ViewTextbook from "../viewtextbook/ViewTextbook"; 
 
 function BookdashBoard() {
+
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [booksPerPage] = useState(8);
 
 
   const APIURL = useSelector((state) => state.APIURL.url);
@@ -40,6 +43,13 @@ function BookdashBoard() {
     setSelectedBook(book);
     setShowModal(true);
   };
+
+  const indexOfLastBook = currentPage * booksPerPage;
+  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+  const currentBook = books.slice(indexOfFirstBook, indexOfLastBook);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div
@@ -97,7 +107,7 @@ function BookdashBoard() {
           borderRadius: "17px",
           marginBottom: "70px",
           }}>
-          {books.length === 0 ? (
+          {currentBook.length === 0 ? (
             <Row className="justify-content-center">
               <Col>
                 <Card  className="text-center p-4" style={{backgroundColor:'transparent', border:'none', color:'#526D82'}}>
@@ -106,8 +116,8 @@ function BookdashBoard() {
               </Col>
             </Row>
           ) : (
-          <Row xs={1} sm={2} md={3} lg={4} className="justify-content-center">
-          {books.map((book, index) => (
+          <Row xs={1} sm={2} md={3} lg={4} >
+          {currentBook.map((book, index) => (
               <Col key={index} className="d-flex justify-content-center mb-4">
                 {/* <Link to={{ pathname: `/ViewTextbook`, state: { book } }} style={{textDecoration:'none'}}> */}
                 <Card
@@ -139,16 +149,20 @@ function BookdashBoard() {
              ))}
           </Row>
           )}
-          </Container>
-         
-          <Pagination className="book_pagination_custom" style={{position: "fixed", top: "600px", left: "50px",}}>
-            <Pagination.Prev />
-            <Pagination.Item>{1}</Pagination.Item>
-            <Pagination.Item>{2}</Pagination.Item>
-            <Pagination.Item>{3}</Pagination.Item>
-            <Pagination.Ellipsis />
-            <Pagination.Next />
+        
+        {currentBook.length > 0 && (
+          <Pagination className="book_pagination_custom" style={{ justifyContent: 'center', }}>
+            <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
+            {Array.from({ length: Math.ceil(books.length / booksPerPage) }, (_, i) => (
+              <Pagination.Item key={i} active={i + 1 === currentPage} onClick={() => paginate(i + 1)}>
+                {i + 1}
+              </Pagination.Item>
+            ))}
+            <Pagination.Next onClick={() => paginate(currentPage + 1)} disabled={currentPage === Math.ceil(books.length / booksPerPage)} />
           </Pagination>
+        )}
+
+          </Container>
           
           <div>
             <Link to='/addbooks'>

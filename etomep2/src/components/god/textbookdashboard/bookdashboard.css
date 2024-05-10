@@ -7,13 +7,13 @@
   .book{
     background-color: #DDE6ED !important;
   }
-  .book_pagination_custom .page-item .page-link {
+  /* .book_pagination_custom .page-item .page-link {
     background-color: transparent !important;
     color: #526D82;
     position: "fixed";
     margin-top: "6050px"; 
     margin-left: "25px";
-  }
+  } */
   /* .image-container:hover {
     transform: scale(1.1); 
   }
@@ -22,4 +22,15 @@
     transition: transform 0.5s; 
   } */
 
+  .book_pagination_custom .page-item.active .page-link {
+    background-color: #526d82;
+    color:#ffffff ; /* Change text color when active */
+    border-color: #526d82;
+    margin-bottom: 30px;
+  }
   
+  .book_pagination_custom .page-link {
+    background-color: transparent;
+    color: #526d82;
+    border-color: #526d82;
+  }
