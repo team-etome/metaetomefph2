@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../addtextbook/addbooks.css";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Nav } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link , useNavigate,useParams} from "react-router-dom";
 import { FaArrowLeft, FaSpinner, FaRedo } from "react-icons/fa";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -27,6 +27,8 @@ function AddBooks() {
   console.log(classValue,"qqqqqqqq")
 
   // console.log(classValue)
+  
+  const navigate = useNavigate()
 
   console.log(data, "data");
 
@@ -277,6 +279,9 @@ function AddBooks() {
         title: "Success!",
         text: "Textbook created successfully!",
       });
+
+      navigate("/header")
+      
     } catch (error) {
       console.error("Error creating textbook:", error);
       Swal.fire({
