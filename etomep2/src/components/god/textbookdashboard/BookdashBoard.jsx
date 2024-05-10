@@ -16,21 +16,15 @@ import "../textbookdashboard/bookdashboard.css";
 import axios from "axios";
 import { BiBookAdd } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import ViewTextbook from "../viewtextbook/ViewTextbook"; 
-
+import ViewTextbook from "../viewtextbook/ViewTextbook";
 function BookdashBoard() {
-
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage] = useState(8);
-
-
   const APIURL = useSelector((state) => state.APIURL.url);
-
   console.log(books,"aaaaaaaaaaaaaaaaaaaaaaaaa")
- 
   useEffect(() => {
     axios.get(`${APIURL}/api/create-textbook/`)
       .then((response) => {
@@ -38,19 +32,15 @@ function BookdashBoard() {
       })
       .catch((error) => console.error("Error fetching books:", error));
   }, []);
-
   const handleCardClick = (book) => {
     setSelectedBook(book);
     setShowModal(true);
   };
-
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
   const currentBook = books.slice(indexOfFirstBook, indexOfLastBook);
-
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   return (
     <div
       style={{
@@ -121,7 +111,6 @@ function BookdashBoard() {
               <Col key={index} className="d-flex justify-content-center mb-4">
                 {/* <Link to={{ pathname: `/ViewTextbook`, state: { book } }} style={{textDecoration:'none'}}> */}
                 <Card
-                
                   style={{
                     width: "200px",
                     alignItems: "center",
@@ -138,7 +127,6 @@ function BookdashBoard() {
                     style={{ width: "150px", margin: "10px" }}
                     class="image-container"
                   />
-               
                   <Card.Body>
                     <Card.Title>{book.text_name}</Card.Title>
                     <Card.Text>{book.publisher_name}</Card.Text>
@@ -149,7 +137,6 @@ function BookdashBoard() {
              ))}
           </Row>
           )}
-        
         {currentBook.length > 0 && (
           <Pagination className="book_pagination_custom" style={{ justifyContent: 'center', }}>
             <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
@@ -161,9 +148,7 @@ function BookdashBoard() {
             <Pagination.Next onClick={() => paginate(currentPage + 1)} disabled={currentPage === Math.ceil(books.length / booksPerPage)} />
           </Pagination>
         )}
-
           </Container>
-          
           <div>
             <Link to='/addbooks'>
               <BiBookAdd style={{ position: "fixed", top: "600px", right: "25px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)" }}/>
@@ -171,11 +156,9 @@ function BookdashBoard() {
           </div>
           {showModal && selectedBook && (
           <ViewTextbook show={showModal} handleClose={() => setShowModal(false)} book={selectedBook} />
-          
         )}
       </Container>
     </div>
   );
 }
-
 export default BookdashBoard;
