@@ -5,14 +5,16 @@ import "../viewtextbook/viewtextbook.css";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Document, Page, pdfjs } from 'react-pdf';
+import { Document, Page, pdfjs } from "react-pdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function ViewTextbook({ show, handleClose, book }) {
-  console.log(book, 'bbbbbbbbbb');
-  
+  console.log(book, "bbbbbbbbbb");
+
   const [showPDF, setShowPDF] = useState(false);
+
+  console.log(book, "book data before navigating");
 
   return (
     <>
@@ -41,7 +43,10 @@ function ViewTextbook({ show, handleClose, book }) {
                 className="d-flex justify-content-center align-items-center"
               >
                 {showPDF ? (
-                  <Document file={book.pdf_url} onLoadSuccess={console.log('PDF loaded')}>
+                  <Document
+                    file={book.pdf_url}
+                    onLoadSuccess={console.log("PDF loaded")}
+                  >
                     <Page pageNumber={1} />
                   </Document>
                 ) : (
@@ -52,7 +57,6 @@ function ViewTextbook({ show, handleClose, book }) {
                       fluid
                       style={{ maxHeight: "100%", maxWidth: "100%" }}
                     />
-                    
                   </div>
                 )}
               </Col>
@@ -96,10 +100,14 @@ function ViewTextbook({ show, handleClose, book }) {
             </Row>
           </Modal.Body>
           <Modal.Footer style={{ border: "none", borderRadius: "8px" }}>
-            <Link to="/addbooks">
+            <Link to={`/addbooks/${book.id}`}>
               <Button variant="secondary">Edit</Button>
             </Link>
-            <Button variant="secondary" style={{ backgroundColor: "#5C7689" }} onClick={() => setShowPDF(true)}>
+            <Button
+              variant="secondary"
+              style={{ backgroundColor: "#5C7689" }}
+              onClick={() => setShowPDF(true)}
+            >
               Preview PDF
             </Button>
           </Modal.Footer>

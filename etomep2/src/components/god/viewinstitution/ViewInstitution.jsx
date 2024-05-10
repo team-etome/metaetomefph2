@@ -6,6 +6,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Swal from 'sweetalert2';
 
 function ViewInstitution() {
   const APIURL = useSelector((state) => state.APIURL.url);
@@ -16,7 +17,17 @@ function ViewInstitution() {
 
   const { id } = useParams();
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   axios
+  //     .get(`${APIURL}/api/adminLogin/${id}`)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setInstitution(response.data);
+  //     })
+  //     .catch((error) => console.error("Error fetching institution:", error));
+  // }, [APIURL, id]);
+
+  const fetchData = () => {
     axios
       .get(`${APIURL}/api/adminLogin/${id}`)
       .then((response) => {
@@ -24,16 +35,44 @@ function ViewInstitution() {
         setInstitution(response.data);
       })
       .catch((error) => console.error("Error fetching institution:", error));
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [APIURL, id]);
 
-  const handleToggleBlock = async (institutionId, isBlocked) => {
-    try {
-      await axios.post(`${APIURL}/api/block`, { id: institutionId, action:isBlocked });
-      // Toggle the blocked status locally
+  // const fetchData = useEffect(() => {
+  //   axios
+  //     .get(`${APIURL}/api/adminLogin/${id}`)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setInstitution(response.data);
+  //     })
+  //     .catch((error) => console.error("Error fetching institution:", error));
+  // }, [APIURL, id]);
 
+
+  const handleToggleBlock = async (institutionId, is_block) => {
+
+    try {
+      await axios.post(`${APIURL}/api/block`, { id: institutionId, action:is_block });
+      // Toggle the blocked status locally
+      
+      // Show success message using SweetAlert
+      Swal.fire({
+        icon: 'success',
+        title: 'Block Status Updated',
+        text: `Block status has been successfully ${is_block ? 'blocked' : 'unblocked'}.`,
+      });
+      fetchData();
     } catch (error) {
       console.error("Error toggling block status:", error);
       // handle error, e.g., show error message to the user
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An error occurred while updating block status. Please try again later.',
+      });
     }
   };
 
@@ -89,9 +128,10 @@ function ViewInstitution() {
                       }
                       style={{
                         backgroundColor: institution.is_block
-                          ? "#FDE9E6"
+                          ? "#28a745"
                           : "#EA4035",
                         color: institution.isBlocked ? "#EA4035" : "#FFF",
+                        borderColor: institution.is_block ? "#28a745" : "#EA4035",
                         fontWeight: "600px",
                       }}
                     >
