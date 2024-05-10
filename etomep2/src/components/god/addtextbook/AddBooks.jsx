@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../addtextbook/addbooks.css";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import { FaArrowLeft, FaSpinner, FaRedo } from "react-icons/fa";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -23,6 +23,8 @@ function AddBooks() {
   const [pdfFile, setPdfFile] = useState(null);
 
   // console.log(classValue)
+  
+  const navigate = useNavigate()
 
   console.log(publisherName, "publisher name");
 
@@ -271,6 +273,9 @@ function AddBooks() {
         title: "Success!",
         text: "Textbook created successfully!",
       });
+
+      navigate("/header")
+      
     } catch (error) {
       console.error("Error creating textbook:", error);
       Swal.fire({

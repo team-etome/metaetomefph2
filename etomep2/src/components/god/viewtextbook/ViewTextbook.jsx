@@ -9,7 +9,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-function ViewTextbook({ show, handleClose, book }) {
+function ViewTextbook({ show, handleClose, book  }) {
   console.log(book, 'bbbbbbbbbb');
   
   const [showPDF, setShowPDF] = useState(false);
