@@ -137,10 +137,10 @@ function Customerdashboard() {
           <Pagination className="cust_pagination_custom" style={{position: "fixed", top: "600px", left: "50px",}}>
             <Pagination.Prev />
             <Pagination.Item>{1}</Pagination.Item>
-            <Pagination.Item>{2}</Pagination.Item>
+            {/* <Pagination.Item>{2}</Pagination.Item>
             <Pagination.Item>{3}</Pagination.Item>
             <Pagination.Ellipsis />
-            <Pagination.Next />
+            <Pagination.Next /> */}
           </Pagination>
           <div >
             {/* <Link to='/addcustomer'> */}

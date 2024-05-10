@@ -30,6 +30,7 @@ function App() {
   <Route path="/goddashboard" element={<GoddashboardPage/>}/>
   <Route path="/addcustomer" element={<AddCustomer/>}/>
   <Route path='/addbooks' element={<AddBooks/>}/>
+  <Route path='/addbooks/:id' element={<AddBooks/>}/>
   <Route path='/viewinstitution/:id' element={<ViewInstitution/>}/>
   <Route path='/textbookdashboard' element={<BookdashBoard/>}/>
   <Route path='/ViewTextbook' element={<ViewTextbook/>}/>
