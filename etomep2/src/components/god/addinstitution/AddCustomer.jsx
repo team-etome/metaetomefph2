@@ -57,8 +57,18 @@ function AddCustomer() {
       setMedium("");
     }
   };
+  // const handlePublisherChange = (selectedOptions) => {
+  //   setPublisherName(selectedOptions);
+  // };
+
   const handlePublisherChange = (selectedOptions) => {
-    setPublisherName(selectedOptions);
+    // Limit the number of selected options to 5
+    if (selectedOptions.length <= 5) {
+      setPublisherName(selectedOptions);
+    } else {
+      toast.error("You can only select up to 5 publishers.");
+      setPublisherName(selectedOptions.slice(0, 5));
+    }
   };
   const handleEducationBoard = (selectedOptions) => {
     setCustBoard(selectedOptions.value)
@@ -299,7 +309,7 @@ function AddCustomer() {
                     Institution Code
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     id="institutionCode"
                     name="institutionCode"
                     value={institutionCode}
