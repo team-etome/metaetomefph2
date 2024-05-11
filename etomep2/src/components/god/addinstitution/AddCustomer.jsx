@@ -260,6 +260,32 @@ function AddCustomer() {
     label: eduboard,
   }));
 
+  // const schoolMedium =[
+  //   'English',
+  //   'Malayalam',
+  //   'Hindi',
+  //   'Tamil',
+  //   'Urudu',
+  //   'Kannada',
+  //   'Telugu',
+  //   'Tulu,',
+  //   'Punjabi ',
+  //   'Gujarati',
+  //   'Bangla',
+  //   'Oriya',
+  //   'Lushai',
+  //   'Marathi',
+  //   'Konkani',
+  //   'Khasi',
+  //   'Nepali ',
+  //   'Manipuri ',
+  //   'Assamese ',
+  // ]
+  // const mediumOptions = schoolMedium.map((mschool) => ({
+  //   value: mschool,
+  //   label: mschool,
+  // }));
+
   return (
     <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white" }}>
       <div className="form">
@@ -314,14 +340,19 @@ function AddCustomer() {
                     name="institutionCode"
                     value={institutionCode}
                     style={{ textTransform: "capitalize" }}
-                    onChange={(e) => setInstitutionCode(e.target.value)}
+                    // onChange={(e) => setInstitutionCode(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value >= 0 || value === "") {
+                        setInstitutionCode(value);
+                      }
+                    }}
                   />
                 </div>
                 <div className="input_container">
                   <label for="email" style={{ fontWeight: "600" }}>
                     Email
                   </label>
-
                   <input
                     type="text"
                     id="email"
@@ -537,7 +568,6 @@ function AddCustomer() {
                               value="english"
                               checked={medium === "english"}
                               onChange={handleMediumChange}
-                              // disabled={institutionType === "college"}
                             />
                           </div>
                           <div
@@ -560,7 +590,6 @@ function AddCustomer() {
                               value="malayalam"
                               checked={medium === "malayalam"}
                               onChange={handleMediumChange}
-                              // disabled={institutionType === "college"}
                             />
                           </div>
                           <div style={{ fontWeight: "600" }}>Malayalam</div>
@@ -568,6 +597,8 @@ function AddCustomer() {
                       </div>
                     </div>
                   )}
+
+
                 </div>
               </div>
               <div className="form-col" style={{ marginTop: "1px" }}>

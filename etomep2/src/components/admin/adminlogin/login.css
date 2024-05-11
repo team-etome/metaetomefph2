@@ -1,0 +1,108 @@
+.admin_form {
+    background-color: #fff;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    /* height: 480px; */
+    width: 85%;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 9px 70px -2px rgba(0, 0, 0, 0.05);
+    padding-top: 60px;
+  }
+  
+  .admin_form_title {
+    font-size: 2rem;
+    line-height: 1.75rem;
+    font-weight: 400;
+    /* text-align: left; */
+    color: #526D82;
+  }
+  
+  .admin_input_container {
+    position: relative;
+    width: 80%;
+  }
+  
+  .admin_input_container input, .form button {
+    outline: none;
+    border: 1px solid #e5e7eb;
+    margin: 8px 0;
+    width: 100%;
+  }
+  
+  .admin_input_container input {
+    background-color: #fff;
+    /* padding: 5rem; */
+    padding: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    /* width: 50%; */
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  .admin_input_container span {
+    display: flex; /* Changed to flex for vertical centering */
+    align-items: center; /* Vertically center the content */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 10px; /* Adjusted right positioning */
+  }
+  
+  .admin_input_container span svg {
+    color: #9CA3AF;
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .admin_submit_btn {
+    display: block;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    background-color: transparent;
+    color: #526D82;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    width:60%;
+    border-radius: 0.5rem;
+    border: 1px solid #526D82;
+   
+  }
+  
+  .admin_signup-link {
+    color: #6b7280;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    text-align: right;
+    margin-bottom: 40px;
+  }
+  
+  .admin_signup-link a {
+    text-decoration: underline;
+    color: #526D82;
+  }
+  @media (max-width: 950px) {
+
+    .admin_lgin_maindiv{
+
+     height:auto !important;
+
+    }
+    .admin_contant_dv{
+      margin: 15px;
+      padding-top: 50px;
+      width: 80%;
+      /* border: 1px solid black; */
+    }
+    .admin_login_dv{
+      margin-top: 80px !important;
+      width: 90% !important;
+    }
+    
+  }
