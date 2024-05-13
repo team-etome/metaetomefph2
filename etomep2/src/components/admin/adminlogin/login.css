@@ -87,7 +87,7 @@
     text-decoration: underline;
     color: #526D82;
   }
-  @media (max-width: 950px) {
+  @media (max-width: 550px) {
 
     .admin_lgin_maindiv{
 

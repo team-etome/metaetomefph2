@@ -529,7 +529,7 @@ function AddBooks() {
                       name="publisherName"
                       options={publisherOptions}
                       placeholder=""
-                      isMulti
+                      // isMulti
                       value={publisherName}
                       onChange={handlePublisherChange}
                       styles={{
@@ -903,7 +903,7 @@ function AddBooks() {
                       name="publisherName"
                       options={publisherOptions}
                       placeholder=""
-                      isMulti
+                      // isMulti
                       value={publisherName}
                       onChange={handlePublisherChange}
                       styles={{
