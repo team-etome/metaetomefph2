@@ -13,6 +13,9 @@ import Header from './components/god/header/Header';
 import Customerdashboard from './components/god/customerdashboard/Customerdashboard';
 import Coursedashboard from './components/god/coursedashboard/Coursedashboard';
 import School from './components/god/addcourse/School';
+import AdminLogin from './components/admin/adminlogin/AdminLogin';
+import AdminDashboard from './components/admin/admindashboard/AdminDashboard';
+import AdminForgot from './components/admin/adminforgotpassword/AdminForgot';
 
 
 
@@ -41,6 +44,9 @@ function App() {
   
 
   
+  <Route path="/adminlogin" element={<AdminLogin/>}/>
+  <Route path="/admindashboard" element={<AdminDashboard/>}/>
+  <Route path="/adminforgot" element={<AdminForgot/>}/>
 
 
 
