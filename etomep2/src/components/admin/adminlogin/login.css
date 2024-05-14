@@ -87,6 +87,23 @@
     text-decoration: underline;
     color: #526D82;
   }
+
+  .adminsocial-icons-container {
+    position: absolute;
+    bottom: 0;
+    left: 60%;
+    transform: translateX(-50%);
+    display: flex;
+  }
+  
+  .adminsocial-icon {
+    width: 50px;
+    height: 35px;
+    margin: 0 10px;
+    background-color: #fff;
+    color: #757575;
+
+  }
   @media (max-width: 550px) {
 
     .admin_lgin_maindiv{

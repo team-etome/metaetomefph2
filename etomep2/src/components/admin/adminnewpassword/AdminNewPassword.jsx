@@ -14,21 +14,39 @@ function AdminNewPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   const navigate = useNavigate();
 
-  const APIURL = useSelector((state) => state.APIURL.url);
+//   const APIURL = useSelector((state) => state.APIURL.url);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
+    if (password !== confirmPassword) {
+        Swal.fire({
+          icon: "error",
+          title: "Password Mismatch",
+          text: "Password and confirm password do not match.",
+        });
+        setLoading(false);
+        return;
+      }
 
-    if (!password || !confirmPassword) {
+    if (!password || 
+        !confirmPassword
+    ) {
+        // let missingFields = [];
+        // if (!password) missingFields.push("password");
+        // if (!confirmPassword) missingFields.push("confirm password");
       Swal.fire({
         title: "Error!",
         text: "All fields are required",
         icon: "error",
         confirmButtonText: "Ok",
       });
+    //   setLoading(false);
       return;
     }
 
@@ -38,7 +56,7 @@ function AdminNewPassword() {
         confirmPassword: confirmPassword,
       };
 
-        const response = await axios.post(`${APIURL}/api/verifyotp`, data);
+        // const response = await axios.post(`${APIURL}/api/reset-password'`, data);
       navigate("/adminlogin");
 
       Swal.fire({
@@ -59,6 +77,10 @@ function AdminNewPassword() {
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
@@ -163,19 +185,20 @@ function AdminNewPassword() {
 
               <div
                 className="admin_new_input_container"
-                style={{ marginTop: "50px" }}
+                style={{ marginTop: "50px", }}
               >
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={showConfirmPassword ? "text" : "password"}
                   id="password"
                   name="password"
                   placeholder=" "
                   // value={confirmpassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  onPaste={(e) => e.preventDefault()}
                 />
                 <label htmlFor="password">Confirm Password</label>
                 <span
-                  onClick={togglePasswordVisibility}
+                  onClick={toggleConfirmPasswordVisibility}
                   style={{
                     position: "absolute",
                     top: "50%",
@@ -186,7 +209,7 @@ function AdminNewPassword() {
                     fontSize: "1.25rem",
                   }}
                 >
-                  {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                    {showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                 </span>
               </div>
 

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "../adminlogin/login.css";
 import { Col, Container, Row } from "react-bootstrap";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash, FaLinkedin, FaInstagramSquare } from "react-icons/fa";
+import { BiLogoGmail } from "react-icons/bi";
 import { RiShareBoxFill } from "react-icons/ri";
 import etomelogo from "../../../assets/etomelogo.png";
 import circle from "../../../assets/Ellipse 52 1.png";
@@ -123,7 +124,7 @@ function AdminLogin() {
                 {/* Conditionally render the text and button for non-mobile screens */}
                 {window.innerWidth > 550 && (
                   <div>
-                    <p style={{ fontSize: "27px" }}>
+                    <p style={{ fontSize: "27px" , color:'#757575'}}>
                       Innovation That Changes the world
                     </p>
                     <Link
@@ -151,6 +152,7 @@ function AdminLogin() {
                         <RiShareBoxFill style={{ marginLeft: "10px" }} />
                       </button>
                     </Link>
+
                   </div>
                 )}
               </div>
@@ -257,8 +259,13 @@ function AdminLogin() {
               </button>
             </form>
           </Col>
-          
+          {/* <div className="adminsocial-icons-container">
+            <FaLinkedin className="adminsocial-icon" />
+            <FaInstagramSquare className="adminsocial-icon" />
+            <BiLogoGmail className="adminsocial-icon" style={{color:'#fff',background:'#757575', borderRadius:'5px'}}/>
+          </div> */}
         </Row>
+
       </Container>
     </div>
   );

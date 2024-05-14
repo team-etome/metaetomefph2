@@ -72,16 +72,13 @@ function AdminForgot() {
   const handleOtpSubmit = async () => {
     try {
       const data = {
-        email: email, // Add the user's email
-        otp: otp1 + otp2 + otp3 + otp4 // Concatenate the OTP from all input fields
-      };
-      
-      // Send a POST request to your OTP verification API
+        email: email, 
+        otp: otp1 + otp2 + otp3 + otp4 
+      }; 
+
       const response = await axios.post(`${APIURL}/api/verifyotp`, data);
       
-      // Handle the response from the server
-      if (response.data.success) {
-        // If OTP verification is successful, navigate to the dashboard
+      if (response) {
         Swal.fire({
           title: "Success!",
           text: "OTP Verified Successfully",
@@ -91,7 +88,6 @@ function AdminForgot() {
           navigate("/adminnewpassword");
         });
       } else {
-        // If OTP verification fails, show an error message
         Swal.fire({
           title: "Error!",
           text: "Invalid OTP",
@@ -100,7 +96,6 @@ function AdminForgot() {
         });
       }
     } catch (error) {
-      // Handle any errors that occur during the request
       Swal.fire({
         title: "Error!",
         text: "Failed to verify OTP",
@@ -214,7 +209,6 @@ function AdminForgot() {
                     placeholder=" "
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required // Ensures the form cannot be submitted without an email
                   />
                   <label htmlFor="email">Enter Email id</label>
                 </div>
