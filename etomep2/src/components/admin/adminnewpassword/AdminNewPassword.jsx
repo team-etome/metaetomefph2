@@ -4,7 +4,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import etomelogo from "../../../assets/etomelogo.png";
 import circle from "../../../assets/Ellipse 52 1.png";
 import { Link } from "react-router-dom";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash, FaSpinner, } from "react-icons/fa";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -17,46 +17,55 @@ function AdminNewPassword() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
   const navigate = useNavigate();
 
-//   const APIURL = useSelector((state) => state.APIURL.url);
+  const APIURL = useSelector((state) => state.APIURL.url);
+  const email = useSelector((state) => state.email);
+
+  console.log("Email from Redux state:", email);
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    if (password !== confirmPassword) {
-        Swal.fire({
-          icon: "error",
-          title: "Password Mismatch",
-          text: "Password and confirm password do not match.",
-        });
-        setLoading(false);
-        return;
-      }
+    e.preventDefault();
+    setLoading(true);
 
-    if (!password || 
-        !confirmPassword
-    ) {
-        // let missingFields = [];
-        // if (!password) missingFields.push("password");
-        // if (!confirmPassword) missingFields.push("confirm password");
+    if (password !== confirmPassword) {
       Swal.fire({
-        title: "Error!",
-        text: "All fields are required",
         icon: "error",
-        confirmButtonText: "Ok",
+        title: "Password Mismatch",
+        text: "Password and confirm password do not match.",
       });
-    //   setLoading(false);
+      setLoading(false);
+      return;
+    }
+
+    if (!password || !confirmPassword) 
+      {
+      let missingFields = [];
+      if (!password) missingFields.push("password");
+      if (!confirmPassword) missingFields.push("confirm password");
+
+      Swal.fire({
+        icon: "error",
+        title: "Missing Required Information",
+        text: `Please complete the following fields: ${missingFields.join(
+          ", "
+        )}.`,
+      });
+
+      setLoading(false);
       return;
     }
 
     try {
       const data = {
+        email: email, 
         password: password,
         confirmPassword: confirmPassword,
       };
 
-        // const response = await axios.post(`${APIURL}/api/reset-password'`, data);
+      console.log("Data to be sent:", data); 
+      
+      const response = await axios.post(`${APIURL}/api/reset-password`, data);
       navigate("/adminlogin");
 
       Swal.fire({
@@ -72,7 +81,9 @@ function AdminNewPassword() {
         icon: "error",
         confirmButtonText: "Ok",
       });
-    }
+    }finally {
+    setLoading(false); // Set loading state back to false after submission
+  }
   };
 
   const togglePasswordVisibility = () => {
@@ -185,18 +196,18 @@ function AdminNewPassword() {
 
               <div
                 className="admin_new_input_container"
-                style={{ marginTop: "50px", }}
+                style={{ marginTop: "50px" }}
               >
                 <input
                   type={showConfirmPassword ? "text" : "password"}
-                  id="password"
-                  name="password"
+                  id="confirmpassword"
+                  name="confirmpassword"
                   placeholder=" "
                   // value={confirmpassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   onPaste={(e) => e.preventDefault()}
                 />
-                <label htmlFor="password">Confirm Password</label>
+                <label htmlFor="confirmpassword">Confirm Password</label>
                 <span
                   onClick={toggleConfirmPasswordVisibility}
                   style={{
@@ -209,7 +220,7 @@ function AdminNewPassword() {
                     fontSize: "1.25rem",
                   }}
                 >
-                    {showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                  {showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                 </span>
               </div>
 
@@ -227,7 +238,17 @@ function AdminNewPassword() {
                   onClick={handleSubmit}
                   style={{ fontSize: "20px" }}
                 >
-                  Submit
+                  {loading ? (
+                      <>
+                        <FaSpinner
+                          className="spinner"
+                          style={{ animation: "spin 2s linear infinite" }}
+                        />
+                        &nbsp;...
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
                 </button>
               </div>
             </div>

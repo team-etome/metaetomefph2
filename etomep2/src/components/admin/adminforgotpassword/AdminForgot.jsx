@@ -3,6 +3,7 @@ import "../adminforgotpassword/adminforgot.css";
 import { Col, Container, Row, Modal, Button } from "react-bootstrap";
 import etomelogo from "../../../assets/etomelogo.png";
 import circle from "../../../assets/Ellipse 52 1.png";
+import { FaSpinner, } from "react-icons/fa";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +18,7 @@ function AdminForgot() {
   const [otp2, setOtp2] = useState("");
   const [otp3, setOtp3] = useState("");
   const [otp4, setOtp4] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,6 +26,7 @@ function AdminForgot() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!email) {
       Swal.fire({
@@ -32,19 +35,16 @@ function AdminForgot() {
         icon: "error",
         confirmButtonText: "Ok",
       });
+      setLoading(false);
       return;
     }
     try {
       const data = { email: email };
-        const response = await axios.post(`${APIURL}/api/forgot-password`, data);
+      const response = await axios.post(`${APIURL}/api/forgot-password`, data);
       setShowOtpScreen(true);
 
-      //   Swal.fire({
-      //     title: "Success!",
-      //     text: "Added Successfully",
-      //     icon: "success",
-      //     confirmButtonText: "Ok",
-      //   });
+       
+      
     } catch (error) {
       Swal.fire({
         title: "Error!",
@@ -55,20 +55,7 @@ function AdminForgot() {
     }
   };
 
-    // Handle OTP verification
-  // const handleOtpSubmit = () => {
-  //   Swal.fire({
-  //     title: "Success!",
-  //     text: "OTP Verified Successfully",
-  //     icon: "success",
-  //     confirmButtonText: "Ok",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       navigate("/admindashboard");
-  //     }
-  //   });
-  // };
-
+   
   const handleOtpSubmit = async () => {
     try {
       const data = {
@@ -102,6 +89,8 @@ function AdminForgot() {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    }finally {
+      setLoading(false); // Set loading state back to false after submission
     }
   };
   
@@ -227,6 +216,17 @@ function AdminForgot() {
                     onClick={handleSubmit}
                     style={{ fontSize: "20px" }}
                   >
+                    {/* {loading ? (
+                      <>
+                        <FaSpinner
+                          className="spinner"
+                          style={{ animation: "spin 2s linear infinite" }}
+                        />
+                        &nbsp;loading...
+                      </>
+                    ) : (
+                      "Submit"
+                    )} */}
                     Submit
                   </button>
                 </div>
