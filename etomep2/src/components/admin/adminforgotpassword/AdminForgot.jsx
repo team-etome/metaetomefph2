@@ -3,6 +3,7 @@ import "../adminforgotpassword/adminforgot.css";
 import { Col, Container, Row, Modal, Button } from "react-bootstrap";
 import etomelogo from "../../../assets/etomelogo.png";
 import circle from "../../../assets/Ellipse 52 1.png";
+import { FaSpinner, } from "react-icons/fa";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -13,13 +14,19 @@ import { AiOutlineClose } from "react-icons/ai";
 function AdminForgot() {
   const [email, setEmail] = useState("");
   const [showOtpScreen, setShowOtpScreen] = useState(false);
-  const [otp, setOtp] = useState("");
+  const [otp1, setOtp1] = useState("");
+  const [otp2, setOtp2] = useState("");
+  const [otp3, setOtp3] = useState("");
+  const [otp4, setOtp4] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
-  //   const APIURL = useSelector((state) => state.APIURL.url);
+    const APIURL = useSelector((state) => state.APIURL.url);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!email) {
       Swal.fire({
@@ -28,19 +35,16 @@ function AdminForgot() {
         icon: "error",
         confirmButtonText: "Ok",
       });
+      setLoading(false);
       return;
     }
     try {
       const data = { email: email };
-      //   const response = await axios.post(`${APIURL}/api/forgot-password`, data);
+      const response = await axios.post(`${APIURL}/api/forgot-password`, data);
       setShowOtpScreen(true);
 
-      //   Swal.fire({
-      //     title: "Success!",
-      //     text: "Added Successfully",
-      //     icon: "success",
-      //     confirmButtonText: "Ok",
-      //   });
+       
+      
     } catch (error) {
       Swal.fire({
         title: "Error!",
@@ -51,19 +55,45 @@ function AdminForgot() {
     }
   };
 
-    // Handle OTP verification
-  const handleOtpSubmit = () => {
-    Swal.fire({
-      title: "Success!",
-      text: "OTP Verified Successfully",
-      icon: "success",
-      confirmButtonText: "Ok",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/admindashboard");
+   
+  const handleOtpSubmit = async () => {
+    try {
+      const data = {
+        email: email, 
+        otp: otp1 + otp2 + otp3 + otp4 
+      }; 
+
+      const response = await axios.post(`${APIURL}/api/verifyotp`, data);
+      
+      if (response) {
+        Swal.fire({
+          title: "Success!",
+          text: "OTP Verified Successfully",
+          icon: "success",
+          confirmButtonText: "Ok",
+        }).then(() => {
+          navigate("/adminnewpassword");
+        });
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: "Invalid OTP",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
-    });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to verify OTP",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }finally {
+      setLoading(false); // Set loading state back to false after submission
+    }
   };
+  
 
   return (
     <div
@@ -168,7 +198,6 @@ function AdminForgot() {
                     placeholder=" "
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required // Ensures the form cannot be submitted without an email
                   />
                   <label htmlFor="email">Enter Email id</label>
                 </div>
@@ -187,6 +216,17 @@ function AdminForgot() {
                     onClick={handleSubmit}
                     style={{ fontSize: "20px" }}
                   >
+                    {/* {loading ? (
+                      <>
+                        <FaSpinner
+                          className="spinner"
+                          style={{ animation: "spin 2s linear infinite" }}
+                        />
+                        &nbsp;loading...
+                      </>
+                    ) : (
+                      "Submit"
+                    )} */}
                     Submit
                   </button>
                 </div>
@@ -221,11 +261,11 @@ function AdminForgot() {
                         marginRight: "30px",
                         height: "50px",
                         borderRadius:'10px',
-                        border:'1px solid #526D82'
-
+                        border:'1px solid #526D82',
+                        textAlign:'center'
                       }}
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
+                      value={otp1}
+                      onChange={(e) => setOtp1(e.target.value)}
                     />
                     <input
                       type="text"
@@ -235,10 +275,11 @@ function AdminForgot() {
                         marginRight: "30px",
                         height: "50px",
                         borderRadius:'10px',
-                        border:'1px solid #526D82'
+                        border:'1px solid #526D82',
+                        textAlign:'center'
                       }}
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
+                      value={otp2}
+                      onChange={(e) => setOtp2(e.target.value)}
                     />
                     <input
                       type="text"
@@ -248,11 +289,11 @@ function AdminForgot() {
                         marginRight: "30px",
                         height: "50px",
                         borderRadius:'10px',
-                        border:'1px solid #526D82'
-
+                        border:'1px solid #526D82',
+                        textAlign:'center'
                       }}
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
+                      value={otp3}
+                      onChange={(e) => setOtp3(e.target.value)}
                     />
                     <input
                       type="text"
@@ -262,11 +303,11 @@ function AdminForgot() {
                         marginRight: "30px",
                         height: "50px",
                         borderRadius:'10px',
-                        border:'1px solid #526D82'
-
+                        border:'1px solid #526D82',
+                        textAlign:'center'
                       }}
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
+                      value={otp4}
+                      onChange={(e) => setOtp4(e.target.value)}
                     />
                   </div>
                   <div>

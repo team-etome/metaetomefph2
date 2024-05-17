@@ -72,7 +72,14 @@
     width:60%;
     border-radius: 0.5rem;
     border: 1px solid #526D82;
+    cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
    
+  }
+
+  .admin_submit_btn:hover {
+    background-color: #526d82; /* Change background color on hover */
+    color: white; /* Change text color on hover */
   }
   
   .admin_signup-link {
@@ -87,6 +94,25 @@
     text-decoration: underline;
     color: #526D82;
   }
+
+  .adminsocial-icons-container {
+    position: absolute;
+    bottom: 0;
+    left: 60%;
+    transform: translateX(-50%);
+    display: flex;
+  }
+  
+  .adminsocial-icon {
+    width: 50px;
+    height: 35px;
+    margin: 0 10px;
+    background-color: #fff;
+    color: #757575;
+
+  }
+ 
+
   @media (max-width:1036px) {
 
 .ad_lg_tagline{
