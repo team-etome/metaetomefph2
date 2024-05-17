@@ -804,10 +804,10 @@ function AddBooks() {
             style={{ paddingLeft: "50px", paddingRight: "50px" }}
           >
             <div>
-              <div className="textbook_row">
+              <div className="textbook_row" style={{ }}>
                 <div
                   className="textbook_col"
-                  style={{ textTransform: "capitalize" }}
+                  style={{ textTransform: "capitalize", }}
                 >
                   <div className="textbook_input_container">
                     <label htmlFor="class" style={{ fontWeight: "600" }}>
@@ -820,6 +820,19 @@ function AddBooks() {
                       value={classValue}
                       style={{}}
                       onChange={handleClassValueChange}
+                    />
+                  </div>
+                  <div className="textbook_input_container">
+                    <label htmlFor="textbookName" style={{ fontWeight: "600" }}>
+                      Textbook Name
+                    </label>
+                    <input
+                      type="text"
+                      id="textbookName"
+                      name="textbookName"
+                      value={textbookName}
+                      style={{ textTransform: "capitalize" }}
+                      onChange={(e) => setTextbookName(e.target.value)}
                     />
                   </div>
                   <div className="textbook_input_container">
@@ -867,7 +880,7 @@ function AddBooks() {
                     />
                   </div>
                 </div>
-                <div className="textbook_col">
+                <div className="textbook_col" style={{ }}>
                   <div className="textbook_input_container">
                     <label htmlFor="volume" style={{ fontWeight: "600" }}>
                       Volume
@@ -958,7 +971,7 @@ function AddBooks() {
                     {renderChapterInputs()}
                   </div>
                 </div>
-                <div className="textbook_col">
+                <div className="textbook_col" style={{marginBottom:'100px', }}>
                   <div className="bottom_right_col">
                     <div style={{ marginBottom: "100px", marginTop: "0px" }}>
                       <label

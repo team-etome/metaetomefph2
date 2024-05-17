@@ -4,7 +4,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import etomelogo from "../../../assets/etomelogo.png";
 import circle from "../../../assets/Ellipse 52 1.png";
 import { Link } from "react-router-dom";
-import { FaRegEye, FaRegEyeSlash, FaSpinner, } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash, FaSpinner } from "react-icons/fa";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -20,9 +20,9 @@ function AdminNewPassword() {
   const navigate = useNavigate();
 
   const APIURL = useSelector((state) => state.APIURL.url);
-  const email = useSelector((state) => state.email);
+  // const email = useSelector((state) => state.email);
 
-  console.log("Email from Redux state:", email);
+  // console.log("Email from Redux state:", email);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,8 +38,7 @@ function AdminNewPassword() {
       return;
     }
 
-    if (!password || !confirmPassword) 
-      {
+    if (!password || !confirmPassword) {
       let missingFields = [];
       if (!password) missingFields.push("password");
       if (!confirmPassword) missingFields.push("confirm password");
@@ -58,13 +57,13 @@ function AdminNewPassword() {
 
     try {
       const data = {
-        email: email, 
+        // email: email,
         password: password,
         confirmPassword: confirmPassword,
       };
 
-      console.log("Data to be sent:", data); 
-      
+      console.log("Data to be sent:", data);
+
       const response = await axios.post(`${APIURL}/api/reset-password`, data);
       navigate("/adminlogin");
 
@@ -81,9 +80,9 @@ function AdminNewPassword() {
         icon: "error",
         confirmButtonText: "Ok",
       });
-    }finally {
-    setLoading(false); // Set loading state back to false after submission
-  }
+    } finally {
+      setLoading(false); // Set loading state back to false after submission
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -96,8 +95,8 @@ function AdminNewPassword() {
 
   return (
     <div
-      className="admin_lgin_maindiv"
-      style={{ height: "100vh", backgroundColor: "#FFFFFF" }}
+      // className="admin_lgin_maindiv"
+      style={{ height: "auto", backgroundColor: "#FFFFFF" }}
     >
       <Container>
         <Row
@@ -109,16 +108,35 @@ function AdminNewPassword() {
           }}
         >
           <Col
-            className="admin_contant_dv"
             md={6}
             xs={12}
             style={{
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
+              
             }}
           >
-            <div style={{ position: "relative", width: "100%" }}>
+            <div className="semi_circle" >
+              <div style={{position: "absolute", top: "50%",left: "35%", transform: "translate(-50%, -50%)",}}>
+              <img
+                src={etomelogo}
+                alt="etome logo"
+                style={{
+                  width: "296px",
+                  height: "116px",
+                  // marginTop: "25px",
+                  // marginBottom: "15px",
+                }}
+              />
+              <div>
+                <p style={{ fontSize: "25px" ,color: "#526D82",fontFamily: "Preahvihear", }}>
+                  Innovation That Changes the world
+                </p>
+              </div>
+              </div>
+            </div>
+            {/* <div style={{ position: "relative", width: "100%" }}>
               <img
                 src={circle}
                 alt="circle"
@@ -156,19 +174,35 @@ function AdminNewPassword() {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
           </Col>
 
           <Col
             md={6}
             xs={12}
             style={{
-              height: "auto",
+              height: "100vh",
               paddingBottom: "50px",
               width: "50%",
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
             }}
           >
-            <div style={{ marginLeft: "40px" }}>
+            <div
+              style={{
+                marginLeft: "40px",
+                display: "flex",
+                justifyContent: "center",
+                height: "500px",
+                width: "500px",
+                flexDirection: "column",
+                alignItems: "flex-end",
+                paddingRight: "30px",
+                // border:'1px solid black',
+                // boxShadow: '0px 4px 10px rgba(52, 51, 51, 0.5)',
+              }}
+            >
               <div className="admin_new_input_container">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -196,7 +230,7 @@ function AdminNewPassword() {
 
               <div
                 className="admin_new_input_container"
-                style={{ marginTop: "50px" }}
+                // style={{ marginTop: "50px" }}
               >
                 <input
                   type={showConfirmPassword ? "text" : "password"}
@@ -227,9 +261,10 @@ function AdminNewPassword() {
               <div
                 className="admin_new_button_container"
                 style={{
-                  display: "flex",
-                  justifyContent: "right",
-                  marginRight: "10px",
+                  // display: "flex",
+                  // justifyContent: "right",
+                  // marginRight: "10px",
+                  paddingTop: "30px",
                 }}
               >
                 <button
@@ -239,16 +274,16 @@ function AdminNewPassword() {
                   style={{ fontSize: "20px" }}
                 >
                   {loading ? (
-                      <>
-                        <FaSpinner
-                          className="spinner"
-                          style={{ animation: "spin 2s linear infinite" }}
-                        />
-                        &nbsp;...
-                      </>
-                    ) : (
-                      "Submit"
-                    )}
+                    <>
+                      <FaSpinner
+                        className="spinner"
+                        style={{ animation: "spin 2s linear infinite" }}
+                      />
+                      &nbsp;...
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
                 </button>
               </div>
             </div>
