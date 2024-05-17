@@ -6,7 +6,7 @@
     align-items: center;
     padding: 1rem;
     /* height: 480px; */
-    width: 85%;
+    width: 70%;
     border-radius: 0.5rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 9px 70px -2px rgba(0, 0, 0, 0.05);
     padding-top: 60px;
@@ -22,7 +22,7 @@
   
   .admin_input_container {
     position: relative;
-    width: 80%;
+    width: 100%;
   }
   
   .admin_input_container input, .form button {
@@ -87,22 +87,52 @@
     text-decoration: underline;
     color: #526D82;
   }
-  @media (max-width: 550px) {
+  @media (max-width:1036px) {
 
-    .admin_lgin_maindiv{
-
-     height:auto !important;
-
-    }
-    .admin_contant_dv{
-      margin: 15px;
-      padding-top: 50px;
-      width: 80%;
-      /* border: 1px solid black; */
-    }
-    .admin_login_dv{
-      margin-top: 80px !important;
-      width: 90% !important;
-    }
+.ad_lg_tagline{
+  margin-left: 2% !important;
+}
     
   }
+
+  /* card flip */
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+  
+    
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    
+  }
+
+  .flip-card-inner.flipped {
+    transform: rotateY(180deg);
+  }
+  .flip-card-front,
+  .flip-card-back {
+  
+ 
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+  
+  }
+  
+  .flip-card-front{
+   
+    width: 100%;
+  }
+  
+  .flip-card-back {
+    background-color: #2980b9;
+    color: rgb(0, 0, 0);
+    transform: rotateY(180deg);
+  }
+
+  @media (max-width:999px) {
+.ad_lg_min_div{
+  background-size: cover !important;
+}
+    
+        
+      }

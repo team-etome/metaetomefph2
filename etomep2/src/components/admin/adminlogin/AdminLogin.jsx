@@ -4,146 +4,144 @@ import { Col, Container, Row } from "react-bootstrap";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { RiShareBoxFill } from "react-icons/ri";
 import etomelogo from "../../../assets/etomelogo.png";
-import circle from "../../../assets/Ellipse 52 1.png"
+import lineart from "../../../assets/lineart.png";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-
 function AdminLogin() {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
-  
-    const navigate = useNavigate();
-  
-    const APIURL = useSelector((state) => state.APIURL.url);
-  
-    const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
-    };
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      if (!email || !password) {
-        Swal.fire({
-          title: "Error!",
-          text: "All fields are required",
-          icon: "error",
-          confirmButtonText: "Ok",
-        });
-        return;
-      }
-  
-      try {
-        const data = {
-          email: email,
-          password: password,
-        };
-  
-        const response = await axios.post(`${APIURL}/api/adminLogin`, data);
-        navigate("/admindashboard");
-  
-        Swal.fire({
-          title: "Success!",
-          text: "Added Successfully",
-          icon: "success",
-          confirmButtonText: "Ok",
-        });
-      } catch (error) {
-        Swal.fire({
-          title: "Error!",
-          text: "Technical Error",
-          icon: "error",
-          confirmButtonText: "Ok",
-        });
-      }
-    };
+    
+ 
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+  const APIURL = useSelector((state) => state.APIURL.url);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      Swal.fire({
+        title: "Error!",
+        text: "All fields are required",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
+
+    try {
+      const data = {
+        email: email,
+        password: password,
+      };
+
+      const response = await axios.post(`${APIURL}/api/adminLogin`, data);
+      navigate("/admindashboard");
+
+      Swal.fire({
+        title: "Success!",
+        text: "Added Successfully",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Technical Error",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  };
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const handleFlip = () => {
+    setIsFlipped(!isFlipped);}
   return (
-    <div className="admin_lgin_maindiv"  style={{ height: "100vh", backgroundColor: "#FFFFFF" }}>
-        <Container>
+    <div
+     className="ad_lg_min_div"
+      style={{
+        height: "100%",
+        width:"100%",
+        backgroundColor: "#FFFFFF",
+        backgroundImage: `url(${lineart})`,
+        backgroundSize: "70% 100%", 
+        backgroundPosition: "left center",
+        backgroundRepeat: "no-repeat",
+        
+      }}
+    >
+      <Container fluid >
         <Row
-          md={12}
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            // border:'1px solid red',
+            height: "100vh",
           }}
         >
-<Col
-  className="admin_contant_dv"
-  md={6}
-  xs={12}
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-    // borderRadius: "50%", 
-    // border:'1px solid black',
-    // padding: "20px",
-  }}
->
-  <div style={{position: 'relative', width: '100%'}}>
-    <img
-      src={circle}
-      alt="circle"
-      style={{
-        width: "100%",
-        height: "850px",
-      }}
-    />
-    <div style={{ position: 'absolute', top: '50%', left: '30%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#526D82', fontFamily: 'Preahvihear, Arial, sans-serif' }}>
-      <img
-        src={etomelogo}
-        alt="etome logo"
-        style={{
-          width: "296px",
-          height: "116px",
-          marginTop: "25px",
-          marginBottom: "15px",
-        }}
-      />
-      {/* Conditionally render the text and button for non-mobile screens */}
-      {window.innerWidth > 550 && (
-        <div>
-          <p style={{ fontSize: '27px', }}>
-            Innovation That Changes the world
-          </p>
-          <Link to="https://www.etome.in/" style={{textDecoration:'none', display: 'inline-block', textAlign: 'center'}}>
-            <button
-              style={{
-                display: "inline-block",
-                width: "224px",
-                height: "53px",
-                backgroundColor: "transparent",
-                color: "#526D82",
-                borderRadius: "1rem",
-                borderColor: "#526D82",
-                marginTop: "20px",
-              }}
-              type="submit"
-            >
-              Go To Website
-              <RiShareBoxFill style={{marginLeft:'10px'}}/>
-            </button>
-          </Link>
-        </div>
-      )}
-    </div>
-  </div>
-</Col>
-
-          
           <Col
             md={6}
             xs={12}
-            className="admin_login_dv"
+            style={{
+              display: "flex",
+              justifyContent:"flex-start",
+              alignItems: "flex-start",
+              flexDirection: "column",
+              textAlign: "center",
+              color: "#526D82",
+              paddingLeft:"100px"
+            }}
+          >
+            <img
+              src={etomelogo}
+              alt="etome logo"
+              style={{
+                width: "296px",
+                height: "116px",
+                marginBottom: "15px",
+              }}
+            />
+            {window.innerWidth > 550 && (
+              <>
+                <p className="ad_lg_tagline" style={{ fontSize: "clamp(15px, 2vw, 20px)",fontFamily: "PT Mono",marginLeft:"30px" }}>Innovation That Changes the world</p>
+                <Link to="https://www.etome.in/" style={{ textDecoration: "none", }}>
+                  <button
+                    style={{
+                      width: "224px",
+                      height: "53px",
+                      backgroundColor: "transparent",
+                      color: "#526D82",
+                      borderRadius: "1rem",
+                      borderColor: "#526D82",
+                      marginTop: "10px",
+                      marginLeft:"30px"
+                    }}
+                    type="submit"
+                  >
+                    Go To Website
+                    <RiShareBoxFill style={{ marginLeft: "10px" }} />
+                  </button>
+                </Link>
+              </>
+            )}
+          </Col>
+
+          <Col
+            md={6}
+            xs={12}
+           
             style={{
               display: "flex",
               justifyContent: "center",
@@ -152,21 +150,14 @@ function AdminLogin() {
               marginTop: "50px",
               paddingBottom: "50px",
               width: "50%",
+              
+             
+            
             }}
           >
             <form className="admin_form ">
-              {/* <img
-                src={etomelogo}
-                alt="etome logo"
-                className="gd_login_logo"
-                style={{
-                  width: "170px",
-                  height: "70px",
-                  marginTop: "25px",
-                  marginBottom: "15px",
-                }}
-              /> */}
-
+         <div className={`flip-card-inner ${isFlipped ? 'flipped' : ''}`}> 
+<div className="flip-card-front" >
               <p className="admin_form_title" style={{marginBottom:'30px', }}>Login</p>
 
               <div className="admin_input_container">
@@ -201,8 +192,8 @@ function AdminLogin() {
                 </span>
             </div>
 
-              <p className="admin_signup-link" style={{}}>
-                <a href="/adminforgot">Forgot Password?</a>
+              <p className="admin_signup-link"  onClick={handleFlip} style={{}}>
+                <a>Forgot Password?</a>
               </p>
               <button
                 className="admin_submit_btn"
@@ -212,14 +203,20 @@ function AdminLogin() {
               >
                 Login
               </button>
-
-
+              </div>
+              <div className="flip-card-back">
+          <p className="title">BACK</p>
+          <p>Leave Me</p>
+        </div>
+</div>   
             </form>
+
+            
           </Col>
         </Row>
       </Container>
     </div>
-  )
+  );
 }
 
-export default AdminLogin
+export default AdminLogin;
