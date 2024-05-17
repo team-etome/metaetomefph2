@@ -5,7 +5,9 @@ import { FaRegEye, FaRegEyeSlash, FaLinkedin, FaInstagramSquare } from "react-ic
 import { BiLogoGmail } from "react-icons/bi";
 import { RiShareBoxFill } from "react-icons/ri";
 import etomelogo from "../../../assets/etomelogo.png";
-import circle from "../../../assets/Ellipse 52 1.png";
+
+import lineart from "../../../assets/lineart.png";
+
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +29,25 @@ function AdminLogin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+
+    
+ 
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+  const APIURL = useSelector((state) => state.APIURL.url);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
 
     if (!email || !password) {
       Swal.fire({
@@ -62,28 +83,36 @@ function AdminLogin() {
       });
     }
   };
+  const [isFlipped, setIsFlipped] = useState(false);
 
+  const handleFlip = () => {
+    setIsFlipped(!isFlipped);}
   return (
     <div
+
       className="admin_lgin_maindiv"
       style={{ height: "100vh", backgroundColor: "#FFFFFF" }}
     >
-      <Container>
+    
+      <Container fluid >
+
         <Row
-          md={12}
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            // border:'1px solid red',
+            height: "100vh",
           }}
         >
           <Col
+
             className="admin_contant_dv"
+
             md={6}
             xs={12}
             style={{
               display: "flex",
+
               justifyContent: "center",
               flexDirection: "column",
               // borderRadius: "50%",
@@ -157,12 +186,54 @@ function AdminLogin() {
                 )}
               </div>
             </div>
+
+              justifyContent:"flex-start",
+              alignItems: "flex-start",
+              flexDirection: "column",
+              textAlign: "center",
+              color: "#526D82",
+              paddingLeft:"100px"
+            }}
+          >
+            <img
+              src={etomelogo}
+              alt="etome logo"
+              style={{
+                width: "296px",
+                height: "116px",
+                marginBottom: "15px",
+              }}
+            />
+            {window.innerWidth > 550 && (
+              <>
+                <p className="ad_lg_tagline" style={{ fontSize: "clamp(15px, 2vw, 20px)",fontFamily: "PT Mono",marginLeft:"30px" }}>Innovation That Changes the world</p>
+                <Link to="https://www.etome.in/" style={{ textDecoration: "none", }}>
+                  <button
+                    style={{
+                      width: "224px",
+                      height: "53px",
+                      backgroundColor: "transparent",
+                      color: "#526D82",
+                      borderRadius: "1rem",
+                      borderColor: "#526D82",
+                      marginTop: "10px",
+                      marginLeft:"30px"
+                    }}
+                    type="submit"
+                  >
+                    Go To Website
+                    <RiShareBoxFill style={{ marginLeft: "10px" }} />
+                  </button>
+                </Link>
+              </>
+            )}
+
           </Col>
 
           <Col
             md={6}
             xs={12}
-            className="admin_login_dv"
+           
             style={{
               display: "flex",
               justifyContent: "center",
@@ -171,9 +242,13 @@ function AdminLogin() {
               marginTop: "50px",
               paddingBottom: "50px",
               width: "50%",
+              
+             
+            
             }}
           >
             <form className="admin_form ">
+
               {/* <img
                 src={etomelogo}
                 alt="etome logo"
@@ -189,6 +264,11 @@ function AdminLogin() {
               <p className="admin_form_title" style={{ marginBottom: "30px" }}>
                 Login
               </p>
+
+         <div className={`flip-card-inner ${isFlipped ? 'flipped' : ''}`}> 
+<div className="flip-card-front" >
+              <p className="admin_form_title" style={{marginBottom:'30px', }}>Login</p>
+
 
               <div className="admin_input_container">
                 <label
@@ -246,8 +326,8 @@ function AdminLogin() {
                 </span>
               </div>
 
-              <p className="admin_signup-link" style={{}}>
-                <a href="/adminforgot">Forgot Password?</a>
+              <p className="admin_signup-link"  onClick={handleFlip} style={{}}>
+                <a>Forgot Password?</a>
               </p>
               <button
                 className="admin_submit_btn"
@@ -257,7 +337,17 @@ function AdminLogin() {
               >
                 Login
               </button>
+
+              </div>
+              <div className="flip-card-back">
+          <p className="title">BACK</p>
+          <p>Leave Me</p>
+        </div>
+</div>   
+
             </form>
+
+            
           </Col>
           {/* <div className="adminsocial-icons-container">
             <FaLinkedin className="adminsocial-icon" />

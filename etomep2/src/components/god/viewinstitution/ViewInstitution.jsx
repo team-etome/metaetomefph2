@@ -17,15 +17,7 @@ function ViewInstitution() {
 
   const { id } = useParams();
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${APIURL}/api/adminLogin/${id}`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setInstitution(response.data);
-  //     })
-  //     .catch((error) => console.error("Error fetching institution:", error));
-  // }, [APIURL, id]);
+
 
   const fetchData = () => {
     axios
@@ -41,38 +33,43 @@ function ViewInstitution() {
     fetchData();
   }, [APIURL, id]);
 
-  // const fetchData = useEffect(() => {
-  //   axios
-  //     .get(`${APIURL}/api/adminLogin/${id}`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setInstitution(response.data);
-  //     })
-  //     .catch((error) => console.error("Error fetching institution:", error));
-  // }, [APIURL, id]);
+
 
 
   const handleToggleBlock = async (institutionId, is_block) => {
-
-    try {
-      await axios.post(`${APIURL}/api/block`, { id: institutionId, action:is_block });
-      // Toggle the blocked status locally
-      
-      // Show success message using SweetAlert
-      Swal.fire({
-        icon: 'success',
-        title: 'Block Status Updated',
-        text: `Block status has been successfully ${is_block ? 'blocked' : 'unblocked'}.`,
-      });
-      fetchData();
-    } catch (error) {
-      console.error("Error toggling block status:", error);
-      // handle error, e.g., show error message to the user
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'An error occurred while updating block status. Please try again later.',
-      });
+    const actionWord = is_block ? 'unblock' : 'block'; // Correct the action word based on the state
+  
+    // Confirmation dialog
+    const result = await Swal.fire({
+      title: `Are you sure?`,
+      text: `Do you want to ${actionWord} this institution?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: `Yes, ${actionWord} it!`
+    });
+  
+    
+    if (result.isConfirmed) {
+      try {
+        await axios.post(`${APIURL}/api/block`, { id: institutionId, action: !is_block }); // Toggle the action
+  
+        Swal.fire({
+          icon: 'success',
+          title: 'Block Status Updated',
+          text: `Institution has been successfully ${actionWord}.`,
+        });
+  
+        fetchData(); 
+      } catch (error) {
+        console.error("Error toggling block status:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'An error occurred while updating block status. Please try again later.',
+        });
+      }
     }
   };
 

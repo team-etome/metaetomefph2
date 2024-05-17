@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { BsFilterRight, BsSearch } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import {
@@ -12,35 +12,59 @@ import {
   Col,
   Pagination,
 } from "react-bootstrap";
-import "../textbookdashboard/bookdashboard.css";
+
 import axios from "axios";
 import { BiBookAdd } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import ViewTextbook from "../viewtextbook/ViewTextbook";
+
 function BookdashBoard() {
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage] = useState(8);
+  const [searchTerm, setSearchTerm] = useState("");
   const APIURL = useSelector((state) => state.APIURL.url);
-  console.log(books,"aaaaaaaaaaaaaaaaaaaaaaaaa")
+
+  console.log(books, "booksssssssss");
+
+  const getClassNames = () => {
+    const classNames = new Set();
+    books.forEach((book) => {
+      if (book.class_name) {
+        classNames.add(book.class_name);
+      }
+    });
+    return Array.from(classNames);
+  };
+
   useEffect(() => {
-    axios.get(`${APIURL}/api/create-textbook/`)
+    axios
+      .get(`${APIURL}/api/create-textbook/`)
       .then((response) => {
         setBooks(response.data);
       })
-      .catch((error) => console.error("Error fetching books:", error));
+      .catch((error) => {
+        console.error("Error fetching books:", error);
+      });
   }, []);
+
   const handleCardClick = (book) => {
     setSelectedBook(book);
     setShowModal(true);
   };
+
+  const filteredBooks = books.filter((book) =>
+    book.text_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  const currentBook = books.slice(indexOfFirstBook, indexOfLastBook);
-  // Change page
+  const currentBook = filteredBooks.slice(indexOfFirstBook, indexOfLastBook);
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div
       style={{
@@ -52,15 +76,28 @@ function BookdashBoard() {
       <Navbar
         expand="lg"
         className="bg-body-tertiary book"
-        style={{ marginBottom: "20px" , marginTop:'10px',borderRadius: "17px",}}
+        style={{
+          marginBottom: "20px",
+          marginTop: "10px",
+          borderRadius: "17px",
+        }}
       >
-        <Container style={{}}>
-          <Navbar.Brand href="#home" style={{color:'#526D82', fontSize:'23px',}}>Library</Navbar.Brand>
+        <Container>
+          <Navbar.Brand
+            href="#home"
+            style={{ color: "#526D82", fontSize: "23px" }}
+          >
+            Library
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto" >
+            <Nav className="me-auto">
               <NavDropdown title="Class" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">XII</NavDropdown.Item>
+                {getClassNames().map((className, index) => (
+                  <NavDropdown.Item key={index} href="#action/3.1">
+                    {className}
+                  </NavDropdown.Item>
+                ))}
               </NavDropdown>
               <NavDropdown title="Subject" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Science</NavDropdown.Item>
@@ -85,6 +122,8 @@ function BookdashBoard() {
                     borderRadius: "12px",
                     fontWeight: "400px",
                   }}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
             </Form>
@@ -92,73 +131,116 @@ function BookdashBoard() {
         </Container>
       </Navbar>
       <Container>
-        <Container style={{
-          backgroundColor: "#fff",
-          borderRadius: "17px",
-          marginBottom: "70px",
-          }}>
+        <Container
+          style={{
+            backgroundColor: "#fff",
+            borderRadius: "17px",
+            marginBottom: "70px",
+          }}
+        >
           {currentBook.length === 0 ? (
             <Row className="justify-content-center">
               <Col>
-                <Card  className="text-center p-4" style={{backgroundColor:'transparent', border:'none', color:'#526D82'}}>
+                <Card
+                  className="text-center p-4"
+                  style={{
+                    backgroundColor: "transparent",
+                    border: "none",
+                    color: "#526D82",
+                  }}
+                >
                   <h5>No data to be shown</h5>
                 </Card>
               </Col>
             </Row>
           ) : (
-          <Row xs={1} sm={2} md={3} lg={4} >
-          {currentBook.map((book, index) => (
-              <Col key={index} className="d-flex justify-content-center mb-4">
-                {/* <Link to={{ pathname: `/ViewTextbook`, state: { book } }} style={{textDecoration:'none'}}> */}
-                <Card
-                  style={{
-                    width: "200px",
-                    alignItems: "center",
-                    border: "none",
-                    marginTop: "20px",
-                    marginBottom: "30px",
-                    boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                  }}
-                  onClick={() => handleCardClick(book)}
-                >
-                  <Card.Img
-                    variant="top"
-                    src={book.textbook_image}
-                    style={{ width: "150px", margin: "10px" }}
-                    class="image-container"
-                  />
-                  <Card.Body>
-                    <Card.Title>{book.text_name}</Card.Title>
-                    <Card.Text>{book.publisher_name}</Card.Text>
-                  </Card.Body>
-                </Card>
-                {/* </Link> */}
-              </Col>
-             ))}
-          </Row>
+            <Row xs={1} sm={2} md={3} lg={4}>
+              {currentBook.map((book, index) => (
+                <Col key={index} className="d-flex justify-content-center mb-4">
+                  <Card
+                    style={{
+                      width: "200px",
+                      alignItems: "center",
+                      border: "none",
+                      marginTop: "20px",
+                      marginBottom: "30px",
+                      boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                    }}
+                    onClick={() => handleCardClick(book)}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={book.textbook_image}
+                      style={{ width: "150px", margin: "10px" }}
+                      class="image-container"
+                    />
+                    <Card.Body>
+                      <Card.Title>{book.text_name}</Card.Title>
+                      <Card.Text>{book.publisher_name}</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
           )}
-        {currentBook.length > 0 && (
-          <Pagination className="book_pagination_custom" style={{ justifyContent: 'center', }}>
-            <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
-            {Array.from({ length: Math.ceil(books.length / booksPerPage) }, (_, i) => (
-              <Pagination.Item key={i} active={i + 1 === currentPage} onClick={() => paginate(i + 1)}>
-                {i + 1}
-              </Pagination.Item>
-            ))}
-            <Pagination.Next onClick={() => paginate(currentPage + 1)} disabled={currentPage === Math.ceil(books.length / booksPerPage)} />
-          </Pagination>
-        )}
-          </Container>
-          <div>
-            <Link to='/addbooks'>
-              <BiBookAdd style={{ position: "fixed", top: "600px", right: "25px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px",  width: "60px", height: "60px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)" }}/>
-            </Link>
-          </div>
-          {showModal && selectedBook && (
-          <ViewTextbook show={showModal} handleClose={() => setShowModal(false)} book={selectedBook} />
+          {currentBook.length > 0 && (
+            <Pagination
+              className="book_pagination_custom"
+              style={{ justifyContent: "center" }}
+            >
+              <Pagination.Prev
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+              />
+              {Array.from(
+                { length: Math.ceil(filteredBooks.length / booksPerPage) },
+                (_, i) => (
+                  <Pagination.Item
+                    key={i}
+                    active={i + 1 === currentPage}
+                    onClick={() => paginate(i + 1)}
+                  >
+                    {i + 1}
+                  </Pagination.Item>
+                )
+              )}
+              <Pagination.Next
+                onClick={() => paginate(currentPage + 1)}
+                disabled={
+                  currentPage === Math.ceil(filteredBooks.length / booksPerPage)
+                }
+              />
+            </Pagination>
+          )}
+        </Container>
+        <div>
+          <Link to="/addbooks">
+            <BiBookAdd
+              style={{
+                position: "fixed",
+                top: "600px",
+                right: "25px",
+                color: "black",
+                borderRadius: "100%",
+                backgroundColor: "white",
+                padding: "10px",
+                width: "60px",
+                height: "60px",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)",
+              }}
+            />
+          </Link>
+        </div>
+        {showModal && selectedBook && (
+          <ViewTextbook
+            show={showModal}
+            handleClose={() => setShowModal(false)}
+            book={selectedBook}
+          />
         )}
       </Container>
     </div>
   );
 }
+
 export default BookdashBoard;
