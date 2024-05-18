@@ -41,19 +41,29 @@ function AdminLogin() {
       navigate("/admindashboard");
       Swal.fire({
         title: "Success!",
-        text: "Added Successfully",
+        text: "Login Successfully",
         icon: "success",
         confirmButtonText: "Ok",
       });
     } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "Technical Error",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
+      if (error.response && error.response.status === 405) {
+        Swal.fire({
+          title: "Blocked!",
+          text: "User has been blocked",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: "Invalid Email id or Password",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      }
     }
   };
+  
   const [isFlipped, setIsFlipped] = useState(false);
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
@@ -92,8 +102,10 @@ function AdminLogin() {
               color: "#526D82",
               paddingLeft: "100px",
             }}
+            className="ad_lg_left_div"
           >
             <img
+            className="ad_lg_logo"
               src={etomelogo}
               alt="etome logo"
               style={{
@@ -102,7 +114,7 @@ function AdminLogin() {
                 marginBottom: "15px",
               }}
             />
-            {window.innerWidth > 550 && (
+
               <>
                 <p
                   className="ad_lg_tagline"
@@ -119,6 +131,7 @@ function AdminLogin() {
                   style={{ textDecoration: "none" }}
                 >
                   <button
+                    className="website_button"
                     style={{
                       width: "224px",
                       height: "53px",
@@ -136,7 +149,7 @@ function AdminLogin() {
                   </button>
                 </Link>
               </>
-            )}
+            
           </Col>
           <Col
             md={6}

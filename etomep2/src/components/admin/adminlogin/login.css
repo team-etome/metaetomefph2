@@ -139,6 +139,57 @@ margin-left: 2% !important;
 .ad_lg_min_div{
 background-size: cover !important;
 }
+}
+
+@media (max-width: 800px) {
+  .ad_lg_min_div {
+      background-size: cover !important;
+      /* text-align: left;  */
+  }
+  .ad_lg_left_div{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    /* background-color: aqua; */
+    padding-left: 0 !important;
+    padding-top: 30px;
+  }
+  /* .ad_lg_logo{
+    padding-right: 35%;
+    margin-top: 20%;
+    display: block; 
+    width: 70%; 
+    height: auto;
+  } */
+  .admin_form {
+      width: 800px;
+      padding: 10px;
+      margin-bottom: 50px;
+  }
+  .admin_form_title {
+      font-size: 1.5rem;
+  }
+  .admin_input_container {
+    /* position: relative; */
+    width: 300px;
+  }
   
-      
-    }
+  .admin_input_container input, .admin_input_container span {
+      font-size: 1rem; 
+  }
+  .admin_submit_btn {
+      width: 100%;
+      padding: 12px; 
+  }
+  .ad_lg_tagline {
+      font-size: 1rem; 
+      margin-left: 5px; 
+  }
+  .admin_signup-link {
+      font-size: 0.875rem; 
+  }
+  .website_button{
+    display: none;
+  }
+}
