@@ -15,6 +15,7 @@ function AddBooks() {
   const [chapters, setChapters] = useState([]);
   const [classValue, setClassValue] = useState("");
   const [textbookName, setTextbookName] = useState("");
+  const [subject, setSubject] = useState("");
   const [medium, setMedium] = useState("");
   const [m, setM] = useState("");
   const [volume, setVolume] = useState("");
@@ -51,6 +52,7 @@ function AddBooks() {
     if (data && data[0].chapter_info) {
       setClassValue(data[0].class_name || "");
       setTextbookName(data[0].text_name || "");
+      setSubject(data[0].subject || "");
       setVolume(data[0].volume || "");
       setMedium({ value: data[0].medium, label: data[0].medium } || "");
       setPublisherName(data[0].publisher_name || []);
@@ -240,6 +242,7 @@ function AddBooks() {
       !classValue ||
       !textbookName ||
       !medium ||
+      !subject ||
       // !volume ||
       !publisherName ||
       !pdfFile ||
@@ -248,6 +251,7 @@ function AddBooks() {
       let missingFields = [];
       if (!classValue) missingFields.push("class");
       if (!textbookName) missingFields.push("textbook name");
+      if (!subject) missingFields.push("Subject");
       if (!medium) missingFields.push("medium");
       if (!publisherName) missingFields.push("publisher name");
       if (!pdfFile) missingFields.push("PDF file");
@@ -269,6 +273,7 @@ function AddBooks() {
       const formData = new FormData();
       formData.append("class_name", classValue);
       formData.append("text_name", textbookName);
+      formData.append("subject", subject);
       formData.append("volume", volume);
       formData.append("textbook_pdf", pdfFile);
       formData.append("textbook_front_page", imageFile);
@@ -339,6 +344,7 @@ function AddBooks() {
       let missingFields = [];
       if (!classValue) missingFields.push("class");
       if (!textbookName) missingFields.push("textbook name");
+      if (!subject) missingFields.push("Subject");
       if (!medium) missingFields.push("medium");
       if (!publisherName) missingFields.push("publisher name");
       if (!pdfFile) missingFields.push("PDF file");
@@ -359,6 +365,7 @@ function AddBooks() {
       formData.append("id",id);
       formData.append("class_name", classValue);
       formData.append("text_name", textbookName);
+      formData.append("subject", subject);
       formData.append("volume", volume);
       formData.append("textbook_pdf", pdfFile);
       formData.append("textbook_front_page", imageFile);
@@ -837,19 +844,7 @@ function AddBooks() {
                       onChange={(e) => setTextbookName(e.target.value)}
                     />
                   </div>
-                  <div className="textbook_input_container">
-                    <label htmlFor="textbookName" style={{ fontWeight: "600" }}>
-                      Textbook Name
-                    </label>
-                    <input
-                      type="text"
-                      id="textbookName"
-                      name="textbookName"
-                      value={textbookName}
-                      style={{ textTransform: "capitalize" }}
-                      onChange={(e) => setTextbookName(e.target.value)}
-                    />
-                  </div>
+
                   <div
                     className="textbook_input_container_select"
                     style={{
@@ -894,6 +889,19 @@ function AddBooks() {
                       value={volume}
                       style={{ textTransform: "capitalize" }}
                       onChange={(e) => setVolume(e.target.value)}
+                    />
+                  </div>
+                  <div className="textbook_input_container">
+                    <label htmlFor="subject" style={{ fontWeight: "600" }}>
+                      Subject
+                    </label>
+                    <input
+                      type="text"
+                      id="subject"
+                      name="subject"
+                      value={subject}
+                      style={{ textTransform: "capitalize" }}
+                      onChange={(e) => setSubject(e.target.value)}
                     />
                   </div>
                   <div
@@ -965,7 +973,7 @@ function AddBooks() {
                   </div>
                   <div
                     style={{
-                      border: "1px solid black",
+                      // border: "1px solid black",
                       width: "390px",
                       marginLeft: "30px",
                     }}
@@ -973,14 +981,14 @@ function AddBooks() {
                     {renderChapterInputs()}
                   </div>
                 </div>
-                <div className="textbook_col" style={{marginBottom:'100px', }}>
-                  <div className="bottom_right_col">
-                    <div style={{ marginBottom: "100px", marginTop: "0px" }}>
+                <div className="textbook_col" style={{marginBottom:'10px', marginTop:'100px'}}>
+                  <div className="bottom_right_col" style={{}}>
+                    <div style={{}}>
                       <label
                         htmlFor="mediaLibrary"
                         style={{
                           marginLeft: "20px",
-                          marginBottom: "10px",
+                          // marginBottom: "50px",
                           fontSize: "25px",
                           padding: "0px",
                         }}
@@ -989,15 +997,15 @@ function AddBooks() {
                       </label>
                     </div>
                     <div>
-                      <div style={{ marginLeft: "10px", marginTop: "-10px" }}>
+                      <div style={{ marginLeft: "10px",  }}>
                         <div style={{ display: "flex" }}>
                           <div
                             className="textbutton-container"
-                            style={{ marginTop: "-80px" }}
+                            style={{  }}
                           >
                             <button
                               style={{
-                                marginTop: "-80px",
+                                
                                 ...(selectedTab === "pdf"
                                   ? { border: "4px solid black" }
                                   : {}),
@@ -1010,11 +1018,11 @@ function AddBooks() {
                           </div>
                           <div
                             className="textbutton-container"
-                            style={{ marginTop: "-80px" }}
+                            style={{  }}
                           >
                             <button
                               style={{
-                                marginTop: "-80px",
+                                
                                 ...(selectedTab === "frontPage"
                                   ? { border: "4px solid black" }
                                   : {}),
@@ -1031,7 +1039,7 @@ function AddBooks() {
                       </div>
 
                       {selectedTab === "pdf" && (
-                        <div style={{ marginLeft: "10px", marginTop: "-50px" }}>
+                        <div style={{ marginLeft: "10px", }}>
                           <label htmlFor="pdf" style={{}}></label>
                           <div className="textbook_image_upload_container">
                             <div className="textbook_upload_placeholder">
@@ -1083,7 +1091,7 @@ function AddBooks() {
                       )}
 
                       {selectedTab === "frontPage" && (
-                        <div style={{ marginLeft: "10px", marginTop: "-50px" }}>
+                        <div style={{ marginLeft: "10px", }}>
                           <label htmlFor="photo" style={{}}></label>
                           <div className="textbook_image_upload_container">
                             <div className="textbook_upload_placeholder">
