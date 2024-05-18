@@ -24,12 +24,11 @@
       setShowOptions(!showOptions);
     };
 
-    const handleOptionClick = (option) => {
-      console.log("Selected option:", option);
-    };
+    // const handleOptionClick = (option) => {
+    //   console.log("Selected option:", option);
+    // };
 
-    console.log(customers,"dddddddddddd")
-
+  
     useEffect(() => {
       axios.get(`${APIURL}/api/addadmin`)
     
