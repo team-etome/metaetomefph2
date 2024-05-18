@@ -37,23 +37,33 @@ function ViewInstitution() {
 
 
   const handleToggleBlock = async (institutionId, is_block) => {
-    const actionWord = is_block ? 'unblock' : 'block'; // Correct the action word based on the state
-  
-    // Confirmation dialog
+    const actionWord = is_block ? 'unblock' : 'block'; 
+   
     const result = await Swal.fire({
-      title: `Are you sure?`,
+      title: 'Are you sure?',
       text: `Do you want to ${actionWord} this institution?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: `Yes, ${actionWord} it!`
+      confirmButtonText: `Yes, ${actionWord} it!`,
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true,
+      buttonsStyling: true, 
+      background: '#fff', 
+      color: '#333', 
+      iconColor: 'red', 
+      width: '600px', 
+      padding: '1.25em', 
+      border: '1px solid #ccc',
+      borderRadius: '20px', 
     });
+    
   
     
     if (result.isConfirmed) {
       try {
-        await axios.post(`${APIURL}/api/block`, { id: institutionId, action: !is_block }); // Toggle the action
+        await axios.post(`${APIURL}/api/block`, { id: institutionId, action: is_block }); // Toggle the action
   
         Swal.fire({
           icon: 'success',
@@ -62,6 +72,7 @@ function ViewInstitution() {
         });
   
         fetchData(); 
+
       } catch (error) {
         console.error("Error toggling block status:", error);
         Swal.fire({

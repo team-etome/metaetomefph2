@@ -19,9 +19,16 @@ function AddBooks() {
   const [m, setM] = useState("");
   const [volume, setVolume] = useState("");
   const [publisherName, setPublisherName] = useState("");
+  const [p, setP] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
   const [data, setData] = useState("");
+
+  console.log(m, "aaaaaaaaaaaaaaaaaaaa");
+  const handleMediumChange = (selectedOptions) => {
+    setM(selectedOptions.value);
+    setMedium(selectedOptions);
+  };
 
   const { id } = useParams();
 
@@ -53,7 +60,13 @@ function AddBooks() {
       setTextbookName(data[0].text_name || "");
       setVolume(data[0].volume || "");
       setMedium({ value: data[0].medium, label: data[0].medium } || "");
-      setPublisherName(data[0].publisher_name || []);
+      setPublisherName({
+        value: data[0].publisher_name,
+        label: data[0].publisher_name,
+      });
+      setTotalChaptersInput(data[0].total_chapters);
+      setImageFile(data[0]?.textbook_image);
+      setPdfFile(data[0]?.textbook_pdf);
 
       setChapters(
         data[0].chapter_info.map((chapter) => ({
@@ -70,6 +83,8 @@ function AddBooks() {
 
   const handlePublisherChange = (selectedOptions) => {
     setPublisherName(selectedOptions);
+    setP(selectedOptions.value)
+    
   };
 
   const publishers = [
@@ -143,10 +158,6 @@ function AddBooks() {
       setClassValue("");
     }
   };
-  const handleMediumChange = (selectedOptions) => {
-    setM(selectedOptions.value);
-    setMedium(selectedOptions);
-  };
 
   const handleChapterInputChange = (index, fieldName, value) => {
     const updatedChapters = [...chapters];
@@ -163,6 +174,7 @@ function AddBooks() {
   };
 
   const renderChapterInputs = () => {
+    
     return chapters.map((chapter, index) => (
       <div
         key={index}
@@ -328,6 +340,8 @@ function AddBooks() {
   }));
 
   const handleUpdate = async () => {
+    console.log("enteredsdddd");
+    // Check if all required fields are filled
     if (
       !classValue ||
       !textbookName ||
@@ -343,64 +357,85 @@ function AddBooks() {
       if (!publisherName) missingFields.push("publisher name");
       if (!pdfFile) missingFields.push("PDF file");
       if (!imageFile) missingFields.push("image file");
-  
+
       Swal.fire({
         icon: "error",
         title: "Missing Required Information",
-        text: `Please complete the following fields: ${missingFields.join(", ")}.`,
+        text: `Please complete the following fields: ${missingFields.join(
+          ", "
+        )}.`,
       });
       setLoading(false);
       return;
     }
-  
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append("id",id);
-      formData.append("class_name", classValue);
-      formData.append("text_name", textbookName);
-      formData.append("volume", volume);
-      formData.append("textbook_pdf", pdfFile);
-      formData.append("textbook_front_page", imageFile);
-      formData.append("medium", m);
-  
-      publisherName.forEach((publisherValue, index) => {
-        formData.append(`publisher_name[${index}]`, publisherValue.value);
-      });
-  
-      chapters.forEach((chapter, index) => {
-        formData.append("chapter_name", chapter.name);
-        formData.append("page_no", chapter.pageNo);
-      });
-  
-      const response = await axios.put(
-        `${APIURL}/api/update-textbook`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+    const confirmResult = await Swal.fire({
+      title: "Confirm Update",
+      text: "Are you sure you want to update this textbook?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update it!",
+    });
+
+    if (confirmResult.isConfirmed) {
+      setLoading(true);
+      try {
+        const formData = new FormData();
+        formData.append("id", id);
+        formData.append("class_name", classValue);
+        formData.append("text_name", textbookName);
+        formData.append("volume", volume);
+        formData.append("textbook_pdf", pdfFile);
+        formData.append("textbook_front_page", imageFile);
+        formData.append("medium", m);
+        // formData.append("publisher_name", publisherName.value);
+
+        if (Array.isArray(publisherName)) {
+          publisherName.forEach((publisher) => {
+            formData.append("publisher_name[]", publisher.value);
+          });
+        } else {
+          console.error("publisherName is not an array:", publisherName);
         }
-      );
-  
-      Swal.fire({
-        icon: "success",
-        title: "Success!",
-        text: "Textbook updated successfully!",
-      });
-  
-      navigate("/header");
-    } catch (error) {
-      console.error("Error updating textbook:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
-    } finally {
-      setLoading(false);
+
+        chapters.forEach((chapter, index) => {
+          formData.append("chapter_name", chapter.name);
+          formData.append("page_no", chapter.pageNo);
+        });
+
+        console.log("FormData:", formData);
+
+        const response = await axios.put(
+          `${APIURL}/api/update-textbook`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Textbook updated successfully!",
+        });
+
+        navigate("/header");
+      } catch (error) {
+        console.error("Error updating textbook:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      } finally {
+        setLoading(false);
+      }
     }
   };
+
   return (
     <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white " }}>
       {data ? (
@@ -508,7 +543,6 @@ function AddBooks() {
                     />
                   </div>
 
-                  
                   <div
                     className="textbook_input_container_select"
                     style={{
@@ -651,7 +685,7 @@ function AddBooks() {
                               {pdfFile ? (
                                 <>
                                   <embed
-                                    src={URL.createObjectURL(pdfFile)}
+                                    src={pdfFile}
                                     type="application/pdf"
                                     width="100%"
                                     height="200px"
@@ -703,7 +737,7 @@ function AddBooks() {
                               {imageFile ? (
                                 <>
                                   <img
-                                    src={URL.createObjectURL(imageFile)}
+                                    src={imageFile}
                                     alt="Uploaded Image"
                                     className="uploaded_image"
                                     style={{
