@@ -85,8 +85,7 @@ function AddBooks() {
 
   const handlePublisherChange = (selectedOptions) => {
     setPublisherName(selectedOptions);
-    setP(selectedOptions.value)
-    
+    setP(selectedOptions.value);
   };
 
   const publishers = [
@@ -176,7 +175,6 @@ function AddBooks() {
   };
 
   const renderChapterInputs = () => {
-    
     return chapters.map((chapter, index) => (
       <div
         key={index}
@@ -345,12 +343,11 @@ function AddBooks() {
   }));
 
   const handleUpdate = async () => {
-    console.log("enteredsdddd");
-    // Check if all required fields are filled
     if (
       !classValue ||
       !textbookName ||
       !medium ||
+      !subject ||
       !publisherName ||
       !pdfFile ||
       !imageFile
@@ -387,28 +384,29 @@ function AddBooks() {
 
     if (confirmResult.isConfirmed) {
       setLoading(true);
+
       try {
         const formData = new FormData();
         formData.append("id", id);
         formData.append("class_name", classValue);
         formData.append("text_name", textbookName);
+        formData.append("subject", subject);
         formData.append("volume", volume);
         formData.append("textbook_pdf", pdfFile);
         formData.append("textbook_front_page", imageFile);
-        formData.append("medium", m);
-        // formData.append("publisher_name", publisherName.value);
+        // formData.append("medium", medium.value);
 
         if (Array.isArray(publisherName)) {
-          publisherName.forEach((publisher) => {
-            formData.append("publisher_name[]", publisher.value);
+          publisherName.forEach((publisher, index) => {
+            formData.append(`publisher_name[${index}]`, publisher.value);
           });
         } else {
-          console.error("publisherName is not an array:", publisherName);
-
+          formData.append("publisher_name", publisherName.value);
+        }
 
         chapters.forEach((chapter, index) => {
-          formData.append("chapter_name", chapter.name);
-          formData.append("page_no", chapter.pageNo);
+          formData.append(`chapter_name[${index}]`, chapter.name);
+          formData.append(`page_no[${index}]`, chapter.pageNo);
         });
 
         console.log("FormData:", formData);
@@ -847,10 +845,10 @@ function AddBooks() {
             style={{ paddingLeft: "50px", paddingRight: "50px" }}
           >
             <div>
-              <div className="textbook_row" style={{ }}>
+              <div className="textbook_row" style={{}}>
                 <div
                   className="textbook_col"
-                  style={{ textTransform: "capitalize", }}
+                  style={{ textTransform: "capitalize" }}
                 >
                   <div className="textbook_input_container">
                     <label htmlFor="class" style={{ fontWeight: "600" }}>
@@ -911,7 +909,7 @@ function AddBooks() {
                     />
                   </div>
                 </div>
-                <div className="textbook_col" style={{ }}>
+                <div className="textbook_col" style={{}}>
                   <div className="textbook_input_container">
                     <label htmlFor="volume" style={{ fontWeight: "600" }}>
                       Volume
@@ -1015,7 +1013,10 @@ function AddBooks() {
                     {renderChapterInputs()}
                   </div>
                 </div>
-                <div className="textbook_col" style={{marginBottom:'10px', marginTop:'100px'}}>
+                <div
+                  className="textbook_col"
+                  style={{ marginBottom: "10px", marginTop: "100px" }}
+                >
                   <div className="bottom_right_col" style={{}}>
                     <div style={{}}>
                       <label
@@ -1031,15 +1032,11 @@ function AddBooks() {
                       </label>
                     </div>
                     <div>
-                      <div style={{ marginLeft: "10px",  }}>
+                      <div style={{ marginLeft: "10px" }}>
                         <div style={{ display: "flex" }}>
-                          <div
-                            className="textbutton-container"
-                            style={{  }}
-                          >
+                          <div className="textbutton-container" style={{}}>
                             <button
                               style={{
-                                
                                 ...(selectedTab === "pdf"
                                   ? { border: "4px solid black" }
                                   : {}),
@@ -1050,13 +1047,9 @@ function AddBooks() {
                               Textbook Pdf
                             </button>
                           </div>
-                          <div
-                            className="textbutton-container"
-                            style={{  }}
-                          >
+                          <div className="textbutton-container" style={{}}>
                             <button
                               style={{
-                                
                                 ...(selectedTab === "frontPage"
                                   ? { border: "4px solid black" }
                                   : {}),
@@ -1073,7 +1066,7 @@ function AddBooks() {
                       </div>
 
                       {selectedTab === "pdf" && (
-                        <div style={{ marginLeft: "10px", }}>
+                        <div style={{ marginLeft: "10px" }}>
                           <label htmlFor="pdf" style={{}}></label>
                           <div className="textbook_image_upload_container">
                             <div className="textbook_upload_placeholder">
@@ -1125,7 +1118,7 @@ function AddBooks() {
                       )}
 
                       {selectedTab === "frontPage" && (
-                        <div style={{ marginLeft: "10px", }}>
+                        <div style={{ marginLeft: "10px" }}>
                           <label htmlFor="photo" style={{}}></label>
                           <div className="textbook_image_upload_container">
                             <div className="textbook_upload_placeholder">
