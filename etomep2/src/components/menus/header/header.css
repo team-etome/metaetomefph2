@@ -1,0 +1,5 @@
+@media (max-width: 999px) {
+    .nav-links {
+        display: none !important;
+    }
+}
