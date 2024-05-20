@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 import BookdashBoard from "../textbookdashboard/BookdashBoard";
 import Customerdashboard from "../customerdashboard/Customerdashboard";
 import Coursedashboard from "../coursedashboard/Coursedashboard";
-import "../header/header.css";
+import "../godheader/header.css";
 
-function Header() {
+function GodHeader() {
   // const [activeTab, setActiveTab] = useState("Institution");
 
   const [activeTab, setActiveTab] = useState(
@@ -55,4 +55,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default GodHeader;
