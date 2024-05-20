@@ -9,7 +9,7 @@ import AddBooks from './components/god/addtextbook/AddBooks';
 import ViewInstitution from './components/god/viewinstitution/ViewInstitution';
 import BookdashBoard from './components/god/textbookdashboard/BookdashBoard';
 import ViewTextbook from './components/god/viewtextbook/ViewTextbook';
-import Header from './components/god/header/Header';
+import GodHeader from './components/god/godheader/GodHeader';
 import Customerdashboard from './components/god/customerdashboard/Customerdashboard';
 import Coursedashboard from './components/god/coursedashboard/Coursedashboard';
 import School from './components/god/addcourse/School';
@@ -17,6 +17,9 @@ import AdminLogin from './components/admin/adminlogin/AdminLogin';
 import AdminDashboard from './components/admin/admindashboard/AdminDashboard';
 import AdminForgot from './components/admin/adminforgotpassword/AdminForgot';
 import AdminNewPassword from './components/admin/adminnewpassword/AdminNewPassword';
+import Header from './components/menus/header/Header';
+import Sidebar from './components/menus/sidebar/Sidebar';
+
 
 
 
@@ -38,28 +41,24 @@ function App() {
   <Route path='/viewinstitution/:id' element={<ViewInstitution/>}/>
   <Route path='/textbookdashboard' element={<BookdashBoard/>}/>
   <Route path='/ViewTextbook' element={<ViewTextbook/>}/>
-  <Route path="/header" element={<Header/>}/>
+  <Route path="/GodHeader" element={<GodHeader/>}/>
   <Route path="/customerdashboard" element={<Customerdashboard/>}/>
   <Route path="/coursedashboard" element={<Coursedashboard/>}/>
   <Route path="/school" element={<School/>}/>
   
 
-  
+  {/* adminside */}
   <Route path="/adminlogin" element={<AdminLogin/>}/>
   <Route path="/admindashboard" element={<AdminDashboard/>}/>
   <Route path="/adminforgot" element={<AdminForgot/>}/>
   <Route path="/adminnewpassword" element={<AdminNewPassword/>}/>
 
 
+{/* menu */}
+  <Route path="/header" element={<Header/>}/>
+  <Route path="/sidebar" element={<Sidebar/>}/>
 
-
-
-
-
-  
-
-
-  
+ 
 </Routes>
 </BrowserRouter>
 </div>
