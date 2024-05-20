@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../adminforgotpassword/adminforgot.css";
 import { Col, Container, Row, Modal, Button } from "react-bootstrap";
 import AdminNewPassword from "../adminnewpassword/AdminNewPassword";
@@ -18,6 +18,7 @@ function AdminForgot() {
   const [otp4, setOtp4] = useState("");
   const [loading, setLoading] = useState(false);
   const [showNewPasswordModal, setShowNewPasswordModal] = useState(false);
+  const [timer, setTimer] = useState(300);
 
   const navigate = useNavigate();
 
@@ -43,13 +44,36 @@ function AdminForgot() {
       setShowOtpScreen(true);
       setLoading(false);
     } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "Technical Error",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
       setLoading(false);
+
+      if (error.response) {
+        if (
+          error.response.status === 400 &&
+          error.response.data &&
+          error.response.data.info
+        ) {
+          Swal.fire({
+            title: "Error!",
+            text: error.response.data.info,
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: "Technical Error",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        }
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: "Unable to connect to server",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      }
     }
   };
 
@@ -115,6 +139,32 @@ function AdminForgot() {
     }
   };
 
+  useEffect(() => {
+    let interval = null;
+
+    if (showOtpScreen && timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    } else if (timer === 0) {
+      clearInterval(interval);
+      Swal.fire({
+        title: "Time Out!",
+        text: "OTP has expired, please request a new one.",
+        icon: "warning",
+        confirmButtonText: "Ok",
+      });
+      setShowOtpScreen(false);
+      setTimer(300);
+    }
+    return () => clearInterval(interval);
+    }, [showOtpScreen, timer]);
+    const formatTime = () => {
+    const minutes = Math.floor(timer / 60);
+    const seconds = timer % 60;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
   // const handlePasswordUpdateSuccess = () => {
   //   navigate("/adminlogin");
   // };
@@ -140,7 +190,7 @@ function AdminForgot() {
           </p>
           <p
             style={{
-              fontSize: "clamp(1px, 2vw, 15px)",
+              fontSize: "clamp(10px, 2vw, 12px)",
               color: "#526D82",
               marginBottom: "30px",
             }}
@@ -277,17 +327,49 @@ function AdminForgot() {
               onChange={(e) => setOtp4(e.target.value)}
             />
           </div>
+          {/* <div>
+            <p style={{marginTop: "20px", marginBottom: "20px",marginLeft:'30px', color: "#526D82",}}>
+              Time remaining: {formatTime()}
+            </p>
+          </div>
           <div>
             <Button
               variant="primary"
               onClick={handleOtpSubmit}
+              disabled={timer === 0}
               style={{
                 marginLeft: "60%",
                 backgroundColor: "transparent",
                 color: "#526D82",
                 border: "1px solid #526D82 ",
-                marginTop: "50px",
+                marginTop: "10px",
                 marginBottom: "20px",
+                width: "100px",
+              }}
+            >
+              Submit
+            </Button>
+          </div> */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center", 
+              justifyContent: "space-between", 
+              marginTop: "10%",
+              marginBottom: "20px",
+              paddingLeft: "30px",
+              paddingRight: "30px",
+            }}
+          >
+            <p style={{ color: "#526D82" }}>Time remaining: {formatTime()}</p>
+            <Button
+              variant="primary"
+              onClick={handleOtpSubmit}
+              disabled={timer === 0}
+              style={{
+                backgroundColor: "transparent",
+                color: "#526D82",
+                border: "1px solid #526D82",
                 width: "100px",
               }}
             >
@@ -298,9 +380,7 @@ function AdminForgot() {
       </Modal>
       {/* )} */}
       {/* </Col> */}
-      {showNewPasswordModal && (
-        <AdminNewPassword/>
-      )}
+      {showNewPasswordModal && <AdminNewPassword />}
     </div>
   );
 }
