@@ -2,4 +2,15 @@
     .nav-links {
         display: none !important;
     }
+    .nav-links,
+    .responsive-buttons,
+    .search_filter {
+        display: block;
+        width: 100%;
+    }
+}
+@media (min-width: 1000px) {
+    .responsive-buttons {
+        display: none;
+    }
 }

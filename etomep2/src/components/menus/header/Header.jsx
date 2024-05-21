@@ -27,7 +27,7 @@ function Header() {
                         <Nav.Link eventKey="Faculty">Faculty</Nav.Link>
                     </Nav.Item>
                 </Nav>
-                <div className="d-flex align-items-center">
+                <div className=" search_filter d-flex align-items-center">
                     <Form className="d-flex">
                         <div className="position-relative">
                             <BsSearch
@@ -48,6 +48,10 @@ function Header() {
                         </div>
                     </Form>
                     <BsFilterRight style={{ height: '40px', width: '40px', marginLeft: '20px', marginRight:'30px' }}/>
+                </div>
+                <div className="responsive-buttons">
+                    <button>class</button>
+                    <button>Faculty</button>
                 </div>
             </Container>
         </Navbar>

@@ -103,7 +103,7 @@ function ViewInstitution() {
                 className="container-fluid"
                 style={{ backgroundColor: "#fff" }}
               >
-                <Link to="/header" style={{ color: "black" }}>
+                <Link to="/GodHeader" style={{ color: "black" }}>
                   {/* <IoIosArrowRoundBack style={{ height: "30px", width: "30px" }} /> */}
                   <FaArrowLeft style={{ height: "30px", width: "20px" }} />
                 </Link>

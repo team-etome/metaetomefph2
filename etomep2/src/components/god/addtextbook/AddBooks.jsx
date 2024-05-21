@@ -314,7 +314,7 @@ function AddBooks() {
         text: "Textbook created successfully!",
       });
 
-      navigate("/header");
+      navigate("/GodHeader");
     } catch (error) {
       console.error("Error creating textbook:", error);
       Swal.fire({
@@ -427,7 +427,7 @@ function AddBooks() {
           text: "Textbook updated successfully!",
         });
 
-        navigate("/header");
+        navigate("/GodHeader");
       } catch (error) {
         console.error("Error updating textbook:", error);
         Swal.fire({
@@ -455,7 +455,7 @@ function AddBooks() {
             }}
           >
             <div style={{ marginLeft: "20px" }}>
-              <Link to="/header" style={{ color: "black" }}>
+              <Link to="/GodHeader" style={{ color: "black" }}>
                 <FaArrowLeft style={{ height: "20px", width: "30px" }} />
               </Link>
             </div>
@@ -485,6 +485,7 @@ function AddBooks() {
                       name="class"
                       value={classValue}
                       style={{}}
+                      maxLength="100"
                       onChange={handleClassValueChange}
                     />
                   </div>
@@ -497,6 +498,7 @@ function AddBooks() {
                       id="textbookName"
                       name="textbookName"
                       value={textbookName}
+                      maxLength="100"
                       style={{ textTransform: "capitalize" }}
                       onChange={(e) => setTextbookName(e.target.value)}
                     />
@@ -523,6 +525,7 @@ function AddBooks() {
                       value={medium}
                       style={{ textTransform: "capitalize" }}
                       onChange={handleMediumChange}
+                      maxLength="100"
                       styles={{
                         control: (baseStyles, state) => ({
                           ...baseStyles,
@@ -543,6 +546,7 @@ function AddBooks() {
                       id="volume"
                       name="volume"
                       value={volume}
+                      maxLength="100"
                       style={{ textTransform: "capitalize" }}
                       onChange={(e) => setVolume(e.target.value)}
                     />
@@ -572,6 +576,7 @@ function AddBooks() {
                       placeholder=""
                       // isMulti
                       value={publisherName}
+                      maxLength="100"
                       onChange={handlePublisherChange}
                       styles={{
                         control: (baseStyles, state) => ({
@@ -830,11 +835,11 @@ function AddBooks() {
             }}
           >
             <div style={{ marginLeft: "20px" }}>
-              <Link to="/header" style={{ color: "black" }}>
+              <Link to="/GodHeader" style={{ color: "black" }}>
                 <FaArrowLeft style={{ height: "20px", width: "30px" }} />
               </Link>
             </div>
-            <div style={{ marginLeft: "30px", color: "#526D82" }}>
+            <div style={{ marginLeft: "30px", color: "#526D82" }} >
               <h3>Add Textbook</h3>
             </div>
             <div style={{ color: "2px solid black" }}></div>
@@ -860,6 +865,7 @@ function AddBooks() {
                       name="class"
                       value={classValue}
                       style={{}}
+                      maxLength="100"
                       onChange={handleClassValueChange}
                     />
                   </div>
@@ -872,6 +878,7 @@ function AddBooks() {
                       id="textbookName"
                       name="textbookName"
                       value={textbookName}
+                      maxLength="100"
                       style={{ textTransform: "capitalize" }}
                       onChange={(e) => setTextbookName(e.target.value)}
                     />
@@ -897,6 +904,7 @@ function AddBooks() {
                       // list=''
                       options={textbookMeium}
                       value={medium}
+                      maxLength="100"
                       style={{ textTransform: "capitalize" }}
                       onChange={handleMediumChange}
                       styles={{
@@ -919,6 +927,7 @@ function AddBooks() {
                       id="volume"
                       name="volume"
                       value={volume}
+                      maxLength="100"
                       style={{ textTransform: "capitalize" }}
                       onChange={(e) => setVolume(e.target.value)}
                     />
@@ -932,6 +941,7 @@ function AddBooks() {
                       id="subject"
                       name="subject"
                       value={subject}
+                      maxLength="100"
                       style={{ textTransform: "capitalize" }}
                       onChange={(e) => setSubject(e.target.value)}
                     />
@@ -960,6 +970,7 @@ function AddBooks() {
                       placeholder=""
                       // isMulti
                       value={publisherName}
+                      maxLength="100"
                       onChange={handlePublisherChange}
                       styles={{
                         control: (baseStyles, state) => ({

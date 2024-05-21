@@ -18,7 +18,7 @@ function AdminForgot() {
   const [otp4, setOtp4] = useState("");
   const [loading, setLoading] = useState(false);
   const [showNewPasswordModal, setShowNewPasswordModal] = useState(false);
-  const [timer, setTimer] = useState(300);
+  const [timer, setTimer] = useState(120);
 
   const navigate = useNavigate();
 
@@ -363,15 +363,11 @@ function AdminForgot() {
           >
             <p style={{ color: "#526D82" }}>Time remaining: {formatTime()}</p>
             <Button
+            className="otp_button"
               variant="primary"
               onClick={handleOtpSubmit}
               disabled={timer === 0}
-              style={{
-                backgroundColor: "transparent",
-                color: "#526D82",
-                border: "1px solid #526D82",
-                width: "100px",
-              }}
+              style={{}}
             >
               Submit
             </Button>
