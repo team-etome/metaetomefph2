@@ -2,199 +2,244 @@ import React, { useState } from "react";
 import { Container, Row, Form, Col, Button } from "react-bootstrap";
 import Select from "react-select";
 import "../addcourse/school.css";
-import { FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 function School() {
   const APIURL = useSelector((state) => state.APIURL.url);
 
-  const [eboard, setEboard] = useState("");
-  const [subject, setSubject] = useState("");
+  const [eboard, setEboard] = useState(null);
+  const [subjectNames, setSubjectNames] = useState([]);
   const [numOfSubjects, setNumOfSubjects] = useState(0);
 
-  const handleBoardofEducation = (selectedOptions) => {
-    setEboard(selectedOptions);
+  const handleBoardofEducation = (selectedOption) => {
+    setEboard(selectedOption);
   };
 
   const handleSubjectCountChange = (e) => {
-    const count = parseInt(e.target.value);
+    const count = parseInt(e.target.value, 10);
     setNumOfSubjects(Math.max(0, count));
+    setSubjectNames(Array(Math.max(0, count)).fill(""));
+  };
+
+  const handleSubjectNameChange = (index, value) => {
+    const newSubjectNames = [...subjectNames];
+    newSubjectNames[index] = value;
+    setSubjectNames(newSubjectNames);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (!eboard || subjectNames.some((name) => !name)) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Incomplete Data',
+        text: 'Please fill out all fields.',
+      });
+      return;
+    }
+  
+    const data = {
+      educational_body: {
+        name: eboard.value,
+      },
+      subjects: subjectNames.map((name) => ({ subject: name })),
+    };
+  
+    try {
+      const response = await axios.post(`${APIURL}/api/addsubject`, data);
+      if (response.status === 201) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Data saved successfully',
+        }).then(() => {
+       
+          setEboard(null);
+          setSubjectNames([]);
+          setNumOfSubjects(0);
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to save data',
+        });
+      }
+    } catch (error) {
+      console.error("There was an error saving the data!", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'There was an error saving the data!',
+      });
+    }
   };
 
   const eeducationboard = [
-    "CENTRAL BOARD OF SECONDARY EDUCATION (CBSE) ",
-    "KERALA BOARD OF PUBLIC EXAMINATION , KERALA",
-    "KERALA BOARD OF HIGHER SECONDARY EDUCATION",
-    "BOARD OF VOCATIONAL HIGHER SECONDARY EDUCATION, KERALA",
-    "BOARD OF SECONDARY EDUCATION, MADHYA PRADESH",
-    "ICSE BOARD",
+    "CENTRAL BOARD OF SECONDARY EDUCATION (CBSE)",
+    "KERALA BOARD OF PUBLIC EXAMINATION, KERALA(KPE)",
+    "KERALA BOARD OF HIGHER SECONDARY EDUCATION (KHSE)",
+    "BOARD OF VOCATIONAL HIGHER SECONDARY EDUCATION, KERALA(KVHSE)",
+    "BOARD OF SECONDARY EDUCATION, MADHYA PRADESH(MPBSE)",
+    " Indian Certificate of Secondary Education (ICSE)",
   ];
+
   const eboardOptions = eeducationboard.map((eboard) => ({
     value: eboard,
     label: eboard,
   }));
+
   return (
     <div
       style={{
         backgroundColor: "#fff",
-        border: "2px solid white ",
+        border: "2px solid white",
         borderRadius: "20px",
         marginTop: "30px",
       }}
     >
-      <Container style={{}}>
-        <Row>
-          <div
-            style={{
-              display: "flex",
-              paddingTop: "33px",
-              paddingBottom: "16px",
-              borderBottom: "3px solid #DDE6ED",
-              marginBottom: "20px",
-            }}
-          >
-            {/* <div style={{ marginLeft: "20px" }}>
-                <Link to="" style={{ color: "black" }}>
-                <FaArrowLeft style={{ height: "32px", width: "20px" }} />
-                </Link>
-            </div> */}
-            <div style={{ marginLeft: "30px", color: "#526D82" }}>
-              <h4>Add Courses</h4>
-            </div>
-          </div>
-        </Row>
-        <Row style={{ marginTop: "20px" }}>
-          <Col md={6}>
+      <Container>
+        <Form onSubmit={handleSubmit}>
+          <Row>
             <div
-              className="school_input_select"
               style={{
-                // width: "500px",
-                border: "1px solid #526D82",
-                marginLeft: "15px",
-                borderRadius: "4px",
-                marginTop: "10px",
-                marginBottom: "10px",
+                display: "flex",
+                paddingTop: "33px",
+                paddingBottom: "16px",
+                borderBottom: "3px solid #DDE6ED",
+                marginBottom: "20px",
               }}
             >
-              <label for="eeducationBoard" style={{ fontWeight: "600" }}>
-                Board Of Education
-              </label>
-              <Select
-                type="text"
-                id="eeducationBoard"
-                name="eeducationBoard"
-                list="eboard-list"
-                options={eboardOptions}
-                value={eboard}
-                // onChange={(e) => setBoard(e.target.value)}
-                onChange={handleBoardofEducation}
-                styles={{
-                  control: (baseStyles, state) => ({
-                    ...baseStyles,
-                    border: "none",
-                    bottom: "1px",
-                    boxShadow: state.isFocused ? "none" : "none",
-                  }),
-                  dropdownIndicator: (provided, state) => ({
-                    ...provided,
-                    color: "black",
-                  }),
-                  indicatorSeparator: (provided, state) => ({
-                    ...provided,
-                    backgroundColor: "none",
-                  }),
+              <div style={{ marginLeft: "30px", color: "#526D82" }}>
+                <h4>Add Courses</h4>
+              </div>
+            </div>
+          </Row>
+          <Row style={{ marginTop: "20px" }}>
+            <Col md={6}>
+              <div
+                className="school_input_select"
+                style={{
+                  border: "1px solid #526D82",
+                  marginLeft: "15px",
+                  borderRadius: "4px",
+                  marginTop: "10px",
+                  marginBottom: "10px",
                 }}
-              />
-            </div>
-          </Col>
-          <Col md={6}>
-            <div
-              className="school_input_select"
-              style={{
-                // width: "500px",
-                border: "1px solid #526D82",
-                marginLeft: "15px",
-                borderRadius: "4px",
-                marginTop: "10px",
-                marginBottom: "10px",
-              }}
-            >
-              <label for="subjectsno" style={{ fontWeight: "600" }}>
-                No. of Subjects
-              </label>
-              <input
-                type="number"
-                id="subjectsno"
-                name="subjectsno"
-                value={numOfSubjects}
-                onChange={handleSubjectCountChange}
+              >
+                <label htmlFor="eeducationBoard" style={{ fontWeight: "600" }}>
+                  Board Of Education
+                </label>
+                <Select
+                  type="text"
+                  id="eeducationBoard"
+                  name="eeducationBoard"
+                  options={eboardOptions}
+                  value={eboard}
+                  onChange={handleBoardofEducation}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      border: "none",
+                      bottom: "1px",
+                      boxShadow: state.isFocused ? "none" : "none",
+                    }),
+                    dropdownIndicator: (provided, state) => ({
+                      ...provided,
+                      color: "black",
+                    }),
+                    indicatorSeparator: (provided, state) => ({
+                      ...provided,
+                      backgroundColor: "none",
+                    }),
+                  }}
+                />
+              </div>
+            </Col>
+            <Col md={6}>
+              <div
+                className="school_input_select"
+                style={{
+                  border: "1px solid #526D82",
+                  marginLeft: "15px",
+                  borderRadius: "4px",
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                }}
+              >
+                <label htmlFor="subjectsno" style={{ fontWeight: "600" }}>
+                  No. of Subjects
+                </label>
+                <input
+                  type="number"
+                  id="subjectsno"
+                  name="subjectsno"
+                  value={numOfSubjects}
+                  onChange={handleSubjectCountChange}
+                  style={{
+                    border: "none",
+                    borderBottom: "0.5px solid #B5B5B5",
+                    width: "100%",
+                    padding: "8px",
+                    borderRadius: "4px",
+                    outline: "none",
+                  }}
+                />
+              </div>
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "50px" }}>
+            <Col md={6}>
+              <div
                 style={{
                   border: "none",
-                  borderBottom: "0.5px solid #B5B5B5",
-                  width: "100%",
-                  padding: "8px",
-                  borderRadius: "4px",
-                  outline: "none",
+                  marginLeft: "15px",
+                  maxHeight: "300px",
+                  overflowY: "auto",
                 }}
-              />
-            </div>
-          </Col>
-        </Row>
-        <Row style={{ marginBottom: "50px" }}>
-          <Col md={6}>
-            <div
-              style={{
-                border: "none",
-                marginLeft: "15px",
-                maxHeight: "300px",
-                overflowY: "auto",
-              }}
-            >
-              {numOfSubjects > 0 &&
-                Array.from({
-                  length: Math.min(Math.ceil(numOfSubjects / 2), 10),
-                }).map((_, rowIndex) => (
-                  <Row key={rowIndex}>
-                    {[0, 1].map((colIndex) => {
-                      const index = rowIndex * 2 + colIndex;
-                      return (
-                        index < numOfSubjects && (
-                          <Col key={index} md={6}>
-                            <input
-                              type="text"
-                              placeholder={` ${index + 1}.`}
-                              style={{
-                                border: "none",
-                                borderBottom: "0.5px solid #B5B5B5",
-                                width: "100%",
-                                padding: "8px",
-                                borderRadius: "4px",
-                                outline: "none",
-                                marginBottom: "10px",
-                              }}
-                            />
-                          </Col>
-                        )
-                      );
-                    })}
-                  </Row>
-                ))}
-            </div>
-            <div
-              className="school_button"
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              <Button
-                type="submit"
-                value="submit"
-                style={{ backgroundColor: "#526D82", color: "white" }}
               >
-                Submit
-              </Button>
-            </div>
-          </Col>
-        </Row>
+                {numOfSubjects > 0 &&
+                  Array.from({ length: Math.min(numOfSubjects, 10) }).map(
+                    (_, index) => (
+                      <input
+                        key={index}
+                        type="text"
+                        placeholder={` ${index + 1}.`}
+                        value={subjectNames[index]}
+                        onChange={(e) =>
+                          handleSubjectNameChange(index, e.target.value)
+                        }
+                        style={{
+                          border: "none",
+                          borderBottom: "0.5px solid #B5B5B5",
+                          width: "100%",
+                          padding: "8px",
+                          borderRadius: "4px",
+                          outline: "none",
+                          marginBottom: "10px",
+                        }}
+                      />
+                    )
+                  )}
+              </div>
+              <div
+                className="school_button"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                <Button
+                  type="submit"
+                  value="submit"
+                  style={{ backgroundColor: "#526D82", color: "white" }}
+                >
+                  Submit
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </Form>
       </Container>
     </div>
   );
