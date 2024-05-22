@@ -11,11 +11,12 @@ import Select from "react-select";
 
 function AddBooks() {
   const [selectedTab, setSelectedTab] = useState("pdf");
-  const [totalChaptersInput, setTotalChaptersInput] = useState("");
+  const [ totalChaptersInput, setTotalChaptersInput] = useState("");
   const [chapters, setChapters] = useState([]);
   const [classValue, setClassValue] = useState("");
   const [textbookName, setTextbookName] = useState("");
-  const [subject, setSubject] = useState("");
+  const [subjectOptions, setSubjectOptions] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState("");
   const [medium, setMedium] = useState("");
   const [m, setM] = useState("");
   const [volume, setVolume] = useState("");
@@ -25,7 +26,31 @@ function AddBooks() {
   const [pdfFile, setPdfFile] = useState(null);
   const [data, setData] = useState("");
 
-  console.log(m, "aaaaaaaaaaaaaaaaaaaa");
+  console.log(selectedSubject, "subjectttttt");
+
+  console.log(publisherName,"publisher nameeeeeeeeeeeeeeeeeeeee")
+
+  const APIURL = useSelector((state) => state.APIURL.url);
+
+  useEffect(() => {
+    // Fetch subjects from the backend
+    const fetchSubjects = async () => {
+      try {
+        const response = await axios.get(`${APIURL}/api/addsubject`);
+        const subjectsData = response.data.map((subject) => subject.subject);
+        const uniqueSubjects = [...new Set(subjectsData)].map((subject) => ({
+          value: subject,
+          label: subject,
+        }));
+        setSubjectOptions(uniqueSubjects);
+      } catch (error) {
+        console.error("Error fetching subjects:", error);
+      }
+    };
+
+    fetchSubjects();
+  }, [APIURL]);
+
   const handleMediumChange = (selectedOptions) => {
     setM(selectedOptions.value);
     setMedium(selectedOptions);
@@ -59,13 +84,14 @@ function AddBooks() {
     if (data && data[0].chapter_info) {
       setClassValue(data[0].class_name || "");
       setTextbookName(data[0].text_name || "");
-      setSubject(data[0].subject || "");
+      setSelectedSubject({ value: data[0].subject, label: data[0].subject } || "");
       setVolume(data[0].volume || "");
       setMedium({ value: data[0].medium, label: data[0].medium } || "");
       setPublisherName({
         value: data[0].publisher_name,
         label: data[0].publisher_name,
       });
+     
       setTotalChaptersInput(data[0].total_chapters);
       setImageFile(data[0]?.textbook_image);
       setPdfFile(data[0]?.textbook_pdf);
@@ -87,6 +113,7 @@ function AddBooks() {
     setPublisherName(selectedOptions);
     setP(selectedOptions.value);
   };
+
 
   const publishers = [
     "MADHUBAN",
@@ -145,8 +172,6 @@ function AddBooks() {
     value: publisher,
     label: publisher,
   }));
-
-  const APIURL = useSelector((state) => state.APIURL.url);
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
@@ -252,7 +277,7 @@ function AddBooks() {
       !classValue ||
       !textbookName ||
       !medium ||
-      !subject ||
+      !selectedSubject ||
       // !volume ||
       !publisherName ||
       !pdfFile ||
@@ -261,7 +286,7 @@ function AddBooks() {
       let missingFields = [];
       if (!classValue) missingFields.push("class");
       if (!textbookName) missingFields.push("textbook name");
-      if (!subject) missingFields.push("Subject");
+      if (!selectedSubject) missingFields.push("Subject");
       if (!medium) missingFields.push("medium");
       if (!publisherName) missingFields.push("publisher name");
       if (!pdfFile) missingFields.push("PDF file");
@@ -283,15 +308,16 @@ function AddBooks() {
       const formData = new FormData();
       formData.append("class_name", classValue);
       formData.append("text_name", textbookName);
-      formData.append("subject", subject);
+      formData.append("subject", selectedSubject.value);
       formData.append("volume", volume);
       formData.append("textbook_pdf", pdfFile);
       formData.append("textbook_front_page", imageFile);
       formData.append("medium", m);
+      formData.append("publisher_name", p);
 
-      publisherName.forEach((publisherValue, index) => {
-        formData.append(`publisher_name[${index}]`, publisherValue.value);
-      });
+      // publisherName.forEach((publisherValue, index) => {
+      //   formData.append(`publisher_name[${index}]`, publisherValue.value);
+      // });
 
       chapters.forEach((chapter, index) => {
         formData.append("chapter_name", chapter.name);
@@ -326,6 +352,7 @@ function AddBooks() {
       setLoading(false);
     }
   };
+
   const mediumbook = [
     "Malayalam",
     "english",
@@ -347,15 +374,16 @@ function AddBooks() {
       !classValue ||
       !textbookName ||
       !medium ||
-      !subject ||
+      !selectedSubject ||
       !publisherName ||
       !pdfFile ||
       !imageFile
     ) {
       let missingFields = [];
+
       if (!classValue) missingFields.push("class");
       if (!textbookName) missingFields.push("textbook name");
-      if (!subject) missingFields.push("Subject");
+      if (!selectedSubject) missingFields.push("Subject");
       if (!medium) missingFields.push("medium");
       if (!publisherName) missingFields.push("publisher name");
       if (!pdfFile) missingFields.push("PDF file");
@@ -390,11 +418,11 @@ function AddBooks() {
         formData.append("id", id);
         formData.append("class_name", classValue);
         formData.append("text_name", textbookName);
-        formData.append("subject", subject);
+        formData.append("subject", selectedSubject.value);
         formData.append("volume", volume);
         formData.append("textbook_pdf", pdfFile);
         formData.append("textbook_front_page", imageFile);
-        // formData.append("medium", medium.value);
+        formData.append("medium",m);
 
         if (Array.isArray(publisherName)) {
           publisherName.forEach((publisher, index) => {
@@ -484,6 +512,7 @@ function AddBooks() {
                       id="class"
                       name="class"
                       value={classValue}
+                      maxLength="2"
                       style={{}}
                       maxLength="100"
                       onChange={handleClassValueChange}
@@ -551,7 +580,37 @@ function AddBooks() {
                       onChange={(e) => setVolume(e.target.value)}
                     />
                   </div>
-
+                  <div
+                    className="textbook_input_container_select"
+                    style={{
+                      width: "400px",
+                      border: "1px solid #526D82",
+                      borderRadius: "4px",
+                      marginTop: "20px",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <label
+                      htmlFor="subject"
+                      style={{ fontWeight: "600" }}
+                    >
+                      Subject
+                    </label>
+                    <Select
+                      id="subject"
+                      name="subject"
+                      options={subjectOptions}
+                      value={selectedSubject}
+                      onChange={(option) => setSelectedSubject(option)}
+                      styles={{
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          border: "none",
+                          boxShadow: state.isFocused ? "none" : "none",
+                        }),
+                      }}
+                    />
+                  </div>
                   <div
                     className="textbook_input_container_select"
                     style={{
@@ -865,7 +924,7 @@ function AddBooks() {
                       name="class"
                       value={classValue}
                       style={{}}
-                      maxLength="100"
+                      maxLength="2" 
                       onChange={handleClassValueChange}
                     />
                   </div>
@@ -932,19 +991,37 @@ function AddBooks() {
                       onChange={(e) => setVolume(e.target.value)}
                     />
                   </div>
-                  <div className="textbook_input_container">
-                    <label htmlFor="subject" style={{ fontWeight: "600" }}>
+                  <div
+                    className="textbook_input_container_select"
+                    style={{
+                      width: "400px",
+                      border: "1px solid #526D82",
+                      borderRadius: "4px",
+                      marginTop: "20px",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <label
+                      htmlFor="subject"
+                      style={{ fontWeight: "600" }}
+                    >
                       Subject
                     </label>
-                    <input
-                      type="text"
+                    <Select
                       id="subject"
                       name="subject"
-                      value={subject}
-                      maxLength="100"
-                      style={{ textTransform: "capitalize" }}
-                      onChange={(e) => setSubject(e.target.value)}
-                    />
+
+                      options={subjectOptions}
+                      value={selectedSubject}
+                      onChange={(option) => setSelectedSubject(option)}
+                      styles={{
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          border: "none",
+                          boxShadow: state.isFocused ? "none" : "none",
+                        }),
+                      }}
+       />
                   </div>
                   <div
                     className="textbook_input_container_select"
