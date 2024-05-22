@@ -31,7 +31,7 @@ function School() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!eboard || subjectNames.some((name) => !name)) {
       Swal.fire({
         icon: 'warning',
@@ -40,14 +40,14 @@ function School() {
       });
       return;
     }
-  
+
     const data = {
       educational_body: {
         name: eboard.value,
       },
       subjects: subjectNames.map((name) => ({ subject: name })),
     };
-  
+
     try {
       const response = await axios.post(`${APIURL}/api/addsubject`, data);
       if (response.status === 201) {
@@ -56,7 +56,6 @@ function School() {
           title: 'Success',
           text: 'Data saved successfully',
         }).then(() => {
-       
           setEboard(null);
           setSubjectNames([]);
           setNumOfSubjects(0);
@@ -192,7 +191,7 @@ function School() {
             </Col>
           </Row>
           <Row style={{ marginBottom: "50px" }}>
-            <Col md={6}>
+            <Col md={12}>
               <div
                 style={{
                   border: "none",
@@ -202,26 +201,51 @@ function School() {
                 }}
               >
                 {numOfSubjects > 0 &&
-                  Array.from({ length: Math.min(numOfSubjects, 10) }).map(
-                    (_, index) => (
-                      <input
-                        key={index}
-                        type="text"
-                        placeholder={` ${index + 1}.`}
-                        value={subjectNames[index]}
-                        onChange={(e) =>
-                          handleSubjectNameChange(index, e.target.value)
-                        }
-                        style={{
-                          border: "none",
-                          borderBottom: "0.5px solid #B5B5B5",
-                          width: "100%",
-                          padding: "8px",
-                          borderRadius: "4px",
-                          outline: "none",
-                          marginBottom: "10px",
-                        }}
-                      />
+                  Array.from({ length: Math.ceil(numOfSubjects / 2) }).map(
+                    (_, rowIndex) => (
+                      <Row key={rowIndex} className="mb-3">
+                        <Col md={6}>
+                          <input
+                            type="text"
+                            placeholder={` ${rowIndex * 2 + 1}.`}
+                            value={subjectNames[rowIndex * 2] || ""}
+                            onChange={(e) =>
+                              handleSubjectNameChange(rowIndex * 2, e.target.value)
+                            }
+                            style={{
+                              border: "none",
+                              borderBottom: "0.5px solid #B5B5B5",
+                              width: "100%",
+                              padding: "8px",
+                              borderRadius: "4px",
+                              outline: "none",
+                            }}
+                          />
+                        </Col>
+                        <Col md={6}>
+                          {rowIndex * 2 + 1 < numOfSubjects && (
+                            <input
+                              type="text"
+                              placeholder={` ${rowIndex * 2 + 2}.`}
+                              value={subjectNames[rowIndex * 2 + 1] || ""}
+                              onChange={(e) =>
+                                handleSubjectNameChange(
+                                  rowIndex * 2 + 1,
+                                  e.target.value
+                                )
+                              }
+                              style={{
+                                border: "none",
+                                borderBottom: "0.5px solid #B5B5B5",
+                                width: "100%",
+                                padding: "8px",
+                                borderRadius: "4px",
+                                outline: "none",
+                              }}
+                            />
+                          )}
+                        </Col>
+                      </Row>
                     )
                   )}
               </div>
