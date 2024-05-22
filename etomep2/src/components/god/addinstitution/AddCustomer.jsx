@@ -46,17 +46,16 @@ function AddCustomer() {
     setImageFile(file);
   };
 
-  const handleMediumChange = (e) => {
-    setMedium(e.target.value);
-  };
+  // const handleMediumChange = (e) => {
+  //   setMedium(e.target.value);
+  // };
 
-  const handleInstitutionChange = (e) => {
-    setInstitutionType(e.target.value);
-    if (e.target.value === "college") {
-      // selectedType
-      setMedium("");
-    }
-  };
+  // const handleInstitutionChange = (e) => {
+  //   setInstitutionType(e.target.value);
+  //   if (e.target.value === "college") {
+  //     setMedium("");
+  //   }
+  // };
   // const handlePublisherChange = (selectedOptions) => {
   //   setPublisherName(selectedOptions);
   // };
@@ -300,46 +299,47 @@ function AddCustomer() {
           }}
         >
           <div style={{ marginLeft: "20px" }}>
-            <Link to="/header" style={{ color: "black" }}>
+            <Link to="/GodHeader" style={{ color: "black" }}>
               <FaArrowLeft style={{ height: "32px", width: "20px" }} />
             </Link>
           </div>
           <div style={{ marginLeft: "30px", color: "#526D82" }}>
             <h3>Add Institution</h3>
           </div>
-          {/* <div style={{color:'2px solid black'}}></div> */}
-        </div>
-        <div
-          className="form-container"
-          style={{ paddingLeft: "50px", paddingRight: "50px" }}
-        >
-          <div>
-            <div className="form-row">
-              <div className="form-col">
-                <div className="input_container">
-                  <label for="institutionName" style={{ fontWeight: "600" }}>
-                    Institution Name
-                  </label>
-                  <input
-                    type="text"
-                    id="institutionName"
-                    name="institutionName"
-                    value={institutionName}
-                    style={{ textTransform: "capitalize" }}
-                    maxLength="100"
-                    onChange={(e) => setInstitutionName(e.target.value)}
-                  />
-                </div>
-                <div className="input_container">
-                  <label for="institutionCode" style={{ fontWeight: "600" }}>
-                    Institution Code
-                  </label>
-                  <input
-                    type="number"
-                    id="institutionCode"
-                    name="institutionCode"
-                    value={institutionCode}
-                    style={{ textTransform: "capitalize" }}
+           <div style={{color:'2px solid black'}}></div> 
+            </div>
+            <div
+              className="form-container"
+              style={{ paddingLeft: "50px", paddingRight: "50px" }}
+            >
+              <div>
+                <div className="form-row">
+                  <div className="form-col">
+              <div className="input_container">
+                <label for="institutionName" style={{ fontWeight: "600" }}>
+                  Institution Name
+                </label>
+                <input
+                  type="text"
+                  id="institutionName"
+                  name="institutionName"
+                  value={institutionName}
+                  style={{ textTransform: "capitalize" }}
+                  maxLength="100"
+                  onChange={(e) => setInstitutionName(e.target.value)}
+                />
+              </div>
+              <div className="input_container">
+                <label for="institutionCode" style={{ fontWeight: "600" }}>
+                  Institution Code
+                </label>
+                <input
+                  type="number"
+                  id="institutionCode"
+                  name="institutionCode"
+                  value={institutionCode}
+                  style={{ textTransform: "capitalize" }}
+                  maxLength="100"
                     // onChange={(e) => setInstitutionCode(e.target.value)}
                     onChange={(e) => {
                       const value = e.target.value;
@@ -358,6 +358,7 @@ function AddCustomer() {
                     id="email"
                     name="email"
                     value={email}
+                    maxLength="100"
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
@@ -456,6 +457,7 @@ function AddCustomer() {
                     value={board}
                     // onChange={(e) => setBoard(e.target.value)}
                     onChange={handleEducationBoard}
+                    maxLength="100"
                     styles={{
                       control: (baseStyles, state) => ({
                         ...baseStyles,
@@ -475,6 +477,7 @@ function AddCustomer() {
                     name="databaseCode"
                     value={databaseCode}
                     style={{ textTransform: "capitalize" }}
+                    maxLength="100"
                     onChange={(e) => setDatabaseCode(e.target.value)}
                   />
                 </div>
@@ -499,105 +502,25 @@ function AddCustomer() {
                     name="region"
                     value={region}
                     style={{ textTransform: "capitalize" }}
+                    maxLength="100"
                     onChange={(e) => setRegion(e.target.value)}
                   />
                 </div>
-                <div style={{ marginLeft: "20px" }}>
-                  <div>
-                    <label
-                      for="institutionType"
-                      style={{ color: "#707070", fontWeight: "600" }}
-                    >
-                      Type of Institution
-                    </label>
-                    <div style={{ display: "flex", color: "#5C7689" }}>
-                      <div style={{ display: "flex", padding: "10px" }}>
-                        <div>
-                          <input
-                            style={{ marginRight: "1px", marginTop: "4px" }}
-                            type="radio"
-                            id="school"
-                            name="institutionType"
-                            value="school"
-                            checked={institutionType === "school"}
-                            onChange={handleInstitutionChange}
-                          />
-                        </div>
-                        <div
-                          style={{
-                            padding: "10px",
-                            marginTop: "-10px",
-                            fontWeight: "600",
-                          }}
-                        >
-                          School
-                        </div>
-                      </div>
-                      <div style={{ display: "flex", padding: "10px" }}>
-                        <div>
-                          <input
-                            style={{ marginRight: "10px", marginTop: "4px" }}
-                            type="radio"
-                            id="college"
-                            name="institutionType"
-                            value="college"
-                            checked={institutionType === "college"}
-                            onChange={handleInstitutionChange}
-                          />
-                        </div>
-                        <div style={{ fontWeight: "600" }}>College</div>
-                      </div>
-                    </div>
-                  </div>
-                  {institutionType === "school" && (
-                    <div>
-                      <label
-                        for="medium"
-                        style={{ color: "#707070", fontWeight: "600" }}
-                      >
-                        Medium
-                      </label>
-                      <div style={{ display: "flex", color: "#5C7689" }}>
-                        <div style={{ display: "flex", padding: "10px" }}>
-                          <div>
-                            <input
-                              style={{ marginRight: "1px", marginTop: "4px" }}
-                              type="radio"
-                              id="english"
-                              name="medium"
-                              value="english"
-                              checked={medium === "english"}
-                              onChange={handleMediumChange}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              padding: "10px",
-                              marginTop: "-10px",
-                              fontWeight: "600",
-                            }}
-                          >
-                            English
-                          </div>
-                        </div>
-                        <div style={{ display: "flex", padding: "10px" }}>
-                          <div>
-                            <input
-                              style={{ marginRight: "10px", marginTop: "4px" }}
-                              type="radio"
-                              id="english"
-                              name="medium"
-                              value="malayalam"
-                              checked={medium === "malayalam"}
-                              onChange={handleMediumChange}
-                            />
-                          </div>
-                          <div style={{ fontWeight: "600" }}>Malayalam</div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
+                <div style={{}}>
+                <div className="input_container">
+                  <label for="medium" style={{ fontWeight: "600" }}>
+                    Medium
+                  </label>
+                  <input
+                    type="text"
+                    id="medium"
+                    name="medium"
+                    value={medium}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength="100"
+                    onChange={(e) => setMedium(e.target.value)}
+                  />
+                </div>
 
                 </div>
               </div>
@@ -625,6 +548,7 @@ function AddCustomer() {
                     isMulti
                     value={publisherName}
                     onChange={handlePublisherChange}
+                    maxLength="100"
                     styles={{
                       control: (baseStyles, state) => ({
                         ...baseStyles,

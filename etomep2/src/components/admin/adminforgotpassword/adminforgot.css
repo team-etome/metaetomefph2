@@ -76,4 +76,16 @@
     color: #FFFFFF; 
     border: 1px solid #526D82;
 }
+.otp_button {
+  background-color: transparent;
+  color: #526D82;
+  border: 1px solid #526D82;
+  width: 100px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
+.otp_button:hover {
+  background-color: #526D82;
+  color: #FFFFFF;
+  border: 1px solid #526D82;
+}

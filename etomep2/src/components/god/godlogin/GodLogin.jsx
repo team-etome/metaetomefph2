@@ -44,7 +44,7 @@ function GodLogin() {
       };
 
       const response = await axios.post(`${APIURL}/api/godLogin`, data);
-      navigate("/header");
+      navigate("/GodHeader");
 
       Swal.fire({
         title: "Success!",
@@ -185,10 +185,10 @@ function GodLogin() {
                 className="submit_btn"
                 type="submit"
                 onClick={handleSubmit}
+                style={{width:'80%'}}
               >
                 Sign in
               </button>
-
               <p className="signup-link">
                 <a href="">Forgot Password?</a>
               </p>
