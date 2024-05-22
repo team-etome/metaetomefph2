@@ -514,7 +514,6 @@ function AddBooks() {
                       value={classValue}
                       maxLength="2"
                       style={{}}
-                      maxLength="100"
                       onChange={handleClassValueChange}
                     />
                   </div>

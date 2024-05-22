@@ -24,6 +24,7 @@
   margin-left: 15px;
   /* border: 2px solid black; */
   margin-bottom: 30px;
+  width: 400px; 
 }
 .button-container button {
   background-color: #526D82; 
@@ -216,6 +217,62 @@
   color: #9CA3AF;
   width: 1rem;
   height: 1rem;
+}
+
+/* Tags Input Styles */
+.tags-input {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border: 1px solid #526D82;
+  border-radius: 4px;
+  padding-left: 5px; 
+  width: 400px;
+}
+
+.tags-input input {
+  border: none;
+  flex: 1;
+  padding: 0px;
+  outline: none;
+  /* width: auto;
+  min-width: 50px; */
+
+}
+
+.tags-input input::placeholder {
+  color: #526D82;
+}
+
+#tags {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.tag {
+  margin: 0px;
+  border-radius: 4px;
+  padding: 1px;
+  color: rgb(188, 29, 29); 
+}
+.tag-title{
+  background-color: aqua;
+  margin-right: 50%;
+}
+
+.tag-close-icon {
+  margin-left: 0px; /* Add margin to create space between tag text and close icon */
+  cursor: pointer;
+  color: #160707;
+  font-weight: bold;
+  /* margin-right: 5px; */
+}
+
+.medium_tag_input{
+  background-color: aqua;width: 200px; height: 200px;
 }
 /* ************************************************ */
 

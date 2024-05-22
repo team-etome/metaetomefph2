@@ -2,6 +2,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'rsuite/dist/rsuite.min.css';
 import GodloginPage from './pages/godpage/GodloginPage'
 import GoddashboardPage from './pages/godpage/GoddashboardPage'
 import AddCustomer from './components/god/addinstitution/AddCustomer';

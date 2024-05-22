@@ -12,6 +12,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import Select from "react-select";
+import { TagInput } from 'rsuite';
+
 
 function AddCustomer() {
   const [institutionName, setInstitutionName] = useState("");
@@ -22,7 +24,7 @@ function AddCustomer() {
   const [databaseCode, setDatabaseCode] = useState("");
   const [address, setAddress] = useState("");
   const [region, setRegion] = useState("");
-  const [medium, setMedium] = useState("");
+  const [medium, setMedium] = useState([]);
   const [institutionType, setInstitutionType] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -284,7 +286,16 @@ function AddCustomer() {
   //   value: mschool,
   //   label: mschool,
   // }));
+  const removeTag = (indexToRemove) => {
+    setMedium(medium.filter((_, index) => index !== indexToRemove));
+  };
 
+  const addTag = (event) => {
+    if (event.target.value.trim() !== "" && event.key === "Enter") {
+      setMedium([...medium, event.target.value]);
+      event.target.value = "";
+    }
+  };
   return (
     <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white" }}>
       <div className="form">
@@ -492,6 +503,8 @@ function AddCustomer() {
                     onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
+
+                
                 <div className="input_container">
                   <label for="region" style={{ fontWeight: "600" }}>
                     Region
@@ -511,17 +524,28 @@ function AddCustomer() {
                   <label for="medium" style={{ fontWeight: "600" }}>
                     Medium
                   </label>
+                  <div className="tags-input">
+                  
+                  <ul   id="tags" >
+                    {medium.map((tag, index) => (
+                      <li key={index} >
+                        <span className="tag-title" style={{}}>{tag}</span>
+                        <span className="tag-close-icon" onClick={() => removeTag(index)} >
+                          x
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
                   <input
+                  className="medium_tag_input"
                     type="text"
-                    id="medium"
-                    name="medium"
-                    value={medium}
-                    style={{ textTransform: "capitalize" }}
-                    maxLength="100"
-                    onChange={(e) => setMedium(e.target.value)}
+                    onKeyUp={(event) => event.key === "Enter" ? addTag(event) : null}
+                    placeholder="Press enter to add tags"
+                    // style={{border:'1px solid black'}}
                   />
                 </div>
 
+                </div>
                 </div>
               </div>
               <div className="form-col" style={{ marginTop: "1px" }}>
