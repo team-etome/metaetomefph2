@@ -221,9 +221,9 @@ function AddBooks() {
                 outline: "none",
               }}
               value={chapter.name}
-              onChange={(e) =>
-                handleChapterInputChange(index, "name", e.target.value)
-              }
+              // onChange={(e) =>
+              //   handleChapterInputChange(index, "name", e.target.value)
+              // }
             />
           </label>
         </div>
@@ -239,9 +239,9 @@ function AddBooks() {
                 outline: "none",
               }}
               value={chapter.pageNo}
-              onChange={(e) =>
-                handleChapterInputChange(index, "pageNo", e.target.value)
-              }
+              // onChange={(e) =>
+              //   handleChapterInputChange(index, "pageNo", e.target.value)
+              // }
             />
           </label>
         </div>
@@ -671,12 +671,11 @@ function AddBooks() {
                       id="totalChapters"
                       name="totalChapters"
                       value={totalChaptersInput}
-                      onChange={handleTotalChaptersChange}
+                      // onChange={handleTotalChaptersChange}
                     />
                   </div>
                   <div
                     style={{
-                      border: "1px solid black",
                       width: "390px",
                       marginLeft: "30px",
                     }}
