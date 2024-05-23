@@ -152,6 +152,7 @@ function AdminLogin() {
             
           </Col>
           <Col
+          className="formcol_Lg"
             md={6}
             xs={12}
             style={{
