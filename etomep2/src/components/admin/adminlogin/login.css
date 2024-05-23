@@ -144,8 +144,10 @@ background-size: cover !important;
   width:100% !important ;
 }
 .admin_form {
-  width: 80% !important;
-  padding-left:4% !important;
+  width: 90% !important;
+  /* padding-left:2% !important;
+  padding-right:2% !important; */
+  padding: 4%;
 }
 }
 
@@ -178,18 +180,29 @@ background-size: cover !important;
   }
   .admin_form_title {
       font-size: 1.5rem;
+      margin-left: 5%;
+      margin-top: 10%;
   }
   .admin_input_container {
-    /* position: relative; */
-    width: 300px;
+    width: 90%;
+    margin-left: 5%;
+  }
+  .admin_input_container input{
+     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: "center";
+    align-content: 'center';
+    /* margin-left: 5%; */
   }
   
   .admin_input_container input, .admin_input_container span {
       font-size: 1rem; 
   }
   .admin_submit_btn {
-      width: 100%;
+      width: 90%;
       padding: 12px; 
+      margin-left: 5%; 
   }
   .ad_lg_tagline {
       font-size: 1rem; 
@@ -197,6 +210,7 @@ background-size: cover !important;
   }
   .admin_signup-link {
       font-size: 0.875rem; 
+      margin-right: 5%;
   }
   .website_button{
     display: none;
