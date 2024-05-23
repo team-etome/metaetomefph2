@@ -10,6 +10,7 @@
   border-radius: 0.5rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 9px 70px -2px rgba(0, 0, 0, 0.05);
   padding-top: 60px;
+  padding-left:3% ;
 }
 
 .admin_form_title {
@@ -139,9 +140,17 @@ margin-left: 2% !important;
 .ad_lg_min_div{
 background-size: cover !important;
 }
+.formcol_Lg{
+  width:100% !important ;
+}
+.admin_form {
+  width: 80% !important;
+  padding-left:4% !important;
+}
 }
 
 @media (max-width: 800px) {
+ 
   .ad_lg_min_div {
       background-size: cover !important;
       /* text-align: left;  */
