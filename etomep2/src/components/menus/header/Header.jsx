@@ -3,22 +3,52 @@ import etomelogo from "../../../assets/etomelogo.png";
 import { Navbar, Container, Nav, Form, Button } from "react-bootstrap";
 import { BsSearch, BsFilterRight } from "react-icons/bs";
 import '../header/header.css'; 
+import { GiHamburgerMenu } from "react-icons/gi";
 
 function Header() {
     return (
         <Navbar expand="lg" style={{ backgroundColor: '#ffff'  }}>
             <Container fluid>
-                <Navbar.Brand href="#">
+                {/* <div className='header_menu'>
+                <GiHamburgerMenu />
+                </div> */}
+
+                <Navbar.Brand href="#" className='header' >
+                <div className='header_menu'>
+                    <GiHamburgerMenu />
+                </div>
+                    <div className='header_logo'>
                     <img
                         src={etomelogo}
                         alt="etome logo"
                         style={{
-                            width: "200px",
-                            height: "90px",
-                            marginBottom: "15px",
+                            width: "162px",
+                            height: "63px",
+                            display:'flex',
+                            justifyContent:'center',
+                            alignContent:'center',
+                            alignItems:'center'
                         }}
                     />
+                    </div>
+
                 </Navbar.Brand>
+                <div className='header_institution' style={{display:'flex', gap:'10px', justifyContent:'center',alignContent:'center',alignItems:'center'}}>
+                <div>
+                    <h6 style={{color:'#9DB2BF', fontSize:'17px'}}>Institute Name</h6>
+                    <p style={{color:'#727272', fontSize:'12px'}}>Institutemail@gmail.com</p>
+                </div>
+                <img
+                        src={etomelogo}
+                        alt="Profile"
+                        style={{
+                            width: "70px",
+                            height: "40px",
+                            borderRadius: "20%",
+                            marginRight: "30px",
+                        }}
+                    />
+                </div>
                 {/* <Nav className=" nav-links me-auto my-2 my-lg-0" style={{ maxHeight: '100px', display: 'flex', flexWrap: 'nowrap' }} variant="underline" >
                     <Nav.Item>
                         <Nav.Link eventKey="Class">Class</Nav.Link>

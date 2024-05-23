@@ -137,10 +137,11 @@ function AdminLogin() {
                       height: "53px",
                       backgroundColor: "transparent",
                       color: "#526D82",
-                      borderRadius: "1rem",
+                      borderRadius: "0.5rem",
                       borderColor: "#526D82",
                       marginTop: "10px",
                       marginLeft: "30px",
+                      border:'1px solid #526D82'
                     }}
                     type="submit"
                   >

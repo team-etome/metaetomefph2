@@ -19,9 +19,40 @@
         gap: 10px;
         margin-left: 20px;
     }
+    .header_institution{
+        display: none !important;
+    }
+    .header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .header_logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .header_menu {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        position: absolute;
+        left: 20px; 
+        color: #526D82;
+    }
+    .header_menu svg {
+        height: 30px; 
+        width: 30px; 
+    }
+
 }
 @media (min-width: 1000px) {
     .responsive-buttons {
         display: none;
     }
+.header_menu{
+    display: none;
+}
 }
