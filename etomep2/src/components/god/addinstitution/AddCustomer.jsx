@@ -12,8 +12,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import Select from "react-select";
-import { TagInput } from 'rsuite';
-
+// import { TagInput } from "rsuite";
 
 function AddCustomer() {
   const [institutionName, setInstitutionName] = useState("");
@@ -72,7 +71,7 @@ function AddCustomer() {
     }
   };
   const handleEducationBoard = (selectedOptions) => {
-    setCustBoard(selectedOptions.value)
+    setCustBoard(selectedOptions.value);
     setBoard(selectedOptions);
   };
 
@@ -286,16 +285,35 @@ function AddCustomer() {
   //   value: mschool,
   //   label: mschool,
   // }));
-  const removeTag = (indexToRemove) => {
-    setMedium(medium.filter((_, index) => index !== indexToRemove));
+  // const removeTag = (indexToRemove) => {
+  //   setMedium(medium.filter((_, index) => index !== indexToRemove));
+  // };
+
+  // const addTag = (event) => {
+  //   if (event.target.value.trim() !== "" && event.key === "Enter") {
+  //     setMedium([...medium, event.target.value]);
+  //     event.target.value = "";
+  //   }
+  // };
+
+  const [currentInput, setCurrentInput] = useState("");
+
+  const handleInputChange = (event) => {
+    setCurrentInput(event.target.value);
   };
 
-  const addTag = (event) => {
-    if (event.target.value.trim() !== "" && event.key === "Enter") {
-      setMedium([...medium, event.target.value]);
-      event.target.value = "";
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && currentInput.trim() !== "") {
+      event.preventDefault();
+      setMedium([...medium, currentInput.trim()]);
+      setCurrentInput("");
     }
   };
+
+  const removeTag = (index) => {
+    setMedium(medium.filter((_, i) => i !== index));
+  };
+
   return (
     <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white" }}>
       <div className="form">
@@ -317,40 +335,40 @@ function AddCustomer() {
           <div style={{ marginLeft: "30px", color: "#526D82" }}>
             <h3>Add Institution</h3>
           </div>
-           <div style={{color:'2px solid black'}}></div> 
-            </div>
-            <div
-              className="form-container"
-              style={{ paddingLeft: "50px", paddingRight: "50px" }}
-            >
-              <div>
-                <div className="form-row">
-                  <div className="form-col">
-              <div className="input_container">
-                <label for="institutionName" style={{ fontWeight: "600" }}>
-                  Institution Name
-                </label>
-                <input
-                  type="text"
-                  id="institutionName"
-                  name="institutionName"
-                  value={institutionName}
-                  style={{ textTransform: "capitalize" }}
-                  maxLength="100"
-                  onChange={(e) => setInstitutionName(e.target.value)}
-                />
-              </div>
-              <div className="input_container">
-                <label for="institutionCode" style={{ fontWeight: "600" }}>
-                  Institution Code
-                </label>
-                <input
-                  type="number"
-                  id="institutionCode"
-                  name="institutionCode"
-                  value={institutionCode}
-                  style={{ textTransform: "capitalize" }}
-                  maxLength="100"
+          <div style={{ color: "2px solid black" }}></div>
+        </div>
+        <div
+          className="form-container"
+          style={{ paddingLeft: "50px", paddingRight: "50px" }}
+        >
+          <div>
+            <div className="form-row">
+              <div className="form-col">
+                <div className="input_container">
+                  <label for="institutionName" style={{ fontWeight: "600" }}>
+                    Institution Name
+                  </label>
+                  <input
+                    type="text"
+                    id="institutionName"
+                    name="institutionName"
+                    value={institutionName}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength="100"
+                    onChange={(e) => setInstitutionName(e.target.value)}
+                  />
+                </div>
+                <div className="input_container">
+                  <label for="institutionCode" style={{ fontWeight: "600" }}>
+                    Institution Code
+                  </label>
+                  <input
+                    type="number"
+                    id="institutionCode"
+                    name="institutionCode"
+                    value={institutionCode}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength="100"
                     // onChange={(e) => setInstitutionCode(e.target.value)}
                     onChange={(e) => {
                       const value = e.target.value;
@@ -504,7 +522,6 @@ function AddCustomer() {
                   />
                 </div>
 
-                
                 <div className="input_container">
                   <label for="region" style={{ fontWeight: "600" }}>
                     Region
@@ -519,33 +536,34 @@ function AddCustomer() {
                     onChange={(e) => setRegion(e.target.value)}
                   />
                 </div>
-                <div style={{}}>
-                <div className="input_container">
-                  <label for="medium" style={{ fontWeight: "600" }}>
-                    Medium
-                  </label>
-                  <div className="tags-input">
-                  
-                  <ul   id="tags" >
-                    {medium.map((tag, index) => (
-                      <li key={index} >
-                        <span className="tag-title" style={{}}>{tag}</span>
-                        <span className="tag-close-icon" onClick={() => removeTag(index)} >
-                          x
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <input
-                  className="medium_tag_input"
-                    type="text"
-                    onKeyUp={(event) => event.key === "Enter" ? addTag(event) : null}
-                    placeholder="Press enter to add tags"
-                    // style={{border:'1px solid black'}}
-                  />
-                </div>
 
-                </div>
+                <div>
+                  {/* <div className="input_container"> */}
+                  <div>
+                    <label htmlFor="medium" style={{ fontWeight: "600" }}>
+                      Medium
+                    </label>
+                    <div className="tags-input-container">
+                      {medium.map((tag, index) => (
+                        <div className="tag-item" key={index}>
+                          {tag}
+                          <button
+                            className="remove-tag"
+                            onClick={() => removeTag(index)}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
+                      <input
+                        type="text"
+                        value={currentInput}
+                        onChange={handleInputChange}
+                        onKeyDown={handleKeyDown}
+                        className="tag-input-field"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="form-col" style={{ marginTop: "1px" }}>
@@ -620,7 +638,7 @@ function AddCustomer() {
                   >
                     {showPassword ? < FaEye/> : < FaEyeSlash />}
                   </div> */}
-                  <span onClick={togglePasswordVisibility} >
+                  <span onClick={togglePasswordVisibility}>
                     {showPassword ? <FaEye /> : <FaEyeSlash />}
                   </span>
                 </div>
@@ -639,10 +657,7 @@ function AddCustomer() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     onPaste={(e) => e.preventDefault()}
                   />
-                  <span
-                    onClick={toggleConfirmPasswordVisibility}
-                    style={{}}
-                  >
+                  <span onClick={toggleConfirmPasswordVisibility} style={{}}>
                     {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
                   </span>
                 </div>

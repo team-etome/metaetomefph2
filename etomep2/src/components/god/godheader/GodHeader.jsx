@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Container, Row, Tabs, Tab, Nav } from "react-bootstrap";
 import etomelogo from "../../../assets/etomelogo.png";
 import { IoIosSearch } from "react-icons/io";
@@ -13,14 +13,13 @@ function GodHeader() {
   // const [activeTab, setActiveTab] = useState("Institution");
 
   const [activeTab, setActiveTab] = useState(
-    localStorage.getItem('activeTab') || "Institution"
+    localStorage.getItem("activeTab") || "Institution"
   );
 
   // Update local storage when activeTab changes
   useEffect(() => {
-    localStorage.setItem('activeTab', activeTab);
+    localStorage.setItem("activeTab", activeTab);
   }, [activeTab]);
-
 
   return (
     <div className="header-container">
@@ -34,13 +33,19 @@ function GodHeader() {
               className="navbar_text"
             >
               <Nav.Item>
-                <Nav.Link eventKey="Institution">Institution</Nav.Link>
+                <Nav.Link eventKey="Institution" className="no-underline">
+                  Institution
+                </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="Textbook">Textbook</Nav.Link>
+                <Nav.Link eventKey="Textbook" className="no-underline">
+                  Textbook
+                </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="Course">Course</Nav.Link>
+                <Nav.Link eventKey="Course" className="no-underline">
+                  Course
+                </Nav.Link>
               </Nav.Item>
             </Nav>
             <div className="dashboard-container">
