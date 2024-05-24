@@ -20,6 +20,7 @@ import AdminForgot from './components/admin/adminforgotpassword/AdminForgot';
 import AdminNewPassword from './components/admin/adminnewpassword/AdminNewPassword';
 import Header from './components/menus/header/Header';
 import Sidebar from './components/menus/sidebar/Sidebar';
+import AdminClassdashboard from './components/admin/adminclassdashboard/AdminClassdashboard';
 
 
 
@@ -53,6 +54,8 @@ function App() {
   <Route path="/admindashboard" element={<AdminDashboard/>}/>
   <Route path="/adminforgot" element={<AdminForgot/>}/>
   <Route path="/adminnewpassword" element={<AdminNewPassword/>}/>
+  <Route path="/adminclassdashboard" element={<AdminClassdashboard/>}/>
+
 
 
 {/* menu */}
