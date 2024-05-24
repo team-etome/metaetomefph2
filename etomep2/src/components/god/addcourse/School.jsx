@@ -98,6 +98,7 @@ function School() {
         border: "2px solid white",
         borderRadius: "20px",
         marginTop: "30px",
+        // minHeight: "100vh "
       }}
     >
       <Container>
