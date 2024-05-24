@@ -2,10 +2,11 @@ import React from 'react'
 import { Col, Container, Row, Tabs, Tab, Nav } from "react-bootstrap";
 import '../admindashboard/admindashboard.css';
 
+
 function AdminDashboard() {
   
   return (
-    <div className="admin_dashboard" style={{backgroundColor:'#FCFEFF', height:'100vh', marginLeft:'60px'}}>
+ <div className="admin_dashboard" style={{backgroundColor:'#F8FEFF', height:'100vh',zIndex:"50px"}}>
       <Container>
         <Row>
           <Col md={12} style={{}}>

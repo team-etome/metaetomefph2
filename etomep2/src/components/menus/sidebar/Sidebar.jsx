@@ -22,7 +22,8 @@ function Sidebar() {
         height: "100vh",
         display: "flex",
         justifyContent: "center",
-        flexDirection: 'column'
+        flexDirection: 'column',
+        overflow: "hidden",
       }}>
 
 
@@ -35,6 +36,7 @@ function Sidebar() {
           width: "112px",
           alignItems: "center",
           alignContent: "center",
+        marginTop:"30px"
 
         }}>
         <Col className='menu_item_col'>
