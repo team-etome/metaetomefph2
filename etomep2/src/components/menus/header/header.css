@@ -1,4 +1,4 @@
-@media (max-width: 999px) {
+@media (max-width: 800px),(max-height:490px ) {
     .nav-links {
         display: none !important;
         justify-content: center;
@@ -48,11 +48,15 @@
     }
 
 }
-@media (min-width: 1000px) {
-    .responsive-buttons {
-        display: none;
-    }
+@media (min-width:799px) {
+   
 .header_menu{
     display: none;
 }
 }
+@media (max-height:491px) {
+   
+    .header_menu{
+        display:flex;
+    }
+    }

@@ -6,16 +6,16 @@ import '../header/header.css';
 import { GiHamburgerMenu } from "react-icons/gi";
 import amritha from "../../../assets/amritha.png";
 
-function Header() {
+function Header({ onBurgerClick }) {
     return (
-        <Navbar expand="lg" style={{ backgroundColor: '#ffff',height:"12vh" ,zIndex:"1000" }}>
+        <Navbar expand="lg" style={{ backgroundColor: '#ffff',height:"12vh",width:"100%" ,zIndex:"1000",position:"fixed",top:"0",left:"0" }}>
             <Container fluid>
                 {/* <div className='header_menu'>
                 <GiHamburgerMenu />
                 </div> */}
 
                 <Navbar.Brand href="#" className='header' >
-                <div className='header_menu'>
+                <div className='header_menu' onClick={onBurgerClick}>
                     <GiHamburgerMenu />
                 </div>
                     <div className='header_logo'>

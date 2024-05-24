@@ -15,11 +15,12 @@ import Customerdashboard from './components/god/customerdashboard/Customerdashbo
 import Coursedashboard from './components/god/coursedashboard/Coursedashboard';
 import School from './components/god/addcourse/School';
 import AdminLogin from './components/admin/adminlogin/AdminLogin';
-import AdminDashboard from './components/admin/admindashboard/AdminDashboard';
 import AdminForgot from './components/admin/adminforgotpassword/AdminForgot';
 import AdminNewPassword from './components/admin/adminnewpassword/AdminNewPassword';
 import Header from './components/menus/header/Header';
 import Sidebar from './components/menus/sidebar/Sidebar';
+import React, { useState } from 'react';
+import AdminDashboardpage from './pages/adminpage/AdminDashboardpage';
 
 
 
@@ -27,9 +28,20 @@ import Sidebar from './components/menus/sidebar/Sidebar';
 function App() {
 
 
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
+
+  const handleBurgerClick = () => {
+      setShowMobileSidebar(true);
+  };
+
+  const handleCloseSidebar = () => {
+      setShowMobileSidebar(false);
+  };
+
   return (
 <div className='App'>
-<BrowserRouter>
+  
+<BrowserRouter >
 <Routes>
 
 
@@ -50,7 +62,7 @@ function App() {
 
   {/* adminside */}
   <Route path="/adminlogin" element={<AdminLogin/>}/>
-  <Route path="/admindashboard" element={<AdminDashboard/>}/>
+  <Route path="/admindashboard" element={<AdminDashboardpage/>}/>
   <Route path="/adminforgot" element={<AdminForgot/>}/>
   <Route path="/adminnewpassword" element={<AdminNewPassword/>}/>
 
