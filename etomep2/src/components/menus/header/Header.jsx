@@ -4,10 +4,11 @@ import { Navbar, Container, Nav, Form, Button } from "react-bootstrap";
 import { BsSearch, BsFilterRight } from "react-icons/bs";
 import '../header/header.css'; 
 import { GiHamburgerMenu } from "react-icons/gi";
+import amritha from "../../../assets/amritha.png";
 
 function Header() {
     return (
-        <Navbar expand="lg" style={{ backgroundColor: '#ffff'  }}>
+        <Navbar expand="lg" style={{ backgroundColor: '#ffff',height:"12vh" ,zIndex:"1000" }}>
             <Container fluid>
                 {/* <div className='header_menu'>
                 <GiHamburgerMenu />
@@ -39,12 +40,12 @@ function Header() {
                     <p style={{color:'#727272', fontSize:'12px'}}>Institutemail@gmail.com</p>
                 </div>
                 <img
-                        src={etomelogo}
+                        src={amritha }
                         alt="Profile"
                         style={{
-                            width: "70px",
-                            height: "40px",
-                            borderRadius: "20%",
+                            width: "52px",
+                            height: "52px",
+                            borderRadius: "50%",
                             marginRight: "30px",
                         }}
                     />

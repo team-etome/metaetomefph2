@@ -1,11 +1,16 @@
 import React from 'react'
 import { Col, Container, Row, Tabs, Tab, Nav } from "react-bootstrap";
 import '../admindashboard/admindashboard.css';
+import Header from '../../menus/header/Header';
+import Sidebar from '../../menus/sidebar/Sidebar';
 
 function AdminDashboard() {
   
   return (
-    <div className="admin_dashboard" style={{backgroundColor:'#FCFEFF', height:'100vh'}}>
+    <div className="admin_dashboard" style={{backgroundColor:'#F8FEFF', height:'100vh',zIndex:"50px"}}>
+     
+      <Sidebar/>
+      <Header/>
       <Container>
         <Row>
           <Col md={12} style={{}}>

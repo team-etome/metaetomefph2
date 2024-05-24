@@ -3,6 +3,12 @@
   justify-content: center;
   flex-direction: column;
   transition: width 0.3s ease-in-out;
+  position: absolute;
+ 
+  height:fit-content;
+  z-index:999;
+
+  
 }
 
 .sidenav_fstdiv:hover {
