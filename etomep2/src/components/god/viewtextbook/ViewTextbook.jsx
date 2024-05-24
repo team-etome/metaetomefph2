@@ -19,7 +19,7 @@ function ViewTextbook({ show, handleClose, book }) {
   };
 
   return (
-    <Modal centered size="lg" show={show} onHide={handleClose}>
+    <Modal centered size="lg" show={show} onHide={handleClose} style={{minHeight: "100vh",}}>
       <Modal.Header closeButton>
         <Modal.Title>{book.text_name}</Modal.Title>
       </Modal.Header>

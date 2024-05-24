@@ -22,7 +22,7 @@ function GodHeader() {
   }, [activeTab]);
 
   return (
-    <div className="header-container">
+    <div className="header-container" style={{minHeight: "100vh",}}>
       <Container>
         <Row>
           <Col md={12} style={{ marginTop: "30px" }}>
