@@ -1,0 +1,9 @@
+.class_rectangle{
+    position: relative;
+    border: 1px solid black;
+    width:260px;
+    height: 100px;
+}
+.class_main{
+    margin-top: 30px;
+}
