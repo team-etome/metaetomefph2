@@ -4,7 +4,7 @@ import School from '../addcourse/School';
 
 function Coursedashboard() {
   return (
-    <div style={{minHeight: "100vh", overflowY: "auto", }}>
+    <div style={{minHeight:'100vh', overflowY: "auto", }}>
         <School/>
     </div>
   )

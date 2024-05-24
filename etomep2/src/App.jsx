@@ -21,6 +21,8 @@ import Header from './components/menus/header/Header';
 import Sidebar from './components/menus/sidebar/Sidebar';
 import React, { useState } from 'react';
 import AdminDashboardpage from './pages/adminpage/AdminDashboardpage';
+import AdminClassdashboard from './components/admin/adminclassdashboard/AdminClassdashboard';
+
 
 
 
@@ -65,6 +67,8 @@ function App() {
   <Route path="/admindashboard" element={<AdminDashboardpage/>}/>
   <Route path="/adminforgot" element={<AdminForgot/>}/>
   <Route path="/adminnewpassword" element={<AdminNewPassword/>}/>
+  <Route path="/adminclassdashboard" element={<AdminClassdashboard/>}/>
+
 
 
 {/* menu */}

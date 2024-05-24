@@ -8,7 +8,7 @@ import amritha from "../../../assets/amritha.png";
 
 function Header({ onBurgerClick }) {
     return (
-        <Navbar expand="lg" style={{ backgroundColor: '#ffff',height:"12vh",width:"100%" ,zIndex:"1000",position:"fixed",top:"0",left:"0" }}>
+ <Navbar expand="lg" style={{ backgroundColor: '#ffff',height:"12vh",width:"100%" ,zIndex:"1000",position:"fixed",top:"0",left:"0" }}>
             <Container fluid>
                 {/* <div className='header_menu'>
                 <GiHamburgerMenu />
