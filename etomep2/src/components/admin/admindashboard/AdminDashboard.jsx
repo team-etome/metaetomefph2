@@ -6,10 +6,10 @@ import '../admindashboard/admindashboard.css';
 function AdminDashboard() {
   
   return (
- <div className="admin_dashboard" style={{backgroundColor:'#F8FEFF', height:'100vh',zIndex:"50px"}}>
+ <div className="admin_dashboard" style={{backgroundColor:'#F8FEFF', height:'100vh',paddingTop:"12vh",paddingLeft:"10px",}}>
       <Container>
-        <Row>
-          <Col md={12} style={{}}>
+        <Row style={{paddingLeft:"2vw",paddingTop:"1vw"}}>
+          <Col md={12} >
             <Nav
               variant="underline"
               // activeKey={activeTab}
@@ -17,7 +17,7 @@ function AdminDashboard() {
               className="admin_dashboard_tab"
             >
               <Nav.Item>
-                <Nav.Link eventKey="Faculty"style={{textDecoration:'none', color:'#526D82', fontSize:'15px'}}>Faculty</Nav.Link>
+                <Nav.Link eventKey="Faculty"style={{textDecoration:'none', color:'#526D82', fontSize:'15px',marginRight:"20px"}}>Faculty</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey="Class" style={{textDecoration:'none', color:'#526D82', fontSize:'15px'}}>Class</Nav.Link>
