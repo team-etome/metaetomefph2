@@ -470,7 +470,7 @@ function AddBooks() {
   };
 
   return (
-    <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white " }}>
+    <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white ", minHeight:'100vh' }}>
       {data ? (
         <div className="textbook">
           <div

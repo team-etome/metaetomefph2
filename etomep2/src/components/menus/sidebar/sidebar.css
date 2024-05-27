@@ -1,0 +1,202 @@
+.sidenav_fstdiv {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  transition: width 0.3s ease-in-out;
+  position: absolute;
+  height:100vh;
+  z-index:1001;
+
+  
+}
+
+.sidenav_fstdiv:hover {
+  width: 280px !important;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(157, 157, 157, 0.5);
+  border-right: 1px solid #c2cfd8;
+
+}
+
+.menu_item_col {
+ /* background-color: blue; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+
+}
+
+.icon_container_div {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #676767;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all 0.5s ease-in-out;
+}
+
+.icon_img {
+  width: 24px;
+  height: 24px;
+}
+
+.icon-text {
+  position: absolute;
+  left: 70px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, color 0.1s ease-in-out ,font-size 0.1s ease-in-out ;
+  font-size: 18px;
+  font-weight: 500;
+  color: #676767;
+}
+.menu_item_col:hover .icon_container_div,
+.menu_item_col.active .icon_container_div {
+  background-color: #526D82; 
+  border-color: #526D82; 
+  color: #fff;;
+}
+
+.menu_item_col:hover .icon-text,
+.menu_item_col.active .icon-text {
+  color: #526D82;
+  font-size: 25px;
+  opacity: 1;
+}
+.sidenav_fstdiv:hover .icon_container_div .icon-text {
+  opacity: 1;
+  
+}
+
+.sidenav_fstdiv:not(:hover) .icon_container_div .icon-text {
+  opacity: 0;
+ 
+}
+.sidebar_header{
+  display: none;
+}
+.sidebar_header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  height: 12vh;
+  padding-left: 11.9px;
+  padding-top: 8.5px;
+
+ 
+}
+
+.sidenav_fstdiv:hover .sidebar_header {
+  opacity: 1;
+  
+  
+}
+
+@media (max-height: 490px),(max-width:800px) {
+  .sidenav_fstdiv{
+      display: none !important;
+  }}
+
+
+  /* mobile side nav css */
+  .mobile_sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(157, 157, 157, 0.5);
+    transition: left 0.3s ease;
+    z-index: 9999;
+    height: 100vh;
+  }
+  
+  .mobile_sidebar.show {
+    left: 0;
+  }
+  
+  .mobile_sidebar_header {
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px;
+    padding-top: 28px;
+  }
+  
+  .mob_menu_item_col {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 40px;
+  }
+  
+  .mob_icon_container_div {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #676767;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .mob_icon_img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .mob_icon_text {
+    font-size: 18px;
+    font-weight: 500;
+    color: #676767;
+    position: absolute;
+    left: 70px;
+    transition: opacity 0.3s ease-in-out, color 0.1s ease-in-out, font-size 0.1s ease-in-out;
+  }
+  
+  .mob_menu_item_col:hover .mob_icon_container_div,
+  .mob_menu_item_col.active .mob_icon_container_div {
+    background-color: #526D82;
+    border-color: #526D82;
+    color: #fff;
+  }
+  
+  .mob_menu_item_col:hover .mob_icon_text,
+  .mob_menu_item_col.active .mob_icon_text {
+    color: #526D82;
+    font-size: 25px;
+    opacity: 1;
+  }
+ .mob_pofile_container_div{
+  border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #676767;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+ }
+ .mob_profile_text{
+  font-size: 18px;
+  font-weight: 500;
+  color: #676767;
+  position: absolute;
+  left: 70px;
+  transition: opacity 0.3s ease-in-out, color 0.1s ease-in-out, font-size 0.1s ease-in-out;
+ }
+ .mob_pofile_container_div:hover .mob_profile_text {
+  color: #526D82;
+  font-size: 25px;
+  opacity: 1;
+}
