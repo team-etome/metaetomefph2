@@ -1,6 +1,7 @@
 
 import React ,{useState} from 'react';
-import { Col, Row, } from "react-bootstrap";
+import { Col, Row,} from "react-bootstrap";
+import { Link } from "react-router-dom";
 import elogo from '../../../assets/elogo.png';
 import { GoHome } from "react-icons/go";
 import { RxDashboard } from "react-icons/rx";
@@ -61,10 +62,12 @@ function Sidebar() {
           </div>
         </Col>
         <Col className={`menu_item_col ${activeItem === 'institution' ? 'active' : ''}`} onClick={() => handleMenuItemClick('institution')}>
+       <Link  to='/institutionadding'>
         <div className='icon_container_div'>
             < RxDashboard  className="icon_img"/>
             <span className="icon-text">Institution</span>
           </div>
+          </Link>
         </Col>
         <Col className={`menu_item_col ${activeItem === 'loka' ? 'active' : ''}`} onClick={() => handleMenuItemClick('loka')}>
           <div  className='icon_container_div'>

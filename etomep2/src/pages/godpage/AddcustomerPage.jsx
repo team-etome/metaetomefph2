@@ -3,7 +3,10 @@ import AddCustomer from '../../components/god/addinstitution/AddCustomer';
 
 function AddcustomerPage() {
   return (
-    <AddCustomer/>
+    <div>
+      <AddCustomer/>
+    </div>
+
   )
 };
 

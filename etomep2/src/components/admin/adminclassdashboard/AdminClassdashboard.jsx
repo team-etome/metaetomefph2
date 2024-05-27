@@ -5,31 +5,40 @@ import etomelogo from "../../../assets/etomelogo.png";
 
 function AdminClassdashboard() {
     return (
+        <div>
+            <Container>
+                
+            </Container>
+        <Container>
         <Row>
             <Col md={6} xl={3} style={{marginTop:'50px', marginLeft:'20px'}}>
-                <div className="border border-dark text-center">
+                <div className="border border-dark text-center" style={{width:'250px', height:'107px'}}>
                 <div
                         style={{
-                            width: "70px",
-                            height: "70px",
+                            width: "50px",
+                            height: "50px",
                             borderRadius: "50%",
-                            marginTop: "-45px",
+                            marginTop: "-30px",
                             // marginRight: "60%",
                             marginLeft:'5%',
                             backgroundColor: "#F2F2F2",
                             backgroundSize: "cover",
                             backgroundPosition: "center"
                         }}
-                    />
+                    ></div>
+                    <div>
                     <p>
                         Facutly Name
                     </p>
                     <p>
                         Facutly Name
                     </p>
+                    </div>
                 </div>
             </Col>
         </Row>
+        </Container>
+        </div>
     );
 }
 

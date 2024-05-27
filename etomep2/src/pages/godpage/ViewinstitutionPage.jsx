@@ -3,7 +3,10 @@ import ViewInstitution from '../../components/god/viewinstitution/ViewInstitutio
 
 function ViewinstitutionPage() {
   return (
-    <ViewInstitution/>
+    <div>
+      <ViewInstitution/>
+    </div>
+
   )
 };
 
