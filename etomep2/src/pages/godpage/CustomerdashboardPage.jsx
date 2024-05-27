@@ -3,7 +3,10 @@ import Customerdashboard from '../../components/god/customerdashboard/Customerda
 
 function CustomerdashboardPage() {
   return (
-    <Customerdashboard/>
+    <div>
+      <Customerdashboard/>
+    </div>
+
   )
 }
 
