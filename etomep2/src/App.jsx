@@ -11,6 +11,7 @@ import AdminNewPassword from './components/admin/adminnewpassword/AdminNewPasswo
 import Header from './components/menus/header/Header';
 import Sidebar from './components/menus/sidebar/Sidebar';
 import React, { useState } from 'react';
+
 import AdminDashboardpage from './pages/adminpage/AdminDashboardpage';
 import AddtextbooksPage from './pages/godpage/AddtextbooksPage';
 import AddcustomerPage from './pages/godpage/AddcustomerPage';
@@ -64,9 +65,11 @@ function App() {
 
   {/* adminside */}
 
+
   <Route path="/adminlogin" element={<AdminLoginPage/>}/>
   <Route path="/admindashboard" element={<AdminDashboardpage/>}/>
   <Route path="/institutionadding" element={<InstitutionAddingPage/>}/>
+
 
   <Route path="/adminforgot" element={<AdminForgot/>}/>
   <Route path="/adminnewpassword" element={<AdminNewPassword/>}/>
