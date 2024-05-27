@@ -20,8 +20,9 @@ import AdminNewPassword from './components/admin/adminnewpassword/AdminNewPasswo
 import Header from './components/menus/header/Header';
 import Sidebar from './components/menus/sidebar/Sidebar';
 import React, { useState } from 'react';
-import AdminDashboardpage from './pages/adminpage/AdminDashboardpage';
 import AdminClassdashboard from './components/admin/adminclassdashboard/AdminClassdashboard';
+// import AdminDashboard from './components/admin/admindashboard/AdminDashboard';
+import AdminDashboardpage from './pages/adminpage/AdminDashboardpage'
 
 
 
@@ -65,7 +66,7 @@ function App() {
   {/* adminside */}
 
   <Route path="/" element={<AdminLogin/>}/>
-  <Route path="/admindashboard" element={<AdminDashboard/>}/>
+  <Route path="/admindashboard" element={<AdminDashboardpage/>}/>
 
 
   <Route path="/adminforgot" element={<AdminForgot/>}/>
