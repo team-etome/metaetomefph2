@@ -1,48 +1,98 @@
-import React, { useState, useEffect } from 'react'
-import { Col, Container, Row, Tabs, Tab, Nav } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { Col, Container, Row, Tabs, Form, Nav } from "react-bootstrap";
 import '../institutionadding/institutiondashboard.css';
 import AdminClassdashboard from '../adminclassdashboard/AdminClassdashboard';
 import FacultyDashboard from '../adminfacultydashboard/FacultyDashboard';
+import { BsSearch, BsFilterRight } from "react-icons/bs";
+import { MdDownload } from "react-icons/md";
+import { MdUpload } from "react-icons/md";
 
 function InstitutionDashboard() {
+  const [activeTab, setActiveTab] = useState(
+    localStorage.getItem("activeTab") || "Faculty"
+  );
 
-    const [activeTab, setActiveTab] = useState(
-        localStorage.getItem("activeTab") || "Faculty"
-      );
-    
-      // Update local storage when activeTab changes
-      useEffect(() => {
-        localStorage.setItem("activeTab", activeTab);
-      }, [activeTab]);
+  // Update local storage when activeTab changes
+  useEffect(() => {
+    localStorage.setItem("activeTab", activeTab);
+  }, [activeTab]);
 
   return (
- <div className="institution_dashboard" style={{backgroundColor:'#F8FEFF', height:'100vh',paddingTop:"12vh",paddingLeft:"10px",}}>
+    <div className="institution_dashboard" style={{ backgroundColor: '#F8FEFF', height: '100vh', paddingTop: "12vh", paddingLeft: "10px" }}>
       <Container>
-        <Row style={{paddingLeft:"2vw",paddingTop:"1vw"}}>
+        <Row style={{ paddingLeft: "2vw", paddingTop: "1vw", }}>
           <Col md={12} >
             <Nav
+
               variant="underline"
               activeKey={activeTab}
               onSelect={(k) => setActiveTab(k)}
               className="institution_dashboard_tab"
+              style={{width:"100%"}}
+
             >
               <Nav.Item>
-                <Nav.Link eventKey="Faculty"style={{textDecoration:'none', color:'#526D82', fontSize:'15px',marginRight:"20px"}}>Faculty</Nav.Link>
+                <Nav.Link eventKey="Faculty" style={{ textDecoration: 'none', color: '#526D82', fontSize: '15px', marginRight: "20px" }}>Faculty</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="Class" style={{textDecoration:'none', color:'#526D82', fontSize:'15px'}}>Class</Nav.Link>
+                <Nav.Link eventKey="Class" style={{ textDecoration: 'none', color: '#526D82', fontSize: '15px' }}>Class</Nav.Link>
               </Nav.Item>
+              {activeTab === "Faculty" && (
+             <div style={{width:"80%",display:"flex",justifyContent:"flex-start",flexDirection:"row",paddingLeft:"2vw" }}>
+                <div style={{ width: "60%", paddingLeft: "5vw"}} className="search_filter d-flex align-items-center" >
+                  <Form className="d-flex">
+                    <div className="position-relative">
+                      <BsSearch
+                        className="position-absolute top-50 translate-middle-y ms-2"
+                        style={{ zIndex: 2, height: "20px", width: "20px", color: "#D8D4D4", right: "15px" }}
+                      />
+                      <Form.Control
+                        type="search"
+                        placeholder="Search"
+                        className="ps-3"
+                        aria-label="Search"
+                        style={{
+                          width: "400px",
+                          height:"35px",
+                          borderRadius: "17px",
+                          color: "#767676",
 
+                        }}
+                      />
+                    </div>
+                  </Form>
+              </div>
+<div style={{width:"35%",display:"flex",flexDirection:"row",justifyContent:"flex-end",}}>
+<button className="Btn_faculty" >
+                    <div className="faculty_dwnld"><MdDownload style={{ width: "20px", height: "20px", marginLeft: "5px" }} /></div>
+                    <div className="text_dwnld">Download</div>
+                  </button>
+                  <button className="Btn_faculty" >
+                    <div className="faculty_dwnld"><MdUpload style={{ width: "20px", height: "20px", marginLeft: "5px" }} /></div>
+                    <div className="text_dwnld">Upload Excel</div>
+                  </button>
+</div>
+<div style={{width:"5%",display:"flex",flexDirection:"row",justifyContent:"flex-end"}}>
+<BsFilterRight style={{ height: '40px', width: '40px', }}/>
+</div>
+                  </div>
+                  
+                
+              )}
+               
             </Nav>
+
             <div className="institution_dashboard_container">
               {activeTab === "Faculty" && <FacultyDashboard />}
               {activeTab === "Class" && <AdminClassdashboard />}
             </div>
+
           </Col>
+
         </Row>
       </Container>
     </div>
   )
 }
 
-export default InstitutionDashboard
+export default InstitutionDashboard;

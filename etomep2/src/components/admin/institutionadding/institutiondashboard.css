@@ -1,0 +1,112 @@
+.institution_dashboard_tab .nav-link {
+    padding: 10px 15px;
+    border: none;
+
+  }
+  
+  .institution_dashboard_tab .nav-link.active {
+    font-weight: bold;
+    border-bottom: 2px solid #526D82;
+  }
+  
+  .search_filter {
+    display: flex;
+    align-items: center;
+
+  }
+  
+  .search_filter .form-control {
+    width: 250px;
+    border-radius: 17px;
+    color: #767676;
+    padding-left: 30px;
+  }
+  
+  .search_filter .form-control::placeholder {
+    color: #767676;
+  }
+  
+  .search_filter .position-relative {
+    position: relative;
+  }
+  
+  .search_filter .position-relative .position-absolute {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+    z-index: 2;
+    height: 20px;
+    width: 20px;
+    color: #D8D4D4;
+  }
+  
+  .search_filter .bs-filter-right {
+    height: 40px;
+    width: 40px;
+    margin-left: 20px;
+    margin-right: 1px;
+  }
+  /* button css */
+  .Btn_faculty {
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    margin-right: 15px;
+    width: 48px;
+    height: 40px;
+    border: none;
+    border-radius:16px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+    background-color: #DEEAF3;
+    color: #526D82;
+    
+  }
+  
+
+  .faculty_dwnld {
+    width: 100%;
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .faculty_dwnld{
+    width: 32px;
+    height: 32px;
+  }
+ 
+  /* text */
+  .text_dwnld {
+    position: absolute;
+    right: 0%;
+    width: 0%;
+    opacity: 0;
+    color: #526D82;
+    font-size: 10px;
+    font-weight: 500;
+    transition-duration: .3s;
+  }
+  /* hover effect on button width */
+  .Btn_faculty:hover {
+    width: 130px;
+    border-radius: 16px;
+    transition-duration: .3s;
+  }
+  
+  .Btn_faculty:hover .faculty_dwnld {
+    width: 20%;
+    
+   
+  }
+  /* hover effect button's text */
+  .Btn_faculty:hover .text_dwnld {
+    opacity: 1;
+    width: 75%;
+    transition-duration: .3s;
+    padding-right: 20px;
+  }
