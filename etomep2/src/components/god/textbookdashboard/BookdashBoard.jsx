@@ -25,6 +25,8 @@ function BookdashBoard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage] = useState(8);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [selectedClass, setSelectedClass] = useState("");
   const APIURL = useSelector((state) => state.APIURL.url);
 
   console.log(books, "booksssssssss");
@@ -33,10 +35,20 @@ function BookdashBoard() {
     const classNames = new Set();
     books.forEach((book) => {
       if (book.class_name) {
-        classNames.add(book.class_name);
+        classNames.add(parseInt(book.class_name, 10)); // Convert to integer
       }
     });
-    return Array.from(classNames);
+    return Array.from(classNames).sort((a, b) => a - b); // Sort numerically
+  };
+
+  const getSubjects = () => {
+    const subjects = new Set();
+    books.forEach((book) => {
+      if (book.subject) {
+        subjects.add(book.subject);
+      }
+    });
+    return Array.from(subjects).sort();
   };
 
   useEffect(() => {
@@ -48,15 +60,26 @@ function BookdashBoard() {
       .catch((error) => {
         console.error("Error fetching books:", error);
       });
-  }, []);
+  }, [APIURL]);
 
   const handleCardClick = (book) => {
     setSelectedBook(book);
     setShowModal(true);
   };
 
-  const filteredBooks = books.filter((book) =>
-    book.text_name.toLowerCase().includes(searchTerm.toLowerCase())
+  const handleSubjectClick = (subject) => {
+    setSelectedSubject(subject === selectedSubject ? "" : subject);
+  };
+
+  const handleClassClick = (className) => {
+    setSelectedClass(className === selectedClass ? "" : className);
+  };
+
+  const filteredBooks = books.filter(
+    (book) =>
+      book.text_name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (selectedSubject === "" || book.subject === selectedSubject) &&
+      (selectedClass === "" || book.class_name === selectedClass.toString())
   );
 
   const indexOfLastBook = currentPage * booksPerPage;
@@ -94,17 +117,37 @@ function BookdashBoard() {
             <Nav className="me-auto">
               <NavDropdown title="Class" id="basic-nav-dropdown">
                 {getClassNames().map((className, index) => (
-                  <NavDropdown.Item key={index} href="#action/3.1">
-                    {className}
+                  <NavDropdown.Item
+                    key={index}
+                    href="#action/3.1"
+                    onClick={() => handleClassClick(className)}
+                    style={{
+                      textDecoration:
+                        selectedClass === className ? "underline" : "none",
+                    }}
+                  >
+                    Class {className}
                   </NavDropdown.Item>
                 ))}
               </NavDropdown>
               <NavDropdown title="Subject" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Science</NavDropdown.Item>
+                {getSubjects().map((subject, index) => (
+                  <NavDropdown.Item
+                    key={index}
+                    href="#action/3.2"
+                    onClick={() => handleSubjectClick(subject)}
+                    style={{
+                      textDecoration:
+                        selectedSubject === subject ? "underline" : "none",
+                    }}
+                  >
+                    {subject}
+                  </NavDropdown.Item>
+                ))}
               </NavDropdown>
-              <NavDropdown title="Board" id="basic-nav-dropdown">
+              {/* <NavDropdown title="Board" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">CBSE</NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown> */}
             </Nav>
             <Form className="d-flex">
               <div className="position-relative">
@@ -172,7 +215,7 @@ function BookdashBoard() {
                       variant="top"
                       src={book.textbook_image}
                       style={{ width: "150px", margin: "10px" }}
-                      class="image-container"
+                      className="image-container"
                     />
                     <Card.Body>
                       <Card.Title>{book.text_name}</Card.Title>
