@@ -1,8 +1,9 @@
 import React ,{useState} from 'react'
 import AdminDashboard from '../../components/admin/admindashboard/AdminDashboard'
-import MobileSidebar from '../../components/menus/sidebar/MobileSidebar';
-import Header from '../../components/menus/header/Header';
-import Sidebar from '../../components/menus/sidebar/Sidebar';
+import MainHeader from '../../components/menus/common/MainHeader/';
+// import MobileSidebar from '../../components/menus/sidebar/MobileSidebar';
+// import Header from '../../components/menus/header/Header';
+// import Sidebar from '../../components/menus/sidebar/Sidebar';
 
 function AdminDashboardpage() {
 
@@ -19,10 +20,17 @@ function AdminDashboardpage() {
     
     return (
         <div>
-            <Header onBurgerClick={handleBurgerClick} />
+            {/* <Header onBurgerClick={handleBurgerClick} />
             <Sidebar/>
             <MobileSidebar show={showMobileSidebar} onClose={handleCloseSidebar} />
-            <AdminDashboard />
+            <AdminDashboard /> */}
+            
+            <MainHeader/>
+            <AdminDashboard/>
+
+
+            
+
         </div>
     )
 }
