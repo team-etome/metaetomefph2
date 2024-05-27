@@ -4,7 +4,10 @@ import BookdashBoard from '../../components/god/textbookdashboard/BookdashBoard'
 
 function BookdashboardPage() {
   return (
-    <BookdashBoard/>
+    <div>
+      <BookdashBoard/>
+    </div>
+
   )
 }
 

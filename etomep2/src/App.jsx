@@ -5,24 +5,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'rsuite/dist/rsuite.min.css';
 import GodloginPage from './pages/godpage/GodloginPage'
 import GoddashboardPage from './pages/godpage/GoddashboardPage'
-import AddCustomer from './components/god/addinstitution/AddCustomer';
-import AddBooks from './components/god/addtextbook/AddBooks';
-import ViewInstitution from './components/god/viewinstitution/ViewInstitution';
-import BookdashBoard from './components/god/textbookdashboard/BookdashBoard';
-import ViewTextbook from './components/god/viewtextbook/ViewTextbook';
 import GodHeader from './components/god/godheader/GodHeader';
-import Customerdashboard from './components/god/customerdashboard/Customerdashboard';
-import Coursedashboard from './components/god/coursedashboard/Coursedashboard';
-import School from './components/god/addcourse/School';
-import AdminLogin from './components/admin/adminlogin/AdminLogin';
 import AdminForgot from './components/admin/adminforgotpassword/AdminForgot';
 import AdminNewPassword from './components/admin/adminnewpassword/AdminNewPassword';
 import Header from './components/menus/header/Header';
 import Sidebar from './components/menus/sidebar/Sidebar';
 import React, { useState } from 'react';
-import AdminClassdashboard from './components/admin/adminclassdashboard/AdminClassdashboard';
-// import AdminDashboard from './components/admin/admindashboard/AdminDashboard';
-import AdminDashboardpage from './pages/adminpage/AdminDashboardpage'
+
+import AdminDashboardpage from './pages/adminpage/AdminDashboardpage';
+import AddtextbooksPage from './pages/godpage/AddtextbooksPage';
+import AddcustomerPage from './pages/godpage/AddcustomerPage';
+import ViewinstitutionPage from './pages/godpage/ViewinstitutionPage';
+import BookdashboardPage from './pages/godpage/BookdashboardPage';
+import CustomerdashboardPage from './pages/godpage/CustomerdashboardPage';
+import CoursedashboardPage from './pages/godpage/CoursedashboardPage';
+import SchoolPage from './pages/godpage/SchoolPage';
+import AdminLoginPage from './pages/adminpage/AdminLoginPage';
+import AdminFacultyPage from './pages/adminpage/AdminFacultyPage';
+import AdminClassPage from './pages/adminpage/AdminClassPage';
+import InstitutionAddingPage from './pages/adminpage/InstitutionAddingPage';
 
 
 
@@ -51,27 +52,30 @@ function App() {
   {/* godside */}
   <Route path="/godlogin" element={<GodloginPage/>}/>
   <Route path="/goddashboard" element={<GoddashboardPage/>}/>
-  <Route path="/addcustomer" element={<AddCustomer/>}/>
-  <Route path='/addbooks' element={<AddBooks/>}/>
-  <Route path='/addbooks/:id' element={<AddBooks/>}/>
-  <Route path='/viewinstitution/:id' element={<ViewInstitution/>}/>
-  <Route path='/textbookdashboard' element={<BookdashBoard/>}/>
-  <Route path='/ViewTextbook' element={<ViewTextbook/>}/>
+  <Route path="/addcustomer" element={<AddcustomerPage/>}/>
+  <Route path='/addbooks' element={<AddtextbooksPage/>}/>
+  <Route path='/addbooks/:id' element={<AddtextbooksPage/>}/>
+  <Route path='/viewinstitution/:id' element={<ViewinstitutionPage/>}/>
+  <Route path='/textbookdashboard' element={<BookdashboardPage/>}/>
   <Route path="/GodHeader" element={<GodHeader/>}/>
-  <Route path="/customerdashboard" element={<Customerdashboard/>}/>
-  <Route path="/coursedashboard" element={<Coursedashboard/>}/>
-  <Route path="/school" element={<School/>}/>
+  <Route path="/customerdashboard" element={<CustomerdashboardPage/>}/>
+  <Route path="/coursedashboard" element={<CoursedashboardPage/>}/>
+  <Route path="/school" element={<SchoolPage/>}/>
   
 
   {/* adminside */}
 
-  <Route path="/" element={<AdminLogin/>}/>
+
+  <Route path="/adminlogin" element={<AdminLoginPage/>}/>
   <Route path="/admindashboard" element={<AdminDashboardpage/>}/>
+  <Route path="/institutionadding" element={<InstitutionAddingPage/>}/>
 
 
   <Route path="/adminforgot" element={<AdminForgot/>}/>
   <Route path="/adminnewpassword" element={<AdminNewPassword/>}/>
-  <Route path="/adminclassdashboard" element={<AdminClassdashboard/>}/>
+  <Route path="/adminclassdashboard" element={<AdminClassPage/>}/>
+  <Route path="/adminfacultydashboard" element={<AdminFacultyPage/>}/>
+
 
 
 
