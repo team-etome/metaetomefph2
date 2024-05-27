@@ -49,7 +49,7 @@ function App() {
 
 
   {/* godside */}
-  <Route path="/" element={<GodloginPage/>}/>
+  <Route path="/godlogin" element={<GodloginPage/>}/>
   <Route path="/goddashboard" element={<GoddashboardPage/>}/>
   <Route path="/addcustomer" element={<AddcustomerPage/>}/>
   <Route path='/addbooks' element={<AddtextbooksPage/>}/>
@@ -63,9 +63,11 @@ function App() {
   
 
   {/* adminside */}
+
   <Route path="/adminlogin" element={<AdminLoginPage/>}/>
   <Route path="/admindashboard" element={<AdminDashboardpage/>}/>
   <Route path="/institutionadding" element={<InstitutionAddingPage/>}/>
+
   <Route path="/adminforgot" element={<AdminForgot/>}/>
   <Route path="/adminnewpassword" element={<AdminNewPassword/>}/>
   <Route path="/adminclassdashboard" element={<AdminClassPage/>}/>
