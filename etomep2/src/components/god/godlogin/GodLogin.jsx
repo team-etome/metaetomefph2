@@ -165,7 +165,7 @@ function GodLogin() {
               </div>
               <div className="input-container">
                 <input
-                  placeholder="Enter passwordd"
+                  placeholder="Enter password"
                   type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"

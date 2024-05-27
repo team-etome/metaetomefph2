@@ -221,9 +221,9 @@ function AddBooks() {
                 outline: "none",
               }}
               value={chapter.name}
-              // onChange={(e) =>
-              //   handleChapterInputChange(index, "name", e.target.value)
-              // }
+              onChange={(e) =>
+                handleChapterInputChange(index, "name", e.target.value)
+              }
             />
           </label>
         </div>
@@ -239,9 +239,9 @@ function AddBooks() {
                 outline: "none",
               }}
               value={chapter.pageNo}
-              // onChange={(e) =>
-              //   handleChapterInputChange(index, "pageNo", e.target.value)
-              // }
+              onChange={(e) =>
+                handleChapterInputChange(index, "pageNo", e.target.value)
+              }
             />
           </label>
         </div>
