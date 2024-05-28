@@ -1,7 +1,6 @@
 import React from 'react';
 import etomelogo from "../../../assets/etomelogo.png";
 import { Navbar, Container, Nav, Form, Button } from "react-bootstrap";
-import { BsSearch, BsFilterRight } from "react-icons/bs";
 import '../header/header.css';
 import { GiHamburgerMenu } from "react-icons/gi";
 import amritha from "../../../assets/amritha.png";

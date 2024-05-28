@@ -2,7 +2,7 @@ import React from 'react'
 
 function FacultyDashboard() {
   return (
-    <div>Faculty</div>
+    <div style={{backgroundColor:"", }}>F</div>
   )
 }
 
