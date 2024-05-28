@@ -10,10 +10,11 @@ import { SlNote } from "react-icons/sl";
 import { SlSettings } from "react-icons/sl";
 import { MdOutlineClose } from "react-icons/md";
 import amritha from "../../../assets/amritha.png";
-function MobileSidebar({ show, onClose }) {
-  const [activeItem, setActiveItem] = useState(null);
 
-  console.log(activeItem, "aaaaaa");
+
+function MobileSidebar({ show, onClose }) {
+
+  const [activeItem, setActiveItem] = useState(null);
 
   const handleMenuItemClick = (item) => {
     setActiveItem(item);
