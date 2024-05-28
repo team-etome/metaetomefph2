@@ -1,12 +1,40 @@
-import React from 'react';
+import Reactm, {useState, useEffect} from 'react';
 import etomelogo from "../../../assets/etomelogo.png";
 import { Navbar, Container, Nav, Form, Button } from "react-bootstrap";
 import { BsSearch, BsFilterRight } from "react-icons/bs";
 import '../header/header.css';
 import { GiHamburgerMenu } from "react-icons/gi";
 import amritha from "../../../assets/amritha.png";
+import MobileSidebar from '../sidebar/MobileSidebar';
 
-function Header({ onBurgerClick }) {
+function Header() {
+
+    const [sidebarVisible, setSidebarVisible] = useState(false);
+
+    const handleBurgerClick = () => {
+        setSidebarVisible(true);
+    };
+
+    const handleCloseSidebar = () => {
+        setSidebarVisible(false);
+    };
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(min-width: 799px)'); // Adjust the breakpoint as needed
+
+        const handleMediaQueryChange = (e) => {
+            if (e.matches) {
+                setSidebarVisible(false);
+            }
+        };
+
+        mediaQuery.addListener(handleMediaQueryChange);
+
+        return () => {
+            mediaQuery.removeListener(handleMediaQueryChange);
+        };
+    }, []);
+
     return (
         <Navbar expand="lg"
             style={{
@@ -20,12 +48,9 @@ function Header({ onBurgerClick }) {
                 boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
             }}>
             <Container fluid>
-                {/* <div className='header_menu'>
-                <GiHamburgerMenu />
-                </div> */}
 
                 <Navbar.Brand href="#" className='header' >
-                    <div className='header_menu' onClick={onBurgerClick}>
+                    <div className='header_menu' onClick={handleBurgerClick}>
                         <GiHamburgerMenu />
                     </div>
                     <div className='header_logo'>
@@ -60,41 +85,9 @@ function Header({ onBurgerClick }) {
                         }}
                     />
                 </div>
-                {/* <Nav className=" nav-links me-auto my-2 my-lg-0" style={{ maxHeight: '100px', display: 'flex', flexWrap: 'nowrap' }} variant="underline" >
-                    <Nav.Item>
-                        <Nav.Link eventKey="Class">Class</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="Faculty">Faculty</Nav.Link>
-                    </Nav.Item>
-                </Nav> */}
-                {/* <div className=" search_filter d-flex align-items-center"  style={{marginTop:'10px',marginBottom:'10px' }}>
-                    <Form className="d-flex">
-                        <div className="position-relative">
-                            <BsSearch
-                                className="position-absolute top-50 translate-middle-y ms-2"
-                                style={{ zIndex: 2, height: "20px", width: "20px", color: "#D8D4D4", right: "15px"}}
-                            />
-                            <Form.Control
-                                type="search"
-                                placeholder="Search"
-                                className="ps-3"
-                                aria-label="Search"
-                                style={{
-                                    width: "250px",
-                                    borderRadius: "17px",
-                                    color: "#767676",
-                                }}
-                            />
-                        </div>
-                    </Form>
-                    <BsFilterRight style={{ height: '40px', width: '40px', marginLeft: '20px', marginRight:'1px' }}/>
-                </div> */}
-                {/* <div className="responsive-buttons">
-                    <button>class</button>
-                    <button>Faculty</button>
-                </div> */}
+                
             </Container>
+            <MobileSidebar show={sidebarVisible} onClose={handleCloseSidebar} />
         </Navbar>
     );
 }
