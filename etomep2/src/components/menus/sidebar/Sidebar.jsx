@@ -70,7 +70,7 @@ function Sidebar() {
           marginTop: "10vh",
         }}
       >
-        <Link to="/admindashboard">
+        <Link to="/admindashboard" style={{textDecoration:'none', color:'inherit'}}>
           <Col
             className={`menu_item_col  ${activeItem === "home" ? "active" : ""}`}
             onClick={() => setActiveItem("home")}
@@ -87,7 +87,7 @@ function Sidebar() {
           }`}
           onClick={() => setActiveItem("institution")}
         >
-          <Link to="/institutionadding">
+          <Link to="/institutionadding" style={{textDecoration:'none', color:'inherit'}}>
             <div className="icon_container_div">
               <RxDashboard className="icon_img" />
               <span className="icon-text">Institution</span>

@@ -1,14 +1,3 @@
-.class_rectangle{
-    position: relative;
-    border: 1px solid black;
-    width:260px;
-    height: 100px;
-}
-.class_main{
-    margin-top: 30px;
-    
-}
-
 .container-scroll {
     overflow-y: auto;
     height: 67vh;
@@ -28,4 +17,67 @@
   .container-scroll::-webkit-scrollbar-thumb {
     background: #A8BFD1;
   }
-  
+
+
+  .class_lisit_circle{
+    position: absolute;
+    top: 85px;
+    left: 20px;
+    transform: translateY(-150%);
+  }
+  .class_number_div{
+    width: 80px;
+    height: 80px;
+    border-radius:50%;
+    background-color: #FFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+    color:#526D82;
+  }
+  .class_list_facultyname{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: #807B7B;
+  }
+  .class_list_medium{
+    position: absolute;
+    top:10px;
+    right: 10px;
+    color: #000000;
+  }
+.class_rectangle{
+  width: 300px;
+  height: 108px;
+  background-color: #ffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid white;
+  border-radius: 8px;
+  position: relative; 
+}
+.class_list{
+  margin-top: 50px;
+  margin-bottom: 30px;
+  margin-left: 1px;
+  margin-right: 1px;
+}
+.class_adding_button {
+  display: flex;
+  justify-content: flex-end;
+  position: fixed;
+  bottom: 3%;
+  right: 3%;
+  z-index: 1000;
+}
+.class_adding{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-top: 30px;
+  background-color: #526D82;background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
