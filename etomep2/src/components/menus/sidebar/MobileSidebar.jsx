@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../sidebar/sidebar.css";
 import { Col, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { RxDashboard } from "react-icons/rx";
 import { PiBook } from "react-icons/pi";
@@ -55,10 +56,12 @@ function MobileSidebar({ show, onClose }) {
           }`}
           onClick={() => handleMenuItemClick("institution")}
         >
+           <Link  to='/institutionadding'>
           <div className="mob_icon_container_div">
             <RxDashboard className="mob_icon_img" />
             <span className="mob_icon_text">Institution</span>
           </div>
+          </Link>
         </Col>
         <Col
           className={`mob_menu_item_col ${
