@@ -58,10 +58,7 @@
   position: relative; 
 }
 .class_list{
-  margin-top: 50px;
-  margin-bottom: 30px;
-  margin-left: 1px;
-  margin-right: 1px;
+  margin: 50px 0 5px 0;
 }
 .class_adding_button {
   display: flex;
