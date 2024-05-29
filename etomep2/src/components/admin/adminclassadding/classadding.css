@@ -1,0 +1,145 @@
+.class_form{
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 3%;
+    padding-bottom: 5%;
+    }
+    
+      .form_group {
+        position: relative;
+        margin-top: 20px;
+        margin-left: 30px;
+    }
+    .form_group label {
+        position: absolute;
+        top: 16px;
+        left: 10px;
+        background-color: #fff;
+        color: #526D82;
+        font-size: 16px;
+        padding: 0 4px;
+        transition: all 0.3s;
+        pointer-events: none;
+    }
+    .form_group input {
+        width: 80%;
+        border: 1px solid #526D82;
+        border-radius: 4px;
+        height: 50px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+        outline: none;
+    }
+    
+    .form_group input:focus,
+    .form_group input:not(:placeholder-shown) {
+        border-color: #526D82;
+    }
+    
+    .form_group input:focus + label,
+    .form_group input:not(:placeholder-shown) + label {
+        top: -12px;
+        left: 10px;
+        font-size: 17px;
+        color: #526D82;
+        /* border: 1px solid #526D82; */
+    }
+    
+    
+      .class_next_button{
+        display: flex;
+        justify-content: flex-end;
+        /* border: 2px solid #526D82;   */
+        /* padding-left: 300px; */
+        margin-top: 10px;
+        height: 100px;
+        padding-top: 10px;
+        padding-right: 150px;
+    
+      }
+    .class_next_button button {
+        background-color: transparent; 
+        color:#526D82;
+        width: 30%;
+        height: 50px;
+        border-radius: 10px;
+        border: 1px solid #526D82;
+      }
+      
+      .class_next_button button:hover {
+        background-color: #526D82;
+        color: #fff;
+        border: 1px solid #526D82;
+      }
+      
+    .class_form{
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 3%;
+    padding-bottom: 5%;
+    }
+    
+      .form_group {
+        position: relative;
+        margin-top: 20px;
+        margin-left: 30px;
+    }
+    .form_group label {
+        position: absolute;
+        top: 16px;
+        left: 10px;
+        background-color: #fff;
+        color: #526D82;
+        font-size: 16px;
+        padding: 0 4px;
+        transition: all 0.3s;
+        pointer-events: none;
+    }
+    .form_group input {
+        width: 80%;
+        border: 1px solid #526D82;
+        border-radius: 4px;
+        height: 50px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+        outline: none;
+    }
+    
+    .form_group input:focus,
+    .form_group input:not(:placeholder-shown) {
+        border-color: #526D82;
+    }
+    
+    .form_group input:focus + label,
+    .form_group input:not(:placeholder-shown) + label {
+        top: -12px;
+        left: 10px;
+        font-size: 17px;
+        color: #526D82;
+        /* border: 1px solid #526D82; */
+    }
+    
+    
+      .class_next_button{
+        /* position: relative; */
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+      }
+    .class_next_button button {
+        width: 50%;
+        border: 1px solid #526D82;
+        border-radius: 4px;
+        height: 50px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+        outline: none;
+      }
+      
+      .class_next_button button:hover {
+        background-color: #526D82;
+        color: #fff;
+        border: 1px solid #526D82;
+      }
+      
+    
