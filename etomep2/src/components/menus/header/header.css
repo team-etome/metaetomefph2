@@ -49,13 +49,11 @@
 
 }
 @media (min-width:799px) {
-   
 .header_menu{
     display: none;
 }
 }
 @media (max-height:491px) {
-   
     .header_menu{
         display:flex;
     }

@@ -9,6 +9,7 @@ import amritha from "../../../assets/amritha.png";
 function Header({ onBurgerClick }) {
     return (
         <Navbar expand="lg"
+        className='header_container'
             style={{
                 backgroundColor: '#ffff',
                 height: "12vh",

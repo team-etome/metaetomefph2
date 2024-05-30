@@ -24,7 +24,7 @@ import AdminLoginPage from './pages/adminpage/AdminLoginPage';
 import AdminFacultyPage from './pages/adminpage/AdminFacultyPage';
 import AdminClassPage from './pages/adminpage/AdminClassPage';
 import InstitutionAddingPage from './pages/adminpage/InstitutionAddingPage';
-import ClassAdding from './components/admin/adminclassadding/ClassAdding';
+import AdminClassAddingPage from './pages/adminpage/AdminClassAddingPage';
 
 
 
@@ -70,7 +70,7 @@ function App() {
   <Route path="/adminlogin" element={<AdminLoginPage/>}/>
   <Route path="/admindashboard" element={<AdminDashboardpage/>}/>
   <Route path="/institutionadding" element={<InstitutionAddingPage/>}/>
-  <Route path="/classadding" element={<ClassAdding/>}/>
+  <Route path="/classadding" element={<AdminClassAddingPage/>}/>
 
 
   <Route path="/adminforgot" element={<AdminForgot/>}/>

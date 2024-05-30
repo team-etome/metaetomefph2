@@ -1,9 +1,15 @@
 import React from 'react'
+import ClassAdding from '../../components/admin/adminclassadding/ClassAdding'
+import MainHeader from '../../components/menus/common/MainHeader/';
 
-function AdminClassAdding() {
+
+function AdminClassAddingPage() {
   return (
-    <div>AdminClassAdding</div>
+    <div>
+      <MainHeader/>
+      <ClassAdding/>
+    </div>
   )
 }
 
-export default AdminClassAdding
+export default AdminClassAddingPage
