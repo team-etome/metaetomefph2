@@ -21,7 +21,7 @@ function ClassAdding() {
                 </Link>
                 <h1 style={{color:'#526D82', fontSize:'25px', marginLeft:'10px'}}>Class Adding</h1>
               </div>
-              <div style={{border:'1px solid #526D82'}}></div>
+              <div style={{border:'0.5px solid #526D82'}}></div>
             </Col>
           </Row>
           <Row>
