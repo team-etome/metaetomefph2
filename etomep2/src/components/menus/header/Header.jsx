@@ -36,6 +36,7 @@ function Header() {
 
     return (
         <Navbar expand="lg"
+        className='header_container'
             style={{
                 backgroundColor: '#ffff',
                 height: "10vh",

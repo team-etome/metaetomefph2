@@ -272,6 +272,14 @@ function AddBooks() {
     setPdfFile(file);
   };
 
+  const handleVolumeChange = (e) => {
+    const value = e.target.value;
+    // Prevent negative values
+    if (/^[a-zA-Z0-9]*$/.test(value)) {
+      setVolume(value);
+    }
+  };
+
   const handleSubmit = async () => {
     if (
       !classValue ||
@@ -576,7 +584,8 @@ function AddBooks() {
                       value={volume}
                       maxLength="100"
                       style={{ textTransform: "capitalize" }}
-                      onChange={(e) => setVolume(e.target.value)}
+                      // onChange={(e) => setVolume(e.target.value)}
+                      onChange={handleVolumeChange}
                     />
                   </div>
                   <div
@@ -986,7 +995,8 @@ function AddBooks() {
                       value={volume}
                       maxLength="100"
                       style={{ textTransform: "capitalize" }}
-                      onChange={(e) => setVolume(e.target.value)}
+                      // onChange={(e) => setVolume(e.target.value)}
+                      onChange={handleVolumeChange}
                     />
                   </div>
                   <div

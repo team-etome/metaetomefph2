@@ -7,7 +7,7 @@ import {
   FaEye,
   FaEyeSlash,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
@@ -24,7 +24,7 @@ function AddCustomer() {
   const [address, setAddress] = useState("");
   const [region, setRegion] = useState("");
   const [medium, setMedium] = useState([]);
-  const [institutionType, setInstitutionType] = useState("");
+  // const [institutionType, setInstitutionType] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [publisherName, setPublisherName] = useState([]);
@@ -35,6 +35,8 @@ function AddCustomer() {
   const publisherValues = publisherName.map((option) => option.value);
 
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate()
 
   const APIURL = useSelector((state) => state.APIURL.url);
 
@@ -104,7 +106,7 @@ function AddCustomer() {
       !databaseCode ||
       !address ||
       !region ||
-      !institutionType ||
+      // !institutionType ||
       !phoneNumber ||
       !password ||
       !confirmPassword ||
@@ -121,7 +123,7 @@ function AddCustomer() {
       if (!databaseCode) missingFields.push("database code");
       if (!address) missingFields.push("address");
       if (!region) missingFields.push("region");
-      if (!institutionType) missingFields.push("type of institution");
+      // if (!institutionType) missingFields.push("type of institution");
       if (!phoneNumber) missingFields.push("phone number");
       if (!password) missingFields.push("password");
       if (!confirmPassword) missingFields.push("confirm password");
@@ -160,7 +162,7 @@ function AddCustomer() {
       formData.append("database_code", databaseCode);
       formData.append("address", address);
       formData.append("region", region);
-      formData.append("institute_type", institutionType);
+      // formData.append("institute_type", institutionType);
       formData.append("phn_number", phoneNumber);
       formData.append("password", password);
       // formData.append("textbook_front_page", confirmPassword);
@@ -171,12 +173,15 @@ function AddCustomer() {
         },
       });
 
-      console.log(response.data);
       Swal.fire({
         icon: "success",
         title: "Success!",
         text: "Institution created successfully!",
-      });
+      })
+
+      navigate("/GodHeader")
+
+
     } catch (error) {
       console.error("Error creating institution:", error);
       Swal.fire({
@@ -260,42 +265,6 @@ function AddCustomer() {
     label: eduboard,
   }));
 
-  // const schoolMedium =[
-  //   'English',
-  //   'Malayalam',
-  //   'Hindi',
-  //   'Tamil',
-  //   'Urudu',
-  //   'Kannada',
-  //   'Telugu',
-  //   'Tulu,',
-  //   'Punjabi ',
-  //   'Gujarati',
-  //   'Bangla',
-  //   'Oriya',
-  //   'Lushai',
-  //   'Marathi',
-  //   'Konkani',
-  //   'Khasi',
-  //   'Nepali ',
-  //   'Manipuri ',
-  //   'Assamese ',
-  // ]
-  // const mediumOptions = schoolMedium.map((mschool) => ({
-  //   value: mschool,
-  //   label: mschool,
-  // }));
-  // const removeTag = (indexToRemove) => {
-  //   setMedium(medium.filter((_, index) => index !== indexToRemove));
-  // };
-
-  // const addTag = (event) => {
-  //   if (event.target.value.trim() !== "" && event.key === "Enter") {
-  //     setMedium([...medium, event.target.value]);
-  //     event.target.value = "";
-  //   }
-  // };
-
   const [currentInput, setCurrentInput] = useState("");
 
   const handleInputChange = (event) => {
@@ -313,6 +282,16 @@ function AddCustomer() {
   const removeTag = (index) => {
     setMedium(medium.filter((_, i) => i !== index));
   };
+
+  const handlePhoneNumberChange = (e) => {
+    const value = e.target.value;
+    // Remove any non-numeric characters
+    const numericValue = value.replace(/\D/g, "");
+    if (numericValue.length <= 10) {
+      setPhoneNumber(numericValue);
+    }
+  };
+
 
   return (
     <div style={{ backgroundColor: "#DDE6ED", border: "2px solid white" }}>
@@ -363,19 +342,13 @@ function AddCustomer() {
                     Institution Code
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     id="institutionCode"
                     name="institutionCode"
                     value={institutionCode}
                     style={{ textTransform: "capitalize" }}
-                    maxLength="100"
-                    // onChange={(e) => setInstitutionCode(e.target.value)}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      if (value >= 0 || value === "") {
-                        setInstitutionCode(value);
-                      }
-                    }}
+                    maxLength="10"
+                    onChange={(e) => setInstitutionCode(e.target.value)}
                   />
                 </div>
                 <div className="input_container">
@@ -510,8 +483,8 @@ function AddCustomer() {
                     onChange={(e) => setDatabaseCode(e.target.value)}
                   />
                 </div>
-                <div className="input_container" style={{ fontWeight: "600" }}>
-                  <label for="address">Address</label>
+                <div className="input_container" >
+                  <label for="address"style={{ fontWeight: "600" }}>Address</label>
                   <input
                     type="text"
                     id="address"
@@ -539,7 +512,7 @@ function AddCustomer() {
 
                 <div>
                   {/* <div className="input_container"> */}
-                  <div>
+                  <div className="input_container">
                     <label htmlFor="medium" style={{ fontWeight: "600" }}>
                       Medium
                     </label>
@@ -581,7 +554,6 @@ function AddCustomer() {
                   <label for="publisherName" style={{ fontWeight: "600" }}>
                     Publisher Name
                   </label>
-                  {/* <input type="text" id="publisherName" name="publisherName" value={publisherName}  style={{textTransform:'capitalize'}} onChange={(e) => setPublisherName(e.target.value)}/> */}
                   <Select
                     id="publisherName"
                     name="publisherName"
@@ -611,7 +583,7 @@ function AddCustomer() {
                     value={phoneNumber}
                     style={{ textTransform: "capitalize" }}
                     maxLength={10}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    onChange={handlePhoneNumberChange}
                   />
                 </div>
 
@@ -626,19 +598,7 @@ function AddCustomer() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  {/* <div
-                    style={{
-                      position: 'absolute',
-                      right: '50px', 
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      cursor: 'pointer',
-                    }}
-                    onClick={togglePasswordVisibility}
-                  >
-                    {showPassword ? < FaEye/> : < FaEyeSlash />}
-                  </div> */}
-                  <span onClick={togglePasswordVisibility}>
+                  <span onClick={togglePasswordVisibility} >
                     {showPassword ? <FaEye /> : <FaEyeSlash />}
                   </span>
                 </div>
@@ -657,7 +617,7 @@ function AddCustomer() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     onPaste={(e) => e.preventDefault()}
                   />
-                  <span onClick={toggleConfirmPasswordVisibility} style={{}}>
+                  <span onClick={toggleConfirmPasswordVisibility} >
                     {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
                   </span>
                 </div>

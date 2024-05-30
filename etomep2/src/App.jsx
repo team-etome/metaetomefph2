@@ -1,30 +1,40 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "rsuite/dist/rsuite.min.css";
-import GodloginPage from "./pages/godpage/GodloginPage";
-import GoddashboardPage from "./pages/godpage/GoddashboardPage";
-import GodHeader from "./components/god/godheader/GodHeader";
-import AdminForgot from "./components/admin/adminforgotpassword/AdminForgot";
-import AdminNewPassword from "./components/admin/adminnewpassword/AdminNewPassword";
-import Header from "./components/menus/header/Header";
-import Sidebar from "./components/menus/sidebar/Sidebar";
-import React, { useState } from "react";
-import AdminDashboardpage from "./pages/adminpage/AdminDashboardpage";
-import AddtextbooksPage from "./pages/godpage/AddtextbooksPage";
-import AddcustomerPage from "./pages/godpage/AddcustomerPage";
-import ViewinstitutionPage from "./pages/godpage/ViewinstitutionPage";
-import BookdashboardPage from "./pages/godpage/BookdashboardPage";
-import CustomerdashboardPage from "./pages/godpage/CustomerdashboardPage";
-import CoursedashboardPage from "./pages/godpage/CoursedashboardPage";
-import SchoolPage from "./pages/godpage/SchoolPage";
-import AdminLoginPage from "./pages/adminpage/AdminLoginPage";
-import AdminFacultyPage from "./pages/adminpage/AdminFacultyPage";
-import AdminClassPage from "./pages/adminpage/AdminClassPage";
-import InstitutionAddingPage from "./pages/adminpage/InstitutionAddingPage";
+
+
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'rsuite/dist/rsuite.min.css';
+import GodloginPage from './pages/godpage/GodloginPage'
+import GoddashboardPage from './pages/godpage/GoddashboardPage'
+import GodHeader from './components/god/godheader/GodHeader';
+import AdminForgot from './components/admin/adminforgotpassword/AdminForgot';
+import AdminNewPassword from './components/admin/adminnewpassword/AdminNewPassword';
+import Header from './components/menus/header/Header';
+import Sidebar from './components/menus/sidebar/Sidebar';
+import React, { useState } from 'react';
+
+import AdminDashboardpage from './pages/adminpage/AdminDashboardpage';
+import AddtextbooksPage from './pages/godpage/AddtextbooksPage';
+import AddcustomerPage from './pages/godpage/AddcustomerPage';
+import ViewinstitutionPage from './pages/godpage/ViewinstitutionPage';
+import BookdashboardPage from './pages/godpage/BookdashboardPage';
+import CustomerdashboardPage from './pages/godpage/CustomerdashboardPage';
+import CoursedashboardPage from './pages/godpage/CoursedashboardPage';
+import SchoolPage from './pages/godpage/SchoolPage';
+import AdminLoginPage from './pages/adminpage/AdminLoginPage';
+import AdminFacultyPage from './pages/adminpage/AdminFacultyPage';
+import AdminClassPage from './pages/adminpage/AdminClassPage';
+import InstitutionAddingPage from './pages/adminpage/InstitutionAddingPage';
+import AdminClassAddingPage from './pages/adminpage/AdminClassAddingPage';
+
+
+
+
+
 
 function App() {
   
+
   return (
     <div className="App">
      
@@ -57,7 +67,7 @@ function App() {
             path="/institutionadding"
             element={<InstitutionAddingPage />}
           />
-
+  <Route path="/classadding" element={<AdminClassAddingPage/>}/>
           <Route path="/adminforgot" element={<AdminForgot />} />
           <Route path="/adminnewpassword" element={<AdminNewPassword />} />
           <Route path="/adminclassdashboard" element={<AdminClassPage />} />
@@ -70,6 +80,7 @@ function App() {
       </BrowserRouter>
     </div>
   );
+
 }
 
 export default App;
