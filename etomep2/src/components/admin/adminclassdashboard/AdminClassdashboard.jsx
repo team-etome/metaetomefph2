@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import "../adminclassdashboard/adminclassdashboard.css";
 import { IoIosAdd } from "react-icons/io";
+import { Link } from "react-router-dom";
+
 
 function AdminClassdashboard() {
 
@@ -60,9 +62,11 @@ function AdminClassdashboard() {
         </Row>
       </Container>
       <div className="class_adding_button">
+        <Link to='/classadding'>
         <button className={`class_adding my-button ${isActive ? 'active' : ''}`}>
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
         </button>
+        </Link>
       </div>
     </div>
   );

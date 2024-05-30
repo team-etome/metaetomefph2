@@ -2,6 +2,8 @@ import React from 'react';
 import { Container, Row, Col } from "react-bootstrap";
 import '../adminclassadding/classadding.css';
 import { IoChevronBackSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
+
 
 function ClassAdding() {
 
@@ -14,7 +16,9 @@ function ClassAdding() {
           <Row>
             <Col>
               <div className="header-container">
+                <Link to='/institutionadding'>
                 <IoChevronBackSharp style={{color:'#526D82', height: "32px", width: "32px", marginLeft:'20px' }} />
+                </Link>
                 <h1 style={{color:'#526D82', fontSize:'25px', marginLeft:'10px'}}>Class Adding</h1>
               </div>
               <div style={{border:'1px solid #526D82'}}></div>
