@@ -2,7 +2,7 @@ import Reactm, {useState, useEffect} from 'react';
 import etomelogo from "../../../assets/etomelogo.png";
 import { Navbar, Container, Nav, Form, Button } from "react-bootstrap";
 import '../header/header.css';
-import { GiHamburgerMenu } from "react-icons/gi";
+import { RxHamburgerMenu } from "react-icons/rx";
 import amritha from "../../../assets/amritha.png";
 import MobileSidebar from '../sidebar/MobileSidebar';
 
@@ -38,7 +38,7 @@ function Header() {
         <Navbar expand="lg"
             style={{
                 backgroundColor: '#ffff',
-                height: "12vh",
+                height: "10vh",
                 width: "100%",
                 zIndex: "10",
                 position: "fixed",
@@ -50,15 +50,15 @@ function Header() {
 
                 <Navbar.Brand href="#" className='header' >
                     <div className='header_menu' onClick={handleBurgerClick}>
-                        <GiHamburgerMenu />
+                        <RxHamburgerMenu />
                     </div>
                     <div className='header_logo'>
                         <img
                             src={etomelogo}
                             alt="etome logo"
                             style={{
-                                width: "162px",
-                                height: "63px",
+                                width: "110px",
+                                height: "40px",
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignContent: 'center',
