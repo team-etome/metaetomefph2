@@ -110,3 +110,39 @@
     transition-duration: .3s;
     padding-right: 20px;
   }
+
+  @media (max-width:768px) {
+   .institution_dashboard_tab{
+    display: flex;
+    align-items: center;
+
+    padding-top: 20px;
+  
+  
+   justify-content: flex-start;
+   
+   }
+    .mob_subhead_one{
+      background-color: #E2E0E0;
+      color: #727272;
+      width: 100% !important;
+      height:30px !important;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .institution_dashboard_tab .nav-link.active {
+      font-weight:400;
+      border-bottom: none ;
+      color: #ffff !important;
+      background-color: #526D82;
+    }
+    .institution_dashboard{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 !important;
+   
+    }
+  }
