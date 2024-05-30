@@ -1,4 +1,5 @@
 
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -30,66 +31,56 @@ import AdminClassAddingPage from './pages/adminpage/AdminClassAddingPage';
 
 
 
+
 function App() {
-
-
-  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
-
-  const handleBurgerClick = () => {
-      setShowMobileSidebar(true);
-  };
-
-  const handleCloseSidebar = () => {
-      setShowMobileSidebar(false);
-  };
+  
 
   return (
-<div className='App'>
-  
-<BrowserRouter >
-<Routes>
+    <div className="App">
+     
+      <BrowserRouter>
+        <Routes>
+          {/* godside */}
+          <Route path="/godlogin" element={<GodloginPage />} />
+          <Route path="/goddashboard" element={<GoddashboardPage />} />
+          <Route path="/addcustomer" element={<AddcustomerPage />} />
+          <Route path="/addbooks" element={<AddtextbooksPage />} />
+          <Route path="/addbooks/:id" element={<AddtextbooksPage />} />
+          <Route
+            path="/viewinstitution/:id"
+            element={<ViewinstitutionPage />}
+          />
+          <Route path="/textbookdashboard" element={<BookdashboardPage />} />
+          <Route path="/GodHeader" element={<GodHeader />} />
+          <Route
+            path="/customerdashboard"
+            element={<CustomerdashboardPage />}
+          />
+          <Route path="/coursedashboard" element={<CoursedashboardPage />} />
+          <Route path="/school" element={<SchoolPage />} />
 
+          {/* adminside */}
 
-  {/* godside */}
-  <Route path="/godlogin" element={<GodloginPage/>}/>
-  <Route path="/goddashboard" element={<GoddashboardPage/>}/>
-  <Route path="/addcustomer" element={<AddcustomerPage/>}/>
-  <Route path='/addbooks' element={<AddtextbooksPage/>}/>
-  <Route path='/addbooks/:id' element={<AddtextbooksPage/>}/>
-  <Route path='/viewinstitution/:id' element={<ViewinstitutionPage/>}/>
-  <Route path='/textbookdashboard' element={<BookdashboardPage/>}/>
-  <Route path="/GodHeader" element={<GodHeader/>}/>
-  <Route path="/customerdashboard" element={<CustomerdashboardPage/>}/>
-  <Route path="/coursedashboard" element={<CoursedashboardPage/>}/>
-  <Route path="/school" element={<SchoolPage/>}/>
-  
-
-  {/* adminside */}
-
-
-  <Route path="/adminlogin" element={<AdminLoginPage/>}/>
-  <Route path="/admindashboard" element={<AdminDashboardpage/>}/>
-  <Route path="/institutionadding" element={<InstitutionAddingPage/>}/>
+          <Route path="/" element={<AdminLoginPage />} />
+          <Route path="/admindashboard" element={<AdminDashboardpage />} />
+          <Route
+            path="/institutionadding"
+            element={<InstitutionAddingPage />}
+          />
   <Route path="/classadding" element={<AdminClassAddingPage/>}/>
+          <Route path="/adminforgot" element={<AdminForgot />} />
+          <Route path="/adminnewpassword" element={<AdminNewPassword />} />
+          <Route path="/adminclassdashboard" element={<AdminClassPage />} />
+          <Route path="/adminfacultydashboard" element={<AdminFacultyPage />} />
 
+          {/* menu */}
+          <Route path="/header" element={<Header />} />
+          <Route path="/sidebar" element={<Sidebar />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 
-  <Route path="/adminforgot" element={<AdminForgot/>}/>
-  <Route path="/adminnewpassword" element={<AdminNewPassword/>}/>
-  <Route path="/adminclassdashboard" element={<AdminClassPage/>}/>
-  <Route path="/adminfacultydashboard" element={<AdminFacultyPage/>}/>
-
-
-
-
-{/* menu */}
-  <Route path="/header" element={<Header/>}/>
-  <Route path="/sidebar" element={<Sidebar/>}/>
-
- 
-</Routes>
-</BrowserRouter>
-</div>
-  )
 }
 
-export default App
+export default App;
