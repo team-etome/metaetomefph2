@@ -26,6 +26,8 @@ import AdminFacultyPage from './pages/adminpage/AdminFacultyPage';
 import AdminClassPage from './pages/adminpage/AdminClassPage';
 import InstitutionAddingPage from './pages/adminpage/InstitutionAddingPage';
 import AdminClassAddingPage from './pages/adminpage/AdminClassAddingPage';
+import CurriculumAdding from './components/admin/admincurriculumadding/CurriculumAdding';
+import AdminCurriculumAddingPage from './pages/adminpage/AdminCurriculumAddingPage';
 
 
 
@@ -63,15 +65,14 @@ function App() {
 
           <Route path="/" element={<AdminLoginPage />} />
           <Route path="/admindashboard" element={<AdminDashboardpage />} />
-          <Route
-            path="/institutionadding"
-            element={<InstitutionAddingPage />}
-          />
-  <Route path="/classadding" element={<AdminClassAddingPage/>}/>
+          <Route path="/institutionadding" element={<InstitutionAddingPage />}/>
+          <Route path="/classadding" element={<AdminClassAddingPage/>}/>
           <Route path="/adminforgot" element={<AdminForgot />} />
           <Route path="/adminnewpassword" element={<AdminNewPassword />} />
           <Route path="/adminclassdashboard" element={<AdminClassPage />} />
           <Route path="/adminfacultydashboard" element={<AdminFacultyPage />} />
+          <Route path="/curriculumadding" element={<AdminCurriculumAddingPage/>}/>
+
 
           {/* menu */}
           <Route path="/header" element={<Header />} />
