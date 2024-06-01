@@ -74,7 +74,7 @@ function FacultyAdding() {
         <Row>
             <Col>
               <div className="faculty_header">
-                <Link to='/adminfacultydashboard'>
+                <Link to='/institutionadding'>
                   <IoChevronBackSharp className='faculty_back' style={{ color: '#526D82', height: "32px", width: "32px", marginLeft: '10px' }} />
                 </Link>
                 <h1 className='faculty_title'>Add Faculty</h1>

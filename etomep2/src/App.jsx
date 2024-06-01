@@ -75,7 +75,6 @@ function App() {
           <Route path="/adminfacultydashboard" element={<AdminFacultyPage />} />
           <Route path="/curriculumadding" element={<AdminCurriculumAddingPage/>}/>
           <Route path="/facultyadding" element={<AdminFacultyAddingPage/>}/>
-          {/* <Route path="/facultyadding" element={<FacultyAdding/>}/> */}
 
 
 
