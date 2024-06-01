@@ -80,7 +80,7 @@ function CurriculumAdding() {
             <Col>
               <div className="curriculum_header">
                 <Link to='/classadding'>
-                  <IoChevronBackSharp className='curriculum_back' style={{ color: '#526D82', height: "32px", width: "32px", marginLeft: '10px' }} />
+                  <IoChevronBackSharp className='curriculum_back'/>
                 </Link>
                 <h1 className='curriculum_title'>Add Curriculum</h1>
               </div>

@@ -28,6 +28,8 @@ import InstitutionAddingPage from './pages/adminpage/InstitutionAddingPage';
 import AdminClassAddingPage from './pages/adminpage/AdminClassAddingPage';
 import CurriculumAdding from './components/admin/admincurriculumadding/CurriculumAdding';
 import AdminCurriculumAddingPage from './pages/adminpage/AdminCurriculumAddingPage';
+import AdminFacultyAddingPage from './pages/adminpage/AdminFacultyAddingPage';
+import FacultyAdding from './components/admin/adminfacultyadding/FacultyAdding';
 
 
 
@@ -72,6 +74,10 @@ function App() {
           <Route path="/adminclassdashboard" element={<AdminClassPage />} />
           <Route path="/adminfacultydashboard" element={<AdminFacultyPage />} />
           <Route path="/curriculumadding" element={<AdminCurriculumAddingPage/>}/>
+          <Route path="/facultyadding" element={<AdminFacultyAddingPage/>}/>
+          {/* <Route path="/facultyadding" element={<FacultyAdding/>}/> */}
+
+
 
 
           {/* menu */}
