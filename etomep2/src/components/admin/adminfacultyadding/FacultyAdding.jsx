@@ -1,30 +1,30 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { IoChevronBackSharp } from 'react-icons/io5';
+import Select from 'react-select';
 import '../adminfacultyadding/facultyadding.css';
-import { Container , Row,Col} from 'react-bootstrap';
-import { Link } from "react-router-dom";
-import { IoChevronBackSharp } from "react-icons/io5";
-import Select from "react-select";
-
 
 function FacultyAdding() {
     const [gender, setGender] = useState(null);
     const [subject, setSubject] = useState(null);
-  
+
     const genderOptions = [
-      { value: 'Female', label: 'Female' },
-      { value: 'Male', label: 'Male' },
-      { value: 'Other', label: 'Other' },
+        { value: 'Female', label: 'Female' },
+        { value: 'Male', label: 'Male' },
+        { value: 'Other', label: 'Other' },
     ];
-  
+
     const subjectOptions = [
-      { value: 'subject 1', label: 'subject 1' },
-      { value: 'subject 2', label: 'subject 2' },
-      { value: 'subject 3', label: 'subject 3' },
+        { value: 'subject 1', label: 'subject 1' },
+        { value: 'subject 2', label: 'subject 2' },
+        { value: 'subject 3', label: 'subject 3' },
     ];
-    const customStyles = {
+
+   const customStyles = {
       control: (base, state) => ({
         ...base,
-        width: '90%',
+        width: '100%',
         minHeight: '50px',
         border: '1px solid #526D82',
         borderRadius: '8px',
@@ -67,78 +67,61 @@ function FacultyAdding() {
         position: 'absolute',
       })
     };
-  return (
-    <div  className='faculty_adding' >
-        <Container className='faculty_container'>
-        <form className='faculty_form'>
-        <Row>
-            <Col>
-              <div className="faculty_header">
+
+
+    return (
+        <div>
+            <Container className='faculty_container'>
+            <form className='faculty_form' >
+              <div style={{display: 'flex', alignItems: 'center', marginBottom:'10px'}}>
                 <Link to='/institutionadding'>
-                  <IoChevronBackSharp className='faculty_back' style={{ color: '#526D82', height: "32px", width: "32px", marginLeft: '10px' }} />
+                    <IoChevronBackSharp className='faculty_back' />
                 </Link>
                 <h1 className='faculty_title'>Add Faculty</h1>
-              </div>
-              <div style={{ border: '0.5px solid #526D82' }}></div>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6}>
-                <div className='faculty_form_field'>
-                    <label htmlFor="first_name">First Name<span style={{color: 'red'}}>*</span></label>
-                    <input type="text" id='first_name' name='first_name'placeholder=''/>
                 </div>
-                <div className='faculty_form_field'>
-                    <label htmlFor="last_name">Last Name<span style={{color: 'red'}}>*</span></label>
-                    <input type="text" id='last_name' name='last_name'placeholder=''/>
-                </div>
-                <div className='faculty_form_field'>
-                    <label htmlFor="employee_id">Employee Id<span style={{color: 'red'}}>*</span></label>
-                    <input type="text" id='employee_id' name='employee_id'placeholder=''/>
-                </div>
-                <div className='faculty_form_field'>
-                    <label htmlFor="email_id">Email Id<span style={{color: 'red'}}>*</span></label>
-                    <input type="text" id='email_id' name='email_id'placeholder=''/>
-                </div>
-            </Col>
-            <Col md={6}>
-                <div className='faculty_form_field_select'>
-                    <label htmlFor="gender">Gender<span style={{color: 'red'}}>*</span></label>
-                    {/* <input type="text" id='gender' name='gender'placeholder=''/> */}
-                    <Select
-                        options={genderOptions}
-                        styles={customStyles}
-                        placeholder=""
-                        value={gender}
-                        onChange={setGender}
-                    />
-                </div>
-                <div className='faculty_form_field'>
-                    <label htmlFor="phone_no">Phone No:<span style={{color: 'red'}}>*</span></label>
-                    <input type="text" id='phone_no' name='phone_no'placeholder=''/>
-                </div>
-                <div className='faculty_form_field_select'>
-                    <label htmlFor="subject">Subject<span style={{color: 'red'}}>*</span></label>
-                    {/* <input type="text" id='subject' name='subject'placeholder=''/> */}
-                    <Select
-                        options={subjectOptions}
-                        styles={customStyles}
-                        placeholder=""
-                        value={subject}
-                        onChange={setSubject}
-                    />
-                </div>
-            </Col>
-          </Row>
-            <div className='faculty_submit' style={{textAlign:'right', }}>
-                <button type="submit" value="submit" className='submit_button'>
-                  Submit
-                </button>
-            </div>
-          </form>
-        </Container>
-    </div>
-  )
+                <div style={{ border: '0.5px solid #526D82' }}></div>
+
+                    <Row style={{paddingTop:'20px'}}>
+                        <Col md={6}>
+                            <div className='faculty_group'>
+                                <label htmlFor="first_name">First Name<span style={{color: 'red'}}>*</span></label>
+                                <input type="text" id='first_name' name='first_name' />
+                            </div>
+                            <div className='faculty_group'>
+                                <label htmlFor="last_name">Last Name<span style={{color: 'red'}}>*</span></label>
+                                <input type="text" id='last_name' name='last_name' />
+                            </div>
+                            <div className='faculty_group'>
+                                <label htmlFor="email_id">Email ID<span style={{color: 'red'}}>*</span></label>
+                                <input type="email" id='email_id' name='email_id' />
+                            </div>
+                            <div className='faculty_group'>
+                                <label htmlFor="employee_id">Employee Id</label>
+                                <input type="text" id='employee_id' name='employee_id' />
+                            </div>
+                        </Col>
+                        <Col md={6}>
+                            <div className='faculty_group'>
+                                <label htmlFor="phone_no">Phone No:<span style={{color: 'red'}}>*</span></label>
+                                <input type="text" id='phone_no' name='phone_no' />
+                            </div>
+                            <div className='faculty_group'>
+                                <label htmlFor="gender" >Gender<span style={{color: 'red'}}>*</span></label>
+                                <Select options={genderOptions} styles={customStyles} value={gender} onChange={setGender} placeholder=''/>
+                            </div>
+                            <div className='faculty_group'>
+                                <label htmlFor="subject">Subject<span style={{color: 'red'}}>*</span></label>
+                                <Select options={subjectOptions} styles={customStyles} value={subject} onChange={setSubject} placeholder=''/>
+                            </div>
+                            <div className='submit_faculty'>
+                            <button type="submit" className='faculty_button'>Submit</button>
+                            </div>
+                        </Col>
+                    </Row>
+                </form>
+            </Container>
+        </div>
+    )
 }
 
-export default FacultyAdding
+export default FacultyAdding;
