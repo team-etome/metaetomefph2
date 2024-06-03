@@ -252,22 +252,22 @@ margin-top: 8px;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
   }
-  /* Add this CSS */
+ 
 
 .overlay.active {
-  background-color: rgba(0, 0, 0, 0.5); /* Change overlay background color when active */
+  background-color: rgba(0, 0, 0, 0.5); 
 }
 
 .my-button.active {
-  box-shadow: none; /* Remove box shadow from IoIosAdd button when active */
+  box-shadow: none;
 }
 
 .fab-options.active {
-  background-color: #526D82; /* Change sidebar background color when active */
+  background-color: #526D82; 
 }
 
 .fab-option.active {
-  background-color: #526D82; /* Change individual icon background color when active */
+  background-color: #526D82; 
 }
 
 .fab-text{
