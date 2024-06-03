@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row,Button } from "react-bootstrap";
 import { IoIosAdd } from "react-icons/io";
 import { Link } from "react-router-dom";
 import amritha from "../../../assets/amritha.png";
 import'../adminfacultydashboard/facultydashboard.css'
+import { FaFileExcel } from 'react-icons/fa';
+import { MdUpload } from "react-icons/md";
+import { IoMdDownload,IoMdAdd } from "react-icons/io";
 
 function FacultyDashboard() {
   const [isActive, setIsActive] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
+
+  const handleAddClick = () => {
+    setShowOptions(!showOptions);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,11 +77,34 @@ function FacultyDashboard() {
         </Row>
       </Container>
       <div className="class_adding_button">
-        <Link to='/facultyadding'>
-        <button className={`class_adding my-button ${isActive ? 'active' : ''}`}>
+        <button className={`class_adding my-button ${isActive ? 'active' : ''}`} onClick={handleAddClick}>
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
         </button>
-        </Link>
+        {showOptions && (
+          <>
+            <div className="overlay" onClick={handleAddClick}></div>
+            <div className="fab-options">
+              <Link to='/facultyadding' style={{display:'flex',justifyContent:'center',alignContent:'center', gap:'20px'}} className='fab_option_link'>
+                <div className='fab-text'>Add Faculty</div>
+                <button className="fab-option">
+                <IoMdAdd className="fab-icon"/>
+                </button>
+              </Link>
+              <Link to='/facultyadding' style={{display:'flex',justifyContent:'center',alignContent:'center', gap:'20px'}} className='fab_option_link'>
+              <div className='fab-text' style={{width:'200px'}}>Upload Through Excel </div>
+              <button className="fab-option">
+              <MdUpload className="fab-icon"/>
+              </button>
+              </Link>
+              <Link to='/facultyadding' style={{display:'flex',justifyContent:'center',alignContent:'center', gap:'20px'}} className='fab_option_link'>
+              <div className='fab-text' style={{width:'200px'}}>Download Excel Template</div>
+              <button className="fab-option">
+              <IoMdDownload className="fab-icon"/>
+              </button>
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
