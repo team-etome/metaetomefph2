@@ -29,7 +29,6 @@ import AdminClassAddingPage from './pages/adminpage/AdminClassAddingPage';
 import CurriculumAdding from './components/admin/admincurriculumadding/CurriculumAdding';
 import AdminCurriculumAddingPage from './pages/adminpage/AdminCurriculumAddingPage';
 import AdminFacultyAddingPage from './pages/adminpage/AdminFacultyAddingPage';
-import FacultyAdding from './components/admin/adminfacultyadding/FacultyAdding';
 
 
 
