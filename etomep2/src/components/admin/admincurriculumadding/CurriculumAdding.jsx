@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import '../admincurriculumadding/curriculumadding.css';
 import { Container, Row, Col } from "react-bootstrap";
 import { IoChevronBackSharp } from "react-icons/io5";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { IoIosAdd } from "react-icons/io";
 import Select from "react-select";
@@ -10,6 +12,7 @@ function CurriculumAdding() {
   const [publisher, setPublisher] = useState(null);
   const [subject, setSubject] = useState(null);
   const [faculty, setFaculty] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
 
   const publisherOptions = [
     { value: 'Publisher1', label: 'Publisher 1' },
@@ -80,7 +83,7 @@ function CurriculumAdding() {
             <Col>
               <div className="curriculum_header">
                 <Link to='/classadding'>
-                  <IoChevronBackSharp className='curriculum_back'/>
+                  <IoChevronBackSharp className='curriculum_back' />
                 </Link>
                 <h1 className='curriculum_title'>Add Curriculum</h1>
               </div>
@@ -89,14 +92,26 @@ function CurriculumAdding() {
           </Row>
           <Row>
             <div className='edit_delete'>
+            <div className='curriculum_edit'>
+                <button>
+                  Edit
+                </button>
+              </div>
               <div className='curriculum_delete'>
                 <button>
                   Delete
                 </button>
               </div>
-              <div className='curriculum_edit'>
+            </div>
+            <div className='delete_edit_mobile'>
+            <div className='edit_mobile'>
                 <button>
-                  Edit
+                  <FiEdit />
+                </button>
+              </div>
+              <div className='delete_mobile'>
+                <button>
+                  <RiDeleteBin6Line />     
                 </button>
               </div>
             </div>
@@ -144,16 +159,54 @@ function CurriculumAdding() {
               </div>
             </Col>
           </Row>
-          <Row>
+          <div>
             <div className='curriculum_listing'>
-              Curriculum Listing
+              <Row style={{display:'flex', justifyContent:'center', alignContent:'center'}}
+              onClick={() => setSelectedRow(1)} 
+              className={selectedRow === 1 ? 'selected' : ''} 
+              >
+                <Col md={3} className='curriculum_list'>
+                  <div className='curriculum_publisher_name'>
+                    rrrrrr
+                  </div>
+                </Col>
+                <Col md={3} className='curriculum_list'>
+                  <div className='curriculum_subject'>
+                    yyyyyyyy
+                  </div>
+                </Col>
+                <Col md={3} className='curriculum_list'>
+                  <div className='curriculum_faculty_name'>
+                    xxxxxxx
+                  </div>
+                </Col>
+              </Row>
+              <Row style={{display:'flex', justifyContent:'center', alignContent:'center'}}
+                            onClick={() => setSelectedRow(2)} 
+                            className={selectedRow === 2 ? 'selected' : ''} >
+                <Col md={3} className='curriculum_list'>
+                  <div className='curriculum_publisher_name'>
+                    rrrrrr
+                  </div>
+                </Col>
+                <Col md={3} className='curriculum_list'>
+                  <div className='curriculum_subject'>
+                    yyyyyyyy
+                  </div>
+                </Col>
+                <Col md={3} className='curriculum_list'>
+                  <div className='curriculum_faculty_name'>
+                    xxxxxxx
+                  </div>
+                </Col>
+              </Row>
             </div>
             <div className='curriculum_submit_button' style={{ textAlign: 'right', marginRight: "10px" }}>
               <button type="submit" value="submit" className='curriculum_submit'>
                 Submit
               </button>
             </div>
-          </Row>
+          </div>
         </form>
       </Container>
     </div>
