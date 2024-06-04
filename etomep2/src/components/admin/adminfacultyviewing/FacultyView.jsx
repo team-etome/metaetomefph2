@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../adminfacultyviewing/facultyview.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -7,13 +7,31 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 
 function FacultyView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const dropdownRef = useRef(null);
 
-  console.log(showEditBlockButtons, "aaaaaaaaa");
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowEditBlockButtons(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const toggleEditBlockButtons = (e) => {
     e.preventDefault();
-    console.log("edit block buttons");
-    setShowEditBlockButtons(true);
+    setShowEditBlockButtons((prevState) => !prevState);
   };
 
   return (
@@ -33,7 +51,7 @@ function FacultyView() {
               </Link>
               <h1 className="faculty_view_title">Sneha</h1>
               <div style={{ flex: "1" }}></div>
-              {window.innerWidth > 800 ? (
+              {windowWidth > 800 ? (
                 <div
                   style={{
                     display: "flex",
@@ -46,14 +64,36 @@ function FacultyView() {
                   <button className="faculty_block">Block</button>
                 </div>
               ) : (
-                <button
-                  className="verticaldot"
-                  onClick={toggleEditBlockButtons}
-                >
-                  <BsThreeDotsVertical />
-                </button>
+                <div style={{ position: "relative" }} ref={dropdownRef}>
+                  <button
+                    className="verticaldot"
+                    onClick={toggleEditBlockButtons}
+                  >
+                    <BsThreeDotsVertical />
+                  </button>
+                  {showEditBlockButtons && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        right: "0",
+                        backgroundColor: "white",
+                        boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+                        borderRadius: "5px",
+                        padding: "10px",
+                        zIndex: "1000",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+                      }}
+                    >
+                      <button className="faculty_edit">Edit</button>
+                      <button className="faculty_block">Block</button>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
+
             <div style={{ border: "0.5px solid #526D82" }}></div>
           </div>
           <Row style={{ paddingTop: "20px" }}>
@@ -97,12 +137,6 @@ function FacultyView() {
           </Row>
         </form>
       </Container>
-      {showEditBlockButtons && (
-        <div className="editBlockButtons">
-          <button className="faculty_edit">Edit</button>
-          <button className="faculty_block">Block</button>
-        </div>
-      )}
     </div>
   );
 }
