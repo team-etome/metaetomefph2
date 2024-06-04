@@ -54,7 +54,9 @@ function FacultyDashboard() {
         <Row>
           {facultyListData.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
+              {/* <Link to='/facultyview' style={{ textDecoration: 'none', color: 'inherit' }}> */}
               <div className="border border-white faculty_rectangle">
+              <Link to='/facultyview' style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="faculty_list_medium">{item.employeeid}</div>
                 <div className="faculty_profile_name">
                   <div>
@@ -71,7 +73,9 @@ function FacultyDashboard() {
                     {/* <h1 style={{ fontSize: "1.8rem", fontWeight: "bold" }}>{item.classnumber}</h1> */}
                   </div>
                 </div>
+                </Link>
               </div>
+              {/* </Link> */}
             </Col>
           ))}
         </Row>
