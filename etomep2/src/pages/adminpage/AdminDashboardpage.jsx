@@ -1,38 +1,18 @@
-import React ,{useState} from 'react'
-import AdminDashboard from '../../components/admin/admindashboard/AdminDashboard'
-import MainHeader from '../../components/menus/common/MainHeader/';
-// import MobileSidebar from '../../components/menus/sidebar/MobileSidebar';
-// import Header from '../../components/menus/header/Header';
-// import Sidebar from '../../components/menus/sidebar/Sidebar';
+import React, { useState } from "react";
+import AdminDashboard from "../../components/admin/admindashboard/AdminDashboard";
+import MainHeader from "../../components/menus/common/MainHeader/";
 
 function AdminDashboardpage() {
 
-    const [showMobileSidebar, setShowMobileSidebar] = useState(false);
+  return (
 
-    const handleBurgerClick = () => {
-        setShowMobileSidebar(true);
-    };
-  
-    const handleCloseSidebar = () => {
-        setShowMobileSidebar(false);
-    };
+    <div>
 
-    
-    return (
-        <div>
-            {/* <Header onBurgerClick={handleBurgerClick} />
-            <Sidebar/>
-            <MobileSidebar show={showMobileSidebar} onClose={handleCloseSidebar} />
-            <AdminDashboard /> */}
-            
-            <MainHeader/>
-            <AdminDashboard/>
-
-
-            
-
-        </div>
-    )
+      <MainHeader />
+      <AdminDashboard />
+      
+    </div>
+  );
 }
 
-export default AdminDashboardpage
+export default AdminDashboardpage;

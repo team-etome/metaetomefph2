@@ -1,5 +1,3 @@
-
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,7 +10,6 @@ import AdminNewPassword from './components/admin/adminnewpassword/AdminNewPasswo
 import Header from './components/menus/header/Header';
 import Sidebar from './components/menus/sidebar/Sidebar';
 import React, { useState } from 'react';
-
 import AdminDashboardpage from './pages/adminpage/AdminDashboardpage';
 import AddtextbooksPage from './pages/godpage/AddtextbooksPage';
 import AddcustomerPage from './pages/godpage/AddcustomerPage';
@@ -31,18 +28,9 @@ import AdminCurriculumAddingPage from './pages/adminpage/AdminCurriculumAddingPa
 import AdminFacultyAddingPage from './pages/adminpage/AdminFacultyAddingPage';
 import AdminClassViewPage from './pages/adminpage/AdminClassViewPage';
 import AdminFacultyViewPage from './pages/adminpage/AdminFacultyViewPage';
-
-
-
-
-
-
 function App() {
-  
-
   return (
     <div className="App">
-     
       <BrowserRouter>
         <Routes>
           {/* godside */}
@@ -63,9 +51,7 @@ function App() {
           />
           <Route path="/coursedashboard" element={<CoursedashboardPage />} />
           <Route path="/school" element={<SchoolPage />} />
-
           {/* adminside */}
-
           <Route path="/" element={<AdminLoginPage />} />
           <Route path="/admindashboard" element={<AdminDashboardpage />} />
           <Route path="/institutionadding" element={<InstitutionAddingPage />}/>
@@ -78,12 +64,6 @@ function App() {
           <Route path="/facultyadding" element={<AdminFacultyAddingPage/>}/>
           <Route path="/classview" element={<AdminClassViewPage/>}/>
           <Route path="/facultyview" element={<AdminFacultyViewPage/>}/>
-
-
-
-
-
-
           {/* menu */}
           <Route path="/header" element={<Header />} />
           <Route path="/sidebar" element={<Sidebar />} />
@@ -91,7 +71,5 @@ function App() {
       </BrowserRouter>
     </div>
   );
-
 }
-
 export default App;
