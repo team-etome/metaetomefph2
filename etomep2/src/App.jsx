@@ -28,6 +28,7 @@ import AdminCurriculumAddingPage from './pages/adminpage/AdminCurriculumAddingPa
 import AdminFacultyAddingPage from './pages/adminpage/AdminFacultyAddingPage';
 import AdminClassViewPage from './pages/adminpage/AdminClassViewPage';
 import AdminFacultyViewPage from './pages/adminpage/AdminFacultyViewPage';
+import AdminStudentListPage from './pages/adminpage/AdminStudentListPage';
 function App() {
   return (
     <div className="App">
@@ -64,6 +65,9 @@ function App() {
           <Route path="/facultyadding" element={<AdminFacultyAddingPage/>}/>
           <Route path="/classview" element={<AdminClassViewPage/>}/>
           <Route path="/facultyview" element={<AdminFacultyViewPage/>}/>
+          <Route path="/studentlist" element={<AdminStudentListPage/>}/>
+
+
           {/* menu */}
           <Route path="/header" element={<Header />} />
           <Route path="/sidebar" element={<Sidebar />} />
