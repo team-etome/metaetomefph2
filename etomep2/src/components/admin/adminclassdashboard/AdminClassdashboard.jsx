@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import "../adminclassdashboard/adminclassdashboard.css";
 import { IoIosAdd } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 import amritha from "../../../assets/amritha.png";
-
+import mp3File from "../../../../src/assets/fun.mp3";
 
 function AdminClassdashboard() {
-
   const [isActive, setIsActive] = useState(false);
+
+  const audioRef = useRef(null);
+
+  const history = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -17,6 +20,17 @@ function AdminClassdashboard() {
 
     return () => clearInterval(interval);
   }, []);
+
+  const handleButtonClick = (event) => {
+    event.preventDefault();
+    setIsActive(!isActive);
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+    setTimeout(() => {
+      history("/classadding");
+    }, 500);
+  };
 
   const classListData = [
     { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 A" },
@@ -44,8 +58,12 @@ function AdminClassdashboard() {
   ];
 
   return (
-    <div style={{display:"flex",justifyContent:"center",width:'104.5%'}}>
-      <Container fluid className="container-scroll" style={{ marginTop: "16px" }}>
+    <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
+      <Container
+        fluid
+        className="container-scroll"
+        style={{ marginTop: "16px" }}
+      >
         <Row>
           {classListData.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
@@ -53,17 +71,21 @@ function AdminClassdashboard() {
                 <div className="class_list_medium">{item.medium}</div>
                 <div className="class_profile_name">
                   <div>
-                <img 
-                  src={amritha} 
-                  alt='profile pic'
-                  className="faculty_profile_photo"
-                />
-                </div>
-                <div className="class_list_facultyname">{item.facultyName}</div>
+                    <img
+                      src={amritha}
+                      alt="profile pic"
+                      className="faculty_profile_photo"
+                    />
+                  </div>
+                  <div className="class_list_facultyname">
+                    {item.facultyName}
+                  </div>
                 </div>
                 <div className="class_lisit_circle">
                   <div className="class_number_div">
-                    <h1 style={{ fontSize: "1.8rem", fontWeight: "bold" }}>{item.classnumber}</h1>
+                    <h1 style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
+                      {item.classnumber}
+                    </h1>
                   </div>
                 </div>
               </div>
@@ -71,12 +93,26 @@ function AdminClassdashboard() {
           ))}
         </Row>
       </Container>
+      {/* <div className="class_adding_button">
+        <audio ref={audioRef} src={mp3File}></audio>
+        <Link to="/classadding">
+          <button
+            className={`class_adding my-button ${isActive ? "active" : ""}`}
+          >
+            <IoIosAdd
+              style={{ height: "40px", width: "40px", color: "#ffff" }}
+            />
+          </button>
+        </Link>
+      </div> */}
       <div className="class_adding_button">
-        <Link to='/classadding'>
-        <button className={`class_adding my-button ${isActive ? 'active' : ''}`}>
+        <audio ref={audioRef} src={mp3File}></audio>
+        <button
+          className={`class_adding my-button ${isActive ? "active" : ""}`}
+          onClick={handleButtonClick}
+        >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
         </button>
-        </Link>
       </div>
     </div>
   );
