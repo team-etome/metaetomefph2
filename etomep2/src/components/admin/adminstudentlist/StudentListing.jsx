@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import '../adminstudentlist/studentlisting.css'
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
-import { BsThreeDotsVertical } from "react-icons/bs";
 
 function StudentListing() {
     const studentListData = [
