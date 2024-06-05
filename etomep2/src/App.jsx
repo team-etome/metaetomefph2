@@ -31,6 +31,10 @@ import AdminFacultyViewPage from './pages/adminpage/AdminFacultyViewPage';
 import AdminStudentListPage from './pages/adminpage/AdminStudentListPage';
 import AdminStudentViewPage from './pages/adminpage/AdminStudentViewPage';
 import AdminStudentResultPage from './pages/adminpage/AdminStudentResultPage';
+import AarnaNavbarPage from './pages/adminpage/AarnaNavbarPage';
+import AarnaProgressPage from './pages/adminpage/AarnaProgressPage';
+import AarnaQuestionPaperPage from './pages/adminpage/AarnaQuestionPaperPage';
+import AarnaQuestionAssigningPage from './pages/adminpage/AarnaQuestionAssigningPage';
 function App() {
   return (
     <div className="App">
@@ -70,6 +74,12 @@ function App() {
           <Route path="/studentlist" element={<AdminStudentListPage/>}/>
           <Route path="/studentview" element={<AdminStudentViewPage/>}/>
           <Route path="/studentresultview" element={<AdminStudentResultPage/>}/>
+          <Route path="/aarnanavbar" element={<AarnaNavbarPage/>}/>
+          <Route path="/aarnaprogress" element={<AarnaProgressPage/>}/>
+          <Route path="/aarnaquestionpaper" element={<AarnaQuestionPaperPage/>}/>
+          <Route path="/questionadding" element={<AarnaQuestionAssigningPage/>}/>
+
+
 
 
 

@@ -107,10 +107,12 @@ function Sidebar() {
           className={`menu_item_col ${activeItem === "aarna" ? "active" : ""}`}
           // onClick={() => handleMenuItemClick("aarna")}
         >
+          <Link to='/aarnanavbar'style={{textDecoration:'none', color:'inherit'}}>
           <div className="icon_container_div">
             <SlNote className="icon_img" />
             <span className="icon-text">Aarna</span>
           </div>
+          </Link>
         </Col>
         <Col
           className={`menu_item_col ${activeItem === "eyora" ? "active" : ""}`}
