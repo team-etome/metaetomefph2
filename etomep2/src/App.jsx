@@ -30,6 +30,7 @@ import AdminClassViewPage from './pages/adminpage/AdminClassViewPage';
 import AdminFacultyViewPage from './pages/adminpage/AdminFacultyViewPage';
 import AdminStudentListPage from './pages/adminpage/AdminStudentListPage';
 import AdminStudentViewPage from './pages/adminpage/AdminStudentViewPage';
+import AdminStudentResultPage from './pages/adminpage/AdminStudentResultPage';
 function App() {
   return (
     <div className="App">
@@ -68,6 +69,7 @@ function App() {
           <Route path="/facultyview" element={<AdminFacultyViewPage/>}/>
           <Route path="/studentlist" element={<AdminStudentListPage/>}/>
           <Route path="/studentview" element={<AdminStudentViewPage/>}/>
+          <Route path="/studentresultview" element={<AdminStudentResultPage/>}/>
 
 
 
