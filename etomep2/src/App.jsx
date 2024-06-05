@@ -35,6 +35,7 @@ import AarnaNavbarPage from './pages/adminpage/AarnaNavbarPage';
 import AarnaProgressPage from './pages/adminpage/AarnaProgressPage';
 import AarnaQuestionPaperPage from './pages/adminpage/AarnaQuestionPaperPage';
 import AarnaQuestionAssigningPage from './pages/adminpage/AarnaQuestionAssigningPage';
+// import AarnaSeatingDashboardPage from './pages/adminpage/AarnaSeatingDashboardPage';
 function App() {
   return (
     <div className="App">
@@ -78,6 +79,7 @@ function App() {
           <Route path="/aarnaprogress" element={<AarnaProgressPage/>}/>
           <Route path="/aarnaquestionpaper" element={<AarnaQuestionPaperPage/>}/>
           <Route path="/questionadding" element={<AarnaQuestionAssigningPage/>}/>
+          {/* <Route path="/seatingdashboard" element={<AarnaSeatingDashboardPage/>}/> */}
 
 
 

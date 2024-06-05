@@ -4,6 +4,7 @@ import { BsSearch, BsFilterRight } from "react-icons/bs";
 import AdminClassdashboard from "../adminclassdashboard/AdminClassdashboard";
 import AarnaProgress from "../aarnaprogress/AarnaProgress";
 import AarnaQuestionPaper from "../aarnaquestionpaper/AarnaQuestionPaper";
+// import SeatingDashboard from "../aarnaseating/SeatingDashboard";
 
 function AarnaNavbar() {
     const [activeTab, setActiveTab] = useState(
@@ -157,6 +158,8 @@ function AarnaNavbar() {
                         <div className="institution_dashboard_container">
                             {activeTab === "Progress" && <AarnaProgress />}
                             {activeTab === "Question Paper" && <AarnaQuestionPaper />}
+                            {/* {activeTab === "Seating" && <SeatingDashboard />} */}
+
                         </div>
                     </Col>
                 </Row>
