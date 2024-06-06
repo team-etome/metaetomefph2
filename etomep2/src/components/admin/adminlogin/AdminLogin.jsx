@@ -8,9 +8,11 @@ import lineart from "../../../assets/lineart.png";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
 import AdminForgot from "../adminforgotpassword/AdminForgot";
+import { admininfo } from "../../../Redux/Actions/AdminInfoAction";
+
 
 function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -18,6 +20,11 @@ function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const APIURL = useSelector((state) => state.APIURL.url);
+
+
+  const dispatch = useDispatch();
+
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -38,6 +45,8 @@ function AdminLogin() {
         password: password,
       };
       const response = await axios.post(`${APIURL}/api/adminLogin`, data);
+      console.log(response.data,"dataaaaaa")
+      dispatch(admininfo(response.data.admin_details)); 
       navigate("/admindashboard");
       Swal.fire({
         title: "Success!",
@@ -63,7 +72,7 @@ function AdminLogin() {
       }
     }
   };
-  
+
   const [isFlipped, setIsFlipped] = useState(false);
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
@@ -105,7 +114,7 @@ function AdminLogin() {
             className="ad_lg_left_div"
           >
             <img
-            className="ad_lg_logo"
+              className="ad_lg_logo"
               src={etomelogo}
               alt="etome logo"
               style={{
@@ -115,45 +124,44 @@ function AdminLogin() {
               }}
             />
 
-              <>
-                <p
-                  className="ad_lg_tagline"
+            <>
+              <p
+                className="ad_lg_tagline"
+                style={{
+                  fontSize: "clamp(15px, 2vw, 20px)",
+                  fontFamily: "PT Mono",
+                  marginLeft: "30px",
+                }}
+              >
+                Innovation That Changes the world
+              </p>
+              <Link
+                to="https://www.etome.in/"
+                style={{ textDecoration: "none" }}
+              >
+                <button
+                  className="website_button"
                   style={{
-                    fontSize: "clamp(15px, 2vw, 20px)",
-                    fontFamily: "PT Mono",
+                    width: "224px",
+                    height: "53px",
+                    backgroundColor: "transparent",
+                    color: "#526D82",
+                    borderRadius: "0.5rem",
+                    borderColor: "#526D82",
+                    marginTop: "10px",
                     marginLeft: "30px",
+                    border: "1px solid #526D82",
                   }}
+                  type="submit"
                 >
-                  Innovation That Changes the world
-                </p>
-                <Link
-                  to="https://www.etome.in/"
-                  style={{ textDecoration: "none" }}
-                >
-                  <button
-                    className="website_button"
-                    style={{
-                      width: "224px",
-                      height: "53px",
-                      backgroundColor: "transparent",
-                      color: "#526D82",
-                      borderRadius: "0.5rem",
-                      borderColor: "#526D82",
-                      marginTop: "10px",
-                      marginLeft: "30px",
-                      border:'1px solid #526D82'
-                    }}
-                    type="submit"
-                  >
-                    Go To Website
-                    <RiShareBoxFill style={{ marginLeft: "10px" }} />
-                  </button>
-                </Link>
-              </>
-            
+                  Go To Website
+                  <RiShareBoxFill style={{ marginLeft: "10px" }} />
+                </button>
+              </Link>
+            </>
           </Col>
           <Col
-          className="formcol_Lg"
+            className="formcol_Lg"
             md={6}
             xs={12}
             style={{
@@ -178,7 +186,7 @@ function AdminLogin() {
                   <div className="admin_input_container">
                     <label
                       htmlFor="email"
-                      style={{ fontSize: "20px", color: "#526D82" , }}
+                      style={{ fontSize: "20px", color: "#526D82" }}
                     >
                       {" "}
                       E-mail Address
