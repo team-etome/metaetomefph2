@@ -36,6 +36,9 @@ import AarnaProgressPage from './pages/adminpage/AarnaProgressPage';
 import AarnaQuestionPaperPage from './pages/adminpage/AarnaQuestionPaperPage';
 import AarnaQuestionAssigningPage from './pages/adminpage/AarnaQuestionAssigningPage';
 import AarnaSeatingDashboardPage from './pages/adminpage/AarnaSeatingDashboardPage';
+import AarnaSeatAssignPage from './pages/adminpage/AarnaSeatAssignPage';
+import AarnaEvaluationSchedulePage from './pages/adminpage/AarnaEvaluationSchedulePage';
+import AarnaEvaluationDashbaordPage from './pages/adminpage/AarnaEvaluationDashbaordPage';
 function App() {
   return (
     <div className="App">
@@ -80,6 +83,9 @@ function App() {
           <Route path="/aarnaquestionpaper" element={<AarnaQuestionPaperPage/>}/>
           <Route path="/questionadding" element={<AarnaQuestionAssigningPage/>}/>
           <Route path="/seatingdashboard" element={<AarnaSeatingDashboardPage/>}/>
+          <Route path="/seatassigning" element={<AarnaSeatAssignPage/>}/>
+          <Route path="/evaluationscheduling" element={<AarnaEvaluationSchedulePage/>}/>
+          <Route path="/evaluationdashboard" element={<AarnaEvaluationDashbaordPage/>}/>
 
 
 

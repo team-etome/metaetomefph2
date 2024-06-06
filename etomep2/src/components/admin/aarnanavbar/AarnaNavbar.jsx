@@ -5,6 +5,7 @@ import AdminClassdashboard from "../adminclassdashboard/AdminClassdashboard";
 import AarnaProgress from "../aarnaprogress/AarnaProgress";
 import AarnaQuestionPaper from "../aarnaquestionpaper/AarnaQuestionPaper";
 import SeatingDashboard from "../aarnaseating/SeatingDashboard";
+import EvaluationDashboard from "../aarnaevaluation/EvaluationDashboard";
 
 function AarnaNavbar() {
     const [activeTab, setActiveTab] = useState(
@@ -159,6 +160,7 @@ function AarnaNavbar() {
                             {activeTab === "Progress" && <AarnaProgress />}
                             {activeTab === "Question Paper" && <AarnaQuestionPaper />}
                             {activeTab === "Seating" && <SeatingDashboard />}
+                            {activeTab === "Evaluation" && <EvaluationDashboard />}
 
                         </div>
                     </Col>

@@ -10,7 +10,7 @@ function QuestionAssigning() {
     const [subject, setSubject] = useState(null);
     const [examName, setExamName] = useState(null);
     const [examDate, setExamDate] = useState(null);
-    const [classSelected, setClass] = useState(null);
+    const [classNo, setClassNo] = useState(null);
     const [category, setCategory] = useState(null);
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
@@ -98,7 +98,7 @@ function QuestionAssigning() {
                     </div>
                     <div className='qpaper_group'>
                         <label htmlFor="exam_date">Exam Date<span style={{color: 'red'}}>*</span></label>
-                        <input type="text" id='exam_date' name='last_naexam_dateme' />
+                        <input type="text" id='exam_date' name='exam_date' />
                     </div>
                     <div className='qpaper_group'>
                         <label htmlFor="class">Class<span style={{color: 'red'}}>*</span></label>
