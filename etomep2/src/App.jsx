@@ -28,6 +28,17 @@ import AdminCurriculumAddingPage from './pages/adminpage/AdminCurriculumAddingPa
 import AdminFacultyAddingPage from './pages/adminpage/AdminFacultyAddingPage';
 import AdminClassViewPage from './pages/adminpage/AdminClassViewPage';
 import AdminFacultyViewPage from './pages/adminpage/AdminFacultyViewPage';
+import AdminStudentListPage from './pages/adminpage/AdminStudentListPage';
+import AdminStudentViewPage from './pages/adminpage/AdminStudentViewPage';
+import AdminStudentResultPage from './pages/adminpage/AdminStudentResultPage';
+import AarnaNavbarPage from './pages/adminpage/AarnaNavbarPage';
+import AarnaProgressPage from './pages/adminpage/AarnaProgressPage';
+import AarnaQuestionPaperPage from './pages/adminpage/AarnaQuestionPaperPage';
+import AarnaQuestionAssigningPage from './pages/adminpage/AarnaQuestionAssigningPage';
+import AarnaSeatingDashboardPage from './pages/adminpage/AarnaSeatingDashboardPage';
+import AarnaSeatAssignPage from './pages/adminpage/AarnaSeatAssignPage';
+import AarnaEvaluationSchedulePage from './pages/adminpage/AarnaEvaluationSchedulePage';
+import AarnaEvaluationDashbaordPage from './pages/adminpage/AarnaEvaluationDashbaordPage';
 function App() {
   return (
     <div className="App">
@@ -64,6 +75,22 @@ function App() {
           <Route path="/facultyadding" element={<AdminFacultyAddingPage/>}/>
           <Route path="/classview" element={<AdminClassViewPage/>}/>
           <Route path="/facultyview" element={<AdminFacultyViewPage/>}/>
+          <Route path="/studentlist" element={<AdminStudentListPage/>}/>
+          <Route path="/studentview" element={<AdminStudentViewPage/>}/>
+          <Route path="/studentresultview" element={<AdminStudentResultPage/>}/>
+          <Route path="/aarnanavbar" element={<AarnaNavbarPage/>}/>
+          <Route path="/aarnaprogress" element={<AarnaProgressPage/>}/>
+          <Route path="/aarnaquestionpaper" element={<AarnaQuestionPaperPage/>}/>
+          <Route path="/questionadding" element={<AarnaQuestionAssigningPage/>}/>
+          <Route path="/seatingdashboard" element={<AarnaSeatingDashboardPage/>}/>
+          <Route path="/seatassigning" element={<AarnaSeatAssignPage/>}/>
+          <Route path="/evaluationscheduling" element={<AarnaEvaluationSchedulePage/>}/>
+          <Route path="/evaluationdashboard" element={<AarnaEvaluationDashbaordPage/>}/>
+
+
+
+
+
           {/* menu */}
           <Route path="/header" element={<Header />} />
           <Route path="/sidebar" element={<Sidebar />} />

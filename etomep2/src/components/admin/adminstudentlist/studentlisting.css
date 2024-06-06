@@ -1,0 +1,149 @@
+.student_container {
+    height: 100vh;
+    padding-top: 100px;
+    background-color: #DDE6ED;
+    width: 80%;
+    }
+    .student_list{
+        height: 90%;
+        width: 100%;
+        background-color: #fff;
+        padding-top: 1%;
+        border-radius: 15px;
+        padding-bottom: 100px;
+    
+    }
+    .student_back {
+        color: #526D82;
+        height: 32px;
+        width: 32px;
+        margin-left: 10px;
+    }
+    
+    
+    .student_title{
+        font-weight: 500;
+        color: #526D82 ;
+        font-size: 30px;
+        margin-left: 10px;
+    }
+    .student_card{
+        width: 100%;
+        height: 80%;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        position: relative;
+        margin-bottom: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+        border: 1px solid #526D82;
+        display: flex;
+        gap: 10px;
+        padding-left: 10px;
+        display: flex;
+    }
+    .student_name{
+        color: #526D82;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        padding-top: 10px;
+        padding-bottom: 1px;
+    }
+    .student_number{
+        color: #526D82;
+        font-weight: bold;
+        display: flex;
+        align-items: center; 
+        justify-content: center;  
+        /* padding: 0px;   */
+        border-radius: 50%;  
+        height: 30px;  
+        width: 30px; 
+        background-color: #DAE2E9;
+        margin-top: 5px;
+    }
+    @media (max-width: 800px) {
+        .student_container {
+            width: 100%;
+            padding-top: 100px;
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: #DDE6ED;
+            box-sizing: border-box;
+        }
+    
+        .student_list {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            max-height: calc(100vh - 120px);
+            overflow-y: scroll; /* Ensure vertical scroll bar appears */
+            overflow-x: hidden; /* Hide horizontal scroll bar */
+            box-sizing: border-box;
+            margin-top: 30px;
+        }
+    
+        .student_list::-webkit-scrollbar {
+            width: 10px;
+        }
+    
+        .student_list::-webkit-scrollbar-track {
+            background: #fff;
+        }
+    
+        .student_list::-webkit-scrollbar-thumb {
+            background: #E3DFDF;
+            border-radius: 10px;
+        }
+    
+        .student_list::-webkit-scrollbar-thumb:hover {
+            background: #E3DFDF;
+        }
+    
+        .student_back {
+            margin-right: 15px;
+        }
+    
+        .student_title {
+            font-size: 24px;
+            flex-grow: 1;
+            text-align: left;
+            padding-left: 0px;
+            margin-left: 0px;
+        }
+    }
+    @media (max-width: 999px), (min-width:801px) {
+        .student_list {
+            margin-top: 10%;
+        }
+    }
+    @media (min-width: 801px) {
+        .student_list {
+            margin-top: 3%;
+            overflow-y: scroll; /* Ensure vertical scroll bar appears */
+            overflow-x: hidden; /* Hide horizontal scroll bar */
+        }
+    
+        .student_list::-webkit-scrollbar {
+            width: 10px;
+        }
+    
+        .student_list::-webkit-scrollbar-track {
+            background: #fff;
+        }
+    
+        .student_list::-webkit-scrollbar-thumb {
+            background: #E3DFDF;
+            border-radius: 10px;
+        }
+    
+        .studentw_list::-webkit-scrollbar-thumb:hover {
+            background: #E3DFDF;
+        }
+    }
+    

@@ -8,6 +8,10 @@ import Select from "react-select";
 function ClassAdding() {
   const [medium, setMedium] = useState(null);
   const [teacher, setTeacher] = useState(null);
+  const [className, setClassName] = useState(false);
+  const [stream, setStream] = useState(false);
+  const [division, setDivision] = useState(false);
+
 
   const mediumOptions = [
     { value: 'medium 1', label: 'medium 1' },
