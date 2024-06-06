@@ -273,7 +273,7 @@ margin-top: 8px;
 .fab-text{
   background-color: #526D82;
   color: #FFFF;
-  width: 150px;
+  width: 200px;
   height: 40px;
   display: flex;
   justify-content: center;
@@ -282,3 +282,4 @@ margin-top: 8px;
   border-radius: 15px;
 }
   
+

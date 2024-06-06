@@ -115,9 +115,11 @@ function ClassAdding() {
                 <label htmlFor="class_medium">Medium</label>
               </div>
               <div className=' class_next_button' style={{textAlign:'right', marginRight: "80px"}}>
+                <Link to = '/curriculumadding'>
                 <button type="submit" value="submit" className='class_next'>
                   Next
                 </button>
+                </Link>
               </div>
             </Col>
           </Row>
