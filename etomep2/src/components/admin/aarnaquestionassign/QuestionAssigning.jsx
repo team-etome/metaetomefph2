@@ -10,7 +10,7 @@ function QuestionAssigning() {
     const [subject, setSubject] = useState(null);
     const [examName, setExamName] = useState(null);
     const [examDate, setExamDate] = useState(null);
-    const [classSelected, setClass] = useState(null);
+    const [classNo, setClassNo] = useState(null);
     const [category, setCategory] = useState(null);
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);

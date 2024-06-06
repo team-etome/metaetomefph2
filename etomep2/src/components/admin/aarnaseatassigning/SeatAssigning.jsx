@@ -14,6 +14,13 @@ import { BsSearch} from "react-icons/bs";
 function SeatAssigning() {
     const [selectedLayout, setSelectedLayout] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [hallNo, setHallNo] = useState(false);
+    const [tableNo, setTableNo] = useState(false);
+    const [columnNo, setColumnNo] = useState(false);
+    const [studentNo, setStudentNo] = useState(false);
+    const [startTime, setStartTime] = useState(false);
+    const [endTime, setEndTime] = useState(false);
+
 
     const handleLayoutSelect = (layout) => {
         setSelectedLayout(layout);

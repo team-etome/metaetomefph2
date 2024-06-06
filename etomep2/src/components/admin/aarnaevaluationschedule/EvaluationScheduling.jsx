@@ -12,6 +12,8 @@ function EvaluationScheduling() {
     const [division, setDivision] = useState(false);
     const [subject, setSubject] = useState(false);
     const [term, setTerm]=useState(false);
+    const [startTime, setStartTime]=useState(false);
+    const [endTime, setEndTime]=useState(false);
     const [checkedItems, setCheckedItems] = useState([]);
 
     const termOptions = [
