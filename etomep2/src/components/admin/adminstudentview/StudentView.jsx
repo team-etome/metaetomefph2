@@ -1,15 +1,25 @@
 import React from 'react'
 import "../adminstudentview/studentview.css"
-import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Row, Col,Button } from "react-bootstrap";
+import { Link, } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
+import amritha from "../../../assets/amritha.png";
+
 
 function StudentView() {
+  const subjects = [
+    { name: 'English', score: 100 },
+    { name: 'Maths', score: 98 },
+    { name: 'Hindi', score: 98 },
+    { name: 'Physics', score: 98 },
+    { name: 'Chemistry', score: 98 },
+    { name: 'Biology', score: 98 },
+  ];
   return (
     <div>
     <Container className="student_view_container">
       <form className="student_view_form">
-        <div>
+        <div className='student_header'>
           <div
             style={{
               display: "flex",
@@ -20,10 +30,11 @@ function StudentView() {
             <Link to="/institutionadding">
               <IoChevronBackSharp className="student_view_back" />
             </Link>
-            <h1 className="student_view_title">Catherine Jose</h1>
+            <h1 className="student_view_title">Niranjana </h1>
           </div>
-          <div style={{ border: "0.5px solid #526D82" }}></div>
+          {/* <div style={{ border: "0.5px solid #526D82" }}></div> */}
         </div>
+        <div className='student_scrollable'>
         <Row style={{ paddingTop: "20px"}} className='personal_info'>
             <div className='student_title'>
                 <h4>Personal Information</h4>
@@ -32,19 +43,19 @@ function StudentView() {
           <Col md={4}>
             <div className='personal_info_field'>
               <label htmlFor="name">Name</label>
-              <input type="text" id="name" name="clasnames_no" readOnly />
+              <input type="text" id="name" name="clasnames_no" value='Niranjana' readOnly style={{color:'#68B670', fontWeight:'600'}}/>
             </div>
             <div className='personal_info_field'>
               <label htmlFor="dob">DOB</label>
-              <input type="text" id="dob" name="dob" readOnly />
+              <input type="text" id="dob" name="dob" value='10/02/2004' readOnly />
             </div>
             <div className='personal_info_field'>
               <label htmlFor="email">Email Id</label>
-              <input type="text" id="email" name="email" readOnly />
+              <input type="text" id="email" name="email" value='catherine10@gmail.com' readOnly />
             </div>
             <div className='personal_info_field'>
               <label htmlFor="address">Address</label>
-              <input type="text" id="address" name="address" readOnly />
+              <input type="text" id="address" name="address"value='hhhhhhhhhhh' readOnly />
             </div>
             <div className='personal_info_field'>
               <label htmlFor="pincode">Pincode</label>
@@ -74,49 +85,73 @@ function StudentView() {
             </div>
           </Col>
           <Col md={4}>
+            <div>
+              <img src={amritha}  alt="" className='profile_picture'/>
+            </div>
           </Col>
         </Row>
         <Row style={{ paddingTop: "20px" }}>
+          <div className='student_heading'>
             <div className='student_title'>
                 <h4>School Information</h4>
             </div>
-
-          <Col md={2}>
-            <div>
+            </div>
+          <Col md={4}>
+            <div className='school_info'>
               <label htmlFor="standard">Standard</label>
-              <input type="text" id="standard" name="standard" readOnly />
+              <input type="text" id="standard" name="standard" value='11 B' readOnly />
             </div>
-          </Col>
-          <Col md={2}>
-            <div>
+            <div className='school_info'>
               <label htmlFor="admin_no">Admission Number</label>
-              <input type="text" id="admin_no" name="admin_no" readOnly />
+              <input type="text" id="admin_no" name="admin_no"value='101010101' readOnly />
             </div>
           </Col>
-          <Col md={2}>
-            <div>
+          <Col md={4}>
+            <div className='school_info'>
               <label htmlFor="roll_no">Roll No</label>
-              <input type="text" id="roll_no" name="roll_no" readOnly />
+              <input type="text" id="roll_no" name="roll_no" value='12'readOnly />
             </div>
-          </Col>
-          <Col md={2}>
-            <div>
+            <div className='school_info'>
               <label htmlFor="category">Category</label>
-              <input type="text" id="category" name="category" readOnly />
+              <input type="text" id="category" name="category" value='Science'readOnly />
             </div>
           </Col>
-          <Col md={2}>
-            <div>
+
+          <Col md={4}>
+            <div className='school_info'>
               <label htmlFor="join_date">Joining Date</label>
-              <input type="text" id="join_date" name="join_date" readOnly />
+              <input type="text" id="join_date" name="join_date"value='06/06/2023' readOnly />
+            </div>
+            <div className='school_info'>
+              <label htmlFor="academic_year">Academic Year</label>
+              <input type="text" id="academic_year" name="academic_year" value='2024-2025'readOnly />
             </div>
           </Col>
         </Row>
-        <Row style={{ paddingTop: "20px" }}>
+        <Row className="mt-4">
+        <div className='result_heading'>
             <div className='student_title'>
-                <h4>Result</h4>
+              <Button>View Results</Button>
             </div>
-        </Row>
+            </div>
+        {/* <Col>
+          <h5 className="mb-2" style={{display:'flex', justifyContent:'center', color:'#526D82', fontSize:'20px', fontWeight:'100px'}}>First Term</h5>
+          <div className="results_container">
+          <div className="results-header">
+            <div className="header-subject-name">Subject Name</div>
+            <div className="header-subject-score">Result</div>
+          </div>
+            {subjects.map((subject, index) => (
+              <div key={index} className="subject_container">
+                <div className="subject_name">{subject.name}</div>
+                <div className="subject_score">{subject.score}</div>
+              </div>
+            ))}
+          </div>
+        </Col> */}
+        
+      </Row>
+      </div>
       </form>
     </Container>
   </div>
