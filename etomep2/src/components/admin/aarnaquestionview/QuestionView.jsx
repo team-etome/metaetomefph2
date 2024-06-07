@@ -3,37 +3,38 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import Layout_01_S from "../../../assets/Layout_01_S.png";
 import '../aarnaquestionview/questionview.css';
 
 function QuestionView() {
-    const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const dropdownRef = useRef(null);
-    const handleResize = () => {
-        setWindowWidth(window.innerWidth);
+  const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const dropdownRef = useRef(null);
+  const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+  
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowEditBlockButtons(false);
+      }
+    };
+  
+    useEffect(() => {
+      window.addEventListener("resize", handleResize);
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+        document.removeEventListener("mousedown", handleClickOutside);
       };
-    
-      const handleClickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-          setShowEditBlockButtons(false);
-        }
-      };
-    
-      useEffect(() => {
-        window.addEventListener("resize", handleResize);
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-          window.removeEventListener("resize", handleResize);
-          document.removeEventListener("mousedown", handleClickOutside);
-        };
-      }, []);
-    
-      const toggleEditBlockButtons = (e) => {
-        e.preventDefault();
-        setShowEditBlockButtons((prevState) => !prevState);
-      };
+    }, []);
+  
+    const toggleEditBlockButtons = (e) => {
+      e.preventDefault();
+      setShowEditBlockButtons((prevState) => !prevState);
+    };
   return (
-    <div>
+    <div style={{border:'1px solid red'}}>
     <Container className="question_view_container">
       <form className="question_view_form">
         <div>

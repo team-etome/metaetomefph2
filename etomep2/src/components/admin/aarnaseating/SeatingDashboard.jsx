@@ -9,7 +9,9 @@ function SeatingDashboard() {
 
     const audioRef = useRef(null);
   
-    const history = useNavigate();
+    // const history = useNavigate();
+    const navigate = useNavigate()
+
   
     useEffect(() => {
       const interval = setInterval(() => {
@@ -19,16 +21,13 @@ function SeatingDashboard() {
       return () => clearInterval(interval);
     }, []);
   
-    const handleButtonClick = (event) => {
-      event.preventDefault();
-      setIsActive(!isActive);
-      if (audioRef.current) {
-        audioRef.current.play();
-      }
-      setTimeout(() => {
-        history("/seatassigning");
-      }, 500);
-    };
+    const handleButtonClick= ()=>{
+      navigate('/seatassigning')
+  }
+
+    const handleclick= ()=>{
+      navigate('/seatview')
+  }
   
     const qpaperListData = [
       {hallNo: "11", date:'01/10/2024',fcaultyNo: "1", time: "10.00 Am - 1.00 Pm" },
@@ -65,7 +64,7 @@ function SeatingDashboard() {
       <Row>
         {qpaperListData.map((item, index) => (
           <Col lg={3} md={4} sm={6} xs={6} key={index} className="qpaper_list">
-            <div className="border border-white seat_rectangle">
+            <div onClick={handleclick} className="border border-white seat_rectangle">
                 <div className="seat_hall_date">
               <div className="seat_hallno">{item.hallNo}</div>
                 <div className="seat_date">
