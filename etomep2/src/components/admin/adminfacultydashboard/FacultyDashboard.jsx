@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { IoIosAdd, IoMdDownload, IoMdAdd } from "react-icons/io";
 import { MdUpload } from "react-icons/md";
@@ -13,16 +13,33 @@ function FacultyDashboard() {
   const [isActive, setIsActive] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [file, setFile] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // Correctly declared here
+  const [isLoading, setIsLoading] = useState(false);
+  const [facultyListData, setFacultyListData] = useState([]);
 
   const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
   const admin_id = admininfo ? admininfo?.admininfo.admin_id : null;
 
-
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
+
+  console.log(facultyListData, "facultyyy");
+
+  useEffect(() => {
+    const fetchFacultyData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`${APIURL}/api/teacherdetails`);
+        setFacultyListData(response.data);
+      } catch (error) {
+        console.error("Failed to fetch faculty data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchFacultyData();
+  }, [APIURL]);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -69,14 +86,9 @@ function FacultyDashboard() {
     setShowOptions(!showOptions);
   };
 
-  const facultyListData = new Array(21).fill({
-    employeeid: "English",
-    facultyName: "yyyyyyyy",
-  });
-
-  const handleclick= ()=>{
-      navigate('/facultyview')
-  }
+  const handleclick = () => {
+    navigate("/facultyview");
+  };
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
@@ -88,18 +100,27 @@ function FacultyDashboard() {
         <Row>
           {facultyListData.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
-              <div onClick={handleclick}  className="border border-white faculty_rectangle">
-               
-                  <div className="faculty_list_medium">{item.employeeid}</div>
-                  <div className="faculty_profile_name">
-                    <div className="faculty_list_facultyname">
-                      {item.facultyName}
-                    </div>
+              <div
+                onClick={() => handleclick(item.employeeid)}
+                className="border border-white faculty_rectangle"
+              >
+                <div className="faculty_list_medium">{item.employee_id}</div>
+                <div className="faculty_profile_name">
+                  <div className="faculty_list_facultyname">
+                    {item.first_name}
                   </div>
-                  <div className="faculty_lisit_circle">
+                </div>
+                <div className="faculty_lisit_circle">
                   <div className="faculty_number_div">
-                    <img style={{width:"80px",height:"80px", borderRadius:'50%'}} src={amritha} alt="" />
-
+                    <img
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        borderRadius: "50%",
+                      }}
+                      src={amritha}
+                      alt=""
+                    />
                   </div>
                 </div>
               </div>
@@ -109,8 +130,10 @@ function FacultyDashboard() {
       </Container>
 
       <div className="faculty_adding_button">
-        <Button className={`faculty_adding my-button ${isActive ? 'active' : ''}`} onClick={handleAddClick}>
-
+        <Button
+          className={`faculty_adding my-button ${isActive ? "active" : ""}`}
+          onClick={handleAddClick}
+        >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
         </Button>
         {showOptions && (
@@ -175,11 +198,12 @@ function FacultyDashboard() {
               {file && (
                 <Button
                   onClick={handleFileUpload}
-                  disabled={isLoading} 
-                  style={{ 
+                  disabled={isLoading}
+                  style={{
                     backgroundColor: "#526D82",
-                    border : "none",
-                    marginTop: "20px" }}
+                    border: "none",
+                    marginTop: "20px",
+                  }}
                 >
                   {isLoading ? "Uploading..." : "Upload File"}
                 </Button>
