@@ -88,15 +88,20 @@ function FacultyDashboard() {
         <Row>
           {facultyListData.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
-              <div onClick={handleclick}  className="border border-black faculty_rectangle">
+              <div onClick={handleclick}  className="border border-white faculty_rectangle">
                
                   <div className="faculty_list_medium">{item.employeeid}</div>
                   <div className="faculty_profile_name">
-                  
                     <div className="faculty_list_facultyname">
                       {item.facultyName}
                     </div>
                   </div>
+                  <div className="faculty_lisit_circle">
+                  <div className="faculty_number_div">
+                    <img style={{width:"80px",height:"80px", borderRadius:'50%'}} src={amritha} alt="" />
+
+                  </div>
+                </div>
               </div>
             </Col>
           ))}
