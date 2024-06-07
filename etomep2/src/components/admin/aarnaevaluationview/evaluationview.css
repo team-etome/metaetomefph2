@@ -1,10 +1,10 @@
-.seat_view_container {
+.evaluation_view_container {
     height: 100vh;
     padding-top: 100px;
     background-color: #DDE6ED;
     width: 80%;
     }
-    .seat_view_form{
+    .evaluation_view_form{
         height: 90%;
         width: 100%;
         background-color: #fff;
@@ -13,7 +13,7 @@
         padding-bottom: 100px;
     
     }
-    .seat_view_back {
+    .evaluation_view_back {
         color: #526D82;
         height: 32px;
         width: 32px;
@@ -21,14 +21,14 @@
     }
     
     
-    .seat_view_title{
+    .evaluation_view_title{
         font-weight: 500;
         color: #526D82 ;
         font-size: 30px;
         margin-left: 10px;
     }
     
-    .seat_view_group {
+    .evaluation_view_group {
         /* margin-bottom: 15px;
         width: 90%; */
         margin-left: 50px;
@@ -39,7 +39,7 @@
         margin-top: 0px;
         /* padding-left: 20px; */
     }
-    .seat_view_group input{
+    .evaluation_view_group input{
         width: 100%;
         border: 1px solid #526D82;
         border-radius: 8px;
@@ -48,7 +48,7 @@
         outline: none;
         padding: 1px 10px 12px 10px;
     }
-    .seat_view_group label{
+    .evaluation_view_group label{
         position: absolute;
         top: 15%;
         left: 5%;
@@ -60,24 +60,24 @@
         padding: 0 4px;
         z-index: 1;
     }
-    .seat_view_group input:focus + label,
-    .seat_view_group input:not(:placeholder-shown) + label {
+    .evaluation_view_group input:focus + label,
+    .evaluation_view_group input:not(:placeholder-shown) + label {
       top: 3px;
       left: 15px;
       font-size: 17px;
       color: #526D82;
     }
-    .seat_verticaldot{
+    .evaluation_verticaldot{
         display: none;
     }
-    .seat_edit{
+    .evaluation_edit{
         width: 75px;
         height: 50px;
         background-color: transparent;
         border: 1px solid #526D82;
         border-radius: 8px;
     }
-    .seat_block{
+    .evaluation_block{
         width: 75px;
         height: 50px;
         background-color: #FDE9E6;
@@ -103,10 +103,10 @@
         padding: 5px;
         box-sizing: border-box;
     } */
-    .chosen_layout{
+    .evaluation_chosen_layout{
         padding-left: 50px;
     }
-    .align_section{
+    .evaluation_align_section{
         padding-left: 50px;
         padding-bottom: 20px;
     }
@@ -118,7 +118,7 @@
         justify-content: space-around;
         gap: 10px;
     } */
-    .assign_layout {
+    .evaluation_assign_layout {
         border: 1px solid #526D82;
         width: 95%; 
         height: 150px; /* Adjust the height as needed based on the design requirements */
@@ -131,7 +131,7 @@
         box-sizing: border-box; 
     }
     
-    .selected_items {
+    .evaluation_selected_items {
         height: 50px; /* Fixed height for each item */
         display: flex;
         justify-content: center;
@@ -162,7 +162,7 @@
       } */
 
     @media (max-width: 800px) {
-        .seat_view_container {
+        .evaluation_view_container {
             width: 100%;
             padding-top: 100px;
             padding-left: 10px;
@@ -171,7 +171,7 @@
             box-sizing: border-box;
         }
     
-        .seat_view_form {
+        .evaluation_view_form {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -185,28 +185,28 @@
             margin-top: 30px;
         }
     
-        .seat_view_form::-webkit-scrollbar {
+        .evaluation_view_form::-webkit-scrollbar {
             width: 10px;
         }
     
-        .seat_view_form::-webkit-scrollbar-track {
+        .evaluation_view_form::-webkit-scrollbar-track {
             background: #fff;
         }
     
-        .seat_view_form::-webkit-scrollbar-thumb {
+        .evaluation_view_form::-webkit-scrollbar-thumb {
             background: #E3DFDF;
             border-radius: 10px;
         }
     
-        .seat_view_form::-webkit-scrollbar-thumb:hover {
+        .evaluation_view_form::-webkit-scrollbar-thumb:hover {
             background: #E3DFDF;
         }
     
-        .seat_view_back {
+        .evaluation_view_back {
             margin-right: 15px;
         }
     
-        .seat_view_title {
+        .evaluation_view_title {
             font-size: 24px;
             flex-grow: 1;
             text-align: left;
@@ -214,30 +214,30 @@
             margin-left: 0px;
         }
     
-        .seat_view_group{
+        .evaluation_view_group{
             margin: 0 10px 20px 10px;
             position: relative;
         }
     
-        .seat_view_group input {
+        .evaluation_view_group input {
             width: 100%;
             border: 1px solid #526D82;
             border-radius: 8px;
             padding: 12px 10px;
         }
     
-        .seat_view_group label{
+        .evaluation_view_group label{
             font-size: 14px;
             transition: all 0.3s;
             transform-origin: left;
         }
     
-        .seat_view_group input:focus + label,
-        .seat_view_group input:not(:placeholder-shown) + label{
+        .evaluation_view_group input:focus + label,
+        .evaluation_view_group input:not(:placeholder-shown) + label{
             transform: scale(0.85) translateY(-25px);
             color: #526D82;
         }
-        .seat_verticaldot{
+        .evaluation_verticaldot{
             display: flex;
             background-color: transparent;
             color: #526D82;
@@ -245,31 +245,31 @@
         }
     }
     @media (max-width: 999px), (min-width:801px) {
-        .question_view_form {
+        .evaluation_view_form {
             margin-top: 10%;
         }
     }
     @media (min-width: 801px) {
-        .seat_view_form {
+        .evaluation_view_form {
             margin-top: 3%;
             overflow-y: scroll; /* Ensure vertical scroll bar appears */
             overflow-x: hidden; /* Hide horizontal scroll bar */
         }
     
-        .seat_view_form::-webkit-scrollbar {
+        .evaluation_view_form::-webkit-scrollbar {
             width: 10px;
         }
     
-        .seat_view_form::-webkit-scrollbar-track {
+        .evaluation_view_form::-webkit-scrollbar-track {
             background: #fff;
         }
     
-        .seat_view_form::-webkit-scrollbar-thumb {
+        .evaluation_view_form::-webkit-scrollbar-thumb {
             background: #E3DFDF;
             border-radius: 10px;
         }
     
-        .seat_view_form::-webkit-scrollbar-thumb:hover {
+        .evaluation_view_form::-webkit-scrollbar-thumb:hover {
             background: #E3DFDF;
         }
     }

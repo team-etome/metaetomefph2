@@ -41,6 +41,7 @@ import AarnaEvaluationSchedulePage from './pages/adminpage/AarnaEvaluationSchedu
 import AarnaEvaluationDashbaordPage from './pages/adminpage/AarnaEvaluationDashbaordPage';
 import AarnaQuestionViewPage from './pages/adminpage/AarnaQuestionViewPage';
 import AarnaSeatViewPage from './pages/adminpage/AarnaSeatViewPage';
+import AarnaEvaluationViewPage from './pages/adminpage/AarnaEvaluationViewPage';
 function App() {
   return (
     <div className="App">
@@ -90,6 +91,7 @@ function App() {
           <Route path="/evaluationdashboard" element={<AarnaEvaluationDashbaordPage/>}/>
           <Route path="/questionview" element={<AarnaQuestionViewPage/>}/>
           <Route path="/seatview" element={<AarnaSeatViewPage/>}/>
+          <Route path="/evaluationview" element={<AarnaEvaluationViewPage/>}/>
 
 
 
