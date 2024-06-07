@@ -9,7 +9,9 @@ function EvaluationDashboard() {
 
     const audioRef = useRef(null);
   
-    const history = useNavigate();
+    // const history = useNavigate();
+    const navigate = useNavigate()
+
   
     useEffect(() => {
       const interval = setInterval(() => {
@@ -19,16 +21,13 @@ function EvaluationDashboard() {
       return () => clearInterval(interval);
     }, []);
   
-    const handleButtonClick = (event) => {
-      event.preventDefault();
-      setIsActive(!isActive);
-      if (audioRef.current) {
-        audioRef.current.play();
-      }
-      setTimeout(() => {
-        history("/evaluationscheduling");
-      }, 500);
-    };
+    const handleButtonClick= ()=>{
+      navigate('/seatassigning')
+  }
+
+    const handleclick= ()=>{
+      navigate('/evaluationview')
+  }
 
     const evaluationListData = [
         { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
@@ -70,7 +69,7 @@ function EvaluationDashboard() {
       <Row>
         {evaluationListData.map((item, index) => (
           <Col lg={3} md={4} sm={6} xs={6} key={index} className="evaluation_list">
-            <div className="border border-white evaluation_rectangle">
+            <div  onClick={handleclick} className="border border-white evaluation_rectangle">
               <div className="evaluation_term">{item.term}</div>
               <div className="evaluation_class_date">
                 <div className="evaluation_class">

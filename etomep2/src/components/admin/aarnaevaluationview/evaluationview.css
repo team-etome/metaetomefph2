@@ -1,10 +1,10 @@
-.question_view_container {
+.evaluation_view_container {
     height: 100vh;
     padding-top: 100px;
     background-color: #DDE6ED;
     width: 80%;
     }
-    .question_view_form{
+    .evaluation_view_form{
         height: 90%;
         width: 100%;
         background-color: #fff;
@@ -13,7 +13,7 @@
         padding-bottom: 100px;
     
     }
-    .question_view_back {
+    .evaluation_view_back {
         color: #526D82;
         height: 32px;
         width: 32px;
@@ -21,14 +21,14 @@
     }
     
     
-    .question_view_title{
+    .evaluation_view_title{
         font-weight: 500;
         color: #526D82 ;
         font-size: 30px;
         margin-left: 10px;
     }
     
-    .question_view_group {
+    .evaluation_view_group {
         /* margin-bottom: 15px;
         width: 90%; */
         margin-left: 50px;
@@ -39,7 +39,7 @@
         margin-top: 0px;
         /* padding-left: 20px; */
     }
-    .question_view_group input{
+    .evaluation_view_group input{
         width: 100%;
         border: 1px solid #526D82;
         border-radius: 8px;
@@ -48,7 +48,7 @@
         outline: none;
         padding: 1px 10px 12px 10px;
     }
-    .question_view_group label{
+    .evaluation_view_group label{
         position: absolute;
         top: 15%;
         left: 5%;
@@ -60,24 +60,24 @@
         padding: 0 4px;
         z-index: 1;
     }
-    .question_view_group input:focus + label,
-    .question_view_group input:not(:placeholder-shown) + label {
+    .evaluation_view_group input:focus + label,
+    .evaluation_view_group input:not(:placeholder-shown) + label {
       top: 3px;
       left: 15px;
       font-size: 17px;
       color: #526D82;
     }
-    .question_verticaldot{
+    .evaluation_verticaldot{
         display: none;
     }
-    .question_edit{
+    .evaluation_edit{
         width: 75px;
         height: 50px;
         background-color: transparent;
         border: 1px solid #526D82;
         border-radius: 8px;
     }
-    .question_block{
+    .evaluation_block{
         width: 75px;
         height: 50px;
         background-color: #FDE9E6;
@@ -86,8 +86,83 @@
         color: #EA4035;
         font-weight: 700px;
     }
+    .selected_img{
+        width: 95%;
+        height: 100%;
+    }
+    /* .assign_layout {
+        border: 1px solid #526D82;
+        width: 95%;
+        height: 100px;
+        border-radius: 8px;
+        white-space: nowrap;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 5px;
+        box-sizing: border-box;
+    } */
+    .evaluation_chosen_layout{
+        padding-left: 50px;
+    }
+    .evaluation_align_section{
+        padding-left: 50px;
+        padding-bottom: 20px;
+    }
+    /* .selected_items{
+        width: 100px;
+        height: 30px;
+        background-color: #DAE2E9;
+        display: flex;
+        justify-content: space-around;
+        gap: 10px;
+    } */
+    .evaluation_assign_layout {
+        border: 1px solid #526D82;
+        width: 95%; 
+        height: 150px; /* Adjust the height as needed based on the design requirements */
+        border-radius: 8px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+        grid-gap: 10px; /* Space between grid items */
+        overflow-y: scroll; /* Always shows vertical scrollbar */
+        padding: 10px;
+        box-sizing: border-box; 
+    }
+    
+    .evaluation_selected_items {
+        height: 50px; /* Fixed height for each item */
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        background-color: #DAE2E9;
+        border-radius: 8px;
+    }
+
+    /* .assign_layout::-webkit-scrollbar {
+        width: 8px;
+        background-color: #f5f5f5;
+    }
+
+
+    .assign_layout::-webkit-scrollbar-thumb {
+        background-color: #526D82; 
+        border-radius: 10px;
+        border: 2px solid #f5f5f5; 
+    }
+
+
+    .assign_layout::-webkit-scrollbar-thumb:hover {
+        background-color: #405c70;
+    }
+    .assign_layout::-webkit-scrollbar-track {
+        background: #fff;
+        height: -10px;
+      } */
+
     @media (max-width: 800px) {
-        .question_view_container {
+        .evaluation_view_container {
             width: 100%;
             padding-top: 100px;
             padding-left: 10px;
@@ -96,7 +171,7 @@
             box-sizing: border-box;
         }
     
-        .question_view_form {
+        .evaluation_view_form {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -110,28 +185,28 @@
             margin-top: 30px;
         }
     
-        .question_view_form::-webkit-scrollbar {
+        .evaluation_view_form::-webkit-scrollbar {
             width: 10px;
         }
     
-        .question_view_form::-webkit-scrollbar-track {
+        .evaluation_view_form::-webkit-scrollbar-track {
             background: #fff;
         }
     
-        .question_view_form::-webkit-scrollbar-thumb {
+        .evaluation_view_form::-webkit-scrollbar-thumb {
             background: #E3DFDF;
             border-radius: 10px;
         }
     
-        .question_view_form::-webkit-scrollbar-thumb:hover {
+        .evaluation_view_form::-webkit-scrollbar-thumb:hover {
             background: #E3DFDF;
         }
     
-        .question_view_back {
+        .evaluation_view_back {
             margin-right: 15px;
         }
     
-        .faculty_view_title {
+        .evaluation_view_title {
             font-size: 24px;
             flex-grow: 1;
             text-align: left;
@@ -139,30 +214,30 @@
             margin-left: 0px;
         }
     
-        .question_view_group{
+        .evaluation_view_group{
             margin: 0 10px 20px 10px;
             position: relative;
         }
     
-        .question_view_group input {
+        .evaluation_view_group input {
             width: 100%;
             border: 1px solid #526D82;
             border-radius: 8px;
             padding: 12px 10px;
         }
     
-        .question_view_group label{
+        .evaluation_view_group label{
             font-size: 14px;
             transition: all 0.3s;
             transform-origin: left;
         }
     
-        .question_view_group input:focus + label,
-        .question_view_group input:not(:placeholder-shown) + label{
+        .evaluation_view_group input:focus + label,
+        .evaluation_view_group input:not(:placeholder-shown) + label{
             transform: scale(0.85) translateY(-25px);
             color: #526D82;
         }
-        .question_verticaldot{
+        .evaluation_verticaldot{
             display: flex;
             background-color: transparent;
             color: #526D82;
@@ -170,31 +245,31 @@
         }
     }
     @media (max-width: 999px), (min-width:801px) {
-        .question_view_form {
+        .evaluation_view_form {
             margin-top: 10%;
         }
     }
     @media (min-width: 801px) {
-        .question_view_form {
+        .evaluation_view_form {
             margin-top: 3%;
             overflow-y: scroll; /* Ensure vertical scroll bar appears */
             overflow-x: hidden; /* Hide horizontal scroll bar */
         }
     
-        .question_view_form::-webkit-scrollbar {
+        .evaluation_view_form::-webkit-scrollbar {
             width: 10px;
         }
     
-        .question_view_form::-webkit-scrollbar-track {
+        .evaluation_view_form::-webkit-scrollbar-track {
             background: #fff;
         }
     
-        .question_view_form::-webkit-scrollbar-thumb {
+        .evaluation_view_form::-webkit-scrollbar-thumb {
             background: #E3DFDF;
             border-radius: 10px;
         }
     
-        .question_view_form::-webkit-scrollbar-thumb:hover {
+        .evaluation_view_form::-webkit-scrollbar-thumb:hover {
             background: #E3DFDF;
         }
     }

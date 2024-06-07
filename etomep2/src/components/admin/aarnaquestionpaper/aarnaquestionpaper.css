@@ -50,6 +50,7 @@
     border-radius: 8px;
     position: relative;
     margin-bottom: 20px;
+    cursor: pointer;
   }
 .qpaper_faculty_name{
     display: flex;

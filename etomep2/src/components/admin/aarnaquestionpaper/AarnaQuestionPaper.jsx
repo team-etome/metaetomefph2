@@ -3,14 +3,17 @@ import { Col, Container, Row } from "react-bootstrap";
 import "../aarnaquestionpaper/aarnaquestionpaper.css"
 import { IoIosAdd } from "react-icons/io";
 import { useNavigate  } from "react-router-dom";
+// import {useNavigate } from "react-router-dom";
+
 
 function AarnaQuestionPaper() {
     const [isActive, setIsActive] = useState(false);
 
-    const audioRef = useRef(null);
+    // const audioRef = useRef(null);
   
-    const history = useNavigate();
-  
+    // const history = useNavigate();
+    const navigate = useNavigate()
+    
     useEffect(() => {
       const interval = setInterval(() => {
         setIsActive((prevState) => !prevState);
@@ -19,38 +22,31 @@ function AarnaQuestionPaper() {
       return () => clearInterval(interval);
     }, []);
   
-    const handleButtonClick = (event) => {
-      event.preventDefault();
-      setIsActive(!isActive);
-      if (audioRef.current) {
-        audioRef.current.play();
-      }
-      setTimeout(() => {
-        history("/questionadding");
-      }, 500);
-    };
-  
+    // const handleButtonClick = (event) => {
+    //   event.preventDefault();
+    //   setIsActive(!isActive);
+    //   if (audioRef.current) {
+    //     audioRef.current.play();
+    //   }
+    //   setTimeout(() => {
+    //     history("/questionadding");
+    //   }, 500);
+    // };
+    const handleButtonClick= ()=>{
+      navigate('/questionadding')
+  }
+
+    const handleclick= ()=>{
+      navigate('/questionview')
+  }
+  // const qpaperListData = new Array(21).fill({
+  //   facultyName: "Anagha Rajagopal",
+  //   term:  "1",
+    
+  // });
     const qpaperListData = [
       { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
       { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha RaRajagopalj", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha RRajagopalaj", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha RRajagopalaj", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Maths" },
-
     ];
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
@@ -62,7 +58,7 @@ function AarnaQuestionPaper() {
       <Row>
         {qpaperListData.map((item, index) => (
           <Col lg={3} md={4} sm={6} xs={6} key={index} className="qpaper_list">
-            <div className="border border-white qpaper_rectangle">
+            <div onClick={handleclick} className="border border-white qpaper_rectangle">
               <div className="qpaper_faculty_name">{item.facultyName}</div>
               <div className="qpaper_term_date">
                 <div className="qpaper_term">
