@@ -113,9 +113,13 @@ function SeatAssigning() {
                     </div>
                 </Col>
                 <Col md={6}>
-                <div className='seat_group'>
+                  <div className='seat_group'>
                         <label htmlFor="students_bench">Students per Bench<span style={{color: 'red'}}>*</span></label>
                         <input type="text" id='students_bench' name='students_bench' />
+                    </div>
+                    <div className='seat_group'>
+                        <label htmlFor="exam_date">Exam Date<span style={{color: 'red'}}>*</span></label>
+                        <input type="text" id='exam_date' name='exam_date' />
                     </div>
                     <Row>
                         <Col md={6}>

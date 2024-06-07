@@ -9,9 +9,11 @@ import mp3File from "../../../../src/assets/fun.mp3";
 function AdminClassdashboard() {
   const [isActive, setIsActive] = useState(false);
 
-  const audioRef = useRef(null);
+  // const audioRef = useRef(null);
 
-  const history = useNavigate();
+  // const history = useNavigate();
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -21,16 +23,23 @@ function AdminClassdashboard() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleButtonClick = (event) => {
-    event.preventDefault();
-    setIsActive(!isActive);
-    if (audioRef.current) {
-      audioRef.current.play();
-    }
-    setTimeout(() => {
-      history("/classadding");
-    }, 500);
-  };
+  // const handleButtonClick = (event) => {
+  //   event.preventDefault();
+  //   setIsActive(!isActive);
+  //   if (audioRef.current) {
+  //     audioRef.current.play();
+  //   }
+  //   setTimeout(() => {
+  //     history("/classadding");
+  //   }, 500);
+  // };
+  const handleButtonClick= ()=>{
+    navigate('/classadding')
+}
+
+  const handleclick= ()=>{
+    navigate('/classview')
+}
 
   const classListData = [
     { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 A" },
@@ -67,7 +76,7 @@ function AdminClassdashboard() {
         <Row>
           {classListData.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
-              <div className="border border-white class_rectangle">
+              <div onClick={handleclick} className="border border-white class_rectangle">
                 <div className="class_list_medium">{item.medium}</div>
                 <div className="class_profile_name">
                   <div>
@@ -106,7 +115,7 @@ function AdminClassdashboard() {
         </Link>
       </div> */}
       <div className="class_adding_button">
-        <audio ref={audioRef} src={mp3File}></audio>
+        {/* <audio ref={audioRef} src={mp3File}></audio> */}
         <button
           className={`class_adding my-button ${isActive ? "active" : ""}`}
           onClick={handleButtonClick}
