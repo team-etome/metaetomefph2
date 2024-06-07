@@ -22,7 +22,7 @@ function EvaluationDashboard() {
     }, []);
   
     const handleButtonClick= ()=>{
-      navigate('/seatassigning')
+      navigate('/evaluationscheduling')
   }
 
     const handleclick= ()=>{
@@ -30,31 +30,31 @@ function EvaluationDashboard() {
   }
 
     const evaluationListData = [
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Maths" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
 
       ];
 

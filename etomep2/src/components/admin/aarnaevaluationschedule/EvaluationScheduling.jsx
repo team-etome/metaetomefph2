@@ -139,14 +139,9 @@ function EvaluationScheduling() {
                         {/* <input type="text" id='students_bench' name='students_bench' /> */}
                         <Select options={subjectOptions} styles={customStyles} value={subject} onChange={setSubject} placeholder=''/>
                     </div>
-                    <div className='evaluation_group' style={{}}>
-                        <label htmlFor="start_time" >Start Time<span style={{color: 'red'}}>*</span></label>
-                        <input type="text" id='start_time' name='start_time' />
-                        {/* <Select options={termOptions} styles={customStyles} value={term} onChange={setTerm} placeholder=''/> */}
-                    </div>
                     <div className='evaluation_group'>
-                        <label htmlFor="end_time" >End Time<span style={{color: 'red'}}>*</span></label>
-                        <input type="text" id='end_time' name='end_time'/>
+                        <label htmlFor="end_date" >End Date<span style={{color: 'red'}}>*</span></label>
+                        <input type="text" id='end_date' name='end_date'/>
                         {/* <Select options={termOptions} styles={customStyles} value={term} onChange={setTerm} placeholder=''/> */}
                     </div>
                 </Col>
