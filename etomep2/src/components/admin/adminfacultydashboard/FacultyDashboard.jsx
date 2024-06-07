@@ -17,7 +17,7 @@ function FacultyDashboard() {
 
   const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
-  const admin_id = admininfo ? admininfo.admininfo.admin_id : null;
+  const admin_id = admininfo ? admininfo?.admininfo.admin_id : null;
 
   const fileInputRef = useRef(null);
 
