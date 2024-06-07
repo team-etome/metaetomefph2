@@ -105,7 +105,7 @@ function FacultyDashboard() {
       </Container>
 
       <div className="faculty_adding_button">
-        <button className={`faculty_adding my-button ${isActive ? 'active' : ''}`} onClick={handleAddClick}>
+        <Button className={`faculty_adding my-button ${isActive ? 'active' : ''}`} onClick={handleAddClick}>
 
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
         </Button>
