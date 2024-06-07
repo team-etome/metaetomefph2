@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { IoIosAdd, IoMdDownload, IoMdAdd } from "react-icons/io";
 import { MdUpload } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import amritha from "../../../assets/amritha.png";
 import "../adminfacultydashboard/facultydashboard.css";
@@ -18,6 +18,9 @@ function FacultyDashboard() {
   const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
   const admin_id = admininfo ? admininfo.admininfo.admin_id : null;
+
+
+  const navigate = useNavigate()
 
   const fileInputRef = useRef(null);
 
@@ -71,6 +74,10 @@ function FacultyDashboard() {
     facultyName: "yyyyyyyy",
   });
 
+  const handleclick= ()=>{
+      navigate('/facultyview')
+  }
+
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
       <Container
@@ -81,23 +88,15 @@ function FacultyDashboard() {
         <Row>
           {facultyListData.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
-              <div className="border border-white faculty_rectangle">
-                <Link
-                  to="/facultyview"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
+              <div onClick={handleclick}  className="border border-black faculty_rectangle">
+               
                   <div className="faculty_list_medium">{item.employeeid}</div>
                   <div className="faculty_profile_name">
-                    <img
-                      src={amritha}
-                      alt="profile pic"
-                      className="faculty_profile_photo"
-                    />
+                  
                     <div className="faculty_list_facultyname">
                       {item.facultyName}
                     </div>
                   </div>
-                </Link>
               </div>
             </Col>
           ))}
