@@ -78,7 +78,7 @@ function StudentDashboard() {
       navigate('/teacherstudentview')
   }
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "104.5%", paddingTop:'100px',paddingBottom:'110px'}}>
+    <div style={{ display: "flex", justifyContent: "center", width: "104.5%"}}>
       <Container
         fluid
         className="teacher_studentdashboard_container"
