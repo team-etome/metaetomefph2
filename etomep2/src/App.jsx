@@ -46,6 +46,7 @@ import TeacherStudentAddPage from './pages/teacherpage/TeacherStudentAddPage';
 import TeacherStudentDashboardPage from './pages/teacherpage/TeacherStudentDashboardPage';
 import TeacherNavbarPage from './pages/teacherpage/TeacherNavbarPage';
 import TeacherStudentViewPage from './pages/teacherpage/TeacherStudentViewPage';
+import TeacherLoginPage from './pages/teacherpage/TeacherLoginPage';
 function App() {
   return (
     <div className="App">
@@ -100,6 +101,7 @@ function App() {
 
 
           {/* teacherside */}
+          <Route path="/teacherlogin" element={<TeacherLoginPage/>}/>
           <Route path="/teachernavbar" element={<TeacherNavbarPage/>}/>
           <Route path="/teacherstudentadd" element={<TeacherStudentAddPage/>}/>
           <Route path="/teacherstudentdashboard" element={<TeacherStudentDashboardPage/>}/>
