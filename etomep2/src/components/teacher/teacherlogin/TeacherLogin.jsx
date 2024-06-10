@@ -19,7 +19,7 @@ function TeacherLogin() {
     const APIURL = useSelector((state) => state.APIURL.url);
   
   
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
   
   
     const togglePasswordVisibility = () => {
@@ -41,9 +41,9 @@ function TeacherLogin() {
           email: email,
           password: password,
         };
-        const response = await axios.post(`${APIURL}/api/teacherlogin'`, data);
+        const response = await axios.post(`${APIURL}/api/teacherlogin`, data);
         console.log(response.data,"dataaaaaa")
-        dispatch(admininfo(response.data.admin_details)); 
+        // dispatch(admininfo(response.data.admin_details)); 
         navigate("/teacherstudentdashboard");
         Swal.fire({
           title: "Success!",

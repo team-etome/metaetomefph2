@@ -77,6 +77,8 @@ function FacultyDashboard() {
         }
       );
       alert("Upload successful");
+      fetchFacultyData()
+      
       console.log(response.data);
       setShowOptions(false);
       setFile(null); 
