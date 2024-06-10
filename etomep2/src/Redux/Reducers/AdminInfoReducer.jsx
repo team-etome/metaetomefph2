@@ -9,7 +9,6 @@ const initialstate  = {
 const AdminInfoReducer = (state = initialstate , action)=>{
     switch(action.type){
         case ADMIN_INFO:
-            console.log(action.payload,"payload")
             return {
                 ...state,
                 admininfo  : action.payload

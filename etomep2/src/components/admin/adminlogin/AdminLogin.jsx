@@ -15,11 +15,11 @@ import { admininfo } from "../../../Redux/Actions/AdminInfoAction";
 
 
 function AdminLogin() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-  const APIURL = useSelector((state) => state.APIURL.url);
+  const [email, setEmail]                 = useState("");
+  const [password, setPassword]           = useState("");
+  const [showPassword, setShowPassword]   = useState(false);
+  const navigate                          = useNavigate();
+  const APIURL                            = useSelector((state) => state.APIURL.url);
 
 
   const dispatch = useDispatch();
