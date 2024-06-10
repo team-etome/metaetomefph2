@@ -1,40 +1,113 @@
 import React, { useState, useRef } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { IoChevronBackSharp } from 'react-icons/io5';
 import Select from 'react-select';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { format } from 'date-fns';
+import axios from "axios";
+import { useSelector } from "react-redux";
+import Swal from 'sweetalert2'; 
 import '../addstudent/addstudent.css';
 
 function AddStudent() {
-    const [sname, setSName] = useState(null);
-    const [srollNo, setSRollNo] = useState(null);
-    const [sclass, setSClass] = useState(null);
-    const [sdivision, setSDivision] = useState(null);
-    const [semail, setSEmail] = useState(null);
-    const [sphone, setSPhone] = useState(null);
-    const [sdob, setSDOB] = useState(null);
-    const [sgender, setSGender] = useState(null);
-    const [sjoinDate, setSJoinDate] = useState(null);
-    const [scategory, setSCategory] = useState(null);
-    const [sadmissionNo, setSAdmissionNo] = useState(null);
-    const [sguardian, setSGuardian] = useState(null);
-    const [sfatherName, setSFatherName] = useState(null);
-    const [smotherName, setSMotherName] = useState(null);
-    const [saddress, setSAddress] = useState(null);
+    const [studentName, setStudentName] = useState(null);
+    const [studentRollno, setStudentRollno] = useState(null);
+    const [studentClass, setStudentClass] = useState(null);
+    const [studentDivision, setStudentDivision] = useState(null);
+    const [studentEmail, setStudentEmail] = useState(null);
+    const [studentPhone, setStudentPhone] = useState(null);
+    const [studentDob, setStudentDob] = useState(null);
+    const [studentGender, setStudentGender] = useState(null);
+    const [studentJoined, setStudentJoined] = useState(null);
+    const [studentCategory, setStudentCategory] = useState(null);
+    const [studentAdmission, setStudentAdmission] = useState(null);
+    const [studentGuardian, setstudentGuardian] = useState(null);
+    const [studentFather, setStudentFather] = useState(null);
+    const [studentMother, setStudentMother] = useState(null);
+    const [studentAddress, setStudentAddress] = useState(null);
 
+    // const admininfo = useSelector((state) => state.admininfo);
+    const APIURL = useSelector((state) => state.APIURL.url);
+    // const admin_id = admininfo ? admininfo.admininfo.admin_id : '1';
 
-
+    const navigate = useNavigate()
+    
     const [isDOBPickerOpen, setDOBPickerOpen] = useState(false);
     const [isJoinDatePickerOpen, setJoinDatePickerOpen] = useState(false);
 
     const dobRef = useRef(null);
     const joinDateRef = useRef(null);
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        const formData = {
+          first_name: studentName, // Using snake_case if your backend expects these keys
+          last_name: studentRollno,
+          email: studentClass,
+          phone_number: studentDivision, // Assuming the backend expects phone_number
+        //   gender: gender ? gender.value : null, 
+          employee_id: studentEmail, // Using snake_case if that's what your backend expects
+          password: studentPhone,
+          password: studentDob,
+          password: studentGender,
+          password: studentJoined,
+          password: studentCategory,
+          password: studentAdmission,
+          password: studentGuardian,
+          password: studentFather,
+          password: studentMother,
+          password: studentAddress,
 
+        //   admin_id: admin_id,
+        };
+    
+        try {
+          const response = await axios.post(`${APIURL}/api/addstudent`, formData);
+          console.log("Success:", response.data);
+
+          setStudentName("");
+          setStudentRollno("");
+          setStudentClass("");
+          setStudentDivision("");
+          setStudentEmail("");
+          setStudentPhone("");
+          setStudentDob("");
+          setStudentGender("");
+          setStudentJoined("");
+          setStudentCategory("");
+          setStudentAdmission("");
+          setstudentGuardian("");
+          setStudentFather("");
+          setStudentMother("");
+          setStudentAddress("");
+
+    
+          // Show success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Registration Successful',
+            text: 'Student has been added successfully!',
+          });
+    
+          navigate('/teachernavbar')
+    
+          
+    
+        } catch (error) {
+          console.error("Error submitting form:", error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: 'Please check the data and try again.'
+          });
+          // Handle errors
+        }
+      };
     const genderOptions = [
         { value: 'female', label: 'female' },
         { value: 'male', label: 'male' },
@@ -107,33 +180,33 @@ function AddStudent() {
                     <Col md={6}>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="student_name">Student Name<span style={{color: 'red'}}>*</span></label>
-                            <input type="text" id='student_name' name='student_name' />
+                            <input type="text" id='student_name' name='student_name' value={studentName} onChange={(e) => setStudentName(e.target.value)}/>
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="roll_no">Roll No.<span style={{color: 'red'}}>*</span></label>
-                            <input type="text" id='exam_roll_nodate' name='roll_no' />
+                            <input type="text" id='exam_roll_nodate' name='roll_no' value={studentRollno} onChange={(e) => setStudentRollno(e.target.value)}/>
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="student_class">Class<span style={{color: 'red'}}>*</span></label>
-                            <input type="text" id='student_class' name='student_class' />
+                            <input type="text" id='student_class' name='student_class'value={studentClass} onChange={(e) => setStudentClass(e.target.value)} />
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="division">Division</label>
-                            <input type="text" id='division' name='division' />
+                            <input type="text" id='division' name='division' value={studentDivision} onChange={(e) => setStudentDivision(e.target.value)}/>
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="email">Email Id<span style={{color: 'red'}}>*</span></label>
-                            <input type="text" id='email' name='email' />
+                            <input type="text" id='email' name='email'value={studentEmail} onChange={(e) => setStudentEmail(e.target.value)} />
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="phone">Phone No.<span style={{color: 'red'}}>*</span></label>
-                            <input type="text" id='suphonebject' name='phone' />
+                            <input type="text" id='suphonebject' name='phone' value={studentPhone} onChange={(e) => setStudentPhone(e.target.value)}/>
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="dob">DOB<span style={{ color: 'red' }}>*</span></label>
                             <div className="teacher_studentadd_date_input">
                                 <input type="text" id='dob' name='dob' ref={dobRef} 
-                                    value={sdob ? format(new Date(sdob), 'yyyy-MM-dd') : ''}
+                                    value={studentDob ? format(new Date(studentDob), 'yyyy-MM-dd') : ''}
                                     onClick={() => setDOBPickerOpen(!isDOBPickerOpen)}
                                     readOnly
                                 />
@@ -142,17 +215,17 @@ function AddStudent() {
                             {isDOBPickerOpen && (
                                 <DayPicker
                                     onDayClick={(date) => {
-                                    setSDOB(date);
+                                    setStudentDob(date);
                                     setDOBPickerOpen(false);
                                     }}
-                                    selected={sdob}
+                                    selected={studentDob}
                                     className='teacher_studentadd_calendar'
                                 />
                             )}
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="gender">Gender<span style={{color: 'red'}}>*</span></label>
-                            <Select options={genderOptions} styles={customStyles} value={sgender} onChange={setSGender} placeholder=''/>
+                            <Select options={genderOptions} styles={customStyles} value={studentGender} onChange={setStudentGender} placeholder=''getOptionLabel={(option) => option.label} getOptionValue={(option) => option.value}/>
                         </div>
                     </Col>
                     <Col md={6}>
@@ -160,7 +233,7 @@ function AddStudent() {
                             <label htmlFor="join_date">Joining Date<span style={{color: 'red'}}>*</span></label>
                             <div className="teacher_studentadd_date_input">
                                 <input type="text" id='join_date' name='join_date' ref={joinDateRef} 
-                                    value={sjoinDate ? format(new Date(sjoinDate), 'yyyy-MM-dd') : ''}
+                                    value={studentJoined ? format(new Date(studentJoined), 'yyyy-MM-dd') : ''}
                                     onClick={() => setJoinDatePickerOpen(!isJoinDatePickerOpen)}
                                     readOnly
                                 />
@@ -169,44 +242,44 @@ function AddStudent() {
                             {isJoinDatePickerOpen && (
                                 <DayPicker
                                     onDayClick={(date) => {
-                                    setSJoinDate(date);
+                                    setStudentJoined(date);
                                     setJoinDatePickerOpen(false);
                                     }}
-                                    selected={sjoinDate}
+                                    selected={studentJoined}
                                     className='teacher_studentadd_calendar'
                                 />
                             )}
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="category" >Category<span style={{color: 'red'}}>*</span></label>
-                            <input type="text" id='category' name='category' />
+                            <input type="text" id='category' name='category' value={studentName} onChange={(e) => setStudentName(e.target.value)}/>
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="term">Admission Number<span style={{color: 'red'}}>*</span></label>
-                            <input type="text" id='s_time' name='s_time' />
+                            <input type="text" id='s_time' name='s_time' value={studentAdmission} onChange={(e) => setStudentAdmission(e.target.value)}/>
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="guardian_name">Gaurdian Name<span style={{color: 'red'}}>*</span></label>
-                            <input type="text" id='guardian_name' name='guardian_name' />
+                            <input type="text" id='guardian_name' name='guardian_name' value={studentGuardian} onChange={(e) => setstudentGuardian(e.target.value)}/>
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="father_name">Father's Name<span style={{color: 'red'}}>*</span></label>
-                            <input type="text" id='father_name' name='father_name' />
+                            <input type="text" id='father_name' name='father_name'value={studentFather} onChange={(e) => setStudentFather(e.target.value)} />
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="mother_name">Mother's Name<span style={{color: 'red'}}>*</span></label>
-                            <input type="text" id='mother_name' name='mother_name' />
+                            <input type="text" id='mother_name' name='mother_name' value={studentMother} onChange={(e) => setStudentMother(e.target.value)}/>
                         </div>
                         <div className='teacher_studentadd_group'>
                             <label htmlFor="address">Address<span style={{color: 'red'}}>*</span></label>
-                            <input type="text" id='address' name='address' />
+                            <input type="text" id='address' name='address'value={studentAddress} onChange={(e) => setStudentAddress(e.target.value)} />
                         </div>
                         {/* <div className='teacher_studentadd_group'>
                             <label htmlFor="upload_image">Upload Image<span style={{color: 'red'}}>*</span></label>
                             <input type="text" id='upload_image' name='assigupload_imagen_faculty' />
                         </div> */}
                         <div className='teacher_studentadd_submit'>
-                        <button type="submit">Submit</button>
+                        <button onClick={handleSubmit} type="submit">Submit</button>
                         </div>
                     </Col>
 

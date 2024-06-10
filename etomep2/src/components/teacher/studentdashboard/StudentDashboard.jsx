@@ -123,7 +123,7 @@ function StudentDashboard() {
                 }}
                 className="student_fab_option_link"
               >
-                <div className="student_fab_text">Add Faculty</div>
+                <div className="student_fab_text">Add Student</div>
                 <Button className="student_fab_option">
                   <IoMdAdd className="student_fab_icon" />
                 </Button>

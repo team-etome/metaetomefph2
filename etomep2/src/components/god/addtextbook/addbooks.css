@@ -126,7 +126,7 @@
     transition: all 0.3s;
     pointer-events: none;
   }
-.itextbook_input_container_select Select:focus + label,
+.textbook_input_container_select Select:focus + label,
 .textbook_input_container_select Select:not(:placeholder-shown) + label {
   top: -10px;
   left: 4px;
