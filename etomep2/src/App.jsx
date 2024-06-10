@@ -49,6 +49,9 @@ import TeacherStudentViewPage from './pages/teacherpage/TeacherStudentViewPage';
 import TeacherLoginPage from './pages/teacherpage/TeacherLoginPage';
 import AdminLokaTextbookPage from './pages/adminpage/AdminLokaTextbookPage';
 import TeacherTextEditorPage from './pages/teacherpage/TeacherTextEditorPage';
+import LokaNavbarPage from './pages/adminpage/LokaNavbarPage';
+
+
 function App() {
   return (
     <div className="App">
@@ -99,6 +102,7 @@ function App() {
           <Route path="/questionview" element={<AarnaQuestionViewPage/>}/>
           <Route path="/seatview" element={<AarnaSeatViewPage/>}/>
           <Route path="/evaluationview" element={<AarnaEvaluationViewPage/>}/>
+          <Route path="/adminlokanavbar" element={<LokaNavbarPage/>}/>
           <Route path="/adminlokatextbook" element={<AdminLokaTextbookPage/>}/>
 
 
