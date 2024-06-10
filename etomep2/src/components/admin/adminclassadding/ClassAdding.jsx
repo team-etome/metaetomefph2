@@ -2,38 +2,39 @@ import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "../adminclassadding/classadding.css";
 import { IoChevronBackSharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch } from "react-redux";
+import { adminclassinfo } from "../../../Redux/Actions/AdminclassAddingInfo";
 
 function ClassAdding() {
-  const [medium, setMedium] = useState(null);
-  const [teacher, setTeacher] = useState(null);
-  const [className, setClassName] = useState(12);
-  const [stream, setStream] = useState(false);
-  const [division, setDivision] = useState(false);
+  const [medium, setMedium] = useState("");
+  const [teacher, setTeacher] = useState("");
+  const [className, setClassName] = useState("");
+  const [stream, setStream] = useState("");
+  const [division, setDivision] = useState("");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  console.log(medium);
+
+
 
   const admininfo = useSelector((state) => state.admininfo);
-  console.log(admininfo, "admin info");
 
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
 
-
   const m = admininfo ? admininfo.admininfo.medium : null;
-
-  const isStreamReadOnly = parseInt(className, 10) < 11;
-
 
   const mediumOption = m ? [{ value: m, label: m }] : [];
 
   const handleClassNameChange = (e) => {
     const value = parseInt(e.target.value, 10);
     if (value > 0 && value <= 12) {
-      // Checks for positive values and maximum limit of 12
       setClassName(value);
     } else if (value <= 0) {
-    
-      setClassName(""); // Resets the input if the value is 0 or negative
+      setClassName("");
     }
   };
 
@@ -41,6 +42,25 @@ function ClassAdding() {
     value: `${teacher.first_name} ${teacher.last_name}`, // Assuming you want to use names as value; could be `teacher.id` or similar if needed
     label: `${teacher.first_name} ${teacher.last_name}`, // Display format in the dropdown
   }));
+
+  const handleSubmit = (e) => {
+
+    console.log('enterrrrrr')
+    e.preventDefault();
+
+    const classData = {
+      medium,
+      teacher,
+      className,
+      stream,
+      division
+    };
+
+    dispatch(adminclassinfo(classData)); 
+    navigate('/curriculumadding')
+   
+         
+  };
 
   const customStyles = {
     control: (base, state) => ({
@@ -84,7 +104,7 @@ function ClassAdding() {
     }),
   };
   return (
-    <div className="page_container" style={{}}>
+    <div className="page_container">
       <Container className="class_add">
         <form
           className="class_form"
@@ -123,29 +143,33 @@ function ClassAdding() {
                   type="number"
                   id="class_number"
                   name="class_number"
-                  placeholder=""
+                  placeholder="Enter class number"
+                  value={className}
                   onChange={handleClassNameChange}
                 />
                 <label htmlFor="class_number">
                   Class Name<span style={{ color: "red" }}>*</span>
                 </label>
               </div>
+
               <div className="form_group">
                 <input
                   type="text"
                   id="class_category"
                   name="class_category"
-                  placeholder=" "
-                  readOnly={isStreamReadOnly}
+                  placeholder="Enter stream"
+                  value={stream}
+                  onChange={(e) => setStream(e.target.value)}
+                  readOnly={parseInt(className, 10) < 11}
                 />
                 <label htmlFor="class_category">Stream</label>
               </div>
+
               <div className="class_select">
-                {/* <input type="text" id="class_teacher" name='class_teacher' placeholder=" "/> */}
                 <Select
                   options={teacherOptions}
                   styles={customStyles}
-                  placeholder=""
+                  placeholder="Select teacher"
                   value={teacher}
                   onChange={setTeacher}
                 />
@@ -154,20 +178,23 @@ function ClassAdding() {
                 </label>
               </div>
             </Col>
+
             <Col md={6}>
               <div className="form_group">
                 <input
                   type="text"
                   id="class_division"
                   name="class_division"
-                  placeholder=" "
+                  placeholder="Enter division"
+                  value={division}
+                  onChange={(e) => setDivision(e.target.value)}
                 />
                 <label htmlFor="class_division">
                   Division<span style={{ color: "red" }}>*</span>
                 </label>
               </div>
+
               <div className="class_select">
-                {/* <input type="text" id="class_medium" name='class_medium' placeholder=" "/> */}
                 <Select
                   options={mediumOption}
                   styles={customStyles}
@@ -177,15 +204,21 @@ function ClassAdding() {
                 />
                 <label htmlFor="class_medium">Medium</label>
               </div>
+
               <div
                 className=" class_next_button"
                 style={{ textAlign: "right", marginRight: "80px" }}
               >
-                <Link to="/curriculumadding">
-                  <button type="submit" value="submit" className="class_next">
+              
+                  <button
+                    onClick={handleSubmit}
+                    type="submit"
+                    value="submit"
+                    className="class_next"
+                  >
                     Next
                   </button>
-                </Link>
+               
               </div>
             </Col>
           </Row>
@@ -196,3 +229,5 @@ function ClassAdding() {
 }
 
 export default ClassAdding;
+
+

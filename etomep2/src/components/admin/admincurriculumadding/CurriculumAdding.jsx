@@ -24,29 +24,39 @@ function CurriculumAdding() {
 
   const [curriculumEntries, setCurriculumEntries] = useState([]);
 
+  console.log(curriculumEntries ,'helooooo')
 
-  console.log(curriculumEntries,'ggggggggggggggg')
 
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
+  const classinfo   = useSelector((state) => state.adminclassinfo);
+  const admininfo = useSelector((state) => state.admininfo);
+
+  const admin_id = admininfo ? admininfo.admininfo.admin_id : null;
+  const class_name      = classinfo?.adminclassinfo.className
+  const division        = classinfo?.adminclassinfo.division
+  const stream          = classinfo?.adminclassinfo.stream
+  const class_teacher   = classinfo?.adminclassinfo.teacher.value
+  const medium          = classinfo?.adminclassinfo.medium.value
+
+  console.log(classinfo,"classinfo")
+  
+
+
+
+
+
   const APIURL = useSelector((state) => state.APIURL.url);
 
 
   console.log(selectedPublisher , selectedSubject ,"ssssssss")
 
-  // const [data, setData] = useState({
-  //   publishers: [],
-  //   subjects: [],
-  // });
-
-  // const [selected, setSelected] = useState({
-  //   publisher: null,
-  //   subject: null,
-  // });
 
   const facultyOptions = teacherinfo.adminteacherinfo.map((teacher) => ({
     value: `${teacher.first_name} ${teacher.last_name}`,
     label: `${teacher.first_name} ${teacher.last_name}`,
   }));
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,12 +66,12 @@ function CurriculumAdding() {
           console.log(response.data, "dataaaaaa");
 
           const publishers = response.data.publisher_names.map((publisher) => ({
-            value: publisher.publisher, // Assuming 'publisher' is the key in each object
+            value: publisher.publisher, 
             label: publisher.publisher,
           }));
 
           const subjects = response.data.subject_names.map((subject) => ({
-            value: subject.subject_name, // Assuming 'subject_name' is the key in each object
+            value: subject.subject_name, 
             label: subject.subject_name,
           }));
 
@@ -75,6 +85,39 @@ function CurriculumAdding() {
 
     fetchData();
   }, []);
+
+
+  const handleSubmit = (e) => {
+
+    console.log("enteredddddd")
+
+    e.preventDefault();
+
+    const payload = {
+      // publisher: selectedPublisher ? selectedPublisher.value : '',
+      // subject: selectedSubject ? selectedSubject.value : '',
+      // faculty: faculty ? faculty.value : '',
+     
+      class_name      : class_name,
+      division        : division,
+      stream          : stream,
+      class_teacher   : class_teacher,
+      admin           : admin_id,
+      medium          : medium,
+      entries         : curriculumEntries,
+
+
+    };
+
+    axios.post(`${APIURL}/api/addClassname`, payload)
+      .then(response => {
+        console.log("Data submitted successfully:", response.data);
+        // Handle further actions after successful submission like redirecting
+      })
+      .catch(error => {
+        console.error("Failed to submit data:", error);
+      });
+  };
 
 
   const handleAddNew = () => {
@@ -94,7 +137,7 @@ function CurriculumAdding() {
         ]);
         // Clear the current selections after adding
         setSelectedPublisher(null);
-        setSelectedSubject(null);
+        setSelectedSubject(null); 
         setFaculty(null);
     }
 };
@@ -278,6 +321,7 @@ function CurriculumAdding() {
                 type="submit"
                 value="submit"
                 className="curriculum_submit"
+                onClick={handleSubmit}
               >
                 Submit
               </button>
