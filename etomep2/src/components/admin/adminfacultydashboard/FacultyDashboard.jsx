@@ -7,7 +7,9 @@ import axios from "axios";
 import amritha from "../../../assets/amritha.png";
 import "../adminfacultydashboard/facultydashboard.css";
 import generateExcelFile from "../../utils/generateExcelFile";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { adminteacherinfo } from "../../../Redux/Actions/AdminTeacherInfoAction";
+
 
 function FacultyDashboard() {
   const [isActive, setIsActive] = useState(false);
@@ -23,14 +25,18 @@ function FacultyDashboard() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
-  console.log(facultyListData, "facultyyy");
+
+  const dispatch = useDispatch()
+
+
 
   useEffect(() => {
     const fetchFacultyData = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`${APIURL}/api/teacherdetails`);
+        const response = await axios.get(`${APIURL}/api/teacherdetails/${admin_id}`);
         setFacultyListData(response.data);
+        dispatch(adminteacherinfo(response.data))
       } catch (error) {
         console.error("Failed to fetch faculty data:", error);
       } finally {
@@ -73,7 +79,7 @@ function FacultyDashboard() {
       alert("Upload successful");
       console.log(response.data);
       setShowOptions(false);
-      setFile(null); // Clear file after upload
+      setFile(null); 
     } catch (error) {
       console.error("Error uploading file:", error);
       alert("Error during file upload.");
@@ -86,8 +92,10 @@ function FacultyDashboard() {
     setShowOptions(!showOptions);
   };
 
-  const handleclick = () => {
-    navigate("/facultyview");
+
+  
+  const handleclick = (facultyData) => {
+    navigate("/facultyview", { state: { faculty: facultyData } });
   };
 
   return (
@@ -101,7 +109,7 @@ function FacultyDashboard() {
           {facultyListData.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
               <div
-                onClick={() => handleclick(item.employeeid)}
+                onClick={() => handleclick(item)}
                 className="border border-white faculty_rectangle"
               >
                 <div className="faculty_list_medium">{item.employee_id}</div>

@@ -1,96 +1,146 @@
-import React,{useState} from 'react';
+import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import '../adminclassadding/classadding.css';
+import "../adminclassadding/classadding.css";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import Select from "react-select";
+import { useSelector } from "react-redux";
 
 function ClassAdding() {
   const [medium, setMedium] = useState(null);
   const [teacher, setTeacher] = useState(null);
-  const [className, setClassName] = useState(false);
+  const [className, setClassName] = useState(12);
   const [stream, setStream] = useState(false);
   const [division, setDivision] = useState(false);
 
+  const admininfo = useSelector((state) => state.admininfo);
+  console.log(admininfo, "admin info");
 
-  const mediumOptions = [
-    { value: 'medium 1', label: 'medium 1' },
-    { value: 'medium 2', label: 'medium 2' },
-    { value: 'medium 3', label: 'medium 3' },
-  ];
+  const teacherinfo = useSelector((state) => state.adminteacherinfo);
 
-  const teacherOptions = [
-    { value: 'teacher 1', label: 'teacher 1' },
-    { value: 'teacher 2', label: 'teacher 2' },
-    { value: 'teacher 3', label: 'teacher 3' },
-  ];
+
+  const m = admininfo ? admininfo.admininfo.medium : null;
+
+  const isStreamReadOnly = parseInt(className, 10) < 11;
+
+
+  const mediumOption = m ? [{ value: m, label: m }] : [];
+
+  const handleClassNameChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    if (value > 0 && value <= 12) {
+      // Checks for positive values and maximum limit of 12
+      setClassName(value);
+    } else if (value <= 0) {
+    
+      setClassName(""); // Resets the input if the value is 0 or negative
+    }
+  };
+
+  const teacherOptions = teacherinfo.adminteacherinfo.map((teacher) => ({
+    value: `${teacher.first_name} ${teacher.last_name}`, // Assuming you want to use names as value; could be `teacher.id` or similar if needed
+    label: `${teacher.first_name} ${teacher.last_name}`, // Display format in the dropdown
+  }));
+
   const customStyles = {
     control: (base, state) => ({
       ...base,
-      width: '90%',
-      minHeight: '50px',
-      border: '1px solid #526D82',
-      borderRadius: '8px',
-      boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 'none', 
+      width: "90%",
+      minHeight: "50px",
+      border: "1px solid #526D82",
+      borderRadius: "8px",
+      boxShadow: state.isFocused ? "0 0 0 1px #526D82" : "none",
       "&:hover": {
-        borderColor: 'none' // Darker border on hover
+        borderColor: "none",
       },
       "&:focus": {
-        borderColor: '#526D82', // Ensures the border color when the element is focused
-        outline: 'none' // Removes the default outline when focused
-      }
+        borderColor: "#526D82", // Ensures the border color when the element is focused
+        outline: "none", // Removes the default outline when focused
+      },
     }),
     placeholder: (base) => ({
       ...base,
-      color: '#526D82', 
+      color: "#526D82",
     }),
     singleValue: (base) => ({
       ...base,
-      color: '#000',
+      color: "#000",
     }),
     option: (base) => ({
       ...base,
-      color: '#000',
+      color: "#000",
     }),
     valueContainer: (base) => ({
       ...base,
-      padding: '0 10px',
+      padding: "0 10px",
     }),
     dropdownIndicator: (base) => ({
       ...base,
-      color: '#526D82',
+      color: "#526D82",
     }),
     indicatorsContainer: (base) => ({
       ...base,
-      alignItems: 'center',
-    })
+      alignItems: "center",
+    }),
   };
   return (
     <div className="page_container" style={{}}>
-      <Container className='class_add'>
-        <form className='class_form' style={{backgroundColor:'#ffff', borderRadius:'16px'}}>
+      <Container className="class_add">
+        <form
+          className="class_form"
+          style={{ backgroundColor: "#ffff", borderRadius: "16px" }}
+        >
           <Row>
             <Col>
               <div className="header-container">
-                <Link to='/institutionadding'>
-                <IoChevronBackSharp style={{color:'#526D82', height: "32px", width: "32px", marginLeft:'20px' }} />
+                <Link to="/institutionadding">
+                  <IoChevronBackSharp
+                    style={{
+                      color: "#526D82",
+                      height: "32px",
+                      width: "32px",
+                      marginLeft: "20px",
+                    }}
+                  />
                 </Link>
-                <h1 style={{color:'#526D82', fontSize:'25px', marginLeft:'10px'}}>Class Adding</h1>
+                <h1
+                  style={{
+                    color: "#526D82",
+                    fontSize: "25px",
+                    marginLeft: "10px",
+                  }}
+                >
+                  Class Adding
+                </h1>
               </div>
-              <div style={{border:'0.5px solid #526D82'}}></div>
+              <div style={{ border: "0.5px solid #526D82" }}></div>
             </Col>
           </Row>
           <Row>
             <Col md={6}>
-              <div className='form_group'>
-                <input type="text" id="class_number" name='class_number' placeholder=" "/>
-                <label htmlFor="class_number">Class Name<span style={{color: 'red'}}>*</span></label>
+              <div className="form_group">
+                <input
+                  type="number"
+                  id="class_number"
+                  name="class_number"
+                  placeholder=""
+                  onChange={handleClassNameChange}
+                />
+                <label htmlFor="class_number">
+                  Class Name<span style={{ color: "red" }}>*</span>
+                </label>
               </div>
-              <div className='form_group'>
-                <input type="text" id="class_category" name='class_category' placeholder=" "/>
+              <div className="form_group">
+                <input
+                  type="text"
+                  id="class_category"
+                  name="class_category"
+                  placeholder=" "
+                  readOnly={isStreamReadOnly}
+                />
                 <label htmlFor="class_category">Stream</label>
               </div>
-              <div className='class_select'>
+              <div className="class_select">
                 {/* <input type="text" id="class_teacher" name='class_teacher' placeholder=" "/> */}
                 <Select
                   options={teacherOptions}
@@ -99,30 +149,42 @@ function ClassAdding() {
                   value={teacher}
                   onChange={setTeacher}
                 />
-                <label htmlFor="class_teacher">Class Teacher<span style={{color: 'red'}}>*</span></label>
+                <label htmlFor="class_teacher">
+                  Class Teacher<span style={{ color: "red" }}>*</span>
+                </label>
               </div>
             </Col>
-            <Col md={6} >
-              <div className='form_group'>
-                <input type="text" id="class_division" name='class_division' placeholder=" "/>
-                <label htmlFor="class_division">Division<span style={{color: 'red'}}>*</span></label>
+            <Col md={6}>
+              <div className="form_group">
+                <input
+                  type="text"
+                  id="class_division"
+                  name="class_division"
+                  placeholder=" "
+                />
+                <label htmlFor="class_division">
+                  Division<span style={{ color: "red" }}>*</span>
+                </label>
               </div>
-              <div className='class_select'>
+              <div className="class_select">
                 {/* <input type="text" id="class_medium" name='class_medium' placeholder=" "/> */}
                 <Select
-                  options={mediumOptions}
+                  options={mediumOption}
                   styles={customStyles}
-                  placeholder=""
+                  placeholder="Select medium"
                   value={medium}
                   onChange={setMedium}
                 />
                 <label htmlFor="class_medium">Medium</label>
               </div>
-              <div className=' class_next_button' style={{textAlign:'right', marginRight: "80px"}}>
-                <Link to = '/curriculumadding'>
-                <button type="submit" value="submit" className='class_next'>
-                  Next
-                </button>
+              <div
+                className=" class_next_button"
+                style={{ textAlign: "right", marginRight: "80px" }}
+              >
+                <Link to="/curriculumadding">
+                  <button type="submit" value="submit" className="class_next">
+                    Next
+                  </button>
                 </Link>
               </div>
             </Col>
