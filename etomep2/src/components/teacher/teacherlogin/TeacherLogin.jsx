@@ -44,7 +44,7 @@ function TeacherLogin() {
         const response = await axios.post(`${APIURL}/api/teacherlogin`, data);
         console.log(response.data,"dataaaaaa")
         // dispatch(admininfo(response.data.admin_details)); 
-        navigate("/teacherstudentdashboard");
+        navigate("/teachernavbar");
         Swal.fire({
           title: "Success!",
           text: "Login Successfully",

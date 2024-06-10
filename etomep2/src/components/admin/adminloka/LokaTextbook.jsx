@@ -25,6 +25,8 @@ function LokaTextbook() {
     const [imageFile, setImageFile] = useState(null);
     const [pdfFile, setPdfFile] = useState(null);
     const [data, setData] = useState("");
+    
+    const [showChapterDiv, setShowChapterDiv] = useState(false);
 
     console.log(selectedSubject, "subjectttttt");
 
@@ -170,7 +172,8 @@ function LokaTextbook() {
         label: publisher,
       }));
     
-      const handleTabChange = (tab) => {
+      const handleTabChange= (e, tab) => {
+        e.preventDefault(); 
         setSelectedTab(tab);
       };
       const handleClassValueChange = (e) => {
@@ -246,18 +249,51 @@ function LokaTextbook() {
         ));
       };
     
-      const handleTotalChaptersChange = (e) => {
-        const totalChapters = parseInt(e.target.value);
-        setTotalChaptersInput(totalChapters);
-        const updatedChapters = Array.from(
-          { length: totalChapters },
-          (_, index) => ({
-            name: "",
-            pageNo: "",
-          })
-        );
-        setChapters(updatedChapters);
-      };
+    //   const handleTotalChaptersChange = (e) => {
+    //     const totalChapters = parseInt(e.target.value);
+    //     setTotalChaptersInput(totalChapters);
+    //     const updatedChapters = Array.from(
+    //       { length: totalChapters },
+    //       (_, index) => ({
+    //         name: "",
+    //         pageNo: "",
+    //       })
+    //     );
+    //     setChapters(updatedChapters);
+    //   };
+    const handleTotalChaptersChange = (e) => {
+        const totalChapters = parseInt(e.target.value, 10);
+        // Set whether to show chapter inputs based on the number of chapters entered
+        setShowChapterDiv(totalChapters > 5);
+    
+        if (!isNaN(totalChapters)) {
+            if (totalChapters > 50) { // Assuming 50 is the maximum allowed chapters
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Limit Exceeded',
+                    text: `You can only enter up to 50 chapters.`,
+                });
+                setTotalChaptersInput(50);
+                const updatedChapters = Array.from(
+                    { length: 50 },
+                    (_, index) => ({ name: "", pageNo: "" })
+                );
+                setChapters(updatedChapters);
+            } else {
+                setTotalChaptersInput(totalChapters);
+                const updatedChapters = Array.from(
+                    { length: totalChapters },
+                    (_, index) => ({ name: "", pageNo: "" })
+                );
+                setChapters(updatedChapters);
+            }
+        } else {
+            setTotalChaptersInput("");
+            setChapters([]);
+        }
+    };
+    
+      
     
       const handleImageUpload = (e) => {
         const file = e.target.files[0];
@@ -538,11 +574,12 @@ function LokaTextbook() {
             <h1 className="loka_title">Add Textbooks</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>
+          <div className="loka_form_scroll">
 
           <Row style={{ paddingTop: "20px" }}>
             <Col md={6}>
-            <div className="faculty_group">
-                    <label htmlFor="class" style={{ fontWeight: "600" }}>
+            <div className="loka_textbook_group">
+                    <label htmlFor="class">
                       Class
                     </label>
                     <input
@@ -555,8 +592,8 @@ function LokaTextbook() {
                       onChange={handleClassValueChange}
                     />
                   </div>
-                  <div className="faculty_group">
-                    <label htmlFor="textbookName" style={{ fontWeight: "600" }}>
+                  <div className="loka_textbook_group">
+                    <label htmlFor="textbookName">
                       Textbook Name
                     </label>
                     <input
@@ -570,9 +607,9 @@ function LokaTextbook() {
                     />
                   </div>
                   <div
-                    className="faculty_group"
+                    className="loka_textbook_group"
                   >
-                    <label htmlFor="mediumbook" style={{ fontWeight: "600" }}>
+                    <label htmlFor="mediumbook">
                       Medium
                     </label>
                     <Select
@@ -591,8 +628,8 @@ function LokaTextbook() {
             </Col>
 
             <Col md={6}>
-            <div className="faculty_group">
-                    <label htmlFor="volume" style={{ fontWeight: "600" }}>
+            <div className="loka_textbook_group">
+                    <label htmlFor="volume">
                       Volume
                     </label>
                     <input
@@ -607,11 +644,10 @@ function LokaTextbook() {
                     />
                   </div>
                   <div
-                    className="faculty_group"
+                    className="loka_textbook_group"
                   >
                     <label
                       htmlFor="subject"
-                      style={{ fontWeight: "600" }}
                     >
                       Subject
                     </label>
@@ -625,11 +661,10 @@ function LokaTextbook() {
                     />
                   </div>
                   <div
-                    className="faculty_group"
+                    className="loka_textbook_group"
                   >
                     <label
                       htmlFor="publisherName"
-                      style={{ fontWeight: "600" }}
                     >
                       Publisher Name
                     </label>
@@ -648,25 +683,24 @@ function LokaTextbook() {
                   </div>
             </Col>
           </Row>
-          <Row>
+          <Row style={{paddingLeft:'40px'}}>
             <Col md={6}>
             <div>
                     <label
                       htmlFor="indexAdding"
                       style={{
-                        marginLeft: "20px",
+                        // marginLeft: "0px",
                         fontSize: "25px",
-                        marginBottom: "20px",
-                        marginTop: "20px",
+                        // marginBottom: "20px",
+                        // marginTop: "20px",
                       }}
                     >
                       Index Adding
                     </label>
                   </div>
-                  <div className="faculty_group">
+                  <div className="loka_textbook_group" style={{marginLeft:'0px', width:'90%'}}>
                     <label
                       htmlFor="totalChapters"
-                      style={{ fontWeight: "600" }}
                     >
                       Total no of Chapters
                     </label>
@@ -676,20 +710,15 @@ function LokaTextbook() {
                       name="totalChapters"
                       value={totalChaptersInput}
                       onChange={handleTotalChaptersChange}
+                      max='50'
                     />
                   </div>
-                  <div
-                    style={{
-                      // border: "1px solid black",
-                      width: "390px",
-                      marginLeft: "30px",
-                    }}
-                  >
-                    {renderChapterInputs()}
-                  </div>
-            </Col>
-            <Col md={6}>
-            <div style={{}}>
+                  <div className={`chapter_div ${totalChaptersInput <= 5 ? 'hidden_border' : ''}`}>
+            {renderChapterInputs()}
+        </div>
+                </Col>
+                <Col md={6} style={{paddingLeft:'2rem'}}>
+                <div style={{}}>
                       <label
                         htmlFor="mediaLibrary"
                         style={{
@@ -712,7 +741,7 @@ function LokaTextbook() {
                                   ? { border: "4px solid black" }
                                   : {}),
                               }}
-                              onClick={() => handleTabChange("pdf")}
+                              onClick={(e) => handleTabChange(e,"pdf")}
                               className={selectedTab === "pdf" ? "active" : ""}
                             >
                               Textbook Pdf
@@ -725,7 +754,7 @@ function LokaTextbook() {
                                   ? { border: "4px solid black" }
                                   : {}),
                               }}
-                              onClick={() => handleTabChange("frontPage")}
+                              onClick={(e) => handleTabChange(e,"frontPage")}
                               className={
                                 selectedTab === "frontPage" ? "active" : ""
                               }
@@ -789,7 +818,7 @@ function LokaTextbook() {
                       )}
 
                       {selectedTab === "frontPage" && (
-                        <div style={{ marginLeft: "10px" }}>
+                        <div>
                           <label htmlFor="photo" style={{}}></label>
                           <div className="textbook_image_upload_container">
                             <div className="textbook_upload_placeholder">
@@ -845,8 +874,8 @@ function LokaTextbook() {
                       )}
                     </div>
                     <div
-                      className="textbook_button_container"
-                      style={{ marginBottom: "50px", marginTop: "30px" }}
+                      className="submit_loka"
+                    //   style={{ marginBottom: "50px", marginTop: "30px" }}
                     >
                       <button
                         onClick={handleSubmit}
@@ -868,6 +897,8 @@ function LokaTextbook() {
                     </div>
             </Col>
           </Row>
+        </div>
+
         </form>
       </Container>
     </div>

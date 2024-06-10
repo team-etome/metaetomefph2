@@ -14,27 +14,6 @@
         border: none;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
-        max-height: calc(100vh - 120px);
-        overflow-y: scroll; /* Ensure vertical scroll bar appears */
-        overflow-x: hidden; /* Hide horizontal scroll bar */
-        box-sizing: border-box;
-    }
-
-    .loka_form::-webkit-scrollbar {
-        width: 10px;
-    }
-
-    .loka_form::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-
-    .loka_form::-webkit-scrollbar-thumb {
-        background: #E3DFDF;
-        border-radius: 10px;
-    }
-
-    .loka_form::-webkit-scrollbar-thumb:hover {
-        background: #E3DFDF;
     }
     .loka_back {
         color: #526D82;
@@ -51,7 +30,7 @@
         margin-left: 10px;
     }
     
-    .faculty_group {
+    .loka_textbook_group {
         /* margin-bottom: 15px;
         width: 90%; */
         margin-left: 50px;
@@ -62,7 +41,7 @@
         margin-top: 0px;
         /* padding-left: 20px; */
     }
-    .faculty_group input{
+    .loka_textbook_group input{
         width: 100%;
         border: 1px solid #526D82;
         border-radius: 8px;
@@ -71,7 +50,7 @@
         outline: none;
         padding: 1px 10px 12px 10px;
     }
-    .faculty_group label{
+    .loka_textbook_group label{
         position: absolute;
         top: 15%;
         left: 5%;
@@ -82,56 +61,26 @@
         pointer-events: none;
         padding: 0 4px;
         z-index: 1;
+        font-weight: 600;
     }
-    .faculty_group input:focus + label,
-    .faculty_group input:not(:placeholder-shown) + label {
+    .loka_textbook_group input:focus + label,
+    .loka_textbook_group input:not(:placeholder-shown) + label {
       top: 3px;
       left: 15px;
       font-size: 17px;
       color: #526D82;
     }
-    .faculty_group_select{
-        margin-left: 50px;
-        margin-right: 30px;
-        margin-bottom: 30px;
-        position: relative;
-        padding-top: 15px;
-        margin-top: 30px;
-        padding-left: 20px;
-    }
-    .faculty_group_select label {
-        position: absolute;
-        top: 5%;
-        left: 8%;
-        background: #fff;
-        color: #526D82;
-        font-size: 16px;
-        transition: all 0.3s;
-        pointer-events: none;
-        padding: 0 4px;
-        z-index: 1;
-    }
-    .faculty_group_select Select {
-        width: 100%;
-        /* padding: 8px 8px 8px 4px; */
-        border: none;
-        border-radius: 8px;
-        box-sizing: border-box;
-        outline: none;
-        background: #fff; 
-        border-color: white; 
-        /* padding: 1px 10px 12px 10px; */
-        /* transition: border-color 0.3s; */
-        /* border: 1px solid #526D82; */
-    }
-    .submit_faculty{
+
+
+
+    .submit_loka{
         margin-top: 20px;
         width: 90%;
         padding-left: 20px;
         text-align: right;
         margin-right: 0px;
     }
-    .faculty_button {
+    .submit_loka button {
         padding: 10px 20px;
         background-color: transparent; 
         color:#526D82;
@@ -145,42 +94,70 @@
         
     }
     
-    .faculty_button:hover {
+    .submit_loka button:hover {
         background-color: #526D82;
         color: #fff;
         border: 1px solid #526D82;
     }
 
         
-    .loka_form {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        border: none;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-        max-height: calc(100vh - 120px);
-        overflow-y: scroll; /* Ensure vertical scroll bar appears */
-        overflow-x: hidden; /* Hide horizontal scroll bar */
-        box-sizing: border-box;
+    .loka_form_scroll {
+        max-height: calc(90vh - 200px);
+        overflow-y: auto; 
+        overflow-x: hidden; 
     }
 
-    .loka_form::-webkit-scrollbar {
+    .loka_form_scroll::-webkit-scrollbar {
         width: 10px;
     }
 
-    .loka_form::-webkit-scrollbar-track {
-        background: #f1f1f1;
+    .loka_form_scroll::-webkit-scrollbar-track {
+        background: #ffffff;
     }
 
-    .loka_form::-webkit-scrollbar-thumb {
+    .loka_form_scroll::-webkit-scrollbar-thumb {
         background: #E3DFDF;
         border-radius: 10px;
     }
 
-    .loka_form::-webkit-scrollbar-thumb:hover {
+    .loka_form_scroll::-webkit-scrollbar-thumb:hover {
         background: #E3DFDF;
     }
+    .chapter_div{
+        border: 1px solid #526D82;
+        width: 90%;
+        height: 30vh;
+        border-radius: 8px;
+        overflow: hidden;
+        overflow-y: auto; 
+        overflow-x: hidden; 
+        padding-left: 20px;
+        padding-top: 25px;
+        padding-bottom: 20px;
+    }
+    .hidden_border {
+        border: none; 
+        overflow-y: hidden;
+        max-height: none;
+    }
+    .chapter_div::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .chapter_div::-webkit-scrollbar-track {
+        margin: 5px;
+        background: #ffffff;
+    }
+
+    .chapter_div::-webkit-scrollbar-thumb {
+        background: #E3DFDF;
+        border-radius: 0px;
+    }
+
+    .chapter_div::-webkit-scrollbar-thumb:hover {
+        background: #E3DFDF;
+    }
+
     @media (max-width: 800px) {
         .loka_container {
             width: 100%;
@@ -233,88 +210,41 @@
             margin-left: 0px;
         }
 
-        .loka_book_group {
-            /* margin-bottom: 15px;
-            width: 90%; */
-            margin-left: 50px;
-            margin-right: 30px;
-            margin-bottom: 20px;
+
+        .loka_textbook_group, .loka_textbook_group_select {
+            margin: 0 10px 20px 10px;
             position: relative;
-            padding-top: 25px;
-            margin-top: 0px;
-            /* padding-left: 20px; */
         }
-        .loka_book_group input{
+    
+        .loka_textbook_group input, .loka_textbook_group_select Select {
             width: 100%;
             border: 1px solid #526D82;
-            border-radius: 8px;
-            height: 50px;
-            box-sizing: border-box;
-            outline: none;
-            padding: 1px 10px 12px 10px;
+            border-radius: 4px;
+            padding: 12px 10px;
         }
-        .loka_book_group label{
-            position: absolute;
-            top: 15%;
-            left: 5%;
-            background: #fff;
-            color: #526D82;
-            font-size: 16px;
+    
+        .loka_textbook_group label, .loka_textbook_group_select label {
+            font-size: 14px;
             transition: all 0.3s;
-            pointer-events: none;
-            padding: 0 4px;
-            z-index: 1;
+            transform-origin: left;
         }
-        .loka_book_group input:focus + label,
-        .loka_book_group input:not(:placeholder-shown) + label {
-          top: 3px;
-          left: 15px;
-          font-size: 17px;
-          color: #526D82;
-        }
-        .loka_book_group_select{
-            margin-left: 50px;
-            margin-right: 30px;
-            margin-bottom: 30px;
-            position: relative;
-            padding-top: 15px;
-            margin-top: 30px;
-            padding-left: 20px;
-        }
-        .loka_book_group label {
-            position: absolute;
-            top: 5%;
-            left: 8%;
-            background: #fff;
+    
+        .loka_textbook_group input:focus + label,
+        .loka_textbook_group input:not(:placeholder-shown) + label,
+        .loka_textbook_group_select Select:focus + label,
+        .loka_textbook_group_select Select:not(:placeholder-shown) + label {
+            transform: scale(0.85) translateY(-25px);
             color: #526D82;
-            font-size: 16px;
-            transition: all 0.3s;
-            pointer-events: none;
-            padding: 0 4px;
-            z-index: 1;
         }
-        .loka_book_group Select {
-            width: 100%;
-            /* padding: 8px 8px 8px 4px; */
-            border: none;
-            border-radius: 8px;
-            box-sizing: border-box;
-            outline: none;
-            background: #fff; 
-            border-color: white; 
-            /* padding: 1px 10px 12px 10px; */
-            /* transition: border-color 0.3s; */
-            /* border: 1px solid #526D82; */
-        }
-
-        .submit_faculty {
+    
+        .submit_loka {
             padding-right: 0px;
             padding-left: 20px;
             margin-left: 20px;
             margin-right: 0px;
         }
     
-        .faculty_button {
+        .submit_loka button {
             width: 50%;
             padding: 12px;
         }
