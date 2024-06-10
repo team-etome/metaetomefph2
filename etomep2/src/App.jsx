@@ -42,6 +42,10 @@ import AarnaEvaluationDashbaordPage from './pages/adminpage/AarnaEvaluationDashb
 import AarnaQuestionViewPage from './pages/adminpage/AarnaQuestionViewPage';
 import AarnaSeatViewPage from './pages/adminpage/AarnaSeatViewPage';
 import AarnaEvaluationViewPage from './pages/adminpage/AarnaEvaluationViewPage';
+import TeacherStudentAddPage from './pages/teacherpage/TeacherStudentAddPage';
+import TeacherStudentDashboardPage from './pages/teacherpage/TeacherStudentDashboardPage';
+import TeacherNavbarPage from './pages/teacherpage/TeacherNavbarPage';
+import TeacherStudentViewPage from './pages/teacherpage/TeacherStudentViewPage';
 function App() {
   return (
     <div className="App">
@@ -94,6 +98,12 @@ function App() {
           <Route path="/evaluationview" element={<AarnaEvaluationViewPage/>}/>
 
 
+
+          {/* teacherside */}
+          <Route path="/teachernavbar" element={<TeacherNavbarPage/>}/>
+          <Route path="/teacherstudentadd" element={<TeacherStudentAddPage/>}/>
+          <Route path="/teacherstudentdashboard" element={<TeacherStudentDashboardPage/>}/>
+          <Route path="/teacherstudentview" element={<TeacherStudentViewPage/>}/>
 
 
 
