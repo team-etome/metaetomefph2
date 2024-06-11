@@ -50,6 +50,7 @@ import TeacherLoginPage from './pages/teacherpage/TeacherLoginPage';
 import AdminLokaTextbookPage from './pages/adminpage/AdminLokaTextbookPage';
 import TeacherTextEditorPage from './pages/teacherpage/TeacherTextEditorPage';
 import LokaNavbarPage from './pages/adminpage/LokaNavbarPage';
+import TeacherAarnaPage from './pages/teacherpage/TeacherAarnaPage';
 
 
 function App() {
@@ -115,6 +116,7 @@ function App() {
           {/* <Route path="/teacherstudentdashboard" element={<TeacherStudentDashboardPage/>}/> */}
           <Route path="/teacherstudentview" element={<TeacherStudentViewPage/>}/>
           <Route path="/teachertexteditor" element={<TeacherTextEditorPage/>}/>
+          <Route path="/teacheraarna" element={<TeacherAarnaPage/>}/>
 
 
 
