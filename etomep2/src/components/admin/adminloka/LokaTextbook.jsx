@@ -568,7 +568,7 @@ function LokaTextbook() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/institutionadding">
+            <Link to="/adminlokanavbar">
               <IoChevronBackSharp className="loka_back" />
             </Link>
             <h1 className="loka_title">Add Textbooks</h1>
