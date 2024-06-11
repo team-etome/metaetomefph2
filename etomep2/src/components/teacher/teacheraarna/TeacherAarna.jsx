@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Col, Container, Row, Form, Nav } from "react-bootstrap";
 import { BsSearch, BsFilterRight } from "react-icons/bs";
+import ExaminationDashboard from "../teacherexamination/ExaminationDashboard";
 // import '../teacheraarna/teacheraarna.css'
 
 function TeacherAarna() {
@@ -47,7 +48,7 @@ function TeacherAarna() {
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link
-                                eventKey="Question Setting"
+                                eventKey="Examination"
                                 className="aarna_mob_subhead_one"
                                 style={{
                                     textDecoration: "none",
@@ -55,12 +56,12 @@ function TeacherAarna() {
                                     fontSize: "15px",
                                 }}
                             >
-                                Question Setting
+                                Examination
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link
-                                eventKey="Examinations"
+                                eventKey="Test Paper"
                                 className="aarna_mob_subhead_one"
                                 style={{
                                     textDecoration: "none",
@@ -68,7 +69,7 @@ function TeacherAarna() {
                                     fontSize: "15px",
                                 }}
                             >
-                                Examinations ^
+                                Test Paper ^
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
@@ -166,10 +167,9 @@ function TeacherAarna() {
                 </div>
 
                 <div className="institution_dashboard_container">
-                    {/* {activeTab === "Progress" && <AarnaProgress />}
-                    {activeTab === "Question Paper" && <AarnaQuestionPaper />}
-                    {activeTab === "Seating" && <SeatingDashboard />}
-                    {activeTab === "Evaluation" && <EvaluationDashboard />} */}
+                    {/* {activeTab === "Progress" && <AarnaProgress />} */}
+                    {activeTab === "Examination" && <ExaminationDashboard/>}
+                    {/* {activeTab === "Progress" && <AarnaProgress />} */}
 
                 </div>
             </Col>
