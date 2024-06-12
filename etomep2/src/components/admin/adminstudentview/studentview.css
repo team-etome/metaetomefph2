@@ -175,6 +175,33 @@
       }
 
     @media (max-width: 800px) {
+      .student_view_container {
+        height: 100vh;
+        padding-top: 100px;
+        background-color: #DDE6ED;
+        width: 100%;
+        padding-left: 10px;
+        }
+        .personal_info_field{
+          display: flex;
+          padding-top: 20px;
+          padding-left: 0px;
+      }
+      .school_info{
+        padding-left: 0px;
+        padding-right: 10px;
+    }
+    .result_heading{
+      padding-left: 100px;
+      padding-right: 10px;
+      display: flex;
+      justify-content: flex-end;
+  }
+  /* .result_heading button{
+      background-color: transparent;
+      color: #526D82;
+      border: 1px solid #526D82;
+  } */
         .student_scrollable {
             scrollbar-width: thin;
             scrollbar-color: #526D82 #DDE6ED;

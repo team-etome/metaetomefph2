@@ -11,7 +11,7 @@ import ResultFilter from "../aarnaresult/ResultFilter";
 
 function AarnaNavbar() {
     const [activeTab, setActiveTab] = useState(
-        localStorage.getItem("activeTab") || "Progress"
+        localStorage.getItem("activeTab") || "Question Paper"
     );
 
     // Update local storage when activeTab changes

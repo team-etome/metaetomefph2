@@ -177,7 +177,7 @@ function SeatAssigning() {
                 <Col md={6} >
                     <p  className='modal_div_title'>Select Faculty</p>
                     <div className='modal_search'>
-                        <Form className="d-flex" style={{paddingTop:'30px', paddingLeft:'30px'}}>
+                        <Form className="d-flex" style={{}}>
                       <div className="position-relative">
                         <BsSearch
                           className="position-absolute top-50 translate-middle-y ms-2 modal_search_icon"
@@ -186,7 +186,7 @@ function SeatAssigning() {
                         <Form.Control
                           type="search"
                           placeholder="Search by Name or Id"
-                          className="ps-3 modal_search_input"
+                          className="ps-1 modal_search_input"
                           aria-label="Search"
                         />
                       </div>
@@ -196,7 +196,7 @@ function SeatAssigning() {
                 <Col md={6}>
                     <p className='modal_div_title'>Select Class</p>
                     <div className='modal_search'>
-                    <Form className="d-flex" style={{paddingTop:'30px', paddingLeft:'30px'}}>
+                    <Form className="d-flex" >
                       <div className="position-relative">
                         <BsSearch
                           className="position-absolute top-50 translate-middle-y ms-2 modal_search_icon"

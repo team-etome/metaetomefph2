@@ -70,7 +70,7 @@ tbody tr:nth-child(even) {
 .result_view_scrollable {
     max-height: calc(100vh - 120px);
     overflow-y: scroll; 
-    overflow-x: hidden; 
+    overflow-x: auto;
 }
 
 .result_view_scrollable::-webkit-scrollbar {
