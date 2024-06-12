@@ -41,7 +41,7 @@ function ResultView() {
             <h1 className='result_view_title'>Class : 10 B</h1>
         </div>
         <div className='result_view_scrollable'>
-            <table className="table table-striped">
+            <table className="table">
                 <thead>
                     <tr>
                         <th>Roll No</th>
@@ -59,19 +59,19 @@ function ResultView() {
                         <th>Progress</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     {students.map(student => (
                         <tr key={student.rollNo}>
-                            <td>{student.rollNo}</td>
+                            <td >{student.rollNo}</td>
                             <td>{student.name}</td>
-                            <td>{student.scores.English}</td>
-                            <td>{student.scores.Malayalam}</td>
-                            <td>{student.scores.SocialScience}</td>
-                            <td>{student.scores.Physics}</td>
-                            <td>{student.scores.Chemistry}</td>
-                            <td>{student.scores.Biology}</td>
-                            <td>{student.scores.IT}</td>
-                            <td>{student.scores.Maths}</td>
+                            <td className="no-border-right">{student.scores.English}</td>
+                            <td className="no-border-right">{student.scores.Malayalam}</td>
+                            <td className="no-border-right">{student.scores.SocialScience}</td>
+                            <td className="no-border-right">{student.scores.Physics}</td>
+                            <td className="no-border-right">{student.scores.Chemistry}</td>
+                            <td className="no-border-right">{student.scores.Biology}</td>
+                            <td className="no-border-right">{student.scores.IT}</td>
+                            <td className="no-border-right">{student.scores.Maths}</td>
                             <td>{student.totalMark}</td>
                             <td>{student.obtainedMark}</td>
                             <td>{student.progress}</td>

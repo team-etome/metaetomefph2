@@ -1,100 +1,18 @@
-.aarna_navbar_tab .nav-link {
-    padding: 10px 15px;
-    border: none;
+.aarna_mob_subhead_one {
+    text-decoration: none;
+    color: #526D82;
+    font-size: 15px;
 }
 
-.aarna_navbar_tab .nav-link.active {
-    font-weight: bold;
-    border-bottom: 2px solid #526D82;
-}
-
-.aarna_search_filter {
-    display: flex;
-    align-items: center;
-}
-
-.aarna_search_filter .form-control {
-    width: 250px;
-    border-radius: 17px;
-    color: #767676;
-    padding-left: 30px;
-}
-
-.aarna_search_filter .form-control::placeholder {
-    color: #767676;
-}
-
-.aarna_search_filter .position-relative {
-    position: relative;
-}
-
-.aarna_search_filter .position-relative .position-absolute {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 15px;
-    z-index: 2;
-    height: 20px;
-    width: 20px;
-    color: #D8D4D4;
-}
-
-.aarna_search_filter .bs-filter-right {
-    height: 40px;
-    width: 40px;
-    margin-left: 15px;
-}
-
-.search_filter_wrapper {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: auto;
-}
-
-@media (max-width: 768px) {
-    .aarna_navbar_tab {
-        display: flex;
-        align-items: center;
-        padding-top: 20px;
-        justify-content: flex-start;
+.dropdown-item-custom {
+    color: #526D82;  /* Example color */
+    background-color: #fff; /* Example background */
+    &:hover {
+        background-color: #f8f9fa; /* Light grey on hover, adjust as needed */
     }
-
-    .aarna_mob_subhead_one {
-        background-color: #e2e0e0;
-        color: #727272;
-        width: 100% !important;
-        height: 30px !important;
-        border-radius: 8px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .aarna_navbar_tab .nav-link.active {
-        font-weight: 400;
-        border-bottom: none;
-        color: #ffff !important;
-        background-color: #526d82;
-    }
-
-    .aarna_navbar {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 !important;
-    }
-
-    .search_filter_wrapper {
-        flex-direction: column;
-    }
-
-    .aarna_search_filter .form-control {
-        width: 100%;
-    }
-
-    .aarna_search_filter .bs-filter-right {
-        height: 30px;
-        width: 30px;
-    }
+}
+.dropdown-tab-style {
+    text-decoration: none;
+    color: #526D82;
+    font-size: 15px;
 }

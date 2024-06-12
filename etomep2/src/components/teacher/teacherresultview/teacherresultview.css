@@ -1,4 +1,4 @@
-.result_view_container {
+.teacher_result_view_container {
     padding-top: 20px;
     width: 100%;
     height: auto; 
@@ -40,21 +40,21 @@ tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.result_view_back {
+.teacher_result_view_back {
     color: #526D82;
     height: 32px;
     width: 32px;
     cursor: pointer;
 }
 
-.result_view_title {
+.teacher_result_view_title {
     font-weight: 500;
     color: #526D82;
     font-size: 24px;
     margin-left: 10px;
 }
 
-.vertical-text {
+.teacher_vertical_text {
     writing-mode: vertical-rl;
     transform: rotate(-180deg);
     white-space: nowrap;
@@ -67,46 +67,46 @@ tbody tr:nth-child(even) {
     text-align: start;
 }
 
-.result_view_scrollable {
+.teacher_result_view_scrollable {
     max-height: calc(100vh - 120px);
     overflow-y: scroll; 
     overflow-x: hidden; 
 }
 
-.result_view_scrollable::-webkit-scrollbar {
+.teacher_result_view_scrollable::-webkit-scrollbar {
     width: 10px;
 }
 
-.result_view_scrollable::-webkit-scrollbar-track {
+.teacher_result_view_scrollable::-webkit-scrollbar-track {
     background: #fff;
     border: none;
 }
 
-.result_view_scrollable::-webkit-scrollbar-thumb {
+.teacher_result_view_scrollable::-webkit-scrollbar-thumb {
     background: #E3DFDF;
     border-radius: 10px;
 }
 
-.result_view_scrollable::-webkit-scrollbar-thumb:hover {
+.teacher_result_view_scrollable::-webkit-scrollbar-thumb:hover {
     background: #E3DFDF;
 }
 
 
 /* Ensures the last subject column before the total mark has a right border */
-td.no-border-right:last-child {
+td.teacherno-border-right:last-child {
     border-right: 1px solid #dee2e6;
 }
 
 @media (max-width: 800px) {
-    .result_view_container {
+    .teacher_result_view_container {
         padding: 10px;
     }
 
-    .result_view_scrollable {
+    .teacher_result_view_scrollable {
         max-height: calc(100vh - 120px);
     }
 
-    table {
+    .teacher_table {
         font-size: 14px;
     }
 
