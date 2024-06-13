@@ -19,7 +19,7 @@ function FacultyAdding() {
 
   const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
-  const admin_id = admininfo ? admininfo.admininfo.admin_id : '1';
+  const admin_id = admininfo ? admininfo.admininfo?.admin_id : '1';
 
   console.log(admin_id,"admin id")
 

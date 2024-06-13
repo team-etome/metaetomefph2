@@ -31,7 +31,7 @@ function CurriculumAdding() {
   const classinfo   = useSelector((state) => state.adminclassinfo);
   const admininfo = useSelector((state) => state.admininfo);
 
-  const admin_id = admininfo ? admininfo.admininfo.admin_id : null;
+  const admin_id = admininfo ? admininfo.admininfo?.admin_id : null;
   const class_name      = classinfo?.adminclassinfo.className
   const division        = classinfo?.adminclassinfo.division
   const stream          = classinfo?.adminclassinfo.stream
@@ -51,7 +51,7 @@ function CurriculumAdding() {
   console.log(selectedPublisher , selectedSubject ,"ssssssss")
 
 
-  const facultyOptions = teacherinfo.adminteacherinfo.map((teacher) => ({
+  const facultyOptions = teacherinfo.adminteacherinfo?.map((teacher) => ({
     value: `${teacher.first_name} ${teacher.last_name}`,
     label: `${teacher.first_name} ${teacher.last_name}`,
   }));
@@ -198,7 +198,7 @@ function CurriculumAdding() {
           <Row>
             <Col>
               <div className="curriculum_header">
-                <Link to="/aarnanavbar">
+                <Link to="/classadding">
                   <IoChevronBackSharp className="curriculum_back" />
                 </Link>
                 <h1 className="curriculum_title">Add Curriculum</h1>

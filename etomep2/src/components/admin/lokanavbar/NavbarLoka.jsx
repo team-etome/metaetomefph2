@@ -4,6 +4,7 @@ import { BsSearch, BsFilterRight } from "react-icons/bs";
 import '../lokanavbar/lokanavbar.css'
 import LokaTextbook from "../adminloka/LokaTextbook";
 import LokaBookDashboard from "../adminlokatextbookdashboard/LokaBookDashboard";
+import LokaLibraryListing from "../adminlokalibrarylist/LokaLibraryListing";
 
 function NavbarLoka() {
     const [activeTab, setActiveTab] = useState(
@@ -123,7 +124,7 @@ function NavbarLoka() {
 
             <div className="institution_dashboard_container">
               {activeTab === "Textbook" && <LokaBookDashboard />}
-              {/* {activeTab === "Library" && <AdminClassdashboard />} */}
+              {activeTab === "Library" && <LokaLibraryListing />}
             </div>
           </Col>
         </Row>
