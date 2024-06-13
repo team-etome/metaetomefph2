@@ -4,15 +4,19 @@ import "../adminclassdashboard/adminclassdashboard.css";
 import { IoIosAdd } from "react-icons/io";
 import { useNavigate  } from "react-router-dom";
 import amritha from "../../../assets/amritha.png";
-import mp3File from "../../../../src/assets/fun.mp3";
+import axios from 'axios'
+import { useSelector,useDispatch } from "react-redux";
+
 
 function AdminClassdashboard() {
   const [isActive, setIsActive] = useState(false);
+  const [classDetails , setClassDetails] = useState([])
+  const admininfo = useSelector((state) => state.admininfo);
+  const APIURL = useSelector((state) => state.APIURL.url);
+  const admin_id = admininfo ? admininfo.admininfo?.admin_id : null;
 
-  // const audioRef = useRef(null);
-
-  // const history = useNavigate();
   const navigate = useNavigate()
+  console.log(classDetails,'drfgdgrfdg')
 
 
   useEffect(() => {
@@ -23,48 +27,36 @@ function AdminClassdashboard() {
     return () => clearInterval(interval);
   }, []);
 
-  // const handleButtonClick = (event) => {
-  //   event.preventDefault();
-  //   setIsActive(!isActive);
-  //   if (audioRef.current) {
-  //     audioRef.current.play();
-  //   }
-  //   setTimeout(() => {
-  //     history("/classadding");
-  //   }, 500);
-  // };
+  
   const handleButtonClick= ()=>{
     navigate('/classadding')
 }
 
-  const handleclick= ()=>{
-    navigate('/classview')
-}
+const handleclick = (classdata) =>  {
+  navigate('/classview', { state: { class: classdata } });
+};
 
-  const classListData = [
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 A" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 B" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 C" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 D" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 E" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 F" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 G" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 H" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 I" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 J" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 K" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 L" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 M" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 N" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 O" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 B" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 B" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 B" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 B" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 B" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 B" },
-    { medium: "English", facultyName: "yyyyyyyy", classnumber: "1 B" },
-  ];
+useEffect(()=>{
+
+  const fetchclass = async()=>{
+
+    try{
+
+      const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`)
+      setClassDetails(response.data)
+
+    }catch(error){
+      console.error("Failed to fetch class data")
+    }
+
+
+  }
+
+  fetchclass();
+
+} ,[APIURL])
+
+
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
@@ -74,14 +66,14 @@ function AdminClassdashboard() {
         style={{ marginTop: "16px" }}
       >
         <Row>
-          {classListData.map((item, index) => (
+          {classDetails.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
-              <div onClick={handleclick} className="border border-white class_rectangle">
+              <div onClick={()=>handleclick(item)} className="border border-white class_rectangle">
                 <div className="class_list_medium">{item.medium}</div>
                 <div className="class_profile_name">
                   <div>
                     <img
-                      src={amritha}
+                      src={item.admin_logo}
                       alt="profile pic"
                       className="faculty_profile_photo"
                     />
@@ -93,7 +85,7 @@ function AdminClassdashboard() {
                 <div className="class_lisit_circle">
                   <div className="class_number_div">
                     <h1 style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
-                      {item.classnumber}
+                      {item.class_name}{item.division}
                     </h1>
                   </div>
                 </div>
