@@ -51,6 +51,9 @@ import AdminLokaTextbookPage from './pages/adminpage/AdminLokaTextbookPage';
 import TeacherTextEditorPage from './pages/teacherpage/TeacherTextEditorPage';
 import LokaNavbarPage from './pages/adminpage/LokaNavbarPage';
 import TeacherAarnaPage from './pages/teacherpage/TeacherAarnaPage';
+import TeacherQuestionCreationPage from './pages/teacherpage/TeacherQuestionCreationPage';
+import AarnaResultViewPage from './pages/adminpage/AarnaResultViewPage';
+import TeacherResultView from './components/teacher/teacherresultview/TeacherResultView';
 
 
 function App() {
@@ -105,6 +108,10 @@ function App() {
           <Route path="/evaluationview" element={<AarnaEvaluationViewPage/>}/>
           <Route path="/adminlokanavbar" element={<LokaNavbarPage/>}/>
           <Route path="/adminlokatextbook" element={<AdminLokaTextbookPage/>}/>
+          <Route path="/adminresultview" element={<AarnaResultViewPage/>}/>
+
+
+
 
 
 
@@ -117,6 +124,8 @@ function App() {
           <Route path="/teacherstudentview" element={<TeacherStudentViewPage/>}/>
           <Route path="/teachertexteditor" element={<TeacherTextEditorPage/>}/>
           <Route path="/teacheraarna" element={<TeacherAarnaPage/>}/>
+          <Route path="/teacherquestionview" element={<TeacherQuestionCreationPage/>}/>
+          <Route path="/teacherresultview" element={<TeacherResultView/>}/>
 
 
 
