@@ -126,7 +126,7 @@
     }
 
     .result_filter_scrollable {
-        max-height: calc(100vh - 200px);
+        max-height: calc(90vh - 200px);
         overflow-y: auto; 
         overflow-x: hidden; 
       }
@@ -151,10 +151,9 @@
     @media (max-width: 800px) {
         .result_filter_container {
             width: 100%;
-            padding-top: 100px;
+            padding-top: 10px;
             padding-left: 10px;
             padding-right: 10px;
-            background-color: #DDE6ED;
             box-sizing: border-box;
         }
     

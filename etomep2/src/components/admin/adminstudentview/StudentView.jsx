@@ -27,7 +27,7 @@ function StudentView() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/institutionadding">
+            <Link to="/studentlist">
               <IoChevronBackSharp className="student_view_back" />
             </Link>
             <h1 className="student_view_title">Niranjana </h1>
