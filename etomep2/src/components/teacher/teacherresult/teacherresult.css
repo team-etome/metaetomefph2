@@ -1,0 +1,216 @@
+.teacher_result_filter_container {
+    height: 50vh;
+    padding-top: 60px;
+    width: 100%;
+    }
+    .teacher_result_filter_form{
+        height: 100%;
+        width: 100%;
+        background-color: #fff;
+        padding-top: 5px;
+        border-radius: 15px;
+        border: 0.5px solid #000000;
+        padding-bottom: 100px;
+    }
+      
+    .teacher_result_filter_title{
+        font-weight: 500;
+        color: #526D82 ;
+        font-size: 25px;
+        /* margin-left: 10px; */
+        padding-left: 30px;
+    }
+    
+    .teacher_result_filter_group {
+        position: relative;
+        padding-top: 25px;
+        margin-bottom: 0px;
+        width: 100%; /* Set width to 100% of its parent container */
+    }
+    .teacher_result_filter_group input{
+        width: 100%;
+        border: 1px solid #526D82;
+        border-radius: 8px;
+        box-sizing: border-box;
+        outline: none;
+        padding: 1px 10px 12px 10px;
+        height: 50px;
+    }
+    .teacher_result_filter_group label{
+        position: absolute;
+        top: 15%;
+        left: 5%;
+        background: #fff;
+        color: #526D82;
+        font-size: 16px;
+        transition: all 0.3s;
+        pointer-events: none;
+        padding: 0 4px;
+        z-index: 1;
+    }
+    .teacher_result_filter_group input:focus + label,
+    .teacher_result_filter_group input:not(:placeholder-shown) + label {
+      top: 3px;
+      left: 15px;
+      font-size: 17px;
+      color: #526D82;
+    }
+    .teacher_result_filter_group_select{
+        margin-left: 50px;
+        margin-right: 30px;
+        margin-bottom: 30px;
+        position: relative;
+        padding-top: 15px;
+        margin-top: 30px;
+        padding-left: 20px;
+    }
+    .teacher_result_filter_group_select label {
+        position: absolute;
+        top: 5%;
+        left: 8%;
+        background: #fff;
+        color: #526D82;
+        font-size: 16px;
+        transition: all 0.3s;
+        pointer-events: none;
+        padding: 0 4px;
+        z-index: 1;
+    }
+    .teacher_result_filter_group_select Select {
+        width: 100%;
+        /* padding: 8px 8px 8px 4px; */
+        border: none;
+        border-radius: 8px;
+        box-sizing: border-box;
+        outline: none;
+        background: #fff; 
+        border-color: white; 
+        /* padding: 1px 10px 12px 10px; */
+        /* transition: border-color 0.3s; */
+        /* border: 1px solid #526D82; */
+    }
+    .teacher_submit_result_filter{
+        width: 100%;
+        padding-left: 100px;
+        display: flex;
+        justify-content: flex-end;
+        text-align: left;
+        padding-top: 30px;
+    }
+    .teacher_submit_result_filter button {
+        padding: 10px 20px;
+        background-color: transparent; 
+        color:#526D82;
+        border: none;
+        border-radius: 8px;
+        border: 1px solid #526D82;
+        cursor: pointer;
+        margin-top: 20px;
+        width: 200px;
+        height: 40;
+    }
+    
+    .teacher_submit_result_filter button:hover {
+        background-color: #526D82;
+        color: #fff;
+        border: 1px solid #526D82;
+    }
+
+    .teacher_result_filter_scrollable {
+        max-height: calc(100vh - 200px);
+        overflow-y: auto; 
+        overflow-x: hidden; 
+      }
+      
+      .teacher_result_filter_scrollable::-webkit-scrollbar {
+        width: 8px; 
+      }
+      
+      .teacher_result_filter_scrollable::-webkit-scrollbar-track {
+        background-color: #fff; 
+      }
+      
+      .teacher_result_filter_scrollable::-webkit-scrollbar-thumb {
+        background-color: #A8BFD1; 
+        border-radius: 4px;
+      }
+      
+      .teacher_result_filter_scrollable::-webkit-scrollbar-thumb:hover {
+        background-color: #8FA2B6; 
+      }
+      
+    @media (max-width: 800px) {
+        .teacher_result_filter_container {
+            width: 100%;
+            padding-top: 100px;
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: #DDE6ED;
+            box-sizing: border-box;
+        }
+    
+        .teacher_result_filter_form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            max-height: calc(100vh - 120px);
+            overflow-y: scroll; /* Ensure vertical scroll bar appears */
+            overflow-x: hidden; /* Hide horizontal scroll bar */
+            box-sizing: border-box;
+        }
+ 
+        .result_filter_back {
+            margin-right: 15px;
+        }
+    
+        .teacher_result_filter_title {
+            font-size: 24px;
+            flex-grow: 1;
+            text-align: left;
+            padding-left: 0px;
+            margin-left: 0px;
+        }
+    
+        .teacher_result_filter_group, .teacher_result_filter_group_select {
+            margin: 0 10px 20px 10px;
+            position: relative;
+        }
+    
+        .teacher_result_filter_group input, .teacher_result_filter_group_select Select {
+            width: 100%;
+            border: 1px solid #526D82;
+            border-radius: 4px;
+            padding: 12px 10px;
+        }
+    
+        .teacher_result_filter_group label, .teacher_result_filter_group_select label {
+            font-size: 14px;
+            transition: all 0.3s;
+            transform-origin: left;
+        }
+    
+        .teacher_result_filter_group input:focus + label,
+        .teacher_result_filter_group input:not(:placeholder-shown) + label,
+        .teacher_result_filter_group_select Select:focus + label,
+        .teacher_result_filter_group_select Select:not(:placeholder-shown) + label {
+            transform: scale(0.85) translateY(-25px);
+            color: #526D82;
+        }
+    
+        .teacher_submit_result_filter {
+            padding-right: 0px;
+            padding-left: 20px;
+            margin-left: 20px;
+            margin-right: 0px;
+        }
+    
+        .teacher_submit_result_filter button {
+            width: 50%;
+            padding: 12px;
+        }
+    }
+    
+    

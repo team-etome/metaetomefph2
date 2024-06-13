@@ -41,7 +41,7 @@ function ViewTextbook({ show, handleClose, book }) {
                 src={book.textbook_image}
                 alt="Book Cover"
                 fluid
-                style={{ maxHeight: "100%", maxWidth: "100%" }}
+                style={{ maxHeight: "80%", maxWidth: "100%" }}
               />
             )}
           </Col>

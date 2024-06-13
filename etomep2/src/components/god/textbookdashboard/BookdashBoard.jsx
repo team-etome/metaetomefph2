@@ -208,13 +208,14 @@ function BookdashBoard() {
                       marginTop: "20px",
                       marginBottom: "30px",
                       boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                      height:'100%'
                     }}
                     onClick={() => handleCardClick(book)}
                   >
                     <Card.Img
                       variant="top"
                       src={book.textbook_image}
-                      style={{ width: "150px", margin: "10px" }}
+                      style={{ width: "150px", margin: "10px", height:'150px' }}
                       className="image-container"
                     />
                     <Card.Body>

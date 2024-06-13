@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Col, Container, Row, Form, Nav } from "react-bootstrap";
 import { BsSearch, BsFilterRight } from "react-icons/bs";
+// import '../aarnanavbar/aarnanavbar.css'
 import AdminClassdashboard from "../adminclassdashboard/AdminClassdashboard";
 import AarnaProgress from "../aarnaprogress/AarnaProgress";
 import AarnaQuestionPaper from "../aarnaquestionpaper/AarnaQuestionPaper";
 import SeatingDashboard from "../aarnaseating/SeatingDashboard";
 import EvaluationDashboard from "../aarnaevaluation/EvaluationDashboard";
+import ResultFilter from "../aarnaresult/ResultFilter";
 
 function AarnaNavbar() {
     const [activeTab, setActiveTab] = useState(
-        localStorage.getItem("activeTab") || "Progress"
+        localStorage.getItem("activeTab") || "Question Paper"
     );
 
     // Update local storage when activeTab changes
@@ -44,7 +46,7 @@ function AarnaNavbar() {
                                             textDecoration: "none",
                                             color: "#526D82",
                                             fontSize: "15px",
-                                            marginRight: "20px",
+                                            marginRight: "0px",
                                         }}
                                     >
                                         Progress
@@ -91,19 +93,6 @@ function AarnaNavbar() {
                                 </Nav.Item>
                                 <Nav.Item>
                                     <Nav.Link
-                                        eventKey="Result"
-                                        className="aarna_mob_subhead_one"
-                                        style={{
-                                            textDecoration: "none",
-                                            color: "#526D82",
-                                            fontSize: "15px",
-                                        }}
-                                    >
-                                        Result
-                                    </Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link
                                         eventKey="Question Bank"
                                         className="aarna_mob_subhead_one"
                                         style={{
@@ -113,6 +102,19 @@ function AarnaNavbar() {
                                         }}
                                     >
                                         Question Bank
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link
+                                        eventKey="Result"
+                                        className="aarna_mob_subhead_one"
+                                        style={{
+                                            textDecoration: "none",
+                                            color: "#526D82",
+                                            fontSize: "15px",
+                                        }}
+                                    >
+                                        Result
                                     </Nav.Link>
                                 </Nav.Item>
                             </Nav>
@@ -161,6 +163,7 @@ function AarnaNavbar() {
                             {activeTab === "Question Paper" && <AarnaQuestionPaper />}
                             {activeTab === "Seating" && <SeatingDashboard />}
                             {activeTab === "Evaluation" && <EvaluationDashboard />}
+                            {activeTab === "Result" && <ResultFilter />}
 
                         </div>
                     </Col>

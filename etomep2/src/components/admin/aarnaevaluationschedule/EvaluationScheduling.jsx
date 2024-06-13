@@ -161,7 +161,7 @@ function EvaluationScheduling() {
             <Row style={{}}>
                 <Col md={6} >
                     <div className='modal_div_assign'>
-                        <Form className="d-flex" style={{paddingTop:'30px', paddingLeft:'30px'}}>
+                        <Form className="d-flex">
                       <div className="position-relative">
                         <BsSearch
                           className="position-absolute top-50 translate-middle-y ms-2 modal_searchbar_icon"

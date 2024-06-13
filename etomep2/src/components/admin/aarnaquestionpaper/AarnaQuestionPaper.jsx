@@ -42,11 +42,29 @@ function AarnaQuestionPaper() {
   // const qpaperListData = new Array(21).fill({
   //   facultyName: "Anagha Rajagopal",
   //   term:  "1",
-    
   // });
+
     const qpaperListData = [
       { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
       { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+      { facultyName: "Anagha Rajagopal", term: "1", date:'01/10/2024', subject: "Pending" },
+
     ];
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>

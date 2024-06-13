@@ -198,7 +198,7 @@ function CurriculumAdding() {
           <Row>
             <Col>
               <div className="curriculum_header">
-                <Link to="/classadding">
+                <Link to="/aarnanavbar">
                   <IoChevronBackSharp className="curriculum_back" />
                 </Link>
                 <h1 className="curriculum_title">Add Curriculum</h1>

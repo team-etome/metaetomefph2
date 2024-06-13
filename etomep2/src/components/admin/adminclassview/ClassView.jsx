@@ -140,12 +140,16 @@ function ClassView() {
             </Col>
           </Row>
           <Row>
-            <div className="student_list_button">
+
+            <Link to='/studentlist'>
+          <div className="student_list_button">
               <button type="submit">
-                View Student List
-                <RiShareBoxFill style={{ marginLeft: "10px" }} />
-              </button>
-            </div>
+                    View Student List
+                    <RiShareBoxFill style={{ marginLeft: "10px" }}/>
+                  </button>
+              </div>
+              </Link>
+
           </Row>
           <Row className="class_curriculum_view">
             <div className="curriculum_view">
