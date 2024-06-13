@@ -31,12 +31,12 @@ function CurriculumAdding() {
   const classinfo   = useSelector((state) => state.adminclassinfo);
   const admininfo = useSelector((state) => state.admininfo);
 
-  const admin_id = admininfo ? admininfo.admininfo.admin_id : null;
-  const class_name      = classinfo?.adminclassinfo.className
-  const division        = classinfo?.adminclassinfo.division
-  const stream          = classinfo?.adminclassinfo.stream
-  const class_teacher   = classinfo?.adminclassinfo.teacher.value
-  const medium          = classinfo?.adminclassinfo.medium.value
+  const admin_id = admininfo ? admininfo.admininfo?.admin_id : null;
+  const class_name      = classinfo?.adminclassinfo?.className
+  const division        = classinfo?.adminclassinfo?.division
+  const stream          = classinfo?.adminclassinfo?.stream
+  const class_teacher   = classinfo?.adminclassinfo?.teacher.value
+  const medium          = classinfo?.adminclassinfo?.medium.value
 
   console.log(classinfo,"classinfo")
   
@@ -51,7 +51,7 @@ function CurriculumAdding() {
   console.log(selectedPublisher , selectedSubject ,"ssssssss")
 
 
-  const facultyOptions = teacherinfo.adminteacherinfo.map((teacher) => ({
+  const facultyOptions = teacherinfo.adminteacherinfo?.map((teacher) => ({
     value: `${teacher.first_name} ${teacher.last_name}`,
     label: `${teacher.first_name} ${teacher.last_name}`,
   }));

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector ,useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
 import '../teacherlogin/teacherlogin.css'
+import { teacherinfo } from "../../../Redux/Actions/TeacherInfoAction";
 
 function TeacherLogin() {
     const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ function TeacherLogin() {
     const APIURL = useSelector((state) => state.APIURL.url);
   
   
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
   
   
     const togglePasswordVisibility = () => {
@@ -43,7 +44,8 @@ function TeacherLogin() {
         };
         const response = await axios.post(`${APIURL}/api/teacherlogin`, data);
         console.log(response.data,"dataaaaaa")
-        // dispatch(admininfo(response.data.admin_details)); 
+        dispatch(teacherinfo(response.data.teacher));
+     
         navigate("/teachernavbar");
         Swal.fire({
           title: "Success!",
