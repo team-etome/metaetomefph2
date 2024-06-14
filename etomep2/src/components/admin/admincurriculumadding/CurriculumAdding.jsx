@@ -240,7 +240,7 @@ function CurriculumAdding() {
                   value={selectedPublisher}
                   onChange={setSelectedPublisher}
                   styles={customStyles}
-                  placeholder="Select a Publisher"
+                  placeholder=""
                 />
               </div>
             </Col>
@@ -255,7 +255,7 @@ function CurriculumAdding() {
                   value={selectedSubject}
                   onChange={setSelectedSubject}
                   styles={customStyles}
-                  placeholder="Select a Subject"
+                  placeholder=""
                 />
               </div>
             </Col>
@@ -267,7 +267,7 @@ function CurriculumAdding() {
                 <Select
                   options={facultyOptions}
                   styles={customStyles}
-                  placeholder="Select a Teacher"
+                  placeholder=""
                   value={faculty}
                   onChange={setFaculty}
                 />
