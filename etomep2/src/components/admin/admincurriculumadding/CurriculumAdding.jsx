@@ -32,11 +32,13 @@ function CurriculumAdding() {
   const admininfo = useSelector((state) => state.admininfo);
 
   const admin_id = admininfo ? admininfo.admininfo?.admin_id : null;
+
   const class_name      = classinfo?.adminclassinfo?.className
   const division        = classinfo?.adminclassinfo?.division
   const stream          = classinfo?.adminclassinfo?.stream
   const class_teacher   = classinfo?.adminclassinfo?.teacher.value
   const medium          = classinfo?.adminclassinfo?.medium.value
+
 
   console.log(classinfo,"classinfo")
   
@@ -198,7 +200,7 @@ function CurriculumAdding() {
           <Row>
             <Col>
               <div className="curriculum_header">
-                <Link to="/aarnanavbar">
+                <Link to="/classadding">
                   <IoChevronBackSharp className="curriculum_back" />
                 </Link>
                 <h1 className="curriculum_title">Add Curriculum</h1>
@@ -240,7 +242,7 @@ function CurriculumAdding() {
                   value={selectedPublisher}
                   onChange={setSelectedPublisher}
                   styles={customStyles}
-                  placeholder="Select a Publisher"
+                  placeholder=""
                 />
               </div>
             </Col>
@@ -255,7 +257,7 @@ function CurriculumAdding() {
                   value={selectedSubject}
                   onChange={setSelectedSubject}
                   styles={customStyles}
-                  placeholder="Select a Subject"
+                  placeholder=""
                 />
               </div>
             </Col>
@@ -267,7 +269,7 @@ function CurriculumAdding() {
                 <Select
                   options={facultyOptions}
                   styles={customStyles}
-                  placeholder="Select a Teacher"
+                  placeholder=""
                   value={faculty}
                   onChange={setFaculty}
                 />

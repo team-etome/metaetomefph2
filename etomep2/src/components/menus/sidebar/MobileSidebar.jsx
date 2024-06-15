@@ -70,10 +70,12 @@ function MobileSidebar({ show, onClose }) {
           }`}
           onClick={() => handleMenuItemClick("loka")}
         >
+           <Link  to='/adminlokanavbar'>
           <div className="mob_icon_container_div">
             <PiBook className="mob_icon_img" />
             <span className="mob_icon_text">Loka</span>
           </div>
+          </Link>
         </Col>
         <Col
           className={`mob_menu_item_col ${
@@ -81,10 +83,12 @@ function MobileSidebar({ show, onClose }) {
           }`}
           onClick={() => handleMenuItemClick("aarna")}
         >
+           <Link  to='/aarnanavbar'>
           <div className="mob_icon_container_div">
             <SlNote className="mob_icon_img" />
             <span className="mob_icon_text">Aarna</span>
           </div>
+          </Link>
         </Col>
         <Col
           className={`mob_menu_item_col ${

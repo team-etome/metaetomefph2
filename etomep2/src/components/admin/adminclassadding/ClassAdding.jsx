@@ -25,7 +25,7 @@ function ClassAdding() {
 
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
 
-  const m = admininfo ? admininfo.admininfo.medium : null;
+  const m = admininfo ? admininfo.admininfo?.medium : null;
 
   const mediumOption = m ? [{ value: m, label: m }] : [];
 
@@ -38,7 +38,7 @@ function ClassAdding() {
     }
   };
 
-  const teacherOptions = teacherinfo.adminteacherinfo.map((teacher) => ({
+  const teacherOptions = teacherinfo.adminteacherinfo?.map((teacher) => ({
     value: `${teacher.first_name} ${teacher.last_name}`, // Assuming you want to use names as value; could be `teacher.id` or similar if needed
     label: `${teacher.first_name} ${teacher.last_name}`, // Display format in the dropdown
   }));
@@ -124,11 +124,8 @@ function ClassAdding() {
                   />
                 </Link>
                 <h1
-                  style={{
-                    color: "#526D82",
-                    fontSize: "25px",
-                    marginLeft: "10px",
-                  }}
+                  style={{}}
+                  className="class_title"
                 >
                   Class Adding
                 </h1>
@@ -137,13 +134,14 @@ function ClassAdding() {
             </Col>
           </Row>
           <Row>
+            {/* <div className="class_scroll"> */}
             <Col md={6}>
               <div className="form_group">
                 <input
                   type="number"
                   id="class_number"
                   name="class_number"
-                  placeholder="Enter class number"
+                  placeholder=""
                   value={className}
                   onChange={handleClassNameChange}
                 />
@@ -157,7 +155,7 @@ function ClassAdding() {
                   type="text"
                   id="class_category"
                   name="class_category"
-                  placeholder="Enter stream"
+                  placeholder=""
                   value={stream}
                   onChange={(e) => setStream(e.target.value)}
                   readOnly={parseInt(className, 10) < 11}
@@ -169,7 +167,7 @@ function ClassAdding() {
                 <Select
                   options={teacherOptions}
                   styles={customStyles}
-                  placeholder="Select teacher"
+                  placeholder=""
                   value={teacher}
                   onChange={setTeacher}
                 />
@@ -178,14 +176,13 @@ function ClassAdding() {
                 </label>
               </div>
             </Col>
-
             <Col md={6}>
-              <div className="form_group">
+              <div className="form_group division">
                 <input
                   type="text"
                   id="class_division"
                   name="class_division"
-                  placeholder="Enter division"
+                  placeholder=""
                   value={division}
                   onChange={(e) => setDivision(e.target.value)}
                 />
@@ -198,7 +195,7 @@ function ClassAdding() {
                 <Select
                   options={mediumOption}
                   styles={customStyles}
-                  placeholder="Select medium"
+                  placeholder=""
                   value={medium}
                   onChange={setMedium}
                 />
@@ -221,6 +218,7 @@ function ClassAdding() {
                
               </div>
             </Col>
+            {/* </div> */}
           </Row>
         </form>
       </Container>

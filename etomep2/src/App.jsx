@@ -23,7 +23,6 @@ import AdminFacultyPage from './pages/adminpage/AdminFacultyPage';
 import AdminClassPage from './pages/adminpage/AdminClassPage';
 import InstitutionAddingPage from './pages/adminpage/InstitutionAddingPage';
 import AdminClassAddingPage from './pages/adminpage/AdminClassAddingPage';
-import CurriculumAdding from './components/admin/admincurriculumadding/CurriculumAdding';
 import AdminCurriculumAddingPage from './pages/adminpage/AdminCurriculumAddingPage';
 import AdminFacultyAddingPage from './pages/adminpage/AdminFacultyAddingPage';
 import AdminClassViewPage from './pages/adminpage/AdminClassViewPage';
@@ -43,7 +42,6 @@ import AarnaQuestionViewPage from './pages/adminpage/AarnaQuestionViewPage';
 import AarnaSeatViewPage from './pages/adminpage/AarnaSeatViewPage';
 import AarnaEvaluationViewPage from './pages/adminpage/AarnaEvaluationViewPage';
 import TeacherStudentAddPage from './pages/teacherpage/TeacherStudentAddPage';
-import TeacherStudentDashboardPage from './pages/teacherpage/TeacherStudentDashboardPage';
 import TeacherNavbarPage from './pages/teacherpage/TeacherNavbarPage';
 import TeacherStudentViewPage from './pages/teacherpage/TeacherStudentViewPage';
 import TeacherLoginPage from './pages/teacherpage/TeacherLoginPage';
@@ -54,6 +52,7 @@ import TeacherAarnaPage from './pages/teacherpage/TeacherAarnaPage';
 import TeacherQuestionCreationPage from './pages/teacherpage/TeacherQuestionCreationPage';
 import AarnaResultViewPage from './pages/adminpage/AarnaResultViewPage';
 import TeacherResultView from './components/teacher/teacherresultview/TeacherResultView';
+import AdminLokaLibraryPage from './pages/adminpage/AdminLokaLibraryPage';
 
 
 function App() {
@@ -107,6 +106,7 @@ function App() {
           <Route path="/evaluationview" element={<AarnaEvaluationViewPage/>}/>
           <Route path="/adminlokanavbar" element={<LokaNavbarPage/>}/>
           <Route path="/adminlokatextbook" element={<AdminLokaTextbookPage/>}/>
+          <Route path="/adminlokalibary" element={<AdminLokaLibraryPage/>}/>
           <Route path="/adminresultview" element={<AarnaResultViewPage/>}/>
 
 

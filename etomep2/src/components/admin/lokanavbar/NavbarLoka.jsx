@@ -4,6 +4,7 @@ import { BsSearch, BsFilterRight } from "react-icons/bs";
 import '../lokanavbar/lokanavbar.css'
 import LokaTextbook from "../adminloka/LokaTextbook";
 import LokaBookDashboard from "../adminlokatextbookdashboard/LokaBookDashboard";
+import LokaLibraryListing from "../adminlokalibrarylist/LokaLibraryListing";
 
 function NavbarLoka() {
     const [activeTab, setActiveTab] = useState(
@@ -17,12 +18,8 @@ function NavbarLoka() {
     
   return (
     <div
-      className="institution_dashboard"
-      style={{
-        backgroundColor: "#F8FEFF",
-        height: "100vh",
-        paddingTop: "12vh",
-      }}
+      className="loka_dashboard"
+
     >
       <Container>
         <Row style={{ paddingLeft: "2vw", paddingTop: "1vw" }}>
@@ -31,13 +28,13 @@ function NavbarLoka() {
               variant="underline"
               activeKey={activeTab}
               onSelect={(k) => setActiveTab(k)}
-              className="institution_dashboard_tab"
+              className="loka_dashboard_tab"
               style={{ width: "100%" }}
             >
               <Nav.Item>
                 <Nav.Link
                   eventKey="Textbook"
-                  className="mob_subhead_one"
+                  className="loka_mob_subhead_one"
                   style={{
                     textDecoration: "none",
                     color: "#526D82",
@@ -51,7 +48,7 @@ function NavbarLoka() {
               <Nav.Item>
                 <Nav.Link
                   eventKey="Library"
-                  className="mob_subhead_one"
+                  className="loka_mob_subhead_one"
                   style={{
                     textDecoration: "none",
                     color: "#526D82",
@@ -123,7 +120,7 @@ function NavbarLoka() {
 
             <div className="institution_dashboard_container">
               {activeTab === "Textbook" && <LokaBookDashboard />}
-              {/* {activeTab === "Library" && <AdminClassdashboard />} */}
+              {activeTab === "Library" && <LokaLibraryListing />}
             </div>
           </Col>
         </Row>

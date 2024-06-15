@@ -7,18 +7,15 @@ import Select from "react-select";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from 'sweetalert2'; 
-import '../adminloka/lokatextbook.css'
+import '../adminlokalibrary/lokalibrary.css'
 
-function LokaTextbook() {
+function LokaLibrary() {
     const [selectedTab, setSelectedTab] = useState("pdf");
     const [ totalChaptersInput, setTotalChaptersInput] = useState("");
     const [chapters, setChapters] = useState([]);
-    const [classValue, setClassValue] = useState("");
     const [textbookName, setTextbookName] = useState("");
     const [subjectOptions, setSubjectOptions] = useState([]);
     const [selectedSubject, setSelectedSubject] = useState("");
-    const [medium, setMedium] = useState("");
-    const [m, setM] = useState("");
     const [volume, setVolume] = useState("");
     const [publisherName, setPublisherName] = useState("");
     const [p, setP] = useState("");
@@ -52,10 +49,7 @@ function LokaTextbook() {
         fetchSubjects();
       }, [APIURL]);
     
-      const handleMediumChange = (selectedOptions) => {
-        setM(selectedOptions.value);
-        setMedium(selectedOptions);
-      };
+
     
       const { id } = useParams();
     
@@ -83,11 +77,9 @@ function LokaTextbook() {
     
       useEffect(() => {
         if (data && data[0].chapter_info) {
-          setClassValue(data[0].class_name || "");
           setTextbookName(data[0].text_name || "");
           setSelectedSubject({ value: data[0].subject, label: data[0].subject } || "");
           setVolume(data[0].volume || "");
-          setMedium({ value: data[0].medium, label: data[0].medium } || "");
           setPublisherName({
             value: data[0].publisher_name,
             label: data[0].publisher_name,
@@ -176,14 +168,6 @@ function LokaTextbook() {
         e.preventDefault(); 
         setSelectedTab(tab);
       };
-      const handleClassValueChange = (e) => {
-        const value = parseInt(e.target.value);
-        if (!isNaN(value) && value > 0) {
-          setClassValue(value);
-        } else {
-          setClassValue("");
-        }
-      };
     
       const handleChapterInputChange = (index, fieldName, value) => {
         const updatedChapters = [...chapters];
@@ -249,18 +233,6 @@ function LokaTextbook() {
         ));
       };
     
-    //   const handleTotalChaptersChange = (e) => {
-    //     const totalChapters = parseInt(e.target.value);
-    //     setTotalChaptersInput(totalChapters);
-    //     const updatedChapters = Array.from(
-    //       { length: totalChapters },
-    //       (_, index) => ({
-    //         name: "",
-    //         pageNo: "",
-    //       })
-    //     );
-    //     setChapters(updatedChapters);
-    //   };
     const handleTotalChaptersChange = (e) => {
         const totalChapters = parseInt(e.target.value, 10);
         // Set whether to show chapter inputs based on the number of chapters entered
@@ -315,9 +287,7 @@ function LokaTextbook() {
     
       const handleSubmit = async () => {
         if (
-          !classValue ||
           !textbookName ||
-          !medium ||
           !selectedSubject ||
           // !volume ||
           !publisherName ||
@@ -325,10 +295,8 @@ function LokaTextbook() {
           !imageFile
         ) {
           let missingFields = [];
-          if (!classValue) missingFields.push("class");
           if (!textbookName) missingFields.push("textbook name");
           if (!selectedSubject) missingFields.push("Subject");
-          if (!medium) missingFields.push("medium");
           if (!publisherName) missingFields.push("publisher name");
           if (!pdfFile) missingFields.push("PDF file");
           if (!imageFile) missingFields.push("image file");
@@ -347,13 +315,11 @@ function LokaTextbook() {
         setLoading(true);
         try {
           const formData = new FormData();
-          formData.append("class_name", classValue);
           formData.append("text_name", textbookName);
           formData.append("subject", selectedSubject.value);
           formData.append("volume", volume);
           formData.append("textbook_pdf", pdfFile);
           formData.append("textbook_front_page", imageFile);
-          formData.append("medium", m);
           formData.append("publisher_name", p);
     
           // publisherName.forEach((publisherValue, index) => {
@@ -381,7 +347,7 @@ function LokaTextbook() {
             text: "Textbook created successfully!",
           });
     
-          navigate("/GodHeader");
+          navigate("/adminlokanavbar");
         } catch (error) {
           console.error("Error creating textbook:", error);
           Swal.fire({
@@ -394,27 +360,10 @@ function LokaTextbook() {
         }
       };
     
-      const mediumbook = [
-        "Malayalam",
-        "english",
-        "hindi",
-        "kannada",
-        "urudu",
-        "telgu",
-        "tamil",
-        "konkani",
-      ];
-    
-      const textbookMeium = mediumbook.map((bookmedium) => ({
-        value: bookmedium,
-        label: bookmedium,
-      }));
-    
+
       const handleUpdate = async () => {
         if (
-          !classValue ||
           !textbookName ||
-          !medium ||
           !selectedSubject ||
           !publisherName ||
           !pdfFile ||
@@ -422,10 +371,8 @@ function LokaTextbook() {
         ) {
           let missingFields = [];
     
-          if (!classValue) missingFields.push("class");
           if (!textbookName) missingFields.push("textbook name");
           if (!selectedSubject) missingFields.push("Subject");
-          if (!medium) missingFields.push("medium");
           if (!publisherName) missingFields.push("publisher name");
           if (!pdfFile) missingFields.push("PDF file");
           if (!imageFile) missingFields.push("image file");
@@ -441,73 +388,71 @@ function LokaTextbook() {
           return;
         }
     
-        const confirmResult = await Swal.fire({
-          title: "Confirm Update",
-          text: "Are you sure you want to update this textbook?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, update it!",
-        });
+        // const confirmResult = await Swal.fire({
+        //   title: "Confirm Update",
+        //   text: "Are you sure you want to update this textbook?",
+        //   icon: "warning",
+        //   showCancelButton: true,
+        //   confirmButtonColor: "#3085d6",
+        //   cancelButtonColor: "#d33",
+        //   confirmButtonText: "Yes, update it!",
+        // });
     
-        if (confirmResult.isConfirmed) {
-          setLoading(true);
+        // if (confirmResult.isConfirmed) {
+        //   setLoading(true);
     
-          try {
-            const formData = new FormData();
-            formData.append("id", id);
-            formData.append("class_name", classValue);
-            formData.append("text_name", textbookName);
-            formData.append("subject", selectedSubject.value);
-            formData.append("volume", volume);
-            formData.append("textbook_pdf", pdfFile);
-            formData.append("textbook_front_page", imageFile);
-            formData.append("medium",m);
+        //   try {
+        //     const formData = new FormData();
+        //     formData.append("id", id);
+        //     formData.append("text_name", textbookName);
+        //     formData.append("subject", selectedSubject.value);
+        //     formData.append("volume", volume);
+        //     formData.append("textbook_pdf", pdfFile);
+        //     formData.append("textbook_front_page", imageFile);
     
-            if (Array.isArray(publisherName)) {
-              publisherName.forEach((publisher, index) => {
-                formData.append(`publisher_name[${index}]`, publisher.value);
-              });
-            } else {
-              formData.append("publisher_name", publisherName.value);
-            }
+        //     if (Array.isArray(publisherName)) {
+        //       publisherName.forEach((publisher, index) => {
+        //         formData.append(`publisher_name[${index}]`, publisher.value);
+        //       });
+        //     } else {
+        //       formData.append("publisher_name", publisherName.value);
+        //     }
     
-            chapters.forEach((chapter, index) => {
-              formData.append(`chapter_name[${index}]`, chapter.name);
-              formData.append(`page_no[${index}]`, chapter.pageNo);
-            });
+        //     chapters.forEach((chapter, index) => {
+        //       formData.append(`chapter_name[${index}]`, chapter.name);
+        //       formData.append(`page_no[${index}]`, chapter.pageNo);
+        //     });
     
-            console.log("FormData:", formData);
+        //     console.log("FormData:", formData);
     
-            const response = await axios.put(
-              `${APIURL}/api/update-textbook`,
-              formData,
-              {
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                },
-              }
-            );
+        //     const response = await axios.put(
+        //       `${APIURL}/api/update-textbook`,
+        //       formData,
+        //       {
+        //         headers: {
+        //           "Content-Type": "multipart/form-data",
+        //         },
+        //       }
+        //     );
     
-            Swal.fire({
-              icon: "success",
-              title: "Success!",
-              text: "Textbook updated successfully!",
-            });
+        //     Swal.fire({
+        //       icon: "success",
+        //       title: "Success!",
+        //       text: "Textbook updated successfully!",
+        //     });
     
-            navigate("/GodHeader");
-          } catch (error) {
-            console.error("Error updating textbook:", error);
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Something went wrong!",
-            });
-          } finally {
-            setLoading(false);
-          }
-        }
+        //     navigate("/GodHeader");
+        //   } catch (error) {
+        //     console.error("Error updating textbook:", error);
+        //     Swal.fire({
+        //       icon: "error",
+        //       title: "Oops...",
+        //       text: "Something went wrong!",
+        //     });
+        //   } finally {
+        //     setLoading(false);
+        //   }
+        // }
       };
 
       const customStyles = {
@@ -559,8 +504,8 @@ function LokaTextbook() {
 
   return (
     <div>
-      <Container className="loka_container">
-        <form className="loka_form">
+      <Container className="loka_lib_container">
+        <form className="loka_lib_form">
           <div
             style={{
               display: "flex",
@@ -569,30 +514,16 @@ function LokaTextbook() {
             }}
           >
             <Link to="/adminlokanavbar">
-              <IoChevronBackSharp className="loka_back" />
+              <IoChevronBackSharp className="loka_lib_back" />
             </Link>
-            <h1 className="loka_title">Add Textbooks</h1>
+            <h1 className="loka_lib_title">Add Books</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>
-          <div className="loka_form_scroll">
+          <div className="loka_lib_form_scroll">
 
           <Row style={{ paddingTop: "20px" }}>
             <Col md={6}>
-            <div className="loka_textbook_group">
-                    <label htmlFor="class">
-                      Class
-                    </label>
-                    <input
-                      type="text"
-                      id="class"
-                      name="class"
-                      value={classValue}
-                      maxLength="2"
-                      style={{}}
-                      onChange={handleClassValueChange}
-                    />
-                  </div>
-                  <div className="loka_textbook_group">
+                  <div className="loka_library_group">
                     <label htmlFor="textbookName">
                       Textbook Name
                     </label>
@@ -607,44 +538,7 @@ function LokaTextbook() {
                     />
                   </div>
                   <div
-                    className="loka_textbook_group"
-                  >
-                    <label htmlFor="mediumbook">
-                      Medium
-                    </label>
-                    <Select
-                      type="text"
-                      id="mediumbook"
-                      name="mediumbook"
-                      // list=''
-                      options={textbookMeium}
-                      value={medium}
-                      style={{ textTransform: "capitalize" }}
-                      onChange={handleMediumChange}
-                      maxLength="100"
-                      styles={customStyles}
-                    />
-                  </div>
-            </Col>
-
-            <Col md={6}>
-            <div className="loka_textbook_group">
-                    <label htmlFor="volume">
-                      Volume
-                    </label>
-                    <input
-                      type="text"
-                      id="volume"
-                      name="volume"
-                      value={volume}
-                      maxLength="100"
-                      style={{ textTransform: "capitalize" }}
-                      // onChange={(e) => setVolume(e.target.value)}
-                      onChange={handleVolumeChange}
-                    />
-                  </div>
-                  <div
-                    className="loka_textbook_group"
+                    className="loka_library_group"
                   >
                     <label
                       htmlFor="subject"
@@ -660,8 +554,27 @@ function LokaTextbook() {
                       styles={customStyles}
                     />
                   </div>
+            </Col>
+
+            <Col md={6}>
+            <div className="loka_library_group">
+                    <label htmlFor="volume">
+                      Volume
+                    </label>
+                    <input
+                      type="text"
+                      id="volume"
+                      name="volume"
+                      value={volume}
+                      maxLength="100"
+                      style={{ textTransform: "capitalize" }}
+                      // onChange={(e) => setVolume(e.target.value)}
+                      onChange={handleVolumeChange}
+                    />
+                  </div>
+
                   <div
-                    className="loka_textbook_group"
+                    className="loka_library_group"
                   >
                     <label
                       htmlFor="publisherName"
@@ -698,7 +611,7 @@ function LokaTextbook() {
                       Index Adding
                     </label>
                   </div>
-                  <div className="loka_textbook_group" style={{marginLeft:'0px', width:'90%'}}>
+                  <div className="loka_library_group" style={{marginLeft:'0px', width:'90%'}}>
                     <label
                       htmlFor="totalChapters"
                     >
@@ -713,7 +626,7 @@ function LokaTextbook() {
                       max='50'
                     />
                   </div>
-                  <div className={`chapter_div ${totalChaptersInput <= 5 ? 'hidden_border' : ''}`}>
+                  <div className={`lib_chapter_div ${totalChaptersInput <= 5 ? 'lib_hidden_border' : ''}`}>
             {renderChapterInputs()}
         </div>
                 </Col>
@@ -734,7 +647,7 @@ function LokaTextbook() {
                     <div>
                       <div style={{ marginLeft: "10px" }}>
                         <div style={{ display: "flex" }}>
-                          <div className="lokatb_textbutton_container" style={{}}>
+                          <div className="textbutton_lib_container" style={{}}>
                             <button
                               style={{
                                 ...(selectedTab === "pdf"
@@ -747,7 +660,7 @@ function LokaTextbook() {
                               Textbook Pdf
                             </button>
                           </div>
-                          <div className="lokatb_textbutton_container" style={{}}>
+                          <div className="textbutton_lib_container" style={{}}>
                             <button
                               style={{
                                 ...(selectedTab === "frontPage"
@@ -768,8 +681,8 @@ function LokaTextbook() {
                       {selectedTab === "pdf" && (
                         <div style={{ marginLeft: "10px" }}>
                           <label htmlFor="pdf" style={{}}></label>
-                          <div className="admin_textbook_image_upload_container">
-                            <div className="admin_textbook_upload_placeholder">
+                          <div className="library_image_upload_container">
+                            <div className="library_upload_placeholder">
                               {pdfFile ? (
                                 <>
                                   <embed
@@ -799,7 +712,7 @@ function LokaTextbook() {
                                 <>
                                   <label
                                     htmlFor="pdf-upload"
-                                    className="admin_textbook_upload_label"
+                                    className="textbook_upload_label"
                                   >
                                     Upload PDF
                                   </label>
@@ -807,7 +720,7 @@ function LokaTextbook() {
                                     id="pdf-upload"
                                     type="file"
                                     accept=".pdf"
-                                    className="admin_textbook_upload_input"
+                                    className="textbook_upload_input"
                                     onChange={handlePdfUpload}
                                   />
                                 </>
@@ -820,8 +733,8 @@ function LokaTextbook() {
                       {selectedTab === "frontPage" && (
                         <div>
                           <label htmlFor="photo" style={{}}></label>
-                          <div className="admin_textbook_image_upload_container">
-                            <div className="admin_textbook_upload_placeholder">
+                          <div className="library_image_upload_container">
+                            <div className="library_upload_placeholder">
                               {imageFile ? (
                                 <>
                                   <img
@@ -855,7 +768,7 @@ function LokaTextbook() {
                                 <>
                                   <label
                                     htmlFor="image-upload"
-                                    className="admin_textbook_upload_label"
+                                    className="textbook_upload_label"
                                   >
                                     Upload Image
                                   </label>
@@ -863,7 +776,7 @@ function LokaTextbook() {
                                     id="image-upload"
                                     type="file"
                                     accept="image/*"
-                                    className="admin_textbook_upload_input"
+                                    className="textbook_upload_input"
                                     onChange={handleImageUpload}
                                   />
                                 </>
@@ -874,7 +787,7 @@ function LokaTextbook() {
                       )}
                     </div>
                     <div
-                      className="submit_loka"
+                      className="library_submit_loka"
                     //   style={{ marginBottom: "50px", marginTop: "30px" }}
                     >
                       <button
@@ -905,4 +818,4 @@ function LokaTextbook() {
   )
 }
 
-export default LokaTextbook
+export default LokaLibrary
