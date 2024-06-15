@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect  } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { IoIosAdd, IoMdDownload, IoMdAdd } from "react-icons/io";
 import { MdUpload } from "react-icons/md";
@@ -6,17 +6,22 @@ import generateExcelFile from "../../utils/generateExcelFile";
 import amritha from "../../../assets/amritha.png";
 import { Link, useNavigate } from "react-router-dom";
 import '../studentdashboard/studentdashboard.css'
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 
 function StudentDashboard() {
   const [isActive, setIsActive] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [file, setFile] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // Correctly declared here
+  const [studentlist , setStudentList] = useState()
 
-  // const admininfo = useSelector((state) => state.admininfo);
-  // const APIURL = useSelector((state) => state.APIURL.url);
-  // const admin_id = admininfo ? admininfo?.admininfo.admin_id : null;
+
+  console.log(studentlist,'student list')
+
+  const APIURL = useSelector((state) => state.APIURL.url);
+  const teacher = useSelector((state) => state.teacherinfo);
+  const teacher_id = teacher.teacherinfo?.teacher_id;
 
 
   const navigate = useNavigate()
@@ -31,38 +36,6 @@ function StudentDashboard() {
     fileInputRef.current.click();
   };
 
-  // const handleFileUpload = async () => {
-  //   if (!file) {
-  //     alert("Please select a file to upload.");
-  //     return;
-  //   }
-
-  //   setIsLoading(true);
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   formData.append("adminId", admin_id);
-
-  //   try {
-  //     const response = await axios.post(
-  //       `${APIURL}/api/excelteacher`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-  //     alert("Upload successful");
-  //     console.log(response.data);
-  //     setShowOptions(false);
-  //     setFile(null);
-  //   } catch (error) {
-  //     console.error("Error uploading file:", error);
-  //     alert("Error during file upload.");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
 
   const handleAddClick = () => {
     setShowOptions(!showOptions);
@@ -77,6 +50,27 @@ function StudentDashboard() {
   const handleclick= ()=>{
       navigate('/teacherstudentview')
   }
+
+  useEffect(() => {
+    const fetchFacultyData = async () => {
+      try {
+        const response = await axios.get(`${APIURL}/api/addstudent/${teacher_id}`);
+        setStudentList(response.data);
+      
+      } catch (error) {
+        console.error("Failed to fetch faculty data:", error);
+      } 
+      
+    };
+
+    fetchFacultyData();
+  }, [APIURL]);
+
+
+
+
+
+
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%"}}>
       <Container

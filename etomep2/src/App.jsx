@@ -85,7 +85,6 @@ function App() {
           <Route path="/classadding" element={<AdminClassAddingPage/>}/>
           <Route path="/adminforgot" element={<AdminForgot />} />
           <Route path="/adminnewpassword" element={<AdminNewPassword />} />
-          <Route path="/adminclassdashboard" element={<AdminClassPage />} />
           <Route path="/adminfacultydashboard" element={<AdminFacultyPage />} />
           <Route path="/curriculumadding" element={<AdminCurriculumAddingPage/>}/>
           <Route path="/facultyadding" element={<AdminFacultyAddingPage/>}/>

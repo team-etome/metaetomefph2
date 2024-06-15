@@ -32,11 +32,13 @@ function CurriculumAdding() {
   const admininfo = useSelector((state) => state.admininfo);
 
   const admin_id = admininfo ? admininfo.admininfo?.admin_id : null;
-  const class_name      = classinfo?.adminclassinfo.className
-  const division        = classinfo?.adminclassinfo.division
-  const stream          = classinfo?.adminclassinfo.stream
-  const class_teacher   = classinfo?.adminclassinfo.teacher.value
-  const medium          = classinfo?.adminclassinfo.medium.value
+
+  const class_name      = classinfo?.adminclassinfo?.className
+  const division        = classinfo?.adminclassinfo?.division
+  const stream          = classinfo?.adminclassinfo?.stream
+  const class_teacher   = classinfo?.adminclassinfo?.teacher.value
+  const medium          = classinfo?.adminclassinfo?.medium.value
+
 
   console.log(classinfo,"classinfo")
   
