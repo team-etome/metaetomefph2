@@ -95,6 +95,8 @@ function FacultyView() {
             </div>
             <div style={{ border: "0.5px solid #526D82" }}></div>
           </div>
+          <div className='faculty_scroll'>
+
           <Row style={{ paddingTop: "20px" }}>
             <Col md={6}>
               <div className="faculty_view_group">
@@ -129,6 +131,7 @@ function FacultyView() {
               </div>
             </Col>
           </Row>
+          </div>
         </form>
       </Container>
     </div>
