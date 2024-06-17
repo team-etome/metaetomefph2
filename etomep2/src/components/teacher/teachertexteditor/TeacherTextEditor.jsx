@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import "../teachertexteditor/teachertexteditor.css"
+
+import React, { useState, useEffect } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "ckeditor5-build-classic-mathtype";
 import DOMPurify from "dompurify";
 
-import { MdFormatBold, MdFormatItalic } from "react-icons/md";
-import { CiTextAlignLeft,CiTextAlignCenter, CiTextAlignRight,CiImageOn } from "react-icons/ci";
+
 
 export default function TeacherTextEditor() {
   const [ckData, setCkData] = useState("");
-  
+
   const createMarkup = (html) => {
     return { __html: DOMPurify.sanitize(html) };
   };
@@ -16,9 +17,6 @@ export default function TeacherTextEditor() {
   const [editorValue, changeEditorValue] = useState('');
   const [selectionStart, setSelectionStart] = useState(0);
   const [selectionEnd, setSelectionEnd] = useState(0);
-
-
-
 
   const handleAlignmentLeft = () => {
     document.execCommand('justifyLeft');
@@ -43,8 +41,6 @@ export default function TeacherTextEditor() {
     reader.readAsDataURL(file);
   };
 
-
-
   const handleEditorChange = (event) => {
     changeEditorValue(event.target.value);
   };
@@ -55,12 +51,40 @@ export default function TeacherTextEditor() {
     setSelectionEnd(selection.focusOffset);
   };
 
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === "childList") {
+          const toolbar = document.querySelector(".ck-toolbar");
+          const editable = document.querySelector(".ck-editor__editable");
+          if (toolbar && editable) {
+            editable.parentNode.insertBefore(toolbar, editable.nextSibling);
+          }
+        }
+      });
+    });
+
+    const config = { childList: true, subtree: true };
+    const targetNode = document.querySelector(".ck-editor");
+
+    if (targetNode) {
+      observer.observe(targetNode, config);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <React.Fragment>
-   
+    <div style={{width:"90%" ,minHeight:"150px"}}>
+    <React.Fragment    >
+  
       <CKEditor
+     
         editor={ClassicEditor}
         config={{
+          
           toolbar: {
             shouldNotGroupWhenFull: true,
             items: [
@@ -91,12 +115,14 @@ export default function TeacherTextEditor() {
           const data = editor.getData();
           setCkData(data);
         }}
+        className="custom-editor"
       />
        
-      <div
+      {/* <div
         style={{ whiteSpace: 'pre-wrap' }}
         dangerouslySetInnerHTML={createMarkup(ckData)}
-      ></div>
+      ></div> */}
     </React.Fragment>
+    </div>
   );
 }

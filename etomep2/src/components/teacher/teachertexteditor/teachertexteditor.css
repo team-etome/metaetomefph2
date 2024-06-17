@@ -1,0 +1,8 @@
+.ck-editor__editable_inline {
+    min-height: 120px !important;
+    border-radius: 8px !important;
+  
+    border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+    z-index: 10 !important;
+  }
