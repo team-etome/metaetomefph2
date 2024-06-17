@@ -53,6 +53,7 @@ import TeacherQuestionCreationPage from './pages/teacherpage/TeacherQuestionCrea
 import AarnaResultViewPage from './pages/adminpage/AarnaResultViewPage';
 import TeacherResultView from './components/teacher/teacherresultview/TeacherResultView';
 import AdminLokaLibraryPage from './pages/adminpage/AdminLokaLibraryPage';
+import TeacherQuestionInstructionPage from './pages/teacherpage/TeacherQuestionInstructionPage';
 
 
 function App() {
@@ -126,6 +127,8 @@ function App() {
           <Route path="/teacheraarna" element={<TeacherAarnaPage/>}/>
           <Route path="/teacherquestionview" element={<TeacherQuestionCreationPage/>}/>
           <Route path="/teacherresultview" element={<TeacherResultView/>}/>
+          <Route path="/tecaherquestioninstruction" element={<TeacherQuestionInstructionPage/>}/>
+
 
 
 

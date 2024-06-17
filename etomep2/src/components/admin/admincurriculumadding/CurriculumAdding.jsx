@@ -187,14 +187,7 @@ function CurriculumAdding() {
   return (
     <div className="curriculum_container">
       <Container className="curriculum_add">
-        <form
-          className="curriculum_form"
-          style={{
-            backgroundColor: "#ffff",
-            borderRadius: "16px",
-            height: "90%",
-          }}
-        >
+        <form className="curriculum_form">
           <Row>
             <Col>
               <div className="curriculum_header">

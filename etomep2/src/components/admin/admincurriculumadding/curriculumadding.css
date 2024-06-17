@@ -21,6 +21,10 @@
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 100%;
+  padding-top: 20px;
+  background-color: #ffff;
+  border-radius: 16px;
+  height: 90%;
 }
 
 .curriculum_form::-webkit-scrollbar {
