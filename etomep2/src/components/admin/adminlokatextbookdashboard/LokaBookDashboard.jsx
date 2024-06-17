@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Col, Container, Row,InputGroup, FormControl } from "react-bootstrap";
+import { Col, Container, Row,InputGroup, FormControl ,Dropdown} from "react-bootstrap";
 import { IoIosAdd } from "react-icons/io";
 import { useNavigate  } from "react-router-dom";
 import amritha from "../../../assets/amritha.png";
@@ -71,8 +71,16 @@ function LokaBookDashboard() {
               <Col className="tb_title_col">
               <h4>Textbook Management</h4>
               </Col>
-              <Col md={6} className="book_search_col">
+              <Col md={6} className="book_search_col" style={{display:'flex'}}>
               {/* <div>dropdown</div> */}
+              <Dropdown>
+                <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic"className="dropdown_tb">
+                  NCERT
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item>NCERT</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
                 <InputGroup style={{width:'80%'}}>
                 <BsSearch className="position-absolute top-50 translate-middle-y ms-2 book_searchbar_icon"/>
                   <FormControl
@@ -83,6 +91,7 @@ function LokaBookDashboard() {
                     onChange={e => setSearchTerm(e.target.value)}
                   />
                 </InputGroup>
+
               </Col>
             </Row>
             <div className="admin_loka_tb_list_scroll">

@@ -17,12 +17,9 @@ function NavbarLoka() {
       }, [activeTab]);
     
   return (
-    <div
-      className="loka_dashboard"
-
-    >
+    <div className="loka_dashboard">
       <Container>
-        <Row style={{ paddingLeft: "2vw", paddingTop: "1vw" }}>
+        <Row  className="loka_navbar_row">
           <Col md={12}>
             <Nav
               variant="underline"
@@ -37,9 +34,6 @@ function NavbarLoka() {
                   className="loka_mob_subhead_one"
                   style={{
                     textDecoration: "none",
-                    color: "#526D82",
-                    fontSize: "15px",
-                    marginRight: "20px",
                   }}
                 >
                   Textbook
@@ -51,8 +45,6 @@ function NavbarLoka() {
                   className="loka_mob_subhead_one"
                   style={{
                     textDecoration: "none",
-                    color: "#526D82",
-                    fontSize: "15px",
                   }}
                 >
                   Library

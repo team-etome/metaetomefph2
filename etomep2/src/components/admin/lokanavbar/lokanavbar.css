@@ -4,6 +4,10 @@
     background-color: #F8FEFF;
  
   }
+  .loka_navbar_row{
+    padding-left: 2vw;
+    padding-top: 1vw;
+  }
 .loka_dashboard_tab .nav-link {
     padding: 10px 15px;
     border: none;
@@ -116,36 +120,52 @@
     transition-duration: .3s;
     padding-right: 20px;
   }
-
+  .loka_mob_subhead_one{
+    text-decoration: none;
+    color: #526D82 !important;
+    font-size: 15px;
+    margin-right: 20px;
+  }
   @media (max-width:768px) {
-   .institution_dashboard_tab{
-    display: flex;
-    align-items: center;
-    padding-top: 0px;
-   justify-content: flex-start;
-   
-   }
-    .loka_mob_subhead_one{
-      background-color: #E2E0E0;
-      color: #727272;
-      width: 100% !important;
-      height:30px !important;
-      border-radius: 8px;
+    .loka_navbar_row{
+      padding-top: 3vw;
+    }
+    .loka_dashboard_tab{
       display: flex;
-      justify-content: center;
       align-items: center;
-    }
-    .loka_dashboard_tab .nav-link.active {
-      font-weight:400;
-      border-bottom: none ;
-      color: #ffff !important;
-      background-color: #526D82;
-    }
-    .loka_dashboard{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0 !important;
-   
-    }
+      padding-top: 0px;
+     justify-content: flex-start;
+     margin-top: 10px;
+     padding-left: 5%;
+     
+     }
+      .loka_mob_subhead_one{
+        /* background-color: #E2E0E0; */
+        color: #9DB2BF!important;
+        width: 100% !important;
+        height:30px !important;
+        border-radius: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #9DB2BF !important;
+      }
+      .loka_mob_subhead_one:hover{
+        background-color: #9DB2BF !important;
+        color: #ffff !important;
+        font-size: 15px;
+      }
+      .loka_dashboard_tab .nav-link.active {
+        font-weight:400;
+        border-bottom: none ;
+        color: #ffff !important;
+        background-color: #9DB2BF;
+      }
+      .loka_dashboard{
+        /* display: flex;
+        justify-content: center;
+        align-items: center; */
+        padding-top: 20% !important;
+      }
+
   }
