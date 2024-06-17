@@ -1,0 +1,7 @@
+.question_generator{
+    height: 100vh;
+    padding-top: 100px;
+    /* padding-bottom: 100px; */
+    background-color: #DDE6ED;
+    width: 80%;
+}
