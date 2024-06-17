@@ -43,7 +43,27 @@
 .curriculum_form::-webkit-scrollbar-thumb:hover {
   background: #B8B8B8;
 }
+.curriculum_scroll{
+  max-height: calc(90vh - 200px);
+  overflow-y: scroll; 
+  overflow-x: hidden; 
+}
+.curriculum_scroll::-webkit-scrollbar {
+  width: 8px;
+}
 
+.curriculum_scroll::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+.curriculum_scroll::-webkit-scrollbar-thumb {
+  background: #CAD7DF;
+  border-radius: 4px;
+}
+
+.curriculum_scroll::-webkit-scrollbar-thumb:hover {
+  background: #CAD7DF;
+}
 .curriculum_back {
   color: #526D82;
   height: 32px;
@@ -252,7 +272,7 @@
     width: 100%;
   }
 
-  .curriculum_form {
+  /* .curriculum_form {
     padding: 20px;
     height: auto;
     background-color: #fff;
@@ -260,9 +280,9 @@
     overflow-x: hidden;
     box-sizing: border-box;
     max-height: calc(100vh - 120px);
-  }
+  } */
 
-  .curriculum_form::-webkit-scrollbar {
+  /* .curriculum_form::-webkit-scrollbar {
     width: 10px;
   }
 
@@ -277,7 +297,7 @@
 
   .curriculum_form::-webkit-scrollbar-thumb:hover {
     background: #B8B8B8;
-  }
+  } */
 
   .curriculum_inputfield {
     margin-left: 10px;

@@ -27,6 +27,7 @@ function LokaTextbook() {
     const [data, setData] = useState("");
     
     const [showChapterDiv, setShowChapterDiv] = useState(false);
+    
 
     console.log(selectedSubject, "subjectttttt");
 
@@ -217,7 +218,7 @@ function LokaTextbook() {
                   style={{
                     border: "none",
                     borderBottom: "1px solid black",
-                    width: "180px",
+                    width: "100px",
                     outline: "none",
                   }}
                   value={chapter.name}
@@ -683,7 +684,7 @@ function LokaTextbook() {
                   </div>
             </Col>
           </Row>
-          <Row style={{paddingLeft:'40px'}}>
+          <Row className="media_index">
             <Col md={6}>
             <div>
                     <label
@@ -698,10 +699,8 @@ function LokaTextbook() {
                       Index Adding
                     </label>
                   </div>
-                  <div className="loka_textbook_group" style={{marginLeft:'0px', width:'90%'}}>
-                    <label
-                      htmlFor="totalChapters"
-                    >
+                  <div className="loka_textbook_group index_field">
+                    <label htmlFor="totalChapters">
                       Total no of Chapters
                     </label>
                     <input
@@ -717,22 +716,17 @@ function LokaTextbook() {
             {renderChapterInputs()}
         </div>
                 </Col>
-                <Col md={6} style={{paddingLeft:'2rem'}}>
+                <Col md={6}className="loka_tb_media">
                 <div style={{}}>
                       <label
                         htmlFor="mediaLibrary"
-                        style={{
-                          marginLeft: "20px",
-                          // marginBottom: "50px",
-                          fontSize: "25px",
-                          padding: "0px",
-                        }}
+                        className="loka_media_label"
                       >
                         Media Library
                       </label>
                     </div>
                     <div>
-                      <div style={{ marginLeft: "10px" }}>
+                      <div style={{ marginLeft: "0px" }}>
                         <div style={{ display: "flex" }}>
                           <div className="lokatb_textbutton_container" style={{}}>
                             <button

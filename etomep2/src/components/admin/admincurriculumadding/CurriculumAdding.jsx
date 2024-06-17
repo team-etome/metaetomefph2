@@ -201,6 +201,8 @@ function CurriculumAdding() {
               <div style={{ border: "0.5px solid #526D82" }}></div>
             </Col>
           </Row>
+
+          <div className="curriculum_scroll">
           <Row>
             <div className="edit_delete">
               <div className="curriculum_edit">
@@ -322,6 +324,8 @@ function CurriculumAdding() {
               </button>
             </div>
           </div>
+          </div>
+
         </form>
       </Container>
     </div>

@@ -133,8 +133,9 @@
         color: #526D82;
     }
     .class_title{
+      font-weight: 500;
       color: #526D82;
-      font-size: 25px;
+      font-size: 35px;
       margin-left: 10px;
     }
       @media (max-width: 800px) {
@@ -219,7 +220,7 @@
 
       @media (max-width: 999px), (min-width:801px) {
         .class_form {
-            margin-top: 10%;
+            margin-top: 5%;
         }
     }
       
