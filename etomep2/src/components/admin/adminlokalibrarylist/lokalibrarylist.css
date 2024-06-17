@@ -21,8 +21,9 @@
 
 .admin_loka_library_dashboard {
   padding-top: 10px;
-  height: 75vh; /* Ensure there's a limit on the height to enable scrolling */
-  overflow-y: auto; /* Allow vertical scrolling */
+  height: 75vh; 
+  overflow-y: auto; 
+  width:150vw ;
 }
 
 
@@ -51,8 +52,11 @@
   font-size: 30px;
   font-weight: 600;
 }
+.lib_inputgroup_search{
+  width: 100%;
+}
 .library_search_input{
-  border-radius: 8px;
+  border-radius: 6px !important;
   height: 30px;
 }
 .library_searchbar_icon{
@@ -60,13 +64,15 @@
   height: 20px;
   width: 20px;
   color: #D8D4D4;
-  right: 1%;
-  left: 90%;
+  /* right: 1%;
+  left: 90%; */
 }
 .search_col{
   background-color: #DAE2E9;
   padding: 5px;
   border-radius: 8px;
+  width: 40%;
+  margin-right: 20px;
 }
   .admin_lib_texts{
     padding: 10px;
@@ -85,11 +91,11 @@
   
   }
   .ad_lk_lib_rectangle{
-  width: 90%;
-  height: 200px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  width: 70%;
+  height: 250px;
+  /* background-color: #ffffff; */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  /* border-radius: 8px; */
   position: relative;
   margin-bottom: 20px;
   cursor: pointer;
@@ -101,13 +107,21 @@
     padding-top: 10px;
   }
   .ad_loka_lib_img img{
-    width: 150px;
-    height: 130px;
+    /* width: 150px;
+    height: 130px; */
+    width: 190px;
+    height: 220px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   .ad_lk_lib_list{
   display: flex;
   justify-content: center;
-  padding-top: 10px;
+  padding-top: 40px;
   margin-top: 5px;
   }
   .ad_lk_lib_add {
@@ -123,16 +137,21 @@
   height: 70px;
   border-radius: 50%;
   margin-top: 30px;
-  background-color: #526D82;background-size: cover;
+  background-color: #526D82;
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   }
   @media (max-width:576px) {
-   
+
   .ad_lk_lib_rectangle{
-    width: 250px !important;
-    height: 80px !important;
+    width: 175px !important;
+    height: 70% !important;
+  }
+  .ad_loka_lib_img img{
+    width: 145px;
+    height: 182px;
   }
   .ad_lk_lib_list{
   padding:4px;
@@ -144,6 +163,17 @@
     height: 70vh;
     width:100% ;
    padding-right: 20px;
+  }
+  .title_col{
+    display: none;
+  }
+  .lib_inputgroup_search{
+    width: 100%;
+    /* padding-right: 5px; */
+  }
+  .search_col{
+    width: 95%;
+    /* margin-right: 20px; */
   }
   }
   .my-button {

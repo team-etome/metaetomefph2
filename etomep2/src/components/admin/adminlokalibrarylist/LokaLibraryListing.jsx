@@ -71,10 +71,10 @@ function LokaLibraryListing() {
         <h4>Library Management</h4>
         </Col>
         <Col md={6} className="search_col">
-          <InputGroup>
-          <BsSearch className="position-absolute top-50 translate-middle-y ms-2 library_searchbar_icon"/>
+          <InputGroup className="lib_inputgroup_search">
+          <BsSearch className="position-absolute top-50 translate-middle-y ms-3 library_searchbar_icon"/>
             <FormControl
-            className="ps-2 library_search_input"
+            className="ps-5 library_search_input"
               placeholder="Search..."
               aria-label="Search"
               value={searchTerm}
@@ -89,7 +89,7 @@ function LokaLibraryListing() {
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="ad_lk_lib_list">
               <div  className="border border-white ad_lk_lib_rectangle">
                 <div className="ad_loka_lib_img">
-                  <img src={chemistry} alt="Textbook"/>
+                  <img src={chemistry} alt="Reference"/>
                 </div>
                 <div className="admin_lib_texts">
                   <div className="admin_loka_lib_publishername">

@@ -11,8 +11,24 @@
         padding-top: 1%;
         border-radius: 15px;
         padding-bottom: 100px;
-    
     }
+    .qpaper_view_scrollable {
+        max-height: calc(90vh - 200px);
+        overflow-y: scroll; 
+        overflow-x: hidden; 
+    }
+    
+      .qpaper_view_scrollable::-webkit-scrollbar {
+        width: 6px; 
+      }
+      
+      .qpaper_view_scrollable::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      
+      .qpaper_view_scrollable::-webkit-scrollbar-thumb {
+        background: #A8BFD1;
+      }
     .question_view_back {
         color: #526D82;
         height: 32px;
@@ -98,37 +114,14 @@
     
         .question_view_form {
             background-color: #fff;
-            padding: 20px;
+            padding: 10px;
             border-radius: 8px;
             border: none;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            max-height: calc(100vh - 120px);
-            overflow-y: scroll; /* Ensure vertical scroll bar appears */
-            overflow-x: hidden; /* Hide horizontal scroll bar */
-            box-sizing: border-box;
-            margin-top: 30px;
-        }
-    
-        .question_view_form::-webkit-scrollbar {
-            width: 10px;
-        }
-    
-        .question_view_form::-webkit-scrollbar-track {
-            background: #fff;
-        }
-    
-        .question_view_form::-webkit-scrollbar-thumb {
-            background: #E3DFDF;
-            border-radius: 10px;
-        }
-    
-        .question_view_form::-webkit-scrollbar-thumb:hover {
-            background: #E3DFDF;
         }
     
         .question_view_back {
-            margin-right: 15px;
+            margin-right: 5px;
         }
     
         .faculty_view_title {
@@ -171,31 +164,8 @@
     }
     @media (max-width: 999px), (min-width:801px) {
         .question_view_form {
-            margin-top: 10%;
+            margin-top: 1%;
         }
     }
-    @media (min-width: 801px) {
-        .question_view_form {
-            margin-top: 3%;
-            overflow-y: scroll; /* Ensure vertical scroll bar appears */
-            overflow-x: hidden; /* Hide horizontal scroll bar */
-        }
-    
-        .question_view_form::-webkit-scrollbar {
-            width: 10px;
-        }
-    
-        .question_view_form::-webkit-scrollbar-track {
-            background: #fff;
-        }
-    
-        .question_view_form::-webkit-scrollbar-thumb {
-            background: #E3DFDF;
-            border-radius: 10px;
-        }
-    
-        .question_view_form::-webkit-scrollbar-thumb:hover {
-            background: #E3DFDF;
-        }
-    }
+
     

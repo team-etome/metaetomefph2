@@ -29,25 +29,26 @@ function QuestionAssigning() {
         { value: '3', label: '3' },
     ];
 
-   const customStyles = {
+    const customStyles = {
       control: (base, state) => ({
         ...base,
         width: '100%',
-        minHeight: '40px',
+        minHeight: '40px', 
+        height: '50px',
         border: '1px solid #526D82',
         borderRadius: '8px',
-        boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 'none', 
+        boxShadow: state.isFocused ? 'none' : 'none',
         "&:hover": {
-          borderColor: 'none' // Darker border on hover
+          borderColor: 'none' 
         },
         "&:focus": {
-          borderColor: '#526D82', // Ensures the border color when the element is focused
-          outline: 'none' // Removes the default outline when focused
+          borderColor: '#526D82', 
+          outline: 'none' 
         }
       }),
       placeholder: (base) => ({
         ...base,
-        color: '#526D82', 
+        color: '#526D82',
       }),
       singleValue: (base) => ({
         ...base,
@@ -65,6 +66,9 @@ function QuestionAssigning() {
         ...base,
         color: '#526D82',
       }),
+      indicatorSeparator: (base) => ({
+        display: 'none',
+      }),
       indicatorsContainer: (base) => ({
         ...base,
         alignItems: 'center',
@@ -73,22 +77,23 @@ function QuestionAssigning() {
         ...base,
         zIndex: 9999,
         position: 'absolute',
-      })
+      }),
     };
+    
 
 
   return (
     <div>
     <Container className='qpaper_assign_container'>
     <form className='qpaper_form' >
-    <div className="qpaper_form_scrollable">
-      <div style={{display: 'flex', alignItems: 'center', marginBottom:'10px'}}>
+      <div style={{display: 'flex', alignItems: 'center', marginBottom:'1px'}}>
         <Link to='/aarnanavbar'>
             <IoChevronBackSharp className='qpaper_back' />
         </Link>
         <h1 className='qpaper_title'>Question Setting</h1>
         </div>
         <div style={{ border: '0.5px solid #526D82' }}></div>
+        <div className="qpaper_form_scrollable">
 
             <Row style={{paddingTop:'20px'}}>
                 <Col md={6}>
@@ -112,6 +117,7 @@ function QuestionAssigning() {
                         <label htmlFor="subject">Subject<span style={{color: 'red'}}>*</span></label>
                         <input type="text" id='subject' name='subject' />
                     </div>
+                    
                 </Col>
                 <Col md={6}>
                     <div className='qpaper_group'>
@@ -136,7 +142,7 @@ function QuestionAssigning() {
                         <input type="text" id='assign_faculty' name='assign_faculty' />
                     </div>
                     <div className='submit_qpaper'>
-                    <button type="submit" className='qpaper_button'>Submit</button>
+                    <button type="submit" className='qpaper_button'>Send</button>
                     </div>
                 </Col>
             </Row>

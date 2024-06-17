@@ -88,7 +88,6 @@ function SeatAssigning() {
     <div>
     <Container className='seat_assign_container'>
     <form className='seat_form' >
-    <div className="seat_form_scrollable">
       <div style={{display: 'flex', alignItems: 'center', marginBottom:'10px'}}>
         <Link to='/aarnanavbar'>
             <IoChevronBackSharp className='seat_back' />
@@ -96,7 +95,7 @@ function SeatAssigning() {
         <h1 className='seat_title'>Seat Assigning</h1>
         </div>
         <div style={{ border: '0.5px solid #526D82' }}></div>
-
+          <div className="seat_form_scrollable">
             <Row style={{paddingTop:'20px'}}>
                 <Col md={6}>
                     <div className='seat_group'>
@@ -160,11 +159,10 @@ function SeatAssigning() {
                 </div>
               </Col>
             </Row>
-
             <div className='submit_seat'>
                     <button type="submit" className='seat_button' onClick={handleSubmit}>Assign</button>
                     </div>
-            </div>
+          </div>
         </form>
     </Container>
 

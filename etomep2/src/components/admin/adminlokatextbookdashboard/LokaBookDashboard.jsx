@@ -72,7 +72,7 @@ function LokaBookDashboard() {
               <h4>Textbook Management</h4>
               </Col>
               <Col md={6} className="book_search_col" style={{display:'flex'}}>
-              {/* <div>dropdown</div> */}
+             
               <Dropdown>
                 <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic"className="dropdown_tb">
                   NCERT
@@ -81,10 +81,11 @@ function LokaBookDashboard() {
                   <Dropdown.Item>NCERT</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-                <InputGroup style={{width:'80%'}}>
-                <BsSearch className="position-absolute top-50 translate-middle-y ms-2 book_searchbar_icon"/>
+              
+                <InputGroup className="inputgroup_search">
+                <BsSearch className="position-absolute top-50 translate-middle-y ms-4 book_searchbar_icon"/>
                   <FormControl
-                  className="ps-2 book_search_input"
+                  className="ps-5 book_search_input"
                     placeholder="Search..."
                     aria-label="Search"
                     value={searchTerm}
