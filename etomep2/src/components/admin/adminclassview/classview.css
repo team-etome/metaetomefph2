@@ -234,4 +234,22 @@
             background: #E3DFDF;
         }
     }
+
+
+    .curriculum_row_highlight {
+        background-color: #f8f9fa; /* Light grey background */
+        border-radius: 8px; /* Rounded corners */
+        padding: 10px; /* Padding for some spacing inside the row */
+        margin-bottom: 20px; /* Space between rows */
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    }
+
+
+    .selected-row {
+        background-color: #cce5ff; /* Light blue background for the selected row */
+    }
+    
+
+    
+
     

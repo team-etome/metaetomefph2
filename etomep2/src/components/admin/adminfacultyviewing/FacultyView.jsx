@@ -10,9 +10,10 @@ function FacultyView() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const dropdownRef = useRef(null);
   const location = useLocation();
+
   const faculty = location.state.faculty; 
 
-  console.log(faculty,'facultyyyy')
+  
  
 
   const handleResize = () => {
