@@ -54,6 +54,7 @@ import AarnaResultViewPage from './pages/adminpage/AarnaResultViewPage';
 import TeacherResultView from './components/teacher/teacherresultview/TeacherResultView';
 import AdminLokaLibraryPage from './pages/adminpage/AdminLokaLibraryPage';
 import TeacherQuestionInstructionPage from './pages/teacherpage/TeacherQuestionInstructionPage';
+import TeacherQuestionGeneratorPage from './pages/teacherpage/TeacherQuestionGeneratorPage';
 
 
 function App() {
@@ -127,6 +128,7 @@ function App() {
           <Route path="/teacherquestionview" element={<TeacherQuestionCreationPage/>}/>
           <Route path="/teacherresultview" element={<TeacherResultView/>}/>
           <Route path="/tecaherquestioninstruction" element={<TeacherQuestionInstructionPage/>}/>
+          <Route path="/tecaherquestiongenerator" element={<TeacherQuestionGeneratorPage/>}/>
 
 
 
