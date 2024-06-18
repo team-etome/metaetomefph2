@@ -275,15 +275,10 @@
             border-radius: 8px;
             border: none;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            max-height: calc(100vh - 120px);
-            overflow-y: scroll; /* Ensure vertical scroll bar appears */
-            overflow-x: hidden; /* Hide horizontal scroll bar */
-            box-sizing: border-box;
         }
 
         .teacher_studentadd_back {
-            margin-right: 15px;
+            margin-right: 5px;
         }
     
         .teacher_studentadd_title {
@@ -294,28 +289,28 @@
             margin-left: 0px;
         }
     
-        .qpaper_group, .faculty_group_select {
+        .teacher_studentadd_group, .teacher_studentadd_group_select {
             margin: 0 10px 20px 10px;
             position: relative;
         }
     
-        .qpaper_group input, .faculty_group_select Select {
+        .teacher_studentadd_group input, .teacher_studentadd_group_select Select {
             width: 100%;
             border: 1px solid #526D82;
             border-radius: 4px;
             padding: 12px 10px;
         }
     
-        .qpaper_group label, .faculty_group_select label {
+        .teacher_studentadd_group label, .teacher_studentadd_group_select label {
             font-size: 14px;
             transition: all 0.3s;
             transform-origin: left;
         }
     
-        .fqpaper_group input:focus + label,
-        .qpaper_group input:not(:placeholder-shown) + label,
-        .qpaper_group_select Select:focus + label,
-        .qpaper_group_select Select:not(:placeholder-shown) + label {
+        .teacher_studentadd_group input:focus + label,
+        .teacher_studentadd_group input:not(:placeholder-shown) + label,
+        .teacher_studentadd_group_select Select:focus + label,
+        .teacher_studentadd_group_select Select:not(:placeholder-shown) + label {
             transform: scale(0.85) translateY(-25px);
             color: #526D82;
         }
@@ -331,6 +326,19 @@
             width: 50%;
             padding: 12px;
         }
+        .teacher_studentadd_submit button:hover {
+            background-color: #526D82;
+            color: #fff;
+            border: 1px solid #526D82;
+        }
+        .image_conatiner{
+            margin-left: 10px;
+            margin-right: 10px;
+          }
+          .student_image_upload_container {
+            width: 100%;
+            height: 150px;
+          }
     }
     
     

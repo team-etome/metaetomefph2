@@ -1,7 +1,15 @@
+.teacher_student_dashboard{
+display: flex;
+justify-content: center;
+width: 100%;
+padding-top: 15vh;
+padding-left: 15vh;
+padding-bottom: 1vh;
+}
 .teacher_studentdashboard_container {
     overflow-y: auto;
     height: 75vh;
-    width:90vw ;
+    width:100% ;
   /* height: 80vh;
   width: 80%;
   overflow-y: auto; */
@@ -33,9 +41,10 @@
     font-size: 16px;
     font-weight: bold;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
+    /* justify-content: flex-start; */
 }
-.student_date_id{
+/* .student_date_id{
     display: flex;
     justify-content: space-between;
     padding: 5px 25px;
@@ -46,15 +55,19 @@
     display: flex;
     justify-content: flex-start;
     color: #727272;
-    /* font-size: 14px; */
-}
+    font-size: 14px;
+} */
 .student_id{
     display: flex;
     justify-content: space-between;
     color: #526D82;
     /* font-size: 14px; */
-    padding-left: 40%;
+    /* padding-left: 50%; */
     /* padding-right: 2%; */
+    width: 100%;
+    padding-top: 5%;
+    display: flex;
+    justify-content: center;
 }
 .student_date, .student_id {
     flex: 1;
@@ -94,23 +107,57 @@
   font-weight: 600;
 
 }
+.teacher_student_search_input{
+width: 400px;
+height: 35px;
+border-radius: 17px;
+color: #767676;
+}
+/* style={{
+  width: "400px",
+  height: "35px",
+  borderRadius: "17px",
+  color: "#767676",
+}} */
 
 @media (max-width:576px) {
   .student_rectangle{
     width: 250px !important;
-    height: 80px !important;
+    height: 120px !important;
   }
   .studentlist{
     padding:4px;
     padding-top: 16px;
     margin-top: 8px;
+    padding-left: 20px;
+    display: flex;
+    justify-content: center;
   }
   .teacher_studentdashboard_container {
-    overflow-y: auto;
+    /* overflow-y: auto; */
     height: 70vh;
     width:100% ;
-   padding-right: 20px;
-    
+   padding-right: 50px;
+   padding-left: 30px;
+  }
+  .teacher_student_dashboard{
+    padding-top: 15vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    }
+    .student_id{
+      width: 100%;
+      padding-left: 0px;
+      padding-top: 0px;
+      display: flex;
+      justify-content: center;
+    }
+    .student_name{
+      padding-left: 20px;
+      padding-top: 20px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
   }
   }
   .my-button {

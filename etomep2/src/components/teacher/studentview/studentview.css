@@ -183,11 +183,11 @@
     font-size: 30px;
     margin-left: 10px;  
 }
-/* .teacher_studentadd_scrollable {
+.teacher_studentadd_scrollable {
     max-height: calc(90vh - 200px);
     overflow-y: auto; 
     overflow-x: hidden; 
-  } */
+  }
   
   .teacher_student_scrollable::-webkit-scrollbar {
     width: 8px; 
@@ -220,37 +220,13 @@
     display: none;
 }
 .teacher_result_view_scrollable {
-  max-height: calc(100vh - 120px);
-  overflow-y: scroll; 
-  overflow-x: auto;
-  max-height: 80vh; 
-  overflow-y: auto; 
-  margin: 20px;
-  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  */
-}
-/* .result_view_scrollable {
-  max-height: 80vh; 
-  overflow-y: auto; 
-  margin: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-} */
-.teacher_result_view_scrollable::-webkit-scrollbar {
-  width: 10px;
+  overflow-x: auto; /* Allow horizontal scrolling */
+  overflow-y: auto; /* Allow vertical scrolling */
+  max-height: calc(100vh - 150px); /* Adjust height to fit the screen */
+  padding-bottom: 10px;
 }
 
-.teacher_result_view_scrollable::-webkit-scrollbar-track {
-  background: #fff;
-  border: none;
-}
 
-.teacher_result_view_scrollable::-webkit-scrollbar-thumb {
-  background: #E3DFDF;
-  border-radius: 10px;
-}
-
-.teacher_result_view_scrollable::-webkit-scrollbar-thumb:hover {
-  background: #E3DFDF;
-}
     @media (max-width: 800px) {
       .teacher_student_view_container {
         height: 100vh;
@@ -262,7 +238,7 @@
         .teacher_personal_info_field{
           display: flex;
           padding-top: 20px;
-          padding-left: 0px;
+          padding-left: 20px;
       }
       .teacher_school_info{
         padding-left: 0px;
@@ -270,7 +246,7 @@
     }
     .teacher_result_heading Button{
       padding-left: 10px;
-      padding-right: 100px;
+      padding-right: 10px;
       display: flex;
       justify-content: flex-start;
       background-color: #526D82;
@@ -306,17 +282,18 @@
         .result_view_container {
           padding: 10px;
       }
-  
       .teacher_result_view_scrollable {
-          max-height: calc(100vh - 120px);
-      }
-  
-      table {
-          font-size: 14px;
-      }
-  
-      th, td {
-          padding: 5px;
-      }
+        overflow-x: auto;
+        overflow-y: auto;
+        max-height: calc(100vh - 150px);
+        padding-bottom: 10px;
+    }
+    .table {
+      display: block;
+      width: 100%;
+      overflow-x: auto; /* Horizontal scrolling */
+      white-space: nowrap; /* Prevent line breaks */
+    }
+    
     }
     
