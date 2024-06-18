@@ -1,14 +1,14 @@
 .admin_loka_textbook_dashboard {
   padding-top: 10px;
-  height: 75vh; /* Ensure there's a limit on the height to enable scrolling */
-  overflow-y: auto; /* Allow vertical scrolling */
+  height: 75vh;
+  overflow-y: auto; 
   width:150vw ;
-
 }
 
 .admin_loka_tb_list_scroll {
   max-height: 70vh;
   overflow-y: auto;  
+  overflow-x: hidden;
 }
 
 .admin_loka_tb_list_scroll::-webkit-scrollbar {
@@ -31,8 +31,11 @@
   font-size: 30px;
   font-weight: 600;
 }
+.inputgroup_search{
+  width: 85%;
+}
 .book_search_input{
-  border-radius: 4px !important;
+  border-radius: 6px !important;
   height: 30px;
   left: 2%;
 }
@@ -69,10 +72,8 @@
 
 }
 .ad_lk_tb_rectangle{
-width: 90%;
-height: 200px;
-background-color: #ffffff;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+width: 70%;
+height: 250px;
 border-radius: 8px;
 position: relative;
 margin-bottom: 20px;
@@ -84,8 +85,14 @@ cursor: pointer;
   padding-top: 10px;
 }
 .ad_loka_tb_img img{
-  width: 150px;
-  height: 130px;
+  width: 190px;
+  height: 220px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .ad_lk_tb_list{
 display: flex;
@@ -106,33 +113,43 @@ width: 70px;
 height: 70px;
 border-radius: 50%;
 margin-top: 30px;
-background-color: #526D82;background-size: cover;
+background-color: #526D82;
+background-size: cover;
 display: flex;
 justify-content: center;
 align-items: center;
 }
 
 @media (max-width:576px) {
- 
-.ad_lk_tb_rectangle{
-  width: 250px !important;
-  height: 80px !important;
-}
-.ad_lk_tb_list{
-padding:4px;
-padding-top: 16px;
-margin-top: 8px;
-}
-.admin_loka_textbook_dashboard {
-  overflow-y: auto;
-  height: 70vh;
-  width:100% ;
- padding-right: 20px;
-}
-.tb_title_col{
-  display: none;
-}
-}
+   
+  .ad_lk_tb_rectangle{
+    width: 175px !important;
+    height: 70% !important;
+  }
+  .ad_loka_tb_img img{
+    width: 145px;
+    height: 182px;
+  }
+  .ad_lk_tb_list{
+    padding:4px;
+    padding-top: 16px;
+    margin-top: 8px;
+  }
+  .admin_loka_textbook_dashboard{
+    overflow-y: auto;
+    height: 70vh;
+    width:100% ;
+   padding-right: 20px;
+    
+  }
+  .tb_title_col{
+    display: none;
+  }
+  .inputgroup_search{
+    width: 75%;
+    padding-right: 5px;
+  }
+  }
 .my-button {
   background-color: #526D82;
   border: none;

@@ -14,25 +14,6 @@
         padding-bottom: 100px;
     
     }
-/* 
-    .seat_form_scrollable {
-        overflow-y: auto;
-        height: 75vh;
-        width:150vw ;
-    }
-    
-      .seat_form_scrollable::-webkit-scrollbar {
-        width: 6px; 
-      }
-      
-      .seat_form_scrollable::-webkit-scrollbar-track {
-        background: #f1f1f1;
-      }
-      
-      .seat_form_scrollable::-webkit-scrollbar-thumb {
-        background: #A8BFD1;
-      } */
-
       
     .evaluation_back {
         color: #526D82;
@@ -261,7 +242,7 @@
     }
       
     @media (max-width: 800px) {
-        .seat_assign_container {
+        .evaluation_assign_container {
             width: 100%;
             padding-top: 100px;
             padding-left: 10px;
@@ -270,41 +251,18 @@
             box-sizing: border-box;
         }
     
-        .seat_form {
+        .evaluation_form {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             border: none;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            max-height: calc(100vh - 120px);
-            overflow-y: scroll; /* Ensure vertical scroll bar appears */
-            overflow-x: hidden; /* Hide horizontal scroll bar */
-            box-sizing: border-box;
+        }
+        .evaluation_back {
+            margin-right: 5px;
         }
     
-        .seat_form::-webkit-scrollbar {
-            width: 10px;
-        }
-    
-        .seat_form::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-    
-        .seat_form::-webkit-scrollbar-thumb {
-            background: #E3DFDF;
-            border-radius: 10px;
-        }
-    
-        .seat_form::-webkit-scrollbar-thumb:hover {
-            background: #E3DFDF;
-        }
-    
-        .seat_back {
-            margin-right: 15px;
-        }
-    
-        .seat_title {
+        .evaluation_title {
             font-size: 24px;
             flex-grow: 1;
             text-align: left;
@@ -312,40 +270,40 @@
             margin-left: 0px;
         }
     
-        .seat_group, .seat_group_select {
+        .evaluation_group, .seat_group_select {
             margin: 0 10px 20px 10px;
             position: relative;
         }
     
-        .seat_group input, .seat_group_select Select {
+        .evaluation_group input, .evaluation_group_select Select {
             width: 100%;
             border: 1px solid #526D82;
             border-radius: 4px;
             padding: 12px 10px;
         }
     
-        .seat_group label, .seat_group_select label {
+        .evaluation_group label, .evaluation_group_select label {
             font-size: 14px;
             transition: all 0.3s;
             transform-origin: left;
         }
     
-        .seat_group input:focus + label,
-        .seat_group input:not(:placeholder-shown) + label,
-        .seat_group_select Select:focus + label,
-        .seat_group_select Select:not(:placeholder-shown) + label {
+        .evaluation_group input:focus + label,
+        .evaluation_group input:not(:placeholder-shown) + label,
+        .evaluation_group_select Select:focus + label,
+        .evaluation_group_select Select:not(:placeholder-shown) + label {
             transform: scale(0.85) translateY(-25px);
             color: #526D82;
         }
     
-        .submit_seat {
+        .submit_evaluation {
             padding-right: 0px;
             padding-left: 20px;
             margin-left: 20px;
             margin-right: 0px;
         }
     
-        .seat_button {
+        .evaluation_button {
             width: 50%;
             padding: 12px;
         }
@@ -382,20 +340,6 @@
         right: 1%;
         left: 95%;
     }
-      /* .modal_evaluation_submit{
-        padding: 10px 20px;
-        background-color: transparent; 
-        color:#526D82;
-        border: none;
-        border-radius: 8px;
-        border: 1px solid #526D82;
-        cursor: pointer;
-        margin-top: 0px;
-        width: 150px;
-        height: 40;
-        margin-bottom: 30px;
-        margin-right: 50px;
-      } */
     }
     
     

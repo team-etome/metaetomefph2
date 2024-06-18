@@ -716,7 +716,7 @@ function LokaTextbook() {
             {renderChapterInputs()}
         </div>
                 </Col>
-                <Col md={6}className="loka_tb_media">
+                <Col md={6} className="loka_tb_media">
                 <div style={{}}>
                       <label
                         htmlFor="mediaLibrary"

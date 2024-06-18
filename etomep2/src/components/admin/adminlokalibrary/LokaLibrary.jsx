@@ -596,7 +596,7 @@ function LokaLibrary() {
                   </div>
             </Col>
           </Row>
-          <Row style={{paddingLeft:'40px'}}>
+          <Row className="lib_media_index">
             <Col md={6}>
             <div>
                     <label
@@ -611,7 +611,7 @@ function LokaLibrary() {
                       Index Adding
                     </label>
                   </div>
-                  <div className="loka_library_group" style={{marginLeft:'0px', width:'90%'}}>
+                  <div className="loka_library_group lib_index_field" >
                     <label
                       htmlFor="totalChapters"
                     >
@@ -630,16 +630,11 @@ function LokaLibrary() {
             {renderChapterInputs()}
         </div>
                 </Col>
-                <Col md={6} style={{paddingLeft:'2rem'}}>
+                <Col md={6} className="loka_lib_media">
                 <div style={{}}>
                       <label
                         htmlFor="mediaLibrary"
-                        style={{
-                          marginLeft: "20px",
-                          // marginBottom: "50px",
-                          fontSize: "25px",
-                          padding: "0px",
-                        }}
+                        className="loka_lib_media_label"
                       >
                         Media Library
                       </label>

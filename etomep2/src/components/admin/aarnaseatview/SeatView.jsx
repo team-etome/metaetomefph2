@@ -90,92 +90,94 @@ function SeatView() {
               </div>
             )}
           </div>
-
           <div style={{ border: "0.5px solid #526D82" }}></div>
         </div>
-        <Row style={{ paddingTop: "20px" }}>
-          <Col md={6}>
-            <div className="seat_view_group">
-              <label htmlFor="hall_no">Hall No</label>
-              <input type="text" id="hall_no" name="hall_no" readOnly />
-            </div>
-            <div className="seat_view_group">
-              <label htmlFor="column_no">No. of Columns</label>
-              <input type="text" id="column_no" name="column_no" readOnly />
-            </div>
-            <div className="seat_view_group">
-              <label htmlFor="table_no">No. of Tables</label>
-              <input type="email" id="table_no" name="table_no" readOnly />
-            </div>
-          </Col>
-          <Col md={6}>
-          <div className="seat_view_group">
-              <label htmlFor="students_bench">Students per Bench</label>
-              <input
-                type="text"
-                id="students_bench"
-                name="students_bench"
-                readOnly
-              />
-            </div>
-            <div className="seat_view_group">
-              <label htmlFor="exam_date">Exam Date</label>
-              <input type="text" id="exam_date" name="exam_date" readOnly />
-            </div>
-            <Row className="tighter-column-gap">
-                <Col>
-                    <div className="seat_view_group full-width-group">
-                        <label htmlFor="start_time">Start Time</label>
-                        <input type="text" id="start_time" name="start_time" readOnly />
-                    </div>
-                </Col>
-                <Col>
-                    <div className="seat_view_group full-width-group">
-                        <label htmlFor="end_time">End Time</label>
-                        <input type="text" id="end_time" name="end_time" readOnly />
-                    </div>
-                </Col>
-            </Row>
-          </Col>
-        </Row>
-        <Row>
-            <Col>
-            <div className='align_section'>
-                <p>Selected Faculties</p>
-                <div className='assign_layout'>
-                    <div className='selected_items'>
-                        facultyname
-                    </div>
-                    <div className='selected_items'>
-                        facultyname
-                    </div>
-                    <div className='selected_items'>
-                        facultyname
-                    </div>
-                </div>
-            </div>
-            <div className='chosen_layout'>
-                <p>Selected Layout</p>
-                <img src={Layout_01_S} alt="Selected layout" className='selected_img'/>
-            </div>
+
+        <div className="seat_view_scrollable">
+          <Row style={{ paddingTop: "20px" }}>
+            <Col md={6}>
+              <div className="seat_view_group">
+                <label htmlFor="hall_no">Hall No</label>
+                <input type="text" id="hall_no" name="hall_no" readOnly />
+              </div>
+              <div className="seat_view_group">
+                <label htmlFor="column_no">No. of Columns</label>
+                <input type="text" id="column_no" name="column_no" readOnly />
+              </div>
+              <div className="seat_view_group">
+                <label htmlFor="table_no">No. of Tables</label>
+                <input type="email" id="table_no" name="table_no" readOnly />
+              </div>
             </Col>
-            <Col>
-            <div className='align_section'>
-                <p>Selected Classes</p>
-                <div className='assign_layout'>
-                <div className='selected_items'>
-                        class
-                    </div>
-                    <div className='selected_items'>
-                        class
-                    </div>
-                    <div className='selected_items'>
-                        class
-                    </div>
-                </div>
-            </div>
+            <Col md={6}>
+            <div className="seat_view_group">
+                <label htmlFor="students_bench">Students per Bench</label>
+                <input
+                  type="text"
+                  id="students_bench"
+                  name="students_bench"
+                  readOnly
+                />
+              </div>
+              <div className="seat_view_group">
+                <label htmlFor="exam_date">Exam Date</label>
+                <input type="text" id="exam_date" name="exam_date" readOnly />
+              </div>
+              <Row className="tighter-column-gap">
+                  <Col>
+                      <div className="seat_view_group full-width-group">
+                          <label htmlFor="start_time">Start Time</label>
+                          <input type="text" id="start_time" name="start_time" readOnly />
+                      </div>
+                  </Col>
+                  <Col>
+                      <div className="seat_view_group full-width-group">
+                          <label htmlFor="end_time">End Time</label>
+                          <input type="text" id="end_time" name="end_time" readOnly />
+                      </div>
+                  </Col>
+              </Row>
             </Col>
-        </Row>
+          </Row>
+          <Row>
+              <Col>
+              <div className='align_section'>
+                  <p>Selected Faculties</p>
+                  <div className='assign_layout'>
+                      <div className='selected_items'>
+                          facultyname
+                      </div>
+                      <div className='selected_items'>
+                          facultyname
+                      </div>
+                      <div className='selected_items'>
+                          facultyname
+                      </div>
+                  </div>
+              </div>
+              <div className='chosen_layout'>
+                  <p>Selected Layout</p>
+                  <img src={Layout_01_S} alt="Selected layout" className='selected_img'/>
+              </div>
+              </Col>
+              <Col>
+              <div className='align_section'>
+                  <p>Selected Classes</p>
+                  <div className='assign_layout'>
+                  <div className='selected_items'>
+                          class
+                      </div>
+                      <div className='selected_items'>
+                          class
+                      </div>
+                      <div className='selected_items'>
+                          class
+                      </div>
+                  </div>
+              </div>
+              </Col>
+          </Row>
+      </div>
       </form>
     </Container>
   </div>

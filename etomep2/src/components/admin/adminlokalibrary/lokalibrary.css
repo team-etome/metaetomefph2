@@ -200,9 +200,23 @@
       .textbook_upload_input {
         display: none;
       }
-      
+      .loka_lib_media{
+        padding-left: 2rem;
+      }
       .textbook_upload_label:hover {
         background-color: rgba(0, 0, 0, 0.2);
+      }
+      .loka_lib_media_label{
+        margin-left: 20px;
+        font-size: 25px;
+        padding: 0px;
+      }
+      .lib_media_index{
+        padding-left: 40px;
+      }
+      .lib_index_field{
+        margin-left: 0px;
+        width: 90%;
       }
       
     @media (max-width: 800px) {
@@ -295,6 +309,30 @@
             width: 50%;
             padding: 12px;
         }
+        .loka_lib_media{
+            padding-left: 0rem;
+        }
+        .lib_media_index{
+            padding-left: 12px;
+          }
+          .library_image_upload_container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 210px;
+            width: 270px;
+            border: 2px dashed #526D82;
+            padding-right: 30px;
+          }
+          .lib_index_field{
+            margin-left: 0px;
+            width: 100%;
+          }
+
+          .textbutton_lib_container button {
+            width: 130px;
+            height: 40px;
+          }
     }
     
     

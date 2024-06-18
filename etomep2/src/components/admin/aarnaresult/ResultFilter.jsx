@@ -105,7 +105,6 @@ function ResultFilter() {
   return (
     <Container className='result_filter_container'>
     <form className='result_filter_form' >
-    <div className="result_filter_scrollable">
       <div style={{display: 'flex', alignItems: 'center', marginBottom:'0px'}}>
         {/* <Link to='/aarnanavbar'>
             <IoChevronBackSharp onClick={handleBack} className='result_filter_back' />
@@ -113,7 +112,7 @@ function ResultFilter() {
         <h1 className='result_filter_title'>Result</h1>
         </div>
         <div style={{ border: '0.5px solid #526D82' }}></div>
-
+        <div className="result_filter_scrollable">
             <Row style={{paddingTop:'20px', paddingLeft:'20px', paddingRight:'20px'}}>
                 <Col md={3}>
                 <div className='result_filter_group'>
