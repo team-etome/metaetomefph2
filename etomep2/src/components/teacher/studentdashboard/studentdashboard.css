@@ -1,8 +1,7 @@
 .teacher_studentdashboard_container {
     overflow-y: auto;
-    height: 70vh;
-    width:100vw ;
- 
+    height: 75vh;
+    width:90vw ;
   /* height: 80vh;
   width: 80%;
   overflow-y: auto; */
@@ -38,11 +37,10 @@
 }
 .student_date_id{
     display: flex;
-    justify-content: space-between; /* This will place the term and date on opposite ends */
-    padding: 5px 20px; /* Adjusted padding for better spacing */
-    color: #727272;
+    justify-content: space-between;
+    padding: 5px 25px;
     font-size: 14px;
-    padding-top: 10px;
+    padding-top: 20px;
 }
 .student_date{
     display: flex;
@@ -53,10 +51,10 @@
 .student_id{
     display: flex;
     justify-content: space-between;
-    color: #727272;
+    color: #526D82;
     /* font-size: 14px; */
-    padding-left: 50%;
-    padding-right: 3%;
+    padding-left: 40%;
+    /* padding-right: 2%; */
 }
 .student_date, .student_id {
     flex: 1;
@@ -86,6 +84,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.class_number{
+  padding-top: 1vh;
+}
+.class_number h4{
+  color: #526D82;
+  font-size: 20px;
+  font-weight: 600;
+
 }
 
 @media (max-width:576px) {
