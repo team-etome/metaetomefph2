@@ -67,7 +67,7 @@ function AarnaQuestionPaper() {
 
     ];
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
+    <div style={{ display: "flex", justifyContent: "center", width: "104.5%"}}>
     <Container
       fluid
       className="qpaper_container_scroll"
@@ -75,7 +75,7 @@ function AarnaQuestionPaper() {
     >
       <Row>
         {qpaperListData.map((item, index) => (
-          <Col lg={3} md={4} sm={6} xs={6} key={index} className="qpaper_list">
+          <Col lg={3} md={6} sm={12} xs={12} key={index} className="qpaper_list">
             <div onClick={handleclick} className="border border-white qpaper_rectangle">
               <div className="qpaper_faculty_name">{item.facultyName}</div>
               <div className="qpaper_term_date">

@@ -257,32 +257,9 @@
             border-radius: 8px;
             border: none;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            max-height: calc(100vh - 120px);
-            overflow-y: scroll; /* Ensure vertical scroll bar appears */
-            overflow-x: hidden; /* Hide horizontal scroll bar */
-            box-sizing: border-box;
         }
-    
-        .evaluation_form::-webkit-scrollbar {
-            width: 10px;
-        }
-    
-        .evaluation_form::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-    
-        .evaluation_form::-webkit-scrollbar-thumb {
-            background: #E3DFDF;
-            border-radius: 10px;
-        }
-    
-        .evaluation_form::-webkit-scrollbar-thumb:hover {
-            background: #E3DFDF;
-        }
-    
         .evaluation_back {
-            margin-right: 15px;
+            margin-right: 5px;
         }
     
         .evaluation_title {

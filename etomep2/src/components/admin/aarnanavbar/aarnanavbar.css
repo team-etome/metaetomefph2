@@ -9,7 +9,7 @@
 
   
   .ad_aarna_navbar_tab .nav-link {
-    padding: 10px 15px;
+    padding: 10px 5px;
     border: none;
   }
   
@@ -69,10 +69,11 @@
      margin-top: 10px;
      padding-left: 0%;
      padding-bottom: 20px;
+     gap: 0px;
     }
     .ad_aarna_mob_subhead_one{
         color: #9DB2BF!important;
-        width: 105% !important;
+        width: 127px !important;
         height:40px !important;
         border-radius: 16px;
         display: flex;

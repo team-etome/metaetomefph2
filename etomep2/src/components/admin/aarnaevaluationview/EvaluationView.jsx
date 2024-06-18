@@ -93,8 +93,9 @@ function EvaluationView() {
             )}
           </div>
 
-          <div style={{ border: "0.5px solid #526D82" }}></div>
+          <div style={{ border: "0.5px solid #526D82" }}>
         </div>
+        <div className="evaluation_view_scrollable">
         <Row style={{ paddingTop: "20px" }}>
           <Col md={6}>
             <div className="evaluation_view_group">
@@ -158,6 +159,8 @@ function EvaluationView() {
             </div>
             </Col>
         </Row>
+        </div>
+        </div>
       </form>
     </Container>
   </div>
