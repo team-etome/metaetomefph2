@@ -27,7 +27,7 @@ function LokaLibrary() {
 
     console.log(selectedSubject, "subjectttttt");
 
-    console.log(publisherName,"publisher nameeeeeeeeeeeeeeeeeeeee")
+    console.log(publisherName,"publisher nameeeeeee")
   
     const APIURL = useSelector((state) => state.APIURL.url);
     useEffect(() => {

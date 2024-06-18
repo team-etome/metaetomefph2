@@ -7,6 +7,25 @@ import TeacherTextEditor from '../teachertexteditor/TeacherTextEditor';
 
 function QuestionInstruction() {
 
+  const handleSave = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/saveData/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: ckData }),
+      });
+      if (response.ok) {
+        console.log('Data saved successfully');
+      } else {
+        console.error('Error saving data');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <div>
     <Container className="teacher_instruction_container">
@@ -37,11 +56,13 @@ function QuestionInstruction() {
 <p1 style={{paddingLeft:"55px"}} >Maximum Marks :80</p1>
 <p1 style={{paddingRight:"55px"}}>Time: 3 Hours</p1>
 </Col>
-<Col style={{display:"flex",justifyContent:"center",marginTop:"20px",alignContent:"center",}}>
-<TeacherTextEditor/>
+<Col style={{display:"flex",justifyContent:"center",marginTop:"20px",alignItems:"center",flexDirection:"column"}}>
+<h6 style={{fontSize:"16px",fontWeight:"500",marginBottom:"10px"}}>Instruction</h6>
+<TeacherTextEditor  placeholder="𝘚𝘵𝘢𝘳𝘵 𝘵𝘺𝘱𝘪𝘯𝘨 𝘺𝘰𝘶𝘳 𝘪𝘯𝘴𝘵𝘳𝘶𝘤𝘵𝘪𝘰𝘯𝘴 𝘩𝘦𝘳e..." />
 </Col>
 <Col  style={{display:"flex",justifyContent:"flex-end",paddingRight:"6%"}}>
-<button style={{backgroundColor:"transparent",color:"#526D82",border:"1px solid #526D82",borderRadius:"8px",cursor:"pointer",marginTop:"30px",width:"200px",height:"40px" }}>Create Question</button>
+<button onClick={handleSave}
+style={{backgroundColor:"transparent",color:"#526D82",border:"1px solid #526D82",borderRadius:"8px",cursor:"pointer",marginTop:"20px",width:"200px",height:"40px" }}>Create Question</button>
 </Col>
         </Row>
         </div>
