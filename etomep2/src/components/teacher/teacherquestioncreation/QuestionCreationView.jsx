@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -12,6 +12,7 @@ function QuestionCreationView() {
     const [showOptions, setShowOptions] = useState(false);
 
     const dropdownRef = useRef(null);
+    const createDropdownRef = useRef(null);
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
       };
@@ -20,7 +21,10 @@ function QuestionCreationView() {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
           setShowEditBlockButtons(false);
         }
-      };
+        if (createDropdownRef.current && !createDropdownRef.current.contains(event.target)) {
+          setShowOptions(false);
+        }
+    };
     
       useEffect(() => {
         window.addEventListener("resize", handleResize);
@@ -35,9 +39,11 @@ function QuestionCreationView() {
         e.preventDefault();
         setShowEditBlockButtons((prevState) => !prevState);
       };
-      const handleAddClick = () => {
+      const handleAddClick = (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
         setShowOptions(!showOptions);
-      };
+    };
+
   return (
     <div>
     <Container className="teacher_question_view_container">
@@ -147,8 +153,33 @@ function QuestionCreationView() {
               <input type="text" id="end_time" name="end_time" readOnly />
             </div>
             
-            <div className='teacher_create_question' >
-                <button> Create Question</button>
+            <div className='teacher_create_question' ref={createDropdownRef} style={{ position: 'relative' }}>
+              <button type="button" onClick={handleAddClick}>Create Question</button>
+                {showOptions && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      right: "0px",
+                      bottom: "100%",
+                      backgroundColor: "white",
+                      boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+                      borderRadius: "5px",
+                      // padding: "10px",
+                      zIndex: "1",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "10px",
+                      marginTop: "5px",
+                     }}
+                  >
+                  <Link to='/texteditor'>
+                    <Button style={{ marginBottom: "10px", backgroundColor: 'white', border: 'none', color: '#526D82', width: '200px' }}>Create Manually</Button>
+                  </Link>
+                  <Link to=''>
+                      <Button style={{ backgroundColor: 'white', border: 'none', color: '#526D82', width: '200px' }}>Upload Pdf</Button>
+                  </Link>
+                </div>
+                )}
             </div>
           </Col>
         </Row>
