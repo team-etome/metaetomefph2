@@ -1,7 +1,18 @@
+.teacher_examination_dashboard{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-top: 15vh;
+  padding-left: 15vh;
+  padding-bottom: 1vh;
+}
 .teacher_examination_container {
+    /* overflow-y: auto;
+    height: 75vh;
+    width:150vw ; */
     overflow-y: auto;
     height: 75vh;
-    width:150vw ;
+    width:100% ;
 }
 
   .teacher_examination_container::-webkit-scrollbar {
@@ -20,7 +31,7 @@
 .examination_list{
   display: flex;
   justify-content: center;
-  padding-top: 40px;
+  padding-top: 10px;
   margin-top: 5px;
 }
 .examination_rectangle{
@@ -42,6 +53,7 @@
     color: #4A4A4A;
     font-size: 16px;
     font-weight: bold;
+    width: 100%;
 }
 .examination_class_date {
     display: flex;
@@ -60,14 +72,16 @@
     justify-content: flex-start;
     color: #727272;
     /* font-size: 14px; */
+    width: 70%;
 }
 .examination_date{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     color: #727272;
     /* font-size: 14px; */
-    padding-left: 50%;
-    padding-right: 3%;
+    padding-left: 30%;
+    /* padding-right: 3%; */
+    width: 70%;
 }
 .examination_subject {
     background-color: #9DB2BF;
@@ -85,22 +99,54 @@
 @media (max-width:576px) {
    
   .examination_rectangle{
-    width: 250px !important;
-    height: 150px !important;
+    width: 400px !important;
+    height: 120px !important;
   }
-
+.class_number{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
   .examination_list{
     padding:4px;
     padding-top: 16px;
     margin-top: 8px;
   }
   .teacher_examination_container{
-    overflow-y: auto;
+    /* overflow-y: auto; */
     height: 70vh;
     width:100% ;
-   padding-right: 20px;
+   padding-right: 50px;
+   padding-left: 30px;
     
   }
+  .teacher_examination_dashboard{
+    padding-top: 15vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    }
+    .examiantion_term{
+      width: 100%;
+  }
+  .examination_class_date {
+    padding: 5px 10px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
+  .examination_class{
+    width: 100%;
+    padding-left: 0%;
+}
+.examination_date{
+  width: 70%;
+  padding-right: 0%;
+  padding-left: 30%;
+}
+.examination_subject {
+    width: 70%; 
+    height: 30px;
+    padding-bottom: 0%;
+}
   }
   .my-button {
     background-color: #526D82;
@@ -146,4 +192,12 @@
       height: 200px;
       opacity: 0;
     }
+  }
+
+  @media (max-width:999px), (min-width:577) {
+    .teacher_examination_dashboard{
+      padding-top: 15vh;
+      padding-left: 5vh;
+      padding-right: 1vh;
+      }
   }

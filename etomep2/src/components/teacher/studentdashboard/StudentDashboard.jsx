@@ -138,7 +138,7 @@ function StudentDashboard() {
         <Row className="teacher_studentdashboard_container">
           {studentListData.map((item, index) => (
             // lg={3} md={4} sm={6} xs={6}
-            <Col lg={3} md={6} sm={12} xs={12} key={index} >
+            <Col lg={3} md={6} sm={6} xs={12} key={index} >
               <div onClick={handleclick}  className="border border-white student_rectangle">
                
                   <div className="student_name">{item.studentName}</div>

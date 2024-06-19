@@ -183,11 +183,7 @@
     font-size: 30px;
     margin-left: 10px;  
 }
-.teacher_studentadd_scrollable {
-    max-height: calc(90vh - 200px);
-    overflow-y: auto; 
-    overflow-x: hidden; 
-  }
+
   
   .teacher_student_scrollable::-webkit-scrollbar {
     width: 8px; 

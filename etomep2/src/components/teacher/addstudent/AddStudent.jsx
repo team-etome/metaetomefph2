@@ -56,7 +56,7 @@ function AddStudent() {
       email: studentEmail,
       gender: studentGender,
       dob: studentDob,
-      category: studentcategory,
+      // category: studentcategory,
       start_date: studentJoined,
       guardian: studentGuardian,
       fathers_name: studentFather,
@@ -250,7 +250,7 @@ function AddStudent() {
                     placeholder="Select Gender"
                   />
                 </div>
-                <div className="teacher_studentadd_group">
+                {/* <div className="teacher_studentadd_group">
                   <label htmlFor="category">
                     Category
                   </label>
@@ -261,7 +261,7 @@ function AddStudent() {
                     value={studentPhone}
                     onChange={(e) => setStudentPhone(e.target.value)}
                   />
-                </div>
+                </div> */}
               </Col>
               <Col md={6}>
                 <div className="teacher_studentadd_group">

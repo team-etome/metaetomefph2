@@ -307,4 +307,10 @@ color: #767676;
   border-radius: 15px;
 }
   
-
+@media (max-width:999px), (min-width:577) {
+  .teacher_student_dashboard{
+    padding-top: 15vh;
+    padding-left: 5vh;
+    padding-right: 1vh;
+    }
+}

@@ -9,6 +9,8 @@ import '../teacherquestioncreation/questioncreationview.css'
 function QuestionCreationView() {
     const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [showOptions, setShowOptions] = useState(false);
+
     const dropdownRef = useRef(null);
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
@@ -33,12 +35,14 @@ function QuestionCreationView() {
         e.preventDefault();
         setShowEditBlockButtons((prevState) => !prevState);
       };
-
+      const handleAddClick = () => {
+        setShowOptions(!showOptions);
+      };
   return (
     <div>
     <Container className="teacher_question_view_container">
       <form className="teacher_question_view_form">
-        <div>
+        <div className='teacher_question_creation_header'>
           <div
             style={{
               display: "flex",
@@ -51,7 +55,7 @@ function QuestionCreationView() {
             </Link>
             <h1 className="teacher_view_title">Question Creation</h1>
             <div style={{ flex: "1" }}></div>
-            {windowWidth > 800 ? (
+            {windowWidth > 576 ? (
               <div
                 style={{
                   display: "flex",
@@ -142,7 +146,8 @@ function QuestionCreationView() {
               <label htmlFor="end_time">End Time</label>
               <input type="text" id="end_time" name="end_time" readOnly />
             </div>
-            <div className='teacher_create_question'>
+            
+            <div className='teacher_create_question' >
                 <button> Create Question</button>
             </div>
           </Col>

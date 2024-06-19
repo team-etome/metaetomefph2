@@ -56,6 +56,9 @@ import AdminLokaLibraryPage from './pages/adminpage/AdminLokaLibraryPage';
 import TeacherQuestionInstructionPage from './pages/teacherpage/TeacherQuestionInstructionPage';
 import TeacherQuestionGeneratorPage from './pages/teacherpage/TeacherQuestionGeneratorPage';
 import TeacherStudentDashboardPage from './pages/teacherpage/TeacherStudentDashboardPage';
+import TeacherExaminationListPage from './pages/teacherpage/TeacherExaminationListPage';
+import TeacherSubjectPage from './pages/teacherpage/TeacherSubjectPage';
+import TeacherClassViewPage from './pages/teacherpage/TeacherClassViewPage';
 
 
 function App() {
@@ -128,8 +131,11 @@ function App() {
           <Route path="/teacheraarna" element={<TeacherAarnaPage/>}/>
           <Route path="/teacherquestionview" element={<TeacherQuestionCreationPage/>}/>
           <Route path="/teacherresultview" element={<TeacherResultView/>}/>
-          <Route path="/tecaherquestioninstruction" element={<TeacherQuestionInstructionPage/>}/>
-          <Route path="/tecaherquestiongenerator" element={<TeacherQuestionGeneratorPage/>}/>
+          <Route path="/teacherquestioninstruction" element={<TeacherQuestionInstructionPage/>}/>
+          <Route path="/teacherquestiongenerator" element={<TeacherQuestionGeneratorPage/>}/>
+          <Route path="/teacherexamination" element={<TeacherExaminationListPage/>}/>
+          <Route path="/teachersubject" element={<TeacherSubjectPage/>}/>
+          <Route path="/teacherclassview" element={<TeacherClassViewPage/>}/>
 
 
 
