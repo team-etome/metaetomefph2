@@ -6,7 +6,7 @@ import TeacherNavbar from '../../components/teacher/teachernavbar/TeacherNavbar'
 function TeacherStudentDashboardPage() {
   return (
     <div>
-        {/* <MainHeader/> */}
+        <MainHeader/>
         {/* <TeacherNavbar/> */}
         <StudentDashboard/>
     </div>

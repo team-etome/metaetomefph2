@@ -2,9 +2,8 @@ import React, { useState, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
+import {FaRedo} from "react-icons/fa";
 import Select from "react-select";
-import { FaCalendarAlt } from "react-icons/fa";
-import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { format } from "date-fns";
 import axios from "axios";
@@ -18,6 +17,7 @@ function AddStudent() {
   const [studentEmail, setStudentEmail] = useState(null);
   const [studentPhone, setStudentPhone] = useState(null);
   const [studentDob, setStudentDob] = useState(null);
+  const [studentcategory, setStudentCategory] = useState(null);
   const [studentGender, setStudentGender] = useState(null);
   const [studentJoined, setStudentJoined] = useState(null);
   const [studentAdmission, setStudentAdmission] = useState(null);
@@ -25,6 +25,8 @@ function AddStudent() {
   const [studentFather, setStudentFather] = useState(null);
   const [studentMother, setStudentMother] = useState(null);
   const [studentAddress, setStudentAddress] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+
 
   // const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
@@ -34,6 +36,14 @@ function AddStudent() {
 
   const navigate = useNavigate();
 
+  const clearImageFile = () => {
+    setImageFile(null);
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,6 +56,7 @@ function AddStudent() {
       email: studentEmail,
       gender: studentGender,
       dob: studentDob,
+      // category: studentcategory,
       start_date: studentJoined,
       guardian: studentGuardian,
       fathers_name: studentFather,
@@ -64,6 +75,7 @@ function AddStudent() {
       setStudentPhone("");
       setStudentDob("");
       setStudentGender("");
+      setStudentCategory("");
       setStudentJoined("");
       setStudentAdmission("");
       setstudentGuardian("");
@@ -78,7 +90,7 @@ function AddStudent() {
         text: "Student has been added successfully!",
       });
 
-      navigate("/teachernavbar");
+      navigate("/teacherstudentdashboard");
     } catch (error) {
       console.error("Error submitting form:", error);
       Swal.fire({
@@ -99,47 +111,51 @@ function AddStudent() {
   const customStyles = {
     control: (base, state) => ({
       ...base,
-      width: "100%",
-      minHeight: "40px",
-      border: "1px solid #526D82",
-      borderRadius: "8px",
-      boxShadow: state.isFocused ? "0 0 0 1px #526D82" : "none",
+      width: '100%',
+      minHeight: '40px', 
+      height: '50px',
+      border: '1px solid #526D82',
+      borderRadius: '8px',
+      boxShadow: state.isFocused ? 'none' : 'none',
       "&:hover": {
-        borderColor: "none", // Darker border on hover
+        borderColor: 'none' 
       },
       "&:focus": {
-        borderColor: "#526D82", // Ensures the border color when the element is focused
-        outline: "none", // Removes the default outline when focused
-      },
+        borderColor: '#526D82', 
+        outline: 'none' 
+      }
     }),
     placeholder: (base) => ({
       ...base,
-      color: "#526D82",
+      color: '#526D82',
     }),
     singleValue: (base) => ({
       ...base,
-      color: "#000",
+      color: '#000',
     }),
     option: (base) => ({
       ...base,
-      color: "#000",
+      color: '#000',
     }),
     valueContainer: (base) => ({
       ...base,
-      padding: "0 10px",
+      padding: '0 10px',
     }),
     dropdownIndicator: (base) => ({
       ...base,
-      color: "#526D82",
+      color: '#526D82',
+    }),
+    indicatorSeparator: (base) => ({
+      display: 'none',
     }),
     indicatorsContainer: (base) => ({
       ...base,
-      alignItems: "center",
+      alignItems: 'center',
     }),
     menu: (base) => ({
       ...base,
       zIndex: 9999,
-      position: "absolute",
+      position: 'absolute',
     }),
   };
 
@@ -152,10 +168,10 @@ function AddStudent() {
             style={{
               display: "flex",
               alignItems: "center",
-              marginBottom: "10px",
+              // marginBottom: "10px",
             }}
           >
-            <Link to="/aarnanavbar">
+            <Link to="/teacherstudentdashboard">
               <IoChevronBackSharp className="teacher_studentadd_back" />
             </Link>
             <h1 className="teacher_studentadd_title">Add Student</h1>
@@ -207,7 +223,7 @@ function AddStudent() {
                   </label>
                   <input
                     type="text"
-                    id="suphonebject"
+                    id="phone"
                     name="phone"
                     value={studentPhone}
                     onChange={(e) => setStudentPhone(e.target.value)}
@@ -234,7 +250,18 @@ function AddStudent() {
                     placeholder="Select Gender"
                   />
                 </div>
-
+                {/* <div className="teacher_studentadd_group">
+                  <label htmlFor="category">
+                    Category
+                  </label>
+                  <input
+                    type="text"
+                    id="category"
+                    name="category"
+                    value={studentPhone}
+                    onChange={(e) => setStudentPhone(e.target.value)}
+                  />
+                </div> */}
               </Col>
               <Col md={6}>
                 <div className="teacher_studentadd_group">
@@ -309,10 +336,58 @@ function AddStudent() {
                     onChange={(e) => setStudentAddress(e.target.value)}
                   />
                 </div>
-                {/* <div className='teacher_studentadd_group'>
-                            <label htmlFor="upload_image">Upload Image<span style={{color: 'red'}}>*</span></label>
-                            <input type="text" id='upload_image' name='assigupload_imagen_faculty' />
-                        </div> */}
+                <div className="image_conatiner">
+                  <div className="student_image_upload_container">
+                  <label className="upload_profile_label">Upload Profile Image</label>
+                  <label >Or</label>
+                    <div className="student_upload_placeholder">
+                      {imageFile ? (
+                        <>
+                          <img
+                            src={URL.createObjectURL(imageFile)}
+                            alt="Uploaded Image"
+                            className="student_uploaded_image"
+                            style={{
+                              maxWidth: "250px",
+                              maxHeight: "200px",
+                              marginLeft: "15px",
+                            }}
+                          />
+                          <button
+                            onClick={clearImageFile}
+                            style={{
+                              border: "none",
+                              background: "none",
+                              cursor: "pointer",
+                            }}
+                          >
+                            <FaRedo
+                              style={{ color: "blue", fontSize: "20px" }}
+                              title="Change Image"
+                            />
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <label
+                            htmlFor="image-upload"
+                            className="student_upload_label"
+                          >
+                            Select File
+                          </label>
+                          <input
+                            id="image-upload"
+                            type="file"
+                            accept="image/*"
+                            className="student_upload_input"
+                            onChange={handleImageUpload}
+                          />
+                        </>
+                      )}
+                    </div>
+                    <label style={{paddingTop:'10px'}}>maximum  Upload file size : 256 Mb.</label>
+                  </div>
+                </div>
                 <div className="teacher_studentadd_submit">
                   <button onClick={handleSubmit} type="submit">
                     Submit
