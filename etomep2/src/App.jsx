@@ -42,7 +42,7 @@ import AarnaQuestionViewPage from './pages/adminpage/AarnaQuestionViewPage';
 import AarnaSeatViewPage from './pages/adminpage/AarnaSeatViewPage';
 import AarnaEvaluationViewPage from './pages/adminpage/AarnaEvaluationViewPage';
 import TeacherStudentAddPage from './pages/teacherpage/TeacherStudentAddPage';
-import TeacherNavbarPage from './pages/teacherpage/TeacherNavbarPage';
+// import TeacherNavbarPage from './pages/teacherpage/TeacherNavbarPage';
 import TeacherStudentViewPage from './pages/teacherpage/TeacherStudentViewPage';
 import TeacherLoginPage from './pages/teacherpage/TeacherLoginPage';
 import AdminLokaTextbookPage from './pages/adminpage/AdminLokaTextbookPage';
@@ -59,6 +59,9 @@ import TeacherStudentDashboardPage from './pages/teacherpage/TeacherStudentDashb
 import TeacherExaminationListPage from './pages/teacherpage/TeacherExaminationListPage';
 import TeacherSubjectPage from './pages/teacherpage/TeacherSubjectPage';
 import TeacherClassViewPage from './pages/teacherpage/TeacherClassViewPage';
+import TeacherAssignmentListPage from './pages/teacherpage/TeacherAssignmentListPage';
+import TeacherAssignmentAddPage from './pages/teacherpage/TeacherAssignmentAddPage';
+import TeacherRefrenceListPage from './pages/teacherpage/TeacherRefrenceListPage';
 
 
 function App() {
@@ -128,7 +131,7 @@ function App() {
           <Route path="/teacherstudentdashboard" element={<TeacherStudentDashboardPage/>}/>
           <Route path="/teacherstudentview" element={<TeacherStudentViewPage/>}/>
           <Route path="/teachertexteditor" element={<TeacherTextEditorPage/>}/>
-          <Route path="/teacheraarna" element={<TeacherAarnaPage/>}/>
+          {/* <Route path="/teacheraarna" element={<TeacherAarnaPage/>}/> */}
           <Route path="/teacherquestionview" element={<TeacherQuestionCreationPage/>}/>
           <Route path="/teacherresultview" element={<TeacherResultView/>}/>
           <Route path="/teacherquestioninstruction" element={<TeacherQuestionInstructionPage/>}/>
@@ -136,6 +139,9 @@ function App() {
           <Route path="/teacherexamination" element={<TeacherExaminationListPage/>}/>
           <Route path="/teachersubject" element={<TeacherSubjectPage/>}/>
           <Route path="/teacherclassview" element={<TeacherClassViewPage/>}/>
+          <Route path="/teacherassignment" element={<TeacherAssignmentListPage/>}/>
+          <Route path="/teacherassignmentadding" element={<TeacherAssignmentAddPage/>}/>
+          <Route path="/teacherrefrencelist" element={<TeacherRefrenceListPage/>}/>
 
 
 
