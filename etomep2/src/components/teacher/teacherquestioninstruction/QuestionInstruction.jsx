@@ -1,30 +1,16 @@
 import React from 'react'
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import '../teacherquestioninstruction/questioninstruction.css'
 import TeacherTextEditor from '../teachertexteditor/TeacherTextEditor';
 
 function QuestionInstruction() {
+  const navigate = useNavigate()
 
-  const handleSave = async () => {
-    try {
-      const response = await fetch('http://localhost:8000/api/saveData/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content: ckData }),
-      });
-      if (response.ok) {
-        console.log('Data saved successfully');
-      } else {
-        console.error('Error saving data');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
+  const handleclick= ()=>{
+    navigate('/teacherquestiongenerator')
+}
 
   return (
     <div>
@@ -38,7 +24,7 @@ function QuestionInstruction() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/teacheraarna">
+            <Link to="/teacherquestionview">
               <IoChevronBackSharp className="teacher_instruction_back" />
             </Link>
             <h1 className="teacher_instruction_title">Question Paper Creation</h1>
@@ -61,7 +47,7 @@ function QuestionInstruction() {
 <TeacherTextEditor  placeholder="𝘚𝘵𝘢𝘳𝘵 𝘵𝘺𝘱𝘪𝘯𝘨 𝘺𝘰𝘶𝘳 𝘪𝘯𝘴𝘵𝘳𝘶𝘤𝘵𝘪𝘰𝘯𝘴 𝘩𝘦𝘳e..." />
 </Col>
 <Col  style={{display:"flex",justifyContent:"flex-end",paddingRight:"6%"}}>
-<button onClick={handleSave}
+<button onClick={handleclick}
 style={{backgroundColor:"transparent",color:"#526D82",border:"1px solid #526D82",borderRadius:"8px",cursor:"pointer",marginTop:"20px",width:"200px",height:"40px" }}>Create Question</button>
 </Col>
         </Row>
