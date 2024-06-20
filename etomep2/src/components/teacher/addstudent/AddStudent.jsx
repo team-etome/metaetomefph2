@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
-import {FaRedo} from "react-icons/fa";
+import { FaRedo } from "react-icons/fa";
 import Select from "react-select";
 import "react-day-picker/dist/style.css";
 import { format } from "date-fns";
@@ -10,7 +10,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import "../addstudent/addstudent.css";
-
 function AddStudent() {
   const [studentName, setStudentName] = useState(null);
   const [studentRollno, setStudentRollno] = useState(null);
@@ -26,28 +25,20 @@ function AddStudent() {
   const [studentMother, setStudentMother] = useState(null);
   const [studentAddress, setStudentAddress] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-
-
   // const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacher = useSelector((state) => state.teacherinfo);
-
   const teacher_id = teacher.teacherinfo?.teacher_id;
-
   const navigate = useNavigate();
-
   const clearImageFile = () => {
     setImageFile(null);
   };
-
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     setImageFile(file);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = {
       student_name: studentName,
       admission_no: studentAdmission,
@@ -64,11 +55,9 @@ function AddStudent() {
       address: studentAddress,
       teacher: teacher_id,
     };
-
     try {
       const response = await axios.post(`${APIURL}/api/addstudent`, formData);
       console.log("Success:", response.data);
-
       setStudentName("");
       setStudentRollno("");
       setStudentEmail("");
@@ -82,14 +71,12 @@ function AddStudent() {
       setStudentFather("");
       setStudentMother("");
       setStudentAddress("");
-
       // Show success message
       Swal.fire({
         icon: "success",
         title: "Registration Successful",
         text: "Student has been added successfully!",
       });
-
       navigate("/teacherstudentdashboard");
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -107,58 +94,56 @@ function AddStudent() {
     { value: "Male", label: "Male" },
     { value: "other", label: "other" },
   ];
-
   const customStyles = {
     control: (base, state) => ({
       ...base,
-      width: '100%',
-      minHeight: '40px', 
-      height: '50px',
-      border: '1px solid #526D82',
-      borderRadius: '8px',
-      boxShadow: state.isFocused ? 'none' : 'none',
+      width: "100%",
+      minHeight: "40px",
+      height: "50px",
+      border: "1px solid #526D82",
+      borderRadius: "8px",
+      boxShadow: state.isFocused ? "none" : "none",
       "&:hover": {
-        borderColor: 'none' 
+        borderColor: "none",
       },
       "&:focus": {
-        borderColor: '#526D82', 
-        outline: 'none' 
-      }
+        borderColor: "#526D82",
+        outline: "none",
+      },
     }),
     placeholder: (base) => ({
       ...base,
-      color: '#526D82',
+      color: "#526D82",
     }),
     singleValue: (base) => ({
       ...base,
-      color: '#000',
+      color: "#000",
     }),
     option: (base) => ({
       ...base,
-      color: '#000',
+      color: "#000",
     }),
     valueContainer: (base) => ({
       ...base,
-      padding: '0 10px',
+      padding: "0 10px",
     }),
     dropdownIndicator: (base) => ({
       ...base,
-      color: '#526D82',
+      color: "#526D82",
     }),
     indicatorSeparator: (base) => ({
-      display: 'none',
+      display: "none",
     }),
     indicatorsContainer: (base) => ({
       ...base,
-      alignItems: 'center',
+      alignItems: "center",
     }),
     menu: (base) => ({
       ...base,
       zIndex: 9999,
-      position: 'absolute',
+      position: "absolute",
     }),
   };
-
   return (
     <div>
       <Container className="teacher_studentadd_container">
@@ -171,11 +156,7 @@ function AddStudent() {
               // marginBottom: "10px",
             }}
           >
-<<<<<<< HEAD
-            <Link to="/teachernavbar">
-=======
             <Link to="/teacherstudentdashboard">
->>>>>>> 2f0136bb8e99b05eced73455ff29c0aa112bd4f4
               <IoChevronBackSharp className="teacher_studentadd_back" />
             </Link>
             <h1 className="teacher_studentadd_title">Add Student</h1>
@@ -208,7 +189,6 @@ function AddStudent() {
                     onChange={(e) => setStudentRollno(e.target.value)}
                   />
                 </div>
-
                 <div className="teacher_studentadd_group">
                   <label htmlFor="email">
                     Email Id<span style={{ color: "red" }}>*</span>
@@ -237,13 +217,17 @@ function AddStudent() {
                   <label htmlFor="dob">
                     DOB<span style={{ color: "red" }}>*</span>
                   </label>
-                  <input  onChange={(e) => setStudentDob (e.target.value)} type="date" name="" id="" />
+                  <input
+                    onChange={(e) => setStudentDob(e.target.value)}
+                    type="date"
+                    name=""
+                    id=""
+                  />
                 </div>
                 <div className="teacher_studentadd_group">
                   <label htmlFor="gender">
                     Gender<span style={{ color: "red" }}>*</span>
                   </label>
-
                   <Select
                     options={genderOptions}
                     styles={customStyles}
@@ -279,7 +263,6 @@ function AddStudent() {
                     id=""
                   />
                 </div>
-
                 <div className="teacher_studentadd_group">
                   <label htmlFor="term">
                     Admission Number<span style={{ color: "red" }}>*</span>
@@ -340,10 +323,13 @@ function AddStudent() {
                     onChange={(e) => setStudentAddress(e.target.value)}
                   />
                 </div>
+                12:36
                 <div className="image_conatiner">
                   <div className="student_image_upload_container">
-                  <label className="upload_profile_label">Upload Profile Image</label>
-                  <label >Or</label>
+                    <label className="upload_profile_label">
+                      Upload Profile Image
+                    </label>
+                    <label>Or</label>
                     <div className="student_upload_placeholder">
                       {imageFile ? (
                         <>
@@ -389,7 +375,9 @@ function AddStudent() {
                         </>
                       )}
                     </div>
-                    <label style={{paddingTop:'10px'}}>maximum  Upload file size : 256 Mb.</label>
+                    <label style={{ paddingTop: "10px" }}>
+                      maximum Upload file size : 256 Mb.
+                    </label>
                   </div>
                 </div>
                 <div className="teacher_studentadd_submit">
@@ -405,5 +393,4 @@ function AddStudent() {
     </div>
   );
 }
-
 export default AddStudent;
