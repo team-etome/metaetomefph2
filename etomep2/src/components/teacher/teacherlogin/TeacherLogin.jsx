@@ -20,8 +20,7 @@ function TeacherLogin() {
     const APIURL = useSelector((state) => state.APIURL.url);
   
   
-    const dispatch = useDispatch();
-  
+    const dispatch = useDispatch(); 
   
     const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
@@ -46,7 +45,7 @@ function TeacherLogin() {
         console.log(response.data,"dataaaaaa")
         dispatch(teacherinfo(response.data.teacher));
      
-        navigate("/teachernavbar");
+        navigate("/teacherstudentdashboard");
         Swal.fire({
           title: "Success!",
           text: "Login Successfully",
