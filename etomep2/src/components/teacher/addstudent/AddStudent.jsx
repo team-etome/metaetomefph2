@@ -171,7 +171,11 @@ function AddStudent() {
               // marginBottom: "10px",
             }}
           >
+<<<<<<< HEAD
+            <Link to="/teachernavbar">
+=======
             <Link to="/teacherstudentdashboard">
+>>>>>>> 2f0136bb8e99b05eced73455ff29c0aa112bd4f4
               <IoChevronBackSharp className="teacher_studentadd_back" />
             </Link>
             <h1 className="teacher_studentadd_title">Add Student</h1>
