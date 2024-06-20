@@ -155,7 +155,7 @@ function AddStudent() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/aarnanavbar">
+            <Link to="/teachernavbar">
               <IoChevronBackSharp className="teacher_studentadd_back" />
             </Link>
             <h1 className="teacher_studentadd_title">Add Student</h1>

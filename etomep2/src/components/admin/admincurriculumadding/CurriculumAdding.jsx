@@ -94,9 +94,7 @@ function CurriculumAdding() {
     e.preventDefault();
 
     const payload = {
-      // publisher: selectedPublisher ? selectedPublisher.value : '',
-      // subject: selectedSubject ? selectedSubject.value : '',
-      // faculty: faculty ? faculty.value : '',
+  
      
       class_name      : class_name,
       division        : division,
@@ -114,6 +112,7 @@ function CurriculumAdding() {
         console.log("Data submitted successfully:", response.data);
         // Handle further actions after successful submission like redirecting
       })
+      
       .catch(error => {
         console.error("Failed to submit data:", error);
       });

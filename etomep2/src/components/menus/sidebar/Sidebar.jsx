@@ -15,6 +15,14 @@ function Sidebar() {
   const location = useLocation();
   const [activeItem, setActiveItem] = useState(null);
 
+  const setAarnaActiveTab = () => {
+    localStorage.setItem("aarnaActiveTab", "Progress");
+  };
+
+  const setInstitutionActiveTab = () => {
+    localStorage.setItem("institutionActiveTab", "Faculty");
+  };
+
   useEffect(() => {
     const path = location.pathname;
     if (path.includes("admindashboard")) {
@@ -87,7 +95,7 @@ function Sidebar() {
           }`}
           onClick={() => setActiveItem("institution")}
         >
-          <Link to="/institutionadding" style={{textDecoration:'none', color:'inherit'}}>
+          <Link to="/institutionadding" style={{textDecoration:'none', color:'inherit'}} onClick={setInstitutionActiveTab}>
             <div className="icon_container_div">
               <RxDashboard className="icon_img" />
               <span className="icon-text">Institution</span>
@@ -107,7 +115,7 @@ function Sidebar() {
           className={`menu_item_col ${activeItem === "aarna" ? "active" : ""}`}
           // onClick={() => handleMenuItemClick("aarna")}
         >
-          <Link to='/aarnanavbar'style={{textDecoration:'none', color:'inherit'}}>
+          <Link to='/aarnanavbar'style={{textDecoration:'none', color:'inherit'}} onClick={setAarnaActiveTab}>
           <div className="icon_container_div">
             <SlNote className="icon_img" />
             <span className="icon-text">Aarna</span>
