@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Link} from "react-router-dom";
 import '../teacherquestiongenerator/questiongenerator.css';
 import { IoIosArrowBack } from "react-icons/io";
 import { IoAddCircleOutline } from "react-icons/io5";
@@ -88,7 +89,9 @@ function QuestionGenerator() {
           justifyContent: "space-bet"
         }}>
           <Col style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+          <Link to="/teacherquestioninstruction">
             <IoIosArrowBack style={{ width: "32px", height: "32px", color: "#526D82", marginLeft: "68px" }} />
+          </Link>
             <h6 style={{ marginLeft: "10px", color: "#526D82", fontWeight: "500", fontSize: "28px" }}>Subject Name</h6>
           </Col>
           <Col style={{ display: "flex", justifyContent: "end", paddingRight: "24px", alignItems: "center" }}>

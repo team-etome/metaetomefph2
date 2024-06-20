@@ -113,7 +113,7 @@ function ExaminationDashboard() {
                     </Form>
                   </div>
 
-                  <div
+                  {/* <div
                     style={{
                       width: "10%",
                       display: "flex",
@@ -122,7 +122,7 @@ function ExaminationDashboard() {
                     }}
                   >
                     <BsFilterRight style={{ height: "50px", width: "40px" }} />
-                  </div>
+                  </div> */}
                 </div>
               </Col>
         </Row>

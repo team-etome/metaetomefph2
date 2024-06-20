@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Layout_01_S from "../../../assets/Layout_01_S.png";
@@ -10,6 +10,8 @@ function QuestionCreationView() {
     const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [showOptions, setShowOptions] = useState(false);
+
+  const navigate = useNavigate()
 
     const dropdownRef = useRef(null);
     const createDropdownRef = useRef(null);
@@ -39,10 +41,9 @@ function QuestionCreationView() {
         e.preventDefault();
         setShowEditBlockButtons((prevState) => !prevState);
       };
-      const handleAddClick = (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-        setShowOptions(!showOptions);
-    };
+      const handleAddClick= ()=>{
+        navigate('/teacherquestioninstruction')
+    }
 
   return (
     <div>
@@ -56,7 +57,7 @@ function QuestionCreationView() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/teacheraarna">
+            <Link to="/teacherexamination">
               <IoChevronBackSharp className="teacher_view_back" />
             </Link>
             <h1 className="teacher_view_title">Question Creation</h1>
@@ -153,9 +154,9 @@ function QuestionCreationView() {
               <input type="text" id="end_time" name="end_time" readOnly />
             </div>
             
-            <div className='teacher_create_question' ref={createDropdownRef} style={{ position: 'relative' }}>
-              <button type="button" onClick={handleAddClick}>Create Question</button>
-                {showOptions && (
+            <div className='teacher_create_question' onClick={handleAddClick} >
+              <button type="button">Create Question</button>
+                {/* {showOptions && (
                   <div
                     style={{
                       position: "absolute",
@@ -164,7 +165,6 @@ function QuestionCreationView() {
                       backgroundColor: "white",
                       boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
                       borderRadius: "5px",
-                      // padding: "10px",
                       zIndex: "1",
                       display: "flex",
                       flexDirection: "column",
@@ -179,7 +179,7 @@ function QuestionCreationView() {
                       <Button style={{ backgroundColor: 'white', border: 'none', color: '#526D82', width: '200px' }}>Upload Pdf</Button>
                   </Link>
                 </div>
-                )}
+                )} */}
             </div>
           </Col>
         </Row>

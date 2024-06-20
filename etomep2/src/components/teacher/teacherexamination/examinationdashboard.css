@@ -99,7 +99,7 @@
 @media (max-width:576px) {
    
   .examination_rectangle{
-    width: 400px !important;
+    width: 500px !important;
     height: 120px !important;
   }
 .class_number{
@@ -121,7 +121,7 @@
     
   }
   .teacher_examination_dashboard{
-    padding-top: 15vh;
+    padding-top: 10vh;
     padding-left: 1vh;
     padding-right: 1vh;
     }
