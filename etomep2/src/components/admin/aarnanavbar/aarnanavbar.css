@@ -1,100 +1,119 @@
-.aarna_navbar_tab .nav-link {
-    padding: 10px 15px;
-    border: none;
-}
+.ad_aarna_navbar_tab {
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: nowrap; 
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
+  }
 
-.aarna_navbar_tab .nav-link.active {
+  
+  .ad_aarna_navbar_tab .nav-link {
+    padding: 10px 5px;
+    border: none;
+  }
+  
+  .ad_aarna_navbar_tab .nav-link.active {
     font-weight: bold;
     border-bottom: 2px solid #526D82;
-}
-
-.aarna_search_filter {
-    display: flex;
-    align-items: center;
-}
-
-.aarna_search_filter .form-control {
-    width: 250px;
-    border-radius: 17px;
-    color: #767676;
-    padding-left: 30px;
-}
-
-.aarna_search_filter .form-control::placeholder {
-    color: #767676;
-}
-
-.aarna_search_filter .position-relative {
-    position: relative;
-}
-
-.aarna_search_filter .position-relative .position-absolute {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 15px;
-    z-index: 2;
-    height: 20px;
-    width: 20px;
-    color: #D8D4D4;
-}
-
-.aarna_search_filter .bs-filter-right {
-    height: 40px;
-    width: 40px;
-    margin-left: 15px;
-}
-
-.search_filter_wrapper {
+  }
+  
+  .ad_search_filter_main {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: auto;
-}
-
-@media (max-width: 768px) {
-    .aarna_navbar_tab {
-        display: flex;
-        align-items: center;
-        padding-top: 20px;
-        justify-content: flex-start;
+    width: 100%;
+  }
+  
+  .search_filter_wrapper {
+    display: flex; 
+    align-items: center;
+  }
+  
+  .ad_search_bar {
+    width: 250px;
+    border-radius: 17px;
+    padding-right: 40px; 
+  }
+  
+  .nav_book_searchbar_icon {
+    right: 15px;
+  }
+  
+  .bs-filter-right {
+    height: 40px;
+    width: 40px;
+  }
+  
+  .ad_search_filter_icon {
+    margin-left: 15px;
+    color: #545454;
+  }
+  .ad_aarna_mob_subhead_one{
+    text-decoration: none;
+    color: #526D82 !important;
+    font-size: 15px;
+    margin-right: 20px;
+  }
+  
+ 
+  @media (max-width: 768px) {
+    .ad_aarna_navbar_tab {
+      /* justify-content: flex-start;
+      margin-top: 10px;
+      padding-left: 5%; */
+      display: flex;
+      align-items: center;
+      padding-top: 0px;
+     justify-content: flex-start;
+     margin-top: 10px;
+     padding-left: 0%;
+     padding-bottom: 20px;
+     gap: 0px;
     }
-
-    .aarna_mob_subhead_one {
-        background-color: #e2e0e0;
-        color: #727272;
-        width: 100% !important;
-        height: 30px !important;
-        border-radius: 8px;
+    .ad_aarna_mob_subhead_one{
+        color: #9DB2BF!important;
+        width: 127px !important;
+        height:40px !important;
+        border-radius: 16px;
         display: flex;
         justify-content: center;
         align-items: center;
+        border: 1px solid #9DB2BF !important;
     }
-
-    .aarna_navbar_tab .nav-link.active {
-        font-weight: 400;
-        border-bottom: none;
+    .ad_aarna_navbar_tab .nav-link.active {
+        font-weight:400;
+        border-bottom: none ;
         color: #ffff !important;
-        background-color: #526d82;
+        background-color: #9DB2BF;
+      }
+  .aarna_navbar{
+    padding-top: 20% !important;
+  }
+    .ad_search_filter_main {
+      /* width: 100%;
+      justify-content: flex-start;
+      padding-left: 0; */
+      width: 100%;
+      padding-left: 0%;
+      /* gap: 5px; */
+      padding-right: 0px;
+      padding-left: 90%;
+      margin-right: 0px;
+    }
+  
+    .ad_search_filter_icon {
+      /* margin-left: 5px; */
+      /* padding-left: 5%; */
+      padding-right: 0px;
+      width: 40px;
+      margin-right: 0px;
+    }
+  
+    .ad_search_bar {
+      width: 250px;
+      margin-right: 0px;
     }
 
-    .aarna_navbar {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 !important;
-    }
-
-    .search_filter_wrapper {
-        flex-direction: column;
-    }
-
-    .aarna_search_filter .form-control {
-        width: 100%;
-    }
-
-    .aarna_search_filter .bs-filter-right {
-        height: 30px;
-        width: 30px;
-    }
-}
+  }
+  

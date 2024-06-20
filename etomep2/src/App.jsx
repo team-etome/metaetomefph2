@@ -23,7 +23,6 @@ import AdminFacultyPage from './pages/adminpage/AdminFacultyPage';
 import AdminClassPage from './pages/adminpage/AdminClassPage';
 import InstitutionAddingPage from './pages/adminpage/InstitutionAddingPage';
 import AdminClassAddingPage from './pages/adminpage/AdminClassAddingPage';
-import CurriculumAdding from './components/admin/admincurriculumadding/CurriculumAdding';
 import AdminCurriculumAddingPage from './pages/adminpage/AdminCurriculumAddingPage';
 import AdminFacultyAddingPage from './pages/adminpage/AdminFacultyAddingPage';
 import AdminClassViewPage from './pages/adminpage/AdminClassViewPage';
@@ -43,12 +42,25 @@ import AarnaQuestionViewPage from './pages/adminpage/AarnaQuestionViewPage';
 import AarnaSeatViewPage from './pages/adminpage/AarnaSeatViewPage';
 import AarnaEvaluationViewPage from './pages/adminpage/AarnaEvaluationViewPage';
 import TeacherStudentAddPage from './pages/teacherpage/TeacherStudentAddPage';
-import TeacherStudentDashboardPage from './pages/teacherpage/TeacherStudentDashboardPage';
 import TeacherNavbarPage from './pages/teacherpage/TeacherNavbarPage';
 import TeacherStudentViewPage from './pages/teacherpage/TeacherStudentViewPage';
 import TeacherLoginPage from './pages/teacherpage/TeacherLoginPage';
 import AdminLokaTextbookPage from './pages/adminpage/AdminLokaTextbookPage';
 import TeacherTextEditorPage from './pages/teacherpage/TeacherTextEditorPage';
+import LokaNavbarPage from './pages/adminpage/LokaNavbarPage';
+import TeacherAarnaPage from './pages/teacherpage/TeacherAarnaPage';
+import TeacherQuestionCreationPage from './pages/teacherpage/TeacherQuestionCreationPage';
+import AarnaResultViewPage from './pages/adminpage/AarnaResultViewPage';
+import TeacherResultView from './components/teacher/teacherresultview/TeacherResultView';
+import AdminLokaLibraryPage from './pages/adminpage/AdminLokaLibraryPage';
+import TeacherQuestionInstructionPage from './pages/teacherpage/TeacherQuestionInstructionPage';
+import TeacherQuestionGeneratorPage from './pages/teacherpage/TeacherQuestionGeneratorPage';
+import TeacherStudentDashboardPage from './pages/teacherpage/TeacherStudentDashboardPage';
+import TeacherExaminationListPage from './pages/teacherpage/TeacherExaminationListPage';
+import TeacherSubjectPage from './pages/teacherpage/TeacherSubjectPage';
+import TeacherClassViewPage from './pages/teacherpage/TeacherClassViewPage';
+
+
 function App() {
   return (
     <div className="App">
@@ -98,18 +110,33 @@ function App() {
           <Route path="/questionview" element={<AarnaQuestionViewPage/>}/>
           <Route path="/seatview" element={<AarnaSeatViewPage/>}/>
           <Route path="/evaluationview" element={<AarnaEvaluationViewPage/>}/>
+          <Route path="/adminlokanavbar" element={<LokaNavbarPage/>}/>
           <Route path="/adminlokatextbook" element={<AdminLokaTextbookPage/>}/>
+          <Route path="/adminlokalibary" element={<AdminLokaLibraryPage/>}/>
+          <Route path="/adminresultview" element={<AarnaResultViewPage/>}/>
+
+
+
 
 
 
 
           {/* teacherside */}
           <Route path="/teacherlogin" element={<TeacherLoginPage/>}/>
-          <Route path="/teachernavbar" element={<TeacherNavbarPage/>}/>
+          {/* <Route path="/teachernavbar" element={<TeacherNavbarPage/>}/> */}
           <Route path="/teacherstudentadd" element={<TeacherStudentAddPage/>}/>
-          {/* <Route path="/teacherstudentdashboard" element={<TeacherStudentDashboardPage/>}/> */}
+          <Route path="/teacherstudentdashboard" element={<TeacherStudentDashboardPage/>}/>
           <Route path="/teacherstudentview" element={<TeacherStudentViewPage/>}/>
           <Route path="/teachertexteditor" element={<TeacherTextEditorPage/>}/>
+          <Route path="/teacheraarna" element={<TeacherAarnaPage/>}/>
+          <Route path="/teacherquestionview" element={<TeacherQuestionCreationPage/>}/>
+          <Route path="/teacherresultview" element={<TeacherResultView/>}/>
+          <Route path="/teacherquestioninstruction" element={<TeacherQuestionInstructionPage/>}/>
+          <Route path="/teacherquestiongenerator" element={<TeacherQuestionGeneratorPage/>}/>
+          <Route path="/teacherexamination" element={<TeacherExaminationListPage/>}/>
+          <Route path="/teachersubject" element={<TeacherSubjectPage/>}/>
+          <Route path="/teacherclassview" element={<TeacherClassViewPage/>}/>
+
 
 
 

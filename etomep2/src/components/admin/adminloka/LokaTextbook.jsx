@@ -27,6 +27,7 @@ function LokaTextbook() {
     const [data, setData] = useState("");
     
     const [showChapterDiv, setShowChapterDiv] = useState(false);
+    
 
     console.log(selectedSubject, "subjectttttt");
 
@@ -217,7 +218,7 @@ function LokaTextbook() {
                   style={{
                     border: "none",
                     borderBottom: "1px solid black",
-                    width: "180px",
+                    width: "100px",
                     outline: "none",
                   }}
                   value={chapter.name}
@@ -568,7 +569,7 @@ function LokaTextbook() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/institutionadding">
+            <Link to="/adminlokanavbar">
               <IoChevronBackSharp className="loka_back" />
             </Link>
             <h1 className="loka_title">Add Textbooks</h1>
@@ -683,7 +684,7 @@ function LokaTextbook() {
                   </div>
             </Col>
           </Row>
-          <Row style={{paddingLeft:'40px'}}>
+          <Row className="media_index">
             <Col md={6}>
             <div>
                     <label
@@ -698,10 +699,8 @@ function LokaTextbook() {
                       Index Adding
                     </label>
                   </div>
-                  <div className="loka_textbook_group" style={{marginLeft:'0px', width:'90%'}}>
-                    <label
-                      htmlFor="totalChapters"
-                    >
+                  <div className="loka_textbook_group index_field">
+                    <label htmlFor="totalChapters">
                       Total no of Chapters
                     </label>
                     <input
@@ -717,24 +716,19 @@ function LokaTextbook() {
             {renderChapterInputs()}
         </div>
                 </Col>
-                <Col md={6} style={{paddingLeft:'2rem'}}>
+                <Col md={6} className="loka_tb_media">
                 <div style={{}}>
                       <label
                         htmlFor="mediaLibrary"
-                        style={{
-                          marginLeft: "20px",
-                          // marginBottom: "50px",
-                          fontSize: "25px",
-                          padding: "0px",
-                        }}
+                        className="loka_media_label"
                       >
                         Media Library
                       </label>
                     </div>
                     <div>
-                      <div style={{ marginLeft: "10px" }}>
+                      <div style={{ marginLeft: "0px" }}>
                         <div style={{ display: "flex" }}>
-                          <div className="textbutton-container" style={{}}>
+                          <div className="lokatb_textbutton_container" style={{}}>
                             <button
                               style={{
                                 ...(selectedTab === "pdf"
@@ -747,7 +741,7 @@ function LokaTextbook() {
                               Textbook Pdf
                             </button>
                           </div>
-                          <div className="textbutton-container" style={{}}>
+                          <div className="lokatb_textbutton_container" style={{}}>
                             <button
                               style={{
                                 ...(selectedTab === "frontPage"
@@ -768,8 +762,8 @@ function LokaTextbook() {
                       {selectedTab === "pdf" && (
                         <div style={{ marginLeft: "10px" }}>
                           <label htmlFor="pdf" style={{}}></label>
-                          <div className="textbook_image_upload_container">
-                            <div className="textbook_upload_placeholder">
+                          <div className="admin_textbook_image_upload_container">
+                            <div className="admin_textbook_upload_placeholder">
                               {pdfFile ? (
                                 <>
                                   <embed
@@ -799,7 +793,7 @@ function LokaTextbook() {
                                 <>
                                   <label
                                     htmlFor="pdf-upload"
-                                    className="textbook_upload_label"
+                                    className="admin_textbook_upload_label"
                                   >
                                     Upload PDF
                                   </label>
@@ -807,7 +801,7 @@ function LokaTextbook() {
                                     id="pdf-upload"
                                     type="file"
                                     accept=".pdf"
-                                    className="textbook_upload_input"
+                                    className="admin_textbook_upload_input"
                                     onChange={handlePdfUpload}
                                   />
                                 </>
@@ -820,8 +814,8 @@ function LokaTextbook() {
                       {selectedTab === "frontPage" && (
                         <div>
                           <label htmlFor="photo" style={{}}></label>
-                          <div className="textbook_image_upload_container">
-                            <div className="textbook_upload_placeholder">
+                          <div className="admin_textbook_image_upload_container">
+                            <div className="admin_textbook_upload_placeholder">
                               {imageFile ? (
                                 <>
                                   <img
@@ -855,7 +849,7 @@ function LokaTextbook() {
                                 <>
                                   <label
                                     htmlFor="image-upload"
-                                    className="textbook_upload_label"
+                                    className="admin_textbook_upload_label"
                                   >
                                     Upload Image
                                   </label>
@@ -863,7 +857,7 @@ function LokaTextbook() {
                                     id="image-upload"
                                     type="file"
                                     accept="image/*"
-                                    className="textbook_upload_input"
+                                    className="admin_textbook_upload_input"
                                     onChange={handleImageUpload}
                                   />
                                 </>

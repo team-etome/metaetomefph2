@@ -32,11 +32,13 @@ function CurriculumAdding() {
   const admininfo = useSelector((state) => state.admininfo);
 
   const admin_id = admininfo ? admininfo.admininfo?.admin_id : null;
+
   const class_name      = classinfo?.adminclassinfo?.className
   const division        = classinfo?.adminclassinfo?.division
   const stream          = classinfo?.adminclassinfo?.stream
   const class_teacher   = classinfo?.adminclassinfo?.teacher.value
   const medium          = classinfo?.adminclassinfo?.medium.value
+
 
   console.log(classinfo,"classinfo")
   
@@ -186,14 +188,7 @@ function CurriculumAdding() {
   return (
     <div className="curriculum_container">
       <Container className="curriculum_add">
-        <form
-          className="curriculum_form"
-          style={{
-            backgroundColor: "#ffff",
-            borderRadius: "16px",
-            height: "90%",
-          }}
-        >
+        <form className="curriculum_form">
           <Row>
             <Col>
               <div className="curriculum_header">
@@ -205,6 +200,8 @@ function CurriculumAdding() {
               <div style={{ border: "0.5px solid #526D82" }}></div>
             </Col>
           </Row>
+
+          <div className="curriculum_scroll">
           <Row>
             <div className="edit_delete">
               <div className="curriculum_edit">
@@ -239,7 +236,7 @@ function CurriculumAdding() {
                   value={selectedPublisher}
                   onChange={setSelectedPublisher}
                   styles={customStyles}
-                  placeholder="Select a Publisher"
+                  placeholder=""
                 />
               </div>
             </Col>
@@ -254,7 +251,7 @@ function CurriculumAdding() {
                   value={selectedSubject}
                   onChange={setSelectedSubject}
                   styles={customStyles}
-                  placeholder="Select a Subject"
+                  placeholder=""
                 />
               </div>
             </Col>
@@ -266,7 +263,7 @@ function CurriculumAdding() {
                 <Select
                   options={facultyOptions}
                   styles={customStyles}
-                  placeholder="Select a Teacher"
+                  placeholder=""
                   value={faculty}
                   onChange={setFaculty}
                 />
@@ -326,6 +323,8 @@ function CurriculumAdding() {
               </button>
             </div>
           </div>
+          </div>
+
         </form>
       </Container>
     </div>

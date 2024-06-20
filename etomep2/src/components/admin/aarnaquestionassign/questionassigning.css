@@ -8,17 +8,17 @@
         height: 90%;
         width: 100%;
         background-color: #fff;
-        padding-top: 20px;
+        padding-top: 1%;
         border-radius: 15px;
-        border: 0.5px solid #000000;
+        /* border: 0.5px solid #000000; */
         padding-bottom: 100px;
     
     }
 
     .qpaper_container_scroll {
-        overflow-y: auto;
-        height: 75vh;
-        width:150vw ;
+        max-height: calc(90vh - 200px);
+        overflow-y: scroll; 
+        overflow-x: hidden; 
     }
     
       .qpaper_container_scroll::-webkit-scrollbar {
@@ -63,7 +63,7 @@
     .qpaper_group input{
         width: 100%;
         border: 1px solid #526D82;
-        border-radius: 8px;
+        border-radius: 8px ;
         box-sizing: border-box;
         outline: none;
         padding: 1px 10px 12px 10px;
@@ -150,7 +150,7 @@
     }
 
     .qpaper_form_scrollable {
-        max-height: calc(100vh - 200px);
+        max-height: calc(90vh - 200px);
         overflow-y: auto; 
         overflow-x: hidden; 
       }
@@ -184,18 +184,13 @@
     
         .qpaper_form {
             background-color: #fff;
-            padding: 20px;
+            padding: 10px;
             border-radius: 8px;
             border: none;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            max-height: calc(100vh - 120px);
-            overflow-y: scroll; /* Ensure vertical scroll bar appears */
-            overflow-x: hidden; /* Hide horizontal scroll bar */
-            box-sizing: border-box;
         }
     
-        .qpaper_form::-webkit-scrollbar {
+        /* .qpaper_form::-webkit-scrollbar {
             width: 10px;
         }
     
@@ -208,12 +203,12 @@
             border-radius: 10px;
         }
     
-        .fqpaper_form::-webkit-scrollbar-thumb:hover {
+        .qpaper_form::-webkit-scrollbar-thumb:hover {
             background: #E3DFDF;
-        }
+        } */
     
         .qpaper_back {
-            margin-right: 15px;
+            margin-right: 5px;
         }
     
         .qpaper_title {
@@ -232,7 +227,7 @@
         .qpaper_group input, .faculty_group_select Select {
             width: 100%;
             border: 1px solid #526D82;
-            border-radius: 4px;
+            border-radius: 8px !important;
             padding: 12px 10px;
         }
     
@@ -260,6 +255,11 @@
         .qpaper_button {
             width: 50%;
             padding: 12px;
+        }
+        .qpaper_button:hover{
+            background-color: #526D82;
+            color: #fff;
+            border: 1px solid #526D82;
         }
     }
     

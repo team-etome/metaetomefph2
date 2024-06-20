@@ -1,10 +1,16 @@
 import React from 'react'
 import '../adminstudentlist/studentlisting.css'
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link,useNavigate  } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 
 function StudentListing() {
+  
+  const navigate = useNavigate();
+  const handleclick= ()=>{
+    navigate('/studentview')
+}
+
     const studentListData = [
         { studentnumber:'1',studentname:'yyyyyyyyyyy'},
         { studentnumber:'1',studentname:'yyyyyyyyyyy'},
@@ -33,14 +39,23 @@ function StudentListing() {
         { studentnumber:'1',studentname:'yyyyyyyyyyy'},
         { studentnumber:'1',studentname:'yyyyyyyyyyy'},
         { studentnumber:'1',studentname:'yyyyyyyyyyy'},
-
+        { studentnumber:'1',studentname:'yyyyyyyyyyy'},
+        { studentnumber:'1',studentname:'yyyyyyyyyyy'},
+        { studentnumber:'1',studentname:'yyyyyyyyyyy'},
+        { studentnumber:'1',studentname:'yyyyyyyyyyy'},
+        { studentnumber:'1',studentname:'yyyyyyyyyyy'},        
+        { studentnumber:'1',studentname:'yyyyyyyyyyy'},
+        { studentnumber:'1',studentname:'yyyyyyyyyyy'},
+        { studentnumber:'1',studentname:'yyyyyyyyyyy'},
       ];
+
+
+
   return (
     <div>
     <Container className="student_container">
-
-      <div className="student_list">
-        <div>
+      <div className="student_form">
+        <div className='studentlist_header'>
           <div
             style={{
               display: "flex",
@@ -48,18 +63,19 @@ function StudentListing() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/institutionadding">
+            <Link to="/classview">
               <IoChevronBackSharp className="student_back" />
             </Link>
             <h1 className="student_title">Student List</h1>
             <div style={{color:'#526D82', paddingLeft:'10px', fontSize:'15px'}}>(50)</div>
           </div>
-          <div style={{ border: "0.5px solid #526D82" }}></div>
+          {/* <div style={{ border: "0.5px solid #526D82" }}></div> */}
         </div>
+<div className='studentlist_scrollable' style={{paddingTop:'30px'}}>
         <Row>
         {studentListData.map((item, index) => (
-            <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
-            <div className=' student_card'>
+            <Col lg={3} md={4} sm={6} xs={6} key={index} className='studentsss_list'>
+            <div  onClick={handleclick} className=' student_card'>
                 <div className='student_number'>
                     {item.studentnumber}
                 </div>
@@ -70,6 +86,7 @@ function StudentListing() {
             </Col>
             ))}
         </Row>
+        </div>
       </div>
     </Container>
   </div>

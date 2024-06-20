@@ -1,8 +1,17 @@
+<<<<<<< HEAD
 import React, { useState, useRef, useEffect } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { IoIosAdd, IoMdDownload, IoMdAdd } from "react-icons/io";
 import { MdUpload } from "react-icons/md";
 import studentexcel from "../../utils/studentexcel";
+=======
+import React, { useState, useRef,useEffect  } from "react";
+import { Col, Container, Row, Button ,Form} from "react-bootstrap";
+import { IoIosAdd, IoMdDownload, IoMdAdd } from "react-icons/io";
+import { MdUpload } from "react-icons/md";
+import generateExcelFile from "../../utils/generateExcelFile";
+import { BsSearch, BsFilterRight } from "react-icons/bs";
+>>>>>>> 2f0136bb8e99b05eced73455ff29c0aa112bd4f4
 import amritha from "../../../assets/amritha.png";
 import { Link, useNavigate } from "react-router-dom";
 import "../studentdashboard/studentdashboard.css";
@@ -39,8 +48,13 @@ function StudentDashboard() {
 
   const studentListData = new Array(30).fill({
     studentName: "Ria Choudary",
+<<<<<<< HEAD
     date: "12/03/2004",
     rollNo: "1001",
+=======
+    // date: "12/03/2004",
+    rollNo:'1001'
+>>>>>>> 2f0136bb8e99b05eced73455ff29c0aa112bd4f4
   });
 
   const handleclick = () => {
@@ -91,12 +105,16 @@ function StudentDashboard() {
   };
 
   return (
+<<<<<<< HEAD
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
+=======
+    <div className='teacher_student_dashboard' >
+>>>>>>> 2f0136bb8e99b05eced73455ff29c0aa112bd4f4
       <Container
         fluid
-        className="teacher_studentdashboard_container"
         style={{ marginTop: "16px" }}
       >
+<<<<<<< HEAD
         <Row>
           {studentlist?.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index}>
@@ -109,6 +127,80 @@ function StudentDashboard() {
                   <div className="student_date">{item.start_date}</div>
                   <div className="student_id">{item.roll_no}</div>
                 </div>
+=======
+        <Row style={{ paddingLeft: "2vw", paddingTop: "1vw", paddingBottom:'1vw' }}>
+              <Col md={6} className="class_number">
+              <h4>Class: 8 A</h4>
+              </Col>
+              <Col md={6}>
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    flexDirection: "row",
+                    paddingLeft: "1vw",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "80%",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                    }}
+                    className="search_filter d-flex align-items-center"
+                  >
+                    <Form className="d-flex">
+                      <div className="position-relative">
+                        <BsSearch
+                          className="position-absolute top-50 translate-middle-y ms-2"
+                          style={{
+                            zIndex: 2,
+                            height: "20px",
+                            width: "20px",
+                            color: "#D8D4D4",
+                            right: "15px",
+                          }}
+                        />
+                        <Form.Control
+                          type="search"
+                          placeholder="Search"
+                          className="ps-6 teacher_student_search_input"
+                          aria-label="Search"
+                        />
+                      </div>
+                    </Form>
+                  </div>
+
+                  <div
+                    style={{
+                      width: "10%",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <BsFilterRight style={{ height: "50px", width: "40px" }} />
+                  </div>
+                </div>
+              </Col>
+        </Row>
+        <Row className="teacher_studentdashboard_container">
+          {studentListData.map((item, index) => (
+            // lg={3} md={4} sm={6} xs={6}
+            <Col lg={3} md={6} sm={6} xs={12} key={index} >
+              <div onClick={handleclick}  className="border border-white student_rectangle">
+               
+                  <div className="student_name">{item.studentName}</div>
+                  <div className="student_date_id">
+                    {/* <div className="student_date">
+                      {item.date}
+                    </div> */}
+                    <div className="student_id">
+                      Admisssion No.{item.rollNo}
+                    </div>
+                  </div>
+>>>>>>> 2f0136bb8e99b05eced73455ff29c0aa112bd4f4
               </div>
             </Col>
           ))}

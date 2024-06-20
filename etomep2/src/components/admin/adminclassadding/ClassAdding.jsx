@@ -104,124 +104,109 @@ function ClassAdding() {
     }),
   };
   return (
-    <div className="page_container">
+    <div>
       <Container className="class_add">
-        <form
-          className="class_form"
-          style={{ backgroundColor: "#ffff", borderRadius: "16px" }}
-        >
-          <Row>
-            <Col>
+        <form className="class_form">
               <div className="header-container">
                 <Link to="/institutionadding">
                   <IoChevronBackSharp
-                    style={{
-                      color: "#526D82",
-                      height: "32px",
-                      width: "32px",
-                      marginLeft: "20px",
-                    }}
+                  className="class_add_back"
                   />
                 </Link>
-                <h1
-                  style={{
-                    color: "#526D82",
-                    fontSize: "25px",
-                    marginLeft: "10px",
-                  }}
-                >
+                <h1 className="class_title" >
                   Class Adding
                 </h1>
               </div>
               <div style={{ border: "0.5px solid #526D82" }}></div>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6}>
-              <div className="form_group">
-                <input
-                  type="number"
-                  id="class_number"
-                  name="class_number"
-                  placeholder="Enter class number"
-                  value={className}
-                  onChange={handleClassNameChange}
-                />
-                <label htmlFor="class_number">
-                  Class Name<span style={{ color: "red" }}>*</span>
-                </label>
-              </div>
+              <div className="class_add_scroll">
+              <Row>
+                {/* <div className="class_scroll"> */}
+                <Col md={6}>
+                  <div className="form_group">
+                    <input
+                      type="number"
+                      id="class_number"
+                      name="class_number"
+                      placeholder=""
+                      value={className}
+                      onChange={handleClassNameChange}
+                    />
+                    <label htmlFor="class_number">
+                      Class Name<span style={{ color: "red" }}>*</span>
+                    </label>
+                  </div>
 
-              <div className="form_group">
-                <input
-                  type="text"
-                  id="class_category"
-                  name="class_category"
-                  placeholder="Enter stream"
-                  value={stream}
-                  onChange={(e) => setStream(e.target.value)}
-                  readOnly={parseInt(className, 10) < 11}
-                />
-                <label htmlFor="class_category">Stream</label>
-              </div>
+                  <div className="form_group">
+                    <input
+                      type="text"
+                      id="class_category"
+                      name="class_category"
+                      placeholder=""
+                      value={stream}
+                      onChange={(e) => setStream(e.target.value)}
+                      readOnly={parseInt(className, 10) < 11}
+                    />
+                    <label htmlFor="class_category">Stream</label>
+                  </div>
 
-              <div className="class_select">
-                <Select
-                  options={teacherOptions}
-                  styles={customStyles}
-                  placeholder="Select teacher"
-                  value={teacher}
-                  onChange={setTeacher}
-                />
-                <label htmlFor="class_teacher">
-                  Class Teacher<span style={{ color: "red" }}>*</span>
-                </label>
-              </div>
-            </Col>
+                  <div className="class_select">
+                    <Select
+                      options={teacherOptions}
+                      styles={customStyles}
+                      placeholder=""
+                      value={teacher}
+                      onChange={setTeacher}
+                    />
+                    <label htmlFor="class_teacher">
+                      Class Teacher<span style={{ color: "red" }}>*</span>
+                    </label>
+                  </div>
+                </Col>
+                <Col md={6}>
+                  <div className="form_group division">
+                    <input
+                      type="text"
+                      id="class_division"
+                      name="class_division"
+                      placeholder=""
+                      value={division}
+                      onChange={(e) => setDivision(e.target.value)}
+                    />
+                    <label htmlFor="class_division">
+                      Division<span style={{ color: "red" }}>*</span>
+                    </label>
+                  </div>
 
-            <Col md={6}>
-              <div className="form_group">
-                <input
-                  type="text"
-                  id="class_division"
-                  name="class_division"
-                  placeholder="Enter division"
-                  value={division}
-                  onChange={(e) => setDivision(e.target.value)}
-                />
-                <label htmlFor="class_division">
-                  Division<span style={{ color: "red" }}>*</span>
-                </label>
-              </div>
+                  <div className="class_select">
+                    <Select
+                      options={mediumOption}
+                      styles={customStyles}
+                      placeholder=""
+                      value={medium}
+                      onChange={setMedium}
+                    />
+                    <label htmlFor="class_medium">Medium</label>
+                  </div>
 
-              <div className="class_select">
-                <Select
-                  options={mediumOption}
-                  styles={customStyles}
-                  placeholder="Select medium"
-                  value={medium}
-                  onChange={setMedium}
-                />
-                <label htmlFor="class_medium">Medium</label>
-              </div>
-
-              <div
-                className=" class_next_button"
-                style={{ textAlign: "right", marginRight: "80px" }}
-              >
-              
-                  <button
-                    onClick={handleSubmit}
-                    type="submit"
-                    value="submit"
-                    className="class_next"
+                  <div
+                    className=" class_next_button"
+                    style={{ }}
                   >
-                    Next
-                  </button>
-               
-              </div>
-            </Col>
-          </Row>
+                  
+                      <button
+                        onClick={handleSubmit}
+                        type="submit"
+                        value="submit"
+                        className="class_next"
+                      >
+                        Next
+                      </button>
+                  
+                  </div>
+                </Col>
+                {/* </div> */}
+              </Row>
+          </div>
         </form>
       </Container>
     </div>

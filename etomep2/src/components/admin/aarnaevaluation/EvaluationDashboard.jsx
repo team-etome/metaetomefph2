@@ -30,32 +30,26 @@ function EvaluationDashboard() {
   }
 
     const evaluationListData = [
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1", date:'01/10/2024', subject: "Pending" },
-
+        { term: "First Term", class: "1 A", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 B", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 C", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 D", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 A", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 B", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 C", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 D", date:'01/10/2024', subject: "Pending" },        
+        { term: "First Term", class: "1 A", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 B", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 C", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 D", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 A", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 B", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 C", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 D", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 A", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 B", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 C", date:'01/10/2024', subject: "Pending" },
+        { term: "First Term", class: "1 D", date:'01/10/2024', subject: "Pending" },
       ];
 
 
@@ -68,12 +62,13 @@ function EvaluationDashboard() {
     >
       <Row>
         {evaluationListData.map((item, index) => (
-          <Col lg={3} md={4} sm={6} xs={6} key={index} className="evaluation_list">
+          // lg={3} md={4} sm={6} xs={6}
+          <Col lg={3} md={6} sm={12} xs={12} key={index} className="evaluation_list">
             <div  onClick={handleclick} className="border border-white evaluation_rectangle">
               <div className="evaluation_term">{item.term}</div>
               <div className="evaluation_class_date">
                 <div className="evaluation_class">
-                  {item.class}
+                 Class: {item.class}
                 </div>
                 <div className="evaluation_date">
                   {item.date}

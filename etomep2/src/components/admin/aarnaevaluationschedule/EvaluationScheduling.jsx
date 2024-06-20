@@ -105,7 +105,7 @@ function EvaluationScheduling() {
     <div>
     <Container className='evaluation_assign_container'>
     <form className='evaluation_form' >
-    <div className="evaluation_form_scrollable">
+    {/* <div className="evaluation_form_scrollable"> */}
       <div style={{display: 'flex', alignItems: 'center', marginBottom:'10px'}}>
         <Link to='/aarnanavbar'>
             <IoChevronBackSharp className='evaluation_back' />
@@ -113,7 +113,7 @@ function EvaluationScheduling() {
         <h1 className='evaluation_title'>Evaluation Scheduling</h1>
         </div>
         <div style={{ border: '0.5px solid #526D82' }}></div>
-
+        <div className="evaluation_form_scrollable">
             <Row style={{paddingTop:'20px'}}>
                 <Col md={6}>
                     <div className='evaluation_group'>
@@ -150,6 +150,7 @@ function EvaluationScheduling() {
                 <button type="submit" className='evaluation_button' onClick={handleSubmit}>Assign</button>
                 </div>
             </div>
+          {/* </div>   */}
         </form>
     </Container>
 
@@ -161,7 +162,7 @@ function EvaluationScheduling() {
             <Row style={{}}>
                 <Col md={6} >
                     <div className='modal_div_assign'>
-                        <Form className="d-flex" style={{paddingTop:'30px', paddingLeft:'30px'}}>
+                        <Form className="d-flex">
                       <div className="position-relative">
                         <BsSearch
                           className="position-absolute top-50 translate-middle-y ms-2 modal_searchbar_icon"

@@ -1,7 +1,8 @@
 .qpaper_container_scroll {
     overflow-y: auto;
-    height: 75vh;
+    height: 100vh;
     width:150vw ;
+    padding-top: 0vh;
 }
 
   .qpaper_container_scroll::-webkit-scrollbar {
@@ -20,7 +21,7 @@
 .qpaper_list{
   display: flex;
   justify-content: center;
-  padding-top: 40px;
+  padding-top: 10px;
   margin-top: 5px;
 }
 .qpaper_adding_button {
@@ -56,12 +57,18 @@
     display: flex;
     /* align-items: center;
     justify-content: center; */
-    padding-left: 20px;
+    padding-left: 10px;
     padding-top: 10px;
     color: #4A4A4A;
     font-size: 16px;
     font-weight: bold;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:170px;
+
 }
+
 .qpaper_term_date {
     display: flex;
     justify-content: space-between; /* This will place the term and date on opposite ends */
@@ -79,15 +86,25 @@
     justify-content: flex-start;
     color: #727272;
     /* font-size: 14px; */
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:60px;
 }
+
 .qpaper_date{
     display: flex;
     justify-content: space-between;
     color: #727272;
     /* font-size: 14px; */
-    padding-left: 50%;
+    padding-left: 30%;
     padding-right: 3%;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:70px;
 }
+
 .qpaper_subject {
     background-color: #9DB2BF;
     width: 70%; 
@@ -100,6 +117,9 @@
     margin: auto;
     font-size: 14px; 
     margin-top: 15px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
 }
 @media (max-width:576px) {
    
@@ -117,9 +137,18 @@
     overflow-y: auto;
     height: 70vh;
     width:100% ;
-   padding-right: 20px;
-    
+   padding-right: 20px;  
   }
+  .qpaper_faculty_name {
+    max-width: 200px; /* Adjust based on smaller layout */
+}
+
+
+.qpaper_subject {
+    width: 80%;
+}
+
+
   }
   .my-button {
     background-color: #526D82;

@@ -19,7 +19,11 @@ function FacultyAdding() {
 
   const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
+<<<<<<< HEAD
   const admin_id = admininfo ? admininfo.admininfo?.admin_id : '';
+=======
+  const admin_id = admininfo ? admininfo.admininfo?.admin_id : '1';
+>>>>>>> 2f0136bb8e99b05eced73455ff29c0aa112bd4f4
 
   console.log(admin_id,"admin id")
 
@@ -143,103 +147,104 @@ function FacultyAdding() {
             <h1 className="faculty_title">Add Faculty</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>
+          <div className="faculty_add_scroll">
+            <Row style={{ paddingTop: "20px" }}>
+              <Col md={6}>
+                <div className="faculty_group">
+                  <label htmlFor="first_name">
+                    First Name<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="first_name"
+                    name="first_name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </div>
+                <div className="faculty_group">
+                  <label htmlFor="last_name">
+                    Last Name<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </div>
+                <div className="faculty_group">
+                  <label htmlFor="email_id">
+                    Email ID<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email_id"
+                    name="email_id"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div className="faculty_group">
+                  <label htmlFor="employee_id">Employee Id</label>
+                  <input
+                    type="text"
+                    id="employee_id"
+                    name="employee_id"
+                    value={employeeId}
+                    onChange={(e) => setEmployeeId(e.target.value)}
+                  />
+                </div>
+              </Col>
 
-          <Row style={{ paddingTop: "20px" }}>
-            <Col md={6}>
-              <div className="faculty_group">
-                <label htmlFor="first_name">
-                  First Name<span style={{ color: "red" }}>*</span>
-                </label>
-                <input
-                  type="text"
-                  id="first_name"
-                  name="first_name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-              </div>
-              <div className="faculty_group">
-                <label htmlFor="last_name">
-                  Last Name<span style={{ color: "red" }}>*</span>
-                </label>
-                <input
-                  type="text"
-                  id="last_name"
-                  name="last_name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </div>
-              <div className="faculty_group">
-                <label htmlFor="email_id">
-                  Email ID<span style={{ color: "red" }}>*</span>
-                </label>
-                <input
-                  type="email"
-                  id="email_id"
-                  name="email_id"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="faculty_group">
-                <label htmlFor="employee_id">Employee Id</label>
-                <input
-                  type="text"
-                  id="employee_id"
-                  name="employee_id"
-                  value={employeeId}
-                  onChange={(e) => setEmployeeId(e.target.value)}
-                />
-              </div>
-            </Col>
-
-            <Col md={6}>
-              <div className="faculty_group">
-                <label htmlFor="phone_no">
-                  Phone No:<span style={{ color: "red" }}>*</span>
-                </label>
-                <input
-                  type="text"
-                  id="phone_no"
-                  name="phone_no"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                />
-              </div>
-              <div className="faculty_group">
-                <label htmlFor="gender">
-                  Gender<span style={{ color: "red" }}>*</span>
-                </label>
-                <Select
-                  options={genderOptions}
-                  styles={customStyles}
-                  value={gender}
-                  onChange={setGender}
-                  placeholder=""
-                  getOptionLabel={(option) => option.label}
-                  getOptionValue={(option) => option.value}
-                />
-              </div>
-              <div className="faculty_group">
-                <label htmlFor="password">
-                  Password<span style={{ color: "red" }}>*</span>
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className="submit_faculty">
-                <button onClick={handleSubmit} type="submit" className="faculty_button">
-                  Submit
-                </button>
-              </div>
-            </Col>
-          </Row>
+              <Col md={6}>
+                <div className="faculty_group">
+                  <label htmlFor="phone_no">
+                    Phone No:<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="phone_no"
+                    name="phone_no"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                  />
+                </div>
+                <div className="faculty_group">
+                  <label htmlFor="gender">
+                    Gender<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <Select
+                    options={genderOptions}
+                    styles={customStyles}
+                    value={gender}
+                    onChange={setGender}
+                    placeholder=""
+                    getOptionLabel={(option) => option.label}
+                    getOptionValue={(option) => option.value}
+                  />
+                </div>
+                <div className="faculty_group">
+                  <label htmlFor="password">
+                    Password<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <div className="submit_faculty">
+                  <button onClick={handleSubmit} type="submit" className="faculty_button">
+                    Submit
+                  </button>
+                </div>
+              </Col>
+            </Row>
+          </div>
         </form>
       </Container>
     </div>

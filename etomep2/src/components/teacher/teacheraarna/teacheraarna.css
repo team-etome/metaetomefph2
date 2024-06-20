@@ -1,0 +1,18 @@
+.aarna_mob_subhead_one {
+    text-decoration: none;
+    color: #526D82;
+    font-size: 15px;
+}
+
+.dropdown-item-custom {
+    color: #526D82;  /* Example color */
+    background-color: #fff; /* Example background */
+    &:hover {
+        background-color: #f8f9fa; /* Light grey on hover, adjust as needed */
+    }
+}
+.dropdown-tab-style {
+    text-decoration: none;
+    color: #526D82;
+    font-size: 15px;
+}

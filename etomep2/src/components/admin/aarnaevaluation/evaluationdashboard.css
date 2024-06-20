@@ -62,32 +62,41 @@
     font-size: 16px;
     font-weight: bold;
 }
+
 .evaluation_class_date {
-    display: flex;
-    justify-content: space-between; /* This will place the term and date on opposite ends */
-    padding: 5px 20px; /* Adjusted padding for better spacing */
-    color: #727272;
-    font-size: 14px;
-    padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px; /* Adjust padding to fit the design */
+  color: #727272;
+  font-size: 14px;
+  padding-top: 10px;
+  gap: 0; /* Ensure no additional gap between elements */
 }
 
 .evaluation_class, .evaluation_date {
-    flex: 1; /* This ensures that both the term and the date can grow and take up equal space if needed */
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0;
+  margin: 0; /* Ensure no margin between elements */
 }
-.evaluation_class{
-    display: flex;
-    justify-content: flex-start;
-    color: #727272;
-    /* font-size: 14px; */
+
+.evaluation_class {
+  text-align: left;
+  max-width: 50%;
+padding-left: 0;
+margin-left: 0;
 }
-.evaluation_date{
-    display: flex;
-    justify-content: space-between;
-    color: #727272;
-    /* font-size: 14px; */
-    padding-left: 50%;
-    padding-right: 3%;
+
+.evaluation_date {
+  text-align: right;
+  max-width: 70%;
+  /* padding-right: 10px; */
+  /* margin-right: 10px; */
 }
+
 .evaluation_subject {
     background-color: #9DB2BF;
     width: 70%; 
@@ -120,6 +129,28 @@
    padding-right: 20px;
     
   }
+  .evaluation_term {
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+.evaluation_class_date {
+    padding: 0 10px;
+}
+
+/* .evaluation_class, .evaluation_date {
+    font-size: 12px;
+    max-width: 100%;
+} */
+.evaluation_class{
+  max-width: 100%;
+}
+.evaluation_date {
+    max-width: 70%;
+}
+.evaluation_subject {
+    width: 80%;
+}
   }
   .my-button {
     background-color: #526D82;

@@ -1,0 +1,124 @@
+import React, { useState, useEffect } from "react";
+import { Col, Container, Row, Tabs, Form, Nav } from "react-bootstrap";
+import { BsSearch, BsFilterRight } from "react-icons/bs";
+import '../lokanavbar/lokanavbar.css'
+import LokaTextbook from "../adminloka/LokaTextbook";
+import LokaBookDashboard from "../adminlokatextbookdashboard/LokaBookDashboard";
+import LokaLibraryListing from "../adminlokalibrarylist/LokaLibraryListing";
+
+function NavbarLoka() {
+    const [activeTab, setActiveTab] = useState(
+        localStorage.getItem("activeTab") || "Textbook"
+      );
+    
+      // Update local storage when activeTab changes
+      useEffect(() => {
+        localStorage.setItem("activeTab", activeTab);
+      }, [activeTab]);
+    
+  return (
+    <div className="loka_dashboard">
+      <Container>
+        <Row  className="loka_navbar_row">
+          <Col md={12}>
+            <Nav
+              variant="underline"
+              activeKey={activeTab}
+              onSelect={(k) => setActiveTab(k)}
+              className="loka_dashboard_tab"
+              style={{ width: "100%" }}
+            >
+              <Nav.Item>
+                <Nav.Link
+                  eventKey="Textbook"
+                  className="loka_mob_subhead_one"
+                  style={{
+                    textDecoration: "none",
+                  }}
+                >
+                  Textbook
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link
+                  eventKey="Library"
+                  className="loka_mob_subhead_one"
+                  style={{
+                    textDecoration: "none",
+                  }}
+                >
+                  Library
+                </Nav.Link>
+              </Nav.Item>
+              {/* {activeTab === "Faculty" && (
+                <div
+                  style={{
+                    width: "80%",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    flexDirection: "row",
+                    paddingLeft: "2vw",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                    }}
+                    className="search_filter d-flex align-items-center"
+                  >
+                    <Form className="d-flex">
+                      <div className="position-relative">
+                        <BsSearch
+                          className="position-absolute top-50 translate-middle-y ms-2"
+                          style={{
+                            zIndex: 2,
+                            height: "20px",
+                            width: "20px",
+                            color: "#D8D4D4",
+                            right: "15px",
+                          }}
+                        />
+                        <Form.Control
+                          type="search"
+                          placeholder="Search"
+                          className="ps-3"
+                          aria-label="Search"
+                          style={{
+                            width: "400px",
+                            height: "35px",
+                            borderRadius: "17px",
+                            color: "#767676",
+                          }}
+                        />
+                      </div>
+                    </Form>
+                  </div>
+
+                  <div
+                    style={{
+                      width: "5%",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <BsFilterRight style={{ height: "40px", width: "40px" }} />
+                  </div>
+                </div>
+              )} */}
+            </Nav>
+
+            <div className="institution_dashboard_container">
+              {activeTab === "Textbook" && <LokaBookDashboard />}
+              {activeTab === "Library" && <LokaLibraryListing />}
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  )
+}
+
+export default NavbarLoka

@@ -34,7 +34,7 @@ function QuestionView() {
       setShowEditBlockButtons((prevState) => !prevState);
     };
   return (
-    <div style={{border:'1px solid red'}}>
+    <div style={{}}>
     <Container className="question_view_container">
       <form className="question_view_form">
         <div>
@@ -95,6 +95,7 @@ function QuestionView() {
 
           <div style={{ border: "0.5px solid #526D82" }}></div>
         </div>
+        <div className="qpaper_view_scrollable">
         <Row style={{ paddingTop: "20px" }}>
           <Col md={6}>
             <div className="question_view_group">
@@ -146,6 +147,7 @@ function QuestionView() {
             </div>
           </Col>
         </Row>
+      </div>
       </form>
     </Container>
   </div>
