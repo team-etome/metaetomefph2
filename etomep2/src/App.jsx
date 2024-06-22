@@ -62,6 +62,9 @@ import TeacherClassViewPage from './pages/teacherpage/TeacherClassViewPage';
 import TeacherAssignmentListPage from './pages/teacherpage/TeacherAssignmentListPage';
 import TeacherAssignmentAddPage from './pages/teacherpage/TeacherAssignmentAddPage';
 import TeacherRefrenceListPage from './pages/teacherpage/TeacherRefrenceListPage';
+import TeacherRefernceAddPage from './pages/teacherpage/TeacherRefernceAddPage';
+import TeacherTestListPage from './pages/teacherpage/TeacherTestListPage';
+import TeacherTestAddPage from './pages/teacherpage/TeacherTestAddPage';
 
 
 function App() {
@@ -142,6 +145,10 @@ function App() {
           <Route path="/teacherassignment" element={<TeacherAssignmentListPage/>}/>
           <Route path="/teacherassignmentadding" element={<TeacherAssignmentAddPage/>}/>
           <Route path="/teacherrefrencelist" element={<TeacherRefrenceListPage/>}/>
+          <Route path="/teacherreferenceadd" element={<TeacherRefernceAddPage/>}/>
+          <Route path="/teachertestlist" element={<TeacherTestListPage/>}/>
+          <Route path="/teachertestadd" element={<TeacherTestAddPage/>}/>
+
 
 
 

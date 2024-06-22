@@ -1,4 +1,4 @@
-.teacher_assignment_adding {
+.teacher_test_adding {
     height: 100vh;
     padding-top: 100px;
     background-color: #DDE6ED;
@@ -6,7 +6,7 @@
     width: 80%;
   }
   
-  .teacher_assignment_form {
+  .teacher_testadd_form {
     height: 90%;
     width: 100%;
     background-color: #fff;
@@ -15,23 +15,23 @@
     padding-bottom: 100px;
   }
   
-  .teacher_assignmentadd_header {
+  .teacher_test_add_header {
     display: flex;
     align-items: center;
   }
-  .teacher_assignmentadd_back {
+  .teacher_testadd_back {
     color: #526D82;
     height: 30px;
     width: 30px;
     margin-left: 10px;
 } 
-.teacher_assignmentadd_title{
+.teacher_testadd_title{
     font-weight: 500;
     color: #526D82 ;
     font-size: 30px;
     margin-left: 10px;
 }
-  .teacher_assignmentadd_group {
+  .teacher_testadd_group {
     margin-left: 50px;
     margin-right: 30px;
     margin-bottom: 20px;
@@ -40,7 +40,7 @@
     margin-top: 0px;
   }
   
-  .teacher_assignmentadd_group input {
+  .teacher_testadd_group input {
     width: 100%;
     border: 1px solid #526D82;
     border-radius: 8px;
@@ -50,7 +50,7 @@
     height: 50px;
   }
   
-  .teacher_assignmentadd_group label {
+  .teacher_testadd_group label {
     position: absolute;
     top: 15%;
     left: 3%;
@@ -63,31 +63,36 @@
     z-index: 1;
   }
   
-  .teacher_assignmentadd_group input:focus + label,
-  .teacher_assignmentadd_group input:not(:placeholder-shown) + label {
+  .teacher_testadd_group input:focus + label,
+  .teacher_testadd_group input:not(:placeholder-shown) + label {
     top: 3px;
     left: 15px;
     font-size: 17px;
     color: #526D82;
   }
   
-  .upload-section {
+  .testadd_upload_section {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding-top: 5px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 20px;
+    padding-left: 50px;
+    width: 100%;
   }
-  
-  .upload-buttons {
+  .testadd_upload_section h6 {
+    color: #526D82;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .testadd_upload_buttons {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
   }
   
-  .upload-btn,
-  .create-btn {
+  .testadd_upload_btn,
+  .testadd_create_btn {
     padding: 10px 20px;
     border-radius: 8px;
     border: 1px solid #526D82;
@@ -97,26 +102,26 @@
     transition: background-color 0.3s;
   }
   
-  .upload-btn:hover,
-  .create-btn:hover {
+  .testadd_upload_btn:hover,
+  .create_btn:hover {
     background-color: #526D82;
     color: #fff;
   }
   
-  .drop-area {
+  .testadd_drop_area {
     border: 2px dashed #526D82;
     border-radius: 8px;
-    width: 100%;
+    width: 90%;
     text-align: center;
     padding: 20px;
     color: #526D82;
   }
   
-  .drop-area p {
+  .testadd_drop_area p {
     margin: 10px 0;
   }
   
-  .select-file-input {
+  .testadd_select_file_input {
     display: block;
     margin: 10px auto;
     padding: 10px 100px;
@@ -132,35 +137,36 @@
     background-color: #526D82;
     color: #fff;
   } */
-  .teacher_assignment_adding_scroll{
+  .teacher_test_adding_scroll{
     max-height: calc(85vh - 200px);
     overflow-y: auto; 
     overflow-x: hidden; 
   }
-  .teacher_assignment_adding_scroll::-webkit-scrollbar {
+  .teacher_test_adding_scroll::-webkit-scrollbar {
     width: 8px; 
   }
   
-  .teacher_assignment_adding_scroll::-webkit-scrollbar-track {
+  .teacher_test_adding_scroll::-webkit-scrollbar-track {
     background-color: #fff; 
   }
   
-  .teacher_assignment_adding_scroll::-webkit-scrollbar-thumb {
+  .teacher_test_adding_scroll::-webkit-scrollbar-thumb {
     background-color: #A8BFD1; 
     border-radius: 4px;
   }
   
-  .teacher_assignment_adding_scroll::-webkit-scrollbar-thumb:hover {
+  .teacher_test_adding_scroll::-webkit-scrollbar-thumb:hover {
     background-color: #8FA2B6; 
   }
-  .teacher_assignadd_submit{
-    margin-top: 20px;
+  .teacher_testadd_submit{
+    margin-top: 0px;
     width: 90%;
-    padding-left: 20px;
+    padding-left: 80px;
     text-align: right;
     margin-right: 0px;
+    padding-right: 0px;
 }
-.teacher_assignadd_submit button {
+.teacher_testadd_submit button {
     padding: 10px 20px;
     background-color: transparent; 
     color:#526D82;
@@ -168,13 +174,12 @@
     border-radius: 8px;
     border: 1px solid #526D82;
     cursor: pointer;
-    margin-top: 30px;
+    margin-top: 0px;
     width: 200px;
     height: 40;
-    
 }
 
-.teacher_assignadd_submit button:hover {
+.teacher_testadd_submit button:hover {
     background-color: #526D82;
     color: #fff;
     border: 1px solid #526D82;
