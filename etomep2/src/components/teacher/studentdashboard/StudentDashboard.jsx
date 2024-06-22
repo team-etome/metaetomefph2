@@ -52,42 +52,19 @@ function StudentDashboard() {
     <div className='teacher_student_dashboard' >
       <Container
         fluid
-        style={{ marginTop: "16px" }}
+        style={{}}
       >
-        <Row style={{ paddingLeft: "2vw", paddingTop: "1vw", paddingBottom:'1vw' }}>
+        <Row style={{ paddingLeft: "2vw", paddingBottom:'1vw' }}>
               <Col md={6} className="class_number">
               <h4>Class: 8 A</h4>
               </Col>
               <Col md={6}>
-                <div
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    flexDirection: "row",
-                    paddingLeft: "1vw",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "80%",
-                      display: "flex",
-                      justifyContent: "flex-end",
-                    }}
-                    className="search_filter d-flex align-items-center"
-                  >
+                <div className="student_search_filter_main">
+                  <div className="student_search_filter d-flex align-items-center">
                     <Form className="d-flex">
                       <div className="position-relative">
                         <BsSearch
-                          className="position-absolute top-50 translate-middle-y ms-2"
-                          style={{
-                            zIndex: 2,
-                            height: "20px",
-                            width: "20px",
-                            color: "#D8D4D4",
-                            right: "15px",
-                          }}
-                        />
+                          className="position-absolute top-50 translate-middle-y ms-2 student_search_icon"/>
                         <Form.Control
                           type="search"
                           placeholder="Search"
@@ -97,7 +74,7 @@ function StudentDashboard() {
                       </div>
                     </Form>
                   </div>
-{/*
+
                   <div
                     style={{
                       width: "10%",

@@ -1,0 +1,126 @@
+import React, { useState } from 'react';
+import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
+import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from 'react-icons/io';
+import { Link, useNavigate } from "react-router-dom";
+import { IoChevronBackSharp } from "react-icons/io5";
+import '../teachertestadd/teachertestadd.css'
+
+function TeacherTestAdd() {
+    const [showUploadArea, setShowUploadArea] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+  
+    const handleFileChange = (event) => {
+      setSelectedFile(event.target.files[0]);
+    };
+  
+    const navigate = useNavigate();
+  
+    // const handleSubmit = () => {
+    //   navigate('');
+    // }
+  return (
+    <div className='teacher_test_adding'>
+        <Container className='teacher_testadd_form'>
+        <div className='teacher_test_add_header'>
+          <Link to="/teachertestlist">
+            <IoChevronBackSharp className="teacher_testadd_back" />
+          </Link>
+          <h1 className="teacher_testadd_title">Test</h1>
+        </div>
+        <hr style={{border:' 1px solid #526D82'}}/>
+        <div className='teacher_test_adding_scroll'>
+            <Row>
+            <Col md={6}>
+                <div className="teacher_testadd_group">
+                <label htmlFor="examname">
+                    Exam Name
+                    <span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                    type="text"
+                    id="examname"
+                    name="examname"
+                />
+                </div>
+                <div className="teacher_testadd_group">
+                <label htmlFor="examdate">
+                    Exam Date
+                    <span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                    type="text"
+                    id="examdate"
+                    name="examdate"
+                />
+                </div>
+                <div className="teacher_testadd_group">
+                <label htmlFor="testsub">
+                    Subject
+                    <span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                    type="text"
+                    id="testsub"
+                    name="testsub"
+                />
+                </div>
+                <div className="teacher_testadd_group">
+                <label htmlFor="testtopic">
+                    Topic
+                    <span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                    type="text"
+                    id="testtopic"
+                    name="testtopic"
+                />
+                </div>
+            </Col>
+            <Col md={6}>
+            <div className="teacher_testadd_group">
+                <label htmlFor="teststarttime">
+                    Start Time
+                    <span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                    type="text"
+                    id="teststarttime"
+                    name="teststarttime"
+                />
+                </div>
+                <div className="teacher_testadd_group">
+                <label htmlFor="testendtime">
+                    End Time
+                    <span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                    type="text"
+                    id="testendtime"
+                    name="testendtime"
+                />
+                </div>
+                <div className="teacher_testadd_group">
+                <label htmlFor="testoutofmarks">
+                    Out Of Marks
+                    <span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                    type="text"
+                    id="testoutofmarks"
+                    name="testoutofmarks"
+                />
+                </div>
+            </Col>
+            <div className="teacher_testadd_submit" >
+                    <button  type="submit">
+                        Create Question
+                    </button>
+                    </div>
+            </Row>
+        </div>
+        </Container>
+    </div>
+  )
+}
+
+export default TeacherTestAdd

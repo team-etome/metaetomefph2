@@ -119,7 +119,63 @@ color: #767676;
   borderRadius: "17px",
   color: "#767676",
 }} */
+.student_search_filter_main{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  padding-left: 2vw;
+  padding-right: 0vw;
+}
 
+.student_search_filter {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-end;
+  padding-right: 5vh;
+}
+
+.student_search_filter .form-control {
+  width: 350px;
+  border-radius: 17px;
+  color: #767676;
+  padding-left: 30px;
+  /* padding-right: 30px; */
+}
+
+.student_search_filter .form-control::placeholder {
+  color: #767676;
+}
+
+.student_search_filter .position-relative {
+  position: relative;
+}
+
+.student_search_filter .position-relative .position-absolute {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  z-index: 2;
+  height: 20px;
+  width: 20px;
+  color: #D8D4D4;
+}
+
+.student_search_filter .bs-filter-right {
+  height: 40px;
+  width: 40px;
+  margin-left: 20px;
+  margin-right: 1px;
+}
+.student_search_icon{
+  z-index: 2;
+  height:20px;
+  width: 20px;
+  color: #D8D4D4;
+  right: 15px;
+}
 @media (max-width:576px) {
   .student_rectangle{
     width: 250px !important;
@@ -158,6 +214,12 @@ color: #767676;
       text-align: center;
       display: flex;
       justify-content: center;
+  }
+
+  .student_search_filter .form-control{
+    width: 300px;
+    display: flex;
+    justify-content: center;
   }
   }
   .my-button {
