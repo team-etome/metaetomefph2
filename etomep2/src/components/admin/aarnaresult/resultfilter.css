@@ -1,16 +1,18 @@
 .result_filter_container {
-    height: 70vh;
+    height:70vh;
     padding-top: 90px;
     width: 80%;
     }
     .result_filter_form{
-        height: 50%;
+        height: 80%;
         width: 100%;
         background-color: #fff;
         padding-top: 5px;
         border-radius: 15px;
         /* border: 0.5px solid #000000; */
         /* padding-bottom: 100px; */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added box-shadow */
+    border-radius: 15px; /* Optional: To match the form's rounded corners */
     }
       
     .result_filter_back {

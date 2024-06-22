@@ -1,174 +1,103 @@
 import React, { useState, useEffect } from "react";
 import { Col, Container, Row, Form, Nav } from "react-bootstrap";
 import { BsSearch, BsFilterRight } from "react-icons/bs";
+import '../aarnanavbar/aarnanavbar.css';
 import AarnaProgress from "../aarnaprogress/AarnaProgress";
 import AarnaQuestionPaper from "../aarnaquestionpaper/AarnaQuestionPaper";
 import SeatingDashboard from "../aarnaseating/SeatingDashboard";
 import EvaluationDashboard from "../aarnaevaluation/EvaluationDashboard";
+import ResultFilter from "../aarnaresult/ResultFilter";
 
 function AarnaNavbar() {
+  const [activeTab, setActiveTab] = useState(() => {
+    return localStorage.getItem("aarnaActiveTab") || "Progress";
+  });
 
-    const [activeTab, setActiveTab] = useState(() => {
-        return localStorage.getItem("aarnaActiveTab") || "Progress";
-      });
+console.log(activeTab, "active tabbbbb");
 
-  console.log(activeTab, "active tabbbbb");
+// Update local storage when activeTab changes
+useEffect(() => {
+localStorage.setItem("activeTab", activeTab);
+}, [activeTab]);
 
-  // Update local storage when activeTab changes
-  useEffect(() => {
-    localStorage.setItem("activeTab", activeTab);
-  }, [activeTab]);
+    return (
+        <div className="aarna_navbar" style={{ backgroundColor: "#F8FEFF", height: "100vh", paddingTop: "12vh"}}>
+            <Container>
+                <Row style={{ paddingLeft: "2vw", paddingTop: "1vw"}}>
+                    <Col md={12}>
+                        {/* Change: Use flex-wrap to allow wrapping on smaller screens */}
+                        <div className="d-flex justify-content-between align-items-center flex-wrap">
+                            <Nav
+                                variant="underline"
+                                activeKey={activeTab}
+                                onSelect={(k) => setActiveTab(k)}
+                                className="ad_aarna_navbar_tab"
+                                // style={{border:'1px solid green', width:'100%' }}
+                            >
+                                <Nav.Item>
+                                    <Nav.Link eventKey="Progress" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
+                                        Progress
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="Question Paper" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
+                                        Question Paper
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="Seating" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
+                                        Seating
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="Evaluation" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
+                                        Evaluation
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="Question Bank" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
+                                        Question Bank
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="Result" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
+                                        Result
+                                    </Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                            {/* Change: Group search bar and filter icon into a flex container */}
+                            <div className="ad_search_filter_main d-flex" style={{width:'100px'}}>
+                                <Form className="d-flex">
+                                    {/* Change: Use position-relative to correctly position the search icon */}
+                                    <div className="position-relative">
+                                        <Form.Control
+                                            type="search"
+                                            placeholder="Search"
+                                            className="ps-3 ad_search_bar"
+                                            aria-label="Search"
+                                        />
+                                        <BsSearch className="position-absolute top-50 translate-middle-y nav_book_searchbar_icon" />
+                                    </div>
+                                </Form>
+                                {/* Change: Adjust filter icon alignment */}
+                                <div className="ad_search_filter_icon d-flex align-items-center">
+                                    <BsFilterRight className="bs-filter-right" />
+                                </div>
+                            </div>
+                        </div>
 
-  return (
-    <div
-      className="aarna_navbar"
-      style={{
-        backgroundColor: "#F8FEFF",
-        height: "100vh",
-        paddingTop: "12vh",
-      }}
-    >
-      <Container>
-        <Row style={{ paddingLeft: "2vw", paddingTop: "1vw" }}>
-          <Col md={12}>
-            <div className="d-flex justify-content-between align-items-center">
-              <Nav
-                variant="underline"
-                activeKey={activeTab}
-                onSelect={(k) => setActiveTab(k)}
-                className="aarna_navbar_tab"
-              >
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="Progress"
-                    className="aarna_mob_subhead_one"
-                    style={{
-                      textDecoration: "none",
-                      color: "#526D82",
-                      fontSize: "15px",
-                      marginRight: "20px",
-                    }}
-                  >
-                    Progress
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="Question Paper"
-                    className="aarna_mob_subhead_one"
-                    style={{
-                      textDecoration: "none",
-                      color: "#526D82",
-                      fontSize: "15px",
-                    }}
-                  >
-                    Question Paper
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="Seating"
-                    className="aarna_mob_subhead_one"
-                    style={{
-                      textDecoration: "none",
-                      color: "#526D82",
-                      fontSize: "15px",
-                    }}
-                  >
-                    Seating
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="Evaluation"
-                    className="aarna_mob_subhead_one"
-                    style={{
-                      textDecoration: "none",
-                      color: "#526D82",
-                      fontSize: "15px",
-                    }}
-                  >
-                    Evaluation
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="Result"
-                    className="aarna_mob_subhead_one"
-                    style={{
-                      textDecoration: "none",
-                      color: "#526D82",
-                      fontSize: "15px",
-                    }}
-                  >
-                    Result
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="Question Bank"
-                    className="aarna_mob_subhead_one"
-                    style={{
-                      textDecoration: "none",
-                      color: "#526D82",
-                      fontSize: "15px",
-                    }}
-                  >
-                    Question Bank
-                  </Nav.Link>
-                </Nav.Item>
-              </Nav>
-
-              <div className="search_filter_wrapper d-flex align-items-center">
-                <Form className="d-flex">
-                  <div className="position-relative">
-                    <BsSearch
-                      className="position-absolute top-50 translate-middle-y ms-2"
-                      style={{
-                        zIndex: 2,
-                        height: "20px",
-                        width: "20px",
-                        color: "#D8D4D4",
-                        right: "15px",
-                      }}
-                    />
-                    <Form.Control
-                      type="search"
-                      placeholder="Search"
-                      className="ps-3"
-                      aria-label="Search"
-                      style={{
-                        width: "300px",
-                        height: "35px",
-                        borderRadius: "17px",
-                        color: "#767676",
-                      }}
-                    />
-                  </div>
-                </Form>
-
-                <BsFilterRight
-                  style={{
-                    height: "40px",
-                    width: "40px",
-                    marginLeft: "15px",
-                    color: "#526D82",
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="institution_dashboard_container">
-              {activeTab === "Progress" && <AarnaProgress />}
-              {activeTab === "Question Paper" && <AarnaQuestionPaper />}
-              {activeTab === "Seating" && <SeatingDashboard />}
-              {activeTab === "Evaluation" && <EvaluationDashboard />}
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  );
+                        <div className="ad_institution_dashboard_container">
+                            {activeTab === "Progress" && <AarnaProgress />}
+                            {activeTab === "Question Paper" && <AarnaQuestionPaper />}
+                            {activeTab === "Seating" && <SeatingDashboard />}
+                            {activeTab === "Evaluation" && <EvaluationDashboard />}
+                            {activeTab === "Result" && <ResultFilter />}
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+        </div>
+    );
 }
 
 export default AarnaNavbar;
