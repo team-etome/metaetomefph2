@@ -5,6 +5,7 @@ width: 100%;
 padding-top: 15vh;
 padding-left: 15vh;
 padding-bottom: 1vh;
+height: 100vh;
 }
 .teacher_studentdashboard_container {
     overflow-y: auto;
@@ -126,6 +127,7 @@ color: #767676;
   flex-direction: row;
   padding-left: 2vw;
   padding-right: 0vw;
+  padding-bottom: 20px;
 }
 
 .student_search_filter {
@@ -197,7 +199,7 @@ color: #767676;
    padding-left: 30px;
   }
   .teacher_student_dashboard{
-    padding-top: 15vh;
+    padding-top: 10vh;
     padding-left: 1vh;
     padding-right: 1vh;
     }
@@ -371,8 +373,11 @@ color: #767676;
   
 @media (max-width:999px), (min-width:577) {
   .teacher_student_dashboard{
-    padding-top: 15vh;
-    padding-left: 5vh;
-    padding-right: 1vh;
+    padding-top: 10vh;
+    /* padding-left: 5vh;
+    padding-right: 1vh; */
+    display: flex;
+    justify-content: center;
+    align-content: center;
     }
 }

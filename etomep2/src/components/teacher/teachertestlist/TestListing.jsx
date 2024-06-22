@@ -3,6 +3,8 @@ import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from 'react-icons/io';
 import { useNavigate } from "react-router-dom";
 import '../teachertestlist/teacherlisting.css'
+import { BsFilterRight } from "react-icons/bs";
+
 
 function TestListing() {
     const [showThisMonth, setShowThisMonth] = useState(true);
@@ -36,7 +38,12 @@ function TestListing() {
     <Container className='test_container'>
       <Row>
         <Col className='test_list'>
-          <h2>Test</h2>
+          <div className='test_header'>
+            <h2>Test</h2>
+            <div className="test_search_filter_icon d-flex align-items-center">
+              <BsFilterRight className="bs-filter-right" />
+            </div>
+          </div>
           <hr />
           <div className='test_body'>
             <div className="test_week" onClick={() => setShowThisMonth(!showThisMonth)}>

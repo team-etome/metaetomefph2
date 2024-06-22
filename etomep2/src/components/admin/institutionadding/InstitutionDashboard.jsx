@@ -81,9 +81,9 @@ function InstitutionDashboard() {
                     </Form>
                   </div>
 
-                  <div className="search_filter_icon">
+                  {/* <div className="search_filter_icon">
                     <BsFilterRight style={{ height: "40px", width: "40px" }} />
-                  </div>
+                  </div> */}
                 </div>
               )}
             </Nav>
