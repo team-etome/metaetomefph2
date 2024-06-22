@@ -1,12 +1,14 @@
 .sidenav_fstdiv {
   display: flex;
-  justify-content: center;
   flex-direction: column;
   transition: width 0.3s ease-in-out;
   position: absolute;
   height:100vh;
   z-index:1001;
-
+  width: 90px;
+  height: 100vh;
+  overflow: hidden,
+ 
   
 }
 
@@ -77,10 +79,7 @@
   opacity: 0;
  
 }
-.sidebar_header{
-  display: none;
-  
-}
+
 .sidebar_header {
   display: flex;
   justify-content: flex-start;
@@ -91,7 +90,7 @@
   transition: opacity 0.3s ease-in-out;
   height: 12vh;
   padding-left: 11.9px;
-  padding-top: 8.5px;
+  padding-top: 16px;
 
  
 }
