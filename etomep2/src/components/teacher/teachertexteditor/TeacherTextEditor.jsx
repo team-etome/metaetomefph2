@@ -64,7 +64,4 @@ export default function TeacherTextEditor({ placeholder }) {
     </div>
   );
 }
-  {/* <div
-        style={{ whiteSpace: 'pre-wrap' }}
-        dangerouslySetInnerHTML={createMarkup(ckData)}
-      ></div> */}
+  

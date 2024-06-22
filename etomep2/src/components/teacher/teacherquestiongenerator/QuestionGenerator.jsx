@@ -1,19 +1,14 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-<<<<<<< HEAD
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import "../teacherquestiongenerator/questiongenerator.css";
-=======
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { Link} from "react-router-dom";
 import '../teacherquestiongenerator/questiongenerator.css';
->>>>>>> 4a25adbf8f454c830d34e59a9544a4beb698313d
 import { IoIosArrowBack } from "react-icons/io";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { TbSection } from "react-icons/tb";
 import TeacherTextEditor from "../teachertexteditor/TeacherTextEditor";
 import { MdOutlineDelete } from "react-icons/md";
 import { PiDotsSix } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 function QuestionGenerator() {
   const [subsections, setSubsections] = useState([
@@ -111,7 +106,7 @@ function QuestionGenerator() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-<<<<<<< HEAD
+
       <div className="question_generator">
         <Row
           xs={2}
@@ -136,17 +131,10 @@ function QuestionGenerator() {
               alignItems: "center",
             }}
           >
-            <IoIosArrowBack
-              style={{
-                width: "32px",
-                height: "32px",
-                color: "#526D82",
-                marginLeft: "68px",
-              }}
-            />
+           
             <h6
               style={{
-                marginLeft: "10px",
+                marginLeft: "45px",
                 color: "#526D82",
                 fontWeight: "500",
                 fontSize: "28px",
@@ -154,26 +142,8 @@ function QuestionGenerator() {
             >
               Subject Name
             </h6>
-=======
-      <div className='question_generator'>
-        <Row xs={2} style={{
-          backgroundColor: '#ffff',
-          height: "10vh",
-          width: "100%",
-          zIndex: "10",
-          position: "sticky",
-          top: "0",
-          left: "0",
-          boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-          display: "flex",
-          justifyContent: "space-bet"
-        }}>
-          <Col style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-          <Link to="/teacherquestioninstruction">
-            <IoIosArrowBack style={{ width: "32px", height: "32px", color: "#526D82", marginLeft: "68px" }} />
-          </Link>
-            <h6 style={{ marginLeft: "10px", color: "#526D82", fontWeight: "500", fontSize: "28px" }}>Subject Name</h6>
->>>>>>> 4a25adbf8f454c830d34e59a9544a4beb698313d
+
+   
           </Col>
           <Col
             style={{
