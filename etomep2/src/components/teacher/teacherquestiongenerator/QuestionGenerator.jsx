@@ -22,8 +22,7 @@ function QuestionGenerator() {
 
   const finalizeQuestion = (subsectionIndex, questionIndex) => {
     const question = subsections[subsectionIndex].questions[questionIndex];
-    setFinalizedQuestions([...finalizedQuestions, question]); // Add question to finalizedQuestions state
-    // Remove question from the current subsection
+    setFinalizedQuestions([...finalizedQuestions, question]);
     const newSubsections = [...subsections];
     newSubsections[subsectionIndex].questions.splice(questionIndex, 1);
     setSubsections(newSubsections);
@@ -56,7 +55,7 @@ function QuestionGenerator() {
 
   const addSubsection = () => {
     setSubsections([...subsections, { name: "New Section", questions: [] }]);
-    setCurrentSubsectionIndex(subsections.length); // Set current index to the newly added subsection
+    setCurrentSubsectionIndex(subsections.length); 
   };
 
   const removeSubsection = (index) => {
@@ -110,59 +109,18 @@ function QuestionGenerator() {
       <div className="question_generator">
         <Row
           xs={2}
-          style={{
-            backgroundColor: "#ffff",
-            height: "10vh",
-            width: "100%",
-            zIndex: "10",
-            position: "sticky",
-            top: "0",
-            left: "0",
-            boxShadow:
-              "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-            display: "flex",
-            justifyContent: "space-bet",
-          }}
-        >
-          <Col
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
+          className="question_generator_header">
+          <Col className="question_generator_header_title">
            
-            <h6
-              style={{
-                marginLeft: "45px",
-                color: "#526D82",
-                fontWeight: "500",
-                fontSize: "28px",
-              }}
-            >
+            <h6>
               Subject Name
             </h6>
 
    
           </Col>
           <Col
-            style={{
-              display: "flex",
-              justifyContent: "end",
-              paddingRight: "24px",
-              alignItems: "center",
-            }}
-          >
-            <button
-              style={{
-                width: "180px",
-                height: "48px",
-                borderRadius: "8px",
-                color: "#ffff",
-                backgroundColor: "#526D82",
-                fontSize: "18px",
-              }}
-            >
+          className="question_generator_header_submit">
+            <button>
               Submit
             </button>
           </Col>
@@ -181,13 +139,7 @@ function QuestionGenerator() {
                     {...provided.droppableProps}
                     className="subsection-container"
                   >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
+                    <div className="subsection_header">
                       <textarea
                         className="subsection_textarea"
                         type="text"
@@ -197,27 +149,8 @@ function QuestionGenerator() {
                           newSubsections[subsectionIndex].name = e.target.value;
                           setSubsections(newSubsections);
                         }}
-                        placeholder="Subsection Name"
-                        style={{
-                          width: "96%",
-                          height: "auto",
-                          minHeight: "50px",
-                          marginBottom: "10px",
-                          padding: "8px",
-                          borderRadius: "8px",
-                          border: "0.5px solid #676767",
-                        }}
-                      />
-                      <button
-                        style={{
-                          backgroundColor: "white",
-                          border: "1px solid #ccc",
-                          borderRadius: "8px",
-                          height: "50px",
-                          marginBottom: "10px",
-                        }}
-                        onClick={() => removeSubsection(subsectionIndex)}
-                      >
+                        placeholder="Subsection Name"/>
+                      <button onClick={() => removeSubsection(subsectionIndex)} >
                         <MdOutlineDelete
                           style={{ width: "32px", height: "32px" }}
                         />
@@ -236,25 +169,8 @@ function QuestionGenerator() {
                             className="question-container"
                           >
                             <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  backgroundColor: "#fff",
-                                  width: "110px",
-                                  height: "110px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                  border: "0.5px solid #676767",
-                                  borderRadius: "8px",
-                                  marginRight: "5px",
-                                }}
-                              >
+                            className="teacher_question_header">
+                              <div className="teacher_question_number">
                                 <h6 style={{ fontSize: "20px" }}>
                                   Q. {questionIndex + 1})
                                 </h6>
@@ -262,13 +178,7 @@ function QuestionGenerator() {
                               <TeacherTextEditor placeholder="Type question here..." />
                             </div>
 
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                paddingLeft: "24px",
-                                paddingRight: "10px",
-                              }}
+                            <div className="teacher_question_footer"
                             >
                               <div
                                 className="answer-key"
@@ -285,14 +195,7 @@ function QuestionGenerator() {
                             </div>
 
                             {q.showAnswer && (
-                              <div
-                                style={{
-                                  marginTop: "20px",
-                                  paddingLeft: "10px",
-                                  display: "flex",
-                                }}
-                                className="answer-editor"
-                              >
+                              <div className="answer_editor_container">
                                 <TeacherTextEditor placeholder="Type answer here..." />
                                 <div className="points-input">
                                   <span>Mark</span>
@@ -311,45 +214,22 @@ function QuestionGenerator() {
                               </div>
                             )}
 
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "end",
-                                paddingRight: "15px",
-                              }}
-                            >
+                            <div className="question_actions">
                               <div
                                 {...provided.dragHandleProps}
-                                style={{ marginRight: "34%" }}
+                                className="drag_handle"
                               >
-                                <PiDotsSix
-                                  style={{
-                                    width: "32px",
-                                    height: "32px",
-                                    cursor: "grab",
-                                  }}
-                                />
+                                <PiDotsSix className="teacher_icon"/>
                               </div>
                               <button
-                                style={{ backgroundColor: "white" }}
+                              className="delete_question_button"
                                 onClick={() =>
                                   removeQuestion(subsectionIndex, questionIndex)
                                 }
                               >
-                                <MdOutlineDelete
-                                  style={{ width: "32px", height: "32px" }}
-                                />
+                                <MdOutlineDelete className="teacher_icon"/>
                               </button>
-                              <button
-                                style={{
-                                  width: "160px",
-                                  height: "42px",
-                                  backgroundColor: "#526D82",
-                                  color: "white",
-                                  borderRadius: "8px",
-                                  marginRight: "10px",
-                                }}
-                              >
+                              <button className="done_button">
                                 Done
                               </button>
                             </div>
@@ -362,35 +242,15 @@ function QuestionGenerator() {
                 )}
               </Droppable>
             ))}
-            <Row
-              style={{
-                width: "64px",
-                height: "152px",
-                backgroundColor: "#ffff",
-                position: "fixed",
-                top: "15%",
-                right: "2.5%",
-                borderRadius: "8px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "5px",
-                flexDirection: "column",
-                paddingTop: "20px",
-              }}
-            >
+            <Row className="action_buttons">
               <Col onClick={addQuestion}>
-                <IoAddCircleOutline style={{ width: "32px", height: "32px" }} />
+                <IoAddCircleOutline  className="teacher_icon" />
               </Col>
-              <hr
-                style={{
-                  backgroundColor: "black",
-                  height: "2px",
-                  width: "50%",
-                }}
+              <hr className="divider"
               ></hr>
               <Col onClick={addSubsection}>
-                <TbSection style={{ width: "32px", height: "32px" }} />
+                <TbSection 
+                className="teacher_icon" />
               </Col>
             </Row>
           </div>
