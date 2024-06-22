@@ -34,13 +34,7 @@ function Sidebar() {
   return (
     <div
       className="sidenav_fstdiv"
-      style={{
-        width: "90px",
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-      }}
+    
     >
       <div className="sidebar_header">
         <img
@@ -51,22 +45,20 @@ function Sidebar() {
             width: "110px",
             height: "40px",
             display: "block",
-            marginTop:"8px"
+          
       
           }}
 
         />
       </div>
       <Row
-        className="sidebar_menu"
+   
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
           height: "60%",
           width: "112px",
-          alignItems: "center",
-          alignContent: "center",
+          justifyContent:"space-between",
           marginTop: "10vh",
         }}
       >
@@ -147,20 +139,22 @@ function Sidebar() {
           </>
         ) : (
           <>
-            <Link
-              to="/admindashboard"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
+           
               <Col
                 className={`menu_item_col ${
                   activeItem === "home" ? "active" : ""
                 }`}
                 onClick={() => setActiveItem("home")}
               >
+                 <Link
+              to="/admindashboard"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
                 <div className="icon_container_div">
                   <GoHome className="icon_img" />
                   <span className="icon-text">Home</span>
                 </div>
+                </Link>     
               </Col>
               <Col
                 className={`menu_item_col ${
@@ -178,7 +172,7 @@ function Sidebar() {
                   </div>
                 </Link>
               </Col>
-            </Link>
+          
             <Col
               className={`menu_item_col ${
                 activeItem === "loka" ? "active" : ""
