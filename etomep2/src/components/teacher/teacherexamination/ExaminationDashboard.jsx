@@ -50,9 +50,12 @@ function ExaminationDashboard() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleclick = () => {
-    navigate("/teacherquestionview");
+  const handleClick = (exam) => {
+    navigate("/teacherquestionview", { state: { exam : exam } });
+    
   };
+
+
 
   return (
     <div style={{}} className="teacher_examination_dashboard">
@@ -119,8 +122,7 @@ function ExaminationDashboard() {
               key={index}
               className="examination_list"
             >
-              <div
-                onClick={handleclick}
+               <div onClick={() => handleClick(item)}
                 className="border border-white examination_rectangle"
               >
                 <div className="examiantion_term">{item.term}</div>
