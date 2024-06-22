@@ -9,14 +9,16 @@ import EvaluationDashboard from "../aarnaevaluation/EvaluationDashboard";
 import ResultFilter from "../aarnaresult/ResultFilter";
 
 function AarnaNavbar() {
-    const [activeTab, setActiveTab] = useState(
-        localStorage.getItem("activeTab") || "Question Paper"
-    );
+  const [activeTab, setActiveTab] = useState(() => {
+    return localStorage.getItem("aarnaActiveTab") || "Progress";
+  });
 
-    // Update local storage when activeTab changes
-    useEffect(() => {
-        localStorage.setItem("activeTab", activeTab);
-    }, [activeTab]);
+console.log(activeTab, "active tabbbbb");
+
+// Update local storage when activeTab changes
+useEffect(() => {
+localStorage.setItem("activeTab", activeTab);
+}, [activeTab]);
 
     return (
         <div className="aarna_navbar" style={{ backgroundColor: "#F8FEFF", height: "100vh", paddingTop: "12vh"}}>

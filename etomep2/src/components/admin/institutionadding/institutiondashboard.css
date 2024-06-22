@@ -9,7 +9,7 @@
     border-bottom: 2px solid #526D82;
   }
   .search_filter_main{
-    width: 75%;
+    width: 80%;
     display: flex;
     justify-content: flex-end;
     flex-direction: row;
@@ -26,7 +26,7 @@
   }
   
   .search_filter .form-control {
-    width: 250px;
+    width: 350px !important;
     border-radius: 17px;
     color: #767676;
     padding-left: 30px;
@@ -51,12 +51,12 @@
     color: #D8D4D4;
   }
   
-  .search_filter .bs-filter-right {
+  /* .search_filter .bs-filter-right {
     height: 40px;
     width: 40px;
     margin-left: 20px;
     margin-right: 1px;
-  }
+  } */
   /* button css */
   .Btn_faculty {
     display: flex;

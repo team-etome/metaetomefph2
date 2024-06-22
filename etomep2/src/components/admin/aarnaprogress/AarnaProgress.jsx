@@ -3,7 +3,7 @@ import '../aarnaprogress/aarnaprogress.css'
 
 function AarnaProgress() {
   return (
-    <div>AarnaProgressAarnaProgress</div>
+    <div style={{paddingTop:'30px'}}>PROGRESS</div>
   )
 }
 

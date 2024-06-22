@@ -4,14 +4,12 @@ import "../institutionadding/institutiondashboard.css";
 import AdminClassdashboard from "../adminclassdashboard/AdminClassdashboard";
 import FacultyDashboard from "../adminfacultydashboard/FacultyDashboard";
 import { BsSearch, BsFilterRight } from "react-icons/bs";
-import { MdDownload } from "react-icons/md";
-import { MdUpload } from "react-icons/md";
 
 function InstitutionDashboard() {
-  const [activeTab, setActiveTab] = useState(
-    localStorage.getItem("activeTab") || "Faculty"
-  );
 
+  const [activeTab, setActiveTab] = useState(
+  sessionStorage.getItem("activeTab") || "Faculty"
+);
   // Update local storage when activeTab changes
   useEffect(() => {
     localStorage.setItem("activeTab", activeTab);
@@ -83,9 +81,9 @@ function InstitutionDashboard() {
                     </Form>
                   </div>
 
-                  <div className="search_filter_icon">
+                  {/* <div className="search_filter_icon">
                     <BsFilterRight style={{ height: "40px", width: "40px" }} />
-                  </div>
+                  </div> */}
                 </div>
               )}
             </Nav>
