@@ -1,6 +1,15 @@
+/* .aarna_qp_dashboard{
+  display: flex;
+justify-content: center;
+width: 100%;
+padding-top: 5vh;
+padding-left: 1vh;
+padding-bottom: 1vh;
+height: 75vh;
+} */
 .qpaper_container_scroll {
     overflow-y: auto;
-    height: 100vh;
+    height: 70vh;
     width:150vw ;
     padding-top: 0vh;
 }

@@ -67,7 +67,7 @@ function AarnaQuestionPaper() {
 
     ];
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "104.5%"}}>
+    <div style={{ display: "flex", justifyContent: "center", width: "104.5%", height:'80vh'}}>
     <Container
       fluid
       className="qpaper_container_scroll"

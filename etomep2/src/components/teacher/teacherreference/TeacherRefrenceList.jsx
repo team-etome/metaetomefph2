@@ -3,6 +3,8 @@ import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from 'react-icons/io';
 import { useNavigate } from "react-router-dom";
 import '../teacherreference/teacherrefrencelist.css';
+import { BsFilterRight } from "react-icons/bs";
+
 
 function TeacherRefrenceList() {
     const [showThisMonth, setShowThisMonth] = useState(true);
@@ -37,7 +39,12 @@ function TeacherRefrenceList() {
     <Container className='refrence_container'>
       <Row>
         <Col className='refrence_list'>
-          <h2>References</h2>
+          <div className='refrence_header'>
+            <h2>References</h2>
+            <div className="refrence_search_filter_icon d-flex align-items-center">
+                  <BsFilterRight className="bs-filter-right" />
+            </div>
+          </div>
           <hr />
           <div className='refrence_body'>
             <div className="refrence_week" onClick={() => setShowThisMonth(!showThisMonth)}>

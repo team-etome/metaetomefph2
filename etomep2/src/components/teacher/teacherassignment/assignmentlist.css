@@ -15,6 +15,15 @@
   overflow: hidden;
   /* margin-top: 0%; */
 }
+.assignment_header{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  padding-bottom: 0
+}
+.assignment_search_filter_icon{
+  color: #545454;
+}
 .assignment_body {
   max-height: calc(70vh - 140px);
   overflow-y: scroll; 

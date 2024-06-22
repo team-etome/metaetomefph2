@@ -3,6 +3,8 @@ import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from 'react-icons/io';
 import { useNavigate } from "react-router-dom";
 import '../teacherassignment/assignmentlist.css';
+import { BsSearch, BsFilterRight } from "react-icons/bs";
+
 
 function AssignmentList() {
   const [showThisMonth, setShowThisMonth] = useState(true);
@@ -63,7 +65,12 @@ function AssignmentList() {
     <Container className='assignment_container'>
       <Row>
         <Col className='assignment_list'>
-          <h2>Assignment</h2>
+          <div className='assignment_header'>
+            <h2>Assignment</h2>
+            <div className="assignment_search_filter_icon d-flex align-items-center">
+                <BsFilterRight className="bs-filter-right" />
+            </div>
+          </div>
           <hr />
           <div className='assignment_body'>
             <div className="week" onClick={() => setShowThisMonth(!showThisMonth)}>
