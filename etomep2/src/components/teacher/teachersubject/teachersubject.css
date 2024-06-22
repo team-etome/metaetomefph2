@@ -1,0 +1,168 @@
+.teacher_subject_container{
+    height: 100vh;
+    background-color: #ffffff;
+    width: 100%;
+    padding-left: 80px;
+    flex-direction: column;
+    display: flex;
+  
+    overflow-y: hidden;
+
+}
+.tec_sub_fstrow{
+    padding-top:14vh;
+    width: 100%;
+    display: flex;
+    height: 22%;
+   
+}
+.teacher_subject_title{
+    font-weight: 500;
+    color: #526D82 ;
+    font-size: 30px;
+    margin-left: 12%;
+}
+.teacher_subject_search_filter_main{
+    width: 75%;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    padding-left: 2vw;
+   
+  }
+  
+  .teacher_subject_search_filter {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+  }
+  
+  .teacher_subject_search_filter .form-control {
+    width: 350px;
+    border-radius: 17px;
+    color: #767676;
+    padding-left: 30px;
+  }
+  
+  .teacher_subject_search_filter .form-control::placeholder {
+    color: #767676;
+  }
+  
+  .teacher_subject_search_filter .position-relative {
+    position: relative;
+  }
+  
+  .teacher_subject_search_filter .position-relative .position-absolute {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+    z-index: 2;
+    height: 20px;
+    width: 20px;
+    color: #D8D4D4;
+  }
+  
+  .teacher_subject_search_filter .bs-filter-right {
+    height: 40px;
+    width: 40px;
+    margin-left: 20px;
+    margin-right: 1px;
+  }
+
+  .tec_sub_crd_rw{
+    width: 100%;
+    height: 80%;
+    padding: 20px;
+    padding-left: 5%;
+   
+  }
+  /* Container for the cards */
+.tec_sub_card_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px; 
+  padding: 16px;
+  height: 530px;
+  overflow-y: scroll;
+}
+
+/* Individual card styling */
+.tec_sub_card {
+  background-color: #ffffff;
+  position: relative;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  height: 103px;
+}
+.tec_sub_card ::before {
+  content: '';
+  position: absolute;
+  left: 16px; /* Adjust based on your padding */
+  top: 16px;
+  bottom: 16px;
+  width: 4px; /* Width of the vertical line */
+  background-color: #9DB2BF; /* Color of the vertical line */
+  border-radius: 2px;
+}
+
+.tec_sub_card h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #526D82;
+  margin-left: 20px;
+}
+
+.tec_sub_card p {
+  margin: 8px 0 0;
+  font-size: 16px;
+  color: #999;
+  margin-left: 20px;
+}
+  
+@media (max-width:700px) {
+
+    .teacher_subject_container{
+   
+   
+        padding-left:10px !important;
+       
+    }
+    .tec_sub_fstrow{
+      
+       justify-content: center !important;
+       align-items: center;
+      
+
+    }
+    .tech_sub_title_col{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        
+    }
+    .teacher_subject_title{
+        margin-bottom: 10px;
+        margin-left: 0;
+        
+    }
+
+   .teacher_subject_search_filter{
+    display: flex;
+    justify-content:center !important;
+   }
+
+   .tec_sub_card_container{
+    grid-template-columns: repeat(2, 1fr); /* Two cards per row on mobile */
+  }
+  .tec_sub_crd_rw{
+ padding-top: 10%;
+    
+  }
+}

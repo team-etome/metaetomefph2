@@ -52,9 +52,11 @@ function Sidebar() {
           src={etomelogo}
           alt="Logo"
           style={{
-            width: "162px",
-            height: "63px",
+            width: "110px",
+            height: "40px",
             display: "block",
+            marginTop:"8px"
+      
           }}
         />
       </div>

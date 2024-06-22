@@ -1,0 +1,191 @@
+.teacher_clsview_container {
+    height: 100vh;
+    background-color: #ffffff;
+    width: 100%;
+    padding-left: 80px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    overflow-y: hidden;
+  }
+  
+  .teacher_clsview_title {
+    font-weight: 500;
+    color: #526D82;
+    font-size: 30px;
+    margin-left: 18%;
+    width: 100%;
+  }
+  
+  .tech_clsvw_hd_rw {
+    height: 10%;
+    margin-bottom: 0 !important;
+  }
+  
+  .teacher_clsview_ti_cl {
+    display: flex;
+    align-items: center;
+    height: 20%;
+    padding-top: 35px;
+    padding-left: 25px;
+  }
+  
+  .tch_clsvw_search_filter_main {
+    width: 75%;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    padding-left: 2vw;
+  }
+  
+  .tch_clsvw_search_filter {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .tch_clsvw_search_filter .form-control {
+    width: 350px;
+    border-radius: 17px;
+    color: #767676;
+    padding-left: 30px;
+  }
+  
+  .tch_clsvw_search_filter .form-control::placeholder {
+    color: #767676;
+  }
+  
+  .tch_clsvw_search_filter .position-relative {
+    position: relative;
+  }
+  
+  .tch_clsvw_search_filter .position-relative .position-absolute {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+    z-index: 2;
+    height: 20px;
+    width: 20px;
+    color: #D8D4D4;
+  }
+  
+  .tch_clsvw_search_filter .bs-filter-right {
+    height: 40px;
+    width: 40px;
+    margin-left: 20px;
+    margin-right: 1px;
+  }
+  /* .tch_vw_snd_rw{
+    width: 275px;
+    height: 85px;
+    border-radius: 8px;
+    border: 1px solid #526D82;
+    background-color: #ffffff;
+    color:#526D82 ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .tch_vw_scrll_hding{
+    font-size: 24px;
+    font-weight: 500; */
+
+
+    .scrollable-container {
+      display: flex;
+      overflow-x: hidden; 
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      justify-content: space-around;
+      padding-top: 2.5%;
+      height: 18%;
+    }
+    
+    .tch_vw_snd_rw {
+      display: inline-block;
+      width: 280px;
+      height: 60px;
+      margin-right: 10px;
+      border-radius: 8px;
+      border: 1px solid #526D82;
+      background-color: #ffffff;
+      color: #526D82;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0; 
+    }
+    
+    .tch_vw_scrll_hding {
+      font-size: 24px;
+      font-weight: 500;
+    }
+    .tch_vw_sndrw_hd{
+      color:#526D82;
+      font-weight: 400;
+     font-size: 24px;
+     
+     margin-left: 20px;
+    }
+    .tch_vw_card_container{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px; 
+      height: 380px;
+      overflow-y: scroll;
+    }
+    
+    
+    .tch_vw_card {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .tch_vw_card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #333;
+    }
+    
+    .tch_vw_card p {
+      margin: 8px 0 0;
+      font-size: 14px;
+      color: #526D82;
+    }
+       
+    .tch_vw_card p1 {
+      margin: 8px 0 0;
+      font-size: 14px;
+      color: #727272;
+    }
+
+  @media (max-width: 768px) {
+    .teacher_clsview_container {
+      padding-left: 0;
+    }
+  
+    .teacher_clsview_ti_cl {
+      display: flex;
+      justify-content: center;
+      height: 45%;
+      padding-top: 25px;
+      padding-left: 0px;
+    }
+  
+    .tech_clsvw_hd_rw {
+      height: 15%;
+    }
+  
+    .tch_clsvw_search_filter {
+      margin-right: 40px;
+    }
+    .tch_vw_card_container{
+      grid-template-columns: repeat(2, 1fr); /* Two cards per row on mobile */
+    }
+  }
+  
