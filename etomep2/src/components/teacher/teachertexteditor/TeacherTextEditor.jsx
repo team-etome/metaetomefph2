@@ -4,7 +4,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "ckeditor5-build-classic-mathtype";
 import DOMPurify from "dompurify";
 
-export default function TeacherTextEditor({ placeholder }) {
+export default function TeacherTextEditor({ placeholder ,editorData, setEditorData }) {
   const [ckData, setCkData] = useState("");
   const [showToolbar, setShowToolbar] = useState(false);
 
@@ -18,6 +18,7 @@ export default function TeacherTextEditor({ placeholder }) {
         <div className={`editor-container ${showToolbar ? "show-toolbar" : ""}`}>
           <CKEditor
             editor={ClassicEditor}
+            data = {editorData}
             config={{
               toolbar: {
                 shouldNotGroupWhenFull: true,
@@ -42,7 +43,7 @@ export default function TeacherTextEditor({ placeholder }) {
               },
               placeholder: placeholder,
             }}
-            data={ckData}
+            // data={ckData}
             onReady={(editor) => {
               // Show toolbar when editor gains focus
               editor.ui.focusTracker.on('change:isFocused', (evt, name, isFocused) => {
@@ -57,6 +58,7 @@ export default function TeacherTextEditor({ placeholder }) {
             onChange={(event, editor) => {
               const data = editor.getData();
               setCkData(data);
+              setEditorData(data); 
             }}
           />
         </div>

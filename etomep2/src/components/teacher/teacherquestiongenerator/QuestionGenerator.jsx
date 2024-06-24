@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import '../teacherquestiongenerator/questiongenerator.css';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import "../teacherquestiongenerator/questiongenerator.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { TbSection } from "react-icons/tb";
@@ -20,21 +20,23 @@ function QuestionGenerator() {
   const [currentSubsectionIndex, setCurrentSubsectionIndex] = useState(0);
   const [finalizedQuestions, setFinalizedQuestions] = useState([]);
 
+
+
+
   const finalizeQuestion = (subsectionIndex, questionIndex) => {
     const question = subsections[subsectionIndex].questions[questionIndex];
     setFinalizedQuestions([...finalizedQuestions, question]);
     const newSubsections = [...subsections];
     newSubsections[subsectionIndex].questions.splice(questionIndex, 1);
     setSubsections(newSubsections);
+
+    console.log("Question:", question.question);
+    console.log("Answer:", question.answer);
   };
 
-  const handleAnswerChange = (subsectionIndex, questionIndex, event) => {
-    const newSubsections = [...subsections];
-    newSubsections[subsectionIndex].questions[questionIndex].answer =
-      event.target.value;
-    setSubsections(newSubsections);
-  };
 
+
+  
   const handlePointsChange = (subsectionIndex, questionIndex, event) => {
     const newSubsections = [...subsections];
     newSubsections[subsectionIndex].questions[questionIndex].points =
@@ -55,7 +57,7 @@ function QuestionGenerator() {
 
   const addSubsection = () => {
     setSubsections([...subsections, { name: "New Section", questions: [] }]);
-    setCurrentSubsectionIndex(subsections.length); 
+    setCurrentSubsectionIndex(subsections.length);
   };
 
   const removeSubsection = (index) => {
@@ -103,26 +105,34 @@ function QuestionGenerator() {
     setSubsections(newSubsections);
   };
 
+  const handleEditorData = useCallback(
+    (subsectionIndex, questionIndex, key, data) => {
+      const updatedSubsections = subsections.map((sub, idx) => {
+        if (idx === subsectionIndex) {
+          const updatedQuestions = sub.questions.map((q, qIdx) => {
+            if (qIdx === questionIndex) {
+              return { ...q, [key]: data };
+            }
+            return q;
+          });
+          return { ...sub, questions: updatedQuestions };
+        }
+        return sub;
+      });
+      setSubsections(updatedSubsections);
+    },
+    [subsections]
+  );
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-
       <div className="question_generator">
-        <Row
-          xs={2}
-          className="question_generator_header">
+        <Row xs={2} className="question_generator_header">
           <Col className="question_generator_header_title">
-           
-            <h6>
-              Subject Name
-            </h6>
-
-   
+            <h6>Subject Name</h6>
           </Col>
-          <Col
-          className="question_generator_header_submit">
-            <button>
-              Submit
-            </button>
+          <Col className="question_generator_header_submit">
+            <button>Submit</button>
           </Col>
         </Row>
         <Row>
@@ -149,8 +159,9 @@ function QuestionGenerator() {
                           newSubsections[subsectionIndex].name = e.target.value;
                           setSubsections(newSubsections);
                         }}
-                        placeholder="Subsection Name"/>
-                      <button onClick={() => removeSubsection(subsectionIndex)} >
+                        placeholder="Subsection Name"
+                      />
+                      <button onClick={() => removeSubsection(subsectionIndex)}>
                         <MdOutlineDelete
                           style={{ width: "32px", height: "32px" }}
                         />
@@ -168,18 +179,28 @@ function QuestionGenerator() {
                             {...provided.draggableProps}
                             className="question-container"
                           >
-                            <div
-                            className="teacher_question_header">
+                            <div className="teacher_question_header">
                               <div className="teacher_question_number">
                                 <h6 style={{ fontSize: "20px" }}>
                                   Q. {questionIndex + 1})
                                 </h6>
                               </div>
-                              <TeacherTextEditor placeholder="Type question here..." />
+                              {/* <TeacherTextEditor placeholder="Type question here..." /> */}
+                              <TeacherTextEditor
+                                placeholder="Type question here..."
+                                editorData={q.question}
+                                setEditorData={(data) =>
+                                  handleEditorData(
+                                    subsectionIndex,
+                                    questionIndex,
+                                    "question",
+                                    data
+                                  )
+                                }
+                              />
                             </div>
 
-                            <div className="teacher_question_footer"
-                            >
+                            <div className="teacher_question_footer">
                               <div
                                 className="answer-key"
                                 onClick={() =>
@@ -196,7 +217,18 @@ function QuestionGenerator() {
 
                             {q.showAnswer && (
                               <div className="answer_editor_container">
-                                <TeacherTextEditor placeholder="Type answer here..." />
+                                <TeacherTextEditor
+                                  placeholder="Type answer here..."
+                                  editorData={q.answer}
+                                  setEditorData={(data) =>
+                                    handleEditorData(
+                                      subsectionIndex,
+                                      questionIndex,
+                                      "answer",
+                                      data
+                                    )
+                                  }
+                                />
                                 <div className="points-input">
                                   <span>Mark</span>
                                   <input
@@ -219,17 +251,25 @@ function QuestionGenerator() {
                                 {...provided.dragHandleProps}
                                 className="drag_handle"
                               >
-                                <PiDotsSix className="teacher_icon"/>
+                                <PiDotsSix className="teacher_icon" />
                               </div>
                               <button
-                              className="delete_question_button"
+                                className="delete_question_button"
                                 onClick={() =>
                                   removeQuestion(subsectionIndex, questionIndex)
                                 }
                               >
-                                <MdOutlineDelete className="teacher_icon"/>
+                                <MdOutlineDelete className="teacher_icon" />
                               </button>
-                              <button className="done_button">
+                              <button
+                                onClick={() =>
+                                  finalizeQuestion(
+                                    subsectionIndex,
+                                    questionIndex
+                                  )
+                                }
+                                className="done_button"
+                              >
                                 Done
                               </button>
                             </div>
@@ -244,13 +284,11 @@ function QuestionGenerator() {
             ))}
             <Row className="action_buttons">
               <Col onClick={addQuestion}>
-                <IoAddCircleOutline  className="teacher_icon" />
+                <IoAddCircleOutline className="teacher_icon" />
               </Col>
-              <hr className="divider"
-              ></hr>
+              <hr className="divider"></hr>
               <Col onClick={addSubsection}>
-                <TbSection 
-                className="teacher_icon" />
+                <TbSection className="teacher_icon" />
               </Col>
             </Row>
           </div>
