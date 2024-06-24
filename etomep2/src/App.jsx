@@ -64,6 +64,7 @@ import TeacherRefrenceListPage from './pages/teacherpage/TeacherRefrenceListPage
 import TeacherRefernceAddPage from './pages/teacherpage/TeacherRefernceAddPage';
 import TeacherTestListPage from './pages/teacherpage/TeacherTestListPage';
 import TeacherTestAddPage from './pages/teacherpage/TeacherTestAddPage';
+import TeacherHomePage from './pages/teacherpage/TeacherHomePage';
 
 
 function App() {
@@ -129,6 +130,7 @@ function App() {
           {/* teacherside */}
           <Route path="/teacherlogin" element={<TeacherLoginPage/>}/>
           {/* <Route path="/teachernavbar" element={<TeacherNavbarPage/>}/> */}
+          <Route path="/teacherhome" element={<TeacherHomePage/>}/>
           <Route path="/teacherstudentadd" element={<TeacherStudentAddPage/>}/>
           <Route path="/teacherstudentdashboard" element={<TeacherStudentDashboardPage/>}/>
           <Route path="/teacherstudentview" element={<TeacherStudentViewPage/>}/>
