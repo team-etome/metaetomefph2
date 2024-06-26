@@ -3,6 +3,7 @@ import etomelogo from "../../../assets/etomelogo.png";
 import { Navbar, Container, Nav, Form, Button } from "react-bootstrap";
 import '../header/header.css';
 import { RxHamburgerMenu } from "react-icons/rx";
+import { FiBell } from 'react-icons/fi';
 import amritha from "../../../assets/amritha.png";
 import MobileSidebar from '../sidebar/MobileSidebar';
 
@@ -85,7 +86,9 @@ function Header() {
                         }}
                     />
                 </div>
-                
+                <div className='notification_icon'>
+                    <FiBell />
+                </div>
             </Container>
             <MobileSidebar show={sidebarVisible} onClose={handleCloseSidebar} />
         </Navbar>
