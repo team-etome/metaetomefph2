@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import "../teacherexamination/examinationdashboard.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useDispatch} from "react-redux";
+import { exampaperinfo } from "../../../Redux/Actions/ExamPaperInfoAction";
+
 
 function ExaminationDashboard() {
   const [isActive, setIsActive] = useState(false);
@@ -16,6 +19,8 @@ function ExaminationDashboard() {
   const teacher = useSelector((state) => state.teacherinfo);
   const teacher_id = teacher.teacherinfo?.teacher_id;
   const APIURL = useSelector((state) => state.APIURL.url);
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (teacher_id) {
@@ -50,7 +55,9 @@ function ExaminationDashboard() {
     return () => clearInterval(interval);
   }, []);
 
+
   const handleClick = (exam) => {
+    dispatch(exampaperinfo(exam));
     navigate("/teacherquestionview", { state: { exam : exam } });
     
   };

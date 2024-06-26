@@ -126,6 +126,12 @@ function Sidebar() {
                 </div>
               </Col>
             </Link>
+
+
+            <Link 
+            
+            style={{ textDecoration: "none", color: "inherit" }}>
+           
             <Col
               className={`menu_item_col ${
                 activeItem === "settings" ? "active" : ""
@@ -136,6 +142,7 @@ function Sidebar() {
                 <span className="icon-text">Settings</span>
               </div>
             </Col>
+            </Link>
           </>
         ) : (
           <>
@@ -221,6 +228,7 @@ function Sidebar() {
                 activeItem === "settings" ? "active" : ""
               }`}
             >
+
               <div className="icon_container_div">
                 <SlSettings className="icon_img" />
                 <span className="icon-text">Settings</span>

@@ -21,8 +21,8 @@ function QuestionAssigning() {
     const [totalMark, setTotalMark] = useState('');
     const [term, setTerm] = useState('');
 
-    const APIURL = useSelector(state => state.APIURL.url);
-    const teacherinfo = useSelector(state => state.adminteacherinfo);
+    const APIURL       = useSelector(state => state.APIURL.url);
+    const teacherinfo  = useSelector(state => state.adminteacherinfo);
 
     useEffect(() => {
         fetchSubjects();

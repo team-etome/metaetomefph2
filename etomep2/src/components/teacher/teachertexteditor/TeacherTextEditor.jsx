@@ -1,24 +1,31 @@
 import "../teachertexteditor/teachertexteditor.css";
-import React, { useState } from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "ckeditor5-build-classic-mathtype";
 import DOMPurify from "dompurify";
 
-export default function TeacherTextEditor({ placeholder ,editorData, setEditorData }) {
+const TeacherTextEditor = forwardRef(({ placeholder, editorData, setEditorData }, ref) => {
   const [ckData, setCkData] = useState("");
   const [showToolbar, setShowToolbar] = useState(false);
+  const editorRef = React.createRef();
+
+  useImperativeHandle(ref, () => ({
+    getEditorRef: () => {
+      return editorRef.current;
+    }
+  }));
 
   const createMarkup = (html) => {
     return { __html: DOMPurify.sanitize(html) };
   };
 
   return (
-    <div style={{ width: "90%", minHeight: "150px" }}>
+    <div style={{ width: "90%", minHeight: "150px" }} ref={editorRef}>
       <React.Fragment>
         <div className={`editor-container ${showToolbar ? "show-toolbar" : ""}`}>
           <CKEditor
             editor={ClassicEditor}
-            data = {editorData}
+            data={editorData}
             config={{
               toolbar: {
                 shouldNotGroupWhenFull: true,
@@ -43,14 +50,11 @@ export default function TeacherTextEditor({ placeholder ,editorData, setEditorDa
               },
               placeholder: placeholder,
             }}
-            // data={ckData}
             onReady={(editor) => {
-              // Show toolbar when editor gains focus
               editor.ui.focusTracker.on('change:isFocused', (evt, name, isFocused) => {
                 setShowToolbar(isFocused);
               });
 
-              // Show toolbar when typing inside the editor
               editor.model.document.on('change:data', () => {
                 setShowToolbar(true);
               });
@@ -58,12 +62,13 @@ export default function TeacherTextEditor({ placeholder ,editorData, setEditorDa
             onChange={(event, editor) => {
               const data = editor.getData();
               setCkData(data);
-              setEditorData(data); 
+              setEditorData(data);
             }}
           />
         </div>
       </React.Fragment>
     </div>
   );
-}
-  
+});
+
+export default TeacherTextEditor;
