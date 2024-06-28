@@ -78,18 +78,14 @@ function App() {
           <Route path="/addcustomer" element={<AddcustomerPage />} />
           <Route path="/addbooks" element={<AddtextbooksPage />} />
           <Route path="/addbooks/:id" element={<AddtextbooksPage />} />
-          <Route
-            path="/viewinstitution/:id"
-            element={<ViewinstitutionPage />}
-          />
+          <Route path="/viewinstitution/:id" element={<ViewinstitutionPage />}/>
           <Route path="/textbookdashboard" element={<BookdashboardPage />} />
           <Route path="/GodHeader" element={<GodHeader />} />
-          <Route
-            path="/customerdashboard"
-            element={<CustomerdashboardPage />}
-          />
+          <Route path="/customerdashboard" element={<CustomerdashboardPage />}/>
           <Route path="/coursedashboard" element={<CoursedashboardPage />} />
           <Route path="/school" element={<SchoolPage />} />
+
+          
           {/* adminside */}
           <Route path="/" element={<AdminLoginPage />} />
           <Route path="/admindashboard" element={<AdminDashboardpage />} />

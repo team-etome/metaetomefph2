@@ -323,8 +323,8 @@ function AddStudent() {
                     onChange={(e) => setStudentAddress(e.target.value)}
                   />
                 </div>
-                12:36
-                <div className="image_conatiner">
+                
+                {/* <div className="image_conatiner">
                   <div className="student_image_upload_container">
                     <label className="upload_profile_label">
                       Upload Profile Image
@@ -379,7 +379,7 @@ function AddStudent() {
                       maximum Upload file size : 256 Mb.
                     </label>
                   </div>
-                </div>
+                </div> */}
                 <div className="teacher_studentadd_submit">
                   <button onClick={handleSubmit} type="submit">
                     Submit
