@@ -1,182 +1,263 @@
 .container-scroll {
-    overflow-y: auto;
-    height: 75vh;
-    width:150vw ;
+  overflow-y: auto;
+  height: 75vh;
+  width:150vw ;
+ 
+}
+.cls_vw_flt_dv {
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  width: 60px;
+  height: 510px;
+  right: 0;
+  top: 13%;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  box-shadow: 0px 0px 9px 0px rgba(82, 109, 130, 0.66);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  transition: transform 0.3s ease;
+}
 
-  
-   
-    
-  }
-  
-  
-  .container-scroll::-webkit-scrollbar {
-    width: 6px; 
-  }
-  
-
-  .container-scroll::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-  
-
-  .container-scroll::-webkit-scrollbar-thumb {
-    background: #A8BFD1;
-  }
-
-
-  .class_lisit_circle{
-    position: absolute;
-    top: 85px;
-    left: 20px;
-    transform: translateY(-150%);
-  }
-  .class_number_div{
-    width: 80px;
-    height: 80px;
-    border-radius:50%;
-    background-color: #FFFF;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
-    color:#526D82;
-  
-  }
-  .class_list_facultyname {
-    color: #000000;
-    font-size: 18px;
-  }
-  
-  .class_profile_name {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-  }
-  
-  .faculty_profile_photo {
-    width: 30px;
-    height: 35px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  .class_list_medium{
-    position: absolute;
-    top:10px;
-    right: 10px;
-    color: #807B7B;
-  }
-.class_rectangle{
-  width: 100%;
-  height: 115px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  position: relative;
+.title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 18px;
+  color: #526d82;
   margin-bottom: 20px;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #526d82;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0;
+  font-size: 14px;
+  color: #526d82;
   cursor: pointer;
 }
-.class_list{
 
-  display: flex;
-  justify-content: center;
-  padding-top: 40px;
-  margin-top: 5px;
-
-  
-}
-.class_adding_button {
-  display: flex;
-  justify-content: flex-end;
-  position: fixed;
-  bottom: 4%;
-  right: 2%;
-  z-index: 1000;
-}
-.class_adding{
-  width: 70px;
-  height: 70px;
+.circle.selected {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #526d82;
   border-radius: 50%;
-  margin-top: 30px;
-  background-color: #526D82;background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0;
+  font-size: 14px;
+  background-color: #526d82;
+  color: white;
+}
+
+.arrow-button {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: #526d82;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+}
+
+
+.container-scroll::-webkit-scrollbar {
+  width: 6px; 
+}
+
+
+.container-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+
+.container-scroll::-webkit-scrollbar-thumb {
+  background: #A8BFD1;
+}
+
+
+.class_lisit_circle{
+  position: absolute;
+  top: 85px;
+  left: 20px;
+  transform: translateY(-150%);
+}
+.class_number_div{
+  width: 80px;
+  height: 80px;
+  border-radius:50%;
+  background-color: #FFFF;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+  color:#526D82;
+
+}
+.class_list_facultyname {
+  color: #000000;
+  font-size: 18px;
+}
+
+.class_profile_name {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+.faculty_profile_photo {
+  width: 30px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.class_list_medium{
+  position: absolute;
+  top:10px;
+  right: 10px;
+  color: #807B7B;
+}
+.class_rectangle{
+width: 100%;
+height: 115px;
+background-color: #ffffff;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+border-radius: 8px;
+position: relative;
+margin-bottom: 20px;
+cursor: pointer;
+}
+.class_list{
+
+display: flex;
+justify-content: center;
+padding-top: 40px;
+margin-top: 5px;
+
+
+}
+.class_adding_button {
+display: flex;
+justify-content: flex-end;
+position: fixed;
+bottom: 4%;
+right: 2%;
+z-index: 1000;
+}
+.class_adding{
+width: 70px;
+height: 70px;
+border-radius: 50%;
+margin-top: 30px;
+background-color: #526D82;background-size: cover;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+@media (max-width: 768px) {
+.cls_vw_flt_dv {
+  transform: translateX(100%);
+}
+
+.cls_vw_flt_dv.visible {
+  transform: translateX(0);
+}
+
+.arrow-button {
+  display: flex;
+}
 }
 @media (max-width:576px) {
-   
-  .class_rectangle{
-    width: 250px !important;
-    height: 80px !important;
-  }
-  .class_number_div{
-    width: 50px;
-    height: 50px;
-   
 
-  }
-  .class_lisit_circle{
-    position: absolute;
-    top: 55px;
-    left: 20px;
-    transform: translateY(-150%);
-  }
-  .class_list{
+.class_rectangle{
+  width: 250px !important;
+  height: 80px !important;
+}
+.class_number_div{
+  width: 50px;
+  height: 50px;
+ 
+
+}
+.class_lisit_circle{
+  position: absolute;
+  top: 55px;
+  left: 20px;
+  transform: translateY(-150%);
+}
+.class_list{
 padding:4px;
 padding-top: 16px;
 margin-top: 8px;
-  }
-  .container-scroll {
-    overflow-y: auto;
-    height: 70vh;
-    width:100% ;
-   padding-right: 20px;
-    
-  }
-  }
-  .my-button {
-    background-color: #526D82;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: flex;
-    font-size: 16px;
-    border-radius: 50%;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-    position: relative;
-    overflow: hidden;
-  }
+}
+.container-scroll {
+  overflow-y: auto;
+  height: 70vh;
+  width:100% ;
+ padding-right: 20px;
   
-  .my-button:after {
-    content: "";
-    background-color: rgba(255, 255, 255, 0.374);
-    position: absolute;
-    top: 50%;
-    left: 50%;
+}
+}
+.my-button {
+  background-color: #526D82;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  font-size: 16px;
+  border-radius: 50%;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.my-button:after {
+  content: "";
+  background-color: rgba(255, 255, 255, 0.374);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.my-button.active:after {
+  animation: ripple_401 3s ease-out;
+}
+
+@keyframes ripple_401 {
+  0% {
     width: 5px;
     height: 5px;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+
+  100% {
+    width: 200px;
+    height: 200px;
     opacity: 0;
   }
-  
-  .my-button.active:after {
-    animation: ripple_401 3s ease-out;
-  }
-  
-  @keyframes ripple_401 {
-    0% {
-      width: 5px;
-      height: 5px;
-      opacity: 1;
-    }
-  
-    100% {
-      width: 200px;
-      height: 200px;
-      opacity: 0;
-    }
-  }
+}

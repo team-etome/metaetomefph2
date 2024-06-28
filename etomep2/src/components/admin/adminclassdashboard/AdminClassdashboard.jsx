@@ -15,6 +15,9 @@ function AdminClassdashboard() {
   const APIURL = useSelector((state) => state.APIURL.url);
   const admin_id = admininfo ? admininfo.admininfo?.admin_id : null;
 
+  const [selected, setSelected] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+
   const navigate = useNavigate()
   console.log(classDetails,'drfgdgrfdg')
 
@@ -59,12 +62,30 @@ useEffect(()=>{
 
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
+    <div style={{ display: "flex", justifyContent: "center", width: "104.5%"}}>
+        <div>
+      <div className="arrow-button" onClick={() => setIsVisible(!isVisible)}>
+        <span>&lt;</span>
+      </div>
+      <div className={`cls_vw_flt_dv ${isVisible ? 'visible' : ''}`}>
+        <div className="title">Class</div>
+        {[...Array(12)].map((_, index) => (
+          <div
+            key={index}
+            className={`circle ${selected === index + 1 ? 'selected' : ''}`}
+            onClick={() => setSelected(index + 1)}
+          >
+            {index + 1}
+          </div>
+        ))}
+      </div>
+    </div>
       <Container
         fluid
         className="container-scroll"
         style={{ marginTop: "16px" }}
       >
+        
         <Row>
           {classDetails.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
