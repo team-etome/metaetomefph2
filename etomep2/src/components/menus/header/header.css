@@ -46,12 +46,30 @@
         height: 25px; 
         width: 25px; 
     }
+    .notification_icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 90%;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #526D82;
+    }
+    .notification_icon svg {
+        height: 30px;
+        width: 30px;
+    }
 
 }
 @media (min-width:799px) {
 .header_menu{
     display: none;
 }
+.notification_icon {
+    display: none;
+}
+
 }
 @media (max-height:491px) {
     .header_menu{
