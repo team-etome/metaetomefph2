@@ -24,6 +24,8 @@ function QuestionAssigning() {
     const APIURL       = useSelector(state => state.APIURL.url);
     const teacherinfo  = useSelector(state => state.adminteacherinfo);
 
+    console.log(teacherinfo,"teachersssss")
+
     useEffect(() => {
         fetchSubjects();
         mapTeachers();
@@ -157,7 +159,7 @@ function QuestionAssigning() {
                                     <Select
                                         options={subjects}
                                         styles={customStyles}
-                                        value={subjects.find(option => option.value === selectedSubject)}
+                                        value={subjects?.find(option => option.value === selectedSubject)}
                                         onChange={option => setSelectedSubject(option ? option.value : null)}
                                         placeholder="Select a subject"
                                         isClearable={true}
@@ -186,7 +188,7 @@ function QuestionAssigning() {
                                     <Select
                                         options={teachers}
                                         styles={customStyles}
-                                        value={teachers.find(option => option.value === selectedTeacher)}
+                                        value={teachers?.find(option => option.value === selectedTeacher)}
                                         onChange={option => setSelectedTeacher(option ? option.value : null)}
                                         placeholder="Select a teacher"
                                         isClearable={true}
