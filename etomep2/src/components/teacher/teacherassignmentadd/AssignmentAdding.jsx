@@ -15,7 +15,7 @@ function AssignmentAdding() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    navigate('/teachertexteditor');
+    navigate('/teacherassignmenteditor');
   }
   return (
     <div className='teacher_assignment_adding'>
