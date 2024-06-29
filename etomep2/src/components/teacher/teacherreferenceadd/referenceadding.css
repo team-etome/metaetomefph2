@@ -89,25 +89,90 @@
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    padding-top: 20px;
   }
   
-  .upload_btn,
-  .create_btn {
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: 1px solid #526D82;
-    background-color: transparent;
+  .ref_pdf_btn, .ref_url_btn {
+    background-color: #fff;
     color: #526D82;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
     cursor: pointer;
-    transition: background-color 0.3s;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, border 0.3s;
+    border: 1px solid #DAE2E9;
   }
   
-  .upload_btn:hover,
-  .create_btn:hover {
-    background-color: #526D82;
-    color: #fff;
+  
+  .ref_pdf_btn.active, .ref_url_btn.active {
+    background-color: #DAE2E9;
+    color: #526D82;
+    border: 2px solid #DAE2E9;
+    font-weight: 500;
+  }
+  .upload_section_content {
+    margin-top: 10px;
+  }
+  .refrence_pdf_upload_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 210px;
+    width: 500px;
+    border: 2px dashed #526D82;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    position: relative;
+    background-color:#fff;
+  }
+  /* .refrence_url_upload_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 500px;
+    border: 0.5px solid #677F91;
+    border-radius: 8px;
+  } */
+  .refrence_pdf_placeholder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  /* .refrence_url_placeholder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  } */
+  .refrence_pdf_upload_label {
+    background-color: #DAE2E9;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  .refrence_pdf_upload_input {
+    display: none;
   }
   
+  .refrence_pdf_upload_label:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .refrence_pdf_upload_input{
+    display: none;
+  }
+  
+  .url_upload_input {
+    border: 0.5px solid #677F91;
+    border-radius: 5px;
+    padding: 10px;
+    width: 500px;
+    height: 50px;
+    font-style: italic;
+    color: #000000;
+  }
   .drop_area {
     border: 2px dashed #526D82;
     border-radius: 8px;
@@ -159,9 +224,9 @@
     background-color: #8FA2B6; 
   }
   .teacher_ref_submit{
-    margin-top: 0px;
+    margin-top: 20px;
     width: 90%;
-    padding-left: 80px;
+    padding-left: 90px;
     text-align: right;
     margin-right: 0px;
     padding-right: 0px;
