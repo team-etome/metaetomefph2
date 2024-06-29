@@ -7,26 +7,27 @@ import { Row, Col, Container } from "react-bootstrap";
 
 function AssignmentEditor({ placeholder }) {
   const [ckData, setCkData] = useState("");
-  const [showToolbar, setShowToolbar] = useState(false);
+  const [showToolbar, setShowToolbar] = useState(true);
   const createMarkup = (html) => {
     return { __html: DOMPurify.sanitize(html) };
   };
   return (
-    <div style={{ width: "90%", minHeight: "150px" }}>
-      <Row xs={2} className="assignment_editor_header">
+    <Container className="assignment_editor">
+    <div className='assignment_editor_div'>
+      <Row xs={2} className="assignment_editor_header" >
         <Col className="assignment_editor_header_title">
-          <h6>Subject Name</h6>
+        <div>
+          <h6>Assignment Name</h6>
+          <p>Due Date :</p>
+          </div>
         </Col>
         <Col className="assignment_editor_header_submit">
             <button >Export Questions</button>
           </Col>
       </Row>
+      <Row>
       <React.Fragment>
-        <div
-          className={`assignment-editor-container ${
-            showToolbar ? "assignment_show_toolbar" : ""
-          }`}
-        >
+        <div className={`assignment-editor-container assignment_show_toolbar`}>
           <CKEditor
             editor={ClassicEditor}
             config={{
@@ -51,7 +52,7 @@ function AssignmentEditor({ placeholder }) {
                   "ChemType",
                 ],
               },
-              placeholder: placeholder,
+              placeholder: "Type questions here.....",
             }}
             data={ckData}
             onReady={(editor) => {
@@ -74,7 +75,9 @@ function AssignmentEditor({ placeholder }) {
           />
         </div>
       </React.Fragment>
+      </Row>
     </div>
+    </Container>
   );
 }
 
