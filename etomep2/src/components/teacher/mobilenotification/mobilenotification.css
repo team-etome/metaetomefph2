@@ -1,23 +1,7 @@
-.admin_dashboard{
-    background-color: #F8FEFF;
-    height: 100vh;
-    padding-top: 12vh;
-    padding-left: 10px;
-    width: 105%;
-    padding-right: 0vw;
-}
-.admin_dasboard_container{
-    padding-right: 0vw;
-}
-.ad_dashboard_col{
-    padding-left: 5vw;
-    padding-top: 1vw;
-    height: 85vh;
-}
-.notification_content{
+.mobile_notification_content{
     /* display: flex; */
 }
-.notification_section{
+.mobile_notification_section{
     width: 400px;
     margin-left: 19vh;
     margin-right: 0px;
@@ -25,49 +9,55 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     background-color: #FFFFFF;
 }
-.notification_bar{
+.mobile_notification_bar{
     text-align: center;
     gap: 5%;
     display: flex;
     padding-top: 2vh;
 }
-.notification_bell{
+.mobile_header{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.mobile_notification_bell{
     text-align: center;
     font-size: 20px;
     margin-top: 1vh;
+    color: #526D82;
 }
-.notification_bar h5{
-    color: #727272;
-    font-size: 20px;
+.mobile_header h5{
+    color: #526D82;
+    font-size: 25px;
     font-weight: 500;
     margin-top: 0.5vh;
 }
-.notification_content hr{
+.mobile_notification_content hr{
     border: 1px solid #000000;
 }
-.notification_body {
+.mobile_notification_body {
     max-height: calc(90vh - 140px);
     overflow-y: scroll; 
     overflow-x: hidden; 
   }
   
-  .notification_body::-webkit-scrollbar {
+  .mobile_notification_body::-webkit-scrollbar {
     width: 8px; 
   }
   
-  .notification_body::-webkit-scrollbar-track {
+  .mobile_notification_body::-webkit-scrollbar-track {
     background-color: #fff; 
   }
   
-  .notification_body::-webkit-scrollbar-thumb {
+  .mobile_notification_body::-webkit-scrollbar-thumb {
     background-color: #A8BFD1; 
     border-radius: 4px;
   }
   
-  .notification_body::-webkit-scrollbar-thumb:hover {
+  .mobile_notification_body::-webkit-scrollbar-thumb:hover {
     background-color: #8FA2B6; 
   }
-  .day {
+  .mobile_day {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -77,11 +67,11 @@
     font-weight: 600;
     font-style: italic; 
 }
-.day_icon {
+.mobile_day_icon {
     margin-left: auto; 
     font-size: 20px;
 }
-  .notification_item {
+  .mobile_notification_item {
     background-color: #ffffff;
     cursor: pointer;
     /* padding: 8px; */
@@ -92,37 +82,18 @@
     border-bottom: 1px solid #727272;
 }
   
-  .notification_item:hover {
+  .mobile_notification_item:hover {
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
-  .notification_item h4{
+  .mobile_notification_item h4{
     color: #4A4A4A;
     font-size: 15px;
     font-weight: 400;
   }
-  .notification_item p{
+  .mobile_notification_item p{
     color: #727272;
     font-size: 15px;
     font-weight: 400;
     padding-top: 1vh;
   }
-  @media (max-width: 800px),(max-height:490px ) {
-.notification_section{
-  display: none;
-}
-  }
-  @media (min-width:799px) {
-    /* .notification_section{
-      display: none;
-    } */
-    .notification_icon {
-        display: none;
-    }
-    
-    }
-    @media (max-height:491px) {
-      .notification_section{
-        display: none;
-      }
-        }

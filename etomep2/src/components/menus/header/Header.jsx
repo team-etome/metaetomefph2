@@ -1,4 +1,4 @@
-import Reactm, {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import etomelogo from "../../../assets/etomelogo.png";
 import { Navbar, Container, Nav, Form, Button } from "react-bootstrap";
 import '../header/header.css';
@@ -6,10 +6,12 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { FiBell } from 'react-icons/fi';
 import amritha from "../../../assets/amritha.png";
 import MobileSidebar from '../sidebar/MobileSidebar';
+import MobileNotification from '../../teacher/mobilenotification/MobileNotification';
 
 function Header() {
 
     const [sidebarVisible, setSidebarVisible] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const handleBurgerClick = () => {
         setSidebarVisible(true);
@@ -17,6 +19,12 @@ function Header() {
 
     const handleCloseSidebar = () => {
         setSidebarVisible(false);
+    };
+    const handleBellIconClick = () => {
+        setShowModal(true); // Show modal when bell icon is clicked
+    };
+    const handleCloseModal = () => {
+        setShowModal(false); // Close modal
     };
 
     useEffect(() => {
@@ -36,18 +44,9 @@ function Header() {
     }, []);
 
     return (
+        <>
         <Navbar expand="lg"
-        className='header_container'
-            style={{
-                backgroundColor: '#ffff',
-                height: "10vh",
-                width: "100%",
-                zIndex: "10",
-                position: "fixed",
-                top: "0",
-                left: "0",
-                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-            }}>
+        className='header_container'>
             <Container fluid>
 
                 <Navbar.Brand href="#" className='header' >
@@ -57,20 +56,11 @@ function Header() {
                     <div className='header_logo'>
                         <img
                             src={etomelogo}
-                            alt="etome logo"
-                            style={{
-                                width: "110px",
-                                height: "40px",
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignContent: 'center',
-                                alignItems: 'center'
-                            }}
-                        />
+                            alt="etome logo"/>
                     </div>
 
                 </Navbar.Brand>
-                <div className='header_institution' style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
+                <div className='header_institution'>
                     <div>
                         <h6 style={{ color: '#9DB2BF', fontSize: '17px' }}>Institute Name</h6>
                         <p style={{ color: '#727272', fontSize: '12px' }}>Institutemail@gmail.com</p>
@@ -86,12 +76,14 @@ function Header() {
                         }}
                     />
                 </div>
-                <div className='notification_icon'>
+                <div className='notification_icon' onClick={handleBellIconClick}>
                     <FiBell />
                 </div>
             </Container>
             <MobileSidebar show={sidebarVisible} onClose={handleCloseSidebar} />
         </Navbar>
+        {showModal && <MobileNotification onClose={handleCloseModal} />}
+        </>
     );
 }
 export default Header;
