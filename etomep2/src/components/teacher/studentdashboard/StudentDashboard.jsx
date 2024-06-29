@@ -9,15 +9,22 @@ import { Link, useNavigate } from "react-router-dom";
 import '../studentdashboard/studentdashboard.css'
 import { useSelector } from "react-redux";
 import axios from "axios";
+
+
+
 function StudentDashboard() {
   const [isActive, setIsActive] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [file, setFile] = useState(null);
   const [studentlist , setStudentList] = useState()
-  console.log(studentlist,'student list')
+  const [standard , setStandard] = useState()
+  const [division , setDivision] = useState()
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacher = useSelector((state) => state.teacherinfo);
   const teacher_id = teacher.teacherinfo?.teacher_id;
+
+  console.log(studentlist,"student list")
+
   const navigate = useNavigate()
   const fileInputRef = useRef(null);
   const handleFileChange = (event) => {
@@ -29,19 +36,21 @@ function StudentDashboard() {
   const handleAddClick = () => {
     setShowOptions(!showOptions);
   };
-  const studentListData = new Array(30).fill({
-    studentName: "Ria Choudary",
-    // date: "12/03/2004",
-    rollNo:'1001'
-  });
-  const handleclick= ()=>{
-      navigate('/teacherstudentview')
-  }
+  
+  const handleclick = (item) => {
+    navigate('/teacherstudentview', { state: { student: item } });
+  };
+
+
   useEffect(() => {
     const fetchFacultyData = async () => {
       try {
         const response = await axios.get(`${APIURL}/api/addstudent/${teacher_id}`);
         setStudentList(response.data);
+        setStandard(response.data[0].standard);
+        setDivision(response.data[0].division);
+        
+     
       } catch (error) {
         console.error("Failed to fetch faculty data:", error);
       }
@@ -56,7 +65,7 @@ function StudentDashboard() {
       >
         <Row style={{ paddingLeft: "2vw", paddingBottom:'1vw' }}>
               <Col md={6} className="class_number">
-              <h4>Class: 8 A</h4>
+              <h4>Class: {standard} {division} </h4>
               </Col>
               <Col md={6}>
                 <div className="student_search_filter_main">
@@ -89,17 +98,15 @@ function StudentDashboard() {
               </Col>
         </Row>
         <Row className="teacher_studentdashboard_container">
-          {studentListData.map((item, index) => (
-            // lg={3} md={4} sm={6} xs={6}
+          {studentlist?.map((item, index) => (
+           
             <Col lg={3} md={6} sm={6} xs={12} key={index} >
-              <div onClick={handleclick}  className="border border-white student_rectangle">
-                  <div className="student_name">{item.studentName}</div>
+              <div  onClick={() => handleclick(item)}  className="border border-white student_rectangle">
+                  <div className="student_name">{item.student_name}</div>
                   <div className="student_date_id">
-                    {/* <div className="student_date">
-                      {item.date}
-                    </div> */}
+                    
                     <div className="student_id">
-                      Admisssion No.{item.rollNo}
+                      Admisssion No.{item.roll_no}
                     </div>
                   </div>
               </div>

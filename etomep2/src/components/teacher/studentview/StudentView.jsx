@@ -1,21 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Container, Row, Col,Button,Modal,Form } from "react-bootstrap";
-import { Link, } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Container, Row, Col, Button, Modal, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { PiGraduationCap } from "react-icons/pi";
 import amritha from "../../../assets/amritha.png";
-import '../studentview/studentview.css'
+import "../studentview/studentview.css";
 import { BsThreeDotsVertical } from "react-icons/bs";
-
+import { useLocation } from "react-router-dom";
 
 function StudentView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const dropdownRef = useRef(null);
-  // const location = useLocation();
 
-  // const faculty = location.state.faculty; 
+  const location = useLocation();
+  const { student } = location.state || {};
+
+  console.log(student, "studetn");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -25,7 +27,6 @@ function StudentView() {
   const handleCloseModal = () => {
     setShowModal(false);
   };
- 
 
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
@@ -50,37 +51,24 @@ function StudentView() {
     e.preventDefault();
     setShowEditBlockButtons((prevState) => !prevState);
   };
-  const students = [
-    { term: "First Term", scores: { English: 60, Malayalam: 60, SocialScience: 60, Physics: 60, Chemistry: 60, Biology: 60, IT: 60, Maths: 60 }, totalMark: 260, obtainedMark: 18, progress: "Failed" },
-    { term: "Second Term", scores: { English: 50, Malayalam: 50, SocialScience: 50, Physics: 50, Chemistry: 60, Biology: 60, IT: 60, Maths: 60 }, totalMark: 260, obtainedMark: 60, progress: "Pass" },
-    { term: "Third Term", scores: { English: 50, Malayalam: 50, SocialScience: 50, Physics: 50, Chemistry: 60, Biology: 60, IT: 60, Maths: 60 }, totalMark: 260, obtainedMark: 60, progress: "Pass" },
-    { term: "Fourth Term", scores: { English: 50, Malayalam: 50, SocialScience: 50, Physics: 50, Chemistry: 60, Biology: 60, IT: 60, Maths: 60 }, totalMark: 260, obtainedMark: 60, progress: "Pass" },
-  ];
-  const subjects = [
-    { name: 'English', score: 100 },
-    { name: 'Maths', score: 98 },
-    { name: 'Hindi', score: 98 },
-    { name: 'Physics', score: 98 },
-    { name: 'Chemistry', score: 98 },
-    { name: 'Biology', score: 98 },
-  ];
+
   return (
     <div>
-    <Container className="teacher_student_view_container">
-      <form className="teacher_student_view_form">
-        <div className='teacher_student_header'>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "10px",
-            }}
-          >
-            <Link to="/teacherstudentdashboard">
-              <IoChevronBackSharp className="teacher_student_view_back" />
-            </Link>
-            <h1 className="teaher_student_view_title">Niranjana </h1>
-            <div style={{ flex: "1" }}></div>
+      <Container className="teacher_student_view_container">
+        <form className="teacher_student_view_form">
+          <div className="teacher_student_header">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "10px",
+              }}
+            >
+              <Link to="/teacherstudentdashboard">
+                <IoChevronBackSharp className="teacher_student_view_back" />
+              </Link>
+              <h1 className="teaher_student_view_title">{student.student_name} </h1>
+              <div style={{ flex: "1" }}></div>
               {windowWidth > 800 ? (
                 <div
                   style={{
@@ -120,125 +108,219 @@ function StudentView() {
                   )}
                 </div>
               )}
-          </div>
+            </div>
 
             {/* </div> */}
-          {/* <div style={{ border: "0.5px solid #526D82" }}></div> */}
-        </div>
-        <div className='teacher_student_scrollable'>
-        <Row style={{ paddingTop: "20px"}} className='teacher_personal_info'>
-            <div className='teacher_student_title'>
+            {/* <div style={{ border: "0.5px solid #526D82" }}></div> */}
+          </div>
+          <div className="teacher_student_scrollable">
+            <Row
+              style={{ paddingTop: "20px" }}
+              className="teacher_personal_info"
+            >
+              <div className="teacher_student_title">
                 <h4>Personal Information</h4>
-            </div>
+              </div>
 
-          <Col md={4}>
-            <div className='teacher_personal_info_field'>
-              <label htmlFor="name">Name</label>
-              <input type="text" id="name" name="clasnames_no" value='Niranjana' readOnly style={{color:'#68B670', fontWeight:'600'}}/>
-            </div>
-            <div className='teacher_personal_info_field'>
-              <label htmlFor="dob">DOB</label>
-              <input type="text" id="dob" name="dob" value='10/02/2004' readOnly />
-            </div>
-            <div className='teacher_personal_info_field'>
-              <label htmlFor="email">Email Id</label>
-              <input type="text" id="email" name="email" value='catherine10@gmail.com' readOnly />
-            </div>
-            <div className='teacher_personal_info_field'>
-              <label htmlFor="address">Address</label>
-              <input type="text" id="address" name="address"value='hhhhhhhhhhh' readOnly />
-            </div>
-            <div className='teacher_personal_info_field'>
-              <label htmlFor="pincode">Pincode</label>
-              <input type="text" id="addpincoderess" name="pincode" readOnly />
-            </div>
-          </Col>
-          <Col md={4}>
-            <div className='teacher_personal_info_field'>
-              <label htmlFor="gender">Gender</label>
-              <input type="text" id="gender" name="gender" readOnly />
-            </div>
-            <div className='teacher_personal_info_field'>
-              <label htmlFor="f_name">Father Name</label>
-              <input type="text" id="f_name" name="f_name" readOnly />
-            </div>
-            <div className='teacher_personal_info_field'>
-              <label htmlFor="m_name">Mother Name</label>
-              <input type="text" id="m_name" name="m_name" readOnly />
-            </div>
-            <div className='teacher_personal_info_field'>
-              <label htmlFor="g_name">Guardian</label>
-              <input type="text" id="g_name" name="g_name" readOnly />
-            </div>
-            <div className='teacher_personal_info_field'>
-              <label htmlFor="phone">Phone No</label>
-              <input type="text" id="phone" name="phone" readOnly />
-            </div>
-          </Col>
-          <Col md={4}>
-            <div>
+              <Col md={4}>
+                <div className="teacher_personal_info_field">
+                  <label htmlFor="name">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="clasnames_no"
+                    value={student.student_name}
+                    readOnly
+                    style={{ color: "#68B670", fontWeight: "600" }}
+                  />
+                </div>
+                <div className="teacher_personal_info_field">
+                  <label htmlFor="dob">DOB</label>
+                  <input
+                    type="text"
+                    id="dob"
+                    name="dob"
+                    value={student.dob}
+                    readOnly
+                  />
+                </div>
+                <div className="teacher_personal_info_field">
+                  <label htmlFor="email">Email Id</label>
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    value={student.email}
+                    readOnly
+                  />
+                </div>
+                <div className="teacher_personal_info_field">
+                  <label htmlFor="address">Address</label>
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value={student.address}
+                    readOnly
+                  />
+                </div>
+              </Col>
+              <Col md={4}>
+                <div className="teacher_personal_info_field">
+                  <label htmlFor="gender">Gender</label>
+                  <input
+                    type="text"
+                    id="gender"
+                    name="gender"
+                    value={student.gender}
+                    readOnly
+                  />
+                </div>
+                <div className="teacher_personal_info_field">
+                  <label htmlFor="f_name">Father Name</label>
+                  <input
+                    type="text"
+                    id="f_name"
+                    name="f_name"
+                    value={student.fathers_name}
+                    readOnly
+                  />
+                </div>
+                <div className="teacher_personal_info_field">
+                  <label htmlFor="m_name">Mother Name</label>
+                  <input
+                    type="text"
+                    id="m_name"
+                    name="m_name"
+                    value={student.mothers_name}
+                    readOnly
+                  />
+                </div>
+                <div className="teacher_personal_info_field">
+                  <label htmlFor="g_name">Guardian</label>
+                  <input
+                    type="text"
+                    id="g_name"
+                    name="g_name"
+                    value={student.guardian}
+                    readOnly
+                  />
+                </div>
+                <div className="teacher_personal_info_field">
+                  <label htmlFor="phone">Phone No</label>
+                  <input
+                    type="text"
+                    id="phone"
+                    name="phone"
+                    value={student.number}
+                    readOnly
+                  />
+                </div>
+              </Col>
+              <Col md={4}>
+                {/* <div>
               <img src={amritha}  alt="" className='teacher_profile_picture'/>
-            </div>
-          </Col>
-        </Row>
-        <Row style={{ paddingTop: "20px" }}>
-          <div className='teacher_student_heading'>
-            <div className='teacher_student_title'>
-                <h4>School Information</h4>
-            </div>
-            </div>
-          <Col md={4}>
-            <div className='teacher_school_info'>
-              <label htmlFor="standard">Standard</label>
-              <input type="text" id="standard" name="standard" value='11 B' readOnly />
-            </div>
-            <div className='teacher_school_info'>
-              <label htmlFor="admin_no">Admission Number</label>
-              <input type="text" id="admin_no" name="admin_no"value='101010101' readOnly />
-            </div>
-          </Col>
-          <Col md={4}>
-            <div className='teacher_school_info'>
-              <label htmlFor="roll_no">Roll No</label>
-              <input type="text" id="roll_no" name="roll_no" value='12'readOnly />
-            </div>
-            <div className='teacher_school_info'>
-              <label htmlFor="category">Category</label>
-              <input type="text" id="category" name="category" value='Science'readOnly />
-            </div>
-          </Col>
+            </div> */}
+              </Col>
+            </Row>
+            <Row style={{ paddingTop: "20px" }}>
+              <div className="teacher_student_heading">
+                <div className="teacher_student_title">
+                  <h4>School Information</h4>
+                </div>
+              </div>
+              <Col md={4}>
+                <div className="teacher_school_info">
+                  <label htmlFor="standard">Standard</label>
+                  <input
+                    type="text"
+                    id="standard"
+                    name="standard"
+                    value={student.class_name}
+                    readOnly
+                  />
+                </div>
+                <div className="teacher_school_info">
+                  <label htmlFor="admin_no">Admission Number</label>
+                  <input
+                    type="text"
+                    id="admin_no"
+                    name="admin_no"
+                    value={student.admission_no}
+                    readOnly
+                  />
+                </div>
+              </Col>
+              <Col md={4}>
+                <div className="teacher_school_info">
+                  <label htmlFor="roll_no">Roll No</label>
+                  <input
+                    type="text"
+                    id="roll_no"
+                    name="roll_no"
+                    value={student.roll_no}
+                    readOnly
+                  />
+                </div>
+                {/* <div className="teacher_school_info">
+                  <label htmlFor="category">Category</label>
+                  <input
+                    type="text"
+                    id="category"
+                    name="category"
+                    value="Science"
+                    readOnly
+                  />
+                </div> */}
+              </Col>
 
-          <Col md={4}>
-            <div className='teacher_school_info'>
-              <label htmlFor="join_date">Joining Date</label>
-              <input type="text" id="join_date" name="join_date"value='06/06/2023' readOnly />
-            </div>
-            <div className='teacher_school_info'>
-              <label htmlFor="academic_year">Academic Year</label>
-              <input type="text" id="academic_year" name="academic_year" value='2024-2025'readOnly />
-            </div>
-          </Col>
-        </Row>
-        
-        <Row className="mt-4">
-        <div className='teacher_result_heading'>
-            <div className='teacher_student_title'>
-              <Button onClick={handleSubmit}>
-              <PiGraduationCap />&nbsp; Results
-                </Button>
-            </div>
-            </div>
-      </Row>
-      </div>
-      </form>
-    </Container>
-    <Modal show={showModal} onHide={handleCloseModal} centered size='xl'>
-        <Modal.Header closeButton style={{border:'none',paddingBottom:'0px' }}>
+              <Col md={4}>
+                <div className="teacher_school_info">
+                  <label htmlFor="join_date">Joining Date</label>
+                  <input
+                    type="text"
+                    id="join_date"
+                    name="join_date"
+                    value = {student.start_date}
+                    readOnly
+                  />
+                </div>
+                {/* <div className="teacher_school_info">
+                  <label htmlFor="academic_year">Academic Year</label>
+                  <input
+                    type="text"
+                    id="academic_year"
+                    name="academic_year"
+                    value="2024-2025"
+                    readOnly
+                  />
+                </div> */}
+              </Col>
+            </Row>
+
+            <Row className="mt-4">
+              <div className="teacher_result_heading">
+                <div className="teacher_student_title">
+                  <Button onClick={handleSubmit}>
+                    <PiGraduationCap />
+                    &nbsp; Results
+                  </Button>
+                </div>
+              </div>
+            </Row>
+          </div>
+        </form>
+      </Container>
+      <Modal show={showModal} onHide={handleCloseModal} centered size="xl">
+        <Modal.Header
+          closeButton
+          style={{ border: "none", paddingBottom: "0px" }}
+        >
           {/* <Modal.Title >Student Results</Modal.Title> */}
         </Modal.Header>
-        <Modal.Body style={{paddingTop:'0px'}}>
-          <div className='teacher_result_view_scrollable'>
-            <table className="table" >
+        <Modal.Body style={{ paddingTop: "0px" }}>
+          <div className="teacher_result_view_scrollable">
+            <table className="table">
               <thead>
                 <tr>
                   <th>Terms</th>
@@ -255,8 +337,8 @@ function StudentView() {
                   <th>Progress</th>
                 </tr>
               </thead>
-              <tbody>
-                {students.map(student => (
+              {/* <tbody>
+                {student.map(student => (
                   <tr >
                     <td>{student.term}</td>
                     <td className="no-border-right">{student.scores.English}</td>
@@ -272,7 +354,7 @@ function StudentView() {
                     <td>{student.progress}</td>
                   </tr>
                 ))}
-              </tbody>
+              </tbody> */}
             </table>
           </div>
         </Modal.Body>
@@ -284,8 +366,8 @@ function StudentView() {
   </Link>
 </Modal.Footer> */}
       </Modal>
-  </div>
-  )
+    </div>
+  );
 }
 
-export default StudentView
+export default StudentView;

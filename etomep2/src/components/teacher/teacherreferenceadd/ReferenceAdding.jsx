@@ -4,40 +4,32 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import '../teacherreferenceadd/referenceadding.css';
 import { FaRedo } from 'react-icons/fa';
-
 function ReferenceAdding() {
     const [showUploadArea, setShowUploadArea] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectedUrl, setSelectedUrl] = useState('');
     const [selectedTab, setSelectedTab] = useState('pdf');
     const navigate = useNavigate();
-
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
-
     const handleUrlChange = (event) => {
         setSelectedUrl(event.target.value);
     };
-
     const handleTabChange = (tab) => {
         setSelectedTab(tab);
         setSelectedFile(null);
         setSelectedUrl('');
     };
-
     const clearPdfFile = () => {
         setSelectedFile(null);
     };
-
     const clearUrl = () => {
         setSelectedUrl('');
     };
-
     // const handleSubmit = () => {
     //   navigate('/teachertexteditor');
     // }
-
     return (
         <div className='teacher_reference_adding'>
             <Container className='teacher_reference_form'>
@@ -84,7 +76,6 @@ function ReferenceAdding() {
                                         Upload URL
                                     </button>
                                 </div>
-
                                 {selectedTab === "pdf" && (
                                     <div className="upload_section_content">
                                         <div className="refrence_pdf_upload_container">
@@ -135,7 +126,6 @@ function ReferenceAdding() {
                                         </div>
                                     </div>
                                 )}
-
                                 {selectedTab === "url" && (
                                     <div className="upload_section_content">
                                         <div className="refrence_url_upload_container">
@@ -182,117 +172,4 @@ function ReferenceAdding() {
         </div>
     )
 }
-
 export default ReferenceAdding;
-{/* <div className="upload_section">
-<h6>Media Library</h6>
-<div className='upload_buttons'>
-    <button
-        style={{
-            ...(selectedTab === "pdf"
-                ? { border: "2px solid #526D82" }
-                : {}),
-        }}
-        onClick={() => handleTabChange("pdf")}
-        className={selectedTab === "pdf" ? "active" : ""}
-    >
-        Upload Pdf
-    </button>
-    <button
-        style={{
-            ...(selectedTab === "url"
-                ? { border: "2px solid #526D82" }
-                : {}),
-        }}
-        onClick={() => handleTabChange("url")}
-        className={selectedTab === "url" ? "active" : ""}
-    >
-        Upload URL
-    </button>
-</div>
-
-{selectedTab === "pdf" && (
-    <div className="upload_section_content">
-        <div className="refrence_pdf_upload_container">
-            <div className="refrence_pdf_placeholder">
-                {selectedFile ? (
-                    <>
-                        <embed
-                            src={URL.createObjectURL(selectedFile)}
-                            type="application/pdf"
-                            width="100%"
-                            height="200px"
-                        />
-                        <button
-                            onClick={clearPdfFile}
-                            style={{
-                                border: "none",
-                                background: "none",
-                                cursor: "pointer",
-                            }}
-                        >
-                            <FaRedo
-                                style={{
-                                    color: "blue",
-                                    fontSize: "20px",
-                                }}
-                                title="Change PDF"
-                            />
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        <label
-                            htmlFor="pdf-upload"
-                            className="refrence_pdf_upload_label"
-                        >
-                            Upload PDF
-                        </label>
-                        <input
-                            id="pdf-upload"
-                            type="file"
-                            accept=".pdf"
-                            className="refrence_pdf_upload_input"
-                            onChange={handleFileChange}
-                        />
-                    </>
-                )}
-            </div>
-        </div>
-    </div>
-)}
-
-{selectedTab === "url" && (
-    <div className="upload_section_content">
-        <div className="refrence_url_upload_container">
-            <div className="refrence_url_upload_placeholder">
-                <input
-                    type="text"
-                    value={selectedUrl}
-                    placeholder="Enter URL"
-                    onChange={handleUrlChange}
-                    className="url_upload_input"
-                />
-                {selectedUrl && (
-                    <button
-                        onClick={clearUrl}
-                        style={{
-                            border: "none",
-                            background: "none",
-                            cursor: "pointer",
-                        }}
-                    >
-                        <FaRedo
-                            style={{
-                                color: "blue",
-                                fontSize: "20px",
-                            }}
-                            title="Clear URL"
-                        />
-                    </button>
-                )}
-            </div>
-        </div>
-    </div>
-)}
-</div> */}

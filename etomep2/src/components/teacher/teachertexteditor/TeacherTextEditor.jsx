@@ -4,10 +4,12 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "ckeditor5-build-classic-mathtype";
 import DOMPurify from "dompurify";
 
+
 const TeacherTextEditor = forwardRef(({ placeholder, editorData, setEditorData }, ref) => {
   const [ckData, setCkData] = useState("");
   const [showToolbar, setShowToolbar] = useState(false);
   const editorRef = React.createRef();
+  
 
   useImperativeHandle(ref, () => ({
     getEditorRef: () => {
@@ -47,6 +49,16 @@ const TeacherTextEditor = forwardRef(({ placeholder, editorData, setEditorData }
                   "MathType",
                   "ChemType",
                 ],
+              },
+              fontSize: {
+                options: [
+                  'tiny',
+                  'small',
+                  'default',
+                  'big',
+                  'huge'
+                ],
+                supportAllValues: false
               },
               placeholder: placeholder,
             }}

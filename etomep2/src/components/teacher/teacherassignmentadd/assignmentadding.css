@@ -95,9 +95,10 @@
     color: #526D82;
     cursor: pointer;
     transition: background-color 0.3s;
+    
   }
   
-  .upload-btn:hover,
+  
   .create-btn:hover {
     background-color: #526D82;
     color: #fff;
