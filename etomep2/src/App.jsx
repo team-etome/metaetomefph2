@@ -65,6 +65,7 @@ import TeacherRefernceAddPage from './pages/teacherpage/TeacherRefernceAddPage';
 import TeacherTestListPage from './pages/teacherpage/TeacherTestListPage';
 import TeacherTestAddPage from './pages/teacherpage/TeacherTestAddPage';
 import TeacherHomePage from './pages/teacherpage/TeacherHomePage';
+import AssignmentEditor from './components/teacher/teacherassignmentadd/AssignmentEditor';
 
 
 function App() {
@@ -141,6 +142,7 @@ function App() {
           <Route path="/teacherclassview" element={<TeacherClassViewPage/>}/>
           <Route path="/teacherassignment" element={<TeacherAssignmentListPage/>}/>
           <Route path="/teacherassignmentadding" element={<TeacherAssignmentAddPage/>}/>
+          <Route path="/teacherassignmenteditor" element={<AssignmentEditor/>}/>
           <Route path="/teacherrefrencelist" element={<TeacherRefrenceListPage/>}/>
           <Route path="/teacherreferenceadd" element={<TeacherRefernceAddPage/>}/>
           <Route path="/teachertestlist" element={<TeacherTestListPage/>}/>
