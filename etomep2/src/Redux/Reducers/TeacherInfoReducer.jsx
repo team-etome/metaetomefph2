@@ -14,6 +14,7 @@ const TeacherInfoReducer = (state = initialstate , action)=>{
                 teacherinfo  : action.payload
             }
 
+            
             default:
                 return state;
     }

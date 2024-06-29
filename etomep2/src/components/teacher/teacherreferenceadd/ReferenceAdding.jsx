@@ -46,7 +46,7 @@ function ReferenceAdding() {
             </Row>
             <Row>
             <Col md={6}>
-                <div className="teacher_assignmentadd_group">
+                {/* <div className="teacher_assignmentadd_group">
                 <label htmlFor="refclass">
                     Class
                     <span style={{ color: "red" }}>*</span>
@@ -78,9 +78,7 @@ function ReferenceAdding() {
                     id="refsub"
                     name="refsub"
                 />
-                </div>
-            </Col>
-            <Col md={6}>
+                </div> */}
                 <div className="upload_section">
                     <h6>Media Library</h6>
                 <div className="upload_buttons">
@@ -100,6 +98,9 @@ function ReferenceAdding() {
                     </div>
                 {/* )} */}
                 </div>
+            </Col>
+            <Col md={6}>
+                
             </Col>
             <div className="teacher_ref_submit" >
                     <button  type="submit">

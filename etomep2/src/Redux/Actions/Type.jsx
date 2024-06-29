@@ -3,4 +3,5 @@ export const TEACHER_INFO          =   'TEACHER_INFO'
 export const ADMIN_CLASS_INFO      =   'ADMIN_CLASS_INFO'
 export const ADMIN_TEACHER_INFO    =   'ADMIN_TEACHER_INFO'
 export const EXAM_PAPER_INFO       =   'EXAM_PAPER_INFO'
+export const TEACHER_SUBJECT_INFO  =   'TEACHER_SUBJECT_INFO'
 

@@ -4,8 +4,9 @@ import { Container, Row, Col, Form } from "react-bootstrap";
 import "../teachersubject/teachersubject.css";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch} from "react-redux";
 import axios from "axios";
+import { teachersubjectinfo } from "../../../Redux/Actions/TeacherSubjectInfoAction";
 
 
 function TeacherSubject() {
@@ -17,6 +18,9 @@ function TeacherSubject() {
   const teacherinfo = useSelector((state) => state.teacherinfo);
   const teacher_id = teacherinfo.teacherinfo?.teacher_id
   console.log(subjects,'subjects')
+
+
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -43,6 +47,7 @@ function TeacherSubject() {
 
   const handlenavigate = (item) => {
     console.log(item,'itemmm')
+    dispatch(teachersubjectinfo(item)); 
     navigate("/teacherclassview", { state: { item } });
   };
 

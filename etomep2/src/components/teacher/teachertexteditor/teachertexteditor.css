@@ -12,6 +12,11 @@
   
   .show-toolbar .ck-toolbar {
     display: flex !important; 
+    
   }
 
 
+.editor-container .ck.ck-editor__main > .ck-editor__editable {
+  border: none; /* Remove the border */
+  box-shadow: none; /* Remove any box-shadow */
+}

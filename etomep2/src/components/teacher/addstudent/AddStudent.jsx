@@ -28,6 +28,7 @@ function AddStudent() {
   // const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacher = useSelector((state) => state.teacherinfo);
+  console.log(teacher,"teacher")
   const teacher_id = teacher.teacherinfo?.teacher_id;
   const navigate = useNavigate();
   const clearImageFile = () => {

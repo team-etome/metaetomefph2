@@ -91,7 +91,7 @@ function QuestionInstruction() {
                 >
                   Instruction
                 </h6>
-                <TeacherTextEditor placeholder="𝘚𝘵𝘢𝘳𝘵 𝘵𝘺𝘱𝘪𝘯𝘨 𝘺𝘰𝘶𝘳 𝘪𝘯𝘴𝘵𝘳𝘶𝘤𝘵𝘪𝘰𝘯𝘴 𝘩𝘦𝘳e..." />
+                <TeacherTextE ditor placeholder="𝘚𝘵𝘢𝘳𝘵 𝘵𝘺𝘱𝘪𝘯𝘨 𝘺𝘰𝘶𝘳 𝘪𝘯𝘴𝘵𝘳𝘶𝘤𝘵𝘪𝘰𝘯𝘴 𝘩𝘦𝘳e..." />
               </Col>
               <Col
                 style={{
