@@ -1,3 +1,11 @@
+.institution_dashboard{
+  background-color: #F8FEFF;
+  height: 100vh;
+  padding-top: 10vh;
+}
+.institution_dashboard_tab{
+  width: 100%;
+}
 .institution_dashboard_tab .nav-link {
     padding: 10px 15px;
     border: none;
@@ -20,11 +28,17 @@
   .search_filter {
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 10%;
     display: flex;
     justify-content: flex-end;
   }
-  
+ .inst_search_icon{
+  z-index: 2;
+  height: 20px;
+  width: 20px;
+  color: #D8D4D4;
+  right: 15px;
+ } 
   .search_filter .form-control {
     width: 350px !important;
     border-radius: 17px;
@@ -139,11 +153,11 @@
     margin-right: 20px;
   }
 
-  @media (max-width:768px) {
+  @media (max-width:700px) {
    .institution_dashboard_tab{
     display: flex;
     align-items: center;
-    padding-top: 0px;
+    padding-top: 10px;
    justify-content: flex-start;
    margin-top: 10px;
    padding-left: 5%;
@@ -173,55 +187,35 @@
       padding-top: 20% !important;
     }
     .search_filter_main{
-      width: 80%;
-      padding-left: 45%;
-      gap: 15px;
+      width: 100%;
       padding-right: 0px;
-      padding-left: 90%;
-    }
-    .search_filter {
       display: flex;
-      align-items: center;
-      /* padding-left: 20%; */
+      justify-content: flex-start;
+      flex-direction: row;
+      padding-left: 0vw;
+      padding-right: 0vw;
     }
-    .search_filter_icon{
-      padding-left: 15%;
-      width: 80px;
-    }
+
     .search_bar{
-      width:220px;
+      width:300px;
       /* margin-left: 15%; */
     }
-    /* .search_filter .form-control {
-      width: 250px;
-      border-radius: 17px;
-      color: #767676;
-      padding-left: 30px;
-    } */
-    
-    /* .search_filter .form-control::placeholder {
-      color: #767676;
-    } */
-    
-    /* .search_filter .position-relative {
-      position: relative;
-    } */
-    
-    /* .search_filter .position-relative .position-absolute {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 15px;
-      z-index: 2;
-      height: 20px;
-      width: 20px;
-      color: #D8D4D4;
-    } */
-    
-    /* .search_filter .bs-filter-right {
-      height: 40px;
-      width: 40px;
-      margin-left: 20px;
-      margin-right: 1px;
-    } */
+
+  }
+  @media (min-width: 710px) and (max-width:1024px) {
+    .institution_dashboard_tab {
+      display: flex;
+      align-items: center;
+      /* justify-content: space-between; */
+      flex-direction: row;
+      padding-top: 10px;
+    }
+    .search_filter_main {
+      justify-content: flex-start;
+      flex-direction: row;
+      width: auto;
+    }
+    .search_bar {
+      width: 300px;
+    }
   }

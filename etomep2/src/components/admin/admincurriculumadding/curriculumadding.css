@@ -1,6 +1,6 @@
 .curriculum_container {
-  margin-left: 120px;
-  min-height: 100vh;
+  padding-left: 10vw;
+  height: 100vh;
   margin-top: 0px;
   background-color: #DDE6ED;
   display: flex;
@@ -249,15 +249,14 @@
   align-content: center;
   border-radius: 8px;
 }
-@media (max-width: 800px) {
+@media (max-width: 700px) {
   .curriculum_container {
     margin-left: 10px;
     margin-right: 10px;
-    padding-top: 10px;
     padding-bottom: 10px;
     min-height: calc(100vh - 20px);
     background-color: #DDE6ED;
-    margin-top: 60px;
+    padding-top: 10vh;
   }
 
   .curriculum_title {
@@ -270,34 +269,9 @@
     padding-bottom: 20px;
     height: auto;
     width: 100%;
+    padding-left: 10px;
+    border: 1px solid red;
   }
-
-  /* .curriculum_form {
-    padding: 20px;
-    height: auto;
-    background-color: #fff;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    max-height: calc(100vh - 120px);
-  } */
-
-  /* .curriculum_form::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  .curriculum_form::-webkit-scrollbar-track {
-    background: #fff;
-  }
-
-  .curriculum_form::-webkit-scrollbar-thumb {
-    background: #E3DFDF;
-    border-radius: 10px;
-  }
-
-  .curriculum_form::-webkit-scrollbar-thumb:hover {
-    background: #B8B8B8;
-  } */
 
   .curriculum_inputfield {
     margin-left: 10px;
@@ -374,5 +348,13 @@
   }
   .curriculum_title {
     font-size: 25px;
+  }
+}
+@media (min-width: 710px) and (max-width:1024px) {
+  .curriculum_add {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    height: auto;
+    width: 100%;
   }
 }

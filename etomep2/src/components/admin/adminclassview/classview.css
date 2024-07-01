@@ -1,6 +1,6 @@
 .class_view_container {
     height: 100vh;
-    padding-top: 100px;
+    padding-top: 10vh !important;
     background-color: #DDE6ED;
     width: 80%;
     }

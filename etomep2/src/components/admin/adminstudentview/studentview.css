@@ -1,6 +1,6 @@
 .student_view_container {
     height: 100vh;
-    padding-top: 100px;
+    padding-top: 15vh !important;
     background-color: #DDE6ED;
     width: 100%;
     padding-left: 100px;
@@ -69,12 +69,12 @@
         z-index: 1;
     }
     .personal_info{
-        padding-left: 30px;
+        padding-left: 20px;
     }
     .personal_info_field{
         display: flex;
         padding-top: 20px;
-        padding-left: 30px;
+        padding-left: 15px;
 
     }
     .personal_info_field label{
@@ -90,13 +90,14 @@
         color: #9B9B9B;
     }
     .student_heading{
-        padding-left: 40px;
+        padding-left: 20px;
     }
     .result_heading{
         padding-right: 100px;
         display: flex;
         justify-content: flex-end;
         padding-top: 20px;
+        padding-left: 20px;
     }
     .result_heading button{
         background-color: transparent;
@@ -111,7 +112,7 @@
     .school_info{
         display: flex;
         gap: 10px;
-        padding-left: 30px;
+        padding-left: 15px;
         padding-top: 20px;
         padding-right: 30px;
     }
@@ -131,7 +132,7 @@
         height: 150px;
         /* padding-right: 10px;
         padding-left: 30px; */
-        margin-left: 50px;
+        margin-left: 20px;
         margin-right: 20px;
         margin-top: 0px;
         margin-bottom: 10px;
@@ -174,7 +175,7 @@
         color: #526D82;
       }
 
-    @media (max-width: 800px) {
+    @media (max-width: 700px) {
       .student_view_container {
         height: 100vh;
         padding-top: 100px;
@@ -185,15 +186,15 @@
         .personal_info_field{
           display: flex;
           padding-top: 20px;
-          padding-left: 0px;
+          padding-left: 10px;
       }
       .school_info{
-        padding-left: 0px;
+        padding-left: 10px;
         padding-right: 10px;
     }
     .result_heading{
       padding-left: 100px;
-      padding-right: 10px;
+      padding-right: 50px;
       display: flex;
       justify-content: flex-end;
   }
@@ -203,7 +204,7 @@
       border: 1px solid #526D82;
   } */
         .student_scrollable {
-            scrollbar-width: thin;
+            scrollbar-width: bold;
             scrollbar-color: #526D82 #DDE6ED;
           }
           
@@ -219,5 +220,9 @@
             background-color: #526D82;
             border-radius: 20px;
           }
+
     }
+    @media (min-width: 710px) and (max-width:1024px) {
+
     
+    }

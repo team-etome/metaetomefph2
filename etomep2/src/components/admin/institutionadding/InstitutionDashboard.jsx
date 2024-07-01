@@ -16,23 +16,15 @@ function InstitutionDashboard() {
   }, [activeTab]);
 
   return (
-    <div
-      className="institution_dashboard"
-      style={{
-        backgroundColor: "#F8FEFF",
-        height: "100vh",
-        paddingTop: "12vh",
-      }}
-    >
+    <div className="institution_dashboard">
       <Container>
-        <Row style={{ paddingLeft: "2vw", paddingTop: "1vw" }}>
+        <Row style={{ paddingLeft: "2vw", paddingTop: "1vw" }} className="inst_row">
           <Col md={12}>
             <Nav
               variant="underline"
               activeKey={activeTab}
               onSelect={(k) => setActiveTab(k)}
               className="institution_dashboard_tab"
-              style={{ width: "100%" }}
             >
               <Nav.Item>
                 <Nav.Link
@@ -58,18 +50,11 @@ function InstitutionDashboard() {
               </Nav.Item>
               {activeTab === "Faculty" && (
                 <div className="search_filter_main">
-                  <div  className="search_filter d-flex align-items-center">
-                    <Form className="d-flex">
+                  {/* <div  className="search_filter d-flex align-items-center"> */}
+                    <Form className="d-flex inst_search">
                       <div className="position-relative">
                         <BsSearch
-                          className="position-absolute top-50 translate-middle-y ms-2"
-                          style={{
-                            zIndex: 2,
-                            height: "20px",
-                            width: "20px",
-                            color: "#D8D4D4",
-                            right: "15px",
-                          }}
+                          className="position-absolute top-50 translate-middle-y ms-2 inst_search_icon"
                         />
                         <Form.Control
                           type="search"
@@ -79,7 +64,7 @@ function InstitutionDashboard() {
                         />
                       </div>
                     </Form>
-                  </div>
+                  {/* </div> */}
 
                   {/* <div className="search_filter_icon">
                     <BsFilterRight style={{ height: "40px", width: "40px" }} />

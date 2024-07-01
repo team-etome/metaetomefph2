@@ -12,7 +12,7 @@ function StudentListing() {
 }
 
     const studentListData = [
-        { studentnumber:'1',studentname:'yyyyyyyyyyy'},
+        { studentnumber:'1',studentname:'rrrrrrryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'},
         { studentnumber:'1',studentname:'yyyyyyyyyyy'},
         { studentnumber:'1',studentname:'yyyyyyyyyyy'},
         { studentnumber:'1',studentname:'yyyyyyyyyyy'},
@@ -46,7 +46,7 @@ function StudentListing() {
         { studentnumber:'1',studentname:'yyyyyyyyyyy'},        
         { studentnumber:'1',studentname:'yyyyyyyyyyy'},
         { studentnumber:'1',studentname:'yyyyyyyyyyy'},
-        { studentnumber:'1',studentname:'yyyyyyyyyyy'},
+        { studentnumber:'1',studentname:'yyyyyyyyyyyyyyy'},
       ];
 
 
@@ -56,31 +56,26 @@ function StudentListing() {
     <Container className="student_container">
       <div className="student_form">
         <div className='studentlist_header'>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "10px",
-            }}
-          >
+          <div className='studentlist_title_section'>
             <Link to="/classview">
               <IoChevronBackSharp className="student_back" />
             </Link>
             <h1 className="student_title">Student List</h1>
-            <div style={{color:'#526D82', paddingLeft:'10px', fontSize:'15px'}}>(50)</div>
+            <div className='studentlist_number'>(50)</div>
           </div>
           {/* <div style={{ border: "0.5px solid #526D82" }}></div> */}
         </div>
 <div className='studentlist_scrollable' style={{paddingTop:'30px'}}>
         <Row>
         {studentListData.map((item, index) => (
-            <Col lg={3} md={4} sm={6} xs={6} key={index} className='studentsss_list'>
+            <Col lg={3} md={4} sm={12} xs={12} key={index} className='studentsss_list'>
             <div  onClick={handleclick} className=' student_card'>
                 <div className='student_number'>
                     {item.studentnumber}
                 </div>
                 <div className='student_name'>
-                        {item.studentname}
+                        {/* {item.studentname} */}
+                        <span>{item.studentname}</span>
                 </div>
             </div>
             </Col>
