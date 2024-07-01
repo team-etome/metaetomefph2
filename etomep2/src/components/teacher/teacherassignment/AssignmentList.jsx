@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from 'react-icons/io';
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import '../teacherassignment/assignmentlist.css';
-import { BsSearch, BsFilterRight } from "react-icons/bs";
-
+import { useSelector } from "react-redux";
 
 function AssignmentList() {
   const [showThisMonth, setShowThisMonth] = useState(true);
   const [showPreviousMonth, setShowPreviousMonth] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
-  const [showCompleted, setShowCompleted] = useState(true);
-  const [showPending, setShowPending] = useState(true);
-
+  const [assignments, setAssignments] = useState([]);
   const navigate = useNavigate();
+
+
+  console.log(assignments,"assignmentssss")
+
+  const teacher = useSelector((state) => state.teacherinfo);
+  const teacher_subject = useSelector((state) => state.teachersubjectinfo);
+  const APIURL = useSelector((state) => state.APIURL.url);
 
   const handleAddClick = () => {
     navigate('/teacherassignmentadding');
@@ -25,41 +30,50 @@ function AssignmentList() {
     setShowModal(true);
   }
 
-  const assignments = {
-    thisMonth: [
-      { id: 1, title: 'Environmental impacts', description: 'Details about environmental impacts' },
-      { id: 3, title: 'Today\'s Model Examination is Vector Graphics', description: 'Details about the model examination' },
-    ],
-    previousMonth: [
-      { id: 2, title: 'Deforestation and Its Effects on Biodiversity', description: 'Details about deforestation' },
-      { id: 4, title: 'Soil Erosion', description: 'Details about soil erosion' },
-      { id: 5, title: 'Water Conservation', description: 'Details about water conservation' },
-    ]
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const standard = teacher_subject.teachersubjectinfo?.class;
+      const division = teacher_subject.teachersubjectinfo?.division;
+      const subject = teacher_subject.teachersubjectinfo?.subject;
+      const teacher_id = teacher.teacherinfo?.teacher_id;
 
-  const completedAssignments = [
-    { name: 'Valayar paramashivam', status: 'Completed', date: '02-12-2024' },
-    { name: 'Valayar paramashivam', status: 'Completed', date: '02-12-2024' },
-    { name: 'Valayar paramashivam', status: 'Completed', date: '02-12-2024' },
-    { name: 'Valayar paramashivam', status: 'Completed', date: '02-12-2024' },
-    { name: 'Valayar paramashivam', status: 'Completed', date: '02-12-2024' },
-    { name: 'Valayar paramashivam', status: 'Completed', date: '02-12-2024' },
-    { name: 'Valayar paramashivam', status: 'Completed', date: '02-12-2024' },
-    { name: 'Valayar paramashivam', status: 'Completed', date: '02-12-2024' },
-    { name: 'Valayar paramashivam', status: 'Completed', date: '02-12-2024' },
-    { name: 'Valayar paramashivam', status: 'Completed', date: '02-12-2024' },
-    { name: 'Valayar paramashivam', status: 'Completed', date: '02-12-2024' },
+      try {
+        const response = await axios.get(`${APIURL}/api/assignment`, {
+          params: {
+            teacher_id,
+            standard,
+            division,
+            subject
+          }
+        });
+        setAssignments(response.data.assignments);  // Update the state with the fetched assignments
+      } catch (error) {
+        console.error('Error fetching assignments:', error);
+      }
+    };
 
-  ];
+    fetchData();
+  }, [APIURL, teacher, teacher_subject]);
 
-  const pendingAssignments = [
-    { name: 'Meesha Madhavan', status: 'Pending', date: '02-12-2024' },
-    { name: 'Meesha Madhavan', status: 'Pending', date: '02-12-2024' },
-    { name: 'Meesha Madhavan', status: 'Pending', date: '02-12-2024' },
-    { name: 'Meesha Madhavan', status: 'Pending', date: '02-12-2024' },
-    { name: 'Meesha Madhavan', status: 'Pending', date: '02-12-2024' },
-    { name: 'Meesha Madhavan', status: 'Pending', date: '02-12-2024' },
-  ];
+  const groupByMonth = (assignments) => {
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    const thisMonth = [];
+    const previousMonth = [];
+
+    assignments.forEach(assignment => {
+      const assignedDate = new Date(assignment.assigned_date);
+      if (assignedDate.getMonth() === currentMonth && assignedDate.getFullYear() === currentYear) {
+        thisMonth.push(assignment);
+      } else {
+        previousMonth.push(assignment);
+      }
+    });
+
+    return { thisMonth, previousMonth };
+  }
+
+  const { thisMonth, previousMonth } = groupByMonth(assignments);
 
   return (
     <Container className='assignment_container'>
@@ -67,31 +81,28 @@ function AssignmentList() {
         <Col className='assignment_list'>
           <div className='assignment_header'>
             <h2>Assignment</h2>
-            <div className="assignment_search_filter_icon d-flex align-items-center">
-                <BsFilterRight className="bs-filter-right" />
-            </div>
           </div>
           <hr />
           <div className='assignment_body'>
             <div className="week" onClick={() => setShowThisMonth(!showThisMonth)}>
-              <span>June</span>
+              <span>This Month</span>
               {showThisMonth ? <IoIosArrowUp className="week_icon" /> : <IoIosArrowDown className="week_icon" />}
             </div>
-            {showThisMonth && assignments.thisMonth.map((assignment) => (
+            {showThisMonth && thisMonth.map((assignment) => (
               <div key={assignment.id} className="assignment_item mb-3 p-2" onClick={() => handleAssignmentClick(assignment)}>
                 <h5>{assignment.title}</h5>
-                <p>Posted On: 02-12-2024</p>
+                <p>Posted On: {new Date(assignment.assigned_date).toLocaleDateString()}</p>
               </div>
             ))}
 
             <div className="week" onClick={() => setShowPreviousMonth(!showPreviousMonth)}>
-              <span>May</span>
+              <span>Previous Month</span>
               {showPreviousMonth ? <IoIosArrowUp className="week_icon" /> : <IoIosArrowDown className="week_icon" />}
             </div>
-            {showPreviousMonth && assignments.previousMonth.map((assignment) => (
+            {showPreviousMonth && previousMonth.map((assignment) => (
               <div key={assignment.id} className="assignment_item mb-3 p-2" onClick={() => handleAssignmentClick(assignment)}>
                 <h4>{assignment.title}</h4>
-                <p>Posted On: 02-12-2024</p>
+                <p>Posted On: {new Date(assignment.assigned_date).toLocaleDateString()}</p>
               </div>
             ))}
           </div>
@@ -104,60 +115,13 @@ function AssignmentList() {
       </Row>
 
       <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" centered>
-        <Modal.Header closeButton >
+        <Modal.Header closeButton>
           <Modal.Title className='assignment-modal'>Assignments</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p className='modal_body'><strong>{selectedAssignment?.title}</strong></p>
-          <p className='modal_date'><strong>Posted On:</strong> 02-12-2024</p>
-
-          <div>
-            <div className="week" onClick={() => setShowCompleted(!showCompleted)}>
-              <span>Completed ({completedAssignments.length})</span>
-              {showCompleted ? <IoIosArrowUp className="week_icon" /> : <IoIosArrowDown className="week_icon" />}
-            </div>
-            {showCompleted && (
-              <div className="assignments-container scrollable-container">
-                {completedAssignments.map((assignment, index) => (
-                  <div key={index} className="assignment-card">
-                    <div className="assignment-title">{assignment.name}</div>
-                    <div className="assignment-info">
-                      <div className={`assignment-status ${assignment.status.toLowerCase()}`}>
-                        {assignment.status}
-                      </div>
-                      <div className="assignment-date">{assignment.date}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div>
-            <div className="week" onClick={() => setShowPending(!showPending)}>
-              <span>Pending ({pendingAssignments.length})</span>
-              {showPending ? <IoIosArrowUp className="week_icon" /> : <IoIosArrowDown className="week_icon" />}
-            </div>
-            {showPending && (
-              <div className="assignments-container scrollable-container">
-                {pendingAssignments.map((assignment, index) => (
-                  <div key={index} className="assignment-card">
-                    <div className="assignment-title">{assignment.name}</div>
-                    <div className="assignment-info">
-                      <div className={`assignment-status ${assignment.status.toLowerCase()}`}>
-                        {assignment.status}
-                      </div>
-                      <div className="assignment-date">{assignment.date}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+4          <p className='modal_date'><strong>Due Date :</strong> {selectedAssignment ? new Date(selectedAssignment.due_date).toLocaleDateString() : ''}</p>          {/* Add other assignment details here */}
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>Close</Button>
-        </Modal.Footer> */}
       </Modal>
     </Container>
   );
