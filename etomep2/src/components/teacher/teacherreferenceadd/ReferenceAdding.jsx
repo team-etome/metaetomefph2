@@ -53,8 +53,8 @@ function ReferenceAdding() {
             </Col>
           </Row>
           <Row>
-            <Col md={4}></Col>
-            <Col md={8}>
+            
+            <Col>
               <div className="upload_section">
                 <h6>Media Library</h6>
                 <div className="upload_buttons">
