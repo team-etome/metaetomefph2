@@ -1,6 +1,6 @@
 .result_filter_container {
     height:70vh;
-    padding-top: 90px;
+    padding-top: 10vh;
     width: 80%;
     }
     .result_filter_form{
@@ -127,7 +127,7 @@
     }
 
     .result_filter_scrollable {
-            max-height: calc(90vh - 200px);
+            max-height: calc(80vh - 200px);
             overflow-y: auto; 
             overflow-x: hidden; 
       }
@@ -149,7 +149,7 @@
         background-color: #8FA2B6; 
       }
       
-    @media (max-width: 800px) {
+    @media (max-width: 700px) {
         .result_filter_container {
             width: 100%;
             padding-top: 10px;
@@ -201,4 +201,9 @@
         }
     }
     
-    
+    @media (min-width: 710px) and (max-width:1024px) {
+        .result_filter_container{
+            width: 100%;   
+            height: 50vh;
+        }
+    }

@@ -63,7 +63,7 @@ function SeatingDashboard() {
     >
       <Row>
         {qpaperListData.map((item, index) => (
-          <Col lg={3} md={6} sm={12} xs={12} key={index} className="qpaper_list">
+          <Col lg={3} md={6} sm={12} xs={12} key={index} className="seat_list">
             <div onClick={handleclick} className="border border-white seat_rectangle">
                 <div className="seat_hall_date">
               <div className="seat_hallno">{item.hallNo}</div>

@@ -126,7 +126,7 @@
     font-size: 15px;
     margin-right: 20px;
   }
-  @media (max-width:768px) {
+  @media (max-width:700px) {
     .loka_navbar_row{
       padding-top: 3vw;
     }

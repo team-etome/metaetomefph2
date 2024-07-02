@@ -21,9 +21,9 @@ localStorage.setItem("activeTab", activeTab);
 }, [activeTab]);
 
     return (
-        <div className="aarna_navbar" style={{ backgroundColor: "#F8FEFF", height: "100vh", paddingTop: "12vh"}}>
-            <Container>
-                <Row style={{ paddingLeft: "2vw", paddingTop: "1vw"}}>
+        <div className="aarna_navbar">
+            <Container className="aarna_container">
+                <Row className="aarna_row">
                     <Col md={12}>
                         {/* Change: Use flex-wrap to allow wrapping on smaller screens */}
                         <div className="d-flex justify-content-between align-items-center flex-wrap">
@@ -66,7 +66,7 @@ localStorage.setItem("activeTab", activeTab);
                                 </Nav.Item>
                             </Nav>
                             {/* Change: Group search bar and filter icon into a flex container */}
-                            <div className="ad_search_filter_main d-flex" style={{width:'100px'}}>
+                            <div className="ad_search_filter_main d-flex" >
                                 <Form className="d-flex">
                                     {/* Change: Use position-relative to correctly position the search icon */}
                                     <div className="position-relative">

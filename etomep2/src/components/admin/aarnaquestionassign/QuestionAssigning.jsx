@@ -132,7 +132,7 @@ function QuestionAssigning() {
     <div>
       <Container className="qpaper_assign_container">
         <form className="qpaper_form" onSubmit={handleSubmit}>
-          <div className="qpaper_form_scrollable">
+          
             <div
               style={{
                 display: "flex",
@@ -146,7 +146,7 @@ function QuestionAssigning() {
               <h1 className="qpaper_title">Question Setting</h1>
             </div>
             <div style={{ border: "0.5px solid #526D82" }}></div>
-
+              <div className="qpaper_form_scrollable">
             <Row style={{ paddingTop: "20px" }}>
               <Col md={6}>
                 <div className="qpaper_group">
@@ -213,10 +213,11 @@ function QuestionAssigning() {
                     Instruction<span style={{ color: "red" }}>*</span>
                   </label>
                   <textarea
+                  className="qpaper_group_textarea"
                     id="t_mark"
                     name="t_mark"
                     rows="4"
-                    cols="50"
+                    cols="40"
                     required
                     onChange={(e) => setInstruction(e.target.value)}
                   ></textarea>
@@ -293,7 +294,7 @@ function QuestionAssigning() {
                 </div>
               </Col>
             </Row>
-          </div>
+            </div>
         </form>
       </Container>
     </div>
