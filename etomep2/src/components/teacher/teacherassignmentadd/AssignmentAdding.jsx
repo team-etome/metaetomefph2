@@ -13,6 +13,10 @@ function AssignmentAdding() {
   const [title, setTitle] = useState("");
   const [duedate, setDueDate] = useState("");
   const [mark, setMark] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  console.log(title , duedate ,mark ,"stateeeeeez")
 
   const APIURL = useSelector((state) => state.APIURL.url);
   const teachersubjectinfo = useSelector((state) => state.teachersubjectinfo);
@@ -33,7 +37,17 @@ function AssignmentAdding() {
   const navigate = useNavigate();
 
   const handlenavigate = () => {
-    navigate("/teacherassignmenteditor");
+    navigate("/teacherassignmenteditor", {
+      state: {
+        title,
+        duedate,
+        mark,
+        teacher_id,
+        class_name,
+        division,
+        subject,
+      },
+    });
   };
 
   const handleSubmit = async () => {
@@ -42,9 +56,9 @@ function AssignmentAdding() {
 
       const formData = new FormData();
       formData.append("title", title);
-      formData.append("duedate", duedate);
+      formData.append("due_date", duedate);
       formData.append("mark", mark);
-      formData.append("file", selectedFile);
+      formData.append("pdf", selectedFile);
       formData.append("teacher", teacher_id);
       formData.append("class_name", class_name);
       formData.append("division", division);
@@ -60,7 +74,7 @@ function AssignmentAdding() {
         },
       });
 
-      const response = await axios.post(`${APIURL}/api/assignement`, formData, {
+      const response = await axios.post(`${APIURL}/api/assignment`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -162,12 +176,10 @@ function AssignmentAdding() {
                   >
                     Upload Pdf
                   </button>
-                
-                  <Link to='/teacherassignmenteditor'>
-                    <button className="create-btn" >
-                      Create Manually
-                    </button>
-                  </Link>
+
+                  <button className="create-btn" onClick={handlenavigate}>
+                    Create Manually
+                  </button>
                 </div>
 
                 <div className="drop-area">
