@@ -7,11 +7,21 @@ padding-left: 1vh;
 padding-bottom: 1vh;
 height: 75vh;
 } */
+ .questionpaper_dashboard{
+  display: flex;
+  justify-content: center;
+  width: 104.5%;
+  height: 100vh;
+  padding-top: 6vh;
+ }
 .qpaper_container_scroll {
-    overflow-y: auto;
-    height: 70vh;
+  overflow-y: auto; 
+  overflow-x: hidden; 
+    height: 75vh;
+    /* max-height: calc(100vh - 200px); */
     width:150vw ;
-    padding-top: 0vh;
+    /* padding-top: 0vh; */
+    /* margin-top: 16px; */
 }
 
   .qpaper_container_scroll::-webkit-scrollbar {
@@ -142,12 +152,12 @@ height: 75vh;
     padding-top: 16px;
     margin-top: 8px;
   }
-  .qpaper_container_scroll{
+  /* .qpaper_container_scroll{
     overflow-y: auto;
-    height: 70vh;
+    height: 90vh;
     width:100% ;
    padding-right: 20px;  
-  }
+  } */
   .qpaper_faculty_name {
     max-width: 200px; /* Adjust based on smaller layout */
 }

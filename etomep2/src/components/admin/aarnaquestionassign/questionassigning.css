@@ -1,6 +1,6 @@
 .qpaper_assign_container {
     height: 100vh;
-    padding-top: 100px;
+    padding-top: 12vh;
     background-color: #DDE6ED;
     width: 80%;
     }
@@ -19,6 +19,7 @@
         max-height: calc(90vh - 200px);
         overflow-y: scroll; 
         overflow-x: hidden; 
+        width: 100%;
     }
     
       .qpaper_container_scroll::-webkit-scrollbar {
@@ -148,7 +149,9 @@
         color: #fff;
         border: 1px solid #526D82;
     }
-
+    .qpaper_group_textarea {
+        width: 100%;
+      }
     .qpaper_form_scrollable {
         max-height: calc(90vh - 200px);
         overflow-y: auto; 
@@ -171,11 +174,10 @@
       .qpaper_form_scrollable::-webkit-scrollbar-thumb:hover {
         background-color: #8FA2B6; 
       }
-      
-    @media (max-width: 800px) {
+    @media (max-width: 700px) {
         .qpaper_assign_container {
             width: 100%;
-            padding-top: 100px;
+            padding-top: 12vh;
             padding-left: 10px;
             padding-right: 10px;
             background-color: #DDE6ED;
@@ -189,23 +191,6 @@
             border: none;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-    
-        /* .qpaper_form::-webkit-scrollbar {
-            width: 10px;
-        }
-    
-        .qpaper_form::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-    
-        .qpaper_form::-webkit-scrollbar-thumb {
-            background: #E3DFDF;
-            border-radius: 10px;
-        }
-    
-        .qpaper_form::-webkit-scrollbar-thumb:hover {
-            background: #E3DFDF;
-        } */
     
         .qpaper_back {
             margin-right: 5px;
@@ -262,5 +247,10 @@
             border: 1px solid #526D82;
         }
     }
-    
+  @media (min-width: 710px) and (max-width:1024px) {
+    .qpaper_assign_container {
+        height: 100vh;
+        padding-top: 12vh;
+        }
+  }
     

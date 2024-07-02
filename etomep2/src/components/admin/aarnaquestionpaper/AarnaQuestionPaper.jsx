@@ -67,11 +67,10 @@ function AarnaQuestionPaper() {
 
     ];
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "104.5%", height:'80vh'}}>
+    <div  className='questionpaper_dashboard'>
     <Container
       fluid
       className="qpaper_container_scroll"
-      style={{ marginTop: "16px" }}
     >
       <Row>
         {qpaperListData.map((item, index) => (

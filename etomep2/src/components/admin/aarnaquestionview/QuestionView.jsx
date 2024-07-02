@@ -34,7 +34,7 @@ function QuestionView() {
       setShowEditBlockButtons((prevState) => !prevState);
     };
   return (
-    <div style={{}}>
+    <div  style={{}}>
     <Container className="question_view_container">
       <form className="question_view_form">
         <div>

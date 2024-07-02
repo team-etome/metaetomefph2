@@ -1,8 +1,9 @@
 .loka_lib_container {
     height: 100vh;
-    padding-top: 100px;
+    padding-top: 15vh;
     background-color: #DDE6ED;
-    width: 80%;
+    width: 90%;
+    padding-left: 0px;
     }
 
     .loka_lib_form {
@@ -33,7 +34,7 @@
     .loka_library_group {
         /* margin-bottom: 15px;
         width: 90%; */
-        margin-left: 50px;
+        margin-left: 30px;
         margin-right: 30px;
         margin-bottom: 20px;
         position: relative;
@@ -102,7 +103,7 @@
 
         
     .loka_lib_form_scroll {
-        max-height: calc(90vh - 200px);
+        max-height: calc(85vh - 200px);
         overflow-y: auto; 
         overflow-x: hidden; 
     }
@@ -219,7 +220,7 @@
         width: 90%;
       }
       
-    @media (max-width: 800px) {
+    @media (max-width: 700px) {
         .loka_lib_container {
             width: 100%;
             padding-top: 100px;
@@ -320,7 +321,7 @@
             justify-content: center;
             align-items: center;
             height: 210px;
-            width: 270px;
+            width: 250px;
             border: 2px dashed #526D82;
             padding-right: 30px;
           }
@@ -335,4 +336,16 @@
           }
     }
     
-    
+    @media (min-width: 710px) and (max-width:1024px) {
+        .loka_lib_container{
+            padding-top: 15vh;
+        }
+          .textbutton_lib_container button {
+            width: 100px;
+            height: 35px;
+          }
+          .library_image_upload_container{
+            height: 210px;
+            width: 250px;
+          }
+    }
