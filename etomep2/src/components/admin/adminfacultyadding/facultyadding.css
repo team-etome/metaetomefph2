@@ -1,16 +1,19 @@
 .faculty_container {
 height: 100vh;
-padding-top: 100px;
+padding-top: 10vh !important;
 background-color: #DDE6ED;
 width: 80%;
+display: flex;
+justify-content: center;
+align-items: center;
+overflow: hidden;
 }
 .faculty_form{
     height: 90%;
     width: 100%;
     background-color: #fff;
-    padding-top: 1%;
+    /* padding-top: 1%; */
     border-radius: 15px;
-    padding-bottom: 100px;
 
 }
 .faculty_back {
@@ -151,17 +154,18 @@ width: 80%;
         background-color: #8FA2B6; 
       }
 
-@media (max-width: 800px) {
+@media (max-width: 700px) {
     .faculty_container {
         width: 100%;
-        padding-top: 110px;
+        padding-top: 10vh !important;
         padding-left: 10px;
         padding-right: 10px;
         background-color: #DDE6ED;
         box-sizing: border-box;
         padding-bottom: 70px;
     }
-
+    .faculty_form{
+    }
     .faculty_add_scroll {
         background-color: #fff;
         border-radius: 8px;
@@ -241,9 +245,12 @@ width: 80%;
         padding: 12px;
     }
 }
-@media (max-width: 999px), (min-width:801px) {
-    .faculty_form {
-        padding-top: 30px;
-        padding-bottom: 30px;
+/* @media (min-width: 710px) and (max-width:1024px) {
+    .faculty_form{
+        height: 90%;
+        width: 100%;
+        background-color: #fff;
+        border-radius: 15px;
+    
     }
-}
+  } */
