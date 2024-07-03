@@ -147,7 +147,8 @@ function CurriculumAdding() {
     control: (base, state) => ({
       ...base,
       width: "100%",
-      minHeight: "50px",
+      minHeight: "40px",
+      height:'50px',
       border: "1px solid #526D82",
       borderRadius: "8px",
       boxShadow: state.isFocused ? "0 0 0 1px #526D82" : "none",
@@ -178,6 +179,9 @@ function CurriculumAdding() {
     dropdownIndicator: (base) => ({
       ...base,
       color: "#526D82",
+    }),
+    indicatorSeparator: (base) => ({
+      display: "none",
     }),
     indicatorsContainer: (base) => ({
       ...base,
