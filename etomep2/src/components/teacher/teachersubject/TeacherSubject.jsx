@@ -46,7 +46,6 @@ function TeacherSubject() {
   const navigate = useNavigate();
 
   const handlenavigate = (item) => {
-    console.log(item,'itemmm')
     dispatch(teachersubjectinfo(item)); 
     navigate("/teacherclassview", { state: { item } });
   };

@@ -8,26 +8,25 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 function AssignmentAdding() {
- 
   const [selectedFile, setSelectedFile] = useState(null);
 
   const [title, setTitle] = useState("");
   const [duedate, setDueDate] = useState("");
   const [mark, setMark] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  console.log(title , duedate ,mark ,"stateeeeeez")
 
   const APIURL = useSelector((state) => state.APIURL.url);
   const teachersubjectinfo = useSelector((state) => state.teachersubjectinfo);
   const teacherinfo = useSelector((state) => state.teacherinfo);
 
-
   const teacher_id = teacherinfo.teacherinfo?.teacher_id;
 
-  const class_name =  teachersubjectinfo.teachersubjectinfo?.class;
-  const division   =  teachersubjectinfo.teachersubjectinfo?.division;
-  const subject   =  teachersubjectinfo.teachersubjectinfo?.subject;
-
-  
-
+  const class_name = teachersubjectinfo.teachersubjectinfo?.class;
+  const division = teachersubjectinfo.teachersubjectinfo?.division;
+  const subject = teachersubjectinfo.teachersubjectinfo?.subject;
 
   console.log(teachersubjectinfo, "teacher subject info");
 
@@ -38,7 +37,17 @@ function AssignmentAdding() {
   const navigate = useNavigate();
 
   const handlenavigate = () => {
-    navigate("/teacherassignmenteditor");
+    navigate("/teacherassignmenteditor", {
+      state: {
+        title,
+        duedate,
+        mark,
+        teacher_id,
+        class_name,
+        division,
+        subject,
+      },
+    });
   };
 
   const handleSubmit = async () => {
@@ -47,9 +56,9 @@ function AssignmentAdding() {
 
       const formData = new FormData();
       formData.append("title", title);
-      formData.append("duedate", duedate);
+      formData.append("due_date", duedate);
       formData.append("mark", mark);
-      formData.append("file", selectedFile);
+      formData.append("pdf", selectedFile);
       formData.append("teacher", teacher_id);
       formData.append("class_name", class_name);
       formData.append("division", division);
@@ -65,7 +74,7 @@ function AssignmentAdding() {
         },
       });
 
-      const response = await axios.post(`${APIURL}/api/assignement`, formData, {
+      const response = await axios.post(`${APIURL}/api/assignment`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -81,11 +90,8 @@ function AssignmentAdding() {
       });
 
       console.log("Form data submitted successfully:", response.data);
-
-
     } catch (error) {
       console.error("Error submitting form data:", error);
-    
     } finally {
       setIsLoading(false); // Set loading state to false
     }
@@ -160,39 +166,40 @@ function AssignmentAdding() {
             </Col>
             <Col md={6}>
               <div className="upload-section">
-                <div  className="upload-buttons">
+                <div className="upload-buttons">
                   <button
-                  style={{
-                    backgroundColor: "#526D82",
-                    color: "#fff",
-                  }}
+                    style={{
+                      backgroundColor: "#526D82",
+                      color: "#fff",
+                    }}
                     className="upload-btn"
-                   
                   >
                     Upload Pdf
                   </button>
+
                   <button className="create-btn" onClick={handlenavigate}>
                     Create Manually
                   </button>
                 </div>
-               
-                  <div className="drop-area">
-                    <p>Drop file any where to upload</p>
-                    <p>or</p>
-                    <input
-                      type="file"
-                      className="select-file-input"
-                      onChange={handleFileChange}
-                      accept="application/pdf"
-                    />
-                    {/* <p>maximum Upload file size: 256 Mb.</p> */}
-                    {/* <p>File format: PDF</p> */}
-                  </div>
-             
+
+                <div className="drop-area">
+                  <p>Drop file any where to upload</p>
+                  <p>or</p>
+                  <input
+                    type="file"
+                    className="select-file-input"
+                    onChange={handleFileChange}
+                    accept="application/pdf"
+                  />
+                  {/* <p>maximum Upload file size: 256 Mb.</p> */}
+                  {/* <p>File format: PDF</p> */}
+                </div>
               </div>
             </Col>
             <div className="teacher_studentadd_submit">
-              <button onClick={handleSubmit} type="submit">Submit</button>
+              <button onClick={handleSubmit} type="submit">
+                Submit
+              </button>
             </div>
           </Row>
         </div>
