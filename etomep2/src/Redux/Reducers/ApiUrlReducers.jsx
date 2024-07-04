@@ -2,7 +2,7 @@
 const initialState = {
 
 
-    url :"http://192.168.1.58:8000"
+    url :"http://192.168.1.43:8000"
 
 
 }
