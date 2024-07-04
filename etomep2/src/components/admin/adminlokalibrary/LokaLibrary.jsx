@@ -536,7 +536,7 @@ function LokaLibrary() {
                       id="textbookName"
                       name="textbookName"
                       value={textbookName}
-                      maxLength="100"
+                      maxLength="50"
                       style={{ textTransform: "capitalize" }}
                       onChange={(e) => setTextbookName(e.target.value)}
                     />
@@ -570,7 +570,7 @@ function LokaLibrary() {
                       id="volume"
                       name="volume"
                       value={volume}
-                      maxLength="100"
+                      maxLength="50"
                       style={{ textTransform: "capitalize" }}
                       // onChange={(e) => setVolume(e.target.value)}
                       onChange={handleVolumeChange}
@@ -593,7 +593,7 @@ function LokaLibrary() {
                       placeholder=""
                       // isMulti
                       value={publisherName}
-                      maxLength="100"
+                      maxLength="50"
                       onChange={handlePublisherChange}
                       styles={customStyles}
                     />
@@ -602,40 +602,8 @@ function LokaLibrary() {
           </Row>
           <Row className="lib_media_index">
             <Col md={6}>
-            <div>
-                    <label
-                      htmlFor="indexAdding"
-                      style={{
-                        // marginLeft: "0px",
-                        fontSize: "25px",
-                        // marginBottom: "20px",
-                        // marginTop: "20px",
-                      }}
-                    >
-                      Index Adding
-                    </label>
-                  </div>
-                  <div className="loka_library_group lib_index_field" >
-                    <label
-                      htmlFor="totalChapters"
-                    >
-                      Total no of Chapters
-                    </label>
-                    <input
-                      type="number"
-                      id="totalChapters"
-                      name="totalChapters"
-                      value={totalChaptersInput}
-                      onChange={handleTotalChaptersChange}
-                      max='50'
-                    />
-                  </div>
-                  <div className={`lib_chapter_div ${totalChaptersInput <= 5 ? 'lib_hidden_border' : ''}`}>
-            {renderChapterInputs()}
-        </div>
-                </Col>
-                <Col md={6} className="loka_lib_media">
-                <div style={{}}>
+
+            <div style={{}}>
                       <label
                         htmlFor="mediaLibrary"
                         className="loka_lib_media_label"
@@ -785,6 +753,41 @@ function LokaLibrary() {
                         </div>
                       )}
                     </div>
+
+
+                </Col>
+                <Col md={6} className="loka_lib_media">
+                <div>
+                    <label
+                      htmlFor="indexAdding"
+                      style={{
+                        // marginLeft: "0px",
+                        fontSize: "25px",
+                        // marginBottom: "20px",
+                        // marginTop: "20px",
+                      }}
+                    >
+                      Index Adding
+                    </label>
+                  </div>
+                  <div className="loka_library_group lib_index_field" >
+                    <label
+                      htmlFor="totalChapters"
+                    >
+                      Total no of Chapters
+                    </label>
+                    <input
+                      type="number"
+                      id="totalChapters"
+                      name="totalChapters"
+                      value={totalChaptersInput}
+                      onChange={handleTotalChaptersChange}
+                      max='50'
+                    />
+                  </div>
+                  <div className={`lib_chapter_div ${totalChaptersInput <= 5 ? 'lib_hidden_border' : ''}`}>
+            {renderChapterInputs()}
+        </div>
                     <div
                       className="library_submit_loka"
                     //   style={{ marginBottom: "50px", marginTop: "30px" }}
