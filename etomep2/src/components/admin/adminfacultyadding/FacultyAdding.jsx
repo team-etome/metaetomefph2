@@ -46,6 +46,16 @@ function FacultyAdding() {
       admin_id: admin_id,
     };
 
+    //for f]phonenumber error handling
+    if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Phone Number",
+        text: "Please enter a valid 10-digit phone number.",
+      });
+      setLoading(false);
+      return;
+    }
     try {
       const response = await axios.post(`${APIURL}/api/addteacher`, formData);
       console.log("Success:", response.data);
@@ -79,12 +89,20 @@ function FacultyAdding() {
       // Handle errors
     }
   };
-
+  const handlePhoneNumberChange = (e) => {
+    const value = e.target.value;
+    // Remove any non-numeric characters
+    const numericValue = value.replace(/\D/g, "");
+    if (numericValue.length <= 10) {
+      setPhoneNumber(numericValue);
+    }
+  };
   const customStyles = {
     control: (base, state) => ({
       ...base,
       width: "100%",
-      minHeight: "50px",
+      minHeight: "40px",
+      height: "50px",
       border: "1px solid #526D82",
       borderRadius: "8px",
       boxShadow: state.isFocused ? "0 0 0 1px #526D82" : "none",
@@ -115,6 +133,10 @@ function FacultyAdding() {
     dropdownIndicator: (base) => ({
       ...base,
       color: "#526D82",
+      paddingTop:'0px'
+    }),
+    indicatorSeparator: (base) => ({
+      display: "none",
     }),
     indicatorsContainer: (base) => ({
       ...base,
@@ -157,6 +179,8 @@ function FacultyAdding() {
                     name="first_name"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength="50"
                   />
                 </div>
                 <div className="faculty_group">
@@ -169,6 +193,8 @@ function FacultyAdding() {
                     name="last_name"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength="50"
                   />
                 </div>
                 <div className="faculty_group">
@@ -181,6 +207,7 @@ function FacultyAdding() {
                     name="email_id"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    maxLength="75"
                   />
                 </div>
                 <div className="faculty_group">
@@ -191,6 +218,7 @@ function FacultyAdding() {
                     name="employee_id"
                     value={employeeId}
                     onChange={(e) => setEmployeeId(e.target.value)}
+                    maxLength="5"
                   />
                 </div>
               </Col>
@@ -205,7 +233,10 @@ function FacultyAdding() {
                     id="phone_no"
                     name="phone_no"
                     value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    // onChange={(e) => setPhoneNumber(e.target.value)}
+                    onChange={handlePhoneNumberChange}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength={10}
                   />
                 </div>
                 <div className="faculty_group">

@@ -65,10 +65,12 @@ function ClassAdding() {
   const customStyles = {
     control: (base, state) => ({
       ...base,
-      width: "90%",
-      minHeight: "50px",
+      width: "89%",
+      minHeight: "40px",
+      height: "50px",
       border: "1px solid #526D82",
       borderRadius: "8px",
+      marginLeft:'5px',
       boxShadow: state.isFocused ? "0 0 0 1px #526D82" : "none",
       "&:hover": {
         borderColor: "none",
@@ -97,10 +99,19 @@ function ClassAdding() {
     dropdownIndicator: (base) => ({
       ...base,
       color: "#526D82",
+      // paddingTop:'0px'
+    }),
+    indicatorSeparator: (base) => ({
+      display: "none",
     }),
     indicatorsContainer: (base) => ({
       ...base,
       alignItems: "center",
+    }),
+    menu: (base) => ({
+      ...base,
+      zIndex: 9999,
+      position: "absolute",
     }),
   };
   return (
