@@ -2,8 +2,7 @@
     height: 100vh;
     padding-top: 15vh;
     background-color: #DDE6ED;
-    width: 90%;
-    padding-left: 0px;
+    width: 85%;
     }
 
     .loka_lib_form {
@@ -34,7 +33,7 @@
     .loka_library_group {
         /* margin-bottom: 15px;
         width: 90%; */
-        margin-left: 30px;
+        margin-left: 50px;
         margin-right: 30px;
         margin-bottom: 20px;
         position: relative;

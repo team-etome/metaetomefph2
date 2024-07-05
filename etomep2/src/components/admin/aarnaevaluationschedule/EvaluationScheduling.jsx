@@ -40,6 +40,7 @@ function EvaluationScheduling() {
         control: (base, state) => ({
           ...base,
           width: '100%',
+          minHeight: "40px",
           height: '50px',
           border: '1px solid #526D82',
           borderRadius: '8px',
@@ -71,6 +72,10 @@ function EvaluationScheduling() {
         dropdownIndicator: (base) => ({
           ...base,
           color: '#526D82',
+          paddingTop:'0px'
+        }),
+        indicatorSeparator: (base) => ({
+          display: "none",
         }),
         indicatorsContainer: (base) => ({
           ...base,

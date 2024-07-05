@@ -86,6 +86,7 @@ function QuestionAssigning() {
       ...base,
       width: "100%",
       minHeight: "40px",
+      height:'50px',
       border: "1px solid #526D82",
       borderRadius: "8px",
       boxShadow: state.isFocused ? "0 0 0 1px #526D82" : "none",
@@ -116,6 +117,10 @@ function QuestionAssigning() {
     dropdownIndicator: (base) => ({
       ...base,
       color: "#526D82",
+      paddingTop:'0px'
+    }),
+    indicatorSeparator: (base) => ({
+      display: "none",
     }),
     indicatorsContainer: (base) => ({
       ...base,
@@ -158,6 +163,8 @@ function QuestionAssigning() {
                     id="exam_name"
                     value={examName}
                     onChange={(e) => setExamName(e.target.value)}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength="50"
                   />
                 </div>
                 <div className="qpaper_group">
@@ -169,6 +176,8 @@ function QuestionAssigning() {
                     id="exam_date"
                     value={examDate}
                     onChange={(e) => setExamDate(e.target.value)}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength="50"
                   />
                 </div>
                 <div className="qpaper_group">
@@ -180,6 +189,8 @@ function QuestionAssigning() {
                     id="class"
                     value={classNo}
                     onChange={(e) => setClassNo(e.target.value)}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength="50"
                   />
                 </div>
                 <div className="qpaper_group">
@@ -189,6 +200,8 @@ function QuestionAssigning() {
                     id="division"
                     value={division}
                     onChange={(e) => setDivision(e.target.value)}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength="50"
                   />
                 </div>
                 <div className="qpaper_group">
@@ -256,6 +269,8 @@ function QuestionAssigning() {
                     id="term"
                     value={term}
                     onChange={(e) => setTerm(e.target.value)}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength="50"
                   />
                 </div>
                 <div className="qpaper_group">
@@ -267,6 +282,8 @@ function QuestionAssigning() {
                     id="t_mark"
                     value={totalMark}
                     onChange={(e) => setTotalMark(e.target.value)}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength="50"
                   />
                 </div>
                 <div className="qpaper_group">
