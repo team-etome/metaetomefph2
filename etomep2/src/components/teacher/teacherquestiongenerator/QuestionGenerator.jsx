@@ -266,8 +266,6 @@ function QuestionGenerator() {
         </Row>
         <Row>
           <div className="text-editor">
-           
-
             {subsections.map((subsection, subsectionIndex) => (
               <Droppable
                 key={subsectionIndex}
@@ -292,11 +290,11 @@ function QuestionGenerator() {
                         }}
                         placeholder="Subsection Name"
                       />
-                      <button onClick={() => removeSubsection(subsectionIndex)}>
+                      <div onClick={() => removeSubsection(subsectionIndex)}>
                         <MdOutlineDelete
                           style={{ width: "32px", height: "32px" }}
                         />
-                      </button>
+                      </div>
                     </div>
                     {subsection.questions.map((q, questionIndex) => {
                       // Initialize refs array for the subsection if not already initialized
@@ -323,25 +321,26 @@ function QuestionGenerator() {
                                 <div className="teacher_question_number">
                                   <h6 style={{ fontSize: "20px" }}>{q.id})</h6>
                                 </div>
-
-                                <TeacherTextEditor
-                                  ref={(el) =>
+                                <div className="editor-wrapper">
+                                  <TeacherTextEditor
+                                    ref={(el) =>
                                     (questionRefs.current[subsectionIndex][
                                       questionIndex
                                     ] = el)
-                                  }
-                                  placeholder="Type question here..."
-                                  editorData={q.question}
-                                  setEditorData={(data) =>
-                                    handleEditorData(
-                                      subsectionIndex,
-                                      questionIndex,
-                                      "question",
-                                      data
-                                    )
-                                  }
-                                 
-                                />
+                                    }
+                                    placeholder="Type question here..."
+                                    editorData={q.question}
+                                    setEditorData={(data) =>
+                                      handleEditorData(
+                                        subsectionIndex,
+                                        questionIndex,
+                                        "question",
+                                        data
+                                      )
+                                    }
+
+                                  />
+                                </div>
                               </div>
 
                               <div className="teacher_question_footer">
@@ -356,29 +355,31 @@ function QuestionGenerator() {
                                 >
                                   Answer Key
                                 </div>
-                                <div></div>
+
                               </div>
 
                               {q.showAnswer && (
                                 <div className="answer_editor_container">
-                                  <TeacherTextEditor
-                                    ref={(el) =>
+                                  <div className="editor-wrapper">
+                                    <TeacherTextEditor
+                                      ref={(el) =>
                                       (answerRefs.current[subsectionIndex][
                                         questionIndex
                                       ] = el)
-                                    }
-                                    placeholder="Type answer here..."
-                                    editorData={q.answer}
-                                    setEditorData={(data) =>
-                                      handleEditorData(
-                                        subsectionIndex,
-                                        questionIndex,
-                                        "answer",
-                                        data
-                                      )
-                                    }
-                                  
-                                  />
+                                      }
+                                      placeholder="Type answer here..."
+                                      editorData={q.answer}
+                                      setEditorData={(data) =>
+                                        handleEditorData(
+                                          subsectionIndex,
+                                          questionIndex,
+                                          "answer",
+                                          data
+                                        )
+                                      }
+
+                                    />
+                                  </div>
                                   <div className="points-input">
                                     <span>Mark</span>
                                     <input

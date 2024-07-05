@@ -100,21 +100,25 @@ function SeatAssigning() {
                 <Col md={6}>
                     <div className='seat_group'>
                         <label htmlFor="hall_no">Hall No:<span style={{color: 'red'}}>*</span></label>
-                        <input type="text" id='hall_no' name='hall_no' />
+                        <input type="text" id='hall_no' name='hall_no' style={{ textTransform: "capitalize" }}
+                    maxLength="50"/>
                     </div>
                     <div className='seat_group'>
                         <label htmlFor="column_no">No. of Columns<span style={{color: 'red'}}>*</span></label>
-                        <input type="text" id='column_no' name='column_no' />
+                        <input type="text" id='column_no' name='column_no' style={{ textTransform: "capitalize" }}
+                    maxLength="50"/>
                     </div>
                     <div className='seat_group'>
                         <label htmlFor="table_no">No. of Tables<span style={{color: 'red'}}>*</span></label>
-                        <input type="text" id='table_no' name='table_no' />
+                        <input type="text" id='table_no' name='table_no' style={{ textTransform: "capitalize" }}
+                    maxLength="50"/>
                     </div>
                 </Col>
                 <Col md={6}>
                   <div className='seat_group'>
                         <label htmlFor="students_bench">Students per Bench<span style={{color: 'red'}}>*</span></label>
-                        <input type="text" id='students_bench' name='students_bench' />
+                        <input type="text" id='students_bench' name='students_bench' style={{ textTransform: "capitalize" }}
+                    maxLength="50"/>
                     </div>
                     <div className='seat_group'>
                         <label htmlFor="exam_date">Exam Date<span style={{color: 'red'}}>*</span></label>

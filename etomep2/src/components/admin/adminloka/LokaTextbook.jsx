@@ -691,38 +691,8 @@ function LokaTextbook() {
           </Row>
           <Row className="media_index">
             <Col md={6}>
-            <div>
-                    <label
-                      htmlFor="indexAdding"
-                      style={{
-                        // marginLeft: "0px",
-                        fontSize: "25px",
-                        // marginBottom: "20px",
-                        // marginTop: "20px",
-                      }}
-                    >
-                      Index Adding
-                    </label>
-                  </div>
-                  <div className="loka_textbook_group index_field">
-                    <label htmlFor="totalChapters">
-                      Total no of Chapters
-                    </label>
-                    <input
-                      type="number"
-                      id="totalChapters"
-                      name="totalChapters"
-                      value={totalChaptersInput}
-                      onChange={handleTotalChaptersChange}
-                      max='50'
-                    />
-                  </div>
-                  <div className={`chapter_div ${totalChaptersInput <= 5 ? 'hidden_border' : ''}`}>
-            {renderChapterInputs()}
-        </div>
-                </Col>
-                <Col md={6} className="loka_tb_media">
-                <div style={{}}>
+
+            <div style={{}}>
                       <label
                         htmlFor="mediaLibrary"
                         className="loka_media_label"
@@ -872,6 +842,39 @@ function LokaTextbook() {
                         </div>
                       )}
                     </div>
+
+
+                </Col>
+                <Col md={6} className="loka_tb_media">
+                <div>
+                    <label
+                      htmlFor="indexAdding"
+                      style={{
+                        // marginLeft: "0px",
+                        fontSize: "25px",
+                        // marginBottom: "20px",
+                        // marginTop: "20px",
+                      }}
+                    >
+                      Index Adding
+                    </label>
+                  </div>
+                  <div className="loka_textbook_group index_field">
+                    <label htmlFor="totalChapters">
+                      Total no of Chapters
+                    </label>
+                    <input
+                      type="number"
+                      id="totalChapters"
+                      name="totalChapters"
+                      value={totalChaptersInput}
+                      onChange={handleTotalChaptersChange}
+                      max='50'
+                    />
+                  </div>
+                  <div className={`chapter_div ${totalChaptersInput <= 5 ? 'hidden_border' : ''}`}>
+            {renderChapterInputs()}
+        </div>
                     <div
                       className="submit_loka"
                     //   style={{ marginBottom: "50px", marginTop: "30px" }}
