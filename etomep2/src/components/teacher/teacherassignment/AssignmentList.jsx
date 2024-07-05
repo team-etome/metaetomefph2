@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
-import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from 'react-icons/io';
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Button, Modal } from "react-bootstrap";
+import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-import '../teacherassignment/assignmentlist.css';
+import axios from "axios";
+import "../teacherassignment/assignmentlist.css";
 import { useSelector } from "react-redux";
 
 function AssignmentList() {
@@ -14,21 +14,20 @@ function AssignmentList() {
   const [assignments, setAssignments] = useState([]);
   const navigate = useNavigate();
 
-
-  console.log(assignments,"assignmentssss")
+  console.log(assignments, "assignmentssss");
 
   const teacher = useSelector((state) => state.teacherinfo);
   const teacher_subject = useSelector((state) => state.teachersubjectinfo);
   const APIURL = useSelector((state) => state.APIURL.url);
 
   const handleAddClick = () => {
-    navigate('/teacherassignmentadding');
-  }
+    navigate("/teacherassignmentadding");
+  };
 
   const handleAssignmentClick = (assignment) => {
     setSelectedAssignment(assignment);
     setShowModal(true);
-  }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,12 +42,12 @@ function AssignmentList() {
             teacher_id,
             standard,
             division,
-            subject
-          }
+            subject,
+          },
         });
-        setAssignments(response.data.assignments);  // Update the state with the fetched assignments
+        setAssignments(response.data.assignments); // Update the state with the fetched assignments
       } catch (error) {
-        console.error('Error fetching assignments:', error);
+        console.error("Error fetching assignments:", error);
       }
     };
 
@@ -61,9 +60,12 @@ function AssignmentList() {
     const thisMonth = [];
     const previousMonth = [];
 
-    assignments.forEach(assignment => {
+    assignments.forEach((assignment) => {
       const assignedDate = new Date(assignment.assigned_date);
-      if (assignedDate.getMonth() === currentMonth && assignedDate.getFullYear() === currentYear) {
+      if (
+        assignedDate.getMonth() === currentMonth &&
+        assignedDate.getFullYear() === currentYear
+      ) {
         thisMonth.push(assignment);
       } else {
         previousMonth.push(assignment);
@@ -71,56 +73,106 @@ function AssignmentList() {
     });
 
     return { thisMonth, previousMonth };
-  }
+  };
 
   const { thisMonth, previousMonth } = groupByMonth(assignments);
 
   return (
-    <Container className='assignment_container'>
+    <Container className="assignment_container">
       <Row>
-        <Col className='assignment_list'>
-          <div className='assignment_header'>
+        <Col className="assignment_list">
+          <div className="assignment_header">
             <h2>Assignment</h2>
           </div>
           <hr />
-          <div className='assignment_body'>
-            <div className="week" onClick={() => setShowThisMonth(!showThisMonth)}>
+          <div className="assignment_body">
+            <div
+              className="week"
+              onClick={() => setShowThisMonth(!showThisMonth)}
+            >
               <span>This Month</span>
-              {showThisMonth ? <IoIosArrowUp className="week_icon" /> : <IoIosArrowDown className="week_icon" />}
+              {showThisMonth ? (
+                <IoIosArrowUp className="week_icon" />
+              ) : (
+                <IoIosArrowDown className="week_icon" />
+              )}
             </div>
-            {showThisMonth && thisMonth.map((assignment) => (
-              <div key={assignment.id} className="assignment_item mb-3 p-2" onClick={() => handleAssignmentClick(assignment)}>
-                <h5>{assignment.title}</h5>
-                <p>Posted On: {new Date(assignment.assigned_date).toLocaleDateString()}</p>
-              </div>
-            ))}
+            {showThisMonth &&
+              thisMonth.map((assignment) => (
+                <div
+                  key={assignment.id}
+                  className="assignment_item mb-3 p-2"
+                  onClick={() => handleAssignmentClick(assignment)}
+                >
+                  <h5>{assignment.title}</h5>
+                  <p>
+                    Posted On:{" "}
+                    {new Date(assignment.assigned_date).toLocaleDateString()}
+                  </p>
+                </div>
+              ))}
 
-            <div className="week" onClick={() => setShowPreviousMonth(!showPreviousMonth)}>
+            <div
+              className="week"
+              onClick={() => setShowPreviousMonth(!showPreviousMonth)}
+            >
               <span>Previous Month</span>
-              {showPreviousMonth ? <IoIosArrowUp className="week_icon" /> : <IoIosArrowDown className="week_icon" />}
+              {showPreviousMonth ? (
+                <IoIosArrowUp className="week_icon" />
+              ) : (
+                <IoIosArrowDown className="week_icon" />
+              )}
             </div>
-            {showPreviousMonth && previousMonth.map((assignment) => (
-              <div key={assignment.id} className="assignment_item mb-3 p-2" onClick={() => handleAssignmentClick(assignment)}>
-                <h4>{assignment.title}</h4>
-                <p>Posted On: {new Date(assignment.assigned_date).toLocaleDateString()}</p>
-              </div>
-            ))}
+            {showPreviousMonth &&
+              previousMonth.map((assignment) => (
+                <div
+                  key={assignment.id}
+                  className="assignment_item mb-3 p-2"
+                  onClick={() => handleAssignmentClick(assignment)}
+                >
+                  <h4>{assignment.title}</h4>
+                  <p>
+                    Posted On:{" "}
+                    {new Date(assignment.assigned_date).toLocaleDateString()}
+                  </p>
+                </div>
+              ))}
           </div>
           <div className="assignment_teacher_button">
-            <Button className={`teacher_assignment my-button ${showModal ? 'active' : ''}`} onClick={handleAddClick}>
-              <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
+            <Button
+              className={`teacher_assignment my-button ${
+                showModal ? "active" : ""
+              }`}
+              onClick={handleAddClick}
+            >
+              <IoIosAdd
+                style={{ height: "40px", width: "40px", color: "#ffff" }}
+              />
             </Button>
           </div>
         </Col>
       </Row>
 
-      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" centered>
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        size="lg"
+        centered
+      >
         <Modal.Header closeButton>
-          <Modal.Title className='assignment-modal'>Assignments</Modal.Title>
+          <Modal.Title className="assignment-modal">Assignments</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className='modal_body'><strong>{selectedAssignment?.title}</strong></p>
-4          <p className='modal_date'><strong>Due Date :</strong> {selectedAssignment ? new Date(selectedAssignment.due_date).toLocaleDateString() : ''}</p>          {/* Add other assignment details here */}
+          <p className="modal_body">
+            <strong>{selectedAssignment?.title}</strong>
+          </p>
+          <p className="modal_date">
+            <strong>Due Date :</strong>{" "}
+            {selectedAssignment
+              ? new Date(selectedAssignment.due_date).toLocaleDateString()
+              : ""}
+          </p>{" "}
+          {/* Add other assignment details here */}
         </Modal.Body>
       </Modal>
     </Container>

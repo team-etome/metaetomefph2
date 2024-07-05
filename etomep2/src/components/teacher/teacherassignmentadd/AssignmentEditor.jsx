@@ -16,8 +16,6 @@ function AssignmentEditor({ placeholder }) {
   const location = useLocation();
   const { state } = location;
 
-  console.log(state, "stateee");
-
   const { title, duedate, mark, teacher_id, class_name, division, subject } =
     state || {};
 
@@ -25,8 +23,8 @@ function AssignmentEditor({ placeholder }) {
 
   const handleExport = async () => {
     try {
-      // Find the ck-content div where the actual content is stored
-      const editorContent = document.querySelector('.ck-content');
+      // Find the ck-editor__editable div where the actual content is stored
+      const editorContent = editorRef.current.editor.ui.view.editable.element;
 
       if (!editorContent) {
         throw new Error("CKEditor content not found");
@@ -44,7 +42,7 @@ function AssignmentEditor({ placeholder }) {
       formData.append("class_name", class_name);
       formData.append("division", division);
       formData.append("subject", subject);
-      formData.append("question", blob, "content.png"); // Add the blob image as a file
+      formData.append("image", blob, "content.png"); // Add the blob image as a file
 
       // Show loading spinner using Swal
       Swal.fire({
@@ -130,7 +128,7 @@ function AssignmentEditor({ placeholder }) {
                 }}
                 data={ckData}
                 onReady={(editor) => {
-                  editorRef.current = editor;
+                  editorRef.current.editor = editor;
                 }}
                 onChange={(event, editor) => {
                   const data = editor.getData();
