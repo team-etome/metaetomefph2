@@ -17,6 +17,15 @@
 
 
 .editor-container .ck.ck-editor__main > .ck-editor__editable {
-  border: none; /* Remove the border */
-  box-shadow: none; /* Remove any box-shadow */
+  border: none;
+  box-shadow: none; 
+}
+.ck-content {
+  font-size: 25px; /* Increase this value to make the text larger */
+}
+.ck-content .wrs_formula,
+.ck-content .wrs_container,
+.ck-content math,
+.ck-content mrow {
+  font-size: 2.5em; /* Increase this value to make the equations larger */
 }

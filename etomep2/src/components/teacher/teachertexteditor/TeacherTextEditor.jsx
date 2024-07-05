@@ -22,7 +22,7 @@ const TeacherTextEditor = forwardRef(({ placeholder, editorData, setEditorData }
   };
 
   return (
-    <div style={{ width: "90%", minHeight: "150px" }} ref={editorRef}>
+    <div style={{ width: "100%", minHeight: "150px" }} ref={editorRef}>
       <React.Fragment>
         <div className={`editor-container ${showToolbar ? "show-toolbar" : ""}`}>
           <CKEditor
@@ -76,6 +76,7 @@ const TeacherTextEditor = forwardRef(({ placeholder, editorData, setEditorData }
               setCkData(data);
               setEditorData(data);
             }}
+        
           />
         </div>
       </React.Fragment>
