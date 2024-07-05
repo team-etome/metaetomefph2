@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { useSelector , useDispatch } from "react-redux";
 import { adminclassinfo } from "../../../Redux/Actions/AdminclassAddingInfo";
+import Swal from 'sweetalert2'; 
+
 
 function ClassAdding() {
   const [medium, setMedium] = useState("");
@@ -13,6 +15,8 @@ function ClassAdding() {
   const [className, setClassName] = useState("");
   const [stream, setStream] = useState("");
   const [division, setDivision] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -43,25 +47,59 @@ function ClassAdding() {
     label: `${teacher.first_name} ${teacher.last_name}`, // Display format in the dropdown
   }));
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
 
-    console.log('enterrrrrr')
+  //   console.log('enterrrrrr')
+  //   e.preventDefault();
+
+  //   const classData = {
+  //     medium,
+  //     teacher,
+  //     className,
+  //     stream,
+  //     division
+  //   };
+
+  //   dispatch(adminclassinfo(classData)); 
+  //   navigate('/curriculumadding')
+   
+         
+  // };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
+
+    
+    const requiredFields = [
+      { value: className, label: "Class Name" },
+      { value: teacher, label: " Class Teacher" },
+      { value: division, label: "Division" },
+      // { value: medium, label: "Medium" },
+    ];
+
+    const missingFields = requiredFields.filter((field) => !field.value);
+
+    if (missingFields.length > 0) {
+      const missingFieldLabels = missingFields.map((field) => field.label).join(", ");
+      Swal.fire({
+        icon: "error",
+        title: "Missing Required Information",
+        text: `Please complete the following fields: ${missingFieldLabels}.`,
+      });
+      return;
+    }
 
     const classData = {
       medium,
       teacher,
       className,
       stream,
-      division
+      division,
     };
 
-    dispatch(adminclassinfo(classData)); 
-    navigate('/curriculumadding')
-   
-         
+    dispatch(adminclassinfo(classData));
+    navigate("/curriculumadding");
   };
-
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -141,6 +179,7 @@ function ClassAdding() {
                       placeholder=""
                       value={className}
                       onChange={handleClassNameChange}
+                      maxLength={50}
                     />
                     <label htmlFor="class_number">
                       Class Name<span style={{ color: "red" }}>*</span>
@@ -182,6 +221,7 @@ function ClassAdding() {
                       placeholder=""
                       value={division}
                       onChange={(e) => setDivision(e.target.value)}
+                      maxLength={10}
                     />
                     <label htmlFor="class_division">
                       Division<span style={{ color: "red" }}>*</span>
@@ -195,6 +235,7 @@ function ClassAdding() {
                       placeholder=""
                       value={medium}
                       onChange={setMedium}
+                      maxLength={50}
                     />
                     <label htmlFor="class_medium">Medium</label>
                   </div>

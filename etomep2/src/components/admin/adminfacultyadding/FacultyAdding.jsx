@@ -16,6 +16,8 @@ function FacultyAdding() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState(null);
+  const [loading, setLoading] = useState(false);
+
 
   const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
@@ -35,30 +37,60 @@ function FacultyAdding() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = {
-      first_name: firstName, // Using snake_case if your backend expects these keys
-      last_name: lastName,
-      email: email,
-      phone_number: phoneNumber, // Assuming the backend expects phone_number
-      gender: gender ? gender.value : null, // Send the value of gender or null if not selected
-      employee_id: employeeId, // Using snake_case if that's what your backend expects
-      password: password,
-      admin_id: admin_id,
-    };
+    // Validate required fields
+    const requiredFields = [
+      { value: firstName, label: "First Name" },
+      { value: lastName, label: "Last Name" },
+      { value: email, label: "Email" },
+      { value: phoneNumber, label: "Phone Number" },
+      { value: gender, label: "Gender" },
+      { value: password, label: "Password" },
+    ];
 
-    //for f]phonenumber error handling
+    const missingFields = requiredFields.filter(field => !field.value);
+
+    if (missingFields.length > 0) {
+      const missingFieldLabels = missingFields.map(field => field.label).join(", ");
+      Swal.fire({
+        icon: "error",
+        title: "Missing Required Information",
+        text: `Please complete the following fields: ${missingFieldLabels}.`,
+      });
+      return;
+    }
+
+    // Validate phone number
     if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
       Swal.fire({
         icon: "error",
         title: "Invalid Phone Number",
         text: "Please enter a valid 10-digit phone number.",
       });
-      setLoading(false);
       return;
     }
+
+    setLoading(true);
+
     try {
+      const formData = {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone_number: phoneNumber,
+        gender: gender.value,
+        employee_id: employeeId,
+        password: password,
+        admin_id: admin_id,
+      };
+
       const response = await axios.post(`${APIURL}/api/addteacher`, formData);
-      console.log("Success:", response.data);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Registration Successful',
+        text: 'Faculty has been added successfully!',
+      });
+
       setFirstName("");
       setLastName("");
       setEmail("");
@@ -66,18 +98,9 @@ function FacultyAdding() {
       setPhoneNumber("");
       setPassword("");
       setGender(null);
-
-      // Show success message
-      Swal.fire({
-        icon: 'success',
-        title: 'Registration Successful',
-        text: 'Faculty has been added successfully!',
-      });
-
-      navigate('/institutionadding')
-
+      setLoading(false);
       
-
+      navigate('/institutionadding');
     } catch (error) {
       console.error("Error submitting form:", error);
       Swal.fire({
@@ -86,9 +109,66 @@ function FacultyAdding() {
         text: 'Something went wrong!',
         footer: 'Please check the data and try again.'
       });
-      // Handle errors
+      setLoading(false);
     }
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const formData = {
+  //     first_name: firstName,
+  //     last_name: lastName,
+  //     email: email,
+  //     phone_number: phoneNumber, 
+  //     gender: gender ? gender.value : null, 
+  //     employee_id: employeeId, 
+  //     password: password,
+  //     admin_id: admin_id,
+  //   };
+
+    
+  //   if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Invalid Phone Number",
+  //       text: "Please enter a valid 10-digit phone number.",
+  //     });
+  //     setLoading(false);
+  //     return;
+  //   }
+  //   try {
+  //     const response = await axios.post(`${APIURL}/api/addteacher`, formData);
+  //     console.log("Success:", response.data);
+  //     setFirstName("");
+  //     setLastName("");
+  //     setEmail("");
+  //     setEmployeeId("");
+  //     setPhoneNumber("");
+  //     setPassword("");
+  //     setGender(null);
+
+      
+  //     Swal.fire({
+  //       icon: 'success',
+  //       title: 'Registration Successful',
+  //       text: 'Faculty has been added successfully!',
+  //     });
+
+  //     navigate('/institutionadding')
+
+      
+
+  //   } catch (error) {
+  //     console.error("Error submitting form:", error);
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Oops...',
+  //       text: 'Something went wrong!',
+  //       footer: 'Please check the data and try again.'
+  //     });
+      
+  //   }
+  // };
   const handlePhoneNumberChange = (e) => {
     const value = e.target.value;
     // Remove any non-numeric characters
@@ -218,7 +298,7 @@ function FacultyAdding() {
                     name="employee_id"
                     value={employeeId}
                     onChange={(e) => setEmployeeId(e.target.value)}
-                    maxLength="5"
+                    maxLength="10"
                   />
                 </div>
               </Col>
@@ -251,6 +331,7 @@ function FacultyAdding() {
                     placeholder=""
                     getOptionLabel={(option) => option.label}
                     getOptionValue={(option) => option.value}
+                    maxLength={10}
                   />
                 </div>
                 <div className="faculty_group">
@@ -263,6 +344,7 @@ function FacultyAdding() {
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    maxLength={50}
                   />
                 </div>
                 <div className="submit_faculty">
