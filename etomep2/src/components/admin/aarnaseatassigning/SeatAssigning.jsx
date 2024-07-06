@@ -9,6 +9,8 @@ import Layout_01_NS from "../../../assets/Layout_01_NS.png";
 import Layout_02_S from "../../../assets/Layout_02_S.png";
 import Layout_02_NS from "../../../assets/Layout_02_NS.png";
 import { BsSearch} from "react-icons/bs";
+import Swal from 'sweetalert2'; 
+
 
 
 function SeatAssigning() {
@@ -20,6 +22,8 @@ function SeatAssigning() {
     const [studentNo, setStudentNo] = useState(false);
     const [startTime, setStartTime] = useState(false);
     const [endTime, setEndTime] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
 
     const handleLayoutSelect = (layout) => {

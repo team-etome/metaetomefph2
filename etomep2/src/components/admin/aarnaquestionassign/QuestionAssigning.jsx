@@ -6,6 +6,8 @@ import "../aarnaquestionassign/questionassigning.css";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 import axios from "axios";
+import Swal from 'sweetalert2'; 
+
 
 function QuestionAssigning() {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -21,6 +23,8 @@ function QuestionAssigning() {
   const [totalMark, setTotalMark] = useState("");
   const [instruction, setInstruction] = useState("");
   const [term, setTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
@@ -52,34 +56,111 @@ function QuestionAssigning() {
       console.error("Failed to fetch subjects:", error);
     }
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = {
-      subject: selectedSubject,
-      teacher: selectedTeacher,
-      exam_name: examName,
-      exam_date: examDate,
-      class_name: classNo,
-      division: division,
-      start_time: startTime,
-      end_time: endTime,
-      total_marks: totalMark,
-      term: term,
-      instructions :instruction,
-    };
+
+    // Validate required fields
+    const requiredFields = [
+      { value: selectedSubject, label: "Subject" },
+      { value: selectedTeacher, label: "Teacher" },
+      { value: examName, label: "Exam Name" },
+      { value: examDate, label: "Exam Date" },
+      { value: classNo, label: "Class" },
+      { value: term, label: "Term" },
+      { value: totalMark, label: "Total Mark" },
+      { value: startTime, label: "Start Time" },
+      { value: endTime, label: "End Time" },
+      { value: instruction, label: "Instruction" },
+    ];
+
+    const missingFields = requiredFields.filter(field => !field.value);
+
+    if (missingFields.length > 0) {
+      const missingFieldLabels = missingFields.map(field => field.label).join(", ");
+      Swal.fire({
+        icon: "error",
+        title: "Missing Required Information",
+        text: `Please complete the following fields: ${missingFieldLabels}.`,
+      });
+      return;
+    }
+
+    setLoading(true);
 
     try {
-      const response = await axios.post(
-        `${APIURL}/api/questionpaper`,
-        formData
-      );
-      alert("Data saved successfully");
+      const formData = {
+        subject: selectedSubject,
+        teacher: selectedTeacher,
+        exam_name: examName,
+        exam_date: examDate,
+        class_name: classNo,
+        division: division,
+        start_time: startTime,
+        end_time: endTime,
+        total_marks: totalMark,
+        term: term,
+        instructions: instruction,
+      };
+
+      const response = await axios.post(`${APIURL}/api/questionpaper`, formData);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Data saved successfully!',
+      });
+
+      // Clear form fields after successful submission
+      setExamName("");
+      setExamDate("");
+      setClassNo("");
+      setDivision("");
+      setStartTime("");
+      setEndTime("");
+      setTotalMark("");
+      setTerm("");
+      setInstruction("");
+      setSelectedSubject(null);
+      setSelectedTeacher(null);
+
+      setLoading(false);
     } catch (error) {
       console.error("Failed to submit form:", error.response.data);
-      alert("Failed to save data");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to save data.',
+      });
+      setLoading(false);
     }
   };
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const formData = {
+  //     subject: selectedSubject,
+  //     teacher: selectedTeacher,
+  //     exam_name: examName,
+  //     exam_date: examDate,
+  //     class_name: classNo,
+  //     division: division,
+  //     start_time: startTime,
+  //     end_time: endTime,
+  //     total_marks: totalMark,
+  //     term: term,
+  //     instructions :instruction,
+  //   };
+
+  //   try {
+  //     const response = await axios.post(
+  //       `${APIURL}/api/questionpaper`,
+  //       formData
+  //     );
+  //     alert("Data saved successfully");
+  //   } catch (error) {
+  //     console.error("Failed to submit form:", error.response.data);
+  //     alert("Failed to save data");
+  //   }
+  // };
 
   const customStyles = {
     control: (base, state) => ({
@@ -164,7 +245,7 @@ function QuestionAssigning() {
                     value={examName}
                     onChange={(e) => setExamName(e.target.value)}
                     style={{ textTransform: "capitalize" }}
-                    maxLength="50"
+                    maxLength="100"
                   />
                 </div>
                 <div className="qpaper_group">
@@ -190,7 +271,7 @@ function QuestionAssigning() {
                     value={classNo}
                     onChange={(e) => setClassNo(e.target.value)}
                     style={{ textTransform: "capitalize" }}
-                    maxLength="50"
+                    maxLength="10"
                   />
                 </div>
                 <div className="qpaper_group">
@@ -201,7 +282,7 @@ function QuestionAssigning() {
                     value={division}
                     onChange={(e) => setDivision(e.target.value)}
                     style={{ textTransform: "capitalize" }}
-                    maxLength="50"
+                    maxLength="10"
                   />
                 </div>
                 <div className="qpaper_group">
@@ -270,7 +351,7 @@ function QuestionAssigning() {
                     value={term}
                     onChange={(e) => setTerm(e.target.value)}
                     style={{ textTransform: "capitalize" }}
-                    maxLength="50"
+                    maxLength="10"
                   />
                 </div>
                 <div className="qpaper_group">
@@ -283,7 +364,7 @@ function QuestionAssigning() {
                     value={totalMark}
                     onChange={(e) => setTotalMark(e.target.value)}
                     style={{ textTransform: "capitalize" }}
-                    maxLength="50"
+                    maxLength="10"
                   />
                 </div>
                 <div className="qpaper_group">

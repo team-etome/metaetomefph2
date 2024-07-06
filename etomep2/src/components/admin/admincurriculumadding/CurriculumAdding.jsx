@@ -9,6 +9,8 @@ import { IoIosAdd } from "react-icons/io";
 import Select from "react-select";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Swal from 'sweetalert2'; 
+
 
 function CurriculumAdding() {
   const [publisher, setPublisher] = useState(null);
@@ -23,6 +25,8 @@ function CurriculumAdding() {
   const [selectedSubject, setSelectedSubject] = useState(null);
 
   const [curriculumEntries, setCurriculumEntries] = useState([]);
+  const [loading, setLoading] = useState(false);
+
 
   console.log(curriculumEntries ,'helooooo')
 
@@ -94,6 +98,25 @@ function CurriculumAdding() {
     console.log("enteredddddd")
 
     e.preventDefault();
+ // validation
+    const requiredFields = [
+      { value: publisher, label: "Publisher Name" },
+      { value: subject, label: " Subject" },
+      { value: faculty, label: "faculty" },
+      // { value: medium, label: "Medium" },
+    ];
+
+    const missingFields = requiredFields.filter((field) => !field.value);
+
+    if (missingFields.length > 0) {
+      const missingFieldLabels = missingFields.map((field) => field.label).join(", ");
+      Swal.fire({
+        icon: "error",
+        title: "Missing Required Information",
+        text: `Please complete the following fields: ${missingFieldLabels}.`,
+      });
+      return;
+    }
 
     const payload = {
   
