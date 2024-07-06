@@ -4,12 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import "../teacherreferenceadd/referenceadding.css";
 import { FaRedo } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import Swal from "sweetalert2";
+
 function ReferenceAdding() {
   const [showUploadArea, setShowUploadArea] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedUrl, setSelectedUrl] = useState("");
   const [selectedTab, setSelectedTab] = useState("pdf");
-  const navigate = useNavigate();
+  const [referenceTitle, setReferenceTitle] = useState("");
+
+  // const navigate = useNavigate();
+
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -27,9 +34,56 @@ function ReferenceAdding() {
   const clearUrl = () => {
     setSelectedUrl("");
   };
-  // const handleSubmit = () => {
-  //   navigate('/teachertexteditor');
-  // }
+
+  const APIURL = useSelector((state) => state.APIURL.url);
+  const teachersubjectinfo = useSelector((state) => state.teachersubjectinfo);
+  const teacherinfo = useSelector((state) => state.teacherinfo);
+
+  const teacher_id = teacherinfo.teacherinfo?.teacher_id;
+
+  const class_name = teachersubjectinfo.teachersubjectinfo?.class;
+  const division = teachersubjectinfo.teachersubjectinfo?.division;
+  const subject = teachersubjectinfo.teachersubjectinfo?.subject;
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("teacher", teacher_id);
+    formData.append("class_name", class_name);
+    formData.append("division", division);
+    formData.append("subject", subject);
+    formData.append("title", referenceTitle);
+
+    if (selectedTab === "pdf" && selectedFile) {
+      formData.append("textbook_pdf", selectedFile);
+    } else if (selectedTab === "url" && selectedUrl) {
+      formData.append("url", selectedUrl);
+    }
+
+    try {
+      const response = await axios.post(`${APIURL}/api/reference`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      Swal.fire({
+        icon: "success",
+        title: "Reference added successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      // navigate('/teacherrefrencelist'); // Uncomment to navigate after successful submission
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "There was an error adding the reference",
+      });
+    }
+  };
+
+
   return (
     <div className="teacher_reference_adding">
       <Container className="teacher_reference_form">
@@ -48,12 +102,13 @@ function ReferenceAdding() {
                   Reference Title
                   <span style={{ color: "red" }}>*</span>
                 </label>
-                <input type="text" id="reftitle" name="reftitle" />
+                <input 
+                onChange={(e)=>setReferenceTitle(e.target.value)}
+                type="text" id="reftitle" name="reftitle" />
               </div>
             </Col>
           </Row>
           <Row>
-            
             <Col>
               <div className="upload_section">
                 <h6>Media Library</h6>
@@ -161,7 +216,7 @@ function ReferenceAdding() {
               </div>
             </Col>
             <div className="teacher_ref_submit">
-              <button type="submit">Submit</button>
+              <button onClick={handleSubmit} type="submit">Submit</button>
             </div>
           </Row>
         </div>

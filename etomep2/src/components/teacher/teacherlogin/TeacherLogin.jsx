@@ -45,7 +45,7 @@ function TeacherLogin() {
         console.log(response.data,"dataaaaaa")
         dispatch(teacherinfo(response.data.teacher));
      
-        navigate("/teacherstudentdashboard");
+        navigate("/admindashboard");
         Swal.fire({
           title: "Success!",
           text: "Login Successfully",
