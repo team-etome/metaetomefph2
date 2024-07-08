@@ -95,28 +95,28 @@ function CurriculumAdding() {
 
   const handleSubmit = (e) => {
 
-    console.log("enteredddddd")
+    // console.log("enteredddddd")
 
-    e.preventDefault();
+    // e.preventDefault();
  // validation
-    const requiredFields = [
-      { value: publisher, label: "Publisher Name" },
-      { value: subject, label: " Subject" },
-      { value: faculty, label: "faculty" },
-      // { value: medium, label: "Medium" },
-    ];
+    // const requiredFields = [
+    //   { value: publisher, label: "Publisher Name" },
+    //   { value: subject, label: " Subject" },
+    //   { value: faculty, label: "faculty" },
+   
+    // ];
 
-    const missingFields = requiredFields.filter((field) => !field.value);
+    // const missingFields = requiredFields.filter((field) => !field.value);
 
-    if (missingFields.length > 0) {
-      const missingFieldLabels = missingFields.map((field) => field.label).join(", ");
-      Swal.fire({
-        icon: "error",
-        title: "Missing Required Information",
-        text: `Please complete the following fields: ${missingFieldLabels}.`,
-      });
-      return;
-    }
+    // if (missingFields.length > 0) {
+    //   const missingFieldLabels = missingFields.map((field) => field.label).join(", ");
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Missing Required Information",
+    //     text: `Please complete the following fields: ${missingFieldLabels}.`,
+    //   });
+    //   return;
+    // }
 
     const payload = {
   
