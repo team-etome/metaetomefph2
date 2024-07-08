@@ -77,6 +77,7 @@ function StudentDashboard() {
   }, [APIURL, teacher_id]);
 
   return (
+
     <div className='teacher_student_dashboard'>
       <Container fluid>
         <Row style={{ paddingLeft: "2vw", paddingBottom: '1vw' }}>
@@ -95,6 +96,7 @@ function StudentDashboard() {
                       className="ps-6 teacher_student_search_input"
                       aria-label="Search"
                     />
+
                   </div>
                 </Form>
               </div>
