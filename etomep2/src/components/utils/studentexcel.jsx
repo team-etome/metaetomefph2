@@ -3,7 +3,7 @@ import * as XLSX from 'xlsx';
 const studentexcel = () => {
   const data = [
     [
-        "Class Name",
+      
         "Student Name",
         "Admission Number",
         "Roll Number",

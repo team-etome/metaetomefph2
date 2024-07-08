@@ -1,46 +1,66 @@
-import React, { useState, useRef,useEffect  } from "react";
-import { Col, Container, Row, Button ,Form} from "react-bootstrap";
+import React, { useState, useRef, useEffect } from "react";
+import { Col, Container, Row, Button, Form, Spinner } from "react-bootstrap";
 import { IoIosAdd, IoMdDownload, IoMdAdd } from "react-icons/io";
 import { MdUpload } from "react-icons/md";
-import generateExcelFile from "../../utils/generateExcelFile";
-import { BsSearch, BsFilterRight } from "react-icons/bs";
-import amritha from "../../../assets/amritha.png";
+import studentexcel from "../../utils/studentexcel";
+import { BsSearch } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import '../studentdashboard/studentdashboard.css'
+import '../studentdashboard/studentdashboard.css';
 import { useSelector } from "react-redux";
 import axios from "axios";
-
-
 
 function StudentDashboard() {
   const [isActive, setIsActive] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [file, setFile] = useState(null);
-  const [studentlist , setStudentList] = useState()
-  const [standard , setStandard] = useState()
-  const [division , setDivision] = useState()
+  const [studentlist, setStudentList] = useState([]);
+  const [standard, setStandard] = useState("");
+  const [division, setDivision] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacher = useSelector((state) => state.teacherinfo);
   const teacher_id = teacher.teacherinfo?.teacher_id;
 
-  console.log(studentlist,"student list")
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
+
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
+
   const openFileSelector = () => {
     fileInputRef.current.click();
   };
+
   const handleAddClick = () => {
     setShowOptions(!showOptions);
   };
-  
-  const handleclick = (item) => {
+
+  const handleClick = (item) => {
     navigate('/teacherstudentview', { state: { student: item } });
   };
 
+  const handleFileUpload = async () => {
+    if (!file) return;
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('teacher',teacher_id)
+
+    try {
+      await axios.post(`${APIURL}/api/studentexcel`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      // Handle success (e.g., show a success message, refresh student list)
+    } catch (error) {
+      console.error("Failed to upload file:", error);
+      // Handle error (e.g., show an error message)
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchFacultyData = async () => {
@@ -49,66 +69,48 @@ function StudentDashboard() {
         setStudentList(response.data);
         setStandard(response.data[0].standard);
         setDivision(response.data[0].division);
-        
-     
       } catch (error) {
         console.error("Failed to fetch faculty data:", error);
       }
     };
     fetchFacultyData();
-  }, [APIURL]);
+  }, [APIURL, teacher_id]);
+
   return (
-    <div className='teacher_student_dashboard' >
-      <Container
-        fluid
-        style={{}}
-      >
-        <Row style={{ paddingLeft: "2vw", paddingBottom:'1vw' }}>
-              <Col md={6} className="class_number">
-              <h4>Class: {standard} {division} </h4>
-              </Col>
-              <Col md={6}>
-                <div className="student_search_filter_main">
-                  <div className="student_search_filter d-flex align-items-center">
-                    <Form className="d-flex">
-                      <div className="position-relative">
-                        <BsSearch
-                          className="position-absolute top-50 translate-middle-y ms-2 student_search_icon"/>
-                        <Form.Control
-                          type="search"
-                          placeholder="Search"
-                          className="ps-6 teacher_student_search_input"
-                          aria-label="Search"
-                        />
-                      </div>
-                    </Form>
+    <div className='teacher_student_dashboard'>
+      <Container fluid>
+        <Row style={{ paddingLeft: "2vw", paddingBottom: '1vw' }}>
+          <Col md={6} className="class_number">
+            <h4>Class: {standard} {division}</h4>
+          </Col>
+          <Col md={6}>
+            <div className="student_search_filter_main">
+              <div className="student_search_filter d-flex align-items-center">
+                <Form className="d-flex">
+                  <div className="position-relative">
+                    <BsSearch className="position-absolute top-50 translate-middle-y ms-2 student_search_icon" />
+                    <Form.Control
+                      type="search"
+                      placeholder="Search"
+                      className="ps-6 teacher_student_search_input"
+                      aria-label="Search"
+                    />
                   </div>
-{/* 
-                  <div
-                    style={{
-                      width: "10%",
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "flex-end",
-                    }}
-                  >
-                    <BsFilterRight style={{ height: "50px", width: "40px" }} />
-                  </div>  */}
-                </div>
-              </Col>
+                </Form>
+              </div>
+            </div>
+          </Col>
         </Row>
         <Row className="teacher_studentdashboard_container">
-          {studentlist?.map((item, index) => (
-           
-            <Col lg={3} md={6} sm={6} xs={12} key={index} >
-              <div  onClick={() => handleclick(item)}  className="border border-white student_rectangle">
-                  <div className="student_name">{item.student_name}</div>
-                  <div className="student_date_id">
-                    
-                    <div className="student_id">
-                      Admisssion No.{item.roll_no}
-                    </div>
+          {studentlist.map((item, index) => (
+            <Col lg={3} md={6} sm={6} xs={12} key={index}>
+              <div onClick={() => handleClick(item)} className="border border-white student_rectangle">
+                <div className="student_name">{item.student_name}</div>
+                <div className="student_date_id">
+                  <div className="student_id">
+                    Admission No.{item.roll_no}
                   </div>
+                </div>
               </div>
             </Col>
           ))}
@@ -138,7 +140,7 @@ function StudentDashboard() {
                 </Button>
               </Link>
               <div
-                onClick={generateExcelFile}
+                onClick={studentexcel}
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -177,14 +179,26 @@ function StudentDashboard() {
               />
               {file && (
                 <Button
-                  // onClick={handleFileUpload}
-                  // disabled={isLoading}
+                  onClick={handleFileUpload}
+                  disabled={isLoading}
                   style={{
                     backgroundColor: "#526D82",
-                    border : "none",
-                    marginTop: "20px" }}
+                    border: "none",
+                    marginTop: "20px"
+                  }}
                 >
-                  {/* {isLoading ? "Uploading..." : "Upload File"} */}
+                  {isLoading ? (
+                    <>
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />{" "}
+                      Uploading...
+                    </>
+                  ) : "Upload File"}
                 </Button>
               )}
             </div>
@@ -194,4 +208,5 @@ function StudentDashboard() {
     </div>
   )
 }
-export default StudentDashboard
+
+export default StudentDashboard;
