@@ -63,7 +63,7 @@ function StudentDashboard() {
         fluid
         style={{}}
       >
-        <Row style={{ paddingLeft: "2vw", paddingBottom:'1vw' }}>
+        <Row className="teacher_student_header">
               <Col md={6} className="class_number">
               <h4>Class: {standard} {division} </h4>
               </Col>
@@ -77,7 +77,7 @@ function StudentDashboard() {
                         <Form.Control
                           type="search"
                           placeholder="Search"
-                          className="ps-6 teacher_student_search_input"
+                          className="ps-4 teacher_student_search_input"
                           aria-label="Search"
                         />
                       </div>

@@ -2,10 +2,19 @@
 display: flex;
 justify-content: center;
 width: 100%;
-padding-top: 15vh;
+padding-top: 10vh;
 padding-left: 15vh;
 padding-bottom: 1vh;
 height: 100vh;
+}
+.teacher_student_header{
+  padding-left: 0vw;
+  /* padding-bottom: 1vw; */
+  box-shadow: none;
+  width:100% ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .teacher_studentdashboard_container {
     overflow-y: auto;
@@ -127,13 +136,13 @@ color: #767676;
   flex-direction: row;
   padding-left: 2vw;
   padding-right: 0vw;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
 }
 
 .student_search_filter {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 400px;
   justify-content: flex-end;
   padding-right: 5vh;
 }
@@ -178,52 +187,7 @@ color: #767676;
   color: #D8D4D4;
   right: 15px;
 }
-@media (max-width:576px) {
-  .student_rectangle{
-    width: 250px !important;
-    height: 120px !important;
-  }
-  .studentlist{
-    padding:4px;
-    padding-top: 16px;
-    margin-top: 8px;
-    padding-left: 20px;
-    display: flex;
-    justify-content: center;
-  }
-  .teacher_studentdashboard_container {
-    /* overflow-y: auto; */
-    height: 70vh;
-    width:100% ;
-   padding-right: 50px;
-   padding-left: 30px;
-  }
-  .teacher_student_dashboard{
-    padding-top: 10vh;
-    padding-left: 1vh;
-    padding-right: 1vh;
-    }
-    .student_id{
-      width: 100%;
-      padding-left: 0px;
-      padding-top: 0px;
-      display: flex;
-      justify-content: center;
-    }
-    .student_name{
-      padding-left: 20px;
-      padding-top: 20px;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-  }
 
-  .student_search_filter .form-control{
-    width: 300px;
-    display: flex;
-    justify-content: center;
-  }
-  }
   .my-button {
     background-color: #526D82;
     border: none;
@@ -370,8 +334,59 @@ color: #767676;
   padding: 10px;
   border-radius: 15px;
 }
-  
-@media (max-width:999px), (min-width:577) {
+@media (max-width: 700px) {
+  .student_rectangle{
+    width: 250px !important;
+    height: 120px !important;
+  }
+  .studentlist{
+    padding:4px;
+    padding-top: 16px;
+    margin-top: 8px;
+    padding-left: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .teacher_studentdashboard_container {
+    /* overflow-y: auto; */
+    height: 70vh;
+    width:100% ;
+   padding-right: 50px;
+   padding-left: 30px;
+  }
+  .teacher_student_dashboard{
+    /* padding-top: 10vh; */
+    padding-left: 1vh;
+    padding-right: 1vh;
+    }
+    .student_id{
+      width: 100%;
+      padding-left: 0px;
+      padding-top: 0px;
+      display: flex;
+      justify-content: center;
+    }
+    .student_name{
+      padding-left: 20px;
+      padding-top: 20px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+  }
+
+  .student_search_filter .form-control{
+    width: 270px;
+    display: flex;
+    justify-content: center;
+  }
+  .student_search_filter_main{
+    padding-left: 6vw;
+    /* padding-right: 0vw; */
+    display: flex;
+    justify-content: center;
+  }
+  }
+@media (min-width: 710px) and (max-width:1024px) {
   .teacher_student_dashboard{
     padding-top: 10vh;
     /* padding-left: 5vh;
@@ -379,5 +394,6 @@ color: #767676;
     display: flex;
     justify-content: center;
     align-content: center;
+    padding-left: 10vw;
     }
 }
