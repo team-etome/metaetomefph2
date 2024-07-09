@@ -78,39 +78,39 @@ function ExaminationDashboard() {
             <h4>Assigned Exams</h4>
           </Col>
           <Col md={6}>
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-end",
-                flexDirection: "row",
-                paddingLeft: "1vw",
-              }}
+            <div className="examdashboard_search_filter_main"
+              // style={{
+              //   width: "100%",
+              //   display: "flex",
+              //   justifyContent: "flex-end",
+              //   flexDirection: "row",
+              //   paddingLeft: "1vw",
+              // }}
             >
-              <div
-                style={{
-                  width: "80%",
-                  display: "flex",
-                  justifyContent: "flex-end",
-                }}
-                className="search_filter d-flex align-items-center"
+              <div 
+                // style={{
+                //   width: "80%",
+                //   display: "flex",
+                //   justifyContent: "flex-end",
+                // }}
+                className="examdashboard_search_filter d-flex align-items-center"
               >
                 <Form className="d-flex">
                   <div className="position-relative">
                     <BsSearch
-                      className="position-absolute top-50 translate-middle-y ms-2"
-                      style={{
-                        zIndex: 2,
-                        height: "20px",
-                        width: "20px",
-                        color: "#D8D4D4",
-                        right: "15px",
-                      }}
+                      className="examdashboard_search_icon position-absolute top-50 translate-middle-y ms-2"
+                      // style={{
+                      //   zIndex: 2,
+                      //   height: "20px",
+                      //   width: "20px",
+                      //   color: "#D8D4D4",
+                      //   right: "15px",
+                      // }}
                     />
                     <Form.Control
                       type="search"
                       placeholder="Search"
-                      className="ps-6 teacher_student_search_input"
+                      className="ps-6 examdashboard_search_input"
                       aria-label="Search"
                     />
                   </div>
