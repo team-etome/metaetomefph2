@@ -6,6 +6,7 @@ import { useNavigate  } from "react-router-dom";
 import amritha from "../../../assets/amritha.png";
 import axios from 'axios'
 import { useSelector,useDispatch } from "react-redux";
+import { adminallclassinfo } from "../../../Redux/Actions/AdminAllClassInfoAction";
 
 
 function AdminClassdashboard() {
@@ -19,7 +20,9 @@ function AdminClassdashboard() {
   const [isVisible, setIsVisible] = useState(false);
 
   const navigate = useNavigate()
-  console.log(classDetails,'drfgdgrfdg')
+
+  const dispatch = useDispatch()
+
 
 
   useEffect(() => {
@@ -47,6 +50,7 @@ useEffect(()=>{
 
       const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`)
       setClassDetails(response.data)
+      dispatch(adminallclassinfo(response.data))
 
     }catch(error){
       console.error("Failed to fetch class data")

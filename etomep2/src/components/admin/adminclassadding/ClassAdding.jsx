@@ -7,6 +7,7 @@ import Select from "react-select";
 import { useSelector , useDispatch } from "react-redux";
 import { adminclassinfo } from "../../../Redux/Actions/AdminclassAddingInfo";
 import Swal from 'sweetalert2'; 
+import { adminallclassinfo } from "../../../Redux/Actions/AdminAllClassInfoAction";
 
 
 function ClassAdding() {
