@@ -157,9 +157,9 @@ function AddStudent() {
               // marginBottom: "10px",
             }}
           >
-            <Link to="/teacherstudentdashboard">
+            {/* <Link to="/teacherstudentdashboard">
               <IoChevronBackSharp className="teacher_studentadd_back" />
-            </Link>
+            </Link> */}
             <h1 className="teacher_studentadd_title">Add Student</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>

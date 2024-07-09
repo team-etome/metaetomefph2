@@ -51,16 +51,16 @@ function QuestionCreationView() {
       <Container className="teacher_question_view_container">
         <form className="teacher_question_view_form">
           <div className="teacher_question_creation_header">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "10px",
-              }}
+            <div className="teacher_question_view_header"
+              // style={{
+              //   display: "flex",
+              //   alignItems: "center",
+              //   marginBottom: "10px",
+              // }}
             >
-              <Link to="/teacherexamination">
+              {/* <Link to="/teacherexamination">
                 <IoChevronBackSharp className="teacher_view_back" />
-              </Link>
+              </Link> */}
               <h1 className="teacher_view_title">Question Creation</h1>
               <div style={{ flex: "1" }}></div>
               {windowWidth > 576 ? (

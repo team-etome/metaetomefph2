@@ -2,9 +2,10 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  padding-top: 15vh;
+  padding-top: 10vh;
   padding-left: 15vh;
   padding-bottom: 1vh;
+  height: 100vh;
 }
 .teacher_examination_container {
     /* overflow-y: auto;
@@ -96,58 +97,7 @@
     font-size: 14px; 
     margin-top: 15px;
 }
-@media (max-width:576px) {
-   
-  .examination_rectangle{
-    width: 500px !important;
-    height: 120px !important;
-  }
-.class_number{
-  display: flex;
-  text-align: center;
-  justify-content: center;
-}
-  .examination_list{
-    padding:4px;
-    padding-top: 16px;
-    margin-top: 8px;
-  }
-  .teacher_examination_container{
-    /* overflow-y: auto; */
-    height: 70vh;
-    width:100% ;
-   padding-right: 50px;
-   padding-left: 30px;
-    
-  }
-  .teacher_examination_dashboard{
-    padding-top: 10vh;
-    padding-left: 1vh;
-    padding-right: 1vh;
-    }
-    .examiantion_term{
-      width: 100%;
-  }
-  .examination_class_date {
-    padding: 5px 10px;
-    padding-top: 10px;
-    padding-bottom: 0px;
-}
-  .examination_class{
-    width: 100%;
-    padding-left: 0%;
-}
-.examination_date{
-  width: 70%;
-  padding-right: 0%;
-  padding-left: 30%;
-}
-.examination_subject {
-    width: 70%; 
-    height: 30px;
-    padding-bottom: 0%;
-}
-  }
+
   .my-button {
     background-color: #526D82;
     border: none;
@@ -193,10 +143,61 @@
       opacity: 0;
     }
   }
-
-  @media (max-width:999px), (min-width:577) {
+  @media (max-width:700px) {
+   
+    .examination_rectangle{
+      width: 500px !important;
+      height: 120px !important;
+    }
+  .class_number{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+    .examination_list{
+      padding:4px;
+      padding-top: 16px;
+      margin-top: 8px;
+    }
+    .teacher_examination_container{
+      /* overflow-y: auto; */
+      height: 70vh;
+      width:100% ;
+     padding-right: 50px;
+     padding-left: 30px;
+      
+    }
     .teacher_examination_dashboard{
-      padding-top: 15vh;
+      padding-top: 10vh;
+      padding-left: 1vh;
+      padding-right: 1vh;
+      }
+      .examiantion_term{
+        width: 100%;
+    }
+    .examination_class_date {
+      padding: 5px 10px;
+      padding-top: 10px;
+      padding-bottom: 0px;
+  }
+    .examination_class{
+      width: 100%;
+      padding-left: 0%;
+  }
+  .examination_date{
+    width: 70%;
+    padding-right: 0%;
+    padding-left: 30%;
+  }
+  .examination_subject {
+      width: 70%; 
+      height: 30px;
+      padding-bottom: 0%;
+  }
+    }
+    @media (min-width: 710px) and (max-width:1024px) {
+    .teacher_examination_dashboard{
+      padding-top: 10vh;
       padding-left: 5vh;
       padding-right: 1vh;
       }
