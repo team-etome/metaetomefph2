@@ -1,7 +1,7 @@
 .teacher_question_view_container
  {
     height: 100vh;
-    padding-top: 10px;
+    padding-top: 5vh;
     background-color: #DDE6ED;
     width: 80%;
     padding-left: 80px;
@@ -46,12 +46,16 @@
         margin-left: 10px;
     }
     
-    
+    .teacher_question_view_header{
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
     .teacher_view_title{
         font-weight: 500;
         color: #526D82 ;
         font-size: 30px;
-        margin-left: 10px;
+        margin-left: 30px;
     }
     
     .teacher_question_view_group {
@@ -212,7 +216,7 @@
             flex-grow: 1;
             text-align: left;
             padding-left: 0px;
-            margin-left: 0px;
+            margin-left: 10px;
         }
         .teacher_create_question{
             padding-bottom: 100px;

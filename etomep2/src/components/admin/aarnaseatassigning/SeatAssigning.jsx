@@ -109,6 +109,71 @@ function SeatAssigning() {
     value: classItem.id,
     label: classItem.classname,
   }));
+  const facultyList = [
+    "John Doe",
+    "Jane Smith",
+    "Alice Johnson",
+    "Robert Brown",
+    "Emily Davis",    
+    "John Doe",
+    "Jane Smith",
+    "Alice Johnson",
+    "Robert Brown",
+    "Emily Davis",
+    "John Doe",
+    "Jane Smith",
+    "Alice Johnson",
+    "Robert Brown",
+    "Emily Davis",
+    "John Doe",
+    "Jane Smith",
+    "Alice Johnson",
+    "Robert Brown",
+    "Emily Davis",    
+    "John Doe",
+    "Jane Smith",
+    "Alice Johnson",
+    "Robert Brown",
+    "Emily Davis",
+    "John Doe",
+    "Jane Smith",
+    "Alice Johnson",
+    "Robert Brown",
+    "Emily Davis",
+    
+  ];
+  const classList = [
+    "IX A",
+    "X B",
+    "XI B",
+    "X G",
+    "XII B",
+    "XI D",
+    "X R",
+    "X T",
+    "X Y",
+    "X R",
+    "IX A",
+    "X B",
+    "XI B",
+    "X G",
+    "XII B",
+    "XI D",
+    "X R",
+    "X T",
+    "X Y",
+    "X R",
+    "IX A",
+    "X B",
+    "XI B",
+    "X G",
+    "XII B",
+    "XI D",
+    "X R",
+    "X T",
+    "X Y",
+    "X R",
+  ];
 
   return (
     <div>
@@ -303,6 +368,16 @@ function SeatAssigning() {
                     />
                   </div>
                 </Form>
+                <div className="seat_modal_content">
+          {facultyList.map((name, index) => (
+            <div key={index} className={`d-flex align-items-center seat_modal_item ${index >= 10 ? 'right-column' : 'left-column'}`}>
+              <Form.Check type="checkbox" id={`checkbox-${index}`} className="seat_modal_checkbox" />
+              <label htmlFor={`checkbox-${index}`} className="ms-2 seat_modal_label">
+                {name}
+              </label>
+            </div>
+          ))}
+        </div>
               </div>
             </Col>
             <Col md={6}>
@@ -324,6 +399,16 @@ function SeatAssigning() {
                     />
                   </div>
                 </Form>
+                <div className="seat_modal_content">
+          {classList.map((classname, index) => (
+            <div key={index} className={`d-flex align-items-center seat_modal_item ${index >= 10 ? 'right-column' : 'left-column'}`}>
+              <Form.Check type="checkbox" id={`checkbox-${index}`} className="seat_modal_checkbox" />
+              <label htmlFor={`checkbox-${index}`} className="ms-2 seat_modal_label">
+                {classname}
+              </label>
+            </div>
+          ))}
+        </div>
               </div>
             </Col>
           </Row>

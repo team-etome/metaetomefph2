@@ -2,7 +2,7 @@
 display: flex;
 justify-content: center;
 width: 100%;
-padding-top: 10vh;
+padding-top: 15vh;
 padding-left: 15vh;
 padding-bottom: 1vh;
 height: 100vh;
@@ -358,6 +358,7 @@ color: #767676;
     /* padding-top: 10vh; */
     padding-left: 1vh;
     padding-right: 1vh;
+    padding-top: 10vh;
     }
     .student_id{
       width: 100%;
@@ -388,7 +389,7 @@ color: #767676;
   }
 @media (min-width: 710px) and (max-width:1024px) {
   .teacher_student_dashboard{
-    padding-top: 10vh;
+    padding-top: 13vh;
     /* padding-left: 5vh;
     padding-right: 1vh; */
     display: flex;

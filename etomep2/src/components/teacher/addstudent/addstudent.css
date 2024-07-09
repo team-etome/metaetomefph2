@@ -1,6 +1,6 @@
 .teacher_studentadd_container {
     height: 100vh;
-    padding-top: 100px;
+    padding-top: 15vh;
     background-color: #DDE6ED;
     width: 80%;
     }
@@ -10,7 +10,7 @@
         background-color: #fff;
         padding-top: 20px;
         border-radius: 15px;
-        border: 0.5px solid #000000;
+        /* border: 0.5px solid #000000; */
         padding-bottom: 100px;
     
     }
@@ -27,7 +27,7 @@
         font-weight: 500;
         color: #526D82 ;
         font-size: 30px;
-        margin-left: 10px;
+        margin-left: 30px;
     }
     
     .teacher_studentadd_group {
@@ -52,7 +52,7 @@
     }
     .teacher_studentadd_group label{
         position: absolute;
-        top: 15%;
+        top: 17%;
         left: 5%;
         background: #fff;
         color: #526D82;
@@ -242,7 +242,7 @@
     pointer-events: none; /* Prevent icon from intercepting clicks */
 }
 
-/* Style the calendar pop-up */
+
 .teacher_studentadd_calendar {
     position: absolute;
     z-index: 9999;
@@ -250,25 +250,24 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 10px;
-    margin-top: 5px; /* Space between input and calendar */
+    margin-top: 5px; 
 }
 
-/* Ensure the pop-up calendar doesn't interfere with the input layout */
+
 .teacher_studentadd_calendar .rdp {
     display: block;
 }
 
       
-    @media (max-width: 800px) {
+    @media (max-width: 700px) {
         .teacher_studentadd_container {
             width: 100%;
-            padding-top: 100px;
+            padding-top: 12vh;
             padding-left: 10px;
             padding-right: 10px;
-            background-color: #DDE6ED;
             box-sizing: border-box;
         }
-    
+
         .teacher_studentadd_form {
             background-color: #fff;
             padding: 20px;
@@ -341,4 +340,10 @@
           }
     }
     
-    
+    @media (min-width: 710px) and (max-width:1024px) {
+        .teacher_studentadd_container {
+            padding-top: 12vh;
+            padding-left: 20px;
+            padding-right: 0px;
+        }
+      }
