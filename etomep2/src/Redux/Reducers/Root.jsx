@@ -6,6 +6,7 @@ import AdminclassInfoReducer from './AdminClassAddingReducer';
 import TeacherInfoReducer from './TeacherInfoReducer';
 import ExamPaperInfoReducer from './ExamPaperInfoReducer';
 import TeacherSubjectInfoReducer from './TeacherSubjectInfoReducer';
+import AdminallclassInfoReducer from './AdminAllClassInfoReducer';
 
 
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   teacherinfo         : TeacherInfoReducer,
   exampaperinfo       : ExamPaperInfoReducer,
   teachersubjectinfo  : TeacherSubjectInfoReducer,
+  adminallclassinfo   : AdminallclassInfoReducer,
 
   
   
