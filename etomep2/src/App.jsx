@@ -66,6 +66,7 @@ import TeacherTestListPage from './pages/teacherpage/TeacherTestListPage';
 import TeacherTestAddPage from './pages/teacherpage/TeacherTestAddPage';
 import TeacherHomePage from './pages/teacherpage/TeacherHomePage';
 import AssignmentEditor from './components/teacher/teacherassignmentadd/AssignmentEditor';
+import AdminProfilePage from './pages/adminpage/AdminProfilePage';
 
 
 function App() {
@@ -117,6 +118,7 @@ function App() {
           <Route path="/adminlokatextbook" element={<AdminLokaTextbookPage/>}/>
           <Route path="/adminlokalibary" element={<AdminLokaLibraryPage/>}/>
           <Route path="/adminresultview" element={<AarnaResultViewPage/>}/>
+          <Route path="/adminprofile" element={<AdminProfilePage/>}/>
 
 
 
