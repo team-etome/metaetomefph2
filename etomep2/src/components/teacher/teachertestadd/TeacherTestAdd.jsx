@@ -22,9 +22,9 @@ function TeacherTestAdd() {
     <div className='teacher_test_adding'>
         <Container className='teacher_testadd_form'>
         <div className='teacher_test_add_header'>
-          <Link to="/teachertestlist">
+          {/* <Link to="/teachertestlist">
             <IoChevronBackSharp className="teacher_testadd_back" />
-          </Link>
+          </Link> */}
           <h1 className="teacher_testadd_title">Test</h1>
         </div>
         <hr style={{border:' 1px solid #526D82'}}/>

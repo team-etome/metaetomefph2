@@ -1,6 +1,6 @@
 .teacher_assignment_adding {
     height: 100vh;
-    padding-top: 100px;
+    padding-top: 12vh;
     background-color: #DDE6ED;
     padding-left: 30vh;
     width: 80%;
@@ -29,7 +29,7 @@
     font-weight: 500;
     color: #526D82 ;
     font-size: 30px;
-    margin-left: 10px;
+    margin-left: 30px;
 }
   .teacher_assignmentadd_group {
     margin-left: 50px;
@@ -179,4 +179,218 @@
     background-color: #526D82;
     color: #fff;
     border: 1px solid #526D82;
+}
+
+@media (max-width: 700px) {
+  .teacher_assignment_adding {
+      width: 100%;
+      padding-top: 12vh;
+      padding-left: 10px;
+      padding-right: 10px;
+      box-sizing: border-box;
+  }
+
+  .teacher_assignment_form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      border: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .teacher_assignmentadd_back {
+      margin-right: 5px;
+  }
+
+  .teacher_assignmentadd_title {
+    font-size: 24px;
+    flex-grow: 1;
+    text-align: left;
+    padding-left: 0px;
+    margin-left: 0px;
+  }
+  .teacher_assignmentadd_group {
+    margin-left: 0px !important;
+    margin-right: 0px;
+    margin-bottom: 20px;
+    position: relative;
+    padding-top: 25px;
+    margin-top: 0px;
+  }
+  /* .teacher_assignmentadd_group{
+      margin: 0 10px 20px 10px;
+      position: relative;
+  } */
+
+  .teacher_assignmentadd_group input{
+      width: 105% !important;
+      border: 1px solid #526D82;
+      border-radius: 4px;
+      padding: 12px 10px;
+  }
+
+  .teacher_assignmentadd_group label{
+      font-size: 14px;
+      transition: all 0.3s;
+      transform-origin: left;
+  }
+
+  .teacher_assignmentadd_group input:focus + label,
+  .teacher_studentadd_group input:not(:placeholder-shown) + label
+  {
+      transform: scale(0.85) translateY(-25px);
+      color: #526D82;
+  }
+
+  .teacher_assignadd_submit {
+      padding-right: 0px;
+      padding-left: 20px;
+      margin-left: 20px;
+      margin-right: 0px;
+  }
+
+  .teacher_assignadd_submit button{
+      width: 50%;
+      padding: 12px;
+  }
+  .teacher_assignadd_submit button:hover {
+      background-color: #526D82;
+      color: #fff;
+      border: 1px solid #526D82;
+  }
+  /* .upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-top: 5px;
+  }
+  
+  .upload-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .upload-btn,
+  .create-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #526D82;
+    background-color: transparent;
+    color: #526D82;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+  }
+  
+  
+  .create-btn:hover {
+    background-color: #526D82;
+    color: #fff;
+  }
+   */
+  .drop-area {
+    border: 2px dashed #526D82;
+    border-radius: 8px;
+    width: 90%;
+    text-align: center;
+    padding: 20px;
+    color: #526D82;
+  }
+  
+  .drop-area p {
+    margin: 0px 0;
+  }
+  
+  .select-file-input {
+    display: block;
+    margin: 0px auto;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #526D82;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+}
+
+@media (min-width: 710px) and (max-width:1024px) {
+  .teacher_assignment_adding {
+    width: 100%;
+      padding-top: 12vh;
+      padding-left: 10vh;
+      padding-right: 5vh;
+  }
+  .teacher_assignment_form {
+    background-color: #fff;
+    padding-top: 10px;
+    padding-bottom: 0;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* height: 70vh; */
+}
+
+.teacher_assignmentadd_back {
+    margin-right: 5px;
+}
+
+.teacher_assignmentadd_title {
+  font-size: 24px;
+  flex-grow: 1;
+  text-align: left;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+.teacher_assignmentadd_group {
+  margin-left: 0px !important;
+  margin-right: 0px;
+  margin-bottom: 20px;
+  position: relative;
+  padding-top: 25px;
+  margin-top: 0px;
+}
+.teacher_assignmentadd_group input{
+  width: 105% !important;
+  border: 1px solid #526D82;
+  border-radius: 4px;
+  padding: 12px 10px;
+}
+
+.teacher_assignmentadd_group label{
+  font-size: 14px;
+  transition: all 0.3s;
+  transform-origin: left;
+}
+
+.teacher_assignmentadd_group input:focus + label,
+.teacher_studentadd_group input:not(:placeholder-shown) + label
+{
+  transform: scale(0.85) translateY(-25px);
+  color: #526D82;
+}
+
+/* .drop-area {
+  border: 2px dashed #526D82;
+  border-radius: 8px;
+  width: 90%;
+  text-align: center;
+  padding: 20px;
+  color: #526D82;
+} */
+
+.select-file-input {
+  display: block;
+  margin: 0px auto;
+  padding: 10px 10px;
+}
+/* .teacher_assignadd_submit {
+  padding-bottom: 10px;
+} */
+
+/* .teacher_assignadd_submit button{
+margin-bottom: 30px;
+} */
 }

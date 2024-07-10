@@ -72,6 +72,7 @@
     justify-content: end;
     padding-right: 24px;
     align-items: center;
+    padding-top: 0px;
     padding-bottom: 10px;
   }
   .assignment_editor_header_submit button{
