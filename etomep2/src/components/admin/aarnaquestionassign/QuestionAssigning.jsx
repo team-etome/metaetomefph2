@@ -21,7 +21,7 @@ function QuestionAssigning() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [totalMark, setTotalMark] = useState("");
-  const [instruction, setInstruction] = useState("");
+  const [instruction, setInstruction] = useState(""); 
   const [term, setTerm] = useState("");
   const [loading, setLoading] = useState(false);
 

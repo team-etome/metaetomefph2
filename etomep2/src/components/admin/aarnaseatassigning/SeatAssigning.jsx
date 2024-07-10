@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
@@ -11,11 +11,12 @@ import Layout_02_NS from "../../../assets/Layout_02_NS.png";
 import { BsSearch } from "react-icons/bs";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 function SeatAssigning() {
   const [selectedLayout, setSelectedLayout] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [loading, setLoading] = useState(false);
+
 
   const [hallNo, setHallNo] = useState("");
   const [studentperbench, setStudentperbench] = useState("");
@@ -24,13 +25,41 @@ function SeatAssigning() {
   const [numberoftables, setNumberoftables] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [selectedTeacher, setSelectedTeacher] = useState(null);
-  const [selectedClass, setSelectedClass] = useState(null);
+  const [selectedTeacher, setSelectedTeacher] = useState([]);
+  const [selectedClass, setSelectedClass] = useState([]);
+  const [teacherOptions, setTeacherOptions] = useState([]);
+  const [classOptions, setClassOptions] = useState([]);
 
+
+ 
+  const APIURL = useSelector((state) => state.APIURL.url);
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
   const classinfo = useSelector((state) => state.adminallclassinfo);
   console.log(teacherinfo, "teacher info");
   console.log(classinfo, "class info");
+
+  useEffect(() => {
+    mapTeachers();
+    mapClasses();
+  }, [teacherinfo, classinfo]);
+
+  const mapTeachers = () => {
+    const options = teacherinfo.adminteacherinfo?.map((teacher, index) => ({
+      id: index,
+      value: `${teacher.first_name} ${teacher.last_name}`,
+      label: `${teacher.first_name} ${teacher.last_name}`,
+    }));
+    setTeacherOptions(options);
+  };
+
+  const mapClasses = () => {
+    const options = classinfo.adminallclassinfo?.map((classItem, index) => ({
+      id: index,
+      value: `${classItem.class_name} ${classItem.division}`,
+      label: `${classItem.class_name} ${classItem.division}`,
+    }));
+    setClassOptions(options);
+  };
 
   const handleLayoutSelect = (layout) => {
     setSelectedLayout(layout);
@@ -45,13 +74,26 @@ function SeatAssigning() {
     setShowModal(false);
   };
 
-  const handleTeacherSelect = (selectedOption) => {
-    setSelectedTeacher(selectedOption);
+  const handleTeacherSelect = (teacher) => {
+    setSelectedTeacher((prevSelectedTeachers) => {
+      if (prevSelectedTeachers.includes(teacher.value)) {
+        return prevSelectedTeachers.filter((item) => item !== teacher.value);
+      } else {
+        return [...prevSelectedTeachers, teacher.value];
+      }
+    });
   };
 
-  const handleClassSelect = (selectedOption) => {
-    setSelectedClass(selectedOption);
+  const handleClassSelect = (classItem) => {
+    setSelectedClass((prevSelectedClasses) => {
+      if (prevSelectedClasses.includes(classItem.value)) {
+        return prevSelectedClasses.filter((item) => item !== classItem.value);
+      } else {
+        return [...prevSelectedClasses, classItem.value];
+      }
+    });
   };
+
 
   const customStyles = {
     control: (base, state) => ({
@@ -100,85 +142,38 @@ function SeatAssigning() {
     }),
   };
 
-  const teacherOptions = teacherinfo.teacherinfo?.map((teacher) => ({
-    value: teacher.id,
-    label: teacher.name,
-  }));
 
-  const classOptions = classinfo.teacherinfo?.map((classItem) => ({
-    value: classItem.id,
-    label: classItem.classname,
-  }));
-  const facultyList = [
-    "John Doe",
-    "Jane Smith",
-    "Alice Johnson",
-    "Robert Brown",
-    "Emily Davis",    
-    "John Doe",
-    "Jane Smith",
-    "Alice Johnson",
-    "Robert Brown",
-    "Emily Davis",
-    "John Doe",
-    "Jane Smith",
-    "Alice Johnson",
-    "Robert Brown",
-    "Emily Davis",
-    "John Doe",
-    "Jane Smith",
-    "Alice Johnson",
-    "Robert Brown",
-    "Emily Davis",    
-    "John Doe",
-    "Jane Smith",
-    "Alice Johnson",
-    "Robert Brown",
-    "Emily Davis",
-    "John Doe",
-    "Jane Smith",
-    "Alice Johnson",
-    "Robert Brown",
-    "Emily Davis",
-    
-  ];
-  const classList = [
-    "IX A",
-    "X B",
-    "XI B",
-    "X G",
-    "XII B",
-    "XI D",
-    "X R",
-    "X T",
-    "X Y",
-    "X R",
-    "IX A",
-    "X B",
-    "XI B",
-    "X G",
-    "XII B",
-    "XI D",
-    "X R",
-    "X T",
-    "X Y",
-    "X R",
-    "IX A",
-    "X B",
-    "XI B",
-    "X G",
-    "XII B",
-    "XI D",
-    "X R",
-    "X T",
-    "X Y",
-    "X R",
-  ];
+  const handleFormSubmit = async () => {
+    const formData = {
+      hallNo,
+      studentperbench,
+      columnNo,
+      examdate,
+      numberoftables,
+      startTime,
+      endTime,
+      selectedTeacher,
+      selectedClass,
+      selectedLayout,
+    };
+
+    try {
+      const response = await axios.post(`${APIURL}/api/seating`, formData);
+      console.log(response.data);
+      Swal.fire("Success", "Seating arrangement submitted successfully", "success");
+      setShowModal(false);
+    } catch (error) {
+      console.error("There was an error submitting the form!", error);
+      Swal.fire("Error", "There was an error submitting the form", "error");
+    }
+    setShowModal(false);
+  };
+
 
   return (
     <div>
       <Container className="seat_assign_container">
-        <form className="seat_form">
+        <form className="seat_form"  onSubmit={handleSubmit}>
           <div
             style={{
               display: "flex",
@@ -258,7 +253,7 @@ function SeatAssigning() {
                     Exam Date<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
-                    type="text"
+                    type="date"
                     id="exam_date"
                     name="exam_date"
                     value={examdate}
@@ -333,7 +328,7 @@ function SeatAssigning() {
               <button
                 type="submit"
                 className="seat_button"
-                onClick={handleSubmit}
+              
               >
                 Assign
               </button>
@@ -368,18 +363,34 @@ function SeatAssigning() {
                     />
                   </div>
                 </Form>
+
                 <div className="seat_modal_content">
-          {facultyList.map((name, index) => (
-            <div key={index} className={`d-flex align-items-center seat_modal_item ${index >= 10 ? 'right-column' : 'left-column'}`}>
-              <Form.Check type="checkbox" id={`checkbox-${index}`} className="seat_modal_checkbox" />
-              <label htmlFor={`checkbox-${index}`} className="ms-2 seat_modal_label">
-                {name}
-              </label>
-            </div>
-          ))}
-        </div>
+                  {teacherOptions?.map((teacher, index) => (
+                    <div
+                      key={index}
+                      className={`d-flex align-items-center seat_modal_item ${
+                        index >= 10 ? "right-column" : "left-column"
+                      }`}
+                    >
+                      <Form.Check
+                        type="checkbox"
+                        id={`checkbox-${index}`}
+                        className="seat_modal_checkbox"
+                        onChange={() => handleTeacherSelect(teacher)}
+                        checked={selectedTeacher.includes(teacher.value)}
+                      />
+                      <label
+                        htmlFor={`checkbox-${index}`}
+                        className="ms-2 seat_modal_label"
+                      >
+                        {teacher.label}
+                      </label>
+                    </div>
+                  ))}
+                </div>
               </div>
             </Col>
+
             <Col md={6}>
               <p className="modal_div_title">Select Class</p>
               <div
@@ -399,16 +410,31 @@ function SeatAssigning() {
                     />
                   </div>
                 </Form>
+
                 <div className="seat_modal_content">
-          {classList.map((classname, index) => (
-            <div key={index} className={`d-flex align-items-center seat_modal_item ${index >= 10 ? 'right-column' : 'left-column'}`}>
-              <Form.Check type="checkbox" id={`checkbox-${index}`} className="seat_modal_checkbox" />
-              <label htmlFor={`checkbox-${index}`} className="ms-2 seat_modal_label">
-                {classname}
-              </label>
-            </div>
-          ))}
-        </div>
+                  {classOptions?.map((classItem, index) => (
+                    <div
+                      key={index}
+                      className={`d-flex align-items-center seat_modal_item ${
+                        index >= 10 ? "right-column" : "left-column"
+                      }`}
+                    >
+                      <Form.Check
+                        type="checkbox"
+                        id={`checkbox-${index}`}
+                        className="seat_modal_checkbox"
+                        onChange={() => handleClassSelect(classItem)}
+                        checked={selectedClass.includes(classItem.value)}
+                      />
+                      <label
+                        htmlFor={`checkbox-${index}`}
+                        className="ms-2 seat_modal_label"
+                      >
+                        {classItem.label}
+                      </label>
+                    </div>
+                  ))}
+                </div>
               </div>
             </Col>
           </Row>
@@ -417,7 +443,7 @@ function SeatAssigning() {
           <Link to="/aarnanavbar" style={{ textDecoration: "none" }}>
             <Button
               variant="primary"
-              onClick={handleCloseModal}
+              onClick={handleFormSubmit}
               className="modal_submit"
             >
               Submit
