@@ -275,7 +275,7 @@ right: 15px;
     @media (min-width: 710px) and (max-width:1024px) {
     .teacher_examination_dashboard{
       padding-top: 10vh;
-      padding-left: 5vh;
+      padding-left: 8vh;
       padding-right: 1vh;
       }
       .examdashboard_search_filter_main {

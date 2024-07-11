@@ -60,39 +60,39 @@ function TeacherSubject() {
             <h1 className="teacher_subject_title">Subjects</h1>{" "}
           </Col>
           <Col md={6}>
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-end",
-                flexDirection: "row",
-                paddingLeft: "1vw",
-              }}
+            <div className="teacher_subject_search_filter_main"
+              // style={{
+              //   width: "100%",
+              //   display: "flex",
+              //   justifyContent: "flex-end",
+              //   flexDirection: "row",
+              //   paddingLeft: "1vw",
+              // }}
             >
               <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "flex-end",
-                }}
+                // style={{
+                //   width: "100%",
+                //   display: "flex",
+                //   justifyContent: "flex-end",
+                // }}
                 className="teacher_subject_search_filter d-flex align-items-center"
               >
                 <Form className="d-flex">
                   <div className="position-relative">
                     <BsSearch
-                      className="position-absolute top-50 translate-middle-y ms-2"
-                      style={{
-                        zIndex: 2,
-                        height: "20px",
-                        width: "20px",
-                        color: "#D8D4D4",
-                        right: "15px",
-                      }}
+                      className="teacher_subject_search_icon position-absolute top-50 translate-middle-y ms-2"
+                      // style={{
+                      //   zIndex: 2,
+                      //   height: "20px",
+                      //   width: "20px",
+                      //   color: "#D8D4D4",
+                      //   right: "15px",
+                      // }}
                     />
                     <Form.Control
                       type="search"
                       placeholder="Search"
-                      className="ps-6 teacher_student_search_input"
+                      className="ps-6 teacher_subject_search_input"
                       aria-label="Search"
                     />
                   </div>

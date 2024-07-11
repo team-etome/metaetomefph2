@@ -1,6 +1,6 @@
 .teacher_subject_container{
     height: 100vh;
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
     width: 100%;
     padding-left: 80px;
     flex-direction: column;
@@ -23,7 +23,7 @@
     margin-left: 12%;
 }
 .teacher_subject_search_filter_main{
-    width: 75%;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     flex-direction: row;
@@ -72,7 +72,19 @@
     margin-left: 20px;
     margin-right: 1px;
   }
-
+  .teacher_subject_search_icon{
+    z-index: 2;
+    height:20px;
+    width: 20px;
+    color: #D8D4D4;
+    right: 15px;
+  }
+  .teacher_subject_search_input{
+    width: 400px;
+    height: 35px;
+    border-radius: 17px;
+    color: #767676;
+    }
   .tec_sub_crd_rw{
     width: 100%;
     height: 80%;
@@ -154,7 +166,8 @@
         
     }
 
-   .teacher_subject_search_filter{
+   .teacher_subject_search_filter .form-control{
+    width: 290px;
     display: flex;
     justify-content:center !important;
    }
@@ -165,5 +178,16 @@
   .tec_sub_crd_rw{
  padding-top: 10%;
     
+  }
+  /* .student_search_filter .form-control{
+    width: 270px;
+    display: flex;
+    justify-content: center;
+  } */
+  .teacher_subject_search_filter_main{
+    padding-left: 6vw;
+    /* padding-right: 0vw; */
+    display: flex;
+    justify-content: center;
   }
 }

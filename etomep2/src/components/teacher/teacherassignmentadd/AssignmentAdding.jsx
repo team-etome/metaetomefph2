@@ -100,12 +100,12 @@ function AssignmentAdding() {
     <div className="teacher_assignment_adding">
       <Container className="teacher_assignment_form">
         <div className="teacher_assignmentadd_header">
-          <Link to="/teacherassignment">
+          {/* <Link to="/teacherassignment">
             <IoChevronBackSharp className="teacher_assignmentadd_back" />
-          </Link>
+          </Link> */}
           <h1 className="teacher_assignmentadd_title">Assignment</h1>
         </div>
-        <hr style={{ border: " 1px solid #526D82" }} />
+        <hr style={{ border: "1px solid #526D82"}} />
         <div className="teacher_assignment_adding_scroll">
           <Row>
             <Col md={12}>

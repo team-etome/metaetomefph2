@@ -88,16 +88,16 @@ function ReferenceAdding() {
     <div className="teacher_reference_adding">
       <Container className="teacher_reference_form">
         <div className="teacher_ref_add_header">
-          <Link to="/teacherrefrencelist">
+          {/* <Link to="/teacherrefrencelist">
             <IoChevronBackSharp className="teacher_refadd_back" />
-          </Link>
+          </Link> */}
           <h1 className="teacher_refadd_title">Add Reference</h1>
         </div>
         <hr style={{ border: "1px solid #526D82" }} />
-        <div className="teacher_assignment_adding_scroll">
+        <div className="teacher_ref_adding_scroll">
           <Row>
             <Col md={12}>
-              <div className="teacher_assignmentadd_group">
+              <div className="teacher_refadd_group">
                 <label htmlFor="reftitle">
                   Reference Title
                   <span style={{ color: "red" }}>*</span>
