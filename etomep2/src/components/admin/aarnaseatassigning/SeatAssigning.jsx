@@ -18,6 +18,9 @@ function SeatAssigning() {
   const [showModal, setShowModal] = useState(false);
 
 
+  console.log(showModal,"show modal")
+
+
   const [hallNo, setHallNo] = useState("");
   const [studentperbench, setStudentperbench] = useState("");
   const [columnNo, setColumnNo] = useState("");
@@ -159,21 +162,21 @@ function SeatAssigning() {
 
     try {
       const response = await axios.post(`${APIURL}/api/seating`, formData);
-      console.log(response.data);
+      // console.log(response.data);
       Swal.fire("Success", "Seating arrangement submitted successfully", "success");
-      setShowModal(false);
+      // setShowModal(false);
     } catch (error) {
-      console.error("There was an error submitting the form!", error);
+      // console.error("There was an error submitting the form!", error);
       Swal.fire("Error", "There was an error submitting the form", "error");
     }
-    setShowModal(false);
+    // setShowModal(false);
   };
 
 
   return (
     <div>
       <Container className="seat_assign_container">
-        <form className="seat_form"  onSubmit={handleSubmit}>
+        <form className="seat_form" >
           <div
             style={{
               display: "flex",
@@ -328,6 +331,7 @@ function SeatAssigning() {
               <button
                 type="submit"
                 className="seat_button"
+                onClick={handleSubmit}
               
               >
                 Assign
@@ -440,7 +444,7 @@ function SeatAssigning() {
           </Row>
         </Modal.Body>
         <Modal.Footer style={{ border: "none" }}>
-          <Link to="/aarnanavbar" style={{ textDecoration: "none" }}>
+         
             <Button
               variant="primary"
               onClick={handleFormSubmit}
@@ -448,7 +452,7 @@ function SeatAssigning() {
             >
               Submit
             </Button>
-          </Link>
+         
         </Modal.Footer>
       </Modal>
     </div>

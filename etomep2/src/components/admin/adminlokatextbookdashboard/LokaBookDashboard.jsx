@@ -69,7 +69,7 @@ function LokaBookDashboard() {
       >
       <Row className="justify-content-between align-items-center" style={{ marginBottom: "12px" }}>
               <Col className="tb_title_col">
-              <h4>Textbook Management</h4>
+              {/* <h4>Textbook Management</h4> */}
               </Col>
               <Col md={6} className="book_search_col" style={{display:'flex'}}>
              
