@@ -351,9 +351,9 @@ function SeatAssigning() {
               <p className="modal_div_title">Select Faculty</p>
 
               <div
-                style={{
-                  border: "2px solid black",
-                }}
+                // style={{
+                //   border: "2px solid black",
+                // }}
                 className="modal_search"
               >
                 <Form className="d-flex">
@@ -398,9 +398,9 @@ function SeatAssigning() {
             <Col md={6}>
               <p className="modal_div_title">Select Class</p>
               <div
-                style={{
-                  border: "2px solid black",
-                }}
+                // style={{
+                //   border: "2px solid black",
+                // }}
                 className="modal_search"
               >
                 <Form className="d-flex">
@@ -443,15 +443,18 @@ function SeatAssigning() {
             </Col>
           </Row>
         </Modal.Body>
-        <Modal.Footer style={{ border: "none" }}>
+        <Modal.Footer style={{ border: "none"}}>
+          <button onClick={handleFormSubmit} className="modal_submit">
+                Submit
+          </button>
          
-            <Button
+            {/* <Button
               variant="primary"
               onClick={handleFormSubmit}
               className="modal_submit"
             >
               Submit
-            </Button>
+            </Button> */}
          
         </Modal.Footer>
       </Modal>
