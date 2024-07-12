@@ -18,6 +18,7 @@ function AdminLogin() {
   const [email, setEmail]                 = useState("");
   const [password, setPassword]           = useState("");
   const [showPassword, setShowPassword]   = useState(false);
+  const [btnPosition, setBtnPosition] = useState('0');
   const navigate                          = useNavigate();
   const APIURL                            = useSelector((state) => state.APIURL.url);
 
@@ -77,6 +78,17 @@ function AdminLogin() {
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
   };
+
+  const handleLeftClick = () => {
+    setBtnPosition('0');
+  };
+
+  const handleRightClick = () => {
+    setBtnPosition('110px');
+  };
+
+
+  
   return (
     <div
       className="ad_lg_min_div"
@@ -177,12 +189,20 @@ function AdminLogin() {
             <form className="admin_form ">
               <div className={`flip-card-inner ${isFlipped ? "flipped" : ""}`}>
                 <div className="flip-card-front">
+                <div className="switch_forgot">
                   <p
                     className="admin_form_title"
-                    style={{ marginBottom: "30px" }}
+                    style={{ marginBottom: "0px" }}
                   >
                     Login
                   </p>
+                  <div className="button_box">
+                    <div className="btn" style={{ left: btnPosition }}></div>
+                    <button type="button" className="toggle_btn" onClick={handleLeftClick}>Admin</button>
+                    <button type="button" className="toggle_btn" onClick={handleRightClick}>Teacher</button>
+                  </div>
+                </div>
+
                   <div className="admin_input_container">
                     <label
                       htmlFor="email"
@@ -238,6 +258,7 @@ function AdminLogin() {
                       {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
                     </span>
                   </div>
+
                   <p
                     className="admin_signup-link"
                     onClick={handleFlip}
