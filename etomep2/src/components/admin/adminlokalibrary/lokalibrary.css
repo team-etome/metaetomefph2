@@ -160,7 +160,7 @@
     .textbutton_lib_container {
         padding: 0 0 0 0;
         margin-top: 28px;
-        margin-left: 15px;
+        margin-left: 30px;
         /* border: 2px solid black; */
       }
       .textbutton_lib_container button {
@@ -184,6 +184,7 @@
         margin-bottom: 15px;
         position: relative;
         background-color:#fff;
+        margin-left: 30px;
       }
       .library_upload_placeholder{
         display: flex;
@@ -207,7 +208,7 @@
         background-color: rgba(0, 0, 0, 0.2);
       }
       .loka_lib_media_label{
-        margin-left: 20px;
+        margin-left: 35px;
         font-size: 25px;
         padding: 0px;
       }
@@ -320,18 +321,24 @@
             justify-content: center;
             align-items: center;
             height: 210px;
-            width: 250px;
+            width: 240px;
             border: 2px dashed #526D82;
             padding-right: 30px;
+            margin-left: 5px;
           }
           .lib_index_field{
             margin-left: 0px;
             width: 100%;
           }
-
+          .textbutton_lib_container{
+            margin-left: 5px;
+            }
           .textbutton_lib_container button {
             width: 130px;
             height: 40px;
+          }
+          .loka_lib_media_label{
+            margin-left: 5px;
           }
     }
     

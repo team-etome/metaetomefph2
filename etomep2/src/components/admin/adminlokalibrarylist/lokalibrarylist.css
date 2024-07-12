@@ -22,14 +22,14 @@
 .admin_loka_library_dashboard {
   padding-top: 10px;
   height: 75vh; 
-  overflow-y: auto; 
-  width:150vw ;
+  width:150vw;
 }
 
 
 .admin_loka_library_list_scroll {
-  max-height: 70vh;
-  overflow-y: auto;  
+  height: 70vh;
+  overflow-y: auto; 
+  overflow-x: hidden; 
 }
 
 
@@ -52,28 +52,7 @@
   font-size: 30px;
   font-weight: 600;
 }
-.lib_inputgroup_search{
-  width: 100%;
-}
-.library_search_input{
-  border-radius: 6px !important;
-  height: 30px;
-}
-.library_searchbar_icon{
-  z-index: 2;
-  height: 20px;
-  width: 20px;
-  color: #D8D4D4;
-  /* right: 1%;
-  left: 90%; */
-}
-.search_col{
-  background-color: #DAE2E9;
-  padding: 5px;
-  border-radius: 8px;
-  width: 40%;
-  margin-right: 20px;
-}
+
   .admin_lib_texts{
     padding: 10px;
   }
@@ -88,7 +67,6 @@
     display: flex;
     justify-content: center;
     font-size: 12px;
-  
   }
   .ad_lk_lib_rectangle{
   width: 70%;
@@ -167,14 +145,7 @@
   .title_col{
     display: none;
   }
-  .lib_inputgroup_search{
-    width: 100%;
-    /* padding-right: 5px; */
-  }
-  .search_col{
-    width: 95%;
-    /* margin-right: 20px; */
-  }
+
   }
   .my-button {
     background-color: #526D82;
