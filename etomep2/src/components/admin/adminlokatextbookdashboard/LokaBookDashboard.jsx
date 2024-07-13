@@ -67,14 +67,13 @@ function LokaBookDashboard() {
         className="admin_loka_textbook_dashboard"
         style={{ marginTop: "16px" }}
       >
-      <Row className="justify-content-between align-items-center" style={{ marginBottom: "12px" }}>
+      {/* <Row className="justify-content-between align-items-center" style={{ marginBottom: "12px" }}>
               <Col className="tb_title_col">
-              {/* <h4>Textbook Management</h4> */}
               </Col>
               <Col md={6} className="book_search_col" style={{display:'flex'}}>
              
-              <Dropdown>
-                <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic"className="dropdown_tb">
+              <Dropdown className="dropdown_tb">
+                <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic" className="dropdown_tb_toggle">
                   NCERT
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -94,7 +93,7 @@ function LokaBookDashboard() {
                 </InputGroup>
 
               </Col>
-            </Row>
+            </Row> */}
             <div className="admin_loka_tb_list_scroll">
         <Row>
           {lokabookListData.map((item, index) => (

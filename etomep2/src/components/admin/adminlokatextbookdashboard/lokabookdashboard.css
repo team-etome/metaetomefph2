@@ -1,14 +1,13 @@
 .admin_loka_textbook_dashboard {
   padding-top: 10px;
-  height: 75vh;
-  overflow-y: auto; 
-  width:150vw ;
+  height: 75vh; 
+  width:150vw;
 }
 
 .admin_loka_tb_list_scroll {
-  max-height: 70vh;
-  overflow-y: auto;  
-  overflow-x: hidden;
+  height: 70vh;
+  overflow-y: auto; 
+  overflow-x: hidden; 
 }
 
 .admin_loka_tb_list_scroll::-webkit-scrollbar {
@@ -31,30 +30,7 @@
   font-size: 30px;
   font-weight: 600;
 }
-.inputgroup_search{
-  width: 85%;
-}
-.book_search_input{
-  border-radius: 6px !important;
-  height: 30px;
-  left: 2%;
-}
-.book_searchbar_icon{
-  z-index: 2;
-  height: 20px;
-  width: 20px;
-  color: #D8D4D4;
-}
-.book_search_col{
-  background-color: #DAE2E9;
-  padding: 5px;
-  border-radius: 8px;
-}
-.dropdown_tb{
-  background-color: #ffffff;
-  border: none;
-  padding-top: 0px;
-}
+
 .admin_tb_texts{
   padding: 10px;
 }
@@ -145,10 +121,7 @@ align-items: center;
   .tb_title_col{
     display: none;
   }
-  .inputgroup_search{
-    width: 75%;
-    padding-right: 5px;
-  }
+  
   }
 .my-button {
   background-color: #526D82;

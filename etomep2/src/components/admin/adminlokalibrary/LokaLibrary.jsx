@@ -566,6 +566,8 @@ function LokaLibrary() {
             </Row>
             <Row className="lib_media_index">
               <Col md={6}>
+              </Col>
+              <Col md={6}>
                 <div style={{}}>
                   <label
                     htmlFor="mediaLibrary"
@@ -575,7 +577,7 @@ function LokaLibrary() {
                   </label>
                 </div>
                 <div>
-                  <div style={{ marginLeft: "10px" }}>
+                  <div style={{  }}>
                     <div style={{ display: "flex" }}>
                       <div className="textbutton_lib_container" style={{}}>
                         <button
@@ -609,7 +611,7 @@ function LokaLibrary() {
                   </div>
 
                   {selectedTab === "pdf" && (
-                    <div style={{ marginLeft: "10px" }}>
+                    <div style={{  }}>
                       <label htmlFor="pdf" style={{}}></label>
                       <div className="library_image_upload_container">
                         <div className="library_upload_placeholder">
