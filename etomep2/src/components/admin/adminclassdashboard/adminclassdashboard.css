@@ -216,7 +216,7 @@ margin-top: 8px;
   
 }
 }
-.my-button {
+.class_adding_my_button{
   background-color: #526D82;
   border: none;
   color: white;
@@ -231,7 +231,7 @@ margin-top: 8px;
   overflow: hidden;
 }
 
-.my-button:after {
+.class_adding_my_button:after {
   content: "";
   background-color: rgba(255, 255, 255, 0.374);
   position: absolute;
@@ -244,7 +244,7 @@ margin-top: 8px;
   opacity: 0;
 }
 
-.my-button.active:after {
+.class_adding_my_button.active:after {
   animation: ripple_401 3s ease-out;
 }
 

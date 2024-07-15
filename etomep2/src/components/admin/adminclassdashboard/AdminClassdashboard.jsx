@@ -123,7 +123,7 @@ useEffect(()=>{
         <audio ref={audioRef} src={mp3File}></audio>
         <Link to="/classadding">
           <button
-            className={`class_adding my-button ${isActive ? "active" : ""}`}
+            className={`class_adding class_adding_my_button ${isActive ? "active" : ""}`}
           >
             <IoIosAdd
               style={{ height: "40px", width: "40px", color: "#ffff" }}
@@ -134,7 +134,7 @@ useEffect(()=>{
       <div className="class_adding_button">
         {/* <audio ref={audioRef} src={mp3File}></audio> */}
         <button
-          className={`class_adding my-button ${isActive ? "active" : ""}`}
+          className={`class_adding class_adding_my_button ${isActive ? "active" : ""}`}
           onClick={handleButtonClick}
         >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />

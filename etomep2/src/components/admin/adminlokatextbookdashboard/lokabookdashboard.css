@@ -123,7 +123,7 @@ align-items: center;
   }
   
   }
-.my-button {
+.ad_lk_add_button_my_button{
   background-color: #526D82;
   border: none;
   color: white;
@@ -138,7 +138,7 @@ align-items: center;
   overflow: hidden;
 }
 
-.my-button:after {
+.ad_lk_add_button_my_button:after {
   content: "";
   background-color: rgba(255, 255, 255, 0.374);
   position: absolute;
@@ -151,7 +151,7 @@ align-items: center;
   opacity: 0;
 }
 
-.my-button.active:after {
+.ad_lk_add_button_my_button.active:after {
   animation: ripple_401 3s ease-out;
 }
 

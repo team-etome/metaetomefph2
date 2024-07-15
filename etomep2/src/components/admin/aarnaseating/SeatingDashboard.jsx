@@ -83,7 +83,7 @@ function SeatingDashboard() {
     </Container>
     <div className="seat_adding_button">
       <button
-        className={`seat_adding my-button ${isActive ? "active" : ""}`}
+        className={`seat_adding seat_adding_my_button ${isActive ? "active" : ""}`}
         onClick={handleButtonClick}
       >
         <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />

@@ -117,7 +117,7 @@ function TeacherRefrenceList() {
           <div className="refrence_teacher_button">
             <Link to = '/teacherreferenceadd'>
               <Button
-                className={`teacher_refrence my-button ${
+                className={`teacher_refrence teacher_refrence_my_button ${
                   showModal ? "active" : ""
                 }`}
                 onClick={handleAddClick}

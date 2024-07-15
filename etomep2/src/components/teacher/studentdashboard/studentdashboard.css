@@ -188,7 +188,7 @@ color: #767676;
   right: 15px;
 }
 
-  .my-button {
+  .student_adding_my_button {
     background-color: #526D82;
     border: none;
     color: white;
@@ -203,7 +203,7 @@ color: #767676;
     overflow: hidden;
   }
   
-  .my-button:after {
+  .student_adding_my_button:after {
     content: "";
     background-color: rgba(255, 255, 255, 0.374);
     position: absolute;
@@ -216,7 +216,7 @@ color: #767676;
     opacity: 0;
   }
   
-  .my-button.active:after {
+  .student_adding_my_button.active:after {
     animation: ripple_401 3s ease-out;
   }
   
@@ -311,7 +311,7 @@ color: #767676;
   background-color: rgba(0, 0, 0, 0.5); 
 }
 
-.my-button.active {
+.student_adding_my_button.active {
   box-shadow: none;
 }
 

@@ -83,7 +83,7 @@ function EvaluationDashboard() {
     </Container>
     <div className="evaluation_adding_button">
       <button
-        className={`evaluation_adding my-button ${isActive ? "active" : ""}`}
+        className={`evaluation_adding evaluation_adding_my_button ${isActive ? "active" : ""}`}
         onClick={handleButtonClick}
       >
         <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />

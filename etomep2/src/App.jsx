@@ -85,7 +85,7 @@ function App() {
           <Route path="/GodHeader" element={<GodHeader />} />
           <Route path="/customerdashboard" element={<CustomerdashboardPage />}/>
           <Route path="/coursedashboard" element={<CoursedashboardPage />} />
-          <Route path="/school" element={<SchoolPage />} />
+          {/* <Route path="/school" element={<SchoolPage />} /> */}
 
           
           {/* adminside */}

@@ -94,7 +94,7 @@ function AarnaQuestionPaper() {
     </Container>
     <div className="qpaper_adding_button">
       <button
-        className={`qpaper_adding my-button ${isActive ? "active" : ""}`}
+        className={`qpaper_adding qpaper_adding_my_button ${isActive ? "active" : ""}`}
         onClick={handleButtonClick}
       >
         <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
