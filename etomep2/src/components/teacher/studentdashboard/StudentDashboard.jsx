@@ -150,7 +150,7 @@ function StudentDashboard() {
                   gap: "20px",
                   cursor: "pointer",
                 }}
-                className="fab_option_link"
+                className="student_fab_option_link"
               >
                 <div className="fab-text">Download Excel Template</div>
                 <Button className="student_fab_option">
@@ -166,7 +166,7 @@ function StudentDashboard() {
                   gap: "20px",
                   cursor: "pointer",
                 }}
-                className="fab_option_link"
+                className="student_fab_option_link"
               >
                 <div className="fab-text">Upload Through Excel</div>
                 <Button className="student_fab_option">
