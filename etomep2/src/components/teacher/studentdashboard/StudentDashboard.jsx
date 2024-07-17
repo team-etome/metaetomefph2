@@ -183,11 +183,12 @@ function StudentDashboard() {
                 <Button
                   onClick={handleFileUpload}
                   disabled={isLoading}
-                  style={{
-                    backgroundColor: "#526D82",
-                    border: "none",
-                    marginTop: "20px"
-                  }}
+                  // style={{
+                  //   backgroundColor: "#526D82",
+                  //   border: "none",
+                  //   marginTop: "20px"
+                  // }}
+                  className="student_upload_button"
                 >
                   {isLoading ? (
                     <>
