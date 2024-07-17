@@ -9,9 +9,14 @@ import EvaluationDashboard from "../aarnaevaluation/EvaluationDashboard";
 import ResultFilter from "../aarnaresult/ResultFilter";
 
 function AarnaNavbar() {
+
   const [activeTab, setActiveTab] = useState(() => {
     return localStorage.getItem("aarnaActiveTab") || "Progress";
   });
+
+  useEffect(() => {
+    localStorage.setItem("aarnaActiveTab", activeTab);
+  }, [activeTab]);
 
 console.log(activeTab, "active tabbbbb");
 

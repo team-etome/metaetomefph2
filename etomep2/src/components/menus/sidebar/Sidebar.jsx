@@ -19,7 +19,7 @@ function Sidebar() {
 
   useEffect(() => {
     const path = location.pathname;
-    const routes = ["admindashboard", "eyora", "settings"]; // Routes visible to all users
+    const routes = ["admindashboard", "eyora", "settings"];
     if (teacher_token) {
       routes.push(
         "teacherstudentdashboard",
@@ -31,34 +31,32 @@ function Sidebar() {
     setActiveItem(found || null);
   }, [location.pathname, teacher_token]);
 
+  const handleLokaClick = () => {
+    console.log("enteredsddddd");
+    localStorage.setItem("activeTab", activeTab);
+    navigate("/adminlokanavbar");
+  };
+
   return (
-    <div
-      className="sidenav_fstdiv"
-    
-    >
+    <div className="sidenav_fstdiv">
       <div className="sidebar_header">
         <img
           src={etomelogo}
           alt="Logo"
-
           style={{
             width: "110px",
             height: "40px",
             display: "block",
-          
-      
           }}
-
         />
       </div>
       <Row
-   
         style={{
           display: "flex",
           flexDirection: "column",
           height: "60%",
           width: "112px",
-          justifyContent:"space-between",
+          justifyContent: "space-between",
           marginTop: "10vh",
         }}
       >
@@ -111,6 +109,7 @@ function Sidebar() {
                 </div>
               </Col>
             </Link>
+
             <Link
               to="/teacherexamination"
               style={{ textDecoration: "none", color: "inherit" }}
@@ -127,64 +126,59 @@ function Sidebar() {
               </Col>
             </Link>
 
-
-            <Link 
-            
-            style={{ textDecoration: "none", color: "inherit" }}>
-           
-            <Col
-              className={`menu_item_col ${
-                activeItem === "settings" ? "active" : ""
-              }`}
-            >
-              <div className="icon_container_div">
-                <SlSettings className="icon_img" />
-                <span className="icon-text">Settings</span>
-              </div>
-            </Col>
+            <Link style={{ textDecoration: "none", color: "inherit" }}>
+              <Col
+                className={`menu_item_col ${
+                  activeItem === "settings" ? "active" : ""
+                }`}
+              >
+                <div className="icon_container_div">
+                  <SlSettings className="icon_img" />
+                  <span className="icon-text">Settings</span>
+                </div>
+              </Col>
             </Link>
           </>
         ) : (
           <>
-           
-              <Col
-                className={`menu_item_col ${
-                  activeItem === "home" ? "active" : ""
-                }`}
-                onClick={() => setActiveItem("home")}
-              >
-                 <Link
-              to="/admindashboard"
-              style={{ textDecoration: "none", color: "inherit" }}
+            <Col
+              className={`menu_item_col ${
+                activeItem === "home" ? "active" : ""
+              }`}
+              onClick={() => setActiveItem("home")}
             >
+              <Link
+                to="/admindashboard"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <div className="icon_container_div">
                   <GoHome className="icon_img" />
                   <span className="icon-text">Home</span>
                 </div>
-                </Link>     
-              </Col>
-              <Col
-                className={`menu_item_col ${
-                  activeItem === "institution" ? "active" : ""
-                }`}
-                onClick={() => setActiveItem("institution")}
-              >
-                <Link
-                  to="/institutionadding"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <div className="icon_container_div">
-                    <RxDashboard className="icon_img" />
-                    <span className="icon-text">Institution</span>
-                  </div>
-                </Link>
-              </Col>
-          
+              </Link>
+            </Col>
             <Col
+              className={`menu_item_col ${
+                activeItem === "institution" ? "active" : ""
+              }`}
+              onClick={() => setActiveItem("institution")}
+            >
+              <Link
+                to="/institutionadding"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <div className="icon_container_div">
+                  <RxDashboard className="icon_img" />
+                  <span className="icon-text">Institution</span>
+                </div>
+              </Link>
+            </Col>
+
+            {/* <Col
               className={`menu_item_col ${
                 activeItem === "loka" ? "active" : ""
               }`}
-              // onClick={() => handleMenuItemClick("loka")}
+          
             >
               <Link
                 to="/adminlokanavbar"
@@ -195,6 +189,18 @@ function Sidebar() {
                   <span className="icon-text">Loka</span>
                 </div>
               </Link>
+            </Col> */}
+
+            <Col
+              className={`menu_item_col ${
+                activeItem === "loka" ? "active" : ""
+              }`}
+              onClick={handleLokaClick}
+            >
+              <div className="icon_container_div">
+                <PiBook className="icon_img" />
+                <span className="icon-text">Loka</span>
+              </div>
             </Col>
 
             <Col
@@ -228,7 +234,6 @@ function Sidebar() {
                 activeItem === "settings" ? "active" : ""
               }`}
             >
-
               <div className="icon_container_div">
                 <SlSettings className="icon_img" />
                 <span className="icon-text">Settings</span>

@@ -17,9 +17,7 @@ function SeatAssigning() {
   const [selectedLayout, setSelectedLayout] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-
-  console.log(showModal,"show modal")
-
+  console.log(showModal, "show modal");
 
   const [hallNo, setHallNo] = useState("");
   const [studentperbench, setStudentperbench] = useState("");
@@ -33,11 +31,9 @@ function SeatAssigning() {
   const [teacherOptions, setTeacherOptions] = useState([]);
   const [classOptions, setClassOptions] = useState([]);
 
-
- 
-  const APIURL       = useSelector((state) => state.APIURL.url);
-  const teacherinfo  = useSelector((state) => state.adminteacherinfo);
-  const classinfo    = useSelector((state) => state.adminallclassinfo);
+  const APIURL = useSelector((state) => state.APIURL.url);
+  const teacherinfo = useSelector((state) => state.adminteacherinfo);
+  const classinfo = useSelector((state) => state.adminallclassinfo);
   console.log(teacherinfo, "teacher info");
   console.log(classinfo, "class info");
 
@@ -88,6 +84,7 @@ function SeatAssigning() {
   };
 
   const handleClassSelect = (classItem) => {
+    console.log(classItem, "classs item");
     setSelectedClass((prevSelectedClasses) => {
       if (prevSelectedClasses.includes(classItem.value)) {
         return prevSelectedClasses.filter((item) => item !== classItem.value);
@@ -96,7 +93,6 @@ function SeatAssigning() {
       }
     });
   };
-
 
   const customStyles = {
     control: (base, state) => ({
@@ -145,7 +141,6 @@ function SeatAssigning() {
     }),
   };
 
-
   const handleFormSubmit = async () => {
     const formData = {
       hallNo,
@@ -160,10 +155,16 @@ function SeatAssigning() {
       selectedLayout,
     };
 
+    console.log(selectedClass,"selected classsssss")
+
     try {
       const response = await axios.post(`${APIURL}/api/seating`, formData);
       // console.log(response.data);
-      Swal.fire("Success", "Seating arrangement submitted successfully", "success");
+      Swal.fire(
+        "Success",
+        "Seating arrangement submitted successfully",
+        "success"
+      );
       // setShowModal(false);
     } catch (error) {
       // console.error("There was an error submitting the form!", error);
@@ -172,11 +173,10 @@ function SeatAssigning() {
     // setShowModal(false);
   };
 
-
   return (
     <div>
       <Container className="seat_assign_container">
-        <form className="seat_form" >
+        <form className="seat_form">
           <div
             style={{
               display: "flex",
@@ -332,7 +332,6 @@ function SeatAssigning() {
                 type="submit"
                 className="seat_button"
                 onClick={handleSubmit}
-              
               >
                 Assign
               </button>
@@ -350,12 +349,7 @@ function SeatAssigning() {
             <Col md={6}>
               <p className="modal_div_title">Select Faculty</p>
 
-              <div
-                // style={{
-                //   border: "2px solid black",
-                // }}
-                className="modal_search"
-              >
+              <div className="modal_search">
                 <Form className="d-flex">
                   <div className="position-relative">
                     <BsSearch className="position-absolute top-50 translate-middle-y ms-2 modal_search_icon" />
@@ -371,20 +365,20 @@ function SeatAssigning() {
                 <div className="seat_modal_content">
                   {teacherOptions?.map((teacher, index) => (
                     <div
-                      key={index}
+                      key={`teacher-${index}`}
                       className={`d-flex align-items-center seat_modal_item ${
                         index >= 10 ? "right-column" : "left-column"
                       }`}
                     >
                       <Form.Check
                         type="checkbox"
-                        id={`checkbox-${index}`}
+                        id={`teacher-checkbox-${index}`}
                         className="seat_modal_checkbox"
                         onChange={() => handleTeacherSelect(teacher)}
                         checked={selectedTeacher.includes(teacher.value)}
                       />
                       <label
-                        htmlFor={`checkbox-${index}`}
+                        htmlFor={`teacher-checkbox-${index}`}
                         className="ms-2 seat_modal_label"
                       >
                         {teacher.label}
@@ -397,12 +391,7 @@ function SeatAssigning() {
 
             <Col md={6}>
               <p className="modal_div_title">Select Class</p>
-              <div
-                // style={{
-                //   border: "2px solid black",
-                // }}
-                className="modal_search"
-              >
+              <div className="modal_search">
                 <Form className="d-flex">
                   <div className="position-relative">
                     <BsSearch className="position-absolute top-50 translate-middle-y ms-2 modal_search_icon" />
@@ -415,23 +404,23 @@ function SeatAssigning() {
                   </div>
                 </Form>
 
-                <div className="seat_modal_content">
+                <div className="class_seat_modal_content">
                   {classOptions?.map((classItem, index) => (
                     <div
-                      key={index}
+                      key={`class-${index}`}
                       className={`d-flex align-items-center seat_modal_item ${
                         index >= 10 ? "right-column" : "left-column"
                       }`}
                     >
                       <Form.Check
                         type="checkbox"
-                        id={`checkbox-${index}`}
+                        id={`class-checkbox-${index}`}
                         className="seat_modal_checkbox"
                         onChange={() => handleClassSelect(classItem)}
                         checked={selectedClass.includes(classItem.value)}
                       />
                       <label
-                        htmlFor={`checkbox-${index}`}
+                        htmlFor={`class-checkbox-${index}`}
                         className="ms-2 seat_modal_label"
                       >
                         {classItem.label}
@@ -443,19 +432,10 @@ function SeatAssigning() {
             </Col>
           </Row>
         </Modal.Body>
-        <Modal.Footer style={{ border: "none"}}>
+        <Modal.Footer style={{ border: "none" }}>
           <button onClick={handleFormSubmit} className="modal_submit">
-                Submit
+            Submit
           </button>
-         
-            {/* <Button
-              variant="primary"
-              onClick={handleFormSubmit}
-              className="modal_submit"
-            >
-              Submit
-            </Button> */}
-         
         </Modal.Footer>
       </Modal>
     </div>
