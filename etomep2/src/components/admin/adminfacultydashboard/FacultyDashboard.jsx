@@ -163,7 +163,7 @@ function FacultyDashboard() {
 
               <div
                 onClick={generateExcelFile}
-                style={{
+                // style={{
                   // display: "flex",
                   // justifyContent: "center",
                   // alignContent: "center",
@@ -171,8 +171,7 @@ function FacultyDashboard() {
                   // gap: "20px",
                   // cursor: "pointer",
                   // marginTop:'20px',
-                  
-                }}
+                // }}
                 className="fab_option_link"
               >
                 <div className="fab-text">Download Excel Template</div>
@@ -183,14 +182,14 @@ function FacultyDashboard() {
 
               <div
                 onClick={openFileSelector}
-                style={{
+                // style={{
                   // display: "flex",
                   // justifyContent: "center",
                   // alignContent: "center",
                   // gap: "20px",
                   // cursor: "pointer",
                   // marginTop:'20px',
-                }}
+                // }}
                 className="fab_option_link"
               >
                 <div className="fab-text">Upload Through Excel</div>
