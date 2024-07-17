@@ -69,7 +69,7 @@ function TestListing() {
             ))}
           </div>
           <div className="test_teacher_button">
-            <Button className={`test_refrence my-button ${showModal ? 'active' : ''}`} onClick={handleAddClick}>
+            <Button className={`teacher_test teacher_test_my_button ${showModal ? 'active' : ''}`} onClick={handleAddClick}>
               <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
             </Button>
           </div>

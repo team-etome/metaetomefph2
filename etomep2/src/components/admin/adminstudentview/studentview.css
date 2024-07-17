@@ -12,7 +12,7 @@
         padding-top: 1%;
         border-radius: 15px;
         padding-bottom: 100px;
-        overflow: hidden; /* Ensure no internal scroll leaks */
+        overflow: hidden; 
     }
     .student_header{
         height: 70px;
@@ -97,14 +97,18 @@
         display: flex;
         justify-content: flex-end;
         padding-top: 20px;
-        padding-left: 20px;
+        /* padding-left: 10px; */
+        /* margin-left: 10vh; */
+
     }
-    .result_heading button{
+    .student_result_view_button{
         background-color: transparent;
         color: #526D82;
         border: 1px solid #526D82;
+        font-size: 20px;
+        border-radius: 8px;
     }
-    .result_heading button:hover{
+    .student_result_view_button:hover{
         background-color: #526D82;
         color: #fff;
         border: 1px solid #526D82;

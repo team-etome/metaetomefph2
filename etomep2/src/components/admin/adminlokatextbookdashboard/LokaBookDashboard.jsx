@@ -117,7 +117,7 @@ function LokaBookDashboard() {
       </Container>
       <div className="ad_lk_tb_add">
         <button
-          className={`ad_lk_add_button my-button ${isActive ? "active" : ""}`}
+          className={`ad_lk_add_button ad_lk_add_button_my_button ${isActive ? "active" : ""}`}
           onClick={handleButtonClick}
         >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />

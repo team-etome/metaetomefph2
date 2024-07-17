@@ -223,7 +223,7 @@
   } */
 
   .teacher_assignmentadd_group input{
-      width: 105% !important;
+      width: 100% !important;
       border: 1px solid #526D82;
       border-radius: 4px;
       padding: 12px 10px;
@@ -353,7 +353,7 @@
   margin-top: 0px;
 }
 .teacher_assignmentadd_group input{
-  width: 105% !important;
+  width: 100% !important;
   border: 1px solid #526D82;
   border-radius: 4px;
   padding: 12px 10px;

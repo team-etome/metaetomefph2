@@ -76,7 +76,7 @@ function App() {
         <Routes>
           {/* godside */}
           <Route path="/godlogin" element={<GodloginPage />} />
-          <Route path="/goddashboard" element={<GoddashboardPage />} />
+          {/* <Route path="/goddashboard" element={<GoddashboardPage />} /> */}
           <Route path="/addcustomer" element={<AddcustomerPage />} />
           <Route path="/addbooks" element={<AddtextbooksPage />} />
           <Route path="/addbooks/:id" element={<AddtextbooksPage />} />
@@ -85,7 +85,7 @@ function App() {
           <Route path="/GodHeader" element={<GodHeader />} />
           <Route path="/customerdashboard" element={<CustomerdashboardPage />}/>
           <Route path="/coursedashboard" element={<CoursedashboardPage />} />
-          <Route path="/school" element={<SchoolPage />} />
+          {/* <Route path="/school" element={<SchoolPage />} /> */}
 
           
           {/* adminside */}
@@ -95,7 +95,7 @@ function App() {
           <Route path="/classadding" element={<AdminClassAddingPage/>}/>
           <Route path="/adminforgot" element={<AdminForgot />} />
           <Route path="/adminnewpassword" element={<AdminNewPassword />} />
-          <Route path="/adminfacultydashboard" element={<AdminFacultyPage />} />
+          {/* <Route path="/adminfacultydashboard" element={<AdminFacultyPage />} /> */}
           <Route path="/curriculumadding" element={<AdminCurriculumAddingPage/>}/>
           <Route path="/facultyadding" element={<AdminFacultyAddingPage/>}/>
           <Route path="/classview" element={<AdminClassViewPage/>}/>
@@ -105,12 +105,12 @@ function App() {
           <Route path="/studentresultview" element={<AdminStudentResultPage/>}/>
           <Route path="/aarnanavbar" element={<AarnaNavbarPage/>}/>
           <Route path="/aarnaprogress" element={<AarnaProgressPage/>}/>
-          <Route path="/aarnaquestionpaper" element={<AarnaQuestionPaperPage/>}/>
+          {/* <Route path="/aarnaquestionpaper" element={<AarnaQuestionPaperPage/>}/> */}
           <Route path="/questionadding" element={<AarnaQuestionAssigningPage/>}/>
-          <Route path="/seatingdashboard" element={<AarnaSeatingDashboardPage/>}/>
+          {/* <Route path="/seatingdashboard" element={<AarnaSeatingDashboardPage/>}/> */}
           <Route path="/seatassigning" element={<AarnaSeatAssignPage/>}/>
           <Route path="/evaluationscheduling" element={<AarnaEvaluationSchedulePage/>}/>
-          <Route path="/evaluationdashboard" element={<AarnaEvaluationDashbaordPage/>}/>
+          {/* <Route path="/evaluationdashboard" element={<AarnaEvaluationDashbaordPage/>}/> */}
           <Route path="/questionview" element={<AarnaQuestionViewPage/>}/>
           <Route path="/seatview" element={<AarnaSeatViewPage/>}/>
           <Route path="/evaluationview" element={<AarnaEvaluationViewPage/>}/>

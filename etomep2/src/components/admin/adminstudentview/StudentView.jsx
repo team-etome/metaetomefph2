@@ -128,12 +128,14 @@ function StudentView() {
             </div>
           </Col>
         </Row>
+
         <Row className="mt-4">
         <div className='result_heading'>
             <div className='student_title'>
-              <Button>View Results</Button>
+              <button className='student_result_view_button'>View Results</button>
             </div>
             </div>
+            </Row>
         {/* <Col>
           <h5 className="mb-2" style={{display:'flex', justifyContent:'center', color:'#526D82', fontSize:'20px', fontWeight:'100px'}}>First Term</h5>
           <div className="results_container">
@@ -150,7 +152,7 @@ function StudentView() {
           </div>
         </Col> */}
         
-      </Row>
+      
       </div>
       </form>
     </Container>

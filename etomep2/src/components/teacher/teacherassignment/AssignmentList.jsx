@@ -140,7 +140,7 @@ function AssignmentList() {
           </div>
           <div className="assignment_teacher_button">
             <Button
-              className={`teacher_assignment my-button ${
+              className={`teacher_assignment teacher_assignment_my_button ${
                 showModal ? "active" : ""
               }`}
               onClick={handleAddClick}

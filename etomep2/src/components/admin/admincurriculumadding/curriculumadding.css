@@ -270,7 +270,7 @@
     height: auto;
     width: 100%;
     padding-left: 10px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
   }
 
   .curriculum_inputfield {
