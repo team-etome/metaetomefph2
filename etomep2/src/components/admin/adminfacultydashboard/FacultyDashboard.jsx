@@ -150,52 +150,50 @@ function FacultyDashboard() {
           <>
             <div className="overlay" onClick={handleAddClick}></div>
             <div className="fab-options">
-              <Link
+            <Link
                 to="/facultyadding"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignContent: "center",
-                  gap: "20px",
-                }}
                 className="fab_option_link"
               >
-                <div className="fab-text">Add Faculty</div>
-                <Button className="fab-option">
+                <Button className="fab-option" style={{marginTop:'10px'}}>
                   <IoMdAdd className="fab-icon" />
                 </Button>
+                <div className="fab-text">Add Faculty</div>
               </Link>
+
 
               <div
                 onClick={generateExcelFile}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignContent: "center",
-                  gap: "20px",
-                  cursor: "pointer",
-                }}
+                // style={{
+                  // display: "flex",
+                  // justifyContent: "center",
+                  // alignContent: "center",
+                  // marginTop:'20px',
+                  // gap: "20px",
+                  // cursor: "pointer",
+                  // marginTop:'20px',
+                // }}
                 className="fab_option_link"
               >
                 <div className="fab-text">Download Excel Template</div>
-                <Button className="fab-option">
+                <Button className="fab-option" style={{marginTop:'70px'}}>
                   <IoMdDownload className="fab-icon" />
                 </Button>
               </div>
 
               <div
                 onClick={openFileSelector}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignContent: "center",
-                  gap: "20px",
-                  cursor: "pointer",
-                }}
+                // style={{
+                  // display: "flex",
+                  // justifyContent: "center",
+                  // alignContent: "center",
+                  // gap: "20px",
+                  // cursor: "pointer",
+                  // marginTop:'20px',
+                // }}
                 className="fab_option_link"
               >
                 <div className="fab-text">Upload Through Excel</div>
-                <Button className="fab-option">
+                <Button className="fab-option"style={{marginTop:'130px'}}>
                   <MdUpload className="fab-icon" />
                 </Button>
               </div>
@@ -207,13 +205,15 @@ function FacultyDashboard() {
               />
               {file && (
                 <Button
+                  className="upload_button"
                   onClick={handleFileUpload}
                   disabled={isLoading}
-                  style={{
-                    backgroundColor: "#526D82",
-                    border: "none",
-                    marginTop: "20px",
-                  }}
+                  // style={{
+                  //   backgroundColor: "#526D82",
+                  //   border: "none",
+                  //   marginTop: "200px",
+                  //   marginRight:'70px',
+                  // }}
                 >
                   {isLoading ? "Uploading..." : "Upload File"}
                 </Button>

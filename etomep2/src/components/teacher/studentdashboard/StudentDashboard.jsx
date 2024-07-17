@@ -128,48 +128,48 @@ function StudentDashboard() {
             <div className="student_fab-options">
               <Link
                 to="/teacherstudentadd"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignContent: "center",
-                  gap: "20px",
-                }}
+                // style={{
+                //   display: "flex",
+                //   justifyContent: "center",
+                //   alignContent: "center",
+                //   gap: "20px",
+                // }}
                 className="student_fab_option_link"
               >
                 <div className="student_fab_text">Add Student</div>
-                <Button className="student_fab_option">
+                <Button className="student_fab_option" style={{marginTop:'10px'}}>
                   <IoMdAdd className="student_fab_icon" />
                 </Button>
               </Link>
               <div
                 onClick={studentexcel}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignContent: "center",
-                  gap: "20px",
-                  cursor: "pointer",
-                }}
-                className="fab_option_link"
+                // style={{
+                //   display: "flex",
+                //   justifyContent: "center",
+                //   alignContent: "center",
+                //   gap: "20px",
+                //   cursor: "pointer",
+                // }}
+                className="student_fab_option_link"
               >
                 <div className="fab-text">Download Excel Template</div>
-                <Button className="student_fab_option">
+                <Button className="student_fab_option" style={{marginTop:'70px'}}>
                   <IoMdDownload className="student_fab_icon" />
                 </Button>
               </div>
               <div
                 onClick={openFileSelector}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignContent: "center",
-                  gap: "20px",
-                  cursor: "pointer",
-                }}
-                className="fab_option_link"
+                // style={{
+                //   display: "flex",
+                //   justifyContent: "center",
+                //   alignContent: "center",
+                //   gap: "20px",
+                //   cursor: "pointer",
+                // }}
+                className="student_fab_option_link"
               >
                 <div className="fab-text">Upload Through Excel</div>
-                <Button className="student_fab_option">
+                <Button className="student_fab_option" style={{marginTop:'130px'}}>
                   <MdUpload className="student_fab_icon" />
                 </Button>
               </div>
