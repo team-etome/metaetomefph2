@@ -36,7 +36,7 @@ function AdminClassdashboard() {
   
   const handleButtonClick= ()=>{
     navigate('/classadding')
-}
+} 
 
 const handleclick = (classdata) =>  {
   navigate('/classview', { state: { class: classdata } });
