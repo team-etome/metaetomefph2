@@ -34,7 +34,7 @@ function AarnaQuestionPaper() {
     // };
     const handleButtonClick= ()=>{
       navigate('/questionadding')
-  }
+  } 
 
     const handleclick= ()=>{
       navigate('/questionview')

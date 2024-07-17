@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
@@ -6,53 +6,65 @@ import Select from "react-select";
 import { BsSearch } from "react-icons/bs";
 import "../aarnaevaluationschedule/evaluationscheduling.css";
 import { useSelector } from "react-redux";
+import axios from 'axios'
 
 function EvaluationScheduling() {
   const [showModal, setShowModal] = useState(false);
   const [classNumber, setClassNumber] = useState(false);
-  const [division, setDivision] = useState(false);
-  const [subject, setSubject] = useState(false);
-  const [term, setTerm] = useState(false);
-  const [startTime, setStartTime] = useState(false);
-  const [endTime, setEndTime] = useState(false);
+  const [subject, setSubjects] = useState(false);
+  const [teachers, setTeachers] = useState([]);
+
   const [checkedItems, setCheckedItems] = useState([]);
 
   const classinfo = useSelector((state) => state.adminallclassinfo);
+  const teacherinfo = useSelector((state) => state.adminteacherinfo);
+  const APIURL = useSelector((state) => state.APIURL.url);
 
   const classnumberOptions = classinfo.adminallclassinfo.map((classItem) => ({
     value: `${classItem.class_name} ${classItem.division}`,
     label: `${classItem.class_name} ${classItem.division}`,
   }));
 
-  const classdivision = classinfo.adminallclassinfo.map((classItem) => ({
-    value: classItem.division,
-    label: classItem.division,
-  }));
+
 
   const class_name = classinfo.adminallclassinfo[0]?.class_name;
   console.log(class_name, "classssss");
   console.log(classinfo, "class infooo");
 
-  const termOptions = [
-    { value: "1", label: "1" },
-    { value: "2", label: "2" },
-    { value: "3", label: "3" },
-  ];
-  const classnumberptions = [
-    { value: "10", label: "10" },
-    { value: "11", label: "11" },
-    { value: "12", label: "12" },
-  ];
-  const divisionOptions = [
-    { value: "a", label: "a" },
-    { value: "b", label: "b" },
-    { value: "c", label: "c" },
-  ];
-  const subjectOptions = [
-    { value: "hindi", label: "hindi" },
-    { value: " malayalam", label: "malayalam" },
-    { value: "english", label: "english" },
-  ];
+  useEffect(() => {
+    fetchSubjects();
+    mapTeachers();
+  }, [teacherinfo]);
+
+  const mapTeachers = () => {
+    const teacherOptions = teacherinfo.adminteacherinfo?.map((teacher) => ({
+      value: `${teacher.first_name} ${teacher.last_name}`,
+      label: `${teacher.first_name} ${teacher.last_name}`,
+    }));
+    setTeachers(teacherOptions);
+  };
+
+  const fetchSubjects = async () => {
+    try {
+      const response = await axios.get(`${APIURL}/api/curriculam`);
+      const mappedSubjects = response.data.subject_names.map((sub) => ({
+        value: sub.subject_name,
+        label: sub.subject_name,
+      }));
+      setSubjects(mappedSubjects);
+    } catch (error) {
+      console.error("Failed to fetch subjects:", error);
+    }
+  };
+
+
+
+ 
+  // const subjectOptions = [
+  //   { value: "hindi", label: "hindi" },
+  //   { value: " malayalam", label: "malayalam" },
+  //   { value: "english", label: "english" },
+  // ];
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -189,10 +201,10 @@ function EvaluationScheduling() {
                   </label>
                   {/* <input type="text" id='students_bench' name='students_bench' /> */}
                   <Select
-                    options={subjectOptions}
+                    options={subject}
                     styles={customStyles}
                     value={subject}
-                    onChange={setSubject}
+                    onChange={setSubjects}
                     placeholder=""
                   />
                 </div>
