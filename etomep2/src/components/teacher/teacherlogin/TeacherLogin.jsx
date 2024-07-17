@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { RiShareBoxFill } from "react-icons/ri";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector ,useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
 import '../teacherlogin/teacherlogin.css'
+
 import { teacherinfo } from "../../../Redux/Actions/TeacherInfoAction";
 
 function TeacherLogin() {
@@ -17,10 +18,28 @@ function TeacherLogin() {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const [btnPosition, setBtnPosition]     = useState('0');
     const APIURL = useSelector((state) => state.APIURL.url);
+
+    useEffect(() => {
+      if (location.pathname === "/teacherlogin") {
+        setBtnPosition("110px");
+      }
+    }, [location.pathname]);
   
   
     const dispatch = useDispatch(); 
+
+
+    const handleLeftClick = () => {
+      setBtnPosition('0');
+      navigate('/')
+    };
+  
+    const handleRightClick = () => {
+      setBtnPosition('110px');
+      navigate("/teacherlogin");
+    };
   
     const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
@@ -175,12 +194,22 @@ function TeacherLogin() {
             <form className="teacher_form ">
               <div className={`teacher_flip_card_inner ${isFlipped ? "flipped" : ""}`}>
                 <div className="teacher_flip_card_front">
+                  <div  className="switch_forgott">
+
                   <p
                     className="teacher_form_title"
                     style={{ marginBottom: "30px" }}
                   >
-                    Login
+                   Teacher  Login
                   </p>
+                  <div className="button_teacher">
+                    <div className="btn" style={{ left: btnPosition }}></div>
+                    <button type="button" className="toggle_btn" onClick={handleLeftClick}>Admin</button>
+                    <button type="button" className="toggle_btn" onClick={handleRightClick}>Teacher</button>
+                  </div>
+
+
+                  </div>
                   <div className="teacher_input_container">
                     <label
                       htmlFor="email"

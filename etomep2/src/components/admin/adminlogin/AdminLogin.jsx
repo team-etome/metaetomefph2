@@ -18,7 +18,7 @@ function AdminLogin() {
   const [email, setEmail]                 = useState("");
   const [password, setPassword]           = useState("");
   const [showPassword, setShowPassword]   = useState(false);
-  const [btnPosition, setBtnPosition] = useState('0');
+  const [btnPosition, setBtnPosition]     = useState('0');
   const navigate                          = useNavigate();
   const APIURL                            = useSelector((state) => state.APIURL.url);
 
@@ -85,6 +85,7 @@ function AdminLogin() {
 
   const handleRightClick = () => {
     setBtnPosition('110px');
+    navigate("/teacherlogin");
   };
 
 
@@ -194,7 +195,7 @@ function AdminLogin() {
                     className="admin_form_title"
                     style={{ marginBottom: "0px" }}
                   >
-                    Login
+                   Admin Login
                   </p>
                   <div className="button_box">
                     <div className="btn" style={{ left: btnPosition }}></div>

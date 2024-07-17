@@ -13,8 +13,8 @@ import Swal from 'sweetalert2';
 
 
 function CurriculumAdding() {
-  const [publisher, setPublisher] = useState(null);
-  const [subject, setSubject] = useState(null);
+  // const [publisher, setPublisher] = useState(null);
+  // const [subject, setSubject] = useState(null);
   const [faculty, setFaculty] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
 

@@ -19,19 +19,19 @@ function EvaluationScheduling() {
 
   const classinfo = useSelector((state) => state.adminallclassinfo);
 
-  // const classnumberOptions = classinfo.adminallclassinfo.map((classItem) => ({
-  //   value: `${classItem.class_name} ${classItem.division}`,
-  //   label: `${classItem.class_name} ${classItem.division}`,
-  // }));
+  const classnumberOptions = classinfo.adminallclassinfo.map((classItem) => ({
+    value: `${classItem.class_name} ${classItem.division}`,
+    label: `${classItem.class_name} ${classItem.division}`,
+  }));
 
-  // const classdivision = classinfo.adminallclassinfo.map((classItem) => ({
-  //   value: classItem.division,
-  //   label: classItem.division,
-  // }));
+  const classdivision = classinfo.adminallclassinfo.map((classItem) => ({
+    value: classItem.division,
+    label: classItem.division,
+  }));
 
-  // const class_name = classinfo.adminallclassinfo[0]?.class_name;
-  // console.log(class_name, "classssss");
-  // console.log(classinfo, "class infooo");
+  const class_name = classinfo.adminallclassinfo[0]?.class_name;
+  console.log(class_name, "classssss");
+  console.log(classinfo, "class infooo");
 
   const termOptions = [
     { value: "1", label: "1" },
@@ -149,7 +149,7 @@ function EvaluationScheduling() {
                     Class Number<span style={{ color: "red" }}>*</span>
                   </label>
                   <Select
-                    // options={classnumberOptions}
+                    options={classnumberOptions}
                     styles={customStyles}
                     value={classNumber} // this should be an object with the same structure as items in options or null
                     onChange={setClassNumber} // ensure this handler updates the state appropriately
@@ -172,14 +172,14 @@ function EvaluationScheduling() {
                   <label htmlFor="term">
                     Term<span style={{ color: "red" }}>*</span>
                   </label>
-                  {/* <input type="text" id='table_no' name='table_no' /> */}
-                  <Select
+                  <input type="text" />
+                  {/* <Select
                     options={termOptions}
                     styles={customStyles}
                     value={term}
                     onChange={setTerm}
                     placeholder=""
-                  />
+                  /> */}
                 </div>
               </Col>
               <Col md={6}>
