@@ -8,8 +8,8 @@ function AdminProfile() {
   return (
     <div className='admin_profile'>
       <div className='background_section top_section'>
-      <Button className="back_button">&lt;</Button>
-      <Button className="logout_button">Logout</Button>
+      <button className="back_button">&lt;</button>
+      <button className="logout_button">Logout</button>
       </div>
       <div className='background_section bottom_section'>
       </div>
@@ -18,9 +18,9 @@ function AdminProfile() {
           <Col md={8}>
             <div className="profile_card">
               <div className='admin_profile_edit'>
-                    <Button>
+                    <button>
                         Edit
-                    </Button>
+                    </button>
                     <RiEdit2Fill className='admin_profile_edit_icon'/>
                 </div> 
               <Form className='profile_form'>
