@@ -1,96 +1,104 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import '../aarnaevaluation/evaluationdashboard.css'
+import "../aarnaevaluation/evaluationdashboard.css";
 import { IoIosAdd } from "react-icons/io";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 function EvaluationDashboard() {
-    const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [evaluationListData, setEvaluationListData] = useState([]);
 
-    const audioRef = useRef(null);
-  
-    // const history = useNavigate();
-    const navigate = useNavigate()
+  console.log(evaluationListData, "evaluationnnnn");
 
-  
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setIsActive((prevState) => !prevState);
-      }, 2000);
-  
-      return () => clearInterval(interval);
-    }, []);
-  
-    const handleButtonClick= ()=>{
-      navigate('/evaluationscheduling')
-  }
+  const navigate = useNavigate();
+  const APIURL = useSelector((state) => state.APIURL.url);
 
-    const handleclick= ()=>{
-      navigate('/evaluationview')
-  }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsActive((prevState) => !prevState);
+    }, 2000);
 
-    const evaluationListData = [
-        { term: "First Term", class: "1 A", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 B", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 C", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 D", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 A", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 B", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 C", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 D", date:'01/10/2024', subject: "Pending" },        
-        { term: "First Term", class: "1 A", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 B", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 C", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 D", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 A", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 B", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 C", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 D", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 A", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 B", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 C", date:'01/10/2024', subject: "Pending" },
-        { term: "First Term", class: "1 D", date:'01/10/2024', subject: "Pending" },
-      ];
+    return () => clearInterval(interval);
+  }, []);
 
+  useEffect(() => {
+    const fetchEvaluations = async () => {
+      try {
+        const response = await axios.get(`${APIURL}/api/evaluationadding`);
+        setEvaluationListData(response.data);
+      } catch (error) {
+        console.error(
+          "There was an error fetching the evaluation data!",
+          error
+        );
+      }
+    };
+
+    fetchEvaluations();
+  }, []);
+
+  const handleButtonClick = () => {
+    navigate("/evaluationscheduling");
+  };
+
+  const handleclick = (evaluationData) => {
+    navigate("/evaluationview", { state: { evaluation: evaluationData } });
+  };
 
   return (
-        <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
-    <Container
-      fluid
-      className="evaluation_container_scroll"
-      style={{ marginTop: "16px" }}
-    >
-      <Row>
-        {evaluationListData.map((item, index) => (
-          // lg={3} md={4} sm={6} xs={6}
-          <Col lg={3} md={6} sm={12} xs={12} key={index} className="evaluation_list">
-            <div  onClick={handleclick} className="border border-white evaluation_rectangle">
-              <div className="evaluation_term">{item.term}</div>
-              <div className="evaluation_class_date">
-                <div className="evaluation_class">
-                 Class: {item.class}
-                </div>
-                <div className="evaluation_date">
-                  {item.date}
-                </div>
-              </div>
-              <div className="evaluation_subject">{item.subject}</div>
-
-            </div>
-          </Col>
-        ))}
-      </Row>
-    </Container>
-    <div className="evaluation_adding_button">
-      <button
-        className={`evaluation_adding evaluation_adding_my_button ${isActive ? "active" : ""}`}
-        onClick={handleButtonClick}
+    <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
+      <Container
+        fluid
+        className="evaluation_container_scroll"
+        style={{ marginTop: "16px" }}
       >
-        <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
-      </button>
+       <Row>
+          {evaluationListData.length > 0 ? (
+            evaluationListData.map((item, index) => (
+              <Col
+                lg={3}
+                md={6}
+                sm={12}
+                xs={12}
+                key={index}
+                className="evaluation_list"
+              >
+                <div
+                  onClick={() => handleclick(item)}
+                  className="border border-white evaluation_rectangle"
+                >
+                  <div className="evaluation_term">{item.term}</div>
+                  <div className="evaluation_class_date">
+                    <div className="evaluation_class">
+                      Class: {item.class_name}
+                    </div>
+                    <div className="evaluation_date">{item.date}</div>
+                  </div>
+                  <div className="evaluation_subject">{item.subject_name}</div>
+                </div>
+              </Col>
+            ))
+          ) : (
+            <div className="no-evaluations-message">
+              <h3>No evaluations scheduled</h3>
+            </div>
+          )}
+        </Row>
+      </Container>
+      <div className="evaluation_adding_button">
+        <button
+          className={`evaluation_adding evaluation_adding_my_button ${
+            isActive ? "active" : ""
+          }`}
+          onClick={handleButtonClick}
+        >
+          <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
+        </button>
+      </div>
     </div>
-  </div>
-  )
+  );
 }
 
-export default EvaluationDashboard
+export default EvaluationDashboard;
