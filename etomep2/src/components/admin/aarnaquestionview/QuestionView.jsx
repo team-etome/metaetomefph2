@@ -1,15 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import Layout_01_S from "../../../assets/Layout_01_S.png";
 import "../aarnaquestionview/questionview.css";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function QuestionView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const dropdownRef = useRef(null);
+
+  const location = useLocation();
+  const questionPaper = location.state?.questionPaper;
+  const APIURL = useSelector((state) => state.APIURL.url);
+
+  const navigate = useNavigate();
+
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
   };
@@ -33,6 +43,37 @@ function QuestionView() {
     e.preventDefault();
     setShowEditBlockButtons((prevState) => !prevState);
   };
+
+  const handleDelete = async () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`${APIURL}/api/questionpaper/${questionPaper.id}`);
+          Swal.fire("Deleted!", "Question paper has been deleted.", "success");
+          navigate("/aarnanavbar"); // Adjust the route as per your application's routing
+        } catch (error) {
+          console.error(
+            "There was an error deleting the question paper!",
+            error
+          );
+          Swal.fire(
+            "Failed!",
+            "There was a problem deleting the question paper.",
+            "error"
+          );
+        }
+      }
+    });
+  };
+
   return (
     <div style={{}}>
       <Container className="question_view_container">
@@ -59,8 +100,14 @@ function QuestionView() {
                     paddingRight: "30px",
                   }}
                 >
-                  <button className="question_edit">Edit</button>
-                  <button className="question_block">Block</button>
+                  {/* <button className="question_edit">Edit</button> */}
+                  <button
+                    onClick={handleDelete}
+                    type="button"
+                    className="question_block"
+                  >
+                    Delete
+                  </button>
                 </div>
               ) : (
                 <div style={{ position: "relative" }} ref={dropdownRef}>
@@ -85,8 +132,14 @@ function QuestionView() {
                         gap: "10px",
                       }}
                     >
-                      <button className="question_edit">Edit</button>
-                      <button className="question_block">Block</button>
+                      {/* <button className="question_edit">Edit</button> */}
+                      <button
+                        onClick={handleDelete}
+                        type="button"
+                        className="question_block"
+                      >
+                        Delete
+                      </button>
                     </div>
                   )}
                 </div>
@@ -100,11 +153,23 @@ function QuestionView() {
               <Col md={6}>
                 <div className="question_view_group">
                   <label htmlFor="exam_name">Exam Name</label>
-                  <input type="text" id="exam_name" name="exam_name" readOnly />
+                  <input
+                    type="text"
+                    id="exam_name"
+                    name="exam_name"
+                    value={questionPaper?.exam_name || ""}
+                    readOnly
+                  />
                 </div>
                 <div className="question_view_group">
                   <label htmlFor="exam_date">Exam Date</label>
-                  <input type="text" id="exam_date" name="exam_date" readOnly />
+                  <input
+                    type="text"
+                    id="exam_date"
+                    name="exam_date"
+                    value={questionPaper?.exam_date || ""}
+                    readOnly
+                  />
                 </div>
                 <div className="question_view_group">
                   <label htmlFor="class_name">Class</label>
@@ -112,21 +177,19 @@ function QuestionView() {
                     type="email"
                     id="class_name"
                     name="class_name"
+                    value={questionPaper?.class_name || ""}
                     readOnly
                   />
                 </div>
-                {/* <div className="question_view_group">
-              <label htmlFor="category">Category Id</label>
-              <input
-                type="text"
-                id="category"
-                name="category"
-                readOnly
-              />
-            </div> */}
                 <div className="question_view_group">
                   <label htmlFor="term">Term</label>
-                  <input type="text" id="term" name="term" readOnly />
+                  <input
+                    type="text"
+                    id="term"
+                    name="term"
+                    value={questionPaper?.term || ""}
+                    readOnly
+                  />
                 </div>
                 <div className="question_view_group">
                   <label htmlFor="assign_faculty">Assigned Faculty</label>
@@ -134,6 +197,7 @@ function QuestionView() {
                     type="text"
                     id="assign_faculty"
                     name="assign_faculty"
+                    value={questionPaper?.teacher_name || ""}
                     readOnly
                   />
                 </div>
@@ -141,11 +205,23 @@ function QuestionView() {
               <Col md={6}>
                 <div className="question_view_group">
                   <label htmlFor="subject">Subject</label>
-                  <input type="text" id="subject" name="subject" readOnly />
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={questionPaper?.subject_name || ""}
+                    readOnly
+                  />
                 </div>
                 <div className="question_view_group">
                   <label htmlFor="out_marks">Out of Marks</label>
-                  <input type="text" id="out_marks" name="out_marks" readOnly />
+                  <input
+                    type="text"
+                    id="out_marks"
+                    name="out_marks"
+                    value={questionPaper?.total_marks || ""}
+                    readOnly
+                  />
                 </div>
                 <div className="question_view_group">
                   <label htmlFor="start_time">Start Time</label>
@@ -153,12 +229,19 @@ function QuestionView() {
                     type="text"
                     id="start_time"
                     name="start_time"
+                    value={questionPaper?.start_time || ""}
                     readOnly
                   />
                 </div>
                 <div className="question_view_group">
                   <label htmlFor="end_time">End Time</label>
-                  <input type="text" id="end_time" name="end_time" readOnly />
+                  <input
+                    type="text"
+                    id="end_time"
+                    name="end_time"
+                    value={questionPaper?.end_time || ""}
+                    readOnly
+                  />
                 </div>
               </Col>
             </Row>

@@ -1,24 +1,32 @@
 import React, { useState,useEffect } from "react";
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import Select from "react-select";
 import { BsSearch } from "react-icons/bs";
 import "../aarnaevaluationschedule/evaluationscheduling.css";
 import { useSelector } from "react-redux";
 import axios from 'axios'
+import Swal from 'sweetalert2';
 
 function EvaluationScheduling() {
   const [showModal, setShowModal] = useState(false);
   const [classNumber, setClassNumber] = useState(false);
-  const [subject, setSubjects] = useState(false);
+  const [subject, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
-
+  const [selectedSubject, setSelectedSubject] = useState(null);
   const [checkedItems, setCheckedItems] = useState([]);
+  const [term, setTerm] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const navigate = useNavigate();
 
   const classinfo = useSelector((state) => state.adminallclassinfo);
+  console.log(classinfo,"classs info")
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
   const APIURL = useSelector((state) => state.APIURL.url);
+
+  console.log(teachers,"ugrfwieyotgr78iewy ")
 
   const classnumberOptions = classinfo.adminallclassinfo.map((classItem) => ({
     value: `${classItem.class_name} ${classItem.division}`,
@@ -28,8 +36,9 @@ function EvaluationScheduling() {
 
 
   const class_name = classinfo.adminallclassinfo[0]?.class_name;
-  console.log(class_name, "classssss");
-  console.log(classinfo, "class infooo");
+  const admin     = classinfo.adminallclassinfo[0]?.admin;
+  
+ 
 
   useEffect(() => {
     fetchSubjects();
@@ -60,11 +69,8 @@ function EvaluationScheduling() {
 
 
  
-  // const subjectOptions = [
-  //   { value: "hindi", label: "hindi" },
-  //   { value: " malayalam", label: "malayalam" },
-  //   { value: "english", label: "english" },
-  // ];
+  
+
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -116,14 +122,19 @@ function EvaluationScheduling() {
       position: "absolute",
     }),
   };
-  const facultyList = ["Rrrrrrrrrr", "Jjjjjjjjj", "Mmmmmmm", "Eeeeeee"];
+ 
 
   const handleCheckboxChange = (e, item) => {
     const isChecked = e.target.checked;
     if (isChecked) {
-      setCheckedItems([...checkedItems, item]);
+      setCheckedItems((prevItems) => {
+        if (!prevItems.includes(item)) {
+          return [...prevItems, item];
+        }
+        return prevItems;
+      });
     } else {
-      setCheckedItems(checkedItems.filter((i) => i !== item));
+      setCheckedItems((prevItems) => prevItems.filter((i) => i !== item));
     }
   };
 
@@ -132,9 +143,48 @@ function EvaluationScheduling() {
     setShowModal(true);
   };
 
+
+  
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
+  const sendData = async (event) => {
+    event.preventDefault();
+    const data = {
+      classNumber: classNumber.label,
+      term: term,
+      subjects: selectedSubject.label,
+      end_date: endDate,
+      teacher: checkedItems.map((teacher) => teacher.label),
+      admin: admin,
+    };
+  
+    try {
+      const response = await axios.post(`${APIURL}/api/evaluationadding`, data);
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Evaluation schedule added successfully!",
+        });
+        navigate("/aarnanavbar");
+      } else {
+        throw new Error(`Unexpected response status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Failed to submit evaluation schedule:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to add evaluation schedule. Please try again.",
+      });
+    } finally {
+      setShowModal(false);
+    }
+  };
+
   return (
     <div>
       <Container className="evaluation_assign_container">
@@ -184,14 +234,8 @@ function EvaluationScheduling() {
                   <label htmlFor="term">
                     Term<span style={{ color: "red" }}>*</span>
                   </label>
-                  <input type="text" />
-                  {/* <Select
-                    options={termOptions}
-                    styles={customStyles}
-                    value={term}
-                    onChange={setTerm}
-                    placeholder=""
-                  /> */}
+                  <input onChange={(e) => setTerm(e.target.value)} type="text" />
+                  
                 </div>
               </Col>
               <Col md={6}>
@@ -203,16 +247,16 @@ function EvaluationScheduling() {
                   <Select
                     options={subject}
                     styles={customStyles}
-                    value={subject}
-                    onChange={setSubjects}
-                    placeholder=""
+                    value={selectedSubject}
+                    onChange={setSelectedSubject}
+                    placeholder="Select Subject..."
                   />
                 </div>
                 <div className="evaluation_group">
                   <label htmlFor="end_date">
                     End Date<span style={{ color: "red" }}>*</span>
                   </label>
-                  <input type="date" id="end_date" name="end_date" />
+                  <input  onChange={(e) => setEndDate(e.target.value)} type="date" id="end_date" name="end_date" />
                   {/* <Select options={termOptions} styles={customStyles} value={term} onChange={setTerm} placeholder=''/> */}
                 </div>
               </Col>
@@ -251,7 +295,7 @@ function EvaluationScheduling() {
                   </div>
                 </Form>
                 <div className="modal_faculty_list">
-                  {facultyList.map((faculty, index) => (
+                  {teachers.map((faculty, index) => (
                     <div key={index} className="d-flex align-items-center mb-2">
                       <input
                         type="checkbox"
@@ -259,7 +303,7 @@ function EvaluationScheduling() {
                         onChange={(e) => handleCheckboxChange(e, faculty)}
                         style={{ marginRight: "10px" }}
                       />
-                      <span>{faculty}</span>
+                      <span>{faculty.value}</span>
                     </div>
                   ))}
                 </div>
@@ -268,19 +312,13 @@ function EvaluationScheduling() {
           </Row>
         </Modal.Body>
         <Modal.Footer style={{ border: "none" }}>
-          <Link to="/aarnanavbar" style={{ textDecoration: "none" }}>
-          <button onClick={handleCloseModal} className="modal_evaluation_submit">
+         
+          <button onClick={sendData} className="modal_evaluation_submit">
             Submit
           </button>
-            {/* <Button
-              variant="primary"
-              onClick={handleCloseModal}
-              className="modal_evaluation_submit"
-            >
-              Submit
-            </Button> */}
+           
 
-          </Link>
+        
         </Modal.Footer>
       </Modal>
     </div>
