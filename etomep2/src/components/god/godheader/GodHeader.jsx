@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Col, Container, Row, Tabs, Tab, Nav } from "react-bootstrap";
-import etomelogo from "../../../assets/etomelogo.png";
-import { IoIosSearch } from "react-icons/io";
-import { IoAddSharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import BookdashBoard from "../textbookdashboard/BookdashBoard";
+import { Col, Container, Row, Nav } from "react-bootstrap";
 import Customerdashboard from "../customerdashboard/Customerdashboard";
+import BookdashBoard from "../textbookdashboard/BookdashBoard";
 import Coursedashboard from "../coursedashboard/Coursedashboard";
 import "../godheader/header.css";
 
 function GodHeader() {
-  // const [activeTab, setActiveTab] = useState("Institution");
+  const validTabs = ["Institution", "Textbook", "Course"];
+  const storedTab = localStorage.getItem("activeTab");
 
   const [activeTab, setActiveTab] = useState(
-    localStorage.getItem("activeTab") || "Institution"
+    validTabs.includes(storedTab) ? storedTab : "Institution"
   );
 
   // Update local storage when activeTab changes
@@ -22,7 +19,7 @@ function GodHeader() {
   }, [activeTab]);
 
   return (
-    <div className="header-container" style={{minHeight: "100vh",}}>
+    <div className="header-container" style={{ minHeight: "100vh" }}>
       <Container>
         <Row>
           <Col md={12} style={{ marginTop: "30px" }}>
