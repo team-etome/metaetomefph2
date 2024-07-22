@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import "../aarnaquestionassign/questionassigning.css";
 import { useSelector } from "react-redux";
@@ -11,6 +11,8 @@ import Swal from "sweetalert2";
 function QuestionAssigning() {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
+  const [selectedClass, setSelectedClass] = useState(null);
+  const [selectedDivision, setSelectedDivision] = useState(null);
   const [teachers, setTeachers] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [examName, setExamName] = useState("");
@@ -23,11 +25,43 @@ function QuestionAssigning() {
   const [instruction, setInstruction] = useState("");
   const [term, setTerm] = useState("");
   const [loading, setLoading] = useState(false);
+  const[classDetails,setClassDetails] = useState([])
 
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
+  const admininfo = useSelector((state) => state.admininfo);
 
-  console.log(teacherinfo, "teachersssss");
+  const navigate = useNavigate()
+ 
+  console.log(classDetails,"class detailssssss")
+
+  const admin_id = admininfo.admininfo?.admin_id
+
+
+
+  
+  useEffect(()=>{
+
+    const fetchclass = async()=>{
+  
+      try{
+  
+        const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`)
+        setClassDetails(response.data)
+       
+
+      }catch(error){
+        console.error("Failed to fetch class data")
+      }
+  
+  
+    }
+  
+    fetchclass();
+  
+  } ,[APIURL])
+
+
 
   useEffect(() => {
     fetchSubjects();
@@ -54,6 +88,30 @@ function QuestionAssigning() {
       console.error("Failed to fetch subjects:", error);
     }
   };
+
+  const classOptions = Array.from(
+    new Set(classDetails.map((item) => item.class_name))
+  ).map((className) => ({
+    value: className,
+    label: className,
+  }));
+
+  // Get division options filtered by the selected class
+  const divisionOptions = classDetails
+    .filter((item) => item.class_name === selectedClass?.value)
+    .map((item) => ({
+      value: item.division,
+      label: item.division,
+    }));
+
+    const handleClassChange = (selectedOption) => {
+      setSelectedClass(selectedOption);
+      setSelectedDivision(null); // Clear division selection when class changes
+    };
+  
+    const handleDivisionChange = (selectedOption) => {
+      setSelectedDivision(selectedOption);
+    };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -63,7 +121,7 @@ function QuestionAssigning() {
       { value: selectedTeacher, label: "Teacher" },
       { value: examName, label: "Exam Name" },
       { value: examDate, label: "Exam Date" },
-      { value: classNo, label: "Class" },
+      // { value: classNo, label: "Class" },
       { value: term, label: "Term" },
       { value: totalMark, label: "Total Mark" },
       { value: startTime, label: "Start Time" },
@@ -93,19 +151,24 @@ function QuestionAssigning() {
         teacher: selectedTeacher,
         exam_name: examName,
         exam_date: examDate,
-        class_name: classNo,
-        division: division,
+        class_name: selectedClass.label,
+        division: selectedDivision.label,
         start_time: startTime,
         end_time: endTime,
         total_marks: totalMark,
         term: term,
         instructions: instruction,
+        admin   :admin_id
       };
 
       const response = await axios.post(
         `${APIURL}/api/questionpaper`,
         formData
       );
+
+      navigate('aarnanavbar')
+
+    
 
       Swal.fire({
         icon: "success",
@@ -116,8 +179,8 @@ function QuestionAssigning() {
       // Clear form fields after successful submission
       setExamName("");
       setExamDate("");
-      setClassNo("");
-      setDivision("");
+      setSelectedClass("");
+      setSelectedDivision("");
       setStartTime("");
       setEndTime("");
       setTotalMark("");
@@ -267,24 +330,29 @@ function QuestionAssigning() {
                   <label htmlFor="class">
                     Class<span style={{ color: "red" }}>*</span>
                   </label>
-                  <input
-                    type="text"
-                    id="class"
-                    value={classNo}
-                    onChange={(e) => setClassNo(e.target.value)}
-                    style={{ textTransform: "capitalize" }}
-                    maxLength="10"
+                  <Select
+                    options={classOptions}
+                    styles={customStyles}
+                    value={classOptions.find(
+                      (option) => option.value === selectedClass?.value
+                    )}
+                    onChange={handleClassChange}
+                    placeholder="Select a class"
+                    isClearable={true}
                   />
                 </div>
                 <div className="qpaper_group">
                   <label htmlFor="division">Division</label>
-                  <input
-                    type="text"
-                    id="division"
-                    value={division}
-                    onChange={(e) => setDivision(e.target.value)}
-                    style={{ textTransform: "capitalize" }}
-                    maxLength="10"
+                  <Select
+                    options={divisionOptions}
+                    styles={customStyles}
+                    value={divisionOptions.find(
+                      (option) => option.value === selectedDivision?.value
+                    )}
+                    onChange={handleDivisionChange}
+                    placeholder="Select a division"
+                    isClearable={true}
+                    isDisabled={!selectedClass}
                   />
                 </div>
                 <div className="qpaper_group">
