@@ -100,17 +100,21 @@ function SeatView() {
                 <label htmlFor="hall_no">Hall No</label>
                 <input type="text" id="hall_no" name="hall_no" readOnly />
               </div>
-              <div className="seat_view_group">
+              <div className="seat_view_group full-width-group">
+                          <label htmlFor="start_time">Start Time</label>
+                          <input type="text" id="start_time" name="start_time" readOnly />
+                      </div>
+              {/* <div className="seat_view_group">
                 <label htmlFor="column_no">No. of Columns</label>
                 <input type="text" id="column_no" name="column_no" readOnly />
-              </div>
-              <div className="seat_view_group">
+              </div> */}
+              {/* <div className="seat_view_group">
                 <label htmlFor="table_no">No. of Tables</label>
                 <input type="email" id="table_no" name="table_no" readOnly />
-              </div>
+              </div> */}
             </Col>
             <Col md={6}>
-            <div className="seat_view_group">
+            {/* <div className="seat_view_group">
                 <label htmlFor="students_bench">Students per Bench</label>
                 <input
                   type="text"
@@ -118,18 +122,19 @@ function SeatView() {
                   name="students_bench"
                   readOnly
                 />
-              </div>
+              </div> */}
               <div className="seat_view_group">
                 <label htmlFor="exam_date">Exam Date</label>
                 <input type="text" id="exam_date" name="exam_date" readOnly />
               </div>
+              
               <Row className="tighter-column-gap">
-                  <Col>
+                  {/* <Col>
                       <div className="seat_view_group full-width-group">
                           <label htmlFor="start_time">Start Time</label>
                           <input type="text" id="start_time" name="start_time" readOnly />
                       </div>
-                  </Col>
+                  </Col> */}
                   <Col>
                       <div className="seat_view_group full-width-group">
                           <label htmlFor="end_time">End Time</label>

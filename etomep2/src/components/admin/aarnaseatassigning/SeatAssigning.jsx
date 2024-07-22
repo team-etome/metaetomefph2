@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
-import Select from "react-select";
 import "../aarnaseatassigning/seatassigning.css";
 import Layout_01_S from "../../../assets/Layout_01_S.png";
 import Layout_01_NS from "../../../assets/Layout_01_NS.png";
@@ -12,12 +10,14 @@ import { BsSearch } from "react-icons/bs";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 function SeatAssigning() {
   const [selectedLayout, setSelectedLayout] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   console.log(showModal, "show modal");
+  const navigate = useNavigate();
 
   const [hallNo, setHallNo] = useState("");
   const [studentperbench, setStudentperbench] = useState("");
@@ -165,6 +165,7 @@ function SeatAssigning() {
         "Seating arrangement submitted successfully",
         "success"
       );
+      navigate("/aarnanavbar");
       // setShowModal(false);
     } catch (error) {
       // console.error("There was an error submitting the form!", error);
