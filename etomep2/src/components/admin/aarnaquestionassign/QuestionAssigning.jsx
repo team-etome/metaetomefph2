@@ -6,8 +6,7 @@ import "../aarnaquestionassign/questionassigning.css";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 import axios from "axios";
-import Swal from 'sweetalert2'; 
-
+import Swal from "sweetalert2";
 
 function QuestionAssigning() {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -21,10 +20,9 @@ function QuestionAssigning() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [totalMark, setTotalMark] = useState("");
-  const [instruction, setInstruction] = useState(""); 
+  const [instruction, setInstruction] = useState("");
   const [term, setTerm] = useState("");
   const [loading, setLoading] = useState(false);
-
 
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
@@ -73,10 +71,12 @@ function QuestionAssigning() {
       { value: instruction, label: "Instruction" },
     ];
 
-    const missingFields = requiredFields.filter(field => !field.value);
+    const missingFields = requiredFields.filter((field) => !field.value);
 
     if (missingFields.length > 0) {
-      const missingFieldLabels = missingFields.map(field => field.label).join(", ");
+      const missingFieldLabels = missingFields
+        .map((field) => field.label)
+        .join(", ");
       Swal.fire({
         icon: "error",
         title: "Missing Required Information",
@@ -102,12 +102,15 @@ function QuestionAssigning() {
         instructions: instruction,
       };
 
-      const response = await axios.post(`${APIURL}/api/questionpaper`, formData);
+      const response = await axios.post(
+        `${APIURL}/api/questionpaper`,
+        formData
+      );
 
       Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Data saved successfully!',
+        icon: "success",
+        title: "Success",
+        text: "Data saved successfully!",
       });
 
       // Clear form fields after successful submission
@@ -127,9 +130,9 @@ function QuestionAssigning() {
     } catch (error) {
       console.error("Failed to submit form:", error.response.data);
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to save data.',
+        icon: "error",
+        title: "Error",
+        text: "Failed to save data.",
       });
       setLoading(false);
     }
@@ -167,7 +170,7 @@ function QuestionAssigning() {
       ...base,
       width: "100%",
       minHeight: "40px",
-      height:'50px',
+      height: "50px",
       border: "1px solid #526D82",
       borderRadius: "8px",
       boxShadow: state.isFocused ? "0 0 0 1px #526D82" : "none",
@@ -198,7 +201,7 @@ function QuestionAssigning() {
     dropdownIndicator: (base) => ({
       ...base,
       color: "#526D82",
-      paddingTop:'0px'
+      paddingTop: "0px",
     }),
     indicatorSeparator: (base) => ({
       display: "none",
@@ -218,21 +221,20 @@ function QuestionAssigning() {
     <div>
       <Container className="qpaper_assign_container">
         <form className="qpaper_form" onSubmit={handleSubmit}>
-          
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "10px",
-              }}
-            >
-              <Link to="/aarnanavbar">
-                <IoChevronBackSharp className="qpaper_back" />
-              </Link>
-              <h1 className="qpaper_title">Question Setting</h1>
-            </div>
-            <div style={{ border: "0.5px solid #526D82" }}></div>
-              <div className="qpaper_form_scrollable">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "10px",
+            }}
+          >
+            <Link to="/aarnanavbar">
+              <IoChevronBackSharp className="qpaper_back" />
+            </Link>
+            <h1 className="qpaper_title">Question Setting</h1>
+          </div>
+          <div style={{ border: "0.5px solid #526D82" }}></div>
+          <div className="qpaper_form_scrollable">
             <Row style={{ paddingTop: "20px" }}>
               <Col md={6}>
                 <div className="qpaper_group">
@@ -307,7 +309,7 @@ function QuestionAssigning() {
                     Instruction<span style={{ color: "red" }}>*</span>
                   </label>
                   <textarea
-                  className="qpaper_group_textarea"
+                    className="qpaper_group_textarea"
                     id="t_mark"
                     name="t_mark"
                     rows="4"
@@ -392,7 +394,7 @@ function QuestionAssigning() {
                 </div>
               </Col>
             </Row>
-            </div>
+          </div>
         </form>
       </Container>
     </div>
