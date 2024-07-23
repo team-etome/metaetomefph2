@@ -53,6 +53,18 @@ function AddCustomer() {
       setPublisherName(selectedOptions.slice(0, 5));
     }
   };
+
+  const handleMediumChange = (selectedOptions) => {
+    // setMedium(selectedOptions);
+    if (selectedOptions.length <= 5) {
+      setMedium(selectedOptions);
+    } else {
+      toast.error("You can only select up to 5 publishers.");
+      setMedium(selectedOptions.slice(0, 5));
+    }
+  };
+
+
   const handleEducationBoard = (selectedOptions) => {
     setCustBoard(selectedOptions.value);
     setBoard(selectedOptions);
@@ -289,9 +301,6 @@ function AddCustomer() {
     if (numericValue.length <= 10) {
       setPhoneNumber(numericValue);
     }
-  };
-  const handleMediumChange = (selectedOptions) => {
-    setMedium(selectedOptions);
   };
 
   const customStyles = {
