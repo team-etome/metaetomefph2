@@ -1,2 +1,17 @@
-
-
+.tb_footer_button{
+    background-color: #fff;
+    color: #5C7689;
+    width: 15vh;
+    height: 5vh;
+    border-radius: 8px;
+    border: 1px solid #5C7689 ;
+}
+.tb_footer_button:hover{
+    background-color: #5C7689;
+    color: #fff;
+}
+.tb_footer{
+    border: none;
+    padding-top: 0vh;
+    padding-bottom: 3vh;
+}

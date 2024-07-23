@@ -493,7 +493,7 @@ function AddBooks() {
           >
             <div style={{ marginLeft: "20px" }}>
               <Link to="/GodHeader" style={{ color: "black" }}>
-                <FaArrowLeft style={{ height: "20px", width: "30px" }} />
+                <FaArrowLeft style={{ height: "40px", width: "20px", color:'#526D82' }} />
               </Link>
             </div>
             <div style={{ marginLeft: "30px", color: "#526D82" }}>
@@ -699,14 +699,15 @@ function AddBooks() {
                 </div>
                 <div className="textbook_col">
                   <div className="bottom_right_col">
-                    <div style={{ marginBottom: "100px", marginTop: "0px" }}>
+                    <div style={{ marginBottom: "70px", marginTop: "30px" }}>
                       <label
                         htmlFor="mediaLibrary"
                         style={{
-                          marginLeft: "20px",
-                          marginBottom: "10px",
+                          marginLeft: "10px",
+                          marginBottom: "0vh",
                           fontSize: "25px",
-                          padding: "0px",
+                          paddingTop: "50px",
+                          paddingBottom:'50px'
                         }}
                       >
                         Media Library
@@ -903,10 +904,10 @@ function AddBooks() {
           >
             <div style={{ marginLeft: "20px" }}>
               <Link to="/GodHeader" style={{ color: "black" }}>
-                <FaArrowLeft style={{ height: "20px", width: "30px" }} />
+                <FaArrowLeft style={{ height: "40px", width: "20px", color:'#526D82' }} />
               </Link>
             </div>
-            <div style={{ marginLeft: "30px", color: "#526D82" }} >
+            <div style={{ marginLeft: "30px", color: "#526D82", fontSize:'25px' }} >
               <h3>Add Textbook</h3>
             </div>
             <div style={{ color: "2px solid black" }}></div>
