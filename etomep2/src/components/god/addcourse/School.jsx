@@ -254,13 +254,13 @@ function School() {
                 className="school_button"
                 style={{ display: "flex", justifyContent: "center" }}
               >
-                <Button
+                <button
                   type="submit"
                   value="submit"
                   style={{ backgroundColor: "#526D82", color: "white" }}
                 >
                   Submit
-                </Button>
+                </button>
               </div>
             </Col>
           </Row>

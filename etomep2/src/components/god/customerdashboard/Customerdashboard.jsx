@@ -48,32 +48,32 @@ function Customerdashboard() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div style={{ minHeight: "100vh", overflowY: "auto" }}>
+    <div  className="customer_dashboard_page">
       <Container>
         <Navbar
           expand="lg"
-          className="bg-body-tertiary customer"
-          style={{ marginBottom: "20px", marginTop: '20px', backgroundColor: "#fff", borderRadius: "17px" }}
+          className="bg-body-tertiary customer_dashboard"
+          // style={{ marginBottom: "20px", marginTop: '20px', backgroundColor: "#fff", borderRadius: "17px" }}
         >
           <Container>
             <Form className="ms-auto d-flex">
               <div className="position-relative">
                 <BsSearch
-                  className="position-absolute top-50 translate-middle-y ms-3"
-                  style={{ height: "20px", width: "20px", color: "#D8D4D4" }}
+                  className="position-absolute top-50 translate-middle-y ms-3 customer_dashboard_search"
+                  // style={{ height: "20px", width: "20px", color: "#D8D4D4" }}
                 />
                 <Form.Control
                   type="search"
                   placeholder="Search School here"
-                  className="me-5 ps-5"
+                  className="me-5 ps-5 customer_dashboard_search_bar"
                   aria-label="Search"
                   value={searchQuery} // Bind search query state
                   onChange={handleSearchChange} // Update search query state
-                  style={{
-                    width: "300px",
-                    borderRadius: "12px",
-                    fontWeight: "400px",
-                  }}
+                  // style={{
+                  //   width: "300px",
+                  //   borderRadius: "12px",
+                  //   fontWeight: "400px",
+                  // }}
                 />
               </div>
             </Form>
@@ -83,17 +83,20 @@ function Customerdashboard() {
 
       <div>
         <Container
-          style={{
-            backgroundColor: "#DDE6ED",
-            borderRadius: "17px",
-            marginBottom: "70px",
-          }}
+        className="customer_dashboard_container"
+          // style={{
+          //   backgroundColor: "#DDE6ED",
+          //   borderRadius: "17px",
+          //   marginBottom: "70px",
+          //   border:'1px solid red'
+          // }}
         >
-          <Container>
+          {/* <Container> */}
             {currentCustomer.length === 0 ? (
-              <Row className="justify-content-center" style={{ backgroundColor: 'white', borderRadius: '15px' }}>
+              <Row className="justify-content-center customer_dashboard_row" >
                 <Col>
-                  <Card className="text-center p-4" style={{ backgroundColor: 'transparent', border: 'none', color: '#526D82' }}>
+                  <Card className="text-center p-4 customer_dashboard_nodata" >
+                  {/* style={{ backgroundColor: 'transparent', border: 'none', color: '#526D82' }} */}
                     <h5>No data to be shown</h5>
                   </Card>
                 </Col>
@@ -104,24 +107,24 @@ function Customerdashboard() {
                   <Col key={index} className="d-flex justify-content-center mb-4">
                     <Link to={{ pathname: `/viewinstitution/${customer.id}`, state: { customer } }} style={{ textDecoration: 'none' }}>
                       <div onClick={handleCardClick}>
-                        <Card
-                          style={{
-                            width: "270px",
-                            height: '170px',
-                            border: "none",
-                            marginTop: "0px",
-                            marginBottom: "30px",
-                            paddingLeft: '10px',
-                            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                          }}
+                        <Card className="customer_dashboard_card"
+                          // style={{
+                          //   width: "270px",
+                          //   height: '170px',
+                          //   border: "none",
+                          //   marginTop: "0px",
+                          //   marginBottom: "30px",
+                          //   paddingLeft: '10px',
+                          //   boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                          // }}
                         >
-                          <Card.Body style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                          <Card.Body className="customer_dashboard_card_body" >
                             <div>
-                              <Card.Title style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '20px' }}>{customer.institute_name}</Card.Title>
+                              <Card.Title className='customer_dashboard_card_body_title' >{customer.institute_name}</Card.Title>
                             </div>
                             <div style={{ display: 'flex', justifyContent: "space-between" }}>
-                              <Card.Text style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: "20%" }}>{customer.eduational_body}</Card.Text>
-                              <Card.Text style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: "20%" }}>{customer.institute_code}</Card.Text>
+                              <Card.Text className="customer_dashboard_card_body_text" >{customer.eduational_body}</Card.Text>
+                              <Card.Text className="customer_dashboard_card_body_text">{customer.institute_code}</Card.Text>
                             </div>
                           </Card.Body>
                         </Card>
@@ -145,7 +148,7 @@ function Customerdashboard() {
             )}
 
             <div>
-              <MdAddHomeWork style={{ position: "fixed", top: "600px", right: "35px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px", width: "60px", height: "60px", boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)", cursor: "pointer" }} onClick={handleAddHomeWorkClick} />
+              <MdAddHomeWork  className='customer_dashboard_add' style={{ position: "fixed", top: "600px", right: "35px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px", width: "60px", height: "60px", boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)", cursor: "pointer" }} onClick={handleAddHomeWorkClick} />
               {showOptions && (
                 <div
                   style={{
@@ -175,7 +178,7 @@ function Customerdashboard() {
                 </div>
               )}
             </div>
-          </Container>
+          {/* </Container> */}
         </Container>
       </div>
     </div>

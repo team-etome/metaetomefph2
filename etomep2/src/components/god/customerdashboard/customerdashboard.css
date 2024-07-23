@@ -1,16 +1,25 @@
-.card:hover {
+/* .card:hover {
   transform: scale(1.1);
 }
 .card {
   transition: transform 0.5s;
-}
-.customer {
-  background-color:#DDE6ED !important;
-}
+} */
+
 /* .cust_pagination_custom .page-item .page-link {
   background-color: transparent !important;
   color: #526D82;
 } */
+ .customer_dashboard_page{
+  min-height: 100vh;
+  overflow-y: auto;
+ }
+.customer_dashboard {
+  background-color:#DDE6ED !important;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  /* background-color: #ffffff; */
+  border-radius: 17px;
+}
 .cust_pagination_custom .page-item.active .page-link {
   background-color: #ffffff;
   color:#526d82 ; /* Change text color when active */
@@ -21,4 +30,68 @@
   background-color: transparent;
   color: #526d82;
   border-color: #526d82;
+}
+.customer_dashboard_search{
+  height: 20px;
+  width: 20px;
+  color: #D8D4D4;
+}
+.customer_dashboard_search_bar{
+width: 300px;
+border-radius: 16px;
+font-weight: 400px;
+}
+.customer_dashboard_container{
+  /* border: 1px solid red; */
+  background-color: #DDE6ED;
+  border-radius: 16px;
+  margin-bottom: 70px;
+}
+.customer_dashboard_row{
+  background-color: #ffffff;
+  border-radius: 16px;
+}
+.customer_dashboard_nodata{
+  background-color: transparent;
+  border: none;
+  color: #526d82;
+}
+.customer_dashboard_card{
+  width: 270px;
+  height: 170px;
+  border: none;
+  margin-top: 0px;
+  margin-bottom: 30px;
+  padding-left: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.customer_dashboard_card_body{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.customer_dashboard_card_body_title{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 20px;
+}
+.customer_dashboard_card_body_text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 20%;
+}
+.customer_dashboard_add{
+  position: fixed;
+  top: 600px;
+  right: 35px;
+  color: black;
+  border-radius: 100%;
+  background-color:'#fff';
+  padding:'10px';
+  width:'60px';
+  height: '60px';
+  box-shadow: '0px 0px 10px rgba(0, 0, 0, 1)';
+  cursor: pointer;
 }
