@@ -26,6 +26,8 @@ function AddCustomer() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const publisherValues = publisherName.map((option) => option.value);
+  const mediumValues = medium.map((option) => option.value);
+  
 
   const [loading, setLoading] = useState(false);
 
@@ -94,7 +96,8 @@ function AddCustomer() {
       let missingFields = [];
       if (!institutionName) missingFields.push("institution name");
       if (!institutionCode) missingFields.push("institution code");
-      if (!medium) missingFields.push("medium");
+      // if (!medium) missingFields.push("medium");
+      if (!medium.length) missingFields.push("medium");
       if (!email) missingFields.push("email");
       if (!publisherName.length) missingFields.push("publisher name");
       if (!board) missingFields.push("board of education");
@@ -133,7 +136,8 @@ function AddCustomer() {
       const formData = new FormData();
       formData.append("institute_name", institutionName);
       formData.append("institute_code", institutionCode);
-      formData.append("medium", medium);
+      // formData.append("medium", medium);
+      formData.append("medium", JSON.stringify(mediumValues));
       formData.append("email_id", email);
       formData.append("publisher_name", JSON.stringify(publisherValues));
       formData.append("eduational_body", custboard);
@@ -228,6 +232,24 @@ function AddCustomer() {
     value: publisher,
     label: publisher,
   }));
+  const mediums = [
+    'English',
+    'Malayalam',
+    'Hindi',
+    'Tamil',
+    'Kannada',
+    'Urudu',
+    'Telgu',
+    'Konkani',
+    'Assamse',
+    'Bengali',
+    'Marathi',
+  ]
+  const mediumOptions = mediums.map((medium) => ({
+    value: medium,
+    label: medium,
+  }));
+
 
   const educationboard = [
     "CENTRAL BOARD OF SECONDARY EDUCATION (CBSE) ",
@@ -268,6 +290,10 @@ function AddCustomer() {
       setPhoneNumber(numericValue);
     }
   };
+  const handleMediumChange = (selectedOptions) => {
+    setMedium(selectedOptions);
+  };
+
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -299,7 +325,11 @@ function AddCustomer() {
     }),
     valueContainer: (base) => ({
       ...base,
-      padding: "0 10px",
+      // padding: "0 10px",
+      // border:'1px solid red',
+      height:'50px',
+      zIndex: 0,
+      overflow: 'scroll',
     }),
     dropdownIndicator: (base) => ({
       ...base,
@@ -317,6 +347,24 @@ function AddCustomer() {
       zIndex: 9999,
       position: "absolute",
     }),
+
+    // multiValue: (base) => ({
+    //   ...base,
+    //   display: "flex",
+    //   overflow: "hidden",
+    //   textOverflow: "ellipsis",
+    //   whiteSpace: "nowrap",
+    // }),
+    // multiValueLabel: (base) => ({
+    //   ...base,
+    //   overflow: "hidden",
+    //   textOverflow: "ellipsis",
+    //   whiteSpace: "nowrap",
+    // }),
+    // multiValueRemove: (base) => ({
+    //   ...base,
+    //   cursor: "pointer",
+    // }),
   };
   return (
     <Container className="add_customer_container">
@@ -500,7 +548,7 @@ function AddCustomer() {
             </div>
 
             <div>
-              <div className="input_container">
+              {/* <div className="input_container">
                 <label htmlFor="medium" style={{ fontWeight: "600" }}>
                   Medium
                 </label>
@@ -524,6 +572,22 @@ function AddCustomer() {
                     className="tag-input-field"
                   />
                 </div>
+              </div> */}
+              <div className="input_container">
+                <label htmlFor="medium" style={{ fontWeight: "600" }}>
+                  Medium
+                </label>
+                <Select
+                  id="medium"
+                  name="medium"
+                  options={mediumOptions}
+                  placeholder=""
+                  isMulti
+                  value={medium}
+                  onChange={handleMediumChange}
+                  maxLength="100"
+                  styles={customStyles}
+                />
               </div>
             </div>
           {/* </div> */}

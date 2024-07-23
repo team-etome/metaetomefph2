@@ -150,8 +150,8 @@ function Customerdashboard() {
                 <div
                   style={{
                     position: "fixed",
-                    top: "500px",
-                    right: "25px",
+                    top: "530px",
+                    right: "115px",
                     borderRadius: "5px",
                     padding: "10px",
                     zIndex: "999",
