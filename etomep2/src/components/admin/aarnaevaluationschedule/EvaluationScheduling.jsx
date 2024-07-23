@@ -28,14 +28,14 @@ function EvaluationScheduling() {
 
   console.log(teachers,"ugrfwieyotgr78iewy ")
 
-  const classnumberOptions = classinfo.adminallclassinfo.map((classItem) => ({
+  const classnumberOptions = classinfo.adminallclassinfo?.map((classItem) => ({
     value: `${classItem.class_name} ${classItem.division}`,
     label: `${classItem.class_name} ${classItem.division}`,
   }));
 
 
 
-  const class_name = classinfo.adminallclassinfo[0]?.class_name;
+  // const class_name = classinfo.adminallclassinfo?.class_name;
   const admin     = classinfo.adminallclassinfo[0]?.admin;
   
  
@@ -56,7 +56,7 @@ function EvaluationScheduling() {
   const fetchSubjects = async () => {
     try {
       const response = await axios.get(`${APIURL}/api/curriculam`);
-      const mappedSubjects = response.data.subject_names.map((sub) => ({
+      const mappedSubjects = response.data.subject_names?.map((sub) => ({
         value: sub.subject_name,
         label: sub.subject_name,
       }));
