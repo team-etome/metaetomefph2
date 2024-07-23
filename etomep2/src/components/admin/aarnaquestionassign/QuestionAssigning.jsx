@@ -166,7 +166,7 @@ function QuestionAssigning() {
         formData
       );
 
-      navigate('aarnanavbar')
+      navigate('/aarnanavbar')
 
     
 
