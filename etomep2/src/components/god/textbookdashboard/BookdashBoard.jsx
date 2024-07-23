@@ -17,6 +17,7 @@ import axios from "axios";
 import { BiBookAdd } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import ViewTextbook from "../viewtextbook/ViewTextbook";
+import '../textbookdashboard/bookdashboard.css'
 
 function BookdashBoard() {
   const [books, setBooks] = useState([]);
@@ -89,21 +90,21 @@ function BookdashBoard() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div
-      style={{
-        backgroundColor: "#DDE6ED",
-        minHeight: "100vh",
-        overflowY: "auto",
-      }}
+    <div className="book_dashboard_page"
+      // style={{
+      //   backgroundColor: "#DDE6ED",
+      //   minHeight: "100vh",
+      //   overflowY: "auto",
+      // }}
     >
       <Navbar
         expand="lg"
-        className="bg-body-tertiary book"
-        style={{
-          marginBottom: "20px",
-          marginTop: "10px",
-          borderRadius: "17px",
-        }}
+        className="bg-body-tertiary book_dashboard_navbar"
+        // style={{
+        //   marginBottom: "20px",
+        //   marginTop: "10px",
+        //   borderRadius: "17px",
+        // }}
       >
         <Container>
           <Navbar.Brand
@@ -152,8 +153,8 @@ function BookdashBoard() {
             <Form className="d-flex">
               <div className="position-relative">
                 <BsSearch
-                  className="position-absolute top-50 translate-middle-y ms-3"
-                  style={{ height: "20px", width: "20px", color: "#D8D4D4" }}
+                  className="position-absolute top-50 translate-middle-y ms-3 book_dashboard_search"
+                  // style={{ height: "20px", width: "20px", color: "#D8D4D4" }}
                 />
                 <Form.Control
                   type="search"
@@ -200,7 +201,7 @@ function BookdashBoard() {
             <Row xs={1} sm={2} md={3} lg={4}>
               {currentBook.map((book, index) => (
                 <Col key={index} className="d-flex justify-content-center mb-4">
-                  <Card
+                  <Card className="book_dashboard_card"
                     style={{
                       width: "200px",
                       alignItems: "center",

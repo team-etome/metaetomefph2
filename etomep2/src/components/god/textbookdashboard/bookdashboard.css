@@ -1,11 +1,15 @@
-.card:hover {
+.book_dashboard_card:hover {
   transform: scale(1.1);
 }
-.card {
+.book_dashboard_card {
   transition: transform 0.5s;
 }
-.book{
+.book_dashboard_navbar{
   background-color: #DDE6ED !important;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  /* border-radius: 16px; */
+  /* border: 1px solid red; */
 }
 /* .book_pagination_custom .page-item .page-link {
   background-color: transparent !important;
@@ -33,4 +37,14 @@
   background-color: transparent;
   color: #526d82;
   border-color: #526d82;
+}
+.book_dashboard_page{
+  background-color: #DDE6ED;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+.book_dashboard_search{
+  height: 20px;
+  width: 20px;
+  color: #DDE6ED;
 }

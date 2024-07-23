@@ -148,28 +148,29 @@ function Customerdashboard() {
             )}
 
             <div>
-              <MdAddHomeWork  className='customer_dashboard_add' style={{ position: "fixed", top: "600px", right: "35px", color: 'black', borderRadius: "100%", backgroundColor: "white", padding: "10px", width: "60px", height: "60px", boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)", cursor: "pointer" }} onClick={handleAddHomeWorkClick} />
+              <MdAddHomeWork  className='customer_dashboard_add'  onClick={handleAddHomeWorkClick} />
               {showOptions && (
-                <div
-                  style={{
-                    position: "fixed",
-                    top: "540px",
-                    right: "110px",
-                    borderRadius: "5px",
-                    padding: "10px",
-                    zIndex: "999",
-                  }}
+                <div className="customer_dashboard_add_options"
+                  // style={{
+                  //   position: "fixed",
+                  //   top: "540px",
+                  //   right: "110px",
+                  //   borderRadius: "5px",
+                  //   padding: "10px",
+                  //   zIndex: "999",
+                  // }}
                 >
-                  <div>
+                  {/* <div>
                     <Link to='/addcustomer'>
                       <Button onClick={() => handleOptionClick("College")} style={{ marginBottom: "10px", backgroundColor: 'white', border: 'none', color: '#526D82', width: '100px' }}>College</Button>
                     </Link>
-                  </div>
+                  </div> */}
                   <div>
                     <Link to='/addcustomer'>
                       <Button
                         onClick={() => handleOptionClick("School")}
-                        style={{ backgroundColor: 'white', border: 'none', color: '#526D82', width: '100px' }}
+                        className="customer_dashboard_add_option_icon"
+                        // style={{ backgroundColor: 'white', border: 'none', color: '#526D82', width: '100px' }}
                       >
                         School
                       </Button>
