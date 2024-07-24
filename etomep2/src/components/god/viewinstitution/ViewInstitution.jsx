@@ -105,7 +105,7 @@ function ViewInstitution() {
               >
                 <Link to="/GodHeader" style={{ color: "black" }}>
                   {/* <IoIosArrowRoundBack style={{ height: "30px", width: "30px" }} /> */}
-                  <FaArrowLeft style={{ height: "30px", width: "20px" }} />
+                  <FaArrowLeft style={{ height: "30px", width: "20px", color:'#526D82' }} />
                 </Link>
                 <a
                   className="navbar-brand"
@@ -141,6 +141,9 @@ function ViewInstitution() {
                         color: institution.isBlocked ? "#EA4035" : "#FFF",
                         borderColor: institution.is_block ? "#28a745" : "#EA4035",
                         fontWeight: "600px",
+                        right:'5vh',
+                        padding:'0',
+                        top:'2vh'
                       }}
                     >
                       {institution.is_block ? "Unblock" : "Block"}
@@ -185,7 +188,7 @@ function ViewInstitution() {
                         src={institution.logo}
                         className="col-md-6 float-md-end mb-3 ms-md-3"
                         alt="logo"
-                        style={{ maxHeight: "100%", maxWidth: "100%" }}
+                        style={{ height:'170px', maxWidth: "100%", paddingTop:'2vh' }}
                       />
                     </div>
                   </div>

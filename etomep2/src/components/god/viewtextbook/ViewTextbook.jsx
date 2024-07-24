@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button, Row, Col, Image, Form } from "react-bootstrap";
 import { AiOutlineClose } from "react-icons/ai";
-import "../viewtextbook/viewtextbook.css"; // Ensure the CSS path is correct
+import "../viewtextbook/viewtextbook.css"; 
 import { Link } from "react-router-dom";
 import { Document, Page, pdfjs } from "react-pdf";
 
@@ -46,7 +46,7 @@ function ViewTextbook({ show, handleClose, book }) {
             )}
           </Col>
           <Col md={8}>
-            <Form>
+            <Form >
               <Form.Group controlId="formTitle">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
@@ -79,17 +79,18 @@ function ViewTextbook({ show, handleClose, book }) {
           </Col>
         </Row>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className="tb_footer">
         <Link to={`/addbooks/${book.id}`}>
-          <Button variant="secondary">Edit</Button>
+          <button variant="secondary" className="tb_footer_button" >Edit</button>
         </Link>
-        <Button
+        <button
           variant="secondary"
-          style={{ backgroundColor: "#5C7689" }}
+          // style={{ backgroundColor: "#5C7689",color:'#fff', height:'5vh', width:'15vh', borderRadius:'8px'  }}
+          className="tb_footer_button" 
           onClick={togglePDFView}
         >
           {showPDF ? "Hide PDF" : "Preview PDF"}
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
   );

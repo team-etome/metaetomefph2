@@ -1,273 +1,275 @@
 .textbook {
-    margin-top: 50px;
-    box-shadow: none; 
-    width: 90%; 
-    max-width: 2000px;
-    height: fit-content;
-    margin-left: auto; 
-    margin-right: auto; 
-    padding: 0px;
-    margin-bottom: 50px;
-    background-color: #fff;
-  }
+  margin-top: 50px;
+  box-shadow: none; 
+  width: 90%; 
+  max-width: 2000px;
+  height: fit-content;
+  margin-left: auto; 
+  margin-right: auto; 
+  padding: 0px;
+  margin-bottom: 50px;
+  background-color: #fff;
+}
 
-  /* ************************************************ */
-   
-  .textbook_button_container {
-    padding: 0 0 0 0;
-    margin-top: -30px;
-    margin-left: 15px;
-    /* border: 2px solid black; */
-  }
-  .textbook_button_container button {
-    background-color: #526D82; 
-    color: #DDE6ED;
-    width: 400px; 
-    height: 50px;
-    font-size: large;
-    border-radius: 4px;
-    border: none; 
-    /* button black border */
-  }
-  
+/* ************************************************ */
+ 
+.textbook_button_container {
+  padding: 0 0 0 0;
+  margin-top: -30px;
+  margin-left: 15px;
+  /* border: 2px solid black; */
+}
+.textbook_button_container button {
+  background-color: #526D82; 
+  color: #DDE6ED;
+  width: 400px; 
+  height: 50px;
+  font-size: large;
+  border-radius: 4px;
+  border: none; 
+  /* button black border */
+}
+
 .textbutton-container {
-    padding: 0 0 0 0;
-    margin-top: 28px;
-    margin-left: 15px;
-    /* border: 2px solid black; */
-  }
-  .textbutton-container button {
-    width: 148px;
-    height: 35px;
-    opacity: 0.41;
-    font-size: 12px;
-    background: #DDE6ED;
-    color: #000000 ;
-    border-radius: 8px;
-  }
+  padding: 0 0 0 0;
+  margin-top: 28px;
+  margin-left: 15px;
+  /* border: 2px solid black; */
+}
+.textbutton-container button {
+  width: 148px;
+  height: 35px;
+  opacity: 0.41;
+  font-size: 12px;
+  background: #DDE6ED;
+  color: #000000 ;
+  border-radius: 8px;
+}
+
+/* ************************************************ */
+
+.image {
+  width: 300px;
+  height: 240px;
+  border-radius: 12.6px ;
+  background-color: #DAE2E9;
+}
+
+/* ************************************************ */
+ 
+.textbook_input_container {
+  position: relative;
+  padding: 30px;
+  /* margin-bottom: 35px;  */
   
-  /* ************************************************ */
-  
-  .image {
-    width: 300px;
-    height: 240px;
-    border-radius: 12.6px ;
-    background-color: #DAE2E9;
-  }
-  
-  /* ************************************************ */
-   
-  .textbook_input_container {
-    position: relative;
-    padding: 30px;
-    /* margin-bottom: 35px;  */
-    
-  }
-  
-  .textbook_input_container input {
-    padding: 8px 8px 8px 4px;
-    border: 1px solid #526D82;
-    border-radius: 4px;
-    outline: none;
-    background: #fff;
-    width: 400px; 
-    height: 50px;
-    box-sizing: border-box;
-    /* margin-bottom: 20px; */
-  }
-  
-  
-  .textbook_input_container label {
-    position: absolute;
-    top: 17px;
-    left: 50px;
-    padding: 0 4px;
-    background: #fff;
-    color:#526D82;
-    font-size: 16px;
-    transition: all 0.3s;
-    pointer-events: none;
-  }
-  
-  .textbook_input_container input:focus + label,
-  .textbook_input_container input:not(:placeholder-shown) + label {
-    top: -10px;
-    left: 4px;
-    font-size: 12px;
-    color: #333;
-  }
-  
-  .textbook_input_container_select {
-    position: relative;
-    padding-top: 15px;
-    /* margin-bottom: 35px;  */
-    margin-left: 30px;
-  }
-  .textbook_input_container_select Select {
-    padding: 8px 8px 8px 4px;
-    border: none;
-    border-radius: 4px;
-    outline: none;
-    background: #fff; 
-    width: 100px;
-    height: 10px;
-    box-sizing: border-box;
-    border-color: white; 
-    
-  }
-  .textbook_input_container_select label {
-    position: absolute;
-    top: -12px;
-    left: 20px;
-    padding: 0 4px;
-    background: #fff;
-    color:#526D82;
-    font-size: 16px;
-    transition: all 0.3s;
-    pointer-events: none;
-  }
-.textbook_input_container_select Select:focus + label,
-.textbook_input_container_select Select:not(:placeholder-shown) + label {
+}
+
+.textbook_input_container input {
+  padding: 8px 8px 8px 4px;
+  border: 1px solid #526D82;
+  border-radius: 4px;
+  outline: none;
+  background: #fff;
+  width: 400px; 
+  height: 50px;
+  box-sizing: border-box;
+  /* margin-bottom: 20px; */
+}
+
+
+.textbook_input_container label {
+  position: absolute;
+  top: 17px;
+  left: 50px;
+  padding: 0 4px;
+  background: #fff;
+  color:#526D82;
+  font-size: 16px;
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+.textbook_input_container input:focus + label,
+.textbook_input_container input:not(:placeholder-shown) + label {
   top: -10px;
   left: 4px;
   font-size: 12px;
   color: #333;
 }
 
+.textbook_input_container_select {
+  position: relative;
+  padding-top: 15px;
+  /* margin-bottom: 35px;  */
+  margin-left: 30px;
+}
+.textbook_input_container_select Select {
+  padding: 8px 8px 8px 4px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  background: #fff; 
+  width: 100px;
+  height: 10px;
+  box-sizing: border-box;
+  border-color: white; 
+  
+}
+.textbook_input_container_select label {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  padding: 0 4px;
+  background: #fff;
+  color:#526D82;
+  font-size: 16px;
+  transition: all 0.3s;
+  pointer-events: none;
+}
+.textbook_input_container_select Select:focus + label,
+.textbook_input_container_select Select:not(:placeholder-shown) + label {
+top: -10px;
+left: 4px;
+font-size: 12px;
+color: #333;
+}
 
-  .textbook_container {
-    width: 100%;
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: 10px;
-    padding-left: 50px;
-    margin-top: 10px;
-    padding-right: 50px;
-  }
-  
-  .textbook_row {
-    display: flex;
-    margin-right: -15px;
-    margin-left: -15px; 
-    padding-right: 110px; 
-    flex-wrap: wrap;
-  }
-  
+
+.textbook_container {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 10px;
+  padding-left: 50px;
+  margin-top: 10px;
+  padding-right: 50px;
+}
+
+.textbook_row {
+  display: flex;
+  margin-right: -15px;
+  margin-left: -15px; 
+  padding-right: 110px; 
+  flex-wrap: wrap;
+}
+
+.textbook_col {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.textbook_image_upload_container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 210px;
+  width: 400px;
+  border: 2px dashed #526D82;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  position: relative;
+  background-color:#fff;
+}
+
+.textbook_uploaded_image {
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  height: auto;
+}
+
+.textbook_upload_placeholder{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.textbook_upload_label {
+  background-color: #DAE2E9;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.textbook_upload_input {
+  display: none;
+}
+
+.textbook_upload_label:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.bottom_right_col {
+  margin-top: -100px; 
+  margin-left: 15px;
+}
+
+/* ************************************************ */
+
+@media (max-width: 500px) {
+  /* .form{
+    width: 100px;
+  } */
   .textbook_col {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-  
-  .textbook_image_upload_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 210px;
-    width: 400px;
-    border: 2px dashed #526D82;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    position: relative;
-    background-color:#fff;
-  }
-  
-  .textbook_uploaded_image {
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-    height: auto;
-  }
-  
-  .textbook_upload_placeholder{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-  .textbook_upload_label {
-    background-color: #DAE2E9;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-  .textbook_upload_input {
-    display: none;
-  }
-  
-  .textbook_upload_label:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-  .bottom_right_col {
-    margin-top: -100px; 
-    margin-left: 15px;
-  }
-  
-  /* ************************************************ */
-  
-  @media (max-width: 500px) {
-    /* .form{
-      width: 100px;
-    } */
-    .textbook_col {
-        flex: 0 0 100%;
-        max-width: 100%;
-        margin-top: 10px;
-        padding-left: 20px;
-        
-    }
-    .textbook_row{
-        display: flex;
-        flex-direction: column;
-    }
-    .textbook{
-      width: 500px;
-      margin-top: 0px;
-      margin-bottom: 0px;
-    }
-    .textbook_input_container {
-        padding: 15px;
-      }
-      .bottom_right_col{
-        margin-top:10px;
-      }
-  }
-  /* ************************************************ */
-  
-  @media (max-width: 1200px) {
-    /* .form{
-      width: 100px;
-    } */
-    .textbook_col {
-        flex: 0 0 100%;
-        max-width: 100%;
-        margin-top: 10px;
-        padding-left: 1px;
-    }
-    .textbook_row{
-        display: flex;
-        flex-direction: column;
-    }
-    .textbook{
-      width: 500px;
-    }
-    .textbook_input_container {
-        padding: 15px;
-      }
-      .bottom_right_col{
-        margin-top:10px;
-      }
-      .textbook_input_container_select {
-        margin-left: 15px;
-      }
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin-top: 10px;
+      padding-left: 20px;
       
   }
-
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  .textbook_row{
+      display: flex;
+      flex-direction: column;
   }
+  .textbook{
+    width: 500px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  .textbook_input_container {
+      padding: 15px;
+    }
+    .textbook_input_container label{
+      top: 5px;
+    }
+    .bottom_right_col{
+      margin-top:10px;
+    }
+}
+/* ************************************************ */
+
+@media (max-width: 1200px) {
+  /* .form{
+    width: 100px;
+  } */
+  .textbook_col {
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin-top: 10px;
+      padding-left: 1px;
+  }
+  .textbook_row{
+      display: flex;
+      flex-direction: column;
+  }
+  .textbook{
+    width: 500px;
+  }
+  .textbook_input_container {
+      padding: 15px;
+    }
+    .bottom_right_col{
+      margin-top:10px;
+    }
+    .textbook_input_container_select {
+      margin-left: 15px;
+    }
+    
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 
 
- 
