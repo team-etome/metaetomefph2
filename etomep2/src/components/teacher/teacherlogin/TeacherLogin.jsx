@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { RiShareBoxFill } from "react-icons/ri";
@@ -7,93 +7,92 @@ import lineart from "../../../assets/lineart.png";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useSelector ,useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import '../teacherlogin/teacherlogin.css'
-
+import '../teacherlogin/teacherlogin.css';
 import { teacherinfo } from "../../../Redux/Actions/TeacherInfoAction";
 
 function TeacherLogin() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
-    const [btnPosition, setBtnPosition]     = useState('0');
-    const APIURL = useSelector((state) => state.APIURL.url);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [btnPosition, setBtnPosition] = useState('0');
+  const [transitionDuration, setTransitionDuration] = useState('0.5s');
+  const navigate = useNavigate();
+  const APIURL = useSelector((state) => state.APIURL.url);
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-      if (location.pathname === "/teacherlogin") {
-        setBtnPosition("110px");
-      }
-    }, [location.pathname]);
-  
-  
-    const dispatch = useDispatch(); 
+  useEffect(() => {
+    if (window.location.pathname === "/teacherlogin") {
+      setBtnPosition("110px");
+    }
+  }, [window.location.pathname]);
 
+  const handleLeftClick = () => {
+    setBtnPosition('0');
+    setTimeout(() => navigate('/'), 500); // Ensure navigation happens after the transition
+  };
 
-    const handleLeftClick = () => {
-      setBtnPosition('0');
-      navigate('/')
-    };
-  
-    const handleRightClick = () => {
-      setBtnPosition('110px');
-      navigate("/teacherlogin");
-    };
-  
-    const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
-    };
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      if (!email || !password) {
+  const handleRightClick = () => {
+    setBtnPosition('110px');
+    setTimeout(() => navigate('/teacherlogin'), 500); // Ensure navigation happens after the transition
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      Swal.fire({
+        title: "Error!",
+        text: "All fields are required",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
+    try {
+      const data = {
+        email: email,
+        password: password,
+      };
+      const response = await axios.post(`${APIURL}/api/teacherlogin`, data);
+      dispatch(teacherinfo(response.data.teacher));
+
+      Swal.fire({
+        title: "Success!",
+        text: "Login Successfully",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+
+      navigate("/admindashboard");
+    } catch (error) {
+      if (error.response && error.response.status === 405) {
         Swal.fire({
-          title: "Error!",
-          text: "All fields are required",
+          title: "Blocked!",
+          text: "User has been blocked",
           icon: "error",
           confirmButtonText: "Ok",
         });
-        return;
-      }
-      try {
-        const data = {
-          email: email,
-          password: password,
-        };
-        const response = await axios.post(`${APIURL}/api/teacherlogin`, data);
-        console.log(response.data,"dataaaaaa")
-        dispatch(teacherinfo(response.data.teacher));
-     
-        navigate("/admindashboard");
+      } else {
         Swal.fire({
-          title: "Success!",
-          text: "Login Successfully",
-          icon: "success",
+          title: "Error!",
+          text: "Invalid Email id or Password",
+          icon: "error",
           confirmButtonText: "Ok",
         });
-      } catch (error) {
-        if (error.response && error.response.status === 405) {
-          Swal.fire({
-            title: "Blocked!",
-            text: "User has been blocked",
-            icon: "error",
-            confirmButtonText: "Ok",
-          });
-        } else {
-          Swal.fire({
-            title: "Error!",
-            text: "Invalid Email id or Password",
-            icon: "error",
-            confirmButtonText: "Ok",
-          });
-        }
       }
-    };
-  
-    const [isFlipped, setIsFlipped] = useState(false);
-    const handleFlip = () => {
-      setIsFlipped(!isFlipped);
-    };
+    }
+  };
+
+  const [isFlipped, setIsFlipped] = useState(false);
+  const handleFlip = () => {
+    setIsFlipped(!isFlipped);
+  };
+
   return (
     <div
       className="teacher_lg_min_div"
@@ -194,21 +193,15 @@ function TeacherLogin() {
             <form className="teacher_form ">
               <div className={`teacher_flip_card_inner ${isFlipped ? "flipped" : ""}`}>
                 <div className="teacher_flip_card_front">
-                  <div  className="switch_forgott">
-
-                  <p
-                    className="teacher_form_title"
-                    style={{ marginBottom: "30px" }}
-                  >
-                   Teacher  Login
-                  </p>
-                  <div className="button_teacher">
-                    <div className="btn" style={{ left: btnPosition }}></div>
-                    <button type="button" className="toggle_btn" onClick={handleLeftClick}>Admin</button>
-                    <button type="button" className="toggle_btn" onClick={handleRightClick}>Teacher</button>
-                  </div>
-
-
+                  <div className="switch_forgott">
+                    <p className="admin_form_title" style={{ marginBottom: "0px" }}>
+                      Teacher Login
+                    </p>
+                    <div className="button_box">
+                      <div className="btn" style={{ left: btnPosition, transitionDuration }}></div>
+                      <button type="button" className="toggle_btn" onClick={handleLeftClick}>Admin</button>
+                      <button type="button" className="toggle_btn" onClick={handleRightClick}>Teacher</button>
+                    </div>
                   </div>
                   <div className="teacher_input_container">
                     <label
@@ -290,7 +283,7 @@ function TeacherLogin() {
         </Row>
       </Container>
     </div>
-  )
+  );
 }
 
-export default TeacherLogin
+export default TeacherLogin;

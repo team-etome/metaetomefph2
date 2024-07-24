@@ -89,6 +89,15 @@ function AdminLogin() {
   };
 
 
+  // const handleLeftClick = () => {
+  //   setBtnPosition('0');
+  //   navigate('/');
+  // };
+
+  // const handleRightClick = () => {
+  //   setBtnPosition('110px');
+  //   navigate("/teacherlogin");
+  // };
   
   return (
     <div

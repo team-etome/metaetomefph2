@@ -11,10 +11,11 @@
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 9px 70px -2px rgba(0, 0, 0, 0.05);
   padding-top: 60px;
   padding-left:3% ;
+  /* border: 1px solid red; */
 }
 
 .admin_form_title {
-  font-size: 2rem;
+  font-size: 1.75rem;
   line-height: 1.75rem;
   font-weight: 400;
   /* text-align: right; */
@@ -112,7 +113,9 @@
   background: #526d82;
   border-radius: 30px;
   /* transition: 0.5s; */
-  transition: right 0.5s ease;
+  /* transition: right 1s ease; */
+  transition: left 0.5ss ease;
+
 }
 
 /* .active-left .toggle_btn:first-child,
