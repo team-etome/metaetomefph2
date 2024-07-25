@@ -12,7 +12,8 @@ function InstitutionDashboard() {
 );
   // Update local storage when activeTab changes
   useEffect(() => {
-    localStorage.setItem("activeTab", activeTab);
+    // localStorage.setItem("activeTab", activeTab);
+    sessionStorage.setItem("activeTab", activeTab);
   }, [activeTab]);
 
   return (

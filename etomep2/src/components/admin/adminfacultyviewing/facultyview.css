@@ -25,6 +25,10 @@
         color: #526D82 ;
         font-size: 30px;
         margin-left: 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 50vh;
     }
     
     .faculty_view_group {

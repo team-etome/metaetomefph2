@@ -49,7 +49,7 @@ function FacultyView() {
               <Link to="/institutionadding">
                 <IoChevronBackSharp className="faculty_view_back" />
               </Link>
-              <h1 className="faculty_view_title">{faculty ? faculty.first_name : 'Faculty Name'}</h1>
+              <h1 className="faculty_view_title">{faculty ? `${faculty.first_name} ${faculty.last_name}` : 'Faculty Name'}</h1>
               <div style={{ flex: "1" }}></div>
               {windowWidth > 800 ? (
                 <div

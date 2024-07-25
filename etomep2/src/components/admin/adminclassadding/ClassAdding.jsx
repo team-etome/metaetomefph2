@@ -99,6 +99,7 @@ function ClassAdding() {
     };
 
     dispatch(adminclassinfo(classData));
+    sessionStorage.setItem("activeTab", "Class");
     navigate("/curriculumadding");
   };
   const customStyles = {
@@ -158,7 +159,9 @@ function ClassAdding() {
       <Container className="class_add">
         <form className="class_form">
               <div className="header-container">
-                <Link to="/institutionadding">
+                {/* <Link to="/institutionadding"> */}
+                <Link to="/institutionadding" onClick={() => sessionStorage.setItem("activeTab", "Class")}>
+
                   <IoChevronBackSharp
                   className="class_add_back"
                   />

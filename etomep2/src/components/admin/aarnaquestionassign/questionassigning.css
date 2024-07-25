@@ -151,6 +151,7 @@
     }
     .qpaper_group_textarea {
         width: 100%;
+        padding-top: 20px;
       }
     .qpaper_form_scrollable {
         max-height: calc(90vh - 200px);
