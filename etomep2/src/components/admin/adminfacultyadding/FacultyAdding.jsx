@@ -298,6 +298,7 @@ function FacultyAdding() {
                     name="employee_id"
                     value={employeeId}
                     onChange={(e) => setEmployeeId(e.target.value)}
+                    style={{ textTransform: "capitalize" }}
                     maxLength="10"
                   />
                 </div>
@@ -331,6 +332,7 @@ function FacultyAdding() {
                     placeholder=""
                     getOptionLabel={(option) => option.label}
                     getOptionValue={(option) => option.value}
+                    style={{ textTransform: "capitalize" }}
                     maxLength={10}
                   />
                 </div>

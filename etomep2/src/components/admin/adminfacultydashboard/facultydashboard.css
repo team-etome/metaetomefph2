@@ -213,6 +213,7 @@ margin-top: 8px;
     margin-top: 20px;
     width: 350px;
     padding-left: 0vh;
+    width: 350px;
 }
   .fab-options {
     display: flex;
@@ -238,7 +239,7 @@ margin-top: 8px;
     transition: background-color 0.3s;
     width: 50px !important;
     height: 50px;
-    margin-left: 30px;
+    margin-left: 40px;
     /* margin-right: 100px; */
 
   }

@@ -57,13 +57,13 @@ function StudentView() {
       <Container className="teacher_student_view_container">
         <form className="teacher_student_view_form">
           <div className="teacher_student_header">
-            <div
+            {/* <div
               style={{
                 display: "flex",
                 alignItems: "center",
                 marginBottom: "10px",
               }}
-            >
+            > */}
               <Link to="/teacherstudentdashboard">
                 <IoChevronBackSharp className="teacher_student_view_back" />
               </Link>
@@ -108,7 +108,7 @@ function StudentView() {
                   )}
                 </div>
               )}
-            </div>
+            {/* </div> */}
 
             {/* </div> */}
             {/* <div style={{ border: "0.5px solid #526D82" }}></div> */}
@@ -274,14 +274,15 @@ function StudentView() {
                 </div> */}
               </Col>
 
-              <Col md={4}>
-                <div className="teacher_school_info">
+              <Col md={3}>
+                <div className="teacher_school_info" >
                   <label htmlFor="join_date">Joining Date</label>
                   <input
                     type="text"
                     id="join_date"
                     name="join_date"
                     value = {student.start_date}
+                    style={{paddingBottom:'10px', marginTop:'0vh'}}
                     readOnly
                   />
                 </div>

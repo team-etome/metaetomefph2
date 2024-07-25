@@ -106,27 +106,28 @@ function TeacherClassView() {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            <Link to = '/teacherassignment'>
-              <div className="tch_vw_snd_rw">
-                <h1 className="tch_vw_scrll_hding">Assignment</h1>
+            <Link to = '/teacherassignment'  className="no-underline-link">
+              <div className="tch_vw_snd_rw ">
+                <h1 className="tch_vw_scrll_hding" >Assignment</h1>
               </div>
             </Link>
 
-            <Link to ='/teacherrefrencelist'>
+            <Link to ='/teacherrefrencelist'  className="no-underline-link">
             <div className="tch_vw_snd_rw">
               <h1 className="tch_vw_scrll_hding">Reference</h1>
             </div>
             </Link>
             
-            <Link to ='/teachertestlist'>
+            <Link to ='/teachertestlist'  className="no-underline-link">
             <div className="tch_vw_snd_rw">
               <h1 className="tch_vw_scrll_hding">Test</h1>
             </div>
             </Link>
-            
-            <div className="tch_vw_snd_rw">
+            <Link className="no-underline-link">
+            <div className="tch_vw_snd_rw" >
               <h1 className="tch_vw_scrll_hding">Result</h1>
             </div>
+            </Link>
           </div>
           <Row>
             <h1 className="tch_vw_sndrw_hd">Students List</h1>

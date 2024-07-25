@@ -329,6 +329,7 @@ function QuestionGenerator() {
                                     ] = el)
                                     }
                                     placeholder="Type question here..."
+                                    // style={{textTransform: "capitalize"}}
                                     editorData={q.question}
                                     setEditorData={(data) =>
                                       handleEditorData(

@@ -176,6 +176,7 @@ function AddStudent() {
                     name="student_name"
                     value={studentName}
                     onChange={(e) => setStudentName(e.target.value)}
+                    style={{ textTransform: "capitalize" }}
                   />
                 </div>
                 <div className="teacher_studentadd_group">
@@ -188,6 +189,7 @@ function AddStudent() {
                     name="roll_no"
                     value={studentRollno}
                     onChange={(e) => setStudentRollno(e.target.value)}
+                    style={{ textTransform: "capitalize" }}
                   />
                 </div>
                 <div className="teacher_studentadd_group">
@@ -236,6 +238,7 @@ function AddStudent() {
                       (option) => option.value === studentGender
                     )}
                     onChange={(option) => setStudentGender(option.value)}
+                    style={{ textTransform: "capitalize" }}
                     placeholder="Select Gender"
                   />
                 </div>
@@ -273,6 +276,7 @@ function AddStudent() {
                     id="s_time"
                     name="s_time"
                     value={studentAdmission}
+                    style={{ textTransform: "capitalize" }}
                     onChange={(e) => setStudentAdmission(e.target.value)}
                   />
                 </div>
@@ -285,6 +289,7 @@ function AddStudent() {
                     id="guardian_name"
                     name="guardian_name"
                     value={studentGuardian}
+                    style={{ textTransform: "capitalize" }}
                     onChange={(e) => setstudentGuardian(e.target.value)}
                   />
                 </div>
@@ -297,6 +302,7 @@ function AddStudent() {
                     id="father_name"
                     name="father_name"
                     value={studentFather}
+                    style={{ textTransform: "capitalize" }}
                     onChange={(e) => setStudentFather(e.target.value)}
                   />
                 </div>
@@ -309,6 +315,7 @@ function AddStudent() {
                     id="mother_name"
                     name="mother_name"
                     value={studentMother}
+                    style={{ textTransform: "capitalize" }}
                     onChange={(e) => setStudentMother(e.target.value)}
                   />
                 </div>
@@ -321,6 +328,7 @@ function AddStudent() {
                     id="address"
                     name="address"
                     value={studentAddress}
+                    style={{ textTransform: "capitalize" }}
                     onChange={(e) => setStudentAddress(e.target.value)}
                   />
                 </div>

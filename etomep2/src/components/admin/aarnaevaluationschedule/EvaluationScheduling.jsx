@@ -234,7 +234,8 @@ function EvaluationScheduling() {
                   <label htmlFor="term">
                     Term<span style={{ color: "red" }}>*</span>
                   </label>
-                  <input onChange={(e) => setTerm(e.target.value)} type="text" />
+                    
+                    <input onChange={(e) => setTerm(e.target.value)} type="text" style={{ textTransform: "capitalize" }}/>
                   
                 </div>
               </Col>

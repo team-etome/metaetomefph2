@@ -184,6 +184,7 @@ function ClassAdding() {
                       value={className}
                       onChange={handleClassNameChange}
                       maxLength={50}
+                    style={{ textTransform: "capitalize" }}
                     />
                     <label htmlFor="class_number">
                       Class Name<span style={{ color: "red" }}>*</span>
@@ -198,7 +199,8 @@ function ClassAdding() {
                       placeholder=""
                       value={stream}
                       onChange={(e) => setStream(e.target.value)}
-                      readOnly={parseInt(className, 10) < 11}
+                    style={{ textTransform: "capitalize" }}
+                    readOnly={parseInt(className, 10) < 11}
                     />
                     <label htmlFor="class_category">Stream</label>
                   </div>
@@ -209,7 +211,8 @@ function ClassAdding() {
                       styles={customStyles}
                       placeholder=""
                       value={teacher}
-                      onChange={setTeacher}
+                    style={{ textTransform: "capitalize" }}
+                    onChange={setTeacher}
                     />
                     <label htmlFor="class_teacher">
                       Class Teacher<span style={{ color: "red" }}>*</span>
@@ -225,7 +228,8 @@ function ClassAdding() {
                       placeholder=""
                       value={division}
                       onChange={(e) => setDivision(e.target.value)}
-                      maxLength={10}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength={10}
                     />
                     <label htmlFor="class_division">
                       Division<span style={{ color: "red" }}>*</span>
@@ -239,7 +243,8 @@ function ClassAdding() {
                       placeholder=""
                       value={medium}
                       onChange={setMedium}
-                      maxLength={50}
+                    style={{ textTransform: "capitalize" }}
+                    maxLength={50}
                     />
                     <label htmlFor="class_medium">Medium</label>
                   </div>
