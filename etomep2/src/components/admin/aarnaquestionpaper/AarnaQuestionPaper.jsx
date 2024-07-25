@@ -12,6 +12,9 @@ function AarnaQuestionPaper() {
   const APIURL = useSelector((state) => state.APIURL.url);
   const [qpaperListData,setQpaperListData] = useState([])
 
+  const admininfo = useSelector((state) => state.admininfo);
+  const admin_id = admininfo.admininfo?.admin_id
+
   console.log(qpaperListData,"daatttttataaaa")
 
   const navigate = useNavigate();
@@ -19,7 +22,7 @@ function AarnaQuestionPaper() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${APIURL}/api/questionpaper`);
+        const response = await axios.get(`${APIURL}/api/questionpaper/${admin_id}`);
         setQpaperListData(response.data);
       } catch (error) {
         console.error("There was an error fetching the question papers!", error);

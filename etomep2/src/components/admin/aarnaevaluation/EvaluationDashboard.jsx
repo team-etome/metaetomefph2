@@ -12,6 +12,10 @@ function EvaluationDashboard() {
 
   console.log(evaluationListData, "evaluationnnnn");
 
+  
+  const admininfo = useSelector((state) => state.admininfo);
+  const admin_id = admininfo.admininfo?.admin_id
+
   const navigate = useNavigate();
   const APIURL = useSelector((state) => state.APIURL.url);
 
@@ -26,7 +30,7 @@ function EvaluationDashboard() {
   useEffect(() => {
     const fetchEvaluations = async () => {
       try {
-        const response = await axios.get(`${APIURL}/api/evaluationadding`);
+        const response = await axios.get(`${APIURL}/api/evaluationadding/${admin_id}`);
         setEvaluationListData(response.data);
       } catch (error) {
         console.error(

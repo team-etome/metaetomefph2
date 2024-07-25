@@ -114,7 +114,7 @@ function FacultyDashboard() {
                 onClick={() => handleclick(item)}
                 className="border border-white faculty_rectangle"
               >
-                <div className="faculty_list_medium">{item.employee_id}</div>
+                <div className="faculty_list_medium">ID:{item.employee_id}</div>
                 <div className="faculty_profile_name">
                   <div className="faculty_list_facultyname">
                     {item.first_name}

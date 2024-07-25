@@ -45,7 +45,7 @@ function AssignmentList() {
             subject,
           },
         });
-        setAssignments(response.data.assignments); // Update the state with the fetched assignments
+        setAssignments(response.data.assignments);
       } catch (error) {
         console.error("Error fetching assignments:", error);
       }
