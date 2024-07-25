@@ -50,6 +50,8 @@ overflow: hidden;
     box-sizing: border-box;
     outline: none;
     padding: 1px 10px 12px 10px;
+    display: flex;
+    align-content: center;
 }
 .faculty_group label{
     position: absolute;

@@ -55,6 +55,7 @@
       box-sizing: border-box;
       outline: none;
       padding: 1px 10px 12px 10px;
+      padding-top: 10px;
     }
     
     .form_group input:focus + label,
