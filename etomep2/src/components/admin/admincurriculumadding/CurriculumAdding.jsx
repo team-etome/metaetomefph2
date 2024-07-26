@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosAdd } from "react-icons/io";
 import Select from "react-select";
 import { useSelector } from "react-redux";
@@ -26,7 +26,7 @@ function CurriculumAdding() {
 
   const [curriculumEntries, setCurriculumEntries] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
 
   console.log(curriculumEntries ,'helooooo')
 
@@ -97,7 +97,7 @@ function CurriculumAdding() {
 
     // console.log("enteredddddd")
 
-    // e.preventDefault();
+    e.preventDefault();
  // validation
     // const requiredFields = [
     //   { value: publisher, label: "Publisher Name" },
@@ -136,6 +136,12 @@ function CurriculumAdding() {
       .then(response => {
         console.log("Data submitted successfully:", response.data);
         // Handle further actions after successful submission like redirecting
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Class and Curriculum added successfully!",
+        });
+        navigate("/institutionadding");
       })
       
       .catch(error => {
