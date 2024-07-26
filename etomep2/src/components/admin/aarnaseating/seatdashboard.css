@@ -88,8 +88,12 @@
     justify-content: space-between;
     color: #727272;
     /* font-size: 14px; */
-    padding-left: 50%;
-    padding-right: 3%;
+    padding-left: 30%;
+    /* padding-right: 3%; */
+    width: 100px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
 }
 .seat_time {
     background-color: #9DB2BF;
