@@ -16,7 +16,11 @@
     }
     .teacher_student_header{
         height: 70px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
     }
     .teacher_student_scrollable {
         overflow-x: hidden;
@@ -28,7 +32,9 @@
         color: #526D82;
         height: 32px;
         width: 32px;
-        margin-left: 10px;
+        /* margin-left: 10px; */
+        display: flex;
+        justify-content: flex-start;
     }
     
     

@@ -140,12 +140,12 @@ function FacultyDashboard() {
       </Container>
 
       <div className="faculty_adding_button">
-        <Button
+        <button
           className={`faculty_adding faculty_adding_my_button ${isActive ? "active" : ""}`}
           onClick={handleAddClick}
         >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
-        </Button>
+        </button>
         {showOptions && (
           <>
             <div className="overlay" onClick={handleAddClick}></div>
@@ -154,7 +154,7 @@ function FacultyDashboard() {
                 to="/facultyadding"
                 className="fab_option_link"
               >
-                <Button className="fab-option" style={{marginTop:'10px'}}>
+                <Button className="fab-option" style={{marginTop:'20px', border:'1px solid red'}}>
                   <IoMdAdd className="fab-icon" />
                 </Button>
                 <div className="fab-text">Add Faculty</div>
@@ -175,7 +175,7 @@ function FacultyDashboard() {
                 className="fab_option_link"
               >
                 <div className="fab-text">Download Excel Template</div>
-                <Button className="fab-option" style={{marginTop:'70px'}}>
+                <Button className="fab-option" style={{marginTop:'80px'}}>
                   <IoMdDownload className="fab-icon" />
                 </Button>
               </div>
@@ -193,7 +193,7 @@ function FacultyDashboard() {
                 className="fab_option_link"
               >
                 <div className="fab-text">Upload Through Excel</div>
-                <Button className="fab-option"style={{marginTop:'130px'}}>
+                <Button className="fab-option"style={{marginTop:'140px'}}>
                   <MdUpload className="fab-icon" />
                 </Button>
               </div>

@@ -25,6 +25,10 @@
         color: #526D82 ;
         font-size: 30px;
         margin-left: 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 50vh;
     }
     
     .faculty_view_group {
@@ -46,6 +50,7 @@
         box-sizing: border-box;
         outline: none;
         padding: 1px 10px 12px 10px;
+        padding-top: 15px;
     }
     .faculty_view_group label{
         position: absolute;

@@ -1,6 +1,6 @@
 .teacher_clsview_container {
     height: 100vh;
-    background-color: #ffffff;
+    background-color: #DDE6ED;
     width: 100%;
     padding-left: 80px;
     justify-content: center;
@@ -109,7 +109,7 @@
       height: 60px;
       margin-right: 10px;
       border-radius: 8px;
-      border: 1px solid #526D82;
+      /* border: 1px solid #526D82; */
       background-color: #ffffff;
       color: #526D82;
       display: flex;
@@ -138,13 +138,20 @@
       overflow-y: scroll;
     }
     
+    .no-underline-link {
+      text-decoration-color:#526D82;
+    }
     
+    .no-underline-link:hover {
+      text-decoration-color:#526D82;
+    }
     .tch_vw_card {
       background-color: #ffffff;
       border: 1px solid #ddd;
       border-radius: 8px;
       padding: 16px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      height: 120px;
     }
     
     .tch_vw_card h3 {

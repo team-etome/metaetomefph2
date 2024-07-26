@@ -1,17 +1,39 @@
 .class_view_container {
     height: 100vh;
-    padding-top: 10vh !important;
+    padding-top: 1vh !important;
     background-color: #DDE6ED;
     width: 80%;
     }
     .class_view_form{
-        height: 90%;
+        height: 80vh;
         width: 100%;
         background-color: #fff;
         padding-top: 1%;
         border-radius: 15px;
         padding-bottom: 100px;
+    }
+    .class_view_form_scroll {
+        max-height: calc(90vh - 200px);
+        overflow-y: scroll; 
+        overflow-x: hidden; 
+    }
     
+      .class_view_form_scroll::-webkit-scrollbar {
+        width: 6px; 
+      }
+      
+      .class_view_form_scroll::-webkit-scrollbar-track {
+        background: #ffffff;
+      }
+      
+      .class_view_form_scroll::-webkit-scrollbar-thumb {
+        background: #A8BFD1;
+      }
+    .question_view_back {
+        color: #526D82;
+        height: 32px;
+        width: 32px;
+        margin-left: 10px;
     }
     .class_view_back {
         color: #526D82;
@@ -47,6 +69,7 @@
         box-sizing: border-box;
         outline: none;
         padding: 1px 10px 12px 10px;
+        padding-top: 15px;
     }
     .class_view_group label{
         position: absolute;
@@ -137,20 +160,20 @@
             margin-top: 30px;
         }
     
-        .class_view_form::-webkit-scrollbar {
+        .class_view_form_scroll::-webkit-scrollbar {
             width: 1px;
         }
     
-        .class_view_form::-webkit-scrollbar-track {
+        .class_view_form_scroll::-webkit-scrollbar-track {
             background: #fff;
         }
     
-        .class_view_form::-webkit-scrollbar-thumb {
+        .class_view_form_scroll::-webkit-scrollbar-thumb {
             background: #E3DFDF;
             border-radius: 1px;
         }
     
-        .class_view_form::-webkit-scrollbar-thumb:hover {
+        .class_view_form_scroll::-webkit-scrollbar-thumb:hover {
             background: #E3DFDF;
         }
     
@@ -210,30 +233,31 @@
             margin-top: 10%;
         }
     }
-    @media (min-width: 801px) {
-        .class_view_form {
-            margin-top: 3%;
-            overflow-y: scroll; /* Ensure vertical scroll bar appears */
-            overflow-x: hidden; /* Hide horizontal scroll bar */
+    /* @media (min-width: 801px) {
+        .class_view_form_scroll {
+            max-height: calc(90vh - 200px);
+            overflow-y: scroll; 
+            overflow-x: hidden; 
         }
-    
-        .class_view_form::-webkit-scrollbar {
-            width: 10px;
+        
+          .class_view_form_scroll::-webkit-scrollbar {
+            width: 6px; 
+          }
+          
+          .class_view_form_scroll::-webkit-scrollbar-track {
+            background: #ffffff;
+          }
+          
+          .class_view_form_scroll::-webkit-scrollbar-thumb {
+            background: #A8BFD1;
+          }
+        .question_view_back {
+            color: #526D82;
+            height: 32px;
+            width: 32px;
+            margin-left: 10px;
         }
-    
-        .class_view_form::-webkit-scrollbar-track {
-            background: #fff;
-        }
-    
-        .class_view_form::-webkit-scrollbar-thumb {
-            background: #E3DFDF;
-            border-radius: 1px;
-        }
-    
-        .class_view_form::-webkit-scrollbar-thumb:hover {
-            background: #E3DFDF;
-        }
-    }
+    } */
 
 
     .curriculum_row_highlight {

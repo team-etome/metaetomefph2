@@ -73,7 +73,8 @@ function ClassView() {
             </div>
             <div style={{ border: "0.5px solid #526D82" }}></div>
           </div>
-          <Row style={{ paddingTop: "20px" }}>
+          <div className="class_view_form_scroll">
+          <Row style={{ paddingTop: "20px" }} >
             <Col md={6}>
               <div className="class_view_group">
                 <label htmlFor="class_no">Class No:</label>
@@ -174,6 +175,7 @@ function ClassView() {
               ))}
             </div>
           </Row>
+          </div>
         </form>
       </Container>
       {showEditBlockButtons && (
