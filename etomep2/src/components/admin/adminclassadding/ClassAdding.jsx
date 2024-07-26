@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { adminallclassinfo } from "../../../Redux/Actions/AdminAllClassInfoAction";
 
 
+
 function ClassAdding() {
   const [medium, setMedium] = useState("");
   const [teacher, setTeacher] = useState("");
@@ -152,6 +153,7 @@ function ClassAdding() {
       ...base,
       zIndex: 9999,
       position: "absolute",
+      width:'89%'
     }),
   };
   return (
@@ -209,10 +211,10 @@ function ClassAdding() {
                     <Select
                       options={teacherOptions}
                       styles={customStyles}
-                      placeholder=""
                       value={teacher}
-                    style={{ textTransform: "capitalize" }}
-                    onChange={setTeacher}
+                      onChange={setTeacher}
+                      placeholder=""
+                      style={{ textTransform: "capitalize" }}
                     />
                     <label htmlFor="class_teacher">
                       Class Teacher<span style={{ color: "red" }}>*</span>
