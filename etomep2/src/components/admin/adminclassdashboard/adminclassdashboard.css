@@ -1,10 +1,10 @@
 .container-scroll {
   overflow-y: auto;
-  height: 75vh;
+  height: 68vh;
   width:150vw ;
  
 }
-.cls_vw_flt_dv {
+/* .cls_vw_flt_dv {
   position: absolute;
   background-color: rgb(255, 255, 255);
   width: 60px;
@@ -21,7 +21,7 @@
   padding-bottom: 10px;
   transition: transform 0.3s ease;
   z-index: 999;
-}
+} */
 
 .title {
   writing-mode: vertical-rl;
@@ -58,8 +58,122 @@
   background-color: #526d82;
   color: white;
 }
+.arrow-button {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: #526d82;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.arrow-back-button {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: #526d82;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.arrow-back-button{
+  right: 50px;
+}
+.arrow-button.hidden,
+.arrow-back-button.hidden {
+  display: none;
+}
 
 .arrow-button {
+  display: none; 
+}
+
+.arrow-back-button {
+  display: none; 
+}
+
+.cls_vw_flt_dv {
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  width: 60px;
+  height: 510px;
+  right: 0;
+  top: 13%;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  box-shadow: 0px 0px 9px 0px rgba(82, 109, 130, 0.66);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  transition: transform 0.3s ease;
+  transform: translateX(100%);
+  z-index: 999;
+}
+
+.cls_vw_flt_dv.visible {
+  transform: translateX(0);
+}
+/* .cls_vw_flt_dv.hidden {
+  display: none;
+} */
+
+
+/* .arrow-button,
+.arrow-back-button {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: #526d82;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  z-index: 1000; 
+}
+.arrow-back-button{
+  right: 50px;
+}
+.arrow-button.hidden,
+.arrow-back-button.hidden {
+  display: none;
+}
+
+.arrow-button {
+  display: none; 
+}
+
+.arrow-back-button {
+  display: none; 
+} */
+
+
+/* .cls_vw_flt_dv:not(.visible) {
+  transform: translateX(100%);
+} */
+/* .arrow-button {
   display: none;
   position: absolute;
   top: 50%;
@@ -75,7 +189,22 @@
   color: white;
   cursor: pointer;
 }
-
+.arrow-back-button{
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: #526d82;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+} */
 
 .container-scroll::-webkit-scrollbar {
   width: 6px; 
@@ -158,9 +287,9 @@ margin-top: 5px;
 display: flex;
 justify-content: flex-end;
 position: fixed;
-bottom: 4%;
-right: 2%;
-z-index: 1000;
+bottom: 1%;
+right: 3%;
+z-index: 1001;
 }
 .class_adding{
 width: 70px;
@@ -173,7 +302,7 @@ justify-content: center;
 align-items: center;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
 .cls_vw_flt_dv {
   transform: translateX(100%);
 }
@@ -184,8 +313,9 @@ align-items: center;
 
 .arrow-button {
   display: flex;
+  z-index: 1;
 }
-}
+} */
 @media (max-width:576px) {
 
 .class_rectangle{
@@ -210,12 +340,41 @@ padding-top: 16px;
 margin-top: 8px;
 }
 .container-scroll {
-  overflow-y: auto;
+  /* overflow-y: auto; */
   height: 70vh;
   width:100% ;
  padding-right: 20px;
   
 }
+.cls_vw_flt_dv {
+  /* transform: translateX(100%); */
+  display: none;
+}
+
+.cls_vw_flt_dv.visible {
+  transform: translateX(0);
+}
+
+.arrow-button,
+.arrow-back-button {
+  display: none;
+}
+/* .cls_vw_flt_dv {
+  transform: translateX(100%);
+}
+
+.cls_vw_flt_dv.visible {
+  transform: translateX(0);
+}
+
+.arrow-button {
+  display: flex;
+  z-index: 1;
+}
+.arrow-back-button {
+  display: flex;
+  z-index: 1;
+} */
 }
 .class_adding_my_button{
   background-color: #526D82;
