@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Col, Container, Row, Button, Form, Spinner } from "react-bootstrap";
 import { IoIosAdd, IoMdDownload, IoMdAdd } from "react-icons/io";
-import { MdUpload } from "react-icons/md";
+import { MdUpload, MdOutlineCalendarMonth } from "react-icons/md";
 import studentexcel from "../../utils/studentexcel";
 import { BsSearch } from "react-icons/bs";
+import { FaCalendarAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import '../studentdashboard/studentdashboard.css';
 import { useSelector } from "react-redux";
@@ -126,6 +127,15 @@ function StudentDashboard() {
           <>
             <div className="student_overlay" onClick={handleAddClick}></div>
             <div className="student_fab-options">
+            <Link
+                to="/teachertimetable"
+                className="student_fab_option_link"
+              >
+                <div className="student_fab_text">Add Timetable</div>
+                <Button className="student_fab_option" style={{marginTop:'12px'}}>
+                  <MdOutlineCalendarMonth className="student_fab_icon" />
+                </Button>
+              </Link>
               <Link
                 to="/teacherstudentadd"
                 // style={{
@@ -137,7 +147,7 @@ function StudentDashboard() {
                 className="student_fab_option_link"
               >
                 <div className="student_fab_text">Add Student</div>
-                <Button className="student_fab_option" style={{marginTop:'10px'}}>
+                <Button className="student_fab_option" style={{marginTop:'72px'}}>
                   <IoMdAdd className="student_fab_icon" />
                 </Button>
               </Link>
@@ -153,7 +163,7 @@ function StudentDashboard() {
                 className="student_fab_option_link"
               >
                 <div className="fab-text">Download Excel Template</div>
-                <Button className="student_fab_option" style={{marginTop:'70px'}}>
+                <Button className="student_fab_option" style={{marginTop:'132px'}}>
                   <IoMdDownload className="student_fab_icon" />
                 </Button>
               </div>
@@ -169,7 +179,7 @@ function StudentDashboard() {
                 className="student_fab_option_link"
               >
                 <div className="fab-text">Upload Through Excel</div>
-                <Button className="student_fab_option" style={{marginTop:'130px'}}>
+                <Button className="student_fab_option" style={{marginTop:'190px'}}>
                   <MdUpload className="student_fab_icon" />
                 </Button>
               </div>
