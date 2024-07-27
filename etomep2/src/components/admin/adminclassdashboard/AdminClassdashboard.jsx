@@ -18,6 +18,9 @@ function AdminClassdashboard() {
 
   const [selected, setSelected] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [inVisible, setInVisible] = useState(false);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
 
   const navigate = useNavigate()
 
@@ -67,9 +70,12 @@ useEffect(()=>{
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%"}}>
-        <div>
+        {/* <div>
       <div className="arrow-button" onClick={() => setIsVisible(!isVisible)}>
         <span>&lt;</span>
+      </div>
+      <div className="arrow-back-button" onClick={() => setInVisible(!inVisible)}>
+        <span>&gt;</span>
       </div>
       <div className={`cls_vw_flt_dv ${isVisible ? 'visible' : ''}`}>
         <div className="title">Class</div>
@@ -83,7 +89,31 @@ useEffect(()=>{
           </div>
         ))}
       </div>
-    </div>
+    </div> */}
+    <div
+        className={`arrow-button ${isSidebarVisible ? 'hidden' : ''}`}
+        onClick={() => setIsSidebarVisible(true)}
+      >
+        <span>&lt;</span>
+      </div>
+      <div
+        className={`arrow-back-button ${isSidebarVisible ? '' : 'hidden'}`}
+        onClick={() => setIsSidebarVisible(false)}
+      >
+        <span>&gt;</span>
+      </div>
+      <div className={`cls_vw_flt_dv ${isSidebarVisible ? 'visible' : ''}`}>
+        <div className="title">Class</div>
+        {[...Array(12)].map((_, index) => (
+          <div
+            key={index}
+            className={`circle ${selected === index + 1 ? 'selected' : ''}`}
+            onClick={() => setSelected(index + 1)}
+          >
+            {index + 1}
+          </div>
+        ))}
+      </div>
       <Container
         fluid
         className="container-scroll"

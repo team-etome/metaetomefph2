@@ -1,5 +1,5 @@
 .curriculum_container {
-  padding-left: 10vw;
+  padding-left: 5vw;
   height: 100vh;
   margin-top: 0px;
   background-color: #DDE6ED;
@@ -7,6 +7,7 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  width: 95%;
 }
 
 .curriculum_add {

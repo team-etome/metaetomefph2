@@ -25,6 +25,7 @@ function AddStudent() {
   const [studentMother, setStudentMother] = useState(null);
   const [studentAddress, setStudentAddress] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   // const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacher = useSelector((state) => state.teacherinfo);
@@ -56,6 +57,16 @@ function AddStudent() {
       address: studentAddress,
       teacher: teacher_id,
     };
+    if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Phone Number",
+        text: "Please enter a valid 10-digit phone number.",
+      });
+      return;
+    }
+
+    setLoading(true);
     try {
       const response = await axios.post(`${APIURL}/api/addstudent`, formData);
       console.log("Success:", response.data);
@@ -95,6 +106,14 @@ function AddStudent() {
     { value: "Male", label: "Male" },
     { value: "other", label: "other" },
   ];
+  const handlePhoneNumberChange = (e) => {
+    const value = e.target.value;
+    // Remove any non-numeric characters
+    const numericValue = value.replace(/\D/g, "");
+    if (numericValue.length <= 10) {
+      setStudentPhone(numericValue);
+    }
+  };
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -177,6 +196,7 @@ function AddStudent() {
                     value={studentName}
                     onChange={(e) => setStudentName(e.target.value)}
                     style={{ textTransform: "capitalize" }}
+                    maxLength="50"
                   />
                 </div>
                 <div className="teacher_studentadd_group">
@@ -190,6 +210,7 @@ function AddStudent() {
                     value={studentRollno}
                     onChange={(e) => setStudentRollno(e.target.value)}
                     style={{ textTransform: "capitalize" }}
+                    maxLength="10"
                   />
                 </div>
                 <div className="teacher_studentadd_group">
@@ -202,6 +223,7 @@ function AddStudent() {
                     name="email"
                     value={studentEmail}
                     onChange={(e) => setStudentEmail(e.target.value)}
+                    maxLength="75"
                   />
                 </div>
                 <div className="teacher_studentadd_group">
@@ -213,7 +235,9 @@ function AddStudent() {
                     id="phone"
                     name="phone"
                     value={studentPhone}
-                    onChange={(e) => setStudentPhone(e.target.value)}
+                    // onChange={(e) => setStudentPhone(e.target.value)}
+                    onChange={handlePhoneNumberChange}
+                    maxLength={10}
                   />
                 </div>
                 <div className="teacher_studentadd_group">
@@ -240,6 +264,7 @@ function AddStudent() {
                     onChange={(option) => setStudentGender(option.value)}
                     style={{ textTransform: "capitalize" }}
                     placeholder="Select Gender"
+                    maxLength={10}
                   />
                 </div>
                 {/* <div className="teacher_studentadd_group">
@@ -265,6 +290,7 @@ function AddStudent() {
                     type="date"
                     name=""
                     id=""
+                    maxLength={50}
                   />
                 </div>
                 <div className="teacher_studentadd_group">
@@ -277,6 +303,7 @@ function AddStudent() {
                     name="s_time"
                     value={studentAdmission}
                     style={{ textTransform: "capitalize" }}
+                    maxLength={50}
                     onChange={(e) => setStudentAdmission(e.target.value)}
                   />
                 </div>
@@ -291,6 +318,7 @@ function AddStudent() {
                     value={studentGuardian}
                     style={{ textTransform: "capitalize" }}
                     onChange={(e) => setstudentGuardian(e.target.value)}
+                    maxLength={50}
                   />
                 </div>
                 <div className="teacher_studentadd_group">
@@ -303,6 +331,7 @@ function AddStudent() {
                     name="father_name"
                     value={studentFather}
                     style={{ textTransform: "capitalize" }}
+                    maxLength={45}
                     onChange={(e) => setStudentFather(e.target.value)}
                   />
                 </div>
@@ -316,6 +345,7 @@ function AddStudent() {
                     name="mother_name"
                     value={studentMother}
                     style={{ textTransform: "capitalize" }}
+                    maxLength={45}
                     onChange={(e) => setStudentMother(e.target.value)}
                   />
                 </div>
@@ -329,6 +359,7 @@ function AddStudent() {
                     name="address"
                     value={studentAddress}
                     style={{ textTransform: "capitalize" }}
+                    maxLength={200}
                     onChange={(e) => setStudentAddress(e.target.value)}
                   />
                 </div>

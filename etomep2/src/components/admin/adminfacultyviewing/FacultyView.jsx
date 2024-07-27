@@ -111,10 +111,7 @@ function FacultyView() {
                 <label htmlFor="email_id">Email ID</label>
                 <input type="email" id="email_id" name="email_id" value={faculty ? faculty.email : ''} readOnly />
               </div>
-              <div className="faculty_view_group">
-                <label htmlFor="employee_id">Employee Id</label>
-                <input type="text" id="employee_id" name="employee_id" value={faculty ? faculty.employee_id : ''} readOnly />
-              </div>
+              
             </Col>
             <Col md={6}>
               <div className="faculty_view_group">
@@ -126,13 +123,38 @@ function FacultyView() {
                 <input type="text" id="gender" name="gender" value={faculty ? faculty.gender : ''} readOnly />
               </div>
               <div className="faculty_view_group">
+                <label htmlFor="employee_id">Employee Id</label>
+                <input type="text" id="employee_id" name="employee_id" value={faculty ? faculty.employee_id : ''} readOnly />
+              </div>
+              {/* <div className="faculty_view_group">
                 <label htmlFor="subject">Subject</label>
                 <input type="text" id="subject" name="subject" value={faculty ? faculty.subject : ''} readOnly />
-              </div>
+              </div> */}
             </Col>
           </Row>
           </div>
         </form>
+        <Row className="subject_class_row">
+          <div className="subject_class">
+            <div>
+              <h6>
+                Subject Fields
+              </h6>
+            </div>
+            <Col>
+            <div className="subject_class_card">
+              <div className="subject_class_body">
+                <h6>English</h6>
+                <div className="class_card">
+                  <div className="card_class_number">1</div>
+                  <div className="card_class_number">1</div>
+                  <div className="card_class_number">1</div>
+                </div>
+              </div>
+            </div>
+            </Col>
+          </div>
+        </Row>
       </Container>
     </div>
   );

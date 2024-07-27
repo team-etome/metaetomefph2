@@ -132,7 +132,7 @@ function ExaminationDashboard() {
                <div onClick={() => handleClick(item)}
                 className="border border-white examination_rectangle"
               >
-                <div className="examiantion_term">{item.term}</div>
+                <div className="examiantion_term">{item.exam_name}</div>
                 <div className="examination_class_date">
                   <div className="examination_class">
                     Class: {item.class_name}
