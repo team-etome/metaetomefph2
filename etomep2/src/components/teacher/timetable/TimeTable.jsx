@@ -54,8 +54,8 @@ function TimeTable() {
     <div className='timetable_page'>
         <Container className='timetable_container'>
         <h5> Time Table</h5>
-            <Row className='timetable_header'>
-                <Col md={10}> 
+            <Row style={{width:'110%'}}>
+              <div className='timetable_header'>
                 <div className="teacher_timetable_group">
                     <label htmlFor="student_name">
                         No. of Periods
@@ -70,15 +70,10 @@ function TimeTable() {
                         onChange={handlePeriodChange}
                     />
                 </div>
-                </Col>
-                <Col md={2}>
                 <div className='timetable_delete'>
-                    <button>
-                        Delete
-                    </button>
+                  <button>Delete</button>
                 </div>
-                </Col>
-                
+                </div>
             </Row>
             <Row className='timetable_section'>
             <Col xs={12}>

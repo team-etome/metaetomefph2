@@ -18,7 +18,7 @@
     margin-top: 10px;
 }
 .teacher_timetable_group input{
-    width: 35%;
+    width: 50vh;
     border: 1px solid #526D82;
     border-radius: 8px;
     box-sizing: border-box;
@@ -85,6 +85,7 @@
     top: 0;
     z-index: 1;
     height: 10vh ;
+    overflow-y: auto; 
   }
   .timetable_table td{
     background-color: #DDE6ED;
@@ -130,7 +131,7 @@ tbody tr:nth-child(even) {
     justify-content: flex-end;
     /* padding-right: 3vh; */
     padding-top: 1vh;
-    margin-left: 87vh;
+    /* margin-left: 87vh; */
 }
 .timetable_submit button{
     width: 40vh;
@@ -142,11 +143,12 @@ tbody tr:nth-child(even) {
  .timetable_header{
     display: flex;
     justify-content: space-between;
+    align-items: center;
  }
  .timetable_delete{
     display: flex;
     justify-content: flex-end;
-    padding-top: 7vh;
+    padding-top: 5vh;
     padding-left: 33vh;
     /* margin-bottom: 1vh; */
     /* margin-left: 100vh; */
@@ -159,4 +161,50 @@ tbody tr:nth-child(even) {
     font-size: 1rem;
     font-weight: 500;
     border-radius: 8px;
+ }
+
+ @media (max-width: 767.98px) {
+
+ }
+ @media (max-width: 991.98px) { 
+  .timetable_header{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+.timetable_delete{
+  padding-left: 10vh;
+  padding-top: 0vh;
+}
+.teacher_timetable_group input {
+  width: 45vh !important;
+  padding-top: 15px;
+}
+.teacher_timetable_group{
+  padding-left: 20px;
+}
+.teacher_timetable_group label{
+left: 15%;
+}
+.timetable_section {
+  padding-left: 0vh;
+}
+.timetable_container{
+  height: 100%;
+  padding-top: 15vh;
+  width: 80%;
+  padding-bottom: 5vh;
+}
+ }
+ @media (max-width: 1199.98px){
+  .teacher_timetable_group input {
+    width: 15vh !important;
+    padding-top: 15px;
+  }
+ }
+ @media(max-width: 1399.98px){
+  .teacher_timetable_group input {
+    width: 15vh !important;
+    padding-top: 15px;
+  }
  }
