@@ -62,6 +62,7 @@ function AssignmentList() {
 
     assignments.forEach((assignment) => {
       const assignedDate = new Date(assignment.assigned_date);
+      console.log(assignedDate,"assigned date fff")
       if (
         assignedDate.getMonth() === currentMonth &&
         assignedDate.getFullYear() === currentYear

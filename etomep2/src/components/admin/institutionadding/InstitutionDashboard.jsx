@@ -3,7 +3,7 @@ import { Col, Container, Row, Tabs, Form, Nav } from "react-bootstrap";
 import "../institutionadding/institutiondashboard.css";
 import AdminClassdashboard from "../adminclassdashboard/AdminClassdashboard";
 import FacultyDashboard from "../adminfacultydashboard/FacultyDashboard";
-import { BsSearch, BsFilterRight } from "react-icons/bs";
+// import { BsSearch, BsFilterRight } from "react-icons/bs";
 
 function InstitutionDashboard() {
 
@@ -49,9 +49,8 @@ function InstitutionDashboard() {
                   Class
                 </Nav.Link>
               </Nav.Item>
-              {activeTab === "Faculty" && (
+              {/* {activeTab === "Faculty" && (
                 <div className="search_filter_main">
-                  {/* <div  className="search_filter d-flex align-items-center"> */}
                     <Form className="d-flex inst_search">
                       <div className="position-relative">
                         <BsSearch
@@ -65,13 +64,8 @@ function InstitutionDashboard() {
                         />
                       </div>
                     </Form>
-                  {/* </div> */}
-
-                  {/* <div className="search_filter_icon">
-                    <BsFilterRight style={{ height: "40px", width: "40px" }} />
-                  </div> */}
                 </div>
-              )}
+              )} */}
             </Nav>
 
             <div className="institution_dashboard_container">

@@ -18,6 +18,7 @@ function AssignmentAdding() {
 
   console.log(title , duedate ,mark ,"stateeeeeez")
 
+
   const APIURL = useSelector((state) => state.APIURL.url);
   const teachersubjectinfo = useSelector((state) => state.teachersubjectinfo);
   const teacherinfo = useSelector((state) => state.teacherinfo);
@@ -81,7 +82,7 @@ function AssignmentAdding() {
       });
 
       Swal.close(); // Close loading spinner
-
+      navigate('/teacherassignment')
       // Show success message using Swal
       Swal.fire({
         icon: "success",
