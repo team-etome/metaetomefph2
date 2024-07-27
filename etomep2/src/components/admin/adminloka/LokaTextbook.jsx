@@ -218,9 +218,10 @@ function LokaTextbook() {
                   style={{
                     border: "none",
                     borderBottom: "1px solid black",
-                    width: "100px",
+                    width: "200px",
                     outline: "none",
                   }}
+                  maxLength={50}
                   value={chapter.name}
                   onChange={(e) =>
                     handleChapterInputChange(index, "name", e.target.value)
@@ -230,7 +231,7 @@ function LokaTextbook() {
             </div>
             <div>
               <label style={{ marginLeft: "20px" }}>
-                <input
+                {/* <input
                   type="text"
                   placeholder="Page No:"
                   style={{
@@ -239,10 +240,22 @@ function LokaTextbook() {
                     width: "180px",
                     outline: "none",
                   }}
+                  maxLength={50}
                   value={chapter.pageNo}
                   onChange={(e) =>
                     handleChapterInputChange(index, "pageNo", e.target.value)
                   }
+                /> */}
+                <input
+                    id="pdf-upload"
+                    type="file"
+                    accept=".pdf"
+                    style={{
+                      border: "none",
+                      width: "180px",
+                      outline: "none",
+                    }}
+                    // onChange={handlePdfUpload}
                 />
               </label>
             </div>
@@ -703,7 +716,7 @@ function LokaTextbook() {
                     <div>
                       <div style={{ marginLeft: "0px" }}>
                         <div style={{ display: "flex" }}>
-                          <div className="lokatb_textbutton_container" style={{}}>
+                          {/* <div className="lokatb_textbutton_container" style={{}}>
                             <button
                               style={{
                                 ...(selectedTab === "pdf"
@@ -715,7 +728,7 @@ function LokaTextbook() {
                             >
                               Textbook Pdf
                             </button>
-                          </div>
+                          </div> */}
                           <div className="lokatb_textbutton_container" style={{}}>
                             <button
                               style={{
@@ -734,7 +747,7 @@ function LokaTextbook() {
                         </div>
                       </div>
 
-                      {selectedTab === "pdf" && (
+                      {/* {selectedTab === "pdf" && (
                         <div style={{ marginLeft: "10px" }}>
                           <label htmlFor="pdf" style={{}}></label>
                           <div className="admin_textbook_image_upload_container">
@@ -784,9 +797,9 @@ function LokaTextbook() {
                             </div>
                           </div>
                         </div>
-                      )}
+                      )} */}
 
-                      {selectedTab === "frontPage" && (
+                      {/* {selectedTab === "frontPage" && ( */}
                         <div>
                           <label htmlFor="photo" style={{}}></label>
                           <div className="admin_textbook_image_upload_container">
@@ -840,7 +853,7 @@ function LokaTextbook() {
                             </div>
                           </div>
                         </div>
-                      )}
+                      {/* )} */}
                     </div>
 
 
