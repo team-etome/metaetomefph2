@@ -34,6 +34,10 @@ function SeatAssigning() {
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
   const classinfo = useSelector((state) => state.adminallclassinfo);
+  const admininfo = useSelector((state) => state.admininfo);
+
+  const admin_id = admininfo.admininfo?.admin_id
+  console.log(admin_id,"admin id")
   console.log(teacherinfo, "teacher info");
   console.log(classinfo, "class info");
 
@@ -153,6 +157,7 @@ function SeatAssigning() {
       selectedTeacher,
       selectedClass,
       selectedLayout,
+      admin_id
     };
 
     console.log(selectedClass,"selected classsssss")

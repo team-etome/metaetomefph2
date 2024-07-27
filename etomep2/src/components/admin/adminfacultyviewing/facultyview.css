@@ -99,12 +99,24 @@
         display: none;
     }
     .faculty_edit{
-        width: 75px;
+        width: 30px;
         height: 50px;
         background-color: transparent;
-        border: 1px solid #526D82;
-        border-radius: 8px;
+        cursor: pointer;
+        /* border: 1px solid #526D82;
+        border-radius: 8px; */
     }
+
+
+    .faculty_save{
+
+      width: 30px;
+      height: 50px;
+      cursor: pointer;
+
+    }
+
+
     .faculty_block{
         width: 75px;
         height: 50px;

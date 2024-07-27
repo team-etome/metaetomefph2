@@ -1,15 +1,14 @@
 import React, { useState, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { IoChevronBackSharp } from "react-icons/io5";
-import { FaRedo } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import "react-day-picker/dist/style.css";
-import { format } from "date-fns";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import "../addstudent/addstudent.css";
+
+
 function AddStudent() {
   const [studentName, setStudentName] = useState(null);
   const [studentRollno, setStudentRollno] = useState(null);
@@ -69,7 +68,7 @@ function AddStudent() {
     setLoading(true);
     try {
       const response = await axios.post(`${APIURL}/api/addstudent`, formData);
-      console.log("Success:", response.data);
+    
       setStudentName("");
       setStudentRollno("");
       setStudentEmail("");
