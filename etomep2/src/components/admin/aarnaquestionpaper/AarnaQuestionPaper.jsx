@@ -67,7 +67,8 @@ function AarnaQuestionPaper() {
                 >
                   <div className="qpaper_faculty_name">{item.facultyName}</div>
                   <div className="qpaper_term_date">
-                    <div className="qpaper_term">{item.term}</div>
+                    {/* <div className="qpaper_term">{item.term}</div> */}
+                    <div className="qpaper_term">{item.exam_name}</div>
                     <div className="qpaper_date">{item.exam_date}</div>
                   </div>
                   <div className="qpaper_subject">{item.subject_name}</div>

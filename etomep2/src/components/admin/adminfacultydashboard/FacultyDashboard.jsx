@@ -177,11 +177,13 @@ function FacultyDashboard() {
           <>
             <div className="overlay" onClick={handleAddClick}></div>
             <div className="fab-options">
+
               <Link to="/facultyadding" className="fab_option_link">
                 <Button
                   className="fab-option"
                   style={{ marginTop: "20px", border: "1px solid red" }}
                 >
+
                   <IoMdAdd className="fab-icon" />
                 </Button>
                 <div className="fab-text">Add Faculty</div>

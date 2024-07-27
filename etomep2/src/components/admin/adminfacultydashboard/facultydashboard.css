@@ -42,6 +42,10 @@
   .faculty_list_facultyname {
     color: #526D82;
     font-size: 18px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:100px;
   }
   
   .faculty_profile_name {
@@ -64,6 +68,10 @@
     top:10px;
     right: 10px;
     color: #807B7B;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:50px;
   }
 .faculty_rectangle{
   width: 100%;
