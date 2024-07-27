@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Col, Container, Row, Button } from "react-bootstrap";
+import { Col, Container, Row, Button, Form } from "react-bootstrap";
 import { IoIosAdd, IoMdDownload, IoMdAdd } from "react-icons/io";
 import { MdUpload } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,9 +7,9 @@ import axios from "axios";
 import amritha from "../../../assets/amritha.png";
 import "../adminfacultydashboard/facultydashboard.css";
 import generateExcelFile from "../../utils/generateExcelFile";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { adminteacherinfo } from "../../../Redux/Actions/AdminTeacherInfoAction";
-
+import { BsSearch, BsFilterRight } from "react-icons/bs";
 
 function FacultyDashboard() {
   const [isActive, setIsActive] = useState(false);
@@ -17,6 +17,7 @@ function FacultyDashboard() {
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [facultyListData, setFacultyListData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
@@ -25,18 +26,17 @@ function FacultyDashboard() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
-
-  const dispatch = useDispatch()
-
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchFacultyData = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`${APIURL}/api/teacherdetails/${admin_id}`);
+        const response = await axios.get(
+          `${APIURL}/api/teacherdetails/${admin_id}`
+        );
         setFacultyListData(response.data);
-        dispatch(adminteacherinfo(response.data))
+        dispatch(adminteacherinfo(response.data));
       } catch (error) {
         console.error("Failed to fetch faculty data:", error);
       } finally {
@@ -77,11 +77,11 @@ function FacultyDashboard() {
         }
       );
       alert("Upload successful");
-      fetchFacultyData()
-      
+      fetchFacultyData();
+
       console.log(response.data);
       setShowOptions(false);
-      setFile(null); 
+      setFile(null);
     } catch (error) {
       console.error("Error uploading file:", error);
       alert("Error during file upload.");
@@ -94,11 +94,16 @@ function FacultyDashboard() {
     setShowOptions(!showOptions);
   };
 
-
-  
   const handleclick = (facultyData) => {
     navigate("/facultyview", { state: { faculty: facultyData } });
   };
+
+
+  const filteredFacultyList = facultyListData.filter(
+    (faculty) =>
+      faculty.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      faculty.employee_id.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
@@ -108,7 +113,27 @@ function FacultyDashboard() {
         style={{ marginTop: "16px" }}
       >
         <Row>
-          {facultyListData.map((item, index) => (
+          <Col md={6}></Col>
+          <Col md={6}>
+            <div className="search_filter_main">
+              <Form className="d-flex inst_search">
+                <div className="position-relative">
+                  <BsSearch className="position-absolute top-50 translate-middle-y ms-2 inst_search_icon" />
+                  <Form.Control
+                    type="search"
+                    placeholder="Search by name"
+                    className="ps-3 search_bar"
+                    aria-label="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </Form>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          {filteredFacultyList.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
               <div
                 onClick={() => handleclick(item)}
@@ -141,7 +166,9 @@ function FacultyDashboard() {
 
       <div className="faculty_adding_button">
         <button
-          className={`faculty_adding faculty_adding_my_button ${isActive ? "active" : ""}`}
+          className={`faculty_adding faculty_adding_my_button ${
+            isActive ? "active" : ""
+          }`}
           onClick={handleAddClick}
         >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
@@ -150,32 +177,33 @@ function FacultyDashboard() {
           <>
             <div className="overlay" onClick={handleAddClick}></div>
             <div className="fab-options">
-            <Link
-                to="/facultyadding"
-                className="fab_option_link"
-              >
-                <Button className="fab-option" style={{marginTop:'20px'}}>
+
+              <Link to="/facultyadding" className="fab_option_link">
+                <Button
+                  className="fab-option"
+                  style={{ marginTop: "20px", border: "1px solid red" }}
+                >
+
                   <IoMdAdd className="fab-icon" />
                 </Button>
                 <div className="fab-text">Add Faculty</div>
               </Link>
 
-
               <div
                 onClick={generateExcelFile}
                 // style={{
-                  // display: "flex",
-                  // justifyContent: "center",
-                  // alignContent: "center",
-                  // marginTop:'20px',
-                  // gap: "20px",
-                  // cursor: "pointer",
-                  // marginTop:'20px',
+                // display: "flex",
+                // justifyContent: "center",
+                // alignContent: "center",
+                // marginTop:'20px',
+                // gap: "20px",
+                // cursor: "pointer",
+                // marginTop:'20px',
                 // }}
                 className="fab_option_link"
               >
                 <div className="fab-text">Download Excel Template</div>
-                <Button className="fab-option" style={{marginTop:'80px'}}>
+                <Button className="fab-option" style={{ marginTop: "80px" }}>
                   <IoMdDownload className="fab-icon" />
                 </Button>
               </div>
@@ -183,17 +211,17 @@ function FacultyDashboard() {
               <div
                 onClick={openFileSelector}
                 // style={{
-                  // display: "flex",
-                  // justifyContent: "center",
-                  // alignContent: "center",
-                  // gap: "20px",
-                  // cursor: "pointer",
-                  // marginTop:'20px',
+                // display: "flex",
+                // justifyContent: "center",
+                // alignContent: "center",
+                // gap: "20px",
+                // cursor: "pointer",
+                // marginTop:'20px',
                 // }}
                 className="fab_option_link"
               >
                 <div className="fab-text">Upload Through Excel</div>
-                <Button className="fab-option"style={{marginTop:'140px'}}>
+                <Button className="fab-option" style={{ marginTop: "140px" }}>
                   <MdUpload className="fab-icon" />
                 </Button>
               </div>

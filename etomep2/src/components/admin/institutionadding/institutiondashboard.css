@@ -16,7 +16,7 @@
     font-weight: bold;
     border-bottom: 2px solid #526D82;
   }
-  .search_filter_main{
+  /* .search_filter_main{
     width: 80%;
     display: flex;
     justify-content: flex-end;
@@ -63,7 +63,7 @@
     height: 20px;
     width: 20px;
     color: #D8D4D4;
-  }
+  } */
   
   /* .search_filter .bs-filter-right {
     height: 40px;
@@ -186,7 +186,7 @@
       align-items: center; */
       padding-top: 20% !important;
     }
-    .search_filter_main{
+    /* .search_filter_main{
       width: 100%;
       padding-right: 0px;
       display: flex;
@@ -198,8 +198,7 @@
 
     .search_bar{
       width:300px;
-      /* margin-left: 15%; */
-    }
+    } */
 
   }
   @media (min-width: 710px) and (max-width:1024px) {
@@ -210,12 +209,12 @@
       flex-direction: row;
       padding-top: 10px;
     }
-    .search_filter_main {
+    /* .search_filter_main {
       justify-content: flex-start;
       flex-direction: row;
       width: auto;
     }
     .search_bar {
       width: 300px;
-    }
+    } */
   }

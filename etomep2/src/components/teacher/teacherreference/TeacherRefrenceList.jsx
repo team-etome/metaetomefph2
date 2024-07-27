@@ -12,15 +12,13 @@ function TeacherRefrenceList() {
   const [showThisMonth, setShowThisMonth] = useState(true);
   const [showPreviousMonth, setShowPreviousMonth] = useState(true);
   const [showModal, setShowModal] = useState(false);
-
-  const [loading, setLoading] = useState(false);
+  const [references, setReferences] = useState([])
+  const [selectedReference, setSelectReference] = useState(null);
 
   
-  const [references, setReferences] = useState({
-    thisMonth: [],
-    previousMonth: [],
-  });
 
+
+  console.log(references,"referenceeeee")
   const navigate = useNavigate();
 
   const handleAddClick = () => {
@@ -37,8 +35,8 @@ function TeacherRefrenceList() {
   console.log(references,"referenceeee")
 
 
-  const handleAssignmentClick = (assignment) => {
-    setSelectedAssignment(assignment);
+  const handleReferenceclick = (reference) => {
+    setSelectReference(reference);
     setShowModal(true);
   };
 
@@ -57,11 +55,8 @@ function TeacherRefrenceList() {
             subject,
           },
         });
-        const fetchedReferences = response.data;
-
-        // Group the references by month
-        const groupedReferences = groupByMonth(fetchedReferences);
-        setReferences(groupedReferences);
+        
+        setReferences(response.data.reference);
       } catch (error) {
         console.error("Error fetching references:", error);
       }
@@ -70,39 +65,7 @@ function TeacherRefrenceList() {
     fetchReferences();
   }, [APIURL, teacher, teacher_subject]);
 
-  // const refrences = {
-  //   thisMonth: [
-  //     {
-  //       id: 1,
-  //       title: "Environmental impacts",
-  //       description: "Details about environmental impacts",
-  //     },
-  //     {
-  //       id: 3,
-  //       title: "Today's Model Examination is Vector Graphics",
-  //       description: "Details about the model examination",
-  //     },
-  //   ],
-  //   previousMonth: [
-  //     {
-  //       id: 2,
-  //       title: "Deforestation and Its Effects on Biodiversity",
-  //       description: "Details about deforestation",
-  //     },
-  //     {
-  //       id: 4,
-  //       title: "Soil Erosion",
-  //       description: "Details about soil erosion",
-  //       studentclass: "A",
-  //     },
-  //     {
-  //       id: 5,
-  //       title: "Water Conservation",
-  //       description: "Details about water conservation",
-  //       studentclass: "A",
-  //     },
-  //   ],
-  // };
+  
   const groupByMonth = (references) => {
     const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
@@ -110,21 +73,28 @@ function TeacherRefrenceList() {
     const previousMonth = [];
 
     references.forEach((reference) => {
-      const assignedDate = new Date(reference.assigned_date);
-      if (
-        assignedDate.getMonth() === currentMonth &&
-        assignedDate.getFullYear() === currentYear
-      ) {
-        thisMonth.push(reference);
+      const assignedDate = new Date(reference.date);
+      console.log(assignedDate,"assigned dateeeee")
+
+      if (!isNaN(assignedDate)) {
+        if (
+          assignedDate.getMonth() === currentMonth &&
+          assignedDate.getFullYear() === currentYear
+        ) {
+          thisMonth.push(reference);
+        } else {
+          previousMonth.push(reference);
+        }
       } else {
-        previousMonth.push(reference);
+        console.error(`Invalid date format: ${reference.date}`);
       }
+
     });
 
     return { thisMonth, previousMonth };
   };
 
-  const { thisMonth, previousMonth } = references;
+  const { thisMonth, previousMonth } = groupByMonth(references);
 
   return (
     <Container className="refrence_container">
@@ -154,12 +124,11 @@ function TeacherRefrenceList() {
                 <div
                   key={refrences.id}
                   className="refrence_item mb-3 p-2"
-                  onClick={() => handleAssignmentClick(refrences)}
+                  onClick={() => handleReferenceclick(refrences)}
                 >
                   <h5>{refrences.title}</h5>
                   <p>
-                    Posted On:{" "}
-                    {new Date(reference.assigned_date).toLocaleDateString()}
+                    <p>Posted On:{refrences.date}</p>
                   </p>
                 </div>
               ))}
@@ -180,10 +149,10 @@ function TeacherRefrenceList() {
                 <div
                   key={refrences.id}
                   className="refrence_item mb-3 p-2"
-                  onClick={() => handleAssignmentClick(refrences)}
+                  onClick={() => handleReferenceclick(refrences)}
                 >
                   <h4>{refrences.title}</h4>
-                  <p>Posted On: {new Date(reference.assigned_date).toLocaleDateString()}</p>
+                  <p>Posted On:{refrences.date}</p>
                 </div>
               ))}
           </div>

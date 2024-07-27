@@ -7,15 +7,18 @@ import { FaRedo } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { ThreeDots } from "react-loader-spinner"; 
+
 
 function ReferenceAdding() {
-  const [showUploadArea, setShowUploadArea] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedUrl, setSelectedUrl] = useState("");
-  const [selectedTab, setSelectedTab] = useState("pdf");
-  const [referenceTitle, setReferenceTitle] = useState("");
+  const [showUploadArea, setShowUploadArea]    = useState(false);
+  const [selectedFile, setSelectedFile]        = useState(null);
+  const [selectedUrl, setSelectedUrl]          = useState("");
+  const [selectedTab, setSelectedTab]          = useState("pdf");
+  const [referenceTitle, setReferenceTitle]    = useState("");
+  const [loading, setLoading]                  = useState(false);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -47,6 +50,7 @@ function ReferenceAdding() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const formData = new FormData();
     formData.append("teacher", teacher_id);
@@ -73,13 +77,15 @@ function ReferenceAdding() {
         showConfirmButton: false,
         timer: 1500,
       });
-      // navigate('/teacherrefrencelist'); // Uncomment to navigate after successful submission
+      navigate('/teacherrefrencelist'); 
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Error",
         text: "There was an error adding the reference",
       });
+    } finally {
+      setLoading(false); // Set loading to false after submission
     }
   };
 
@@ -215,8 +221,28 @@ function ReferenceAdding() {
                 )}
               </div>
             </Col>
-            <div className="teacher_ref_submit">
+            {/* <div className="teacher_ref_submit">
               <button onClick={handleSubmit} type="submit">Submit</button>
+              {loading && (
+                  <ThreeDots
+                  color="#00BFFF"
+                  height={80}
+                  width={80}
+                  style={{ margin: "20px auto" }}
+                />
+              )}
+            </div> */}
+            <div className="teacher_ref_submit">
+              {loading ? (
+                <ThreeDots
+                  color="#00BFFF"
+                  height={80}
+                  width={80}
+                  style={{ margin: "20px auto" }}
+                />
+              ) : (
+                <button onClick={handleSubmit} type="submit">Submit</button>
+              )}
             </div>
           </Row>
         </div>
