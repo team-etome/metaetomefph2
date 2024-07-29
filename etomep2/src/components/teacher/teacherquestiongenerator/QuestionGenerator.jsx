@@ -7,6 +7,7 @@ import { TbSection } from "react-icons/tb";
 import TeacherTextEditor from "../teachertexteditor/TeacherTextEditor";
 import { MdOutlineDelete } from "react-icons/md";
 import { PiDotsSix } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -30,6 +31,7 @@ function QuestionGenerator() {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [lastQuestionId, setLastQuestionId] = useState(1); // State to track last question ID
+  const navigate = useNavigate();
 
   const APIURL = useSelector((state) => state.APIURL.url);
   const exampaperinfo = useSelector((state) => state.exampaperinfo);
@@ -226,6 +228,8 @@ function QuestionGenerator() {
         title: "Export successful!",
         showConfirmButton: false,
         timer: 1500,
+      }).then(() => {
+        navigate("/teacherexamination");
       });
     } catch (error) {
       setSuccessMessage("Export failed!");
