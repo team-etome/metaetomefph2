@@ -134,7 +134,7 @@ useEffect(()=>{
                     />
                   </div>
                   <div className="class_list_facultyname">
-                    {item.facultyName}
+                    {item.class_teacher}
                   </div>
                 </div>
                 <div className="class_lisit_circle">

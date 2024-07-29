@@ -1,6 +1,6 @@
 .faculty_view_container {
     height: 100vh;
-    padding-top: 0.5vh;
+    padding-top: 0.25vh;
     background-color: #DDE6ED;
     width: 80%;
     }
@@ -145,6 +145,7 @@
         font-size: 1.25rem;
         font-weight: 500;
         padding-top: 10px;
+        margin-left: 10px;
       }
       
       .subject_class_card {
@@ -156,6 +157,10 @@
         overflow-y: scroll;
         overflow-x: hidden; 
         box-sizing: border-box;
+        margin-left: 20px;
+      }
+      .subject_class_card p{
+        font-size: 1rem;
       }
     .subject_class_card::-webkit-scrollbar {
         width: 8px; 
