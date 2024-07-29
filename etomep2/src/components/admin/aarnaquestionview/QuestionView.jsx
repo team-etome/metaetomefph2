@@ -89,7 +89,7 @@ function QuestionView() {
               <Link to="/aarnanavbar">
                 <IoChevronBackSharp className="question_view_back" />
               </Link>
-              <h1 className="question_view_title">Question 1</h1>
+              <h1 className="question_view_title">{questionPaper?.exam_name || ""}</h1>
               <div style={{ flex: "1" }}></div>
               {windowWidth > 800 ? (
                 <div

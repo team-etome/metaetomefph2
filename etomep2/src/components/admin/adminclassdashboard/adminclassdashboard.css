@@ -241,7 +241,7 @@
 }
 .class_list_facultyname {
   color: #000000;
-  font-size: 18px;
+  font-size: 0.90rem;
 }
 
 .class_profile_name {
@@ -253,10 +253,11 @@
 }
 
 .faculty_profile_photo {
-  width: 30px;
-  height: 35px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
   margin-right: 10px;
+  border: 0.5px solid #526D82;
 }
 .class_list_medium{
   position: absolute;
