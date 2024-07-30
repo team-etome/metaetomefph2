@@ -198,7 +198,10 @@ function TeacherLogin() {
                       Teacher Login
                     </p>
                     <div className="button_box">
-                      <div className="btn" style={{ left: btnPosition, transitionDuration }}></div>
+                      <div className="btn" style={{ left: btnPosition, transitionDuration }}>
+
+                        <p style={{color:"white"}}>Teacher</p>
+                      </div>
                       <button type="button" className="toggle_btn" onClick={handleLeftClick}>Admin</button>
                       <button type="button" className="toggle_btn" onClick={handleRightClick}>Teacher</button>
                     </div>

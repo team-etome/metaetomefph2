@@ -207,7 +207,10 @@ function AdminLogin() {
                    Admin Login
                   </p>
                   <div className="button_box">
-                    <div className="btn" style={{ left: btnPosition }}></div>
+                    <div  className="btn" style={{ left: btnPosition , border:"2px solid black" }}>
+
+                      <p style={{color : "white"}}>Admin</p>
+                    </div>
                     <button type="button" className="toggle_btn" onClick={handleLeftClick}>Admin</button>
                     <button type="button" className="toggle_btn" onClick={handleRightClick}>Teacher</button>
                   </div>
