@@ -91,7 +91,7 @@ height: 75vh;
 .qpaper_term_date {
     display: flex;
     justify-content: space-between; /* This will place the term and date on opposite ends */
-    padding: 5px 20px; /* Adjusted padding for better spacing */
+    padding: 5px 10px; /* Adjusted padding for better spacing */
     color: #727272;
     font-size: 14px;
     padding-top: 10px;
@@ -108,20 +108,22 @@ height: 75vh;
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
-    width:60px;
+    width:70px;
+    /* border: 1px solid green; */
 }
 
 .qpaper_date{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     color: #727272;
     /* font-size: 14px; */
-    padding-left: 30%;
-    padding-right: 3%;
+    padding-left: 40px;
+    /* padding-right: 3%; */
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
-    width:70px;
+    width:50px !important;
+    /* border: 1px solid red; */
 }
 
 .qpaper_subject {

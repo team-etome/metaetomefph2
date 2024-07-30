@@ -159,6 +159,7 @@
       .modal_heading{
         border-bottom: none;
         padding-left: 30px;
+        /* padding-right: 50px; */
       }
       .modal_assign{
         color: #526D82;
@@ -194,12 +195,12 @@
             background-color: #8FA2B6; 
         }
       .modal_div_assign{
-        border: 1px solid #ffffff;
+        border: 1px solid #b91919;
         box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
         height: 400px;
         width: 400px;
         border-radius: 15px;
-        margin-left: 10px;
+        margin-left: 30px;
         padding-top: 30px;
         padding-left: 20px;
       }

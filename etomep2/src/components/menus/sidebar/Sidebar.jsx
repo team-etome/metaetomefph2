@@ -63,7 +63,7 @@ function Sidebar() {
         {teacher_token ? (
           <>
             <Link
-              to="/admindashboard"
+              to="/teacherhome"
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Col

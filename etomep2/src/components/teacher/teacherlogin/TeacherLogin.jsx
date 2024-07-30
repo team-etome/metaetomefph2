@@ -30,7 +30,7 @@ function TeacherLogin() {
 
   const handleLeftClick = () => {
     setBtnPosition('0');
-    setTimeout(() => navigate('/'), 500); // Ensure navigation happens after the transition
+    setTimeout(() => navigate('/'), 400); // Ensure navigation happens after the transition
   };
 
   const handleRightClick = () => {
@@ -68,7 +68,7 @@ function TeacherLogin() {
         confirmButtonText: "Ok",
       });
 
-      navigate("/admindashboard");
+      navigate("/teacherhome");
     } catch (error) {
       if (error.response && error.response.status === 405) {
         Swal.fire({
@@ -197,13 +197,13 @@ function TeacherLogin() {
                     <p className="admin_form_title" style={{ marginBottom: "0px" }}>
                       Teacher Login
                     </p>
-                    <div className="button_box">
-                      <div className="btn" style={{ left: btnPosition, transitionDuration }}>
+                    <div className="button_box" style={{}}>
+                      <div className="btn" style={{ left: btnPosition, transitionDuration}}>
 
-                        <p style={{color:"white"}}>Teacher</p>
+                        {/* <p style={{color:"white", paddingBottom:'50px'}}>Teacher</p> */}
                       </div>
-                      <button type="button" className="toggle_btn" onClick={handleLeftClick}>Admin</button>
-                      <button type="button" className="toggle_btn" onClick={handleRightClick}>Teacher</button>
+                      <button type="button" className="toggle_btn" onClick={handleLeftClick} style={{ color: btnPosition === '0' ? 'white' : '#526d82' }}>Admin</button>
+                      <button type="button" className="toggle_btn" onClick={handleRightClick} style={{ color: btnPosition === '110px' ? 'white' : '#526d82' }}>Teacher</button>
                     </div>
                   </div>
                   <div className="teacher_input_container">

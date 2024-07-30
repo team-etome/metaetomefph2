@@ -96,8 +96,10 @@ function QuestionView() {
                   style={{
                     display: "flex",
                     justifyContent: "flex-end",
+                    alignContent:'center',
                     gap: "20px",
                     paddingRight: "30px",
+                    paddingTop:'10px'
                   }}
                 >
                   {/* <button className="question_edit">Edit</button> */}

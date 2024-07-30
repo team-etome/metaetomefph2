@@ -282,7 +282,7 @@ function EvaluationScheduling() {
         </Modal.Header>
         <Modal.Body>
           <Row style={{}}>
-            <Col md={6}>
+            <Col md={6} style={{}}>
               <div className="modal_div_assign">
                 <Form className="d-flex">
                   <div className="position-relative">

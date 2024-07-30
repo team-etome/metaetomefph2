@@ -90,9 +90,10 @@
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
   background: #fff;
   display: flex;
+  height: 40px;
 }
 
-/* .toggle_btn {
+.toggle_btn {
   padding: 10px 29px;
   cursor: pointer;
   background: transparent;
@@ -103,7 +104,7 @@
   z-index: 1;
   flex: 1;
   transition: color 0.5s;
-} */
+}
 
 .btn {
   position: absolute;
