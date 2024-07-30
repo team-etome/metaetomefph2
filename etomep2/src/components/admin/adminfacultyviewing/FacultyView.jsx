@@ -243,8 +243,9 @@ function FacultyView() {
                   {/* <MdBlockFlipped  onClick={handleBlockClick}/> */}
                   {isBlocked ? (
                     <CgUnblock
+                    // className="faculty_block"
                       style={{
-                        width: "50px",
+                        width: "40px",
                         height: "50px",
                         color: "green",
                         cursor: "pointer",
@@ -255,7 +256,7 @@ function FacultyView() {
                     />
                   ) : (
                     <MdBlockFlipped
-                      style={{ width: "50px", height: "50px", color: "red" ,cursor:"pointer"}}
+                      style={{ width: "40px", height: "50px", color: "red" ,cursor:"pointer"}}
                       onClick={handleBlockClick}
                       title="Block"
                     />
@@ -416,6 +417,7 @@ function FacultyView() {
                 <div className="subject_class_body">
                   <h6>English</h6>
                   <div className="class_card">
+                    <p>Class : </p>
                     <div className="card_class_number">1</div>
                     <div className="card_class_number">1</div>
                     <div className="card_class_number">1</div>
