@@ -5,13 +5,13 @@
     width: 80%;
     }
     .evaluation_form{
-        height: 90%;
+        height: 60vh;
         width: 100%;
         background-color: #fff;
         padding-top: 20px;
         border-radius: 15px;
         padding-bottom: 100px;
-    
+        /* border: 1px solid green; */
     }
       
     .evaluation_back {
@@ -134,9 +134,10 @@
     }
 
     .evaluation_form_scrollable {
-        max-height: calc(90vh - 200px);
+        max-height: calc(90vh - 90px);
         overflow-y: auto; 
         overflow-x: hidden; 
+        /* border: 1px solid red; */
       }
       
       .evaluation_form_scrollable::-webkit-scrollbar {
@@ -195,8 +196,8 @@
             background-color: #8FA2B6; 
         }
       .modal_div_assign{
-        border: 1px solid #b91919;
-        box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
+        /* border: 1px solid #b91919; */
+        box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.3);
         height: 400px;
         width: 400px;
         border-radius: 15px;

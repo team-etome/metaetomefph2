@@ -107,8 +107,9 @@ function StudentDashboard() {
         <Row className="teacher_studentdashboard_container">
           {studentlist.map((item, index) => (
             <Col lg={3} md={6} sm={6} xs={12} key={index}>
-              <div onClick={() => handleClick(item)} className="border border-white student_rectangle">
-                <div className="student_name">{item.student_name}</div>
+              <div onClick={() => handleClick(item)} className="student_rectangle">
+
+                <div className="student_name1">{item.student_name}</div>
                 <div className="student_date_id">
                   <div className="student_id">
                     Admission No.{item.roll_no}

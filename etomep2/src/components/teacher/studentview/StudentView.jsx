@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col, Button, Modal, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { PiGraduationCap } from "react-icons/pi";
 import amritha from "../../../assets/amritha.png";
@@ -12,6 +12,9 @@ function StudentView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const navigate = useNavigate();
+
   const dropdownRef = useRef(null);
 
   const location = useLocation();
@@ -38,6 +41,9 @@ function StudentView() {
     }
   };
 
+  const handleBackClick = () => {
+    navigate("/teacherstudentdashboard");
+  };
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     document.addEventListener("mousedown", handleClickOutside);
@@ -64,9 +70,9 @@ function StudentView() {
                 marginBottom: "10px",
               }}
             > */}
-              <Link to="/teacherstudentdashboard">
-                <IoChevronBackSharp className="teacher_student_view_back" />
-              </Link>
+              {/* <Link to="/teacherstudentdashboard"> */}
+                <IoChevronBackSharp onClick={handleBackClick} className="teacher_student_view_back" />
+              {/* </Link> */}
               <h1 className="teaher_student_view_title">{student.student_name} </h1>
               <div style={{ flex: "1" }}></div>
               {windowWidth > 800 ? (

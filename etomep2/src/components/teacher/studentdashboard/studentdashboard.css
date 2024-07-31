@@ -44,15 +44,30 @@ height: 100vh;
   margin-bottom: 20px;
   cursor: pointer;
 }
-.student_name{
-    padding-left: 20px;
+.student_name1{
+    /* padding-left: 50px;
     padding-top: 10px;
     color: #4A4A4A;
     font-size: 16px;
     font-weight: bold;
     display: flex;
     justify-content: center;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:70px; */
     /* justify-content: flex-start; */
+    display: flex;
+    justify-content: flex-start;
+    color: #4A4A4A;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:270px;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
 }
 /* .student_date_id{
     display: flex;
@@ -69,15 +84,21 @@ height: 100vh;
 } */
 .student_id{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     color: #526D82;
     /* font-size: 14px; */
     /* padding-left: 50%; */
     /* padding-right: 2%; */
     width: 100%;
     padding-top: 5%;
-    display: flex;
-    justify-content: center;
+    padding-right: 0%;
+    padding-left: 90%;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:70px;
+    /* border: 1px solid red; */
+    /* justify-content: center; */
 }
 .student_date, .student_id {
     flex: 1;

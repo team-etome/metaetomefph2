@@ -108,6 +108,39 @@
     font-size: 14px; 
     margin-top: 15px;
 }
+.seat_list_search_filter_main {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100px;
+  /* border: 1px solid red; */
+  padding-left: 98.5%;
+}
+
+.seat_list_search_filter_wrapper {
+  display: flex; 
+  align-items: center;
+}
+
+.seat_list_ad_search_bar {
+  width: 250px;
+  border-radius: 17px;
+  padding-right: 40px; 
+}
+
+.seat_list_searchbar_icon {
+  right: 15px;
+}
+
+.bs-filter-right {
+  height: 40px;
+  width: 40px;
+}
+
+.seat_search_filter_icon {
+  margin-left: 15px;
+  color: #545454;
+}
 @media (max-width:576px) {
    
   .seat_rectangle{
