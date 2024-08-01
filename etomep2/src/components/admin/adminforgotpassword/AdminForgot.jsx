@@ -8,6 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AiOutlineClose } from "react-icons/ai";
+import { IoMdArrowBack } from "react-icons/io";
 
 function AdminForgot() {
   const [email, setEmail] = useState("");
@@ -168,7 +169,9 @@ function AdminForgot() {
   // const handlePasswordUpdateSuccess = () => {
   //   navigate("/adminlogin");
   // };
-
+  const handleBackClick = () => {
+    window.location.reload(); // Refresh the page
+  };
   return (
     <div className="ad_fg_min_div" style={{}}>
       <form
@@ -217,6 +220,7 @@ function AdminForgot() {
               // marginRight: "40px",
             }}
           >
+             <div className="forgot_back" onClick={handleBackClick}> <IoMdArrowBack className="forgot_back_icon"/> Back</div>
             <button
               type="submit"
               value="submit"
