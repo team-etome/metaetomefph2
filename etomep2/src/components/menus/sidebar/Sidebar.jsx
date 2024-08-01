@@ -197,10 +197,15 @@ function Sidebar() {
               }`}
               onClick={handleLokaClick}
             >
-              <div className="icon_container_div">
-                <PiBook className="icon_img" />
-                <span className="icon-text">Loka</span>
-              </div>
+              <Link
+                to="/adminlokanavbar"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <div className="icon_container_div">
+                  <PiBook className="icon_img" />
+                  <span className="icon-text">Loka</span>
+                </div>
+              </Link>
             </Col>
 
             <Col

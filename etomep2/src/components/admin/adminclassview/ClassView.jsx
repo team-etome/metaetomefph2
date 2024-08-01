@@ -25,14 +25,12 @@ function ClassView() {
   };
 
   const handleRowClick = (index) => {
-   
     if (index === selectedRowIndex) {
-        setSelectedRowIndex(null);
+      setSelectedRowIndex(null);
     } else {
-        setSelectedRowIndex(index);
+      setSelectedRowIndex(index);
     }
-
-};
+  };
   return (
     <div>
       <Container className="class_view_container">
@@ -74,107 +72,105 @@ function ClassView() {
             <div style={{ border: "0.5px solid #526D82" }}></div>
           </div>
           <div className="class_view_form_scroll">
-          <Row style={{ paddingTop: "20px" }} >
-            <Col md={6}>
-              <div className="class_view_group">
-                <label htmlFor="class_no">Class No:</label>
-                <input
-                  type="text"
-                  id="class_no"
-                  name="class_no"
-                  value={classDetails ? classDetails.class_name : ""}
-                  readOnly
-                />
-              </div>
-              <div className="class_view_group">
-                <label htmlFor="division">Division</label>
-                <input
-                  type="text"
-                  id="division"
-                  name="division"
-                  value={classDetails ? classDetails.division : ""}
-                  readOnly
-                />
-              </div>
-              <div className="class_view_group">
-                <label htmlFor="category">Category</label>
-                <input
-                  type="text"
-                  id="category"
-                  name="category"
-                  value={classDetails ? classDetails.category : "null"}
-                  readOnly
-                />
-              </div>
-            </Col>
-            <Col md={6}>
-              <div className="class_view_group">
-                <label htmlFor="class_teacher">Class Teacher</label>
-                <input
-                  type="text"
-                  id="class_teacher"
-                  name="class_teacher"
-                  value={classDetails ? classDetails.class_teacher : ""}
-                  readOnly
-                />
-              </div>
-              <div className="class_view_group">
-                <label htmlFor="medium">Medium</label>
-                <input
-                  type="text"
-                  id="medium"
-                  name="medium"
-                  value={classDetails ? classDetails.medium : ""}
-                  readOnly
-                />
-              </div>
-              <div className="class_view_group">
-                <label htmlFor="subject_no">No. of Subjects</label>
-                <input
-                  type="text"
-                  id="subject_no"
-                  name="subject_no"
-                  value={classDetails ? classDetails.subject_count : ""}
-                  readOnly
-                />
-              </div>
-            </Col>
-          </Row>
-          <Row>
-
-            <Link to='/studentlist'>
-          <div className="student_list_button">
-              <button type="submit">
+            <Row style={{ paddingTop: "20px" }}>
+              <Col md={6}>
+                <div className="class_view_group">
+                  <label htmlFor="class_no">Class No:</label>
+                  <input
+                    type="text"
+                    id="class_no"
+                    name="class_no"
+                    value={classDetails ? classDetails.class_name : ""}
+                    readOnly
+                  />
+                </div>
+                <div className="class_view_group">
+                  <label htmlFor="division">Division</label>
+                  <input
+                    type="text"
+                    id="division"
+                    name="division"
+                    value={classDetails ? classDetails.division : ""}
+                    readOnly
+                  />
+                </div>
+                <div className="class_view_group">
+                  <label htmlFor="category">Category</label>
+                  <input
+                    type="text"
+                    id="category"
+                    name="category"
+                    value={classDetails ? classDetails.category : "null"}
+                    readOnly
+                  />
+                </div>
+              </Col>
+              <Col md={6}>
+                <div className="class_view_group">
+                  <label htmlFor="class_teacher">Class Teacher</label>
+                  <input
+                    type="text"
+                    id="class_teacher"
+                    name="class_teacher"
+                    value={classDetails ? classDetails.class_teacher : ""}
+                    readOnly
+                  />
+                </div>
+                <div className="class_view_group">
+                  <label htmlFor="medium">Medium</label>
+                  <input
+                    type="text"
+                    id="medium"
+                    name="medium"
+                    value={classDetails ? classDetails.medium : ""}
+                    readOnly
+                  />
+                </div>
+                <div className="class_view_group">
+                  <label htmlFor="subject_no">No. of Subjects</label>
+                  <input
+                    type="text"
+                    id="subject_no"
+                    name="subject_no"
+                    value={classDetails ? classDetails.subject_count : ""}
+                    readOnly
+                  />
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Link to="/studentlist">
+                <div className="student_list_button">
+                  <button type="submit">
                     View Student List
-                    <RiShareBoxFill style={{ marginLeft: "10px" }}/>
+                    <RiShareBoxFill style={{ marginLeft: "10px" }} />
                   </button>
-              </div>
+                </div>
               </Link>
-
-          </Row>
-          <Row className="class_curriculum_view">
-            <div className="curriculum_view">
-              {classDetails?.curriculum?.map((item, index) => (
-                <Row
-                  key={index}
-                  className={`curriculum_row_highlight ${
-                    index === selectedRowIndex ? "selected-row" : ""
-                  }`}
-                  onClick={() => handleRowClick(index)} // Handle row click to toggle selection
-                >
-                  <Col md={4}>
-                    <p>{item.subject}</p>
-                  </Col>
-                  <Col md={4}>
-                    <p>{item.publisher_name}</p>
-                  </Col>
-                  <Col md={4}>
-                    <p>{item.teacher}</p>
-                  </Col>
-                </Row>
-              ))}
-            </div>
-          </Row>
+            </Row>
+            <Row className="class_curriculum_view">
+              <div className="curriculum_view">
+                {classDetails?.curriculum?.map((item, index) => (
+                  <Row
+                    key={index}
+                    className={`curriculum_row_highlight ${
+                      index === selectedRowIndex ? "selected-row" : ""
+                    }`}
+                    onClick={() => handleRowClick(index)} // Handle row click to toggle selection
+                  >
+                    <Col md={4}>
+                      <p>{item.subject}</p>
+                    </Col>
+                    <Col md={4}>
+                      <p>{item.publisher_name}</p>
+                    </Col>
+                    <Col md={4}>
+                      <p>{item.teacher}</p>
+                    </Col>
+                  </Row>
+                ))}
+              </div>
+            </Row>
           </div>
         </form>
       </Container>

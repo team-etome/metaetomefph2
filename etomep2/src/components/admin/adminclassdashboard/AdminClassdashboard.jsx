@@ -2,31 +2,43 @@ import React, { useState, useEffect, useRef } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import "../adminclassdashboard/adminclassdashboard.css";
 import { IoIosAdd } from "react-icons/io";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import amritha from "../../../assets/amritha.png";
-import axios from 'axios'
-import { useSelector,useDispatch } from "react-redux";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 import { adminallclassinfo } from "../../../Redux/Actions/AdminAllClassInfoAction";
-
 
 function AdminClassdashboard() {
   const [isActive, setIsActive] = useState(false);
-  const [classDetails , setClassDetails] = useState([])
+  const [classDetails, setClassDetails] = useState([]);
   const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
   const admin_id = admininfo ? admininfo.admininfo?.admin_id : null;
 
   const [selected, setSelected] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [inVisible, setInVisible] = useState(false);
+  // const [isVisible, setIsVisible] = useState(false);
+  // const [inVisible, setInVisible] = useState(false);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
+  console.log(classDetails, "detailsssssss");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
+  const filteredClassDetails =
+    selected === null
+      ? classDetails
+      : classDetails.filter((item) => item.class_name === String(selected));
 
+  console.log(filteredClassDetails, "filtered classssss");
+
+  const toggleClassSelection = (index) => {
+    // Toggle the selection
+    setSelected((prevSelected) =>
+      prevSelected === index + 1 ? null : index + 1
+    );
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,41 +48,33 @@ function AdminClassdashboard() {
     return () => clearInterval(interval);
   }, []);
 
-  
-  const handleButtonClick= ()=>{
-    navigate('/classadding')
-} 
+  const handleButtonClick = () => {
+    navigate("/classadding");
+  };
 
-const handleclick = (classdata) =>  {
-  navigate('/classview', { state: { class: classdata } });
-};
+  const handleclick = (classdata) => {
+    navigate("/classview", { state: { class: classdata } });
+  };
 
-useEffect(()=>{
+  useEffect(() => {
+    const fetchclass = async () => {
+      try {
+        const response = await axios.get(
+          `${APIURL}/api/addClassname/${admin_id}`
+        );
+        setClassDetails(response.data);
+        dispatch(adminallclassinfo(response.data));
+      } catch (error) {
+        console.error("Failed to fetch class data");
+      }
+    };
 
-  const fetchclass = async()=>{
-
-    try{
-
-      const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`)
-      setClassDetails(response.data)
-      dispatch(adminallclassinfo(response.data))
-
-    }catch(error){
-      console.error("Failed to fetch class data")
-    }
-
-
-  }
-
-  fetchclass();
-
-} ,[APIURL])
-
-
+    fetchclass();
+  }, [APIURL]);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "104.5%"}}>
-        {/* <div>
+    <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
+      {/* <div>
       <div className="arrow-button" onClick={() => setIsVisible(!isVisible)}>
         <span>&lt;</span>
       </div>
@@ -90,25 +94,25 @@ useEffect(()=>{
         ))}
       </div>
     </div> */}
-    <div
-        className={`arrow-button ${isSidebarVisible ? 'hidden' : ''}`}
+      <div
+        className={`arrow-button ${isSidebarVisible ? "hidden" : ""}`}
         onClick={() => setIsSidebarVisible(true)}
       >
         <span>&lt;</span>
       </div>
       <div
-        className={`arrow-back-button ${isSidebarVisible ? '' : 'hidden'}`}
+        className={`arrow-back-button ${isSidebarVisible ? "" : "hidden"}`}
         onClick={() => setIsSidebarVisible(false)}
       >
         <span>&gt;</span>
       </div>
-      <div className={`cls_vw_flt_dv ${isSidebarVisible ? 'visible' : ''}`}>
+      <div className={`cls_vw_flt_dv ${isSidebarVisible ? "visible" : ""}`}>
         <div className="title">Class</div>
         {[...Array(12)].map((_, index) => (
           <div
             key={index}
-            className={`circle ${selected === index + 1 ? 'selected' : ''}`}
-            onClick={() => setSelected(index + 1)}
+            className={`circle ${selected === index + 1 ? "selected" : ""}`}
+            onClick={() => toggleClassSelection(index)}
           >
             {index + 1}
           </div>
@@ -119,34 +123,52 @@ useEffect(()=>{
         className="container-scroll"
         style={{ marginTop: "16px" }}
       >
-        
         <Row>
-          {classDetails.map((item, index) => (
-            <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
-              <div onClick={()=>handleclick(item)} className="border border-white class_rectangle">
-                <div className="class_list_medium">{item.medium}</div>
-                <div className="class_profile_name">
-                  <div>
-                    <img
-                      src={item.admin_logo}
-                      alt="profile pic"
-                      className="faculty_profile_photo"
-                    />
+          {filteredClassDetails.length > 0 ? (
+            filteredClassDetails.map((item, index) => (
+              <Col
+                lg={3}
+                md={4}
+                sm={6}
+                xs={6}
+                key={index}
+                className="class_list"
+              >
+                <div
+                  onClick={() =>handleclick(item)}
+                  className="border border-white class_rectangle"
+                >
+                  <div className="class_list_medium">{item.medium}</div>
+                  <div className="class_profile_name">
+                    <div>
+                      <img
+                        src={item.admin_logo}
+                        alt="profile pic"
+                        className="faculty_profile_photo"
+                      />
+                    </div>
+                    <div className="class_list_facultyname">
+                      {item.class_teacher}
+                    </div>
                   </div>
-                  <div className="class_list_facultyname">
-                    {item.facultyName}
+                  <div className="class_lisit_circle">
+                    <div className="class_number_div">
+                      <h1 style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
+                        {item.class_name}
+                        {item.division}
+                      </h1>
+                    </div>
                   </div>
                 </div>
-                <div className="class_lisit_circle">
-                  <div className="class_number_div">
-                    <h1 style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
-                      {item.class_name}{item.division}
-                    </h1>
-                  </div>
-                </div>
+              </Col>
+            ))
+          ) : (
+            <Col>
+              <div className="no-classes-message">
+                No classes available for the selected number.
               </div>
             </Col>
-          ))}
+          )}
         </Row>
       </Container>
       {/* <div className="class_adding_button">
@@ -164,7 +186,9 @@ useEffect(()=>{
       <div className="class_adding_button">
         {/* <audio ref={audioRef} src={mp3File}></audio> */}
         <button
-          className={`class_adding class_adding_my_button ${isActive ? "active" : ""}`}
+          className={`class_adding class_adding_my_button ${
+            isActive ? "active" : ""
+          }`}
           onClick={handleButtonClick}
         >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
