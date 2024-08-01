@@ -57,9 +57,9 @@ function StudentListing() {
       <div className="student_form">
         <div className='studentlist_header'>
           <div className='studentlist_title_section'>
-            <Link to="/classview">
+            {/* <Link to="/classview">
               <IoChevronBackSharp className="student_back" />
-            </Link>
+            </Link> */}
             <h1 className="student_title">Student List</h1>
             <div className='studentlist_number'>(50)</div>
           </div>

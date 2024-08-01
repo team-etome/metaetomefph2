@@ -36,8 +36,8 @@ function EvaluationScheduling() {
 
 
 
-  // const class_name = classinfo.adminallclassinfo?.class_name;
-  const admin     = classinfo.adminallclassinfo[0]?.admin;
+  const class_name = classinfo.adminallclassinfo?.class_name;
+  // const admin     = classinfo.adminallclassinfo[0]?.admin;
   
  
 
