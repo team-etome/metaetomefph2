@@ -181,7 +181,7 @@ function FacultyDashboard() {
               <Link to="/facultyadding" className="fab_option_link">
                 <Button
                   className="fab-option"
-                  style={{ marginTop: "20px", border: "1px solid red" }}
+                  style={{ marginTop: "20px" }}
                 >
 
                   <IoMdAdd className="fab-icon" />

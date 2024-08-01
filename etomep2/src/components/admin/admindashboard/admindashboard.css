@@ -2,20 +2,47 @@
     background-color: #F8FEFF;
     height: 100vh;
     padding-top: 12vh;
-    padding-left: 10px;
-    width: 105%;
+    padding-left: 10vh;
+    width: 100%;
     padding-right: 0vw;
 }
 .admin_dasboard_container{
     padding-right: 0vw;
 }
 .ad_dashboard_col{
-    padding-left: 5vw;
-    padding-top: 1vw;
+    padding-left: 0vw;
+    padding-top: 0vw;
     height: 85vh;
 }
 .notification_content{
     /* display: flex; */
+}
+/* .background-image-container {
+  position: relative;
+  text-align: center;
+} */
+/* 
+.overlay-text {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+} */
+/* .overlay-text {
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 2rem;
+} */
+
+.overlay-text img {
+  width: 100px; /* Adjust the size as needed */
+  height: auto;
 }
 .notification_section{
     width: 400px;

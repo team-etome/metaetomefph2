@@ -151,13 +151,17 @@ function AdminClassdashboard() {
                       {item.class_teacher}
                     </div>
                   </div>
-                  <div className="class_lisit_circle">
-                    <div className="class_number_div">
-                      <h1 style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
-                        {item.class_name}
-                        {item.division}
-                      </h1>
-                    </div>
+
+                  <div className="class_list_facultyname">
+                    {item.class_teacher}
+                  </div>
+                </div>
+                <div className="class_lisit_circle">
+                  <div className="class_number_div">
+                    <h1 style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
+                      {item.class_name}{item.division}
+                    </h1>
+
                   </div>
                 </div>
               </Col>
