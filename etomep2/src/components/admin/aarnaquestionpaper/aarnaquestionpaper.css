@@ -11,8 +11,8 @@ height: 75vh;
   display: flex;
   justify-content: center;
   width: 104.5%;
-  height: 100vh;
-  padding-top: 6vh;
+  height: 80vh;
+  /* padding-top: 6vh; */
  }
 .qpaper_container_scroll {
   overflow-y: auto; 
@@ -91,7 +91,7 @@ height: 75vh;
 .qpaper_term_date {
     display: flex;
     justify-content: space-between; /* This will place the term and date on opposite ends */
-    padding: 5px 20px; /* Adjusted padding for better spacing */
+    padding: 5px 10px; /* Adjusted padding for better spacing */
     color: #727272;
     font-size: 14px;
     padding-top: 10px;
@@ -108,20 +108,22 @@ height: 75vh;
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
-    width:60px;
+    width:70px;
+    /* border: 1px solid green; */
 }
 
 .qpaper_date{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     color: #727272;
     /* font-size: 14px; */
-    padding-left: 30%;
-    padding-right: 3%;
+    padding-left: 40px;
+    /* padding-right: 3%; */
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
-    width:70px;
+    width:50px !important;
+    /* border: 1px solid red; */
 }
 
 .qpaper_subject {
@@ -139,6 +141,38 @@ height: 75vh;
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
+}
+.qp_list_search_filter_main {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100px;
+  padding-left: 98.5%;
+}
+
+.qp_list_search_filter_wrapper {
+  display: flex; 
+  align-items: center;
+}
+
+.qp_list_ad_search_bar {
+  width: 250px;
+  border-radius: 17px;
+  padding-right: 40px; 
+}
+
+.qp_list_searchbar_icon {
+  right: 15px;
+}
+
+.bs-filter-right {
+  height: 40px;
+  width: 40px;
+}
+
+.qp_list_search_filter_icon {
+  margin-left: 15px;
+  color: #545454;
 }
 @media (max-width:576px) {
    

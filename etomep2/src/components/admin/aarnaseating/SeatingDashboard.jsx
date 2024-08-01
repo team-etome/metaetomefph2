@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Form } from "react-bootstrap";
 import { IoIosAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import "../aarnaseating/seatdashboard.css";
 import { useSelector } from "react-redux";
+import { BsSearch, BsFilterRight } from "react-icons/bs";
 import axios from "axios";
 
 function SeatingDashboard() {
@@ -52,6 +53,23 @@ function SeatingDashboard() {
         className="seat_container_scroll"
         style={{ marginTop: "16px" }}
       >
+        <Row>
+          <div className="seat_list_search_filter_main d-flex">
+            <Form className="d-flex">
+              {/* Change: Use position-relative to correctly position the search icon */}
+              <div className="position-relative">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="ps-3 seat_list_ad_search_bar"
+                  aria-label="Search"
+                />
+                <BsSearch className="position-absolute top-50 translate-middle-y seat_list_searchbar_icon" />
+              </div>
+            </Form>
+            {/* Change: Adjust filter icon alignment */}
+          </div>
+        </Row>
         <Row>
           {seatingData.length > 0 ? (
             seatingData.map((item, index) => (

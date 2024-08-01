@@ -55,53 +55,106 @@ function ResultFilter() {
       navigate('/adminresultview'); // Adjust the path as necessary
   }
 
-   const customStyles = {
-      control: (base, state) => ({
-        ...base,
-        width: '100%',
-        minHeight: '40px',
-        border: '1px solid #526D82',
-        borderRadius: '8px',
-        boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 'none', 
-        "&:hover": {
-          borderColor: '#526D82' 
-        },
-        "&:focus": {
-          borderColor: '#526D82', 
-          outline: 'none' 
-        }
-      }),
-      placeholder: (base) => ({
-        ...base,
-        color: '#526D82', 
-      }),
-      singleValue: (base) => ({
-        ...base,
-        color: '#000',
-      }),
-      option: (base) => ({
-        ...base,
-        color: '#000',
-      }),
-      valueContainer: (base) => ({
-        ...base,
-        padding: '0 10px',
-      }),
-      dropdownIndicator: (base) => ({
-        ...base,
-        color: '#526D82',
-      }),
-      indicatorsContainer: (base) => ({
-        ...base,
-        alignItems: 'center',
-      }),
-      menu: (base) => ({
-        ...base,
-        zIndex: 9999,
-        position: 'absolute',
-      })
-    };
-
+  //  const customStyles = {
+  //     control: (base, state) => ({
+  //       ...base,
+  //       width: '100%',
+  //       minHeight: '40px',
+  //       border: '1px solid #526D82',
+  //       borderRadius: '8px',
+  //       boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 'none', 
+  //       "&:hover": {
+  //         borderColor: '#526D82' 
+  //       },
+  //       "&:focus": {
+  //         borderColor: '#526D82', 
+  //         outline: 'none' 
+  //       }
+  //     }),
+  //     placeholder: (base) => ({
+  //       ...base,
+  //       color: '#526D82', 
+  //     }),
+  //     singleValue: (base) => ({
+  //       ...base,
+  //       color: '#000',
+  //     }),
+  //     option: (base) => ({
+  //       ...base,
+  //       color: '#000',
+  //     }),
+  //     valueContainer: (base) => ({
+  //       ...base,
+  //       padding: '0 10px',
+  //     }),
+  //     dropdownIndicator: (base) => ({
+  //       ...base,
+  //       color: '#526D82',
+  //     }),
+  //     indicatorsContainer: (base) => ({
+  //       ...base,
+  //       alignItems: 'center',
+  //     }),
+  //     menu: (base) => ({
+  //       ...base,
+  //       zIndex: 9999,
+  //       position: 'absolute',
+  //     })
+  //   };
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      width: '100%',
+      minHeight: '40px',
+      border: '1px solid #526D82',
+      borderRadius: '8px',
+      boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 'none',
+      "&:hover": {
+        borderColor: '#526D82'
+      },
+      "&:focus": {
+        borderColor: '#526D82',
+        outline: 'none'
+      }
+    }),
+    placeholder: (base) => ({
+      ...base,
+      color: '#526D82',
+    }),
+    singleValue: (base) => ({
+      ...base,
+      color: '#000',
+    }),
+    option: (base) => ({
+      ...base,
+      color: '#000',
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: '0 10px',
+    }),
+    dropdownIndicator: (base) => ({
+      ...base,
+      color: '#526D82',
+    }),
+    indicatorsContainer: (base) => ({
+      ...base,
+      alignItems: 'center',
+    }),
+    menu: (base) => ({
+      ...base,
+      zIndex: 9999,
+      position: 'absolute',
+      maxHeight: '150px', // Set the max height for the dropdown list
+      overflowY: 'auto' // Add vertical scrolling
+    }),
+    menuList: (base) => ({
+      ...base,
+      maxHeight: '150px', // Set the max height for the list items
+      padding: '0'
+    }),
+  };
+  
   return (
     <Container className='result_filter_container'>
     <form className='result_filter_form' >

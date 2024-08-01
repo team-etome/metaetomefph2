@@ -1,31 +1,36 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Form, Nav } from "react-bootstrap";
+import { BsSearch, BsFilterRight } from "react-icons/bs";
 import "../aarnaquestionpaper/aarnaquestionpaper.css";
 import { IoIosAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-
 function AarnaQuestionPaper() {
   const [isActive, setIsActive] = useState(false);
   const APIURL = useSelector((state) => state.APIURL.url);
-  const [qpaperListData,setQpaperListData] = useState([])
+  const [qpaperListData, setQpaperListData] = useState([]);
 
   const admininfo = useSelector((state) => state.admininfo);
-  const admin_id = admininfo.admininfo?.admin_id
+  const admin_id = admininfo.admininfo?.admin_id;
 
-  console.log(qpaperListData,"daatttttataaaa")
+  console.log(qpaperListData, "daatttttataaaa");
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${APIURL}/api/questionpaper/${admin_id}`);
+        const response = await axios.get(
+          `${APIURL}/api/questionpaper/${admin_id}`
+        );
         setQpaperListData(response.data);
       } catch (error) {
-        console.error("There was an error fetching the question papers!", error);
+        console.error(
+          "There was an error fetching the question papers!",
+          error
+        );
       }
     };
 
@@ -37,20 +42,36 @@ function AarnaQuestionPaper() {
 
     return () => clearInterval(interval);
   }, [APIURL]);
+  
   const handleButtonClick = () => {
     navigate("/questionadding");
   };
 
-  
   const handleclick = (item) => {
     navigate("/questionview", { state: { questionPaper: item } });
   };
-
 
   return (
     <div className="questionpaper_dashboard">
       <Container fluid className="qpaper_container_scroll">
       <Row>
+          <div className="qp_list_search_filter_main d-flex">
+            <Form className="d-flex">
+              {/* Change: Use position-relative to correctly position the search icon */}
+              <div className="position-relative">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="ps-3 qp_list_ad_search_bar"
+                  aria-label="Search"
+                />
+                <BsSearch className="position-absolute top-50 translate-middle-y qp_list_searchbar_icon" />
+              </div>
+            </Form>
+            {/* Change: Adjust filter icon alignment */}
+          </div>
+        </Row>
+        <Row >
           {qpaperListData.length > 0 ? (
             qpaperListData.map((item, index) => (
               <Col

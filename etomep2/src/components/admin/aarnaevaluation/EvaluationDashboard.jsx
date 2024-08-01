@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Form } from "react-bootstrap";
 import "../aarnaevaluation/evaluationdashboard.css";
 import { IoIosAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { BsSearch, BsFilterRight } from "react-icons/bs";
 
 function EvaluationDashboard() {
   const [isActive, setIsActive] = useState(false);
@@ -58,6 +59,23 @@ function EvaluationDashboard() {
         className="evaluation_container_scroll"
         style={{ marginTop: "16px" }}
       >
+        <Row>
+          <div className="evaluation_list_search_filter_main d-flex">
+            <Form className="d-flex">
+              {/* Change: Use position-relative to correctly position the search icon */}
+              <div className="position-relative">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="ps-3 evaluation_list_ad_search_bar"
+                  aria-label="Search"
+                />
+                <BsSearch className="position-absolute top-50 translate-middle-y evaluation_list_searchbar_icon" />
+              </div>
+            </Form>
+            {/* Change: Adjust filter icon alignment */}
+          </div>
+        </Row>
        <Row>
           {evaluationListData.length > 0 ? (
             evaluationListData.map((item, index) => (

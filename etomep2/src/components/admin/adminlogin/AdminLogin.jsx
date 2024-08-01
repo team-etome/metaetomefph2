@@ -206,13 +206,13 @@ function AdminLogin() {
                   >
                    Admin Login
                   </p>
-                  <div className="button_box">
-                    <div  className="btn" style={{ left: btnPosition , border:"2px solid black" }}>
+                  <div className="button_box" style={{ zIndex: 1, position: 'relative' }}>
+                    <div  className="btn" style={{ left: btnPosition  }}>
 
-                      <p style={{color : "white"}}>Admin</p>
+                      {/* <p style={{color : "white"}}>Admin</p> */}
                     </div>
-                    <button type="button" className="toggle_btn" onClick={handleLeftClick}>Admin</button>
-                    <button type="button" className="toggle_btn" onClick={handleRightClick}>Teacher</button>
+                    <button type="button" className="toggle_btn" onClick={handleLeftClick} style={{ color: btnPosition === '0' ? 'white' : '#526d82' }}>Admin</button>
+                    <button type="button" className="toggle_btn" onClick={handleRightClick} style={{ color: btnPosition === '110px' ? 'white' : '#526d82' }}>Teacher</button>
                   </div>
                 </div>
 

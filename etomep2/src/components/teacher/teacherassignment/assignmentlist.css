@@ -17,9 +17,28 @@
 }
 .assignment_header{
   display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  padding-bottom: 0
+  /* justify-content: space-around; */
+  /* border: 1px solid green; */
+}
+.teacher_assignment_view_back {
+  color: #526D82;
+  height: 32px;
+  width: 32px;
+  /* margin-left: 10px; */
+  display: flex;
+  justify-content: flex-start;
+  cursor: pointer;
+  /* border: 1px solid red; */
+  margin-top: 20px;
+}
+
+
+.teaher_assignment_view_title{
+  font-weight: 500;
+  color: #526D82 ;
+  font-size: 30px;
+  margin-left: 10px;
+  /* border: 1px solid red; */
 }
 .assignment_search_filter_icon{
   color: #545454;

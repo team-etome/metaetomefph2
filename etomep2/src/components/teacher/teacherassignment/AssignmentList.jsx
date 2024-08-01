@@ -4,6 +4,7 @@ import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../teacherassignment/assignmentlist.css";
+import { IoChevronBackSharp } from "react-icons/io5";
 import { useSelector } from "react-redux";
 
 function AssignmentList() {
@@ -77,13 +78,16 @@ function AssignmentList() {
   };
 
   const { thisMonth, previousMonth } = groupByMonth(assignments);
-
+  const handleBackClick = () => {
+    navigate("/teacherassignmentadding");
+  };
   return (
     <Container className="assignment_container">
       <Row>
         <Col className="assignment_list">
           <div className="assignment_header">
-            <h2>Assignment</h2>
+            <IoChevronBackSharp  className="teacher_assignment_view_back" />
+            <h2 className="teaher_assignment_view_title">Assignment</h2>
           </div>
           <hr />
           <div className="assignment_body">

@@ -17,6 +17,7 @@ function EvaluationScheduling() {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [checkedItems, setCheckedItems] = useState([]);
   const [term, setTerm] = useState("");
+  const [selectedTerm, setSelectedTerm] = useState("")
   const [endDate, setEndDate] = useState("");
 
   const navigate = useNavigate();
@@ -119,7 +120,14 @@ function EvaluationScheduling() {
     menu: (base) => ({
       ...base,
       zIndex: 9999,
-      position: "absolute",
+      position: 'absolute',
+      maxHeight: '150px', // Set the max height for the dropdown list
+      overflowY: 'auto' // Add vertical scrolling
+    }),
+    menuList: (base) => ({
+      ...base,
+      maxHeight: '250px', // Set the max height for the list items
+      padding: '0'
     }),
   };
  
@@ -235,8 +243,14 @@ function EvaluationScheduling() {
                     Term<span style={{ color: "red" }}>*</span>
                   </label>
                     
-                    <input onChange={(e) => setTerm(e.target.value)} type="text" style={{ textTransform: "capitalize" }}/>
-                  
+                    {/* <input onChange={(e) => setTerm(e.target.value)} type="text" style={{ textTransform: "capitalize" }}/> */}
+                    <Select
+                    options={term}
+                    styles={customStyles}
+                    // value={selectedSubject}
+                    onChange={setTerm}
+                    placeholder="Select Term..."
+                  />
                 </div>
               </Col>
               <Col md={6}>
@@ -282,7 +296,7 @@ function EvaluationScheduling() {
         </Modal.Header>
         <Modal.Body>
           <Row style={{}}>
-            <Col md={6}>
+            <Col md={6} style={{}}>
               <div className="modal_div_assign">
                 <Form className="d-flex">
                   <div className="position-relative">

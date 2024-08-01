@@ -39,11 +39,11 @@ localStorage.setItem("activeTab", activeTab);
                                 className="ad_aarna_navbar_tab"
                                 // style={{border:'1px solid green', width:'100%' }}
                             >
-                                <Nav.Item>
+                                {/* <Nav.Item>
                                     <Nav.Link eventKey="Progress" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
                                         Progress
                                     </Nav.Link>
-                                </Nav.Item>
+                                </Nav.Item> */}
                                 <Nav.Item>
                                     <Nav.Link eventKey="Question Paper" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
                                         Question Paper
@@ -71,28 +71,11 @@ localStorage.setItem("activeTab", activeTab);
                                 </Nav.Item>
                             </Nav>
                             {/* Change: Group search bar and filter icon into a flex container */}
-                            <div className="ad_search_filter_main d-flex" >
-                                <Form className="d-flex">
-                                    {/* Change: Use position-relative to correctly position the search icon */}
-                                    <div className="position-relative">
-                                        <Form.Control
-                                            type="search"
-                                            placeholder="Search"
-                                            className="ps-3 ad_search_bar"
-                                            aria-label="Search"
-                                        />
-                                        <BsSearch className="position-absolute top-50 translate-middle-y nav_book_searchbar_icon" />
-                                    </div>
-                                </Form>
-                                {/* Change: Adjust filter icon alignment */}
-                                <div className="ad_search_filter_icon d-flex align-items-center">
-                                    <BsFilterRight className="bs-filter-right" />
-                                </div>
-                            </div>
+                            
                         </div>
 
                         <div className="ad_institution_dashboard_container">
-                            {activeTab === "Progress" && <AarnaProgress />}
+                            {/* {activeTab === "Progress" && <AarnaProgress />} */}
                             {activeTab === "Question Paper" && <AarnaQuestionPaper />}
                             {activeTab === "Seating" && <SeatingDashboard />}
                             {activeTab === "Evaluation" && <EvaluationDashboard />}

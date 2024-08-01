@@ -20,6 +20,7 @@
         height: 30px;
         width: 30px;
         margin-left: 10px;
+        cursor: pointer;
     }
     
     
@@ -27,7 +28,7 @@
         font-weight: 500;
         color: #526D82 ;
         font-size: 30px;
-        margin-left: 30px;
+        margin-left: 10px;
     }
     
     .teacher_studentadd_group {

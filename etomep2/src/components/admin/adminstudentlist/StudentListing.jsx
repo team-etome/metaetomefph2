@@ -73,7 +73,7 @@ function StudentListing() {
                 <div className='student_number'>
                     {item.studentnumber}
                 </div>
-                <div className='student_name'>
+                <div className='student_name_list'>
                         {/* {item.studentname} */}
                         <span>{item.studentname}</span>
                 </div>

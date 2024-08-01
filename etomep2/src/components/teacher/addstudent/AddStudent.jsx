@@ -1,12 +1,13 @@
 import React, { useState, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 import Select from "react-select";
 import "react-day-picker/dist/style.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import "../addstudent/addstudent.css";
+import { IoChevronBackSharp } from "react-icons/io5";
 
 
 function AddStudent() {
@@ -25,6 +26,7 @@ function AddStudent() {
   const [studentAddress, setStudentAddress] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  // const navigate =useNavigate();
   // const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacher = useSelector((state) => state.teacherinfo);
@@ -163,6 +165,9 @@ function AddStudent() {
       position: "absolute",
     }),
   };
+  const handleBackClick = () => {
+    navigate("/teacherstudentdashboard");
+  };
   return (
     <div>
       <Container className="teacher_studentadd_container">
@@ -178,6 +183,7 @@ function AddStudent() {
             {/* <Link to="/teacherstudentdashboard">
               <IoChevronBackSharp className="teacher_studentadd_back" />
             </Link> */}
+                <IoChevronBackSharp onClick={handleBackClick} className="teacher_studentadd_back" />
             <h1 className="teacher_studentadd_title">Add Student</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>

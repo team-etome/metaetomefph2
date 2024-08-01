@@ -147,7 +147,7 @@
     }
     .tch_vw_card {
       background-color: #ffffff;
-      border: 1px solid #ddd;
+      border: 1px solid #d34747;
       border-radius: 8px;
       padding: 16px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -158,12 +158,18 @@
       margin: 0;
       font-size: 18px;
       color: #333;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     
     .tch_vw_card p {
       margin: 8px 0 0;
       font-size: 14px;
       color: #526D82;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
        
     .tch_vw_card p1 {

@@ -106,7 +106,7 @@
         text-overflow: ellipsis;
         max-width: 100px;
     } */
-    .student_name {
+    .student_name_list {
         color: #526D82;
         font-weight: bold;
         display: flex;
@@ -118,7 +118,7 @@
         position: relative;
       }
       
-      .student_name::after {
+      .student_name_list::after {
         content: '';
         position: absolute;
         right: 0;
@@ -126,7 +126,7 @@
         background: #fff;
       }
       
-      .student_name span {
+      .student_name_list span {
         display: inline-block;
         max-width: 90px; 
         white-space: nowrap;
