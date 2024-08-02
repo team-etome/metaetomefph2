@@ -59,6 +59,44 @@ function FacultyAdding() {
       return;
     }
 
+  // Validate first name and last name length
+  // if (firstName.length < 3) {
+  //   Swal.fire({
+  //     icon: "error",
+  //     title: "Invalid First Name",
+  //     text: "First name must be at least 3 characters long.",
+  //   });
+  //   return;
+  // }
+
+  // if (lastName.length < 3) {
+  //   Swal.fire({
+  //     icon: "error",
+  //     title: "Invalid Last Name",
+  //     text: "Last name must be at least 3 characters long.",
+  //   });
+  //   return;
+  // }
+  // Validate first name and last name for special characters
+  const nameRegex = /^[A-Za-z]+$/;
+
+  if (!nameRegex.test(firstName)) {
+    Swal.fire({
+      icon: "error",
+      title: "Invalid First Name",
+      text: "First name must contain only letters.",
+    });
+    return;
+  }
+
+  if (!nameRegex.test(lastName)) {
+    Swal.fire({
+      icon: "error",
+      title: "Invalid Last Name",
+      text: "Last name must contain only letters.",
+    });
+    return;
+  }
     // Validate phone number
     if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
       Swal.fire({
@@ -228,7 +266,9 @@ function FacultyAdding() {
       position: "absolute",
     }),
   };
-
+  const handleBackClick = () => {
+    navigate("/institutionadding");
+  };
   return (
     <div>
       <Container className="faculty_container">
@@ -240,9 +280,9 @@ function FacultyAdding() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/institutionadding">
-              <IoChevronBackSharp className="faculty_back" />
-            </Link>
+            {/* <Link to="/institutionadding"> */}
+              <IoChevronBackSharp  onClick={handleBackClick} className="faculty_back" />
+            {/* </Link> */}
             <h1 className="faculty_title">Add Faculty</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>

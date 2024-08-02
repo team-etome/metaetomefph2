@@ -7,6 +7,7 @@ import { IoChevronBackSharp } from "react-icons/io5";
 function StudentListing() {
   
   const navigate = useNavigate();
+
   const handleclick= ()=>{
     navigate('/studentview')
 }
@@ -50,16 +51,18 @@ function StudentListing() {
       ];
 
 
-
+      const handleBackClick = () => {
+        navigate("/classview");
+      };
   return (
     <div>
     <Container className="student_container">
       <div className="student_form">
         <div className='studentlist_header'>
           <div className='studentlist_title_section'>
-            {/* <Link to="/classview">
-              <IoChevronBackSharp className="student_back" />
-            </Link> */}
+            {/* <Link to="/classview"> */}
+              <IoChevronBackSharp onClick={handleBackClick} className="student_back" />
+            {/* </Link> */}
             <h1 className="student_title">Student List</h1>
             <div className='studentlist_number'>(50)</div>
           </div>

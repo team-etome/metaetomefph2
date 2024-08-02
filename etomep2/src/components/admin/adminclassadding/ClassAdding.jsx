@@ -35,10 +35,24 @@ function ClassAdding() {
 
   const mediumOption = m ? [{ value: m, label: m }] : [];
 
+  // const handleClassNameChange = (e) => {
+  //   const value = parseInt(e.target.value, 10);
+  //   if (value > 0 && value <= 12) {
+  //     setClassName(value);
+  //   } else if (value <= 0) {
+  //     setClassName("");
+  //   }
+  // };
   const handleClassNameChange = (e) => {
     const value = parseInt(e.target.value, 10);
     if (value > 0 && value <= 12) {
       setClassName(value);
+      if (value < 11) {
+        setStream("");
+        setStreamDisabled(true); // Disable stream if class is less than 11
+      } else {
+        setStreamDisabled(false); // Enable stream if class is 11 or 12
+      }
     } else if (value <= 0) {
       setClassName("");
     }
@@ -78,7 +92,9 @@ function ClassAdding() {
       { value: division, label: "Division" },
       // { value: medium, label: "Medium" },
     ];
-
+    if (className >= 11) {
+      requiredFields.push({ value: stream, label: "Stream" });
+    }
     const missingFields = requiredFields.filter((field) => !field.value);
 
     if (missingFields.length > 0) {

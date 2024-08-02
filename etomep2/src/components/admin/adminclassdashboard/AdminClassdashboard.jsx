@@ -94,7 +94,7 @@ function AdminClassdashboard() {
         ))}
       </div>
     </div> */}
-      <div
+      {/* <div
         className={`arrow-button ${isSidebarVisible ? "hidden" : ""}`}
         onClick={() => setIsSidebarVisible(true)}
       >
@@ -105,13 +105,13 @@ function AdminClassdashboard() {
         onClick={() => setIsSidebarVisible(false)}
       >
         <span>&gt;</span>
-      </div>
+      </div> */}
       <div className={`cls_vw_flt_dv ${isSidebarVisible ? "visible" : ""}`}>
         <div className="title">Class</div>
         {[...Array(12)].map((_, index) => (
           <div
             key={index}
-            className={`circle ${selected === index + 1 ? "selected" : ""}`}
+            className={`circle_one ${selected === index + 1 ? "selected" : ""}`}
             onClick={() => toggleClassSelection(index)}
           >
             {index + 1}
@@ -138,7 +138,7 @@ function AdminClassdashboard() {
                   onClick={() =>handleclick(item)}
                   className="border border-white class_rectangle"
                 >
-                  <div className="class_list_medium">{item.medium}</div>
+                  <div className="class_list_medium" style={{textTransform:'capitalize'}}>{item.medium}</div>
                 <div className="class_profile_name">
                   <div>
                     <img
@@ -147,7 +147,7 @@ function AdminClassdashboard() {
                       className="faculty_profile_photo"
                     />
                   </div>
-                  <div className="class_list_facultyname">
+                  <div className="class_list_facultyname"  style={{textTransform:'capitalize'}}>
                     {item.class_teacher}
                   </div>
                 </div>

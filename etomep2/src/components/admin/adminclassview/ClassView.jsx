@@ -5,6 +5,8 @@ import { Link, useLocation } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { RiShareBoxFill } from "react-icons/ri";
+import { FiEdit } from "react-icons/fi";
+
 
 function ClassView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
@@ -57,7 +59,8 @@ function ClassView() {
                     paddingRight: "30px",
                   }}
                 >
-                  <button className="class_edit">Edit</button>
+                  {/* <button className="class_edit">Edit</button> */}
+                  <FiEdit className="class_edit_icon"/>
                   {/* <button className="class_block">Block</button> */}
                 </div>
               ) : (
@@ -81,6 +84,7 @@ function ClassView() {
                     id="class_no"
                     name="class_no"
                     value={classDetails ? classDetails.class_name : ""}
+                    style={{textTransform:'capitalize'}}
                     readOnly
                   />
                 </div>
@@ -91,6 +95,7 @@ function ClassView() {
                     id="division"
                     name="division"
                     value={classDetails ? classDetails.division : ""}
+                    style={{textTransform:'capitalize'}}
                     readOnly
                   />
                 </div>
@@ -100,6 +105,7 @@ function ClassView() {
                     type="text"
                     id="category"
                     name="category"
+                    style={{textTransform:'capitalize'}}
                     value={classDetails ? classDetails.category : "null"}
                     readOnly
                   />
@@ -112,6 +118,7 @@ function ClassView() {
                     type="text"
                     id="class_teacher"
                     name="class_teacher"
+                    style={{textTransform:'capitalize'}}
                     value={classDetails ? classDetails.class_teacher : ""}
                     readOnly
                   />
@@ -122,6 +129,7 @@ function ClassView() {
                     type="text"
                     id="medium"
                     name="medium"
+                    style={{textTransform:'capitalize'}}
                     value={classDetails ? classDetails.medium : ""}
                     readOnly
                   />
@@ -132,6 +140,7 @@ function ClassView() {
                     type="text"
                     id="subject_no"
                     name="subject_no"
+                    style={{textTransform:'capitalize'}}
                     value={classDetails ? classDetails.subject_count : ""}
                     readOnly
                   />
