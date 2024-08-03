@@ -12,6 +12,8 @@ import html2canvas from "html2canvas";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { IoChevronBackSharp } from "react-icons/io5";
+
 
 function QuestionGenerator() {
   const [subsections, setSubsections] = useState([
@@ -250,12 +252,15 @@ function QuestionGenerator() {
     setLoading(true); // Start loading as soon as export is initiated
     setTriggerExport(true); // Set the trigger to initiate the export
   };
-
+const handleBackClick = () => {
+  navigate('/teacherquestionview')
+}
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="question_generator">
         <Row xs={2} className="question_generator_header">
           <Col className="question_generator_header_title">
+          <IoChevronBackSharp onClick={handleBackClick}className="teacher_question_back" />
             <h6>Subject Name</h6>
           </Col>
           <Col className="question_generator_header_submit">

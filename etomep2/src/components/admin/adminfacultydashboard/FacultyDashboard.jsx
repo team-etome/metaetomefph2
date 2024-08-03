@@ -85,6 +85,8 @@ function FacultyDashboard() {
     } catch (error) {
       console.error("Error uploading file:", error);
       alert("Error during file upload.");
+      // const errorMessage = error.response?.data?.message || "Error during file upload.";
+      // alert(errorMessage);
     } finally {
       setIsLoading(false);
     }

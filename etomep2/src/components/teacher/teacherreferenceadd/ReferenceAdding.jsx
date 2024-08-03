@@ -88,15 +88,17 @@ function ReferenceAdding() {
       setLoading(false); // Set loading to false after submission
     }
   };
-
+const handleBackClick = () => {
+  navigate('/teacherrefrencelist')
+}
 
   return (
     <div className="teacher_reference_adding">
       <Container className="teacher_reference_form">
         <div className="teacher_ref_add_header">
-          {/* <Link to="/teacherrefrencelist">
-            <IoChevronBackSharp className="teacher_refadd_back" />
-          </Link> */}
+          {/* <Link to="/teacherrefrencelist"> */}
+            <IoChevronBackSharp onClick={handleBackClick} className="teacher_refadd_back" />
+          {/* </Link> */}
           <h1 className="teacher_refadd_title">Add Reference</h1>
         </div>
         <hr style={{ border: "1px solid #526D82" }} />

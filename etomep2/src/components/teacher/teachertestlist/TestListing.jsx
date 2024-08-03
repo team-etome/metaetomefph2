@@ -4,6 +4,7 @@ import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from 'react-icons/io';
 import { useNavigate } from "react-router-dom";
 import '../teachertestlist/teacherlisting.css'
 import { BsFilterRight } from "react-icons/bs";
+import { IoChevronBackSharp } from "react-icons/io5";
 
 
 function TestListing() {
@@ -33,12 +34,15 @@ function TestListing() {
         { id: 5, title: 'Water Conservation', description: 'Details about water conservation',studentclass: 'A',},
       ]
     };
-
+    const handleBackClick = () => {
+      navigate ('/teacherclassview')
+    }
   return (
     <Container className='test_container'>
       <Row>
         <Col className='test_list'>
           <div className='test_header'>
+          <IoChevronBackSharp onClick={handleBackClick} className="teacher_test_back" />
             <h2>Test</h2>
             <div className="test_search_filter_icon d-flex align-items-center">
               <BsFilterRight className="bs-filter-right" />

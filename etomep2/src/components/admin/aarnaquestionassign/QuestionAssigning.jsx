@@ -279,7 +279,9 @@ function QuestionAssigning() {
       position: "absolute",
     }),
   };
-
+const handleBackClick = () => {
+  navigate('/aarnanavbar');
+}
   return (
     <div>
       <Container className="qpaper_assign_container">
@@ -291,9 +293,9 @@ function QuestionAssigning() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/aarnanavbar">
-              <IoChevronBackSharp className="qpaper_back" />
-            </Link>
+            {/* <Link to="/aarnanavbar"> */}
+              <IoChevronBackSharp onClick={handleBackClick} className="qpaper_back" />
+            {/* </Link> */}
             <h1 className="qpaper_title">Question Setting</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>

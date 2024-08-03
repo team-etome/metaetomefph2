@@ -18,6 +18,7 @@
         height: 32px;
         width: 32px;
         margin-left: 10px;
+        cursor: pointer;
     }
     
     .evaluation_view_scrollable {

@@ -73,15 +73,24 @@
   margin-left: 10px;
   cursor: pointer;
 }
-.faculty_edit{
+.curriculum_edit{
   width: 30px;
   height: 50px;
   background-color: transparent;
   cursor: pointer;
+  color: #526D82;
   /* border: 1px solid #526D82;
   border-radius: 8px; */
 }
-
+.curriculum_delete{
+  width: 30px;
+  height: 50px;
+  background-color: transparent;
+  cursor: pointer;
+  color: #526D82;
+  /* border: 1px solid #526D82;
+  border-radius: 8px; */
+}
 .edit_delete {
   display: flex;
   justify-content: flex-end;
@@ -91,7 +100,7 @@
   gap: 15px;
 }
 
-.curriculum_edit button {
+/* .curriculum_edit button {
   background-color: transparent;
   color: #526D82;
   width: 80px;
@@ -120,7 +129,7 @@
   background-color: #EA4035;
   color: #fff;
   border: 1px solid #EA4035;
-}
+} */
 
 .delete_edit_mobile {
   display: none;

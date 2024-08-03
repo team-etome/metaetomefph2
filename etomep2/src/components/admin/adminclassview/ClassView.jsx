@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../adminclassview/classview.css";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { RiShareBoxFill } from "react-icons/ri";
@@ -15,6 +15,7 @@ function ClassView() {
   console.log(selectedRowIndex, "aaaa");
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const classDetails = location.state?.class;
 
@@ -33,6 +34,9 @@ function ClassView() {
       setSelectedRowIndex(index);
     }
   };
+  const handleBackClick = () => {
+    navigate("/institutionadding");
+  };
   return (
     <div>
       <Container className="class_view_container">
@@ -46,7 +50,7 @@ function ClassView() {
               }}
             >
               <Link to="/institutionadding">
-                <IoChevronBackSharp className="class_view_back" />
+                <IoChevronBackSharp onClick={handleBackClick} className="class_view_back" />
               </Link>
               <h1 className="class_view_title">Class List</h1>
               <div style={{ flex: "1" }}></div>

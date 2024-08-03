@@ -179,6 +179,10 @@ function SeatAssigning() {
     // setShowModal(false);
   };
 
+  const handleBackClick = () => {
+    navigate ('/aarnanavbar')
+  }
+
   return (
     <div>
       <Container className="seat_assign_container">
@@ -190,9 +194,9 @@ function SeatAssigning() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/aarnanavbar">
-              <IoChevronBackSharp className="seat_back" />
-            </Link>
+            {/* <Link to="/aarnanavbar"> */}
+              <IoChevronBackSharp onClick={handleBackClick} className="seat_back" />
+            {/* </Link> */}
             <h1 className="seat_title">Seat Assigning</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>

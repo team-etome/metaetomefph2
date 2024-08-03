@@ -73,7 +73,9 @@ function QuestionView() {
       }
     });
   };
-
+const handleBackClick =() =>{
+  navigate('/aarnanavbar');
+}
   return (
     <div style={{}}>
       <Container className="question_view_container">
@@ -86,9 +88,9 @@ function QuestionView() {
                 marginBottom: "10px",
               }}
             >
-              <Link to="/aarnanavbar">
-                <IoChevronBackSharp className="question_view_back" />
-              </Link>
+              {/* <Link to="/aarnanavbar"> */}
+                <IoChevronBackSharp onClick={handleBackClick} className="question_view_back" />
+              {/* </Link> */}
               <h1 className="question_view_title">{questionPaper?.exam_name || ""}</h1>
               <div style={{ flex: "1" }}></div>
               {windowWidth > 800 ? (

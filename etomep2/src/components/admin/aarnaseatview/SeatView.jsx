@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Layout_01_S from "../../../assets/Layout_01_S.png";
@@ -9,6 +9,8 @@ import '../aarnaseatview/seatview.css'
 function SeatView() {
     const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const navigate = useNavigate();
+
     const dropdownRef = useRef(null);
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
@@ -33,6 +35,9 @@ function SeatView() {
         e.preventDefault();
         setShowEditBlockButtons((prevState) => !prevState);
       };
+      const handleBackClick = () => {
+        navigate ('/aarnanavbar')
+      }
   return (
     <div>
     <Container className="seat_view_container">
@@ -45,9 +50,9 @@ function SeatView() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/aarnanavbar">
-              <IoChevronBackSharp className="seat_view_back" />
-            </Link>
+            {/* <Link to="/aarnanavbar"> */}
+              <IoChevronBackSharp onClick={handleBackClick} className="seat_view_back" />
+            {/* </Link> */}
             <h1 className="seat_view_title">Seat List</h1>
             <div style={{ flex: "1" }}></div>
             {windowWidth > 800 ? (
