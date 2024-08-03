@@ -192,7 +192,9 @@ function FacultyView() {
       });
     }
   };
-
+  const handleBackClick = () => {
+    navigate("/institutionadding");
+  };
   return (
     <div>
       <Container className="faculty_view_container">
@@ -205,9 +207,9 @@ function FacultyView() {
                 marginBottom: "10px",
               }}
             >
-              <Link to="/institutionadding">
-                <IoChevronBackSharp className="faculty_view_back" />
-              </Link>
+              {/* <Link to="/institutionadding"> */}
+                <IoChevronBackSharp onClick={handleBackClick} className="faculty_view_back" />
+              {/* </Link> */}
               <h1 className="faculty_view_title">
                 {faculty
                   ? `${faculty.first_name} ${faculty.last_name}`
@@ -340,6 +342,7 @@ function FacultyView() {
                     value={firstName}
                     readOnly={!isEditing}
                     onChange={(e) => setFirstName(e.target.value)}
+                    style={{textTransform:'capitalize'}}
                   />
                 </div>
                 <div className="faculty_view_group">
@@ -350,6 +353,7 @@ function FacultyView() {
                     name="last_name"
                     value={lastName}
                     readOnly={!isEditing}
+                    style={{textTransform:'capitalize'}}
                     onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
@@ -385,6 +389,7 @@ function FacultyView() {
                     name="gender"
                     value={gender}
                     readOnly={!isEditing}
+                    style={{textTransform:'capitalize'}}
                     onChange={(e) => setGender(e.target.value)}
                   />
                 </div>
@@ -396,6 +401,7 @@ function FacultyView() {
                     name="employee_id"
                     value={employeeId}
                     readOnly={!isEditing}
+                    style={{textTransform:'capitalize'}}
                     onChange={(e) => setEmployeeId(e.target.value)}
                   />
                 </div>

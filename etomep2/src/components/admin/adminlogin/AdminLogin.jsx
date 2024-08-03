@@ -202,7 +202,7 @@ function AdminLogin() {
                 <div className="switch_forgot">
                   <p
                     className="admin_form_title"
-                    style={{ marginBottom: "0px" }}
+                    style={{ marginBottom: "15px" }}
                   >
                    Admin Login
                   </p>

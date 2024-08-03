@@ -11,7 +11,7 @@ import ResultFilter from "../aarnaresult/ResultFilter";
 function AarnaNavbar() {
 
   const [activeTab, setActiveTab] = useState(() => {
-    return localStorage.getItem("aarnaActiveTab") || "Progress";
+    return localStorage.getItem("aarnaActiveTab") || "Question Paper";
   });
 
   useEffect(() => {

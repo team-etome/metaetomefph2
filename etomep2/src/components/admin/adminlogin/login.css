@@ -5,13 +5,12 @@
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  /* height: 480px; */
+  height: 500px;
   width: 70%;
   border-radius: 0.5rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 9px 70px -2px rgba(0, 0, 0, 0.05);
   padding-top: 60px;
   padding-left:3% ;
-  /* border: 1px solid red; */
 }
 
 .admin_form_title {
@@ -292,4 +291,16 @@ background-size: cover !important;
   .website_button{
     display: none;
   }
+
+.button_box {
+  border: 1px solid green;
+}
+
+.toggle_btn {
+  
+}
+
+.btn {
+  
+}
 }

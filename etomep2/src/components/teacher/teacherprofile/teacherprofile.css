@@ -1,0 +1,223 @@
+.teacher_profile {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  
+  .teacher_background_section {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    /* border: 1px solid red; */
+  }
+  
+  .teacher_top_section {
+    background-color: #526D82;
+    height: 35vh;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px;
+    /* border: 1px solid black; */
+  }
+  /* .back_button, .logout_button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #FFFFFF;
+  } */
+  
+  .teacher_back_button {
+    background: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-size: 30px;
+    margin-left: 20px; 
+    display: flex;
+    justify-content: flex-start;
+    /* border: 1px solid blue; */
+    cursor: pointer;
+}
+
+.teacher_logout_button {
+    background: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #FFFFFF;
+    margin-right: 20px; 
+    display: flex;
+    justify-content: flex-end;
+    /* border: 1px solid yellow; */
+    margin-bottom: 50px;
+}
+  .teacher_bottom_section {
+    background-color: #FFFFFF;
+    height: 65vh;
+    top: 35vh;
+  }
+  
+  .teacher_content_container {
+    position: relative; 
+    width: 100%;
+    z-index: 2;
+    padding-top: 20vh; 
+    padding-left: 10vw;
+  }
+  
+  .teacher_profile_card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    /* border: 1px solid black; */
+    height: 55vh;
+    width: 100%;
+  }
+  
+  .profile_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .teacher_profile_edit{
+    background: none;
+    /* border: 1px solid purple; */
+    font-size: 18px;
+    cursor: pointer;
+    color: #d01313;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 30px;
+  }
+  .teacher_profile_edit button{
+    background-color: #fff;
+    border:1px solid  #526D82;
+    color: #526D82;
+    width: 100px;
+    border-radius: 8px;
+  }
+  .teacher_profile_edit button:hover {
+    background-color: #526D82;
+    color: #fff;
+    border: 1px solid #526D82;
+}
+.teacher_profile_edit_icon{
+    display: none;
+}
+
+  
+  .teacher_profile_image_container {
+    position: absolute;
+    top: 10%; 
+    left: 55%;
+    transform: translateX(-50%);
+    z-index: 3; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+    /* border: 2px solid #e09833; */
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile_image {
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+  }
+  .teacher_profile_form{
+    padding-top: 30px;
+  }
+  .teacher_profile_form {
+    max-height: calc(80vh - 200px);
+    overflow-y: scroll; 
+    overflow-x: hidden; 
+}
+
+  .teacher_profile_form::-webkit-scrollbar {
+    width: 6px; 
+  }
+  
+  .teacher_profile_form::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+  
+  .teacher_profile_form::-webkit-scrollbar-thumb {
+    background: #A8BFD1;
+  }
+
+  .teacher_profile_group {
+    /* margin-left: 0px;
+    margin-right: 0px; */
+    margin-bottom: 20px;
+    position: relative;
+    padding-top: 25px;
+    margin-top: 0px;
+}
+.teacher_profile_group input{
+    width: 95%;
+    border: 0.5px solid #526D82;
+    border-radius: 8px;
+    height: 50px;
+    box-sizing: border-box;
+    outline: none;
+    padding: 1px 10px 12px 10px;
+}
+.teacher_profile_group label{
+    position: absolute;
+    top: 15%;
+    left: 5%;
+    background: #fff;
+    color: #526D82;
+    font-size: 16px;
+    transition: all 0.3s;
+    pointer-events: none;
+    padding: 0 4px;
+    z-index: 1;
+}
+.teacher_profile_group input:focus + label,
+.teacher_profile_group input:not(:placeholder-shown) + label {
+  top: 3px;
+  left: 15px;
+  font-size: 17px;
+  color: #526D82;
+}
+
+@media (max-width: 700px) {
+    .teacher_profile_edit button{
+display: none;
+      }
+      .teacher_profile_edit{
+        padding-right: 15px;
+      }
+    .teacher_profile_edit_icon{
+        display: flex;
+        color: #526D82;
+    }
+    .teacher_profile_card{
+        height: 70vh;
+    }
+}
+@media (min-width: 710px) and (max-width:1024px) {
+    .teacher_profile_card{
+        width: 100%;
+        height: auto;
+    }
+    .teacher_content_container{
+        padding-left: 0;
+    }
+    .teacher_profile_image_container {
+        top: 15%; 
+        left: 53%;
+      }
+}

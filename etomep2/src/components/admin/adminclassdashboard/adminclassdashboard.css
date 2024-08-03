@@ -31,8 +31,8 @@
   margin-bottom: 20px;
 }
 
-.circle {
-  width: 30px;
+.circle_one {
+  width:25px;
   height: 30px;
   border: 1px solid #526d82;
   border-radius: 100%;
@@ -45,11 +45,11 @@
   cursor: pointer;
 }
 
-.circle.selected {
+.circle_one.selected {
   width: 30px;
   height: 30px;
   border: 1px solid #526d82;
-  border-radius: 50%;
+  border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,55 +58,8 @@
   background-color: #526d82;
   color: white;
 }
-.arrow-button {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  background-color: #526d82;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  cursor: pointer;
-  z-index: 1;
-}
 
-.arrow-back-button {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  background-color: #526d82;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  cursor: pointer;
-  z-index: 1;
-}
 
-.arrow-back-button{
-  right: 50px;
-}
-.arrow-button.hidden,
-.arrow-back-button.hidden {
-  display: none;
-}
-
-.arrow-button {
-  display: none; 
-}
-
-.arrow-back-button {
-  display: none; 
-}
 
 .cls_vw_flt_dv {
   position: absolute;
@@ -241,7 +194,7 @@
 }
 .class_list_facultyname {
   color: #000000;
-  font-size: 0.90rem;
+  font-size: 1rem;
 }
 
 .class_profile_name {
@@ -288,9 +241,9 @@ margin-top: 5px;
 display: flex;
 justify-content: flex-end;
 position: fixed;
-bottom: 1%;
-right: 3%;
-z-index: 1001;
+bottom: 4%;
+right: 2%;
+z-index: 1000;
 }
 .class_adding{
 width: 70px;

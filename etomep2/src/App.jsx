@@ -68,6 +68,7 @@ import TeacherHomePage from './pages/teacherpage/TeacherHomePage';
 import AssignmentEditor from './components/teacher/teacherassignmentadd/AssignmentEditor';
 import AdminProfilePage from './pages/adminpage/AdminProfilePage';
 import TeacherTimeTablePage from './pages/teacherpage/TeacherTimeTablePage';
+import TeacherProfilePage from './pages/teacherpage/TeacherProfilePage';
 
 
 function App() {
@@ -151,6 +152,7 @@ function App() {
           <Route path="/teachertestlist" element={<TeacherTestListPage/>}/>
           <Route path="/teachertestadd" element={<TeacherTestAddPage/>}/>
           <Route path="/teachertimetable" element={<TeacherTimeTablePage/>}/>
+          <Route path="/teacherprofile" element={<TeacherProfilePage/>}/>
 
 
 

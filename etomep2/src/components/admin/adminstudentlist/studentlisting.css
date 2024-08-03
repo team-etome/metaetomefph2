@@ -35,6 +35,7 @@
     height: 32px;
     width: 32px;
     margin-left: 10px;
+    cursor: pointer;
 }
 .student_title{
     font-weight: 500;

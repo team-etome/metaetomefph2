@@ -150,26 +150,66 @@ function CurriculumAdding() {
   };
 
 
-  const handleAddNew = () => {
-    let missingFields = [];
-    if (!selectedPublisher) missingFields.push("selectedPublisher");
-    if (!selectedSubject) missingFields.push("selectedSubject");
-    if (!faculty) missingFields.push("Faculty");
+//   const handleAddNew = () => {
+//     let missingFields = [];
+//     if (!selectedPublisher) missingFields.push("selectedPublisher");
+//     if (!selectedSubject) missingFields.push("selectedSubject");
+//     if (!faculty) missingFields.push("Faculty");
 
-    if (missingFields.length > 0) {
-        // Create a string that lists missing fields, separated by commas and replace the last comma with 'and'
-        const missingFieldsString = missingFields.join(', ').replace(/, ([^,]*)$/, ' and $1');
-        alert(`Please make sure all fields are selected before adding. Missing: ${missingFieldsString}.`);
-    } else {
-        setCurriculumEntries(prevEntries => [
-            ...prevEntries,
-            { selectedPublisher, selectedSubject, faculty }
-        ]);
-        // Clear the current selections after adding
-        setSelectedPublisher(null);
-        setSelectedSubject(null); 
-        setFaculty(null);
-    }
+//     if (missingFields.length > 0) {
+//         const missingFieldsString = missingFields.join(', ').replace(/, ([^,]*)$/, ' and $1');
+//         alert(`Please make sure all fields are selected before adding. Missing: ${missingFieldsString}.`);
+//     } 
+//     else {
+//         setCurriculumEntries(prevEntries => [
+//             ...prevEntries,
+//             { selectedPublisher, selectedSubject, faculty }
+//         ]);
+        
+//         setSelectedPublisher(null);
+//         setSelectedSubject(null); 
+//         setFaculty(null);
+//     }
+// };
+const handleAddNew = () => {
+  // Check if all required fields are selected
+  let missingFields = [];
+  if (!selectedPublisher) missingFields.push("Publisher Name");
+  if (!selectedSubject) missingFields.push("Subject");
+  if (!faculty) missingFields.push("Faculty");
+
+  if (missingFields.length > 0) {
+    const missingFieldsString = missingFields.join(', ').replace(/, ([^,]*)$/, ' and $1');
+    alert(`Please make sure all fields are selected before adding. Missing: ${missingFieldsString}.`);
+    return;
+  }
+
+  // Check if the entry already exists
+  const isDuplicate = curriculumEntries.some(entry => 
+    entry.selectedPublisher.value === selectedPublisher.value &&
+    entry.selectedSubject.value === selectedSubject.value &&
+    entry.faculty.value === faculty.value
+  );
+
+  if (isDuplicate) {
+    Swal.fire({
+      icon: "error",
+      title: "Duplicate Entry",
+      text: "This entry already exists in the list.",
+    });
+    return;
+  }
+
+  // Add the new entry if it's not a duplicate
+  setCurriculumEntries(prevEntries => [
+    ...prevEntries,
+    { selectedPublisher, selectedSubject, faculty }
+  ]);
+
+  // Clear the current selections after adding
+  setSelectedPublisher(null);
+  setSelectedSubject(null);
+  setFaculty(null);
 };
 
   const customStyles = {
@@ -217,7 +257,9 @@ function CurriculumAdding() {
       alignItems: "center",
     }),
   };
-
+  const handleBackClick = () => {
+    navigate("/classadding");
+  };
   return (
     <div className="curriculum_container">
       <Container className="curriculum_add">
@@ -225,9 +267,9 @@ function CurriculumAdding() {
           <Row>
             <Col>
               <div className="curriculum_header">
-                <Link to="/classadding">
-                  <IoChevronBackSharp className="curriculum_back" />
-                </Link>
+                {/* <Link to="/classadding"> */}
+                  <IoChevronBackSharp onClick={handleBackClick} className="curriculum_back" />
+                {/* </Link> */}
                 <h1 className="curriculum_title">Add Curriculum</h1>
               </div>
               <div style={{ border: "0.5px solid #526D82" }}></div>
@@ -238,10 +280,11 @@ function CurriculumAdding() {
           <Row>
             <div className="edit_delete">
               <div className="curriculum_edit">
-                <button>Edit</button>
+                <FiEdit />
               </div>
               <div className="curriculum_delete">
-                <button>Delete</button>
+               <RiDeleteBin6Line />
+
               </div>
             </div>
             <div className="delete_edit_mobile">

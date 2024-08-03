@@ -94,7 +94,7 @@ function AdminClassdashboard() {
         ))}
       </div>
     </div> */}
-      <div
+      {/* <div
         className={`arrow-button ${isSidebarVisible ? "hidden" : ""}`}
         onClick={() => setIsSidebarVisible(true)}
       >
@@ -105,13 +105,13 @@ function AdminClassdashboard() {
         onClick={() => setIsSidebarVisible(false)}
       >
         <span>&gt;</span>
-      </div>
+      </div> */}
       <div className={`cls_vw_flt_dv ${isSidebarVisible ? "visible" : ""}`}>
         <div className="title">Class</div>
         {[...Array(12)].map((_, index) => (
           <div
             key={index}
-            className={`circle ${selected === index + 1 ? "selected" : ""}`}
+            className={`circle_one ${selected === index + 1 ? "selected" : ""}`}
             onClick={() => toggleClassSelection(index)}
           >
             {index + 1}
@@ -138,21 +138,16 @@ function AdminClassdashboard() {
                   onClick={() =>handleclick(item)}
                   className="border border-white class_rectangle"
                 >
-                  <div className="class_list_medium">{item.medium}</div>
-                  <div className="class_profile_name">
-                    <div>
-                      <img
-                        src={item.admin_logo}
-                        alt="profile pic"
-                        className="faculty_profile_photo"
-                      />
-                    </div>
-                    <div className="class_list_facultyname">
-                      {item.class_teacher}
-                    </div>
+                  <div className="class_list_medium" style={{textTransform:'capitalize'}}>{item.medium}</div>
+                <div className="class_profile_name">
+                  <div>
+                    <img
+                      src={item.admin_logo}
+                      alt="profile pic"
+                      className="faculty_profile_photo"
+                    />
                   </div>
-
-                  <div className="class_list_facultyname">
+                  <div className="class_list_facultyname"  style={{textTransform:'capitalize'}}>
                     {item.class_teacher}
                   </div>
                 </div>
@@ -161,9 +156,35 @@ function AdminClassdashboard() {
                     <h1 style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
                       {item.class_name}{item.division}
                     </h1>
-
                   </div>
                 </div>
+                  {/* <div className="class_list_medium">{item.medium}</div> */}
+                  {/* <div className="class_list_medium">{item.medium}</div>
+                  <div className="class_profile_name">
+                    <div>
+                      <img
+                        src={item.admin_logo}
+                        alt="profile pic"
+                        className="faculty_profile_photo"
+                      />
+                    </div>
+                    <div className="class_list_facultyname" >
+                      {item.class_teacher}
+                    </div>
+                  </div> */}
+
+                  {/* <div className="class_list_facultyname" style={{paddingLeft:'2vh',paddingTop:'1vh'}}>
+                    {item.class_name} {item.division}
+                  </div> */}
+                </div>
+                {/* <div className="class_lisit_circle">
+                  <div className="class_number_div">
+                    <h1 style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
+                      {item.class_name}{item.division}
+                    </h1>
+
+                  </div>
+                </div> */}
               </Col>
             ))
           ) : (
