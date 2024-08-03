@@ -84,9 +84,27 @@ function FacultyDashboard() {
       setFile(null);
     } catch (error) {
       console.error("Error uploading file:", error);
-      alert("Error during file upload.");
+      // alert("Error during file upload.");
       // const errorMessage = error.response?.data?.message || "Error during file upload.";
       // alert(errorMessage);
+      // let errorMessage = "Error during file upload.";
+
+      
+      // if (error.response && error.response.data) {
+      //   if (typeof error.response.data === 'string') {
+      //     errorMessage = error.response.data;
+      //   } else if (error.response.data.message) {
+      //     errorMessage = error.response.data.message;
+      //   }
+      // }
+  
+      // alert(errorMessage);
+      const errorMessage = 
+      typeof error.response?.data === 'string' 
+      ? error.response?.data 
+      : error.response?.data?.message || "Error during file upload.";
+    
+    alert(errorMessage);
     } finally {
       setIsLoading(false);
     }
