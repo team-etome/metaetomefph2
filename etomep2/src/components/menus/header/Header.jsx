@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect } from "react";
 import etomelogo from "../../../assets/etomelogo.png";
 import { Navbar, Container, Nav, Form, Button } from "react-bootstrap";
 import "../header/header.css";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { FiBell } from "react-icons/fi";
+
 import amritha from "../../../assets/amritha.png";
 import MobileSidebar from "../sidebar/MobileSidebar";
 import MobileNotification from "../../teacher/mobilenotification/MobileNotification";
@@ -18,9 +19,22 @@ function Header() {
 
   const navigate = useNavigate();
 
-  const handleBurgerClick = () => {
-    setSidebarVisible(true);
-  };
+
+
+    const handleBurgerClick = () => {
+        setSidebarVisible(true);
+    };
+
+    const handleCloseSidebar = () => {
+        setSidebarVisible(false);
+    };
+    // const handleBellIconClick = () => {
+    //     setShowModal(true); // Show modal when bell icon is clicked
+    // };
+    const handleCloseModal = () => {
+        setShowModal(false); // Close modal
+    };
+
 
   const handleCloseSidebar = () => {
     setSidebarVisible(false);
@@ -42,6 +56,7 @@ function Header() {
     };
 
     mediaQuery.addListener(handleMediaQueryChange);
+
 
     return () => {
       mediaQuery.removeListener(handleMediaQueryChange);
@@ -94,5 +109,7 @@ function Header() {
       {showModal && <MobileNotification onClose={handleCloseModal} />}
     </>
   );
+
+  
 }
 export default Header;

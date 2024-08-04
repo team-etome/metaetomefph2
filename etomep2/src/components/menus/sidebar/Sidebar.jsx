@@ -67,9 +67,8 @@ function Sidebar() {
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Col
-                className={`menu_item_col ${
-                  activeItem === "home" ? "active" : ""
-                }`}
+                className={`menu_item_col ${activeItem === "home" ? "active" : ""
+                  }`}
                 onClick={() => setActiveItem("home")}
               >
                 <div className="icon_container_div">
@@ -83,9 +82,8 @@ function Sidebar() {
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Col
-                className={`menu_item_col ${
-                  activeItem === "institution" ? "active" : ""
-                }`}
+                className={`menu_item_col ${activeItem === "institution" ? "active" : ""
+                  }`}
                 onClick={() => setActiveItem("institution")}
               >
                 <div className="icon_container_div">
@@ -99,9 +97,8 @@ function Sidebar() {
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Col
-                className={`menu_item_col ${
-                  activeItem === "loka" ? "active" : ""
-                }`}
+                className={`menu_item_col ${activeItem === "loka" ? "active" : ""
+                  }`}
               >
                 <div className="icon_container_div">
                   <PiBook className="icon_img" />
@@ -115,9 +112,8 @@ function Sidebar() {
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Col
-                className={`menu_item_col ${
-                  activeItem === "aarna" ? "active" : ""
-                }`}
+                className={`menu_item_col ${activeItem === "aarna" ? "active" : ""
+                  }`}
               >
                 <div className="icon_container_div">
                   <SlNote className="icon_img" />
@@ -128,9 +124,8 @@ function Sidebar() {
 
             <Link style={{ textDecoration: "none", color: "inherit" }}>
               <Col
-                className={`menu_item_col ${
-                  activeItem === "settings" ? "active" : ""
-                }`}
+                className={`menu_item_col ${activeItem === "settings" ? "active" : ""
+                  }`}
               >
                 <div className="icon_container_div">
                   <SlSettings className="icon_img" />
@@ -142,9 +137,8 @@ function Sidebar() {
         ) : (
           <>
             <Col
-              className={`menu_item_col ${
-                activeItem === "home" ? "active" : ""
-              }`}
+              className={`menu_item_col ${activeItem === "home" ? "active" : ""
+                }`}
               onClick={() => setActiveItem("home")}
             >
               <Link
@@ -158,9 +152,8 @@ function Sidebar() {
               </Link>
             </Col>
             <Col
-              className={`menu_item_col ${
-                activeItem === "institution" ? "active" : ""
-              }`}
+              className={`menu_item_col ${activeItem === "institution" ? "active" : ""
+                }`}
               onClick={() => setActiveItem("institution")}
             >
               <Link
@@ -192,9 +185,8 @@ function Sidebar() {
             </Col> */}
 
             <Col
-              className={`menu_item_col ${
-                activeItem === "loka" ? "active" : ""
-              }`}
+              className={`menu_item_col ${activeItem === "loka" ? "active" : ""
+                }`}
               onClick={handleLokaClick}
             >
               <Link
@@ -209,10 +201,9 @@ function Sidebar() {
             </Col>
 
             <Col
-              className={`menu_item_col ${
-                activeItem === "aarna" ? "active" : ""
-              }`}
-              // onClick={() => handleMenuItemClick("aarna")}
+              className={`menu_item_col ${activeItem === "aarna" ? "active" : ""
+                }`}
+            // onClick={() => handleMenuItemClick("aarna")}
             >
               <Link
                 to="/aarnanavbar"
@@ -225,9 +216,8 @@ function Sidebar() {
               </Link>
             </Col>
             <Col
-              className={`menu_item_col ${
-                activeItem === "eyora" ? "active" : ""
-              }`}
+              className={`menu_item_col ${activeItem === "eyora" ? "active" : ""
+                }`}
             >
               <div className="icon_container_div">
                 <TbScanEye className="icon_img" />
@@ -235,9 +225,8 @@ function Sidebar() {
               </div>
             </Col>
             <Col
-              className={`menu_item_col ${
-                activeItem === "settings" ? "active" : ""
-              }`}
+              className={`menu_item_col ${activeItem === "settings" ? "active" : ""
+                }`}
             >
               <div className="icon_container_div">
                 <SlSettings className="icon_img" />
