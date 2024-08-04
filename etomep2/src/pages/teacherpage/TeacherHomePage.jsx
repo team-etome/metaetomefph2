@@ -1,11 +1,12 @@
 import React from 'react'
 import TeacherHome from '../../components/teacher/teacherhome/TeacherHome'
-import MainHeader from '../../components/menus/common/MainHeader/';
+
+import TeacherHeader from '../../components/menus/common/TeacherHeader';
 
 function TeacherHomePage() {
   return (
     <div>
-        <MainHeader/>
+        <TeacherHeader/>
         <TeacherHome/>
     </div>
   )

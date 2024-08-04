@@ -10,11 +10,10 @@ import MobileNotification from "../../teacher/mobilenotification/MobileNotificat
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function Header() {
+function TeacherH() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const admininfo = useSelector((state) => state.admininfo);
-  console.log(admininfo, "admin info");
+
 
   const navigate = useNavigate();
 
@@ -26,14 +25,14 @@ function Header() {
     setSidebarVisible(false);
   };
   const handleBellIconClick = () => {
-    setShowModal(true); // Show modal when bell icon is clicked
+    setShowModal(true); 
   };
   const handleCloseModal = () => {
-    setShowModal(false); // Close modal
+    setShowModal(false); 
   };
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 799px)"); // Adjust the breakpoint as needed
+    const mediaQuery = window.matchMedia("(min-width: 799px)"); 
 
     const handleMediaQueryChange = (e) => {
       if (e.matches) {
@@ -49,7 +48,8 @@ function Header() {
   }, []);
 
   const handlenavigate = () => {
-    navigate('/adminprofile', { state: { admininfo: admininfo.admininfo } });  };
+    navigate("/teacherprofile",);
+  };
 
   return (
     <>
@@ -66,15 +66,16 @@ function Header() {
           <div className="header_institution">
             <div>
               <h6 style={{ color: "#9DB2BF", fontSize: "17px" }}>
-                {admininfo.admininfo?.institute_name}
+                {}
               </h6>
               <p style={{ color: "#727272", fontSize: "12px" }}>
-                {admininfo.admininfo?.email}
+                {}
+               teacher
               </p>
             </div>
             <img
               onClick={handlenavigate}
-              src={admininfo.admininfo?.logo}
+              src=''
               alt="Profile"
               style={{
                 width: "52px",
@@ -95,4 +96,4 @@ function Header() {
     </>
   );
 }
-export default Header;
+export default TeacherH;
