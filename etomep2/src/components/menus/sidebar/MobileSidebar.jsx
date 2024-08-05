@@ -41,9 +41,11 @@ function MobileSidebar({ show, onClose }) {
   };
 
   const handlenavigate = () => {
+    navigate("/adminprofile");
+  };
+  const handleteachernavigate = () => {
     navigate("/teacherprofile");
   };
-
   return (
     <div className={`mobile_sidebar ${show ? "show" : ""}`}>
       <div className="mobile_sidebar_header">
@@ -132,6 +134,37 @@ function MobileSidebar({ show, onClose }) {
                 </div>
               </Link>
             </Col>
+            <div
+        className={` ${activeItem === "profile" ? "active" : ""}`}
+        onClick={() => handleMenuItemClick("profile")}
+        style={{
+          width: "100%",
+          height: "100px",
+          paddingTop: "10px",
+          display: "flex",
+          justifyContent: "flex-start",
+          paddingLeft: "45px",
+        }}
+      >
+        <div
+          onClick={handleteachernavigate}
+          style={{
+            cursor: "pointer",
+          }}
+          className="mob_pofile_container_div"
+        >
+          <img
+            src=""
+            alt="Profile"
+            style={{
+              width: "46px",
+              height: "46px",
+              borderRadius: "50%",
+            }}
+          />
+          <span className="mob_profile_text">Profile</span>
+        </div>
+      </div>
           </>
           
         ) : (
@@ -212,9 +245,39 @@ function MobileSidebar({ show, onClose }) {
             </Col>
           </>
         )}
-        
+        <div
+        className={` ${activeItem === "profile" ? "active" : ""}`}
+        onClick={() => handleMenuItemClick("profile")}
+        style={{
+          width: "100%",
+          height: "100px",
+          paddingTop: "10px",
+          display: "flex",
+          justifyContent: "flex-start",
+          paddingLeft: "45px",
+        }}
+      >
+        <div
+          onClick={handlenavigate}
+          style={{
+            cursor: "pointer",
+          }}
+          className="mob_pofile_container_div"
+        >
+          <img
+            src=""
+            alt="Profile"
+            style={{
+              width: "46px",
+              height: "46px",
+              borderRadius: "50%",
+            }}
+          />
+          <span className="mob_profile_text">Profile</span>
+        </div>
+      </div>
       </Row>
-      <div
+      {/* <div
         className={` ${activeItem === "profile" ? "active" : ""}`}
         onClick={() => handleMenuItemClick("profile")}
         style={{
@@ -244,7 +307,7 @@ function MobileSidebar({ show, onClose }) {
           />
           <span className="mob_profile_text">Profile</span>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
