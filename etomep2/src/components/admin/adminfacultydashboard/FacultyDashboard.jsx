@@ -55,35 +55,52 @@ function FacultyDashboard() {
     fileInputRef.current.click();
   };
 
-  const handleFileUpload = async () => {
-    if (!file) {
-      alert("Please select a file to upload.");
-      return;
-    }
+  // const handleFileUpload = async () => {
+  //   if (!file) {
+  //     alert("Please select a file to upload.");
+  //     return;
+  //   }
 
-    setIsLoading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("adminId", admin_id);
+  //   setIsLoading(true);
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("adminId", admin_id);
 
-    try {
-      const response = await axios.post(
-        `${APIURL}/api/excelteacher`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      alert("Upload successful");
-      fetchFacultyData();
+  //   try {
+  //     const response = await axios.post(
+  //       `${APIURL}/api/excelteacher`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //     console.log("File uploaded successfully:", response);
+  //   alert("Upload successful");
+  //   fetchFacultyData();
+  //   setShowOptions(false);
+  //   setFile(null);
+  // } catch (error) {
+  //   console.error("Error uploading file:", error);
 
-      console.log(response.data);
-      setShowOptions(false);
-      setFile(null);
-    } catch (error) {
-      console.error("Error uploading file:", error);
+  //   let errorMessage = "An error occurred during file upload.";
+  //   if (error.response) {
+  //     if (typeof error.response.data === 'string') {
+  //       errorMessage = error.response.data;
+  //     } else if (error.response.data && error.response.data.message) {
+  //       errorMessage = error.response.data.message;
+  //     }
+  //   }
+
+    //   alert("Upload successful");
+    //   fetchFacultyData();
+
+    //   console.log(response.data);
+    //   setShowOptions(false);
+    //   setFile(null);
+    // } catch (error) {
+    //   console.error("Error uploading file:", error);
       // alert("Error during file upload.");
       // const errorMessage = error.response?.data?.message || "Error during file upload.";
       // alert(errorMessage);
@@ -97,14 +114,60 @@ function FacultyDashboard() {
       //     errorMessage = error.response.data.message;
       //   }
       // }
-  
       // alert(errorMessage);
-      const errorMessage = 
-      typeof error.response?.data === 'string' 
-      ? error.response?.data 
-      : error.response?.data?.message || "Error during file upload.";
-    
-    alert(errorMessage);
+
+      // const errorMessage = 
+      // typeof error.response?.data === 'string' 
+      // ? error.response?.data 
+      // : error.response?.data?.message || "Error during file upload.";
+
+  //   alert(errorMessage);
+
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+  const handleFileUpload = async () => {
+    if (!file) {
+      alert("Please select a file to upload.");
+      return;
+    }
+
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("adminId", admin_id);
+
+    try {
+      console.log("Starting file upload...");
+      const response = await axios.post(
+        `${APIURL}/api/excelteacher`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("File uploaded successfully:", response);
+      alert("Upload successful");
+      await fetchFacultyData();
+      setShowOptions(false);
+      setFile(null);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+
+      // let errorMessage = "An error occurred during file upload.";
+      if (error.response) {
+        if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else if (error.response.data && error.response.data.message) {
+          errorMessage = error.response.data.message;
+        }
+      }
+
+      alert(errorMessage);
     } finally {
       setIsLoading(false);
     }
