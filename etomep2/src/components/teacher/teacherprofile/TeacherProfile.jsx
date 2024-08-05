@@ -4,9 +4,14 @@ import amritha from "../../../assets/amritha.png";
 import { RiEdit2Fill } from "react-icons/ri";
 import "../teacherprofile/teacherprofile.css";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../../../Redux/Actions/TeacherLogoutInfoAction";
+import { useDispatch } from "react-redux";
+
 
 function TeacherProfile() {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch()
 
   const handleback = () => {
     navigate("/teacherhome");
@@ -25,9 +30,9 @@ function TeacherProfile() {
 
     // Clear session storage
     sessionStorage.clear();
-
+    dispatch(logout());
     // Navigate to login page
-    navigate('/teacherlogin');
+    navigate("/teacherlogin");
   };
 
   return (
@@ -36,7 +41,9 @@ function TeacherProfile() {
         <button onClick={handleback} className="teacher_back_button">
           &lt;
         </button>
-        <button onClick={handleLogout} className="teacher_logout_button">Logout</button>
+        <button onClick={handleLogout} className="teacher_logout_button">
+          Logout
+        </button>
       </div>
       <div className="teacher_background_section teacher_bottom_section"></div>
       <Container className="teacher_content_container">

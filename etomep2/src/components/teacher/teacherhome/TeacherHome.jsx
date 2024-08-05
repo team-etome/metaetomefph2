@@ -3,8 +3,8 @@ import { Col, Container, Row, Tabs, Tab, Nav } from "react-bootstrap";
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { LuBellDot } from "react-icons/lu";
 import '../teacherhome/teacherhome.css'
-import Dashimg1 from "../../../assets/dashimgone.png";
-import Dashimg from "../../../assets/dashimg.png";
+// import Dashimg1 from "../../../assets/dashimgone.png";
+// import Dashimg from "../../../assets/dashimg.png";
 
 function TeacherHome() {
   const [showThisDate, setShowThisDate] = useState(true);
@@ -42,8 +42,8 @@ function TeacherHome() {
         <Row className='teacher_home_row'>
           <Col className='dashboard_section' md={7}>
             <div className='dashboard_content'>
-              <img src={Dashimg1} alt='dashimage' className='dashboard_image1' />
-              <img src={Dashimg} alt='dashimage' className='dashboard_image2' />
+              {/* <img src={Dashimg1} alt='dashimage' className='dashboard_image1' /> */}
+              {/* <img src={Dashimg} alt='dashimage' className='dashboard_image2' /> */}
             </div>
 
           </Col>
