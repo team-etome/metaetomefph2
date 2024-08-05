@@ -1,4 +1,4 @@
-import {TEACHER_INFO} from '../Actions/Type'
+import {TEACHER_INFO,TEACHER_LOGOUT} from '../Actions/Type'
 
 
 const initialstate  = {
@@ -8,6 +8,12 @@ const initialstate  = {
 
 const TeacherInfoReducer = (state = initialstate , action)=>{
     switch(action.type){
+
+
+        case TEACHER_LOGOUT:
+            return initialstate
+
+
         case TEACHER_INFO:
             return {
                 ...state,

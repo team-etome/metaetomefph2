@@ -3,8 +3,8 @@ import { Col, Container, Row, Tabs, Tab, Nav } from "react-bootstrap";
 import '../admindashboard/admindashboard.css';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { LuBellDot } from "react-icons/lu";
-import Dashimg1 from "../../../assets/dashimgone.png";
-import Dashimg from "../../../assets/dashimg.png";
+// import Dashimg1 from "../../../assets/dashimgone.png";
+// import Dashimg from "../../../assets/dashimg.png";
 
 
 import { useSelector } from 'react-redux';
@@ -44,10 +44,10 @@ function AdminDashboard() {
       <Container className='admin_dasboard_container'>
         <Row className='admin_dashboard_row'>
           <Col className='dashboard_section' md={7}>
-            <div className='dashboard_content'>
+            {/* <div className='dashboard_content'>
               <img src={Dashimg1} alt='dashimage' className='dashboard_image1' />
               <img src={Dashimg} alt='dashimage' className='dashboard_image2' />
-            </div>
+            </div> */}
 
           </Col>
 
