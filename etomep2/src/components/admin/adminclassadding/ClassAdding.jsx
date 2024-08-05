@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "../adminclassadding/classadding.css";
 import { IoChevronBackSharp } from "react-icons/io5";
@@ -19,6 +19,8 @@ function ClassAdding() {
   const [division, setDivision] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [mediumOption, setMediumOption] = useState([]);
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -33,7 +35,25 @@ function ClassAdding() {
 
   const m = admininfo ? admininfo.admininfo?.medium : null;
 
-  const mediumOption = m ? [{ value: m, label: m }] : [];
+  // const mediumOption = m ? [{ value: m, label: m }] : [];
+  // console.log(mediumOption,"medium option")
+
+
+  useEffect(() => {
+    if (m) {
+      try {
+        // Parse the JSON string if needed
+        const parsedMedium = JSON.parse(m);
+        // Ensure parsedMedium is an array
+        if (Array.isArray(parsedMedium)) {
+          const options = parsedMedium.map(item => ({ value: item.trim(), label: item.trim() }));
+          setMediumOption(options);
+        }
+      } catch (e) {
+        console.error('Error parsing medium:', e);
+      }
+    }
+  }, [m]);
 
   // const handleClassNameChange = (e) => {
   //   const value = parseInt(e.target.value, 10);

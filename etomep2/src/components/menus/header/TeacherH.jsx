@@ -1,53 +1,38 @@
-
 import React, { useState, useEffect } from "react";
 import etomelogo from "../../../assets/etomelogo.png";
 import { Navbar, Container, Nav, Form, Button } from "react-bootstrap";
 import "../header/header.css";
 import { RxHamburgerMenu } from "react-icons/rx";
-
+import { FiBell } from "react-icons/fi";
 import amritha from "../../../assets/amritha.png";
 import MobileSidebar from "../sidebar/MobileSidebar";
 import MobileNotification from "../../teacher/mobilenotification/MobileNotification";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function Header() {
+function TeacherH() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const admininfo = useSelector((state) => state.admininfo);
-  console.log(admininfo, "admin info");
+
 
   const navigate = useNavigate();
 
-
-
-    const handleBurgerClick = () => {
-        setSidebarVisible(true);
-    };
-
-    const handleCloseSidebar = () => {
-        setSidebarVisible(false);
-    };
-    // const handleBellIconClick = () => {
-    //     setShowModal(true); // Show modal when bell icon is clicked
-    // };
-    const handleCloseModal = () => {
-        setShowModal(false); // Close modal
-    };
-
+  const handleBurgerClick = () => {
+    setSidebarVisible(true);
+  };
 
   const handleCloseSidebar = () => {
     setSidebarVisible(false);
   };
   const handleBellIconClick = () => {
-    setShowModal(true); // Show modal when bell icon is clicked
+    setShowModal(true); 
   };
   const handleCloseModal = () => {
-    setShowModal(false); // Close modal
+    setShowModal(false); 
   };
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 799px)"); // Adjust the breakpoint as needed
+    const mediaQuery = window.matchMedia("(min-width: 799px)"); 
 
     const handleMediaQueryChange = (e) => {
       if (e.matches) {
@@ -57,14 +42,14 @@ function Header() {
 
     mediaQuery.addListener(handleMediaQueryChange);
 
-
     return () => {
       mediaQuery.removeListener(handleMediaQueryChange);
     };
   }, []);
 
   const handlenavigate = () => {
-    navigate('/adminprofile', { state: { admininfo: admininfo.admininfo } });  };
+    navigate("/teacherprofile",);
+  };
 
   return (
     <>
@@ -81,15 +66,16 @@ function Header() {
           <div className="header_institution">
             <div>
               <h6 style={{ color: "#9DB2BF", fontSize: "17px" }}>
-                {admininfo.admininfo?.institute_name}
+                {}
               </h6>
               <p style={{ color: "#727272", fontSize: "12px" }}>
-                {admininfo.admininfo?.email}
+                {}
+               teacher
               </p>
             </div>
             <img
               onClick={handlenavigate}
-              src={admininfo.admininfo?.logo}
+              src=''
               alt="Profile"
               style={{
                 width: "52px",
@@ -109,7 +95,5 @@ function Header() {
       {showModal && <MobileNotification onClose={handleCloseModal} />}
     </>
   );
-
-  
 }
-export default Header;
+export default TeacherH;

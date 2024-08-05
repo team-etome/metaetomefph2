@@ -1,68 +1,109 @@
-import React from 'react';
+import React from "react";
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import amritha from "../../../assets/amritha.png";
 import { RiEdit2Fill } from "react-icons/ri";
-import '../teacherprofile/teacherprofile.css'
+import "../teacherprofile/teacherprofile.css";
+import { useNavigate } from "react-router-dom";
 
 function TeacherProfile() {
+  const navigate = useNavigate();
+
+  const handleback = () => {
+    navigate("/teacherhome");
+  };
+
+  const handleLogout = () => {
+    // Clear all cookies
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+
+    // Clear local storage
+    localStorage.clear();
+
+    // Clear session storage
+    sessionStorage.clear();
+
+    // Navigate to login page
+    navigate('/teacherlogin');
+  };
+
   return (
-    <div className='teacher_profile'>
-      <div className='teacher_background_section teacher_top_section'>
-      <button className="teacher_back_button">&lt;</button>
-      <button className="teacher_logout_button">Logout</button>
+    <div className="teacher_profile">
+      <div className="teacher_background_section teacher_top_section">
+        <button onClick={handleback} className="teacher_back_button">
+          &lt;
+        </button>
+        <button onClick={handleLogout} className="teacher_logout_button">Logout</button>
       </div>
-      <div className='teacher_background_section teacher_bottom_section'>
-      </div>
+      <div className="teacher_background_section teacher_bottom_section"></div>
       <Container className="teacher_content_container">
         <Row className="justify-content-center">
           <Col md={8}>
             <div className="teacher_profile_card">
-              <div className='teacher_profile_edit'>
-                    <button>
-                        Edit
-                    </button>
-                    <RiEdit2Fill className='teacher_profile_edit_icon'/>
-                </div> 
-              <Form className='teacher_profile_form'>
+              <div className="teacher_profile_edit">
+                <button>Edit</button>
+                <RiEdit2Fill className="teacher_profile_edit_icon" />
+              </div>
+              <Form className="teacher_profile_form">
                 <Row>
                   <Col md={6}>
                     <div className="teacher_profile_group">
-                        <label htmlFor="inst_name">Institutuion Name</label>
-                        <input type="text" id="inst_name" name="inst_name" readOnly />
+                      <label htmlFor="inst_name">Institution Name</label>
+                      <input
+                        type="text"
+                        id="inst_name"
+                        name="inst_name"
+                        readOnly
+                      />
                     </div>
                   </Col>
                   <Col md={6}>
                     <div className="teacher_profile_group">
-                        <label htmlFor="email">Email Id</label>
-                        <input type="text" id="email" name="email" readOnly />
+                      <label htmlFor="email">Email Id</label>
+                      <input type="text" id="email" name="email" readOnly />
                     </div>
                   </Col>
                 </Row>
                 <Row>
                   <Col md={6}>
                     <div className="teacher_profile_group">
-                        <label htmlFor="inst_code">Institutuion Code</label>
-                        <input type="text" id="inst_code" name="inst_code" readOnly />
+                      <label htmlFor="inst_code">Institution Code</label>
+                      <input
+                        type="text"
+                        id="inst_code"
+                        name="inst_code"
+                        readOnly
+                      />
                     </div>
                   </Col>
                   <Col md={6}>
                     <div className="teacher_profile_group">
-                        <label htmlFor="region">Region</label>
-                        <input type="text" id="region" name="region" readOnly />
+                      <label htmlFor="region">Region</label>
+                      <input type="text" id="region" name="region" readOnly />
                     </div>
                   </Col>
                 </Row>
                 <Row>
                   <Col md={6}>
                     <div className="teacher_profile_group">
-                        <label htmlFor="boardofeducation">Board Of Education</label>
-                        <input type="text" id="boardofeducation" name="boardofeducation" readOnly />
+                      <label htmlFor="boardofeducation">
+                        Board Of Education
+                      </label>
+                      <input
+                        type="text"
+                        id="boardofeducation"
+                        name="boardofeducation"
+                        readOnly
+                      />
                     </div>
                   </Col>
                   <Col md={6}>
                     <div className="teacher_profile_group">
-                        <label htmlFor="phn_no">Phone Number</label>
-                        <input type="text" id="phn_no" name="phn_no" readOnly />
+                      <label htmlFor="phn_no">Phone Number</label>
+                      <input type="text" id="phn_no" name="phn_no" readOnly />
                     </div>
                   </Col>
                 </Row>
@@ -75,7 +116,7 @@ function TeacherProfile() {
         <img src={amritha} alt="Institution Logo" className="profile_image" />
       </div>
     </div>
-  )
+  );
 }
 
-export default TeacherProfile
+export default TeacherProfile;

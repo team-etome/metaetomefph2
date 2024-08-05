@@ -30,12 +30,12 @@ function TeacherLogin() {
 
   const handleLeftClick = () => {
     setBtnPosition('0');
-    setTimeout(() => navigate('/'), 400); // Ensure navigation happens after the transition
+    setTimeout(() => navigate('/'), 400); 
   };
 
   const handleRightClick = () => {
     setBtnPosition('110px');
-    setTimeout(() => navigate('/teacherlogin'), 500); // Ensure navigation happens after the transition
+    setTimeout(() => navigate('/teacherlogin'), 500); 
   };
 
   const togglePasswordVisibility = () => {
