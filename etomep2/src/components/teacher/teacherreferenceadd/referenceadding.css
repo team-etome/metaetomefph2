@@ -24,6 +24,7 @@
     height: 30px;
     width: 30px;
     margin-left: 10px;
+    cursor: pointer;
 } 
 .teacher_refadd_title{
     font-weight: 500;

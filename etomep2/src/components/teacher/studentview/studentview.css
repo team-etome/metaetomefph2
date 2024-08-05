@@ -44,7 +44,11 @@
         color: #526D82 ;
         font-size: 30px;
         margin-left: 10px;
-    }
+        width: 500px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    } 
     
     .student_view_group {
         margin-left: 50px;
@@ -209,11 +213,12 @@
     background-color: #8FA2B6; 
   }
   .teacher_student_edit{
-    width: 75px;
-    height: 50px;
-    background-color: transparent;
-    border: 1px solid #526D82;
+    width: 30px;
+    height: 30px;
+    /* background-color: transparent; */
+    /* border: 1px solid #526D82; */
     border-radius: 8px;
+    color: #526D82;
 }
 .teacher_student_edit:hover{
     background-color: #526D82;
@@ -297,6 +302,14 @@
       overflow-x: auto; /* Horizontal scrolling */
       white-space: nowrap; /* Prevent line breaks */
     }
+    .teacher_student_edit{
+      width: 30px;
+      height: 50px;
+      background-color: transparent;
+      cursor: pointer;
+      /* border: 1px solid #526D82;
+      border-radius: 8px; */
+  }
     
     }
     

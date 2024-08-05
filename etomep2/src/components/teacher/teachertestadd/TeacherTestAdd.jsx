@@ -18,13 +18,16 @@ function TeacherTestAdd() {
     // const handleSubmit = () => {
     //   navigate('');
     // }
+    const handleBackClick = () => {
+        navigate('/teachertestlist')
+      }
   return (
     <div className='teacher_test_adding'>
         <Container className='teacher_testadd_form'>
         <div className='teacher_test_add_header'>
-          {/* <Link to="/teachertestlist">
-            <IoChevronBackSharp className="teacher_testadd_back" />
-          </Link> */}
+          {/* <Link to="/teachertestlist"> */}
+            <IoChevronBackSharp onClick={handleBackClick} className="teacher_testadd_back" />
+          {/* </Link> */}
           <h1 className="teacher_testadd_title">Test</h1>
         </div>
         <hr style={{border:' 1px solid #526D82'}}/>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link,  useLocation, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Layout_01_S from "../../../assets/Layout_01_S.png";
@@ -44,7 +44,9 @@ function QuestionCreationView() {
 
   // const handleQuestion = () => {
   //   navigate("/teacherquestioninstruction");}
-
+const handleBackClick = () =>{
+  navigate('/teacherexamination')
+}
 
   return (
     <div>
@@ -58,9 +60,9 @@ function QuestionCreationView() {
               //   marginBottom: "10px",
               // }}
             >
-              {/* <Link to="/teacherexamination">
-                <IoChevronBackSharp className="teacher_view_back" />
-              </Link> */}
+              {/* <Link to="/teacherexamination"> */}
+                <IoChevronBackSharp onClick={handleBackClick}className="teacher_view_back" />
+              {/* </Link> */}
               <h1 className="teacher_view_title">Question Creation</h1>
               <div style={{ flex: "1" }}></div>
               {windowWidth > 576 ? (

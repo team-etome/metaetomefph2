@@ -192,6 +192,9 @@ function EvaluationScheduling() {
       setShowModal(false);
     }
   };
+const handleBackClick = () =>{
+  navigate('/aarnanavbar')
+}
 
   return (
     <div>
@@ -205,9 +208,9 @@ function EvaluationScheduling() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/aarnanavbar">
-              <IoChevronBackSharp className="evaluation_back" />
-            </Link>
+            {/* <Link to="/aarnanavbar"> */}
+              <IoChevronBackSharp onClick={handleBackClick} className="evaluation_back" />
+            {/* </Link> */}
             <h1 className="evaluation_title">Evaluation Scheduling</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>

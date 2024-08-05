@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+
 function AssignmentAdding() {
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -97,6 +98,9 @@ function AssignmentAdding() {
       setIsLoading(false); // Set loading state to false
     }
   };
+  const handleBackClick =() =>{
+    navigate('/teacherassignment')
+  }
   return (
     <div className="teacher_assignment_adding">
       <Container className="teacher_assignment_form">
@@ -104,6 +108,7 @@ function AssignmentAdding() {
           {/* <Link to="/teacherassignment">
             <IoChevronBackSharp className="teacher_assignmentadd_back" />
           </Link> */}
+            <IoChevronBackSharp onClick={handleBackClick} className="teacher_assignmentadd_back" />
           <h1 className="teacher_assignmentadd_title">Assignment</h1>
         </div>
         <hr style={{ border: "1px solid #526D82"}} />

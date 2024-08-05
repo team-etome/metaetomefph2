@@ -78,15 +78,17 @@ function AssignmentList() {
   };
 
   const { thisMonth, previousMonth } = groupByMonth(assignments);
+
   const handleBackClick = () => {
-    navigate("/teacherassignmentadding");
+    navigate("/teacherclassview");
   };
+
   return (
     <Container className="assignment_container">
       <Row>
         <Col className="assignment_list">
           <div className="assignment_header">
-            <IoChevronBackSharp  className="teacher_assignment_view_back" />
+            <IoChevronBackSharp onClick={handleBackClick} className="teacher_assignment_view_back" />
             <h2 className="teaher_assignment_view_title">Assignment</h2>
           </div>
           <hr />

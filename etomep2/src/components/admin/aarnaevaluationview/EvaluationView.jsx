@@ -79,7 +79,9 @@ function EvaluationView() {
     });
   };
 
-
+const handleBackClick = () =>{
+  navigate('/aarnanavbar')
+}
   return (
     <div>
       <Container className="evaluation_view_container">
@@ -92,9 +94,9 @@ function EvaluationView() {
                 marginBottom: "10px",
               }}
             >
-              <Link to="/aarnanavbar">
-                <IoChevronBackSharp className="evaluation_view_back" />
-              </Link>
+              {/* <Link to="/aarnanavbar"> */}
+                <IoChevronBackSharp onClick={handleBackClick} className="evaluation_view_back" />
+              {/* </Link> */}
               <h1 className="evaluation_view_title">{evaluationData?.class_name || ""}</h1>
               <div style={{ flex: "1" }}></div>
               {windowWidth > 800 ? (

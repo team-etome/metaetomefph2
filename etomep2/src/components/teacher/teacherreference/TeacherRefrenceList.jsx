@@ -7,6 +7,8 @@ import { BsFilterRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { IoChevronBackSharp } from "react-icons/io5";
+
 
 function TeacherRefrenceList() {
   const [showThisMonth, setShowThisMonth] = useState(true);
@@ -96,11 +98,15 @@ function TeacherRefrenceList() {
 
   const { thisMonth, previousMonth } = groupByMonth(references);
 
+const handleBackClick = () => {
+  navigate('/teacherclassview')
+}
   return (
     <Container className="refrence_container">
       <Row>
         <Col className="refrence_list">
           <div className="refrence_header">
+          <IoChevronBackSharp onClick={handleBackClick} className="refrence_header_back" />
             <h2>References</h2>
             <div className="refrence_search_filter_icon d-flex align-items-center">
               <BsFilterRight className="bs-filter-right" />

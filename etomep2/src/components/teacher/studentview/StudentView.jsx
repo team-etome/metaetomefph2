@@ -6,6 +6,7 @@ import { PiGraduationCap } from "react-icons/pi";
 import amritha from "../../../assets/amritha.png";
 import "../studentview/studentview.css";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { FiEdit } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 
 function StudentView() {
@@ -84,7 +85,8 @@ function StudentView() {
                     paddingRight: "30px",
                   }}
                 >
-                  <button className="teacher_student_edit">Edit</button>
+                  <FiEdit className='teacher_student_edit'/>
+                  {/* <button className="teacher_student_edit">Edit</button> */}
                 </div>
               ) : (
                 <div style={{ position: "relative" }} ref={dropdownRef}>
@@ -109,7 +111,8 @@ function StudentView() {
                         gap: "10px",
                       }}
                     >
-                      <button className="faculty_edit">Edit</button>
+                    <FiEdit className='teacher_student_edit'/>
+
                     </div>
                   )}
                 </div>

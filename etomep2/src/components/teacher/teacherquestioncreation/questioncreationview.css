@@ -44,6 +44,7 @@
         height: 32px;
         width: 32px;
         margin-left: 10px;
+        cursor: pointer;
     }
     
     .teacher_question_view_header{

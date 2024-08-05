@@ -279,13 +279,13 @@ const handleAddNew = () => {
           <div className="curriculum_scroll">
           <Row>
             <div className="edit_delete">
-              <div className="curriculum_edit">
-                <FiEdit />
-              </div>
-              <div className="curriculum_delete">
-               <RiDeleteBin6Line />
+              {/* <div className="curriculum_edit"> */}
+                <FiEdit className="curriculum_edit"/>
+              {/* </div> */}
+              {/* <div className="curriculum_delete"> */}
+               <RiDeleteBin6Line className="curriculum_delete"/>
 
-              </div>
+              {/* </div> */}
             </div>
             <div className="delete_edit_mobile">
               <div className="edit_mobile">
