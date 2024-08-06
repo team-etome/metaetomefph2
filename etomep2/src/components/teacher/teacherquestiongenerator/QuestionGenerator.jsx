@@ -261,7 +261,7 @@ const handleBackClick = () => {
         <Row xs={2} className="question_generator_header">
           <Col className="question_generator_header_title">
           <IoChevronBackSharp onClick={handleBackClick}className="teacher_question_back" />
-            <h6>Subject Name</h6>
+            <h6>Subject Namerrrrrrrrr</h6>
           </Col>
           <Col className="question_generator_header_submit">
             <button onClick={handleExport} disabled={loading}>
