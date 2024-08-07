@@ -381,6 +381,7 @@ color: #767676;
   .student_rectangle{
     width: 250px !important;
     height: 120px !important;
+    margin-top: 20px;
   }
   .studentlist{
     padding:4px;
@@ -406,16 +407,20 @@ color: #767676;
     .student_id{
       width: 100%;
       padding-left: 0px;
-      padding-top: 0px;
+      padding-top: 20px;
       display: flex;
       justify-content: center;
     }
-    .student_name{
+    .student_name1{
       padding-left: 20px;
       padding-top: 20px;
-      text-align: center;
+      /* text-align: center;
       display: flex;
-      justify-content: center;
+      justify-content: center; */
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+      width:200px;
   }
 
   .student_search_filter .form-control{
@@ -424,10 +429,16 @@ color: #767676;
     justify-content: center;
   }
   .student_search_filter_main{
-    padding-left: 6vw;
-    /* padding-right: 0vw; */
+    /* border: 1px solid blue; */
+    width: 320px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    /* margin-left: 100%; */
+  }
+  
+  .form_search{
+    /* border: 1px solid pink; */
+    margin-left:  0vw;
   }
   }
 @media (min-width: 710px) and (max-width:1024px) {
@@ -440,4 +451,10 @@ color: #767676;
     align-content: center;
     padding-left: 10vw;
     }
+    .student_name1{
+      overflow: hidden; /* Ensures text overflow is handled */
+      white-space: nowrap; /* Prevents text from wrapping */
+      text-overflow: ellipsis;
+      width: 150px;
+  }
 }
