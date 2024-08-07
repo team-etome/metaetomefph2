@@ -196,8 +196,8 @@ function FacultyDashboard() {
         style={{ marginTop: "16px" }}
       >
         <Row>
-          <Col md={6}></Col>
-          <Col md={6}>
+          <Col md={6} ></Col>
+          <Col md={6} className='fac_search_col'>
             <div className="search_filter_main">
               <Form className="d-flex inst_search">
                 <div className="position-relative">

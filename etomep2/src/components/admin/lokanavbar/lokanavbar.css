@@ -18,13 +18,17 @@
     font-weight: bold;
     border-bottom: 2px solid #526D82;
   }
-  
+  /* .textbook_search{
+    border: 1px solid #0e84de;
+  } */
   .search_filter {
     display: flex;
     align-items: center;
 
   }
-  
+  /* .search_dropdwon_textbook{
+    border: 1px solid blue;
+  } */
   .search_filter .form-control {
     width: 250px;
     border-radius: 17px;
@@ -127,15 +131,18 @@
     margin-right: 20px;
   }
   .inputgroup_search{
-    width: 83%;
+    width: 100%;
+    /* border: 1px solid green !important; */
+    /* margin-left: 0vw; */
   }
   .book_search_input{
     border-radius: 6px !important;
     height: 30px;
-    left: 2%;
+    /* left: 2%; */
     top: 10%;
-margin-right: 1rem;
-
+    /* margin-right: 1rem; */
+    border: transparent !important;
+    /* border: 1px solid red !important; */
   }
   .book_searchbar_icon{
     z-index: 2;
@@ -144,21 +151,32 @@ margin-right: 1rem;
     color: #D8D4D4;
   }
   .book_search_col{
-    background-color: #DAE2E9;
-    padding:0px;
+    background-color: #ffff;
+    /* padding:0px; */
     border-radius: 8px;
     height: 40px;
+    border: 0.5px solid #9DB2BF;
+    display: flex;
+    margin-left: 125px;
+    width: 80%;
+  }
+  .separator {
+    width: 1px;
+    height: 100%;
+    background-color: #ccc; 
+    margin: 0 10px; 
   }
   .dropdown_tb{
     background-color: #ffffff;
     /* border: none; */
     margin-top: 0px;
-    width: 100px;
+    width: 150px;
     border-radius: 6px;
     height: 30px;
-    /* border: 1px solid red; */
+    /* border: 1px solid red !important; */
     top: 10%;
-    margin-left: 1rem;
+    /* margin-left: 1rem; */
+    border: none;
   }
   .dropdown_tb_toggle{
     background-color: #ffffff;
@@ -166,7 +184,7 @@ margin-right: 1rem;
     /* margin-top: 0px; */
     width: 100px;
     border-radius: 6px;
-    height: 25px;
+    height: 30px;
     /* border: 1px solid blue; */
     top: 0%;
   }
@@ -175,7 +193,7 @@ margin-right: 1rem;
     color:#526D82 ;
   }
   .lib_search_nav{
-    left: 55%;
+    left: 5%;
     /* border: 1px solid red; */
   }
   .lib_inputgroup_search{
@@ -194,12 +212,13 @@ margin-right: 1rem;
     left: 90%; */
   }
   .search_col{
-    background-color: #DAE2E9;
+    background-color: transparent;
     padding: 5px;
     border-radius: 8px;
-    width: 80%;
+    width: 70%;
     /* margin-right: 20px; */
-    margin-left: 20%;
+    margin-left: 30%;
+    /* border: 1px solid blue; */
   }
   @media (max-width:700px) {
     .loka_navbar_row{
