@@ -2,7 +2,7 @@
   height: auto;
   background-color: #DDE6ED;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .question_generator_header {
@@ -28,11 +28,14 @@
   color: #526D82;
   font-weight: 500;
   font-size: 28px;
+  overflow: hidden; /* Ensures text overflow is handled */
+  white-space: nowrap; /* Prevents text from wrapping */
+  text-overflow: ellipsis;
 }
 .teacher_question_back {
   color: #526D82;
   height: 32px;
-  width: 32px;
+  width: 62px;
   margin-left: 10px;
   cursor: pointer;
 }

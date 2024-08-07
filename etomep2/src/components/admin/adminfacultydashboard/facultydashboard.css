@@ -120,7 +120,7 @@
   display: flex;
   justify-content: flex-end;
   flex-direction: row;
-  padding-left: 40vw;
+  padding-left: 43vw;
   padding-right: 0vw;
   padding-bottom: 10px;
   
@@ -140,6 +140,9 @@ width: 20px;
 color: #D8D4D4;
 right: 15px;
 } 
+.inst_search{
+  /* border: 1px solid red; */
+}
 .search_filter .form-control {
   width: 350px !important;
   border-radius: 17px;
@@ -209,6 +212,15 @@ margin-top: 8px;
     width:300px !important;
     /* margin-left: 15%; */
   }
+  .faculty_list_facultyname {
+    color: #526D82;
+    font-size: 18px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:100px;
+  }
+  
   }
   .faculty_adding_my_button{
     background-color: #526D82;
@@ -385,14 +397,23 @@ border-radius: 8% !important;
     justify-content: center;
     flex-direction: row;
     /* width: auto; */
-    width: 80%;
+    width: 10% !important;
     /* display: flex;
     justify-content: flex-end;
     flex-direction: row; */
-    padding-left: 40vw;
+    padding-left: 25vw !important;
+    padding-right: 0vw ;
     
   }
   .search_bar {
-    width: 100px;
+    width: 270px !important;
+  }
+  .faculty_list_facultyname {
+    color: #526D82;
+    font-size: 18px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:200px;
   }
 }

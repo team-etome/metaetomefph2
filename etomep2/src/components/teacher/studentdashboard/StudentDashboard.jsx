@@ -81,14 +81,14 @@ function StudentDashboard() {
 
     <div className='teacher_student_dashboard'>
       <Container fluid>
-        <Row style={{ paddingLeft: "2vw", paddingBottom: '1vw' }}>
+        <Row style={{ paddingLeft: "2vw", paddingBottom: '1vw'}} className="std_list">
           <Col md={6} className="class_number">
             <h4>Class: {standard} {division}</h4>
           </Col>
-          <Col md={6}>
-            <div className="student_search_filter_main">
-              <div className="student_search_filter d-flex align-items-center">
-                <Form className="d-flex">
+          <Col md={6} className="student_search_col">
+            <div className="student_search_filter_main" >
+              <div className="student_search_filter ">
+                <Form className="d-flex form_search">
                   <div className="position-relative">
                     <BsSearch className="position-absolute top-50 translate-middle-y ms-2 student_search_icon" />
                     <Form.Control
