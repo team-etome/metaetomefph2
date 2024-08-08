@@ -375,8 +375,8 @@ const handleBackClick = () => {
                   />
                 </div>
                 <div className="qpaper_group">
-                  <label htmlFor="t_mark">
-                    Instruction<span style={{ color: "red" }}>*</span>
+                  <label htmlFor="t_mark" style={{top:'10%'}}>
+                    Instruction<span style={{ color: "red"}}>*</span>
                   </label>
                   <textarea
                     className="qpaper_group_textarea"

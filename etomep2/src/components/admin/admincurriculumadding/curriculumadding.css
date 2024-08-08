@@ -9,6 +9,8 @@
   overflow: hidden;
   width: 95%;
   padding-top: 3vh;
+  margin-right: 2vw;
+  margin-left: 2vw;
 }
 
 .curriculum_add {
@@ -27,6 +29,8 @@
   background-color: #ffff;
   border-radius: 16px;
   height: 90%;
+  /* border: 1px solid red; */
+  
 }
 
 .curriculum_form::-webkit-scrollbar {
@@ -146,12 +150,14 @@
   margin-bottom: 20px;
   position: relative;
   padding-top: 15px;
+  padding-left: 10px;
+padding-right: 10px;
 }
 
 .curriculum_inputfield label {
   position: absolute;
-  top: 5px;
-  left: 20px;
+  top: 5%;
+  left: 5%;
   background: #fff;
   color: #526D82;
   font-size: 16px;
@@ -211,6 +217,27 @@
   margin-left: 30px;
   border-radius: 8px;
   margin-right: 20px;
+  overflow-y: scroll; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Hide horizontal scrolling */
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #CAD7DF #fff; /* For Firefox */
+}
+
+.curriculum_listing::-webkit-scrollbar {
+  width: 8px; /* For Chrome, Safari, and Opera */
+}
+
+.curriculum_listing::-webkit-scrollbar-track {
+  background: #fff; /* For Chrome, Safari, and Opera */
+}
+
+.curriculum_listing::-webkit-scrollbar-thumb {
+  background: #CAD7DF; /* For Chrome, Safari, and Opera */
+  border-radius: 4px; /* For Chrome, Safari, and Opera */
+}
+
+.curriculum_listing::-webkit-scrollbar-thumb:hover {
+  background: #B8B8B8; /* For Chrome, Safari, and Opera */
 }
 
 .curriculum_submit_button {
@@ -301,7 +328,7 @@
   .curriculum_submit_button {
     margin-right: 0px;
     padding-bottom: 10px;
-    padding-right: 17px;
+    padding-right: 1px;
   }
 
   .curriculum_listing {
@@ -369,6 +396,7 @@
   .curriculum_title {
     font-size: 25px;
   }
+  
 }
 @media (min-width: 710px) and (max-width:1024px) {
   .curriculum_add {
@@ -376,5 +404,13 @@
     padding-bottom: 20px;
     height: auto;
     width: 100%;
+  }
+  .curriculum_form{
+    margin-left: 20px;
+  }
+  .curriculum_submit_button {
+    margin-right: 0px;
+    padding-bottom: 10px;
+    padding-right: 27px;
   }
 }

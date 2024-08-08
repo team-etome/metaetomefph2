@@ -2,7 +2,9 @@
     overflow-y: auto;
     height: 75vh;
     width:150vw ;
- 
+  margin-top: 16px;
+  margin-right: 2vw;
+  margin-left: 2vw;
   }
   
   .faculty_container_scroll::-webkit-scrollbar {
@@ -47,7 +49,12 @@
     text-overflow:ellipsis;
     width:200px;
   }
-  
+  .fac_list{
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+    margin-top: 5px;
+    }
   .faculty_profile_name {
     display: flex;
     align-items: center;
@@ -120,7 +127,7 @@
   display: flex;
   justify-content: flex-end;
   flex-direction: row;
-  padding-left: 43vw;
+  padding-left: 41vw;
   padding-right: 0vw;
   padding-bottom: 10px;
   
@@ -220,6 +227,11 @@ margin-top: 8px;
     text-overflow:ellipsis;
     width:100px;
   }
+  .fac_list{
+    padding:4px;
+    padding-top: 16px;
+    margin-top: 8px;
+    }
   
   }
   .faculty_adding_my_button{
@@ -401,8 +413,8 @@ border-radius: 8% !important;
     /* display: flex;
     justify-content: flex-end;
     flex-direction: row; */
-    padding-left: 25vw !important;
-    padding-right: 0vw ;
+    padding-left: 23vw !important;
+    padding-right: 1vw;
     
   }
   .search_bar {

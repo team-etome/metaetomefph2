@@ -274,7 +274,7 @@ function SeatAssigning() {
                   />
                 </div>
                 <Row>
-                  <Col md={6}>
+                  <Col md={6} className="time_col">
                     <div className="seat_group" style={{}}>
                       <label htmlFor="start_time">
                         Start Time<span style={{ color: "red" }}>*</span>
@@ -285,11 +285,11 @@ function SeatAssigning() {
                         name="start_time"
                         value={startTime}
                         onChange={(e) => setStartTime(e.target.value)}
+                        style={{width:'100%'}}
                       />
-                      {/* <Select options={termOptions} styles={customStyles} value={term} onChange={setTerm} placeholder=''/> */}
                     </div>
                   </Col>
-                  <Col md={6}>
+                  <Col md={6} className="time_col">
                     <div className="seat_group">
                       <label htmlFor="end_time">
                         End Time<span style={{ color: "red" }}>*</span>
@@ -300,8 +300,9 @@ function SeatAssigning() {
                         name="end_time"
                         value={endTime}
                         onChange={(e) => setEndTime(e.target.value)}
+                        style={{width:'100%'}}
+
                       />
-                      {/* <Select options={termOptions} styles={customStyles} value={term} onChange={setTerm} placeholder=''/> */}
                     </div>
                   </Col>
                 </Row>
@@ -366,13 +367,13 @@ function SeatAssigning() {
                     <Form.Control
                       type="search"
                       placeholder="Search by Name or Id"
-                      className="ps-1 modal_search_input"
+                      className="ps-3 modal_search_input"
                       aria-label="Search"
                     />
                   </div>
                 </Form>
 
-                <div className="seat_modal_content">
+                <div className="class_seat_modal_content">
                   {teacherOptions?.map((teacher, index) => (
                     <div
                       key={`teacher-${index}`}

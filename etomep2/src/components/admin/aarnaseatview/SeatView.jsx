@@ -149,7 +149,7 @@ function SeatView() {
               </Row>
             </Col>
           </Row>
-          <Row>
+          <Row className='seat_sections_fac_class'>
               <Col>
               <div className='align_section'>
                   <p>Selected Faculties</p>
