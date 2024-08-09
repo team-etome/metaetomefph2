@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import '../teacherlogin/teacherlogin.css';
+import TeacherForgot from "../teacherforgotpassword/TeacherForgot";
 import { teacherinfo } from "../../../Redux/Actions/TeacherInfoAction";
 
 function TeacherLogin() {
@@ -278,7 +279,7 @@ function TeacherLogin() {
                   </button>
                 </div>
                 <div className="teacher_flip_card_back">
-                  {/* <AdminForgot /> */}
+                  <TeacherForgot />
                 </div>
               </div>
             </form>
