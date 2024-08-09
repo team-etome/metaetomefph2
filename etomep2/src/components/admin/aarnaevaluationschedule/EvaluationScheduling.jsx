@@ -27,7 +27,7 @@ function EvaluationScheduling() {
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
   const APIURL = useSelector((state) => state.APIURL.url);
 
-  console.log(teachers,"ugrfwieyotgr78iewy ")
+  console.log(APIURL,"ugrfwieyotgr78iewy ")
 
   const classnumberOptions = classinfo.adminallclassinfo?.map((classItem) => ({
     value: `${classItem.class_name} ${classItem.division}`,
@@ -37,7 +37,7 @@ function EvaluationScheduling() {
 
 
   const class_name = classinfo.adminallclassinfo?.class_name;
-  // const admin     = classinfo.adminallclassinfo[0]?.admin;
+  const admin     = classinfo.adminallclassinfo[0]?.admin;
   
  
 
@@ -159,6 +159,7 @@ function EvaluationScheduling() {
   };
 
   const sendData = async (event) => {
+    console.log("enterddddddd")
     event.preventDefault();
     const data = {
       classNumber: classNumber.label,
@@ -168,9 +169,12 @@ function EvaluationScheduling() {
       teacher: checkedItems.map((teacher) => teacher.label),
       admin: admin,
     };
+
+   
   
     try {
       const response = await axios.post(`${APIURL}/api/evaluationadding`, data);
+      console.log(response,"response")
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
@@ -246,14 +250,14 @@ const handleBackClick = () =>{
                     Term<span style={{ color: "red" }}>*</span>
                   </label>
                     
-                    {/* <input onChange={(e) => setTerm(e.target.value)} type="text" style={{ textTransform: "capitalize" }}/> */}
-                    <Select
+                    <input onChange={(e) => setTerm(e.target.value)} type="text" style={{ textTransform: "capitalize" }}/>
+                    {/* <Select
                     options={term}
                     styles={customStyles}
-                    // value={selectedSubject}
+                    value={selectedSubject}
                     onChange={setTerm}
-                    placeholder="Select Term..."
-                  />
+                    placeholder="Select Term..." */}
+                  {/* /> */}
                 </div>
               </Col>
               <Col md={6}>
@@ -336,7 +340,6 @@ const handleBackClick = () =>{
           </button>
            
 
-        
         </Modal.Footer>
       </Modal>
     </div>

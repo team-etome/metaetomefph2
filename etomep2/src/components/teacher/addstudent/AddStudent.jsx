@@ -58,7 +58,7 @@ function AddStudent() {
       address: studentAddress,
       teacher: teacher_id,
     };
-    if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+    if (studentPhone.length !== 10 || isNaN(studentPhone)) {
       Swal.fire({
         icon: "error",
         title: "Invalid Phone Number",
