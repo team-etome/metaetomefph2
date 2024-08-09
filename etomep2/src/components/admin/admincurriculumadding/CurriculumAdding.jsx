@@ -387,7 +387,7 @@ const handleAddNew = () => {
 
             <div
               className="curriculum_submit_button"
-              style={{ textAlign: "right", marginRight: "10px" }}
+              style={{ textAlign: "right", marginRight: "0px" }}
             >
               <button
                 type="submit"

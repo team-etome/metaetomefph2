@@ -193,7 +193,6 @@ function FacultyDashboard() {
       <Container
         fluid
         className="faculty_container_scroll"
-        style={{ marginTop: "16px" }}
       >
         <Row>
           <Col md={6} ></Col>
@@ -217,7 +216,7 @@ function FacultyDashboard() {
         </Row>
         <Row>
           {filteredFacultyList.map((item, index) => (
-            <Col lg={3} md={4} sm={6} xs={6} key={index} className="class_list">
+            <Col lg={3} md={4} sm={6} xs={6} key={index} className="fac_list">
               <div
                 onClick={() => handleclick(item)}
                 className="border border-white faculty_rectangle"
