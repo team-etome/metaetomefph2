@@ -212,7 +212,7 @@
             flex-direction: column;
           }
           .align_section {
-            width: 100%;
+            width: 80%;
             padding-left: 10px;
             padding-bottom: 20px;
         }
@@ -227,6 +227,10 @@
         /* Ensuring equal width for Selected Faculties and Selected Classes sections */
         .assign_layout {
             width: 95%; /* Ensure both have the same width */
+        }
+        .seat_sections_fac_class{
+            margin-left: 30px;
+            /* margin-right: 30px; */
         }
     }
 

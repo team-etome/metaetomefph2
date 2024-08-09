@@ -317,7 +317,7 @@ const handleBackClick = () =>{
                   </div>
                 </Form>
                 <div className="modal_faculty_list">
-                  {teachers.map((faculty, index) => (
+                  {teachers?.map((faculty, index) => (
                     <div key={index} className="d-flex align-items-center mb-2">
                       <input
                         type="checkbox"

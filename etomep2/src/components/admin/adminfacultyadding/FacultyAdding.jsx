@@ -218,7 +218,7 @@ function FacultyAdding() {
   const customStyles = {
     control: (base, state) => ({
       ...base,
-      width: "100%",
+      width: "95%",
       minHeight: "40px",
       height: "50px",
       border: "1px solid #526D82",
