@@ -36,8 +36,8 @@ function SeatAssigning() {
   const classinfo = useSelector((state) => state.adminallclassinfo);
   const admininfo = useSelector((state) => state.admininfo);
 
-  const admin_id = admininfo.admininfo?.admin_id
-  console.log(admin_id,"admin id")
+  const admin = admininfo.admininfo?.admin_id
+  console.log(admin,"admin id")
   console.log(teacherinfo, "teacher info");
   console.log(classinfo, "class info");
 
@@ -157,26 +157,39 @@ function SeatAssigning() {
       selectedTeacher,
       selectedClass,
       selectedLayout,
-      admin_id
+      admin
     };
 
     console.log(selectedClass,"selected classsssss")
 
     try {
       const response = await axios.post(`${APIURL}/api/seating`, formData);
-      // console.log(response.data);
-      Swal.fire(
-        "Success",
-        "Seating arrangement submitted successfully",
-        "success"
-      );
-      navigate("/aarnanavbar");
-      // setShowModal(false);
+  
+      if (response.status === 200) {
+        // Success case
+        Swal.fire(
+          "Success",
+          "Seating arrangement submitted successfully",
+          "success"
+        );
+        navigate("/aarnanavbar");
+      }
     } catch (error) {
-      // console.error("There was an error submitting the form!", error);
-      Swal.fire("Error", "There was an error submitting the form", "error");
+      const statusCode = error.response?.status;
+      const errorMessage = error.response?.data?.message || "There was an error submitting the form";
+  
+      if (statusCode === 400) {
+        Swal.fire("Error", errorMessage, "error");
+      } else if (statusCode === 404) {
+        Swal.fire("Error", "Student or class not found.", "error");
+      } else if (statusCode === 409) {
+        Swal.fire("Conflict", errorMessage, "warning");
+      } else if (statusCode === 500) {
+        Swal.fire("Error", "An internal server error occurred.", "error");
+      } else {
+        Swal.fire("Error", "Unexpected error occurred.", "error");
+      }
     }
-    // setShowModal(false);
   };
 
   const handleBackClick = () => {
