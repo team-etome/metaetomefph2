@@ -126,11 +126,11 @@
         /* border: 1px solid #526D82; */
     }
     .submit_qpaper{
-        margin-top: 20px;
-        width: 90%;
-        padding-left: 20px;
+        margin-top: 20px !important;
+        width: 95%;
+        padding-left: 50px ;
         text-align: right;
-        margin-right: 0px;
+        /* margin-right: 50px !important; */
     }
     .qpaper_button {
         padding: 10px 20px;
@@ -254,6 +254,11 @@
     .qpaper_assign_container {
         height: 100vh;
         padding-top: 12vh;
+        /* border: 1px solid red; */
+        }
+        .qpaper_form{
+            /* border: 1px solid blue; */
+            height: 80vh;
         }
   }
     

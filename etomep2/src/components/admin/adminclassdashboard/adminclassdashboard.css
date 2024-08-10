@@ -2,7 +2,9 @@
   overflow-y: auto;
   height: 68vh;
   width:150vw ;
- 
+  margin-top: 16px;
+  margin-right: 2vw;
+  margin-left: 2vw;
 }
 /* .cls_vw_flt_dv {
   position: absolute;
@@ -195,6 +197,10 @@
 .class_list_facultyname {
   color: #000000;
   font-size: 1rem;
+  overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:130px;
 }
 
 .class_profile_name {
@@ -279,14 +285,20 @@ align-items: center;
 .class_number_div{
   width: 50px;
   height: 50px;
- 
-
 }
 .class_lisit_circle{
   position: absolute;
   top: 55px;
   left: 20px;
   transform: translateY(-150%);
+}
+.class_list_facultyname {
+  color: #000000;
+  font-size: 1rem;
+  overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:70px;
 }
 .class_list{
 padding:4px;

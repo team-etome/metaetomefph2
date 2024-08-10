@@ -168,7 +168,7 @@ function AdminNewPassword() {
           onClick={handleSubmit}
           disabled={loading}
           variant="primary"
-          className="admin_submit_btn"
+          className="admin_new_submit_btn"
         >
           {loading ? (
             <>

@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 function TeacherProfile() {
   const teacherinfo = useSelector((state) => state.teacherinfo);
   const [isEditing, setIsEditing] = useState(false);
+  const [selectedFileName, setSelectedFileName] = useState("");
   const [firstName, setFirstName] = useState(
     teacherinfo.teacherinfo?.first_name || ""
   );
@@ -81,14 +82,26 @@ function TeacherProfile() {
       });
   };
 
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setProfileImage(file);
+  //   };
+  //   reader.readAsDataURL(file);
+  // };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setProfileImage(file);
-    };
-    reader.readAsDataURL(file);
+    if (file) {
+      setSelectedFileName(file.name); 
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(file);
+      };
+      reader.readAsDataURL(file);
+    }
   };
+
 
   return (
     <div className="teacher_profile">
@@ -115,11 +128,11 @@ function TeacherProfile() {
                 <Row>
                   <Col md={6}>
                     <div className="teacher_profile_group">
-                      <label htmlFor="inst_name">Teacher Name</label>
+                      <label htmlFor="first_name">First Name</label>
                       <input
                         type="text"
-                        id="inst_name"
-                        name="inst_name"
+                        id="first_name"
+                        name="first_name"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         readOnly={!isEditing}
@@ -143,23 +156,32 @@ function TeacherProfile() {
                 <Row>
                   <Col md={6}>
                     <div className="teacher_profile_group">
-                      <label htmlFor="inst_code">Institution Code</label>
+                      <label htmlFor="last_name">Last Name</label>
                       <input
                         type="text"
-                        id="inst_code"
-                        name="inst_code"
-                        readOnly
+                        id="last_name"
+                        name="last_name"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        readOnly={!isEditing}
                       />
                     </div>
                   </Col>
                   <Col md={6}>
-                    <div className="teacher_profile_group">
-                      <label htmlFor="region">Region</label>
-                      <input type="text" id="region" name="region" readOnly />
+                  <div className="teacher_profile_group">
+                      <label htmlFor="phn_no">Phone Number</label>
+                      <input
+                        type="text"
+                        id="phn_no"
+                        name="phn_no"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        readOnly={!isEditing}   
+                      />
                     </div>
                   </Col>
                 </Row>
-                <Row>
+                {/* <Row>
                   <Col md={6}>
                     <div className="teacher_profile_group">
                       <label htmlFor="boardofeducation">
@@ -187,22 +209,54 @@ function TeacherProfile() {
                       />
                     </div>
                   </Col>
-                </Row>
+                </Row> */}
               </Form>
             </div>
           </Col>
         </Row>
       </Container>
-      <div className="teacher_profile_image_container">
+      {/* <div className="teacher_profile_image_container">
         <img src='' alt="Profile" className="profile_image" />
         {isEditing && (
           <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
+            className="teacher_profile_pic"
           />
         )}
-      </div>
+      </div> */}
+      {/* <div className="teacher_profile_image_container">
+  <img src='' alt="Profile" className="profile_image" />
+  {isEditing && (
+    <div className="input_container">
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        className="teacher_profile_pic"
+      />
+      <span className="file_name">{selectedFileName}</span>
+    </div>
+  )}
+</div> */}
+<div className="teacher_profile_image_container">
+  <img src={profileImage} alt="Profile" className="profile_image" />
+  {isEditing && (
+    <div className="input_container_pic">
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        className="teacher_profile_pic"
+      />
+      {/* {selectedFileName && (
+        <span className="file_name">{selectedFileName}</span>
+      )} */}
+    </div>
+  )}
+</div>
+
     </div>
   );
 }
