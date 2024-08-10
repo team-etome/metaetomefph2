@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 
 function EvaluationScheduling() {
   const [showModal, setShowModal] = useState(false);
-  const [classNumber, setClassNumber] = useState(false);
+  const [classNumber, setClassNumber] = useState(null);
   const [subject, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -22,10 +22,9 @@ function EvaluationScheduling() {
 
   const navigate = useNavigate();
 
-  const classinfo = useSelector((state) => state.adminallclassinfo);
-  console.log(classinfo,"classs info")
-  const teacherinfo = useSelector((state) => state.adminteacherinfo);
-  const APIURL = useSelector((state) => state.APIURL.url);
+  const classinfo = useSelector((state) => state.adminallclassinfo || {});
+  const teacherinfo = useSelector((state) => state.adminteacherinfo || {});
+  const APIURL = useSelector((state) => state.APIURL.url || '');
 
   console.log(APIURL,"ugrfwieyotgr78iewy ")
 
