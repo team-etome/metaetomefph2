@@ -69,6 +69,7 @@ import AssignmentEditor from './components/teacher/teacherassignmentadd/Assignme
 import AdminProfilePage from './pages/adminpage/AdminProfilePage';
 import TeacherTimeTablePage from './pages/teacherpage/TeacherTimeTablePage';
 import TeacherProfilePage from './pages/teacherpage/TeacherProfilePage';
+import TeacherForgot from './components/teacher/teacherforgotpassword/TeacherForgot';
 
 
 function App() {
@@ -153,6 +154,7 @@ function App() {
           <Route path="/teachertestadd" element={<TeacherTestAddPage/>}/>
           <Route path="/teachertimetable" element={<TeacherTimeTablePage/>}/>
           <Route path="/teacherprofile" element={<TeacherProfilePage/>}/>
+          <Route path="/teacherforgot" element={<TeacherForgot />} />
 
 
 
