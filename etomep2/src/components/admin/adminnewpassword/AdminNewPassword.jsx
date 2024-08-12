@@ -162,7 +162,7 @@ function AdminNewPassword() {
             </div>
       </Modal.Body>
       <Modal.Footer style={{border:'none'}}className="admin_new_button_container">
-        <Button
+        <button
         
           type="submit"
           onClick={handleSubmit}
@@ -181,7 +181,7 @@ function AdminNewPassword() {
           ) : (
             "Submit"
           )}
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
   );

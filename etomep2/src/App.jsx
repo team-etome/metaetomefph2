@@ -70,6 +70,7 @@ import AdminProfilePage from './pages/adminpage/AdminProfilePage';
 import TeacherTimeTablePage from './pages/teacherpage/TeacherTimeTablePage';
 import TeacherProfilePage from './pages/teacherpage/TeacherProfilePage';
 import TeacherForgot from './components/teacher/teacherforgotpassword/TeacherForgot';
+import TeacherNewPassword from './components/teacher/teachernewpassword/TeacherNewPassword';
 
 
 function App() {
@@ -155,6 +156,8 @@ function App() {
           <Route path="/teachertimetable" element={<TeacherTimeTablePage/>}/>
           <Route path="/teacherprofile" element={<TeacherProfilePage/>}/>
           <Route path="/teacherforgot" element={<TeacherForgot />} />
+          <Route path="/teachernewpassword" element={<TeacherNewPassword />} />
+
 
 
 

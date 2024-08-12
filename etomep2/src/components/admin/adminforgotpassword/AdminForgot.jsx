@@ -255,7 +255,7 @@ function AdminForgot() {
           >
             Enter OTP Code
           </Modal.Title>
-          <Button
+          <button
             variant="secondary"
             onClick={() => setShowOtpScreen(false)}
             style={{
@@ -265,7 +265,7 @@ function AdminForgot() {
             }}
           >
             <AiOutlineClose size={20} style={{ cursor: "pointer" }} />
-          </Button>
+          </button>
         </Modal.Header>
         <Modal.Body>
           <div
@@ -366,7 +366,7 @@ function AdminForgot() {
             }}
           >
             <p style={{ color: "#526D82" }}>Time remaining: {formatTime()}</p>
-            <Button
+            <button
             className="otp_button"
               variant="primary"
               onClick={handleOtpSubmit}
@@ -374,7 +374,7 @@ function AdminForgot() {
               style={{}}
             >
               Submit
-            </Button>
+            </button>
           </div>
         </Modal.Body>
       </Modal>
