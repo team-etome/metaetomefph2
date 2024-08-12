@@ -2,7 +2,7 @@
   height: 100vh;
   padding-top: 15vh;
   background-color: #DDE6ED;
-  width: 80%;
+  width: 100%;
   padding-left: 80px;
 }
 .assignment_list{
@@ -19,6 +19,7 @@
   display: flex;
   /* justify-content: space-around; */
   /* border: 1px solid green; */
+  padding-left: 8px;
 }
 .teacher_assignment_view_back {
   color: #526D82;
@@ -95,6 +96,7 @@
     font-size: 15px;
     font-weight: 600;
     font-style: italic; 
+    padding-left: 30px;
 }
 .week_icon {
     margin-left: auto; /* Ensures the icon is pushed to the far right */

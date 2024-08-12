@@ -17,9 +17,10 @@
    
 }
 .teacher_subject_title{
-    font-weight: 500;
+    font-weight: 600 !important;
     color: #526D82 ;
     font-size: 30px;
+    /* font-weight: bold; */
     margin-left: 12%;
 }
 .teacher_subject_search_filter_main{
@@ -108,7 +109,11 @@
   background-color: #ffffff;
   position: relative;
   border-radius: 8px;
-  padding: 16px;
+  padding-left: 5px;
+  /* padding: 16px; */
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   text-align: left;
   height: 103px;
@@ -116,9 +121,9 @@
 .tec_sub_card ::before {
   content: '';
   position: absolute;
-  left: 16px; /* Adjust based on your padding */
-  top: 16px;
-  bottom: 16px;
+  left: 6px; /* Adjust based on your padding */
+  top: 6px;
+  bottom: 4px;
   width: 4px; /* Width of the vertical line */
   background-color: #9DB2BF; /* Color of the vertical line */
   border-radius: 2px;
@@ -126,16 +131,17 @@
 
 .tec_sub_card h3 {
   margin: 0;
-  font-size: 24px;
+  font-size: 32px;
   color: #526D82;
   margin-left: 20px;
 }
 
 .tec_sub_card p {
-  margin: 8px 0 0;
+  margin: 5px 0 0;
   font-size: 16px;
   color: #999;
   margin-left: 20px;
+
 }
   
 @media (max-width:700px) {
@@ -174,9 +180,12 @@
 
    .tec_sub_card_container{
     grid-template-columns: repeat(2, 1fr); /* Two cards per row on mobile */
+    padding-top: 20vw;
+
   }
+
   .tec_sub_crd_rw{
- padding-top: 10%;
+ padding-top: 5%;
     
   }
   /* .student_search_filter .form-control{

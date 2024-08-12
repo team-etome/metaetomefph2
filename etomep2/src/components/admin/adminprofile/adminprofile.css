@@ -139,7 +139,7 @@
     padding-top: 30px;
   }
   .profile_form {
-    max-height: calc(80vh - 200px);
+    max-height: calc(70vh - 200px);
     overflow-y: scroll; 
     overflow-x: hidden; 
 }

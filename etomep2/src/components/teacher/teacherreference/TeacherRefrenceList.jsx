@@ -109,7 +109,7 @@ const handleBackClick = () => {
           <IoChevronBackSharp onClick={handleBackClick} className="refrence_header_back" />
             <h2>References</h2>
             <div className="refrence_search_filter_icon d-flex align-items-center">
-              <BsFilterRight className="bs-filter-right" />
+              <BsFilterRight className="refrence-bs-filter-right" />
             </div>
           </div>
           <hr />

@@ -23,6 +23,14 @@
     align-content: center;
     align-items: center;
 }
+.header_institution h6{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 50px; /* Reduce width to ensure overflow */
+  max-width: 150px;
+  
+}
 @media (max-width: 800px),(max-height:490px ) {
     .header_container{
     }

@@ -41,34 +41,24 @@ height: 100vh;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   cursor: pointer;
 }
-.student_name1{
-    /* padding-left: 50px;
-    padding-top: 10px;
-    color: #4A4A4A;
-    font-size: 16px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-    width:70px; */
-    /* justify-content: flex-start; */
-    display: flex;
-    justify-content: flex-start;
-    color: #4A4A4A;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-    width:270px;
-    padding-left: 16px;
-    padding-top: 10px;
-    font-size: 18px;
-    font-weight: bold;
+.student_name1 {
+  display: inline-block; /* Use inline-block for better control */
+  color: #4A4A4A;
+  padding: 0;
+  padding-left: 18px;
+  padding-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 250px; /* Reduce width to ensure overflow */
+  max-width: 275px; /* Set max-width if necessary */
 }
+
 /* .student_date_id{
     display: flex;
     justify-content: space-between;
@@ -92,7 +82,7 @@ height: 100vh;
     width: 100%;
     padding-top: 10%;
     padding-right: 0%;
-    padding-left: 90%;
+    padding-left: 92%;
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
@@ -102,6 +92,14 @@ height: 100vh;
 }
 .student_date, .student_id {
     flex: 1;
+}
+.std_list
+{
+  /* background-color: red; */
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1.4vh;
+
 }
 
 .student_list{
@@ -134,11 +132,14 @@ height: 100vh;
   background-color: #526D82;
 }
 .class_number{
-  padding-top: 1vh;
+  padding-top: 0.5vh;
+  padding-left: 0px;
+  padding-bottom: 1.4vh;
+  /* background-color: black; */
 }
 .class_number h4{
   color: #526D82;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 600;
 
 }

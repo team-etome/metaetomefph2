@@ -110,6 +110,8 @@
         padding-left: 20px;
         text-align: right;
         margin-right: 0px;
+        margin-left: 2vw;
+        /* border: 1px solid red; */
     }
     .teacher_studentadd_submit button {
         padding: 10px 20px;
