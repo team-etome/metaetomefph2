@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import "../adminloka/lokatextbook.css";
 
 function LokaTextbook() {
-  const [selectedTab, setSelectedTab] = useState("pdf");
+  const [selectedTab, setSelectedTab] = useState("frontPage");
   const [totalChaptersInput, setTotalChaptersInput] = useState("");
   const [chapters, setChapters] = useState([]);
   const [classValue, setClassValue] = useState("");
@@ -331,89 +331,90 @@ function LokaTextbook() {
     }
   };
 
-  // const handleSubmit = async () => {
-    // if (
-    //   !classValue ||
-    //   !textbookName ||
-    //   !medium ||
-    //   !selectedSubject ||
-      // !volume ||
-    //   !publisherName ||
-    //   !pdfFile ||
-    //   !imageFile
-    // ) {
-    //   let missingFields = [];
-    //   if (!classValue) missingFields.push("class");
-    //   if (!textbookName) missingFields.push("textbook name");
-    //   if (!selectedSubject) missingFields.push("Subject");
-    //   if (!medium) missingFields.push("medium");
-    //   if (!publisherName) missingFields.push("publisher name");
-    //   if (!pdfFile) missingFields.push("PDF file");
-    //   if (!imageFile) missingFields.push("image file");
-
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Missing Required Information",
-    //     text: `Please complete the following fields: ${missingFields.join(
-    //       ", "
-    //     )}.`,
-    //   });
-    //   setLoading(false);
-    //   return;
-    // }
-
-    // setLoading(true);
-    // try {
-    //   const formData = new FormData();
-    //   formData.append("class_name", classValue);
-    //   formData.append("text_name", textbookName);
-    //   formData.append("subject", selectedSubject.value);
-    //   formData.append("volume", volume);
-    //   formData.append("textbook_pdf", pdfFile);
-    //   formData.append("textbook_front_page", imageFile);
-    //   formData.append("medium", m);
-    //   formData.append("publisher_name", p);
-
-      // publisherName.forEach((publisherValue, index) => {
-      //   formData.append(`publisher_name[${index}]`, publisherValue.value);
-      // });
-
-      // chapters.forEach((chapter, index) => {
-        // formData.append("chapter_name", chapter.name);
-      //   formData.append("page_no", chapter.pageNo);
-      //   if (chapter.pdfFile) {
-      //     formData.append(`chapters[${index}][pdfFile]`, chapter.pdfFile);
-      // }
-      // });
-
-      // const response = await axios.post(
-      //   `${APIURL}/api//`,
-      //   formData,
-      //   {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //     },
-      //   }
-      // );
-
-      // Swal.fire({
-      //   icon: "success",
-      //   title: "Success!",
-      //   text: "Textbook created successfully!",
-      // });
-
-      // navigate("/GodHeader");
-  //   } catch (error) {
-  //     console.error("Error creating textbook:", error);
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Oops...",
-  //       text: "Something went wrong!",
-  //     });
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    setLoading(true); // Show the loading spinner
+  
+    // Validate required fields
+    if (
+      !classValue ||
+      !textbookName ||
+      !medium ||
+      !selectedSubject ||
+      !publisherName ||
+      !imageFile || // Ensure that an image file is selected
+      !chapters.length // Ensure that chapters are added
+    ) {
+      let missingFields = [];
+  
+      if (!classValue) missingFields.push("class");
+      if (!textbookName) missingFields.push("textbook name");
+      if (!selectedSubject) missingFields.push("Subject");
+      if (!medium) missingFields.push("medium");
+      if (!publisherName) missingFields.push("publisher name");
+      if (!imageFile) missingFields.push("image file");
+      if (!chapters.length) missingFields.push("chapters");
+  
+      Swal.fire({
+        icon: "error",
+        title: "Missing Required Information",
+        text: `Please complete the following fields: ${missingFields.join(
+          ", "
+        )}.`,
+      });
+      setLoading(false);
+      return;
+    }
+  
+    try {
+      // Create FormData to send file and other data
+      const formData = new FormData();
+      formData.append("class_name", classValue);
+      formData.append("text_name", textbookName);
+      formData.append("subject", selectedSubject.value);
+      formData.append("volume", volume);
+      formData.append("textbook_front_page", imageFile);
+      formData.append("medium", medium.value);
+      formData.append("publisher_name", publisherName.value);
+  
+      // Append chapters data (only name and PDF file) to FormData
+      chapters.forEach((chapter, index) => {
+        formData.append(`chapters[${index}][name]`, chapter.name);
+        if (chapter.pdfFile) {
+          formData.append(`chapters[${index}][pdfFile]`, chapter.pdfFile);
+        }
+      });
+  
+      // Send the form data to the backend
+      const response = await axios.post(
+        `${APIURL}/api/admin-create-textbook/`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+  
+      // Show success message
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Textbook created successfully!",
+      });
+  
+      navigate("/adminlokanavbar"); 
+    } catch (error) {
+      console.error("Error creating textbook:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    } finally {
+      setLoading(false); 
+    }
+  };
 
   const mediumbook = [
     "Malayalam",
@@ -431,105 +432,105 @@ function LokaTextbook() {
     label: bookmedium,
   }));
 
-  const handleUpdate = async () => {
-    if (
-      !classValue ||
-      !textbookName ||
-      !medium ||
-      !selectedSubject ||
-      !publisherName ||
-      !pdfFile ||
-      !imageFile
-    ) {
-      let missingFields = [];
+  // const handleUpdate = async () => {
+  //   if (
+  //     !classValue ||
+  //     !textbookName ||
+  //     !medium ||
+  //     !selectedSubject ||
+  //     !publisherName ||
+  //     !pdfFile ||
+  //     !imageFile
+  //   ) {
+  //     let missingFields = [];
 
-      if (!classValue) missingFields.push("class");
-      if (!textbookName) missingFields.push("textbook name");
-      if (!selectedSubject) missingFields.push("Subject");
-      if (!medium) missingFields.push("medium");
-      if (!publisherName) missingFields.push("publisher name");
-      if (!pdfFile) missingFields.push("PDF file");
-      if (!imageFile) missingFields.push("image file");
+  //     if (!classValue) missingFields.push("class");
+  //     if (!textbookName) missingFields.push("textbook name");
+  //     if (!selectedSubject) missingFields.push("Subject");
+  //     if (!medium) missingFields.push("medium");
+  //     if (!publisherName) missingFields.push("publisher name");
+  //     if (!pdfFile) missingFields.push("PDF file");
+  //     if (!imageFile) missingFields.push("image file");
 
-      Swal.fire({
-        icon: "error",
-        title: "Missing Required Information",
-        text: `Please complete the following fields: ${missingFields.join(
-          ", "
-        )}.`,
-      });
-      setLoading(false);
-      return;
-    }
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Missing Required Information",
+  //       text: `Please complete the following fields: ${missingFields.join(
+  //         ", "
+  //       )}.`,
+  //     });
+  //     setLoading(false);
+  //     return;
+  //   }
 
-    const confirmResult = await Swal.fire({
-      title: "Confirm Update",
-      text: "Are you sure you want to update this textbook?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, update it!",
-    });
+  //   const confirmResult = await Swal.fire({
+  //     title: "Confirm Update",
+  //     text: "Are you sure you want to update this textbook?",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, update it!",
+  //   });
 
-    if (confirmResult.isConfirmed) {
-      setLoading(true);
+  //   if (confirmResult.isConfirmed) {
+  //     setLoading(true);
 
-      try {
-        const formData = new FormData();
-        formData.append("id", id);
-        formData.append("class_name", classValue);
-        formData.append("text_name", textbookName);
-        formData.append("subject", selectedSubject.label);
-        formData.append("volume", volume);
-        formData.append("textbook_pdf", pdfFile);
-        formData.append("textbook_front_page", imageFile);
-        formData.append("medium", m);
+  //     try {
+  //       const formData = new FormData();
+  //       formData.append("id", id);
+  //       formData.append("class_name", classValue);
+  //       formData.append("text_name", textbookName);
+  //       formData.append("subject", selectedSubject.label);
+  //       formData.append("volume", volume);
+  //       formData.append("textbook_pdf", pdfFile);
+  //       formData.append("textbook_front_page", imageFile);
+  //       formData.append("medium", m);
 
-        if (Array.isArray(publisherName)) {
-          publisherName.forEach((publisher, index) => {
-            formData.append(`publisher_name[${index}]`, publisher.value);
-          });
-        } else {
-          formData.append("publisher_name", publisherName.value);
-        }
+  //       if (Array.isArray(publisherName)) {
+  //         publisherName.forEach((publisher, index) => {
+  //           formData.append(`publisher_name[${index}]`, publisher.value);
+  //         });
+  //       } else {
+  //         formData.append("publisher_name", publisherName.value);
+  //       }
 
-        chapters.forEach((chapter, index) => {
-          formData.append(`chapter_name[${index}]`, chapter.name);
-          formData.append(`page_no[${index}]`, chapter.pageNo);
-        });
+  //       chapters.forEach((chapter, index) => {
+  //         formData.append(`chapter_name[${index}]`, chapter.name);
+  //         formData.append(`page_no[${index}]`, chapter.pageNo);
+  //       });
 
-        console.log("FormData:", formData);
+  //       console.log("FormData:", formData);
 
-        const response = await axios.put(
-          `${APIURL}/api/update-textbook`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+  //       const response = await axios.put(
+  //         `${APIURL}/api/update-textbook`,
+  //         formData,
+  //         {
+  //           headers: {
+  //             "Content-Type": "multipart/form-data",
+  //           },
+  //         }
+  //       );
 
-        Swal.fire({
-          icon: "success",
-          title: "Success!",
-          text: "Textbook updated successfully!",
-        });
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Success!",
+  //         text: "Textbook updated successfully!",
+  //       });
 
-        navigate("/GodHeader");
-      } catch (error) {
-        console.error("Error updating textbook:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-        });
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
+  //       navigate("/GodHeader");
+  //     } catch (error) {
+  //       console.error("Error updating textbook:", error);
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "Oops...",
+  //         text: "Something went wrong!",
+  //       });
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  // };
 
   const customStyles = {
     control: (base, state) => ({
@@ -872,7 +873,7 @@ function LokaTextbook() {
                   className="submit_loka"
                   //   style={{ marginBottom: "50px", marginTop: "30px" }}
                 >
-                  <button  type="submit" value="submit">
+                  <button onClick={handleSubmit}>
                     {loading ? (
                       <>
                         <FaSpinner
