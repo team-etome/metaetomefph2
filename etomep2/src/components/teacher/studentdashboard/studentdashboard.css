@@ -64,9 +64,9 @@ height: 100vh;
     white-space:nowrap;
     text-overflow:ellipsis;
     width:270px;
-    padding-left: 10px;
+    padding-left: 16px;
     padding-top: 10px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
 }
 /* .student_date_id{
@@ -90,7 +90,7 @@ height: 100vh;
     /* padding-left: 50%; */
     /* padding-right: 2%; */
     width: 100%;
-    padding-top: 5%;
+    padding-top: 10%;
     padding-right: 0%;
     padding-left: 90%;
     overflow:hidden;
@@ -138,7 +138,7 @@ height: 100vh;
 }
 .class_number h4{
   color: #526D82;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
 
 }
@@ -402,7 +402,7 @@ color: #767676;
     /* padding-top: 10vh; */
     padding-left: 1vh;
     padding-right: 1vh;
-    padding-top: 10vh;
+    padding-top: 14vh;
     }
     .student_id{
       width: 100%;

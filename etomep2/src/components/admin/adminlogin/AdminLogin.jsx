@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import "../adminlogin/login.css";
 import { Col, Container, Row } from "react-bootstrap";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash,FaLinkedin,FaInstagramSquare } from "react-icons/fa";
 import { RiShareBoxFill } from "react-icons/ri";
+import { BiLogoGmail } from "react-icons/bi";
 import etomelogo from "../../../assets/etomelogo.png";
+import linkedin from "../../../assets/linkedin.png";
+import gmail from "../../../assets/gmail.png";
+import instagram from "../../../assets/instagram.png";
 import lineart from "../../../assets/lineart.png";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -283,11 +287,28 @@ function AdminLogin() {
                     className="admin_submit_btn"
                     type="submit"
                     onClick={handleSubmit}
-                    style={{ marginTop: "10px", marginBottom: "50px" }}
+                    style={{ marginTop: "10px", marginBottom: "15px" }}
                   >
                     Login
                   </button>
-                </div>
+                  <div>
+                    <div className="ad_lg_social_sect">
+                      <h6 style={{color:'#526D82'}}>Reach Us On</h6>
+                    </div>
+                    <div className="ad_lg_social_icons">
+                    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="ad_lg_circle">
+                      <img src={linkedin} alt="LinkedIn" />
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"className="ad_lg_circle">
+                      <img src={instagram} alt="Instagram" />
+                    </a>
+                    <a href="mailto:development@resoluteindia.co.in" target="_blank" rel="noopener noreferrer"className="ad_lg_circle">
+                      <img src={gmail} alt="Gmail" />
+                    </a>
+
+                    </div>
+                    </div>
+              </div>
                 <div className="flip-card-back">
                   <AdminForgot />
                 </div>

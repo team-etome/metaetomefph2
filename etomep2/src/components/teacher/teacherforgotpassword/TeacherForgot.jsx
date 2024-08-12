@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import '../teacherforgotpassword/teacherforgot.css'
 import { Col, Container, Row, Modal, Button } from "react-bootstrap";
-// import AdminNewPassword from "../adminnewpassword/AdminNewPassword";
+import TeacherNewPassword from "../teachernewpassword/TeacherNewPassword";
 import { FaSpinner } from "react-icons/fa";
 import Swal from "sweetalert2";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoMdArrowBack } from "react-icons/io";
 
@@ -21,94 +21,94 @@ function TeacherForgot() {
     const [showNewPasswordModal, setShowNewPasswordModal] = useState(false);
     const [timer, setTimer] = useState(120);
   
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
   
-    // const APIURL = useSelector((state) => state.APIURL.url);
+    const APIURL = useSelector((state) => state.APIURL.url);
   
-    // const handleSubmit = async (e) => {
-    //   e.preventDefault();
-    //   setLoading(true);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setLoading(true);
   
-    //   if (!email) {
-    //     Swal.fire({
-    //       title: "Error!",
-    //       text: "Enter Email Id",
-    //       icon: "error",
-    //       confirmButtonText: "Ok",
-    //     });
-    //     setLoading(false);
-    //     return;
-    //   }
-    //   try {
-    //     const data = { email: email };
-    //     const response = await axios.post(`${APIURL}/api/forgot-password`, data);
-    //     setShowOtpScreen(true);
-    //     setLoading(false);
-    //   } catch (error) {
-    //     setLoading(false);
+      if (!email) {
+        Swal.fire({
+          title: "Error!",
+          text: "Enter Email Id",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+        setLoading(false);
+        return;
+      }
+      try {
+        const data = { email: email };
+        const response = await axios.post(`${APIURL}/api/forgotpasswordteacher`, data);
+        setShowOtpScreen(true);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
   
-    //     if (error.response) {
-    //       if (
-    //         error.response.status === 400 &&
-    //         error.response.data &&
-    //         error.response.data.info
-    //       ) {
-    //         Swal.fire({
-    //           title: "Error!",
-    //           text: error.response.data.info,
-    //           icon: "error",
-    //           confirmButtonText: "Ok",
-    //         });
-    //       } else {
-    //         Swal.fire({
-    //           title: "Error!",
-    //           text: "Technical Error",
-    //           icon: "error",
-    //           confirmButtonText: "Ok",
-    //         });
-    //       }
-    //     } else {
-    //       Swal.fire({
-    //         title: "Error!",
-    //         text: "Unable to connect to server",
-    //         icon: "error",
-    //         confirmButtonText: "Ok",
-    //       });
-    //     }
-    //   }
-    // };
+        if (error.response) {
+          if (
+            error.response.status === 400 &&
+            error.response.data &&
+            error.response.data.info
+          ) {
+            Swal.fire({
+              title: "Error!",
+              text: error.response.data.info,
+              icon: "error",
+              confirmButtonText: "Ok",
+            });
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text: "Technical Error",
+              icon: "error",
+              confirmButtonText: "Ok",
+            });
+          }
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: "Unable to connect to server",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        }
+      }
+    };
   
-    // const handleOtpSubmit = async () => {
-    //   try {
-    //     const data = {
-    //       email: email,
-    //       otp: otp1 + otp2 + otp3 + otp4,
-    //     };
+    const handleOtpSubmit = async () => {
+      try {
+        const data = {
+          email: email,
+          otp: otp1 + otp2 + otp3 + otp4,
+        };
   
-    //     const response = await axios.post(`${APIURL}/api/verifyotp`, data);
+        const response = await axios.post(`${APIURL}/api/verifyotpteacher`, data);
   
-    //     if (response) {
-    //       setShowOtpScreen(false);
-    //       setShowNewPasswordModal(true);
-    //     } else {
-    //       Swal.fire({
-    //         title: "Error!",
-    //         text: "Invalid OTP",
-    //         icon: "error",
-    //         confirmButtonText: "Ok",
-    //       });
-    //     }
-    //   } catch (error) {
-    //     Swal.fire({
-    //       title: "Error!",
-    //       text: "Failed to verify OTP",
-    //       icon: "error",
-    //       confirmButtonText: "Ok",
-    //     });
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
+        if (response) {
+          setShowOtpScreen(false);
+          setShowNewPasswordModal(true);
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: "Invalid OTP",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to verify OTP",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
   
     useEffect(() => {
       let interval = null;
@@ -194,7 +194,7 @@ function TeacherForgot() {
               <button
                 type="submit"
                 value="submit"
-                // onClick={handleSubmit}
+                onClick={handleSubmit}
                 style={{ fontSize: "20px" }}
               >
                 {loading ? (
@@ -225,7 +225,7 @@ function TeacherForgot() {
             >
               Enter OTP Code
             </Modal.Title>
-            <Button
+            <button
               variant="secondary"
               onClick={() => setShowOtpScreen(false)}
               style={{
@@ -235,7 +235,7 @@ function TeacherForgot() {
               }}
             >
               <AiOutlineClose size={20} style={{ cursor: "pointer" }} />
-            </Button>
+            </button>
           </Modal.Header>
           <Modal.Body>
             <div
@@ -336,21 +336,21 @@ function TeacherForgot() {
               }}
             >
               <p style={{ color: "#526D82" }}>Time remaining: {formatTime()}</p>
-              <Button
+              <button
               className="teacher_otp_button"
                 variant="primary"
-                // onClick={handleOtpSubmit}
+                onClick={handleOtpSubmit}
                 disabled={timer === 0}
                 style={{}}
               >
                 Submit
-              </Button>
+              </button>
             </div>
           </Modal.Body>
         </Modal>
         {/* )} */}
         {/* </Col> */}
-        {/* {showNewPasswordModal && <AdminNewPassword />} */}
+        {showNewPasswordModal && <TeacherNewPassword />}
       </div>
     );
 }

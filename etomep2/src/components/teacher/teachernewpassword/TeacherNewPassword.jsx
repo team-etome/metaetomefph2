@@ -25,10 +25,78 @@ function TeacherNewPassword() {
   
     // console.log("Email from Redux state:", email);
   
+    // const handleSubmit = async (e) => {
+    //   e.preventDefault();
+    //   setLoading(true);
+  
+    //   if (password !== confirmPassword) {
+    //     Swal.fire({
+    //       icon: "error",
+    //       title: "Password Mismatch",
+    //       text: "Password and confirm password do not match.",
+    //     });
+    //     setLoading(false);
+    //     return;
+    //   }
+  
+    //   if (!password || !confirmPassword) {
+    //     let missingFields = [];
+    //     if (!password) missingFields.push("password");
+    //     if (!confirmPassword) missingFields.push("confirm password");
+  
+    //     Swal.fire({
+    //       icon: "error",
+    //       title: "Missing Required Information",
+    //       text: `Please complete the following fields: ${missingFields.join(
+    //         ", "
+    //       )}.`,
+    //     });
+  
+    //     setLoading(false);
+    //     return;
+    //   }
+  
+    //   try {
+    //     const data = {
+    //       password: password,
+    //       confirmPassword: confirmPassword,
+    //     };
+  
+    //     console.log("Data to be sent:", data);
+  
+    //     const response = await axios.post(`${APIURL}/api/resetpasswordteacher`, data);
+        
+  
+    //     if (response) { 
+    //       Swal.fire({
+    //         title: "Success!",
+    //         text: "Password Changed Successfully",
+    //         icon: "success",
+    //         confirmButtonText: "Ok",
+  
+            
+    //       })
+  
+    //       navigate("/teacherlogin");
+  
+    //     } else {
+    //       throw new Error('Failed to update password');
+    //     }
+    //   }  catch (error) {
+    //     Swal.fire({
+    //       title: "Error!",
+    //       text: "Technical Error",
+    //       icon: "error",
+    //       confirmButtonText: "Ok",
+    //     });
+    //   } finally {
+    //     setLoading(false); 
+    //   }
+    // };
     const handleSubmit = async (e) => {
       e.preventDefault();
       setLoading(true);
-  
+    
       if (password !== confirmPassword) {
         Swal.fire({
           icon: "error",
@@ -38,52 +106,47 @@ function TeacherNewPassword() {
         setLoading(false);
         return;
       }
-  
+    
       if (!password || !confirmPassword) {
         let missingFields = [];
         if (!password) missingFields.push("password");
         if (!confirmPassword) missingFields.push("confirm password");
-  
+    
         Swal.fire({
           icon: "error",
           title: "Missing Required Information",
-          text: `Please complete the following fields: ${missingFields.join(
-            ", "
-          )}.`,
+          text: `Please complete the following fields: ${missingFields.join(", ")}.`,
         });
-  
+    
         setLoading(false);
         return;
       }
-  
+    
       try {
         const data = {
-          // email: email,
           password: password,
           confirmPassword: confirmPassword,
         };
-  
-        console.log("Data to be sent:", data);
-  
-        // const response = await axios.post(`${APIURL}/api/reset-password`, data);
-        
-  
-        if (response) { 
+    
+        const response = await axios.post(`${APIURL}/api/resetpasswordteacher`, data);
+    
+        if (response.status === 200 || response.status === 201) {  // Ensure you check the correct status
           Swal.fire({
             title: "Success!",
             text: "Password Changed Successfully",
             icon: "success",
             confirmButtonText: "Ok",
+          }).then(() => {
+            setShowModal(false); // Close modal first
+            navigate("/teacherlogin"); // Then navigate to login
+          });
   
-            
-          })
-  
-          navigate("/teacherlogin");
-  
+    
         } else {
           throw new Error('Failed to update password');
         }
-      }  catch (error) {
+      } catch (error) {
+        console.error("Error during password reset:", error);
         Swal.fire({
           title: "Error!",
           text: "Technical Error",
@@ -91,10 +154,10 @@ function TeacherNewPassword() {
           confirmButtonText: "Ok",
         });
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
-  
+    
     const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
     };
@@ -162,7 +225,7 @@ function TeacherNewPassword() {
               </div>
         </Modal.Body>
         <Modal.Footer style={{border:'none'}}className="teacher_new_button_container">
-          <Button
+          <button
           
             type="submit"
             onClick={handleSubmit}
@@ -181,7 +244,7 @@ function TeacherNewPassword() {
             ) : (
               "Submit"
             )}
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     );
