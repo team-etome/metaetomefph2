@@ -20,7 +20,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        
+        padding-left: 2vw !important;
+        padding-bottom: 10px;
+               
     }
     .teacher_student_scrollable {
         overflow-x: hidden;
@@ -81,6 +83,7 @@
     }
     .teacher_personal_info{
         padding-left: 1%;
+        padding-top: 35px !important;
     }
     .teacher_personal_info_field{
         display: flex;
@@ -101,7 +104,7 @@
         color: #9B9B9B;
     }
     .teacher_student_heading{
-        padding-left: 40px;
+        padding-left: 25px;
     }
     .teacher_result_heading{
         padding-right: 100px;
@@ -125,7 +128,7 @@
         display: flex;
         gap: 0px;
         padding-left: 10px;
-        padding-top: 15px;
+        padding-top: 20px;
         padding-right: 0px;
     }
     .teacher_school_info label{
@@ -192,7 +195,7 @@
     font-weight: 500;
     color: #526D82 ;
     font-size: 30px;
-    margin-left: 10px;  
+    margin-left: 25px;  
 }
 
   
@@ -213,8 +216,8 @@
     background-color: #8FA2B6; 
   }
   .teacher_student_edit{
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     /* background-color: transparent; */
     /* border: 1px solid #526D82; */
     border-radius: 8px;
