@@ -17,8 +17,8 @@ function QuestionAssigning() {
   const [subjects, setSubjects] = useState([]);
   const [examName, setExamName] = useState("");
   const [examDate, setExamDate] = useState("");
-  const [classNo, setClassNo] = useState("");
-  const [division, setDivision] = useState("");
+  // const [classNo, setClassNo] = useState("");
+  // const [division, setDivision] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [totalMark, setTotalMark] = useState("");
@@ -38,35 +38,62 @@ function QuestionAssigning() {
   const admin_id = admininfo.admininfo?.admin_id
 
 
+   console.log(selectedClass,selectedDivision,subjects,"classs ")
+   console.log(selectedDivision,subjects," division")
+   console.log(subjects,"subject")
 
-  
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    const fetchclass = async()=>{
-  
-      try{
-  
-        const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`)
-        setClassDetails(response.data)
+  //   const fetchclass = async()=>{
+
+  //     try{
+  //       const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`)
+  //       setClassDetails(response.data)
        
-
-      }catch(error){
-        console.error("Failed to fetch class data")
-      }
+  //     }catch(error){
+  //       console.error("Failed to fetch class data")
+  //     }
   
   
-    }
+  //   }
   
-    fetchclass();
+  //   fetchclass();
   
-  } ,[APIURL])
-
-
+  // } ,[APIURL])
 
   useEffect(() => {
-    fetchSubjects();
-    mapTeachers();
-  }, [teacherinfo]);
+    const fetchClass = async () => {
+      try {
+        const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`);
+        setClassDetails(response.data);
+      } catch (error) {
+        console.error("Failed to fetch class data");
+      }
+    };
+    fetchClass();
+  }, [APIURL, admin_id]);
+
+  useEffect(() => {
+    if (selectedClass && selectedDivision) {
+      const selectedClassDetails = classDetails.find(
+        (item) =>
+          item.class_name === selectedClass.value &&
+          item.division === selectedDivision.value
+      );
+
+      if (selectedClassDetails) {
+        const mappedSubjects = selectedClassDetails.curriculum.map((sub) => ({
+          value: sub.subject,
+          label: sub.subject,
+        }));
+        setSubjects(mappedSubjects);
+      } else {
+        setSubjects([]); // Clear subjects if no match is found
+      }
+    } else {
+      setSubjects([]); // Clear subjects if class or division is not selected
+    }
+  }, [selectedClass, selectedDivision, classDetails]);
 
   const mapTeachers = () => {
     const teacherOptions = teacherinfo.adminteacherinfo?.map((teacher) => ({
@@ -76,19 +103,11 @@ function QuestionAssigning() {
     setTeachers(teacherOptions);
   };
 
-  const fetchSubjects = async () => {
-    try {
-      const response = await axios.get(`${APIURL}/api/curriculam`);
-      const mappedSubjects = response.data.subject_names.map((sub) => ({
-        value: sub.subject_name,
-        label: sub.subject_name,
-      }));
-      setSubjects(mappedSubjects);
-    } catch (error) {
-      console.error("Failed to fetch subjects:", error);
-    }
-  };
+  useEffect(() => {
+    mapTeachers();
+  }, [teacherinfo]);
 
+  
   const classOptions = Array.from(
     new Set(classDetails.map((item) => item.class_name))
   ).map((className) => ({
@@ -96,7 +115,7 @@ function QuestionAssigning() {
     label: className,
   }));
 
-  // Get division options filtered by the selected class
+
   const divisionOptions = classDetails
     .filter((item) => item.class_name === selectedClass?.value)
     .map((item) => ({
@@ -105,23 +124,26 @@ function QuestionAssigning() {
     }));
 
     const handleClassChange = (selectedOption) => {
+      console.log("enteredddd")
       setSelectedClass(selectedOption);
-      setSelectedDivision(null); // Clear division selection when class changes
+      setSelectedDivision(null); 
+      setSubjects([]);
     };
   
     const handleDivisionChange = (selectedOption) => {
       setSelectedDivision(selectedOption);
     };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Validate required fields
+    
     const requiredFields = [
       { value: selectedSubject, label: "Subject" },
       { value: selectedTeacher, label: "Teacher" },
       { value: examName, label: "Exam Name" },
       { value: examDate, label: "Exam Date" },
-      // { value: classNo, label: "Class" },
+    
       { value: term, label: "Term" },
       { value: totalMark, label: "Total Mark" },
       { value: startTime, label: "Start Time" },
@@ -200,34 +222,7 @@ function QuestionAssigning() {
       setLoading(false);
     }
   };
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   const formData = {
-  //     subject: selectedSubject,
-  //     teacher: selectedTeacher,
-  //     exam_name: examName,
-  //     exam_date: examDate,
-  //     class_name: classNo,
-  //     division: division,
-  //     start_time: startTime,
-  //     end_time: endTime,
-  //     total_marks: totalMark,
-  //     term: term,
-  //     instructions :instruction,
-  //   };
-
-  //   try {
-  //     const response = await axios.post(
-  //       `${APIURL}/api/questionpaper`,
-  //       formData
-  //     );
-  //     alert("Data saved successfully");
-  //   } catch (error) {
-  //     console.error("Failed to submit form:", error.response.data);
-  //     alert("Failed to save data");
-  //   }
-  // };
-
+ 
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -343,6 +338,8 @@ const handleBackClick = () => {
                     isClearable={true}
                   />
                 </div>
+
+                
                 <div className="qpaper_group">
                   <label htmlFor="division">Division</label>
                   <Select
@@ -357,6 +354,9 @@ const handleBackClick = () => {
                     isDisabled={!selectedClass}
                   />
                 </div>
+
+
+
                 <div className="qpaper_group">
                   <label htmlFor="subject">
                     Subject<span style={{ color: "red" }}>*</span>
@@ -374,7 +374,9 @@ const handleBackClick = () => {
                     isClearable={true}
                   />
                 </div>
-                <div className="qpaper_group">
+
+                
+                {/* <div className="qpaper_group">
                   <label htmlFor="t_mark" style={{top:'10%'}}>
                     Instruction<span style={{ color: "red"}}>*</span>
                   </label>
@@ -387,7 +389,7 @@ const handleBackClick = () => {
                     required
                     onChange={(e) => setInstruction(e.target.value)}
                   ></textarea>
-                </div>
+                </div> */}
               </Col>
 
               <Col md={6}>
