@@ -71,6 +71,7 @@ import TeacherTimeTablePage from './pages/teacherpage/TeacherTimeTablePage';
 import TeacherProfilePage from './pages/teacherpage/TeacherProfilePage';
 import TeacherForgot from './components/teacher/teacherforgotpassword/TeacherForgot';
 import TeacherNewPassword from './components/teacher/teachernewpassword/TeacherNewPassword';
+import TeacherMockTest from './components/teacher/teachermocktest/TeacherMockTest';
 
 
 function App() {
@@ -157,6 +158,7 @@ function App() {
           <Route path="/teacherprofile" element={<TeacherProfilePage/>}/>
           <Route path="/teacherforgot" element={<TeacherForgot />} />
           <Route path="/teachernewpassword" element={<TeacherNewPassword />} />
+          <Route path="/teachermocktest" element={<TeacherMockTest />} />
 
 
 

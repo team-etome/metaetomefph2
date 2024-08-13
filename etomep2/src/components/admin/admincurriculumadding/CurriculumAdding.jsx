@@ -222,12 +222,18 @@ const handleAddNew = () => {
       borderRadius: "8px",
       boxShadow: state.isFocused ? "0 0 0 1px #526D82" : "none",
       "&:hover": {
-        borderColor: "none", // Darker border on hover
+        borderColor: "none", 
       },
       "&:focus": {
-        borderColor: "#526D82", // Ensures the border color when the element is focused
-        outline: "none", // Removes the default outline when focused
+        borderColor: "#526D82", 
+        outline: "none",
       },
+    }),
+    menu: (base) => ({
+      ...base,
+      zIndex: 9999, 
+      position: 'absolute', 
+      marginTop: 0, 
     }),
     placeholder: (base) => ({
       ...base,
