@@ -28,11 +28,16 @@ function LokaTextbook() {
 
   const [showChapterDiv, setShowChapterDiv] = useState(false);
 
-  console.log(selectedSubject, "subjectttttt");
+  console.log(pdfFile, "subjectttttt");
 
   console.log(publisherName, "publisher nameeeeeeeeeeeeeeeeeeeee");
 
-  console.log(chapters,"chaptersssssssssssssss")
+  console.log(chapters, "chaptersssssssssssssss");
+
+  const admininfo = useSelector((state) => state.admininfo);
+  const admin_id = admininfo.admininfo?.admin_id
+
+  console.log(admin_id,"admin id")
 
   const APIURL = useSelector((state) => state.APIURL.url);
   useEffect(() => {
@@ -104,7 +109,7 @@ function LokaTextbook() {
       setChapters(
         data[0].chapter_info.map((chapter) => ({
           name: chapter.name || "",
-          pageNo: chapter.page_no || "",
+          pdfFile: chapter.pdf || null,
         })) || []
       );
     }
@@ -209,54 +214,92 @@ function LokaTextbook() {
     setImageFile(null);
   };
 
+  // const renderChapterInputs = () => {
+  //   return chapters.map((chapter, index) => (
+  //     <div
+  //       key={index}
+  //       style={{
+  //         display: "flex",
+  //         padding: "0px",
+  //         marginTop: index === 0 ? "0px" : "20px",
+  //       }}
+  //     >
+  //       <div style={{ marginLeft: "0px" }}>
+  //         <label>
+  //           <input
+  //             type="text"
+  //             placeholder="Chapter Name"
+  //             style={{
+  //               border: "none",
+  //               borderBottom: "1px solid black",
+  //               width: "200px",
+  //               outline: "none",
+  //             }}
+  //             maxLength={50}
+  //             value={chapter.name}
+  //             onChange={(e) =>
+  //               handleChapterInputChange(index, "name", e.target.value)
+  //             }
+  //           />
+  //         </label>
+  //       </div>
+  //       <div>
+  //         <label style={{ marginLeft: "20px" }}>
+  //           <input
+  //             onChange={(e) => handleFileChange(index, e.target.files[0])}
+  //             id="pdf-upload"
+  //             type="file"
+  //             accept=".pdf"
+  //             style={{
+  //               border: "none",
+  //               width: "180px",
+  //               outline: "none",
+  //             }}
+  //           />
+  //         </label>
+  //       </div>
+  //     </div>
+  //   ));
+  // };
+
+
+
   const renderChapterInputs = () => {
     return chapters.map((chapter, index) => (
-      <div
-        key={index}
-        style={{
-          display: "flex",
-          padding: "0px",
-          marginTop: index === 0 ? "0px" : "20px",
-        }}
-      >
+      <div key={index} style={{ display: "flex", padding: "0px", marginTop: index === 0 ? "0px" : "20px" }}>
         <div style={{ marginLeft: "0px" }}>
           <label>
             <input
               type="text"
               placeholder="Chapter Name"
-              style={{
-                border: "none",
-                borderBottom: "1px solid black",
-                width: "200px",
-                outline: "none",
-              }}
+              style={{ border: "none", borderBottom: "1px solid black", width: "200px", outline: "none" }}
               maxLength={50}
               value={chapter.name}
-              onChange={(e) =>
-                handleChapterInputChange(index, "name", e.target.value)
-              }
+              onChange={(e) => handleChapterInputChange(index, "name", e.target.value)}
             />
           </label>
         </div>
         <div>
           <label style={{ marginLeft: "20px" }}>
-            
             <input
-              id="pdf-upload"
+              id={`pdf-upload-${index}`}
               type="file"
               accept=".pdf"
-              style={{
-                border: "none",
-                width: "180px",
-                outline: "none",
-              }}
-            
+              style={{ border: "none", width: "180px", outline: "none" }}
+              onChange={(e) => handleFileChange(index, e.target.files[0])}
             />
           </label>
         </div>
       </div>
     ));
   };
+  
+
+
+
+
+
+
 
   //   const handleTotalChaptersChange = (e) => {
   //     const totalChapters = parseInt(e.target.value);
@@ -303,8 +346,6 @@ function LokaTextbook() {
     }
   };
 
-
-
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     setImageFile(file);
@@ -315,14 +356,20 @@ function LokaTextbook() {
   //   setPdfFile(file);
   // };
 
-  const handlePdfUpload = (index, e) => {
-    const file = e.target.files[0];
+  // const handlePdfUpload = (index, e) => {
+  //   const file = e.target.files[0];
+  //   const updatedChapters = [...chapters];
+  //   updatedChapters[index].pdfFile = file;
+  //   setChapters(updatedChapters);
+  // };
+
+  const handleFileChange = (index, file) => {
     const updatedChapters = [...chapters];
     updatedChapters[index].pdfFile = file;
     setChapters(updatedChapters);
   };
+ 
 
-  
   const handleVolumeChange = (e) => {
     const value = e.target.value;
     // Prevent negative values
@@ -334,7 +381,7 @@ function LokaTextbook() {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
     setLoading(true); // Show the loading spinner
-  
+
     // Validate required fields
     if (
       !classValue ||
@@ -346,7 +393,7 @@ function LokaTextbook() {
       !chapters.length // Ensure that chapters are added
     ) {
       let missingFields = [];
-  
+
       if (!classValue) missingFields.push("class");
       if (!textbookName) missingFields.push("textbook name");
       if (!selectedSubject) missingFields.push("Subject");
@@ -354,7 +401,7 @@ function LokaTextbook() {
       if (!publisherName) missingFields.push("publisher name");
       if (!imageFile) missingFields.push("image file");
       if (!chapters.length) missingFields.push("chapters");
-  
+
       Swal.fire({
         icon: "error",
         title: "Missing Required Information",
@@ -365,26 +412,37 @@ function LokaTextbook() {
       setLoading(false);
       return;
     }
-  
+
     try {
       // Create FormData to send file and other data
       const formData = new FormData();
       formData.append("class_name", classValue);
       formData.append("text_name", textbookName);
-      formData.append("subject", selectedSubject.value);
+      formData.append("subject", selectedSubject.label);
       formData.append("volume", volume);
       formData.append("textbook_front_page", imageFile);
-      formData.append("medium", medium.value);
-      formData.append("publisher_name", publisherName.value);
-  
+      formData.append("medium", medium.label);
+      formData.append("publisher_name", publisherName.label);
+      formData.append("admin", admin_id);
+
       // Append chapters data (only name and PDF file) to FormData
+      // chapters.forEach((chapter, index) => {
+      //   formData.append(`chapters[${index}][name]`, chapter.name);
+      //   if (chapter.pdfFile) {
+      //     formData.append(`chapters[${index}][pdfFile]`, chapter.pdfFile);
+      //   }
+      // });
+
+
       chapters.forEach((chapter, index) => {
         formData.append(`chapters[${index}][name]`, chapter.name);
         if (chapter.pdfFile) {
           formData.append(`chapters[${index}][pdfFile]`, chapter.pdfFile);
         }
       });
-  
+
+
+
       // Send the form data to the backend
       const response = await axios.post(
         `${APIURL}/api/admin-create-textbook/`,
@@ -395,15 +453,15 @@ function LokaTextbook() {
           },
         }
       );
-  
+
       // Show success message
       Swal.fire({
         icon: "success",
         title: "Success!",
         text: "Textbook created successfully!",
       });
-  
-      navigate("/adminlokanavbar"); 
+
+      navigate("/adminlokanavbar");
     } catch (error) {
       console.error("Error creating textbook:", error);
       Swal.fire({
@@ -412,7 +470,7 @@ function LokaTextbook() {
         text: "Something went wrong!",
       });
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 

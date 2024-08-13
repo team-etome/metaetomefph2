@@ -20,6 +20,9 @@ function TeacherForgot() {
     const [loading, setLoading] = useState(false);
     const [showNewPasswordModal, setShowNewPasswordModal] = useState(false);
     const [timer, setTimer] = useState(120);
+
+
+    console.log(otp1 , otp2 , otp3 , otp4,"otppppppp")
   
     const navigate = useNavigate();
   
@@ -90,6 +93,7 @@ function TeacherForgot() {
         if (response) {
           setShowOtpScreen(false);
           setShowNewPasswordModal(true);
+        
         } else {
           Swal.fire({
             title: "Error!",
