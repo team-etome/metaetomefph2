@@ -376,7 +376,7 @@ const handleAddNew = () => {
                     alignContent: "center",
                   }}
                   onClick={() => setSelectedRow(1)}
-                  className={selectedRow === 1 ? "selected" : ""}
+                  className={selectedRow === 1 ? "selected" : "curriculum_row"}
                 >
                   <Col md={3} className="curriculum_list">
                     {entry.selectedPublisher.label}
