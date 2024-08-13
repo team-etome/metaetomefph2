@@ -151,7 +151,7 @@
       gap: 16px; 
       height: 380px;
       overflow-y: scroll;
-      border: 1px solid red;
+      /* border: 1px solid red; */
     }
     
     .no-underline-link {

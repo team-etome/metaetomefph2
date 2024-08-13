@@ -263,7 +263,7 @@ function FacultyDashboard() {
               <Link to="/facultyadding" className="fab_option_link">
                 <Button
                   className="fab-option"
-                  style={{ marginTop: "20px" }}
+                  style={{ marginTop: "10px" }}
                 >
 
                   <IoMdAdd className="fab-icon" />
@@ -285,7 +285,7 @@ function FacultyDashboard() {
                 className="fab_option_link"
               >
                 <div className="fab-text">Download Excel Template</div>
-                <Button className="fab-option" style={{ marginTop: "80px" }}>
+                <Button className="fab-option" style={{ marginTop: "70px" }}>
                   <IoMdDownload className="fab-icon" />
                 </Button>
               </div>
@@ -303,7 +303,7 @@ function FacultyDashboard() {
                 className="fab_option_link"
               >
                 <div className="fab-text">Upload Through Excel</div>
-                <Button className="fab-option" style={{ marginTop: "140px" }}>
+                <Button className="fab-option" style={{ marginTop: "130px" }}>
                   <MdUpload className="fab-icon" />
                 </Button>
               </div>

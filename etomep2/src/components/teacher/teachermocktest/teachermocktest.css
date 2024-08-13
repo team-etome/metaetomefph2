@@ -10,27 +10,27 @@
     display: none !important;
   }
   
-  .tch_mock_show_toolbar .ck-toolbar {
+  .assignment_show_toolbar .ck-toolbar {
     display: flex !important; 
     /* height: 500px; */
   }
 
-  .tch_mock_editor_container .ck-placeholder {
+  .assignment-editor-container .ck-placeholder {
     font-style: italic;
   }
 
-  .tch_mock_editor{
+  .assignment_editor{
     width: 100%;
     min-height: 100vh;
     padding-top: 15vh;
   }
-  .tch_mock_editor_div{
+  .assignment_editor_div{
     background-color: #ffff;
     height: 40vh;
     border-radius: 15px;
     padding-top: 10px;
   }
-  .tch_mock_editor_header{
+  .assignment_editor_header{
     background-color: #ffffff !important;
     height: 10vh;
     width: 100%;
@@ -47,27 +47,27 @@
     margin-bottom: 30px;
     padding-top: 20px;
   }
-  .tch_mock_editor_header_title{
+  .assignment_editor_header_title{
     display: flex;
     align-items: center;
   }
-  .tch_mock_editor_header_title div {
+  .assignment_editor_header_title div {
     display: flex;
     flex-direction: column; /* Arrange items vertically */
   }
   
-  .tch_mock_editor_header_title h6{
+  .assignment_editor_header_title h6{
     margin-left: 20px;
     color: #526D82;
     font-weight: 500;
     font-size: 28px;
   }
-  .tch_mock_editor_header_title p{
+  .assignment_editor_header_title p{
     margin-left: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
   }
-  .tch_mock_editor_header_submit{
+  .assignment_editor_header_submit{
     display: flex;
     justify-content: end;
     padding-right: 24px;
@@ -75,7 +75,7 @@
     padding-top: 0px;
     padding-bottom: 10px;
   }
-  .tch_mock_editor_header_submit button{
+  .assignment_editor_header_submit button{
     width: 180px;
     height: 48px;
     border-radius: 8px;

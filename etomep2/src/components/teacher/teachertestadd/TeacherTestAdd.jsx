@@ -21,6 +21,10 @@ function TeacherTestAdd() {
     const handleBackClick = () => {
         navigate('/teachertestlist')
       }
+      const handlenavigate = () => {
+        navigate("/teachermocktest")
+      };
+    
   return (
     <div className='teacher_test_adding'>
         <Container className='teacher_testadd_form'>
@@ -113,9 +117,20 @@ function TeacherTestAdd() {
                     name="testoutofmarks"
                 />
                 </div>
+                <div className="teacher_testadd_group">
+                <label htmlFor="teachercode">
+                    Teacher Code
+                    <span style={{ color: "red" }}>*</span>
+                </label>
+                <input
+                    type="text"
+                    id="teachercode"
+                    name="teachercode"
+                />
+                </div>
             </Col>
             <div className="teacher_testadd_submit" >
-                    <button  type="submit">
+                    <button  type="submit" onClick={handlenavigate}>
                         Create Question
                     </button>
                     </div>
