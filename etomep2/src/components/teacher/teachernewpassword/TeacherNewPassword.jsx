@@ -130,16 +130,18 @@ function TeacherNewPassword() {
     
         const response = await axios.post(`${APIURL}/api/resetpasswordteacher`, data);
     
-        if (response.status === 200 || response.status === 201) {  // Ensure you check the correct status
+        if (response) {  
+          
           Swal.fire({
             title: "Success!",
             text: "Password Changed Successfully",
             icon: "success",
             confirmButtonText: "Ok",
-          }).then(() => {
-            setShowModal(false); // Close modal first
-            navigate("/teacherlogin"); // Then navigate to login
-          });
+          })
+             
+            navigate("/teacherlogin");
+            setShowModal(false); 
+          
   
     
         } else {
