@@ -60,6 +60,7 @@ function ExaminationDashboard() {
     dispatch(exampaperinfo(exam));
     navigate("/teacherquestionview", { state: { exam : exam } });
     
+    
   };
 
 

@@ -52,7 +52,7 @@
     padding-left: 20px;
     padding-top: 10px;
     color: #4A4A4A;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     width: 100%;
     overflow:hidden;
@@ -66,7 +66,7 @@
     padding: 5px 20px; /* Adjusted padding for better spacing */
     color: #727272;
     font-size: 14px;
-    padding-top: 10px;
+    padding-top: 15px;
 }
 
 .examination_class, .qpaper_date {
@@ -90,10 +90,10 @@
 }
 .examination_subject {
     background-color: #9DB2BF;
-    width: 70%; 
+    width: 90%; 
     color: #fff;
     border-radius: 18px;
-    height: 30px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center; 
@@ -102,12 +102,13 @@
     margin-top: 15px;
 }
 .examdashboard_search_filter_main{
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   flex-direction: row;
-  padding-left: 2vw;
-  padding-right: 0vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  /* border: 1px solid red; */
 }
 
 .examdashboard_search_filter {
@@ -154,6 +155,7 @@ right: 15px;
   height: 35px;
   border-radius: 17px;
   color: #767676;
+  /* border: 1px solid green; */
   }
   .my-button {
     background-color: #526D82;

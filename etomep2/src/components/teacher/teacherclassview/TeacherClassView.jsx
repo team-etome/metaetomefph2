@@ -58,24 +58,27 @@ function TeacherClassView() {
               </div>
             </Col>
             <Col className="teacher_clsview_ti_cl">
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  flexDirection: "row",
-                  paddingLeft: "1vw",
-                }}
+              <div 
+              className="tch_cls_view_search"
+                // style={{
+                //   width: "100%",
+                //   display: "flex",
+                //   justifyContent: "flex-end",
+                //   flexDirection: "row",
+                //   paddingLeft: "1vw",
+                //   border:'1px solid red'
+                // }}
               >
                 <div
                   style={{
                     width: "100%",
                     display: "flex",
                     justifyContent: "flex-end",
+                    // border:'1px solid green'
                   }}
                   className="tch_clsvw_search_filter d-flex align-items-center"
                 >
-                  <Form className="d-flex">
+                  <Form className="d-flex tch_srch_form">
                     <div className="position-relative">
                       <BsSearch
                         className="position-absolute top-50 translate-middle-y ms-2"
@@ -90,7 +93,7 @@ function TeacherClassView() {
                       <Form.Control
                         type="search"
                         placeholder="Search"
-                        className="ps-6 teacher_student_search_input"
+                        className="ps-6 tch_student_search_input"
                         aria-label="Search"
                       />
                     </div>
@@ -140,6 +143,7 @@ function TeacherClassView() {
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
+                        paddingTop :"10px"
                       }}
                     >
                       <p1>{student.dob}</p1>

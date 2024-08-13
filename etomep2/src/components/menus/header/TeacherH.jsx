@@ -65,7 +65,7 @@ function TeacherH() {
           </Navbar.Brand>
           <div className="header_institution">
             <div>
-              <h6 style={{ color: "#9DB2BF", fontSize: "17px" }}>
+              <h6 style={{ color: "#red", fontSize: "30px" }}>
                 {}
               </h6>
               <p style={{ color: "#727272", fontSize: "12px" }}>

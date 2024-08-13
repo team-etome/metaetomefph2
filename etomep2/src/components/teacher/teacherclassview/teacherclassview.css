@@ -29,6 +29,14 @@
     padding-top: 35px;
     padding-left: 25px;
   }
+  .tch_cls_view_search{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    padding-left: 2vw;
+    /* border: 1px solid red; */
+  }
   
   .tch_clsvw_search_filter_main {
     width: 75%;
@@ -100,14 +108,21 @@
       -webkit-overflow-scrolling: touch;
       justify-content: space-around;
       padding-top: 2.5%;
+      /* padding: 1px; */
+      padding-left: 15px;
       height: 18%;
+      flex-grow: 1;
+      flex-wrap: nowrap; 
+      overflow-x: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none; 
     }
     
     .tch_vw_snd_rw {
       display: inline-block;
-      width: 280px;
+      width: 320px;
       height: 60px;
-      margin-right: 10px;
+      /* margin-right: 10px; */
       border-radius: 8px;
       /* border: 1px solid #526D82; */
       background-color: #ffffff;
@@ -136,6 +151,7 @@
       gap: 16px; 
       height: 380px;
       overflow-y: scroll;
+      border: 1px solid red;
     }
     
     .no-underline-link {
@@ -152,6 +168,7 @@
       padding: 16px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       height: 120px;
+      width: 200px;
     }
     
     .tch_vw_card h3 {
@@ -177,6 +194,12 @@
       font-size: 14px;
       color: #727272;
     }
+    .tch_student_search_input{
+      width: 400px;
+      height: 35px;
+      border-radius: 17px;
+      color: #767676;
+      }
 
   @media (max-width: 768px) {
     .teacher_clsview_container {
@@ -201,5 +224,34 @@
     .tch_vw_card_container{
       grid-template-columns: repeat(2, 1fr); /* Two cards per row on mobile */
     }
+    .tch_cls_view_search{
+      /* margin-left: 75vw; */
+      /* padding-right: 0vw; */
+      display: flex;
+      justify-content: center;
+      width: 40%;
+    }
+    .tch_srch_form{
+      /* border: 1px solid blue; */
+      width: 10%;
+      margin-right: 50vw;
+      margin-bottom: 1vw;
+      margin-top: 5vw;
+    }
+    .tch_student_search_input{
+      width: 300px !important;
+      height: 35px;
+      border-radius: 17px;
+      color: #767676;
+      }
+      .scrollable-container {
+        padding-top: 8%;
+        gap: 15px;
+      }
+      .tch_vw_snd_rw {
+        width: 220px;
+        height: 60px;
+
+      }
   }
   
