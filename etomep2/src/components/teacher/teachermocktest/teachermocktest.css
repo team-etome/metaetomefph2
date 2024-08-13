@@ -1,86 +1,257 @@
-.ck-editor__editable_inline {
-    min-height: 110px !important;
+.mock_question_generator {
+  height: auto;
+  background-color: #DDE6ED;
+  width: 100%;
+  height: 100vh;
+}
 
- border-radius: 8px !important;
-    /* border-top-left-radius: 0 !important;
-  border-top-right-radius: 0 !important; */
-    z-index: 10 !important;
-  }
-  .ck-toolbar {
-    display: none !important;
-  }
+.mock_test_generator_header {
+  background-color: #ffff !important;
+  height: 10vh;
+  width: 100%;
+  z-index: 10;
+  position: sticky;
+  top: 0;
+  left: 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: space-between;
+}
+
+.mock_test_generator_header_title {
+  display: flex;
+  align-items: center;
+}
+
+.mock_test_generator_header_title h6 {
+  margin-left: 15px;
+  color: #526D82;
+  font-weight: 500;
+  font-size: 28px;
+  overflow: hidden; /* Ensures text overflow is handled */
+  white-space: nowrap; /* Prevents text from wrapping */
+  text-overflow: ellipsis;
+}
+.teacher_mock_back {
+  color: #526D82;
+  height: 32px;
+  width: 62px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.mock_generator_header_submit {
+  display: flex;
+  justify-content: end;
+  padding-right: 24px;
+  align-items: center;
+}
+
+.mock_generator_header_submit button {
+  width: 180px;
+  height: 48px;
+  border-radius: 8px;
+  color: #fff;
+  background-color: #526D82;
+  font-size: 18px;
+}
+
+.mock_subsection_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mock_question_header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.mock_question_number {
+  background-color: #fff;
+  width: 110px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.5px solid #676767;
+  border-radius: 8px;
+  margin-right: 5px;
+}
+
+.mock_question_footer {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 15px;
+}
+
+.mk_question_actions {
+  display: flex;
+  justify-content: end;
+  padding-right: 15px;
+}
+
+.mk_drag_handle {
+  margin-right: 34%;
+}
+
+.mk_icon {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.mk_delete_question_button {
+  background-color: white;
+}
+
+.done_button {
+  width: 160px;
+  height: 42px;
+  background-color: #526D82;
+  color: white;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.mk_action_buttons {
+  width: 64px;
+  height: 152px;
+  background-color: #fff;
+  position: fixed;
+  top: 15%;
+  right: 2.5%;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 5px 5px 5px;
+}
+
+.mk_divider {
+  background-color: black;
+  height: 2px;
+  width: 50%;
+}
+
+.answer_editor-container {
+  margin-top: 20px;
+  padding-left: 10px;
+  display: flex;
+}
+
+.mock_text_editor {
+  width: 92%;
+  padding-top: 20px;
+  padding-left: 3%;
+  overflow-y: scroll;
+}
+
+.mock-question-container {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  background-color: #ffff;
+}
+
+.mock-question-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+.mock-answer-key {
+  color: blue;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.answer-editor.show {
+  display: block;
+}
+
+.index {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.mk_answer_editor_container {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.mk-points-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  height: 120px;
+  width: 100px;
+  margin-left: 25px;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mk-points-input input {
+  border: none;
+  width: 50px;
+  text-align: center;
+  font-size: 16px;
+  width: 70px;
+  height: 50px;
+  padding-left: 20px;
+}
+
+.mk-points-input span {
+  font-size: 16px;
+}
+
+.mock_subsection_textarea {
+  width: 96%;
+  height: auto;
+  min-height: 50px;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 0.5px solid #676767;
+  font-size: 20px;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.mock_subsection_textarea button {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.mock-subsection-container {
+  margin-bottom: 24px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.mock-editor-wrapper {
+  border: 1px solid gray;
+  border-radius: 8px;
+  width: 90%;
+  min-height: 120px;
+overflow: hidden;
+text-transform: capitalize;
   
-  .assignment_show_toolbar .ck-toolbar {
-    display: flex !important; 
-    /* height: 500px; */
-  }
 
-  .assignment-editor-container .ck-placeholder {
-    font-style: italic;
-  }
-
-  .assignment_editor{
-    width: 100%;
-    min-height: 100vh;
-    padding-top: 15vh;
-  }
-  .assignment_editor_div{
-    background-color: #ffff;
-    height: 40vh;
-    border-radius: 15px;
-    padding-top: 10px;
-  }
-  .assignment_editor_header{
-    background-color: #ffffff !important;
-    height: 10vh;
-    width: 100%;
-    z-index: 10;
-    position: sticky;
-    /* top: 0;
-    left: 0; */
-    /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
-    border-bottom:1px solid  #526D82;
-    display: flex;
-    justify-content: space-between;
-    margin-left: 0px;
-    /* border-radius: 15px; */
-    margin-bottom: 30px;
-    padding-top: 20px;
-  }
-  .assignment_editor_header_title{
-    display: flex;
-    align-items: center;
-  }
-  .assignment_editor_header_title div {
-    display: flex;
-    flex-direction: column; /* Arrange items vertically */
-  }
-  
-  .assignment_editor_header_title h6{
-    margin-left: 20px;
-    color: #526D82;
-    font-weight: 500;
-    font-size: 28px;
-  }
-  .assignment_editor_header_title p{
-    margin-left: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .assignment_editor_header_submit{
-    display: flex;
-    justify-content: end;
-    padding-right: 24px;
-    align-items: center;
-    padding-top: 0px;
-    padding-bottom: 10px;
-  }
-  .assignment_editor_header_submit button{
-    width: 180px;
-    height: 48px;
-    border-radius: 8px;
-    color: #fff;
-    background-color: #526D82;
-    font-size: 18px;
-  }
-
+}

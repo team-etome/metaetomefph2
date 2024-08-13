@@ -163,7 +163,7 @@ function StudentDashboard() {
                 // }}
                 className="student_fab_option_link"
               >
-                <div className="fab-text">Download Excel Template</div>
+                <div className="student_fab_text">Download Excel Template</div>
                 <Button className="student_fab_option" style={{marginTop:'132px'}}>
                   <IoMdDownload className="student_fab_icon" />
                 </Button>
@@ -179,7 +179,7 @@ function StudentDashboard() {
                 // }}
                 className="student_fab_option_link"
               >
-                <div className="fab-text">Upload Through Excel</div>
+                <div className="student_fab_text">Upload Through Excel</div>
                 <Button className="student_fab_option" style={{marginTop:'190px'}}>
                   <MdUpload className="student_fab_icon" />
                 </Button>
