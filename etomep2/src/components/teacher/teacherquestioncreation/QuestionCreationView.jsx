@@ -145,7 +145,7 @@ const handleBackClick = () =>{
                     value={exam?.class_name}
                   />
                 </div>
-                <div className="teacher_question_view_group">
+                {/* <div className="teacher_question_view_group">
                   <label htmlFor="division">Division</label>
                   <input
                     type="text"
@@ -154,7 +154,7 @@ const handleBackClick = () =>{
                     readOnly
                     value={exam?.division}
                   />
-                </div>
+                </div> */}
                 <div className="teacher_question_view_group">
                   <label htmlFor="term">Term</label>
                   <input

@@ -223,10 +223,10 @@
     border-radius: 8px;
     color: #526D82;
 }
-.teacher_student_edit:hover{
+/* .teacher_student_edit:hover{
     background-color: #526D82;
     color: #fff;
-}
+} */
 .teacher_student_verticaldot{
     display: none;
 }

@@ -1,3 +1,81 @@
+.assignment_editor {
+  height: auto;
+  background-color: #DDE6ED;
+  width: 100%;
+  height: 100vh;
+  padding-top: 2vh;
+}
+
+.assignment_editor_header {
+  background-color: #ffff !important;
+  height: 10vh;
+  width: 100%;
+  z-index: 10;
+  position: sticky;
+  top: 0;
+  left: 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .assignment_editor_header_title {
+  display: flex;
+  align-items: center;
+} */
+.assign_back_title{
+  display: flex;
+  align-items: center;
+  padding-top: 1vh;
+}
+.assignment_editor_header_title h6 {
+  /* margin-left: 1px; */
+  color: #526D82;
+  font-weight: 500;
+  font-size: 28px;
+  overflow: hidden; /* Ensures text overflow is handled */
+  white-space: nowrap; /* Prevents text from wrapping */
+  text-overflow: ellipsis;
+}
+.assignment_editor_header_title p{
+  margin-left: 75px;
+  padding-top: 10px;
+}
+.assigment_back {
+  color: #526D82;
+  height: 32px;
+  width: 62px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.assignment_editor_header_submit {
+  display: flex;
+  justify-content: end;
+  padding-right: 24px;
+  align-items: center;
+}
+
+.assignment_editor_header_submit button {
+  width: 180px;
+  height: 48px;
+  border-radius: 8px;
+  color: #fff;
+  background-color: #526D82;
+  font-size: 18px;
+}
+.assignment_editor_container {
+  margin-bottom: 24px;
+  padding: 26px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin-top: 5vh;
+}
+.assignment_show_toolbar .ck-toolbar {
+  display: flex !important; 
+  
+}
 .ck-editor__editable_inline {
     min-height: 110px !important;
 
