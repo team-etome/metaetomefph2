@@ -202,7 +202,7 @@ function AssignmentAdding() {
                 </div>
               </div>
             </Col>
-            <div className="teacher_studentadd_submit">
+            <div className="teacher_assignadd_submit">
               <button onClick={handleSubmit} type="submit">
                 Submit
               </button>

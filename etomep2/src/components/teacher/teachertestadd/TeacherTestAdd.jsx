@@ -85,25 +85,14 @@ function TeacherTestAdd() {
             </Col>
             <Col md={6}>
             <div className="teacher_testadd_group">
-                <label htmlFor="teststarttime">
-                    Start Time
+                <label htmlFor="testduration">
+                    Duration
                     <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                     type="text"
-                    id="teststarttime"
-                    name="teststarttime"
-                />
-                </div>
-                <div className="teacher_testadd_group">
-                <label htmlFor="testendtime">
-                    End Time
-                    <span style={{ color: "red" }}>*</span>
-                </label>
-                <input
-                    type="text"
-                    id="testendtime"
-                    name="testendtime"
+                    id="testduration"
+                    name="testduration"
                 />
                 </div>
                 <div className="teacher_testadd_group">

@@ -108,7 +108,7 @@
   .drop-area {
     border: 2px dashed #526D82;
     border-radius: 8px;
-    width: 100%;
+    width: 90%;
     text-align: center;
     padding: 20px;
     color: #526D82;
@@ -161,6 +161,8 @@
     padding-left: 20px;
     text-align: right;
     margin-right: 0px;
+    /* border: 1px solid red; */
+    margin-left: 8%;
 }
 .teacher_assignadd_submit button {
     padding: 10px 20px;
