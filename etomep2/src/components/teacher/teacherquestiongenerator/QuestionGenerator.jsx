@@ -147,7 +147,7 @@ function QuestionGenerator() {
       return "Element not captured";
     }
     try {
-      const canvas = await html2canvas(element, { scale: 2 });
+      const canvas = await html2canvas(element, { scale: 4 });
       const dataUrl = canvas.toDataURL("image/png");
       console.log("Capture successful", dataUrl);
       return dataUrl;

@@ -148,7 +148,7 @@ function QuestionAssigning() {
       { value: totalMark, label: "Total Mark" },
       { value: startTime, label: "Start Time" },
       { value: endTime, label: "End Time" },
-      { value: instruction, label: "Instruction" },
+      // { value: instruction, label: "Instruction" },
     ];
 
     const missingFields = requiredFields.filter((field) => !field.value);

@@ -104,14 +104,15 @@
     .scrollable-container {
       display: flex;
       overflow-x: hidden; 
-      white-space: nowrap;
+      white-space: nowrap; 
       -webkit-overflow-scrolling: touch;
       justify-content: space-around;
       padding-top: 2.5%;
       /* padding: 1px; */
       padding-left: 15px;
       height: 18%;
-      flex-grow: 1;
+      flex-grow: 1; 
+      /* command */
       flex-wrap: nowrap; 
       overflow-x: auto;
       -ms-overflow-style: none;

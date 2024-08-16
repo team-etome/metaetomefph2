@@ -8,10 +8,17 @@ import { toPng } from "html-to-image";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import "../teacherassignmentadd/assignmenteditor.css";
+import { IoChevronBackSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+
 
 function AssignmentEditor({ placeholder }) {
   const [ckData, setCkData] = useState("");
   const editorRef = useRef();
+  const [showToolbar, setShowToolbar] = useState(false);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
 
   const location = useLocation();
   const { state } = location;
@@ -67,8 +74,9 @@ function AssignmentEditor({ placeholder }) {
         icon: "success",
         title: "Form Submitted Successfully!",
         text: "Your assignment has been submitted.",
+      }).then(() => {
+        navigate("/teacherassignment");
       });
-
       console.log("Form data submitted successfully:", response.data);
     } catch (error) {
       console.error("Error submitting form data:", error);
@@ -79,16 +87,20 @@ function AssignmentEditor({ placeholder }) {
       });
     }
   };
-
+  const handleBackClick = () => {
+    navigate('/teacherassignmentadding')
+  }
   return (
     <Container className="assignment_editor">
       <div className="assignment_editor_div">
         <Row xs={2} className="assignment_editor_header">
           <Col className="assignment_editor_header_title">
-            <div>
-              <h6>{title}</h6>
+            <div className="assign_back_title">
+              <IoChevronBackSharp onClick={handleBackClick}className="teacher_question_back" />
+              <h6> {title}</h6>
+              </div>
               <p>Due Date: {duedate}</p>
-            </div>
+            
           </Col>
           <Col className="assignment_editor_header_submit">
             <button onClick={handleExport}>Export Questions</button>
@@ -97,10 +109,12 @@ function AssignmentEditor({ placeholder }) {
         <Row>
           <React.Fragment>
             <div
-              className={`assignment-editor-container assignment_show_toolbar`}
-              ref={editorRef}
+              className={`assignment_editor_container ${showToolbar ? "assignment_show_toolbar" : ""} `}
+              // ref={editorRef}
             >
               <CKEditor
+                // editor={ClassicEditor}
+                ref={editorRef} // Set the ref directly on CKEditor
                 editor={ClassicEditor}
                 config={{
                   toolbar: {
@@ -124,16 +138,44 @@ function AssignmentEditor({ placeholder }) {
                       "ChemType",
                     ],
                   },
+                  fontSize: {
+                    options: [
+                      'tiny',
+                      'small',
+                      'default',
+                      'big',
+                      'huge'
+                    ],
+                    supportAllValues: false
+                  },
                   placeholder: "Type questions here.....",
                 }}
                 data={ckData}
                 onReady={(editor) => {
                   editorRef.current.editor = editor;
+                  setShowToolbar(isFocused);
                 }}
                 onChange={(event, editor) => {
                   const data = editor.getData();
                   setCkData(data);
+                  
                 }}
+
+                // onReady={(editor) => {
+                //   editorRef.current = editor;
+                //   editor.ui.focusTracker.on('change:isFocused', (evt, name, isFocused) => {
+                //     setShowToolbar(isFocused);
+                //   });
+    
+                //   editor.model.document.on('change:data', () => {
+                //     setShowToolbar(true);
+                //   });
+                // }}
+                // onChange={(event, editor) => {
+                //   const data = editor.getData();
+                //   setCkData(data);
+                //   setEditorData(data);
+                // }}
               />
             </div>
           </React.Fragment>
