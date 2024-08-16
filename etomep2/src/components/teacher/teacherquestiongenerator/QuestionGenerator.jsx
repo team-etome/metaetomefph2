@@ -372,6 +372,7 @@ const handleBackClick = () => {
                                 <div className="answer_editor_container">
                                   <div className="editor-wrapper">
                                     <TeacherTextEditor
+                                    
                                       ref={(el) =>
                                       (answerRefs.current[subsectionIndex][
                                         questionIndex
