@@ -7,7 +7,6 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { RiShareBoxFill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 
-
 function ClassView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
@@ -19,7 +18,9 @@ function ClassView() {
 
   const classDetails = location.state?.class;
 
-  console.log(classDetails, "sssssss");
+  console.log(classDetails,4)
+
+  
 
   const toggleEditBlockButtons = (e) => {
     e.preventDefault();
@@ -49,9 +50,12 @@ function ClassView() {
                 marginBottom: "10px",
               }}
             >
-              <Link to="/institutionadding">
-                <IoChevronBackSharp onClick={handleBackClick} className="class_view_back" />
-              </Link>
+            
+                {/* <IoChevronBackSharp
+                  onClick={handleBackClick}
+                  className="class_view_back"
+                /> */}
+           
               <h1 className="class_view_title">Class List</h1>
               <div style={{ flex: "1" }}></div>
               {window.innerWidth > 800 ? (
@@ -64,7 +68,7 @@ function ClassView() {
                   }}
                 >
                   {/* <button className="class_edit">Edit</button> */}
-                  <FiEdit className="class_edit_icon"/>
+                  <FiEdit className="class_edit_icon" />
                   {/* <button className="class_block">Block</button> */}
                 </div>
               ) : (
@@ -88,7 +92,7 @@ function ClassView() {
                     id="class_no"
                     name="class_no"
                     value={classDetails ? classDetails.class_name : ""}
-                    style={{textTransform:'capitalize'}}
+                    style={{ textTransform: "capitalize" }}
                     readOnly
                   />
                 </div>
@@ -99,7 +103,7 @@ function ClassView() {
                     id="division"
                     name="division"
                     value={classDetails ? classDetails.division : ""}
-                    style={{textTransform:'capitalize'}}
+                    style={{ textTransform: "capitalize" }}
                     readOnly
                   />
                 </div>
@@ -109,7 +113,7 @@ function ClassView() {
                     type="text"
                     id="category"
                     name="category"
-                    style={{textTransform:'capitalize'}}
+                    style={{ textTransform: "capitalize" }}
                     value={classDetails ? classDetails.category : "null"}
                     readOnly
                   />
@@ -122,7 +126,7 @@ function ClassView() {
                     type="text"
                     id="class_teacher"
                     name="class_teacher"
-                    style={{textTransform:'capitalize'}}
+                    style={{ textTransform: "capitalize" }}
                     value={classDetails ? classDetails.class_teacher : ""}
                     readOnly
                   />
@@ -133,7 +137,7 @@ function ClassView() {
                     type="text"
                     id="medium"
                     name="medium"
-                    style={{textTransform:'capitalize'}}
+                    style={{ textTransform: "capitalize" }}
                     value={classDetails ? classDetails.medium : ""}
                     readOnly
                   />
@@ -144,7 +148,7 @@ function ClassView() {
                     type="text"
                     id="subject_no"
                     name="subject_no"
-                    style={{textTransform:'capitalize'}}
+                    style={{ textTransform: "capitalize" }}
                     value={classDetails ? classDetails.subject_count : ""}
                     readOnly
                   />
@@ -152,7 +156,9 @@ function ClassView() {
               </Col>
             </Row>
             <Row>
-              <Link to="/studentlist">
+              <Link
+                to={`/studentlist/${classDetails ? classDetails.class : ""}`}
+              >
                 <div className="student_list_button">
                   <button type="submit">
                     View Student List

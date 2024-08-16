@@ -105,7 +105,7 @@ function App() {
           <Route path="/facultyadding" element={<AdminFacultyAddingPage/>}/>
           <Route path="/classview" element={<AdminClassViewPage/>}/>
           <Route path="/facultyview" element={<AdminFacultyViewPage/>}/>
-          <Route path="/studentlist" element={<AdminStudentListPage/>}/>
+          <Route path="/studentlist/:id" element={<AdminStudentListPage/>}/>
           <Route path="/studentview" element={<AdminStudentViewPage/>}/>
           <Route path="/studentresultview" element={<AdminStudentResultPage/>}/>
           <Route path="/aarnanavbar" element={<AarnaNavbarPage/>}/>
