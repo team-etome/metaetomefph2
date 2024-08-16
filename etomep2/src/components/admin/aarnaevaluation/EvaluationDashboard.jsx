@@ -70,7 +70,7 @@ function EvaluationDashboard() {
                   className="ps-3 evaluation_list_ad_search_bar"
                   aria-label="Search"
                 />
-                <BsSearch className="position-absolute top-50 translate-middle-y evaluation_list_searchbar_icon" />
+                <BsSearch className="position-absolute top-50 translate-middle-y ms-2 evaluation_list_searchbar_icon" />
               </div>
             </Form>
             {/* Change: Adjust filter icon alignment */}

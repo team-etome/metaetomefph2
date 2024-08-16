@@ -66,22 +66,24 @@ function LokaLibraryListing() {
         className="admin_loka_library_dashboard"
         style={{ marginTop: "16px" }}
       >
-      {/* <Row className="justify-content-between align-items-center" style={{ marginBottom: "12px" }}>
+      <Row className="justify-content-between align-items-center" style={{ marginBottom: "12px" }}>
         <Col className="title_col">
         </Col>
-        <Col md={6} className="search_col">
-          <InputGroup className="lib_inputgroup_search">
-          <BsSearch className="position-absolute top-50 translate-middle-y ms-3 library_searchbar_icon"/>
-            <FormControl
-            className="ps-5 library_search_input"
-              placeholder="Search..."
-              aria-label="Search"
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-            />
-          </InputGroup>
+        <Col md={6} >
+        <div className="lib_search_nav">
+                {/* <Col md={6} className="search_col"> */}
+                  <InputGroup className="lib_inputgroup_search">
+                    <BsSearch className="position-absolute top-50 translate-middle-y ms-3 library_searchbar_icon" />
+                    <FormControl
+                      className="ps-5 library_search_input"
+                      placeholder="Search..."
+                      aria-label="Search"
+                    />
+                  </InputGroup>
+                {/* </Col> */}
+        </div>
         </Col>
-      </Row> */}
+      </Row>
        <div className="admin_loka_library_list_scroll">
         <Row>
           {lokalibraryListData.map((item, index) => (

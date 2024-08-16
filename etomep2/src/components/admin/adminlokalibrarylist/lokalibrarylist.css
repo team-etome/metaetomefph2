@@ -121,6 +121,34 @@
   justify-content: center;
   align-items: center;
   }
+  .lib_search_nav{
+    left: 5%;
+  }
+  .lib_inputgroup_search{
+    width: 80%;
+    margin-left: 15%;
+  }
+  .library_search_input{
+    border-radius: 6px !important;
+    height: 30px;
+  }
+  .library_searchbar_icon{
+    z-index: 2;
+    height: 20px;
+    width: 20px;
+    color: #D8D4D4;
+    /* right: 1%;
+    left: 90%; */
+  }
+  .search_col{
+    background-color: transparent;
+    padding: 5px;
+    border-radius: 8px;
+    width: 70%;
+    /* margin-right: 20px; */
+    margin-left: 30%;
+    /* border: 1px solid blue; */
+  }
   @media (max-width:576px) {
 
   .ad_lk_lib_rectangle{
@@ -145,7 +173,16 @@
   .title_col{
     display: none;
   }
-
+  .lib_search_nav{
+    padding-left: 1%;
+    width: 100% !important;
+  }
+  .lib_inputgroup_search{
+    width: 80%;
+    margin-right: 20%;
+    /* padding-left: 15%; */
+    padding-left: 0;
+  }
   }
   .ad_lk_lib_add_button_my_button{
     background-color: #526D82;

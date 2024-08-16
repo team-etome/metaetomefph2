@@ -66,7 +66,7 @@ function NavbarLoka() {
               </Nav.Item>
             </Nav>
           </Col>
-          <Col md={6}>
+          {/* <Col md={6}>
             {currentTab === "Textbook" && (
               <div className="textbook_search">
                 <Row className="search_dropdwon_textbook">
@@ -90,8 +90,6 @@ function NavbarLoka() {
                         className="ps-5 book_search_input"
                         placeholder="Search..."
                         aria-label="Search"
-                        // value={searchTerm}
-                        // onChange={e => setSearchTerm(e.target.value)}
                       />
                     </InputGroup>
                   </div>
@@ -107,14 +105,12 @@ function NavbarLoka() {
                       className="ps-5 library_search_input"
                       placeholder="Search..."
                       aria-label="Search"
-                      // value={searchTerm}
-                      // onChange={e => setSearchTerm(e.target.value)}
                     />
                   </InputGroup>
                 </Col>
               </div>
             )}
-          </Col>
+          </Col> */}
         </Row>
 
         <div className="institution_dashboard_container">
