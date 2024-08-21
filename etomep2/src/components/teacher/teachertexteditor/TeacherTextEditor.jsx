@@ -22,10 +22,11 @@ const TeacherTextEditor = forwardRef(({ placeholder, editorData, setEditorData }
   };
 
   return (
-    <div style={{ width: "100%", minHeight: "150px" }} ref={editorRef}>
+    <div  style={{ width: "100%" ,}} ref={editorRef}>
       <React.Fragment>
-        <div className={`editor-container ${showToolbar ? "show-toolbar" : ""}`}>
+        <div  className={`editor-container ${showToolbar ? "show-toolbar" : ""}`}>
           <CKEditor
+          
             editor={ClassicEditor}
             data={editorData}
             config={{

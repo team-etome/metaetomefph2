@@ -13,6 +13,19 @@ function SeatingDashboard() {
   const APIURL = useSelector((state) => state.APIURL.url);
   const admininfo = useSelector((state) => state.admininfo);
 
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+
+  const filteredSeatingData = seatingData.filter((item) => {
+    return (
+      item.exam_date.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.hall_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.teacher.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+  
+
   const admin_id = admininfo.admininfo?.admin_id;
 
   console.log(seatingData, "seatinggggggggggg");
@@ -63,16 +76,19 @@ function SeatingDashboard() {
                   placeholder="Search"
                   className="ps-3 seat_list_ad_search_bar"
                   aria-label="Search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <BsSearch className="position-absolute top-50 translate-middle-y seat_list_searchbar_icon" />
+                <BsSearch 
+                className="position-absolute top-50 translate-middle-y seat_list_searchbar_icon" />
               </div>
             </Form>
             {/* Change: Adjust filter icon alignment */}
           </div>
         </Row>
         <Row>
-          {seatingData.length > 0 ? (
-            seatingData.map((item, index) => (
+          {filteredSeatingData.length > 0 ? (
+            filteredSeatingData.map((item, index) => (
               <Col
                 lg={3}
                 md={6}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { GoHome } from "react-icons/go";
 import { RxDashboard } from "react-icons/rx";
@@ -12,6 +12,7 @@ import etomelogo from "../../../assets/etomelogo.png";
 
 function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate(); // Ensure this is imported and used
   const [activeItem, setActiveItem] = useState(null);
 
   const teacher = useSelector((state) => state.teacherinfo);
@@ -19,23 +20,28 @@ function Sidebar() {
 
   useEffect(() => {
     const path = location.pathname;
-    const routes = ["admindashboard", "eyora", "settings"];
-    if (teacher_token) {
-      routes.push(
-        "teacherstudentdashboard",
-        "teachersubject",
-        "teacherexamination"
-      ); // Routes visible only to teachers
-    }
-    const found = routes.find((route) => path.includes(route));
-    setActiveItem(found || null);
-  }, [location.pathname, teacher_token]);
+    const routes = {
+      "/admindashboard": "home",
+      "/teacherstudentdashboard": "institution",
+      "/teachersubject": "loka",
+      "/teacherexamination": "aarna",
+      "/settings": "settings",
+      "/institutionadding": "institution",
+      "/adminlokanavbar": "loka",
+      "/aarnanavbar": "aarna",
+      "/eyora": "eyora",
+      "/teacherhome": "teacherhome",
+    };
 
-  const handleLokaClick = () => {
-    console.log("enteredsddddd");
-    localStorage.setItem("activeTab", activeTab);
-    navigate("/adminlokanavbar");
-  };
+    if (teacher_token) {
+      routes["/teacherstudentdashboard"] = "institution";
+      routes["/teachersubject"] = "loka";
+      routes["/teacherexamination"] = "aarna";
+    }
+
+    const found = Object.keys(routes).find((route) => path.includes(route));
+    setActiveItem(routes[found] || null);
+  }, [location.pathname, teacher_token]);
 
   return (
     <div className="sidenav_fstdiv">
@@ -43,11 +49,7 @@ function Sidebar() {
         <img
           src={etomelogo}
           alt="Logo"
-          style={{
-            width: "110px",
-            height: "40px",
-            display: "block",
-          }}
+          style={{ width: "110px", height: "40px", display: "block" }}
         />
       </div>
       <Row
@@ -62,71 +64,41 @@ function Sidebar() {
       >
         {teacher_token ? (
           <>
-            <Link
-              to="/teacherhome"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <Col
-                className={`menu_item_col ${activeItem === "home" ? "active" : ""
-                  }`}
-                onClick={() => setActiveItem("home")}
-              >
+            <Link to="/teacherhome" style={{ textDecoration: "none", color: "inherit" }}>
+              <Col className={`menu_item_col ${activeItem === "teacherhome" ? "active" : ""}`}>
                 <div className="icon_container_div">
                   <GoHome className="icon_img" />
                   <span className="icon-text">Home</span>
                 </div>
               </Col>
             </Link>
-            <Link
-              to="/teacherstudentdashboard"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <Col
-                className={`menu_item_col ${activeItem === "institution" ? "active" : ""
-                  }`}
-                onClick={() => setActiveItem("institution")}
-              >
+
+            <Link to="/teacherstudentdashboard" style={{ textDecoration: "none", color: "inherit" }}>
+              <Col className={`menu_item_col ${activeItem === "institution" ? "active" : ""}`}>
                 <div className="icon_container_div">
                   <RxDashboard className="icon_img" />
                   <span className="icon-text">My Class</span>
                 </div>
               </Col>
             </Link>
-            <Link
-              to="/teachersubject"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <Col
-                className={`menu_item_col ${activeItem === "loka" ? "active" : ""
-                  }`}
-              >
+            <Link to="/teachersubject" style={{ textDecoration: "none", color: "inherit" }}>
+              <Col className={`menu_item_col ${activeItem === "loka" ? "active" : ""}`}>
                 <div className="icon_container_div">
                   <PiBook className="icon_img" />
                   <span className="icon-text">Subjects</span>
                 </div>
               </Col>
             </Link>
-
-            <Link
-              to="/teacherexamination"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <Col
-                className={`menu_item_col ${activeItem === "aarna" ? "active" : ""
-                  }`}
-              >
+            <Link to="/teacherexamination" style={{ textDecoration: "none", color: "inherit" }}>
+              <Col className={`menu_item_col ${activeItem === "aarna" ? "active" : ""}`}>
                 <div className="icon_container_div">
                   <SlNote className="icon_img" />
-                  <span className="icon-text"> Aarna</span>
+                  <span className="icon-text">Aarna</span>
                 </div>
               </Col>
             </Link>
-
-            <Link style={{ textDecoration: "none", color: "inherit" }}>
-              <Col
-                className={`menu_item_col ${activeItem === "settings" ? "active" : ""
-                  }`}
-              >
+            <Link to="/settings" style={{ textDecoration: "none", color: "inherit" }}>
+              <Col className={`menu_item_col ${activeItem === "settings" ? "active" : ""}`}>
                 <div className="icon_container_div">
                   <SlSettings className="icon_img" />
                   <span className="icon-text">Settings</span>
@@ -134,105 +106,75 @@ function Sidebar() {
               </Col>
             </Link>
           </>
+
+
+
         ) : (
           <>
-            <Col
-              className={`menu_item_col ${activeItem === "home" ? "active" : ""
-                }`}
-              onClick={() => setActiveItem("home")}
-            >
-              <Link
-                to="/admindashboard"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
+          
+            <Link to="/admindashboard" style={{ textDecoration: "none", color: "inherit" }}>
+              <Col className={`menu_item_col ${activeItem === "home" ? "active" : ""}`}>
                 <div className="icon_container_div">
                   <GoHome className="icon_img" />
                   <span className="icon-text">Home</span>
                 </div>
-              </Link>
-            </Col>
-            <Col
-              className={`menu_item_col ${activeItem === "institution" ? "active" : ""
-                }`}
-              onClick={() => setActiveItem("institution")}
-            >
-              <Link
-                to="/institutionadding"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
+              </Col>
+            </Link>
+
+
+
+            <Link to="/institutionadding" style={{ textDecoration: "none", color: "inherit" }}>
+              <Col className={`menu_item_col ${activeItem === "institution" ? "active" : ""}`}>
                 <div className="icon_container_div">
                   <RxDashboard className="icon_img" />
                   <span className="icon-text">Institution</span>
                 </div>
-              </Link>
-            </Col>
+              </Col>
+            </Link>
 
-            {/* <Col
-              className={`menu_item_col ${
-                activeItem === "loka" ? "active" : ""
-              }`}
-          
-            >
-              <Link
-                to="/adminlokanavbar"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
+
+
+
+            <Link to="/adminlokanavbar" style={{ textDecoration: "none", color: "inherit" }}>
+              <Col className={`menu_item_col ${activeItem === "loka" ? "active" : ""}`}>
                 <div className="icon_container_div">
                   <PiBook className="icon_img" />
                   <span className="icon-text">Loka</span>
                 </div>
-              </Link>
-            </Col> */}
+              </Col>
+            </Link>
 
-            <Col
-              className={`menu_item_col ${activeItem === "loka" ? "active" : ""
-                }`}
-              onClick={handleLokaClick}
-            >
-              <Link
-                to="/adminlokanavbar"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <div className="icon_container_div">
-                  <PiBook className="icon_img" />
-                  <span className="icon-text">Loka</span>
-                </div>
-              </Link>
-            </Col>
 
-            <Col
-              className={`menu_item_col ${activeItem === "aarna" ? "active" : ""
-                }`}
-            // onClick={() => handleMenuItemClick("aarna")}
-            >
-              <Link
-                to="/aarnanavbar"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
+
+
+            <Link to="/aarnanavbar" style={{ textDecoration: "none", color: "inherit" }}>
+              <Col className={`menu_item_col ${activeItem === "aarna" ? "active" : ""}`}>
                 <div className="icon_container_div">
                   <SlNote className="icon_img" />
                   <span className="icon-text">Aarna</span>
                 </div>
-              </Link>
-            </Col>
-            <Col
-              className={`menu_item_col ${activeItem === "eyora" ? "active" : ""
-                }`}
-            >
+              </Col>
+            </Link>
+
+
+
+            <Col className={`menu_item_col ${activeItem === "eyora" ? "active" : ""}`}>
               <div className="icon_container_div">
                 <TbScanEye className="icon_img" />
                 <span className="icon-text">Eyora</span>
               </div>
             </Col>
-            <Col
-              className={`menu_item_col ${activeItem === "settings" ? "active" : ""
-                }`}
-            >
+
+
+            <Col className={`menu_item_col ${activeItem === "settings" ? "active" : ""}`}>
               <div className="icon_container_div">
                 <SlSettings className="icon_img" />
                 <span className="icon-text">Settings</span>
               </div>
             </Col>
+
+
+
           </>
         )}
       </Row>

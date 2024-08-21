@@ -11,6 +11,22 @@ function EvaluationDashboard() {
   const [isActive, setIsActive] = useState(false);
   const [evaluationListData, setEvaluationListData] = useState([]);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+
+  const filteredEvaluationListData = evaluationListData.filter((item) => {
+    return (
+      item.class_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.division.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.subject_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.teacher_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.start_date.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.end_date.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
+
   console.log(evaluationListData, "evaluationnnnn");
 
   
@@ -69,6 +85,8 @@ function EvaluationDashboard() {
                   placeholder="Search"
                   className="ps-3 evaluation_list_ad_search_bar"
                   aria-label="Search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <BsSearch className="position-absolute top-50 translate-middle-y ms-2 evaluation_list_searchbar_icon" />
               </div>
@@ -77,8 +95,8 @@ function EvaluationDashboard() {
           </div>
         </Row>
        <Row>
-          {evaluationListData.length > 0 ? (
-            evaluationListData.map((item, index) => (
+          {filteredEvaluationListData.length > 0 ? (
+            filteredEvaluationListData.map((item, index) => (
               <Col
                 lg={3}
                 md={6}

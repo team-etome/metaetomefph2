@@ -106,7 +106,7 @@ const handleBackClick = () => {
       <Row>
         <Col className="refrence_list">
           <div className="refrence_header">
-          <IoChevronBackSharp onClick={handleBackClick} className="refrence_header_back" />
+        
             <h2>References</h2>
             <div className="refrence_search_filter_icon d-flex align-items-center">
               <BsFilterRight className="refrence-bs-filter-right" />

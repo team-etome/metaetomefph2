@@ -42,7 +42,7 @@ function TestListing() {
       <Row>
         <Col className='test_list'>
           <div className='test_header'>
-          <IoChevronBackSharp onClick={handleBackClick} className="teacher_test_back" />
+        
             <h2>Test</h2>
             <div className="test_search_filter_icon d-flex align-items-center">
               <BsFilterRight className="bs-filter-right" />

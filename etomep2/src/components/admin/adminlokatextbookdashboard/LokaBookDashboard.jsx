@@ -22,12 +22,23 @@ function LokaBookDashboard() {
   const APIURL = useSelector((state) => state.APIURL.url);
   const admininfo = useSelector((state) => state.admininfo);
   const admin_id = admininfo.admininfo?.admin_id;
-
+  const [selectedPublisher, setSelectedPublisher] = useState("");
   const publisher_name = admininfo.admininfo?.publisher_name;
-
-  console.log(publisher_name, "lokaaaaaaa");
-
   const navigate = useNavigate();
+
+
+  console.log(lokabookListData,"clgggggggggggggggggg")
+
+  const handlePublisherSelect = (publisher) => {
+    setSelectedPublisher(publisher);
+  };
+
+  const filteredBooks = lokabookListData.filter(
+    (item) =>
+      (!selectedPublisher || item.publisher_name === selectedPublisher) &&
+      (!searchTerm ||
+        item.subject.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,24 +50,22 @@ function LokaBookDashboard() {
   const handleButtonClick = () => {
     navigate("/adminlokatextbook");
   };
+
   useEffect(() => {
     fetchTextbookData();
   }, [APIURL, admin_id]);
 
-  //   const handleclick= ()=>{
-  //     navigate('/lokatextview')
-  // }
   const fetchTextbookData = async () => {
     try {
       const response = await axios.get(
         `${APIURL}/api/admin-create-textbook/${admin_id}`
       );
       console.log("API Data:", response.data);
-      // Ensure that textbook_details is treated as an array
+
       setLokaBookListData(
-        Array.isArray(response.data.textbook_details)
-          ? response.data.textbook_details
-          : [response.data.textbook_details]
+        Array.isArray(response.data.textbooks)
+          ? response.data.textbooks
+          : [response.data.textbooks]
       );
     } catch (error) {
       console.error("Failed to fetch textbooks:", error);
@@ -71,56 +80,71 @@ function LokaBookDashboard() {
         style={{ marginTop: "16px" }}
       >
         <div className="textbook_search">
-                <Row className="search_dropdwon_textbook">
-                  <div className="book_search_col" >
-                    <Dropdown className="dropdown_tb">
-                      <Dropdown.Toggle
-                        variant="outline-secondary"
-                        id="dropdown-basic"
-                        className="dropdown_tb_toggle"
-                      >
-                        NCERT
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>NCERT</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                    <div className="separator"></div>
-                    <InputGroup className="inputgroup_search">
-                      <BsSearch className="position-absolute top-50 translate-middle-y ms-2 book_searchbar_icon" />
-                      <FormControl
-                        className="ps-5 book_search_input"
-                        placeholder="Search..."
-                        aria-label="Search"
-                      />
-                    </InputGroup>
-                  </div>
-                </Row>
-              </div>
+          <Row className="search_dropdwon_textbook">
+            <div className="book_search_col">
+              <Dropdown className="dropdown_tb">
+                <Dropdown.Toggle
+                  variant="outline-secondary"
+                  id="dropdown-basic"
+                  className="dropdown_tb_toggle"
+                >
+                  {selectedPublisher || "Select Publisher"}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {(publisher_name || []).map((publisher, index) => (
+                    <Dropdown.Item
+                      key={index}
+                      onClick={() => handlePublisherSelect(publisher)}
+                    >
+                      {publisher}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+              <div className="separator"></div>
+              <InputGroup className="inputgroup_search">
+                <BsSearch className="position-absolute top-50 translate-middle-y ms-2 book_searchbar_icon" />
+                <FormControl
+                  className="ps-5 book_search_input"
+                  placeholder="Search..."
+                  aria-label="Search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </InputGroup>
+            </div>
+          </Row>
+        </div>
         <div className="admin_loka_tb_list_scroll">
           <Row>
-            {lokabookListData.map((item, index) => (
-              <Col
-                lg={3}
-                md={4}
-                sm={6}
-                xs={6}
-                key={index}
-                className="ad_lk_tb_list"
-              >
-                <div className="border border-white ad_lk_tb_rectangle">
-                  <div className="ad_loka_tb_img">
-                    <img src={item.textbook_front_page} alt="Textbook" />
-                  </div>
-                  <div className="admin_tb_texts">
-                    <div className="admin_loka_publishername">
-                      {item.publisher_name}
+            {filteredBooks.length > 0 ? (
+              filteredBooks.map((item, index) => (
+                <Col
+                  lg={2}
+                  md={4}
+                  sm={6}
+                  xs={6}
+                  key={index}
+                  className="ad_lk_tb_list"
+                >
+                  <div className="border border-white ad_lk_tb_rectangle">
+                    <div className="ad_loka_tb_img">
+                      <img src={item.textbook_image} alt="Textbook" />
                     </div>
-                    <div className="ad_loka_tb_subject">{item.subject}</div>
+                    <div className="admin_tb_texts">
+                      <div className="admin_loka_publishername">
+                        {item.publisher_name}
+                      </div>
+                      <div className="ad_loka_tb_subject">{item.subject}</div>
+                    </div>
                   </div>
-                </div>
-              </Col>
-            ))}
+                </Col>
+              ))
+            ) : (
+              <div className="no-books-message">
+                No books available for the selected publisher.
+              </div>
+            )}
           </Row>
         </div>
       </Container>
