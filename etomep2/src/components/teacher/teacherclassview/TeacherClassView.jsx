@@ -45,13 +45,7 @@ function TeacherClassView() {
         >
           <Row className="tech_clsvw_hd_rw" md={2} xs={1}>
             <Col className="teacher_clsview_ti_cl">
-              <Link to="/teachersubject">
-                <div>
-                  <IoIosArrowBack
-                    style={{ color: "#526D82", width: "32px", height: "32px" }}
-                  />
-                </div>
-              </Link>
+                
               <div>
              
                 <h1 className="teacher_clsview_title">Class {item.class} {item.division}</h1>
@@ -126,11 +120,12 @@ function TeacherClassView() {
               <h1 className="tch_vw_scrll_hding">Test</h1>
             </div>
             </Link>
-            <Link className="no-underline-link">
+            
+         
             <div className="tch_vw_snd_rw" >
               <h1 className="tch_vw_scrll_hding">Result</h1>
             </div>
-            </Link>
+          
           </div>
           <Row>
             <h1 className="tch_vw_sndrw_hd">Students List</h1>

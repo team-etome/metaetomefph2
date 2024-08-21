@@ -108,7 +108,6 @@ function AssignmentAdding() {
           {/* <Link to="/teacherassignment">
             <IoChevronBackSharp className="teacher_assignmentadd_back" />
           </Link> */}
-            <IoChevronBackSharp onClick={handleBackClick} className="teacher_assignmentadd_back" />
           <h1 className="teacher_assignmentadd_title">Assignment</h1>
         </div>
         <hr style={{ border: "1px solid #526D82"}} />

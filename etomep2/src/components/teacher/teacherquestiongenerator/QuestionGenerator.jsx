@@ -260,8 +260,8 @@ const handleBackClick = () => {
       <div className="question_generator">
         <Row xs={2} className="question_generator_header">
           <Col className="question_generator_header_title">
-          <IoChevronBackSharp onClick={handleBackClick}className="teacher_question_back" />
-            <h6>Subject Namerrrrrrrrr</h6>
+          {/* <IoChevronBackSharp onClick={handleBackClick}className="teacher_question_back" /> */}
+            {/* <h6>Subject Namerrrrrrrrr</h6> */}
           </Col>
           <Col className="question_generator_header_submit">
             <button onClick={handleExport} disabled={loading}>
@@ -327,10 +327,10 @@ const handleBackClick = () => {
                               className="question-container"
                             >
                               <div className="teacher_question_header">
-                                <div className="teacher_question_number">
+                                <div  className="teacher_question_number">
                                   <h6 style={{ fontSize: "20px" }}>{q.id})</h6>
                                 </div>
-                                <div className="editor-wrapper">
+                                <div  className="editor-wrapper">
                                   <TeacherTextEditor
                                     ref={(el) =>
                                     (questionRefs.current[subsectionIndex][
@@ -338,7 +338,6 @@ const handleBackClick = () => {
                                     ] = el)
                                     }
                                     placeholder="Type question here..."
-                                    // style={{textTransform: "capitalize"}}
                                     editorData={q.question}
                                     setEditorData={(data) =>
                                       handleEditorData(
@@ -369,7 +368,7 @@ const handleBackClick = () => {
                               </div>
 
                               {q.showAnswer && (
-                                <div className="answer_editor_container">
+                                <div  className="answer_editor_container">
                                   <div className="editor-wrapper">
                                     <TeacherTextEditor
                                     

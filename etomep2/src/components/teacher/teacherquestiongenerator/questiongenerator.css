@@ -227,6 +227,7 @@
   font-size: 20px;
   text-align: center;
   padding-top: 15px;
+
 }
 
 .subsection_textarea button {
@@ -250,8 +251,8 @@
   border-radius: 8px;
   width: 90%;
   min-height: 120px;
-overflow: hidden;
-text-transform: capitalize;
-  
+  overflow: hidden;
+  text-transform: capitalize;
+  max-width: 700px;
 
 }

@@ -97,7 +97,7 @@ const handleBackClick = () => {
       <Container className="teacher_reference_form">
         <div className="teacher_ref_add_header">
           {/* <Link to="/teacherrefrencelist"> */}
-            <IoChevronBackSharp onClick={handleBackClick} className="teacher_refadd_back" />
+          
           {/* </Link> */}
           <h1 className="teacher_refadd_title">Add Reference</h1>
         </div>

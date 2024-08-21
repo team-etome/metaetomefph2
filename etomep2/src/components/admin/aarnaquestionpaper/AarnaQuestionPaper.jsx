@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Col, Container, Row, Form, Nav } from "react-bootstrap";
-import { BsSearch, BsFilterRight } from "react-icons/bs";
+import React, { useState, useEffect } from "react";
+import { Col, Container, Row, Form } from "react-bootstrap";
+import { BsSearch } from "react-icons/bs";
 import "../aarnaquestionpaper/aarnaquestionpaper.css";
 import { IoIosAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -9,13 +9,12 @@ import { useSelector } from "react-redux";
 
 function AarnaQuestionPaper() {
   const [isActive, setIsActive] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const APIURL = useSelector((state) => state.APIURL.url);
   const [qpaperListData, setQpaperListData] = useState([]);
 
   const admininfo = useSelector((state) => state.admininfo);
   const admin_id = admininfo.admininfo?.admin_id;
-
-  console.log(qpaperListData, "daatttttataaaa");
 
   const navigate = useNavigate();
 
@@ -42,7 +41,7 @@ function AarnaQuestionPaper() {
 
     return () => clearInterval(interval);
   }, [APIURL]);
-  
+
   const handleButtonClick = () => {
     navigate("/questionadding");
   };
@@ -51,29 +50,44 @@ function AarnaQuestionPaper() {
     navigate("/questionview", { state: { questionPaper: item } });
   };
 
+  // Filter the question papers based on the search term
+  const filteredQpaperListData = qpaperListData.filter((item) => {
+    return (
+      item.exam_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.exam_date.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.subject_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.teacher_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.class_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.division.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.total_marks.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
   return (
     <div className="questionpaper_dashboard">
       <Container fluid className="qpaper_container_scroll">
-      <Row>
+        <Row>
           <div className="qp_list_search_filter_main d-flex">
             <Form className="d-flex">
-              {/* Change: Use position-relative to correctly position the search icon */}
               <div className="position-relative">
                 <Form.Control
                   type="search"
                   placeholder="Search"
                   className="ps-3 qp_list_ad_search_bar"
                   aria-label="Search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <BsSearch className="position-absolute top-50 translate-middle-y qp_list_searchbar_icon" />
               </div>
             </Form>
-            {/* Change: Adjust filter icon alignment */}
           </div>
         </Row>
-        <Row >
-          {qpaperListData.length > 0 ? (
-            qpaperListData.map((item, index) => (
+        <Row>
+          {filteredQpaperListData.length > 0 ? (
+            filteredQpaperListData.map((item, index) => (
               <Col
                 lg={3}
                 md={6}
@@ -86,9 +100,10 @@ function AarnaQuestionPaper() {
                   onClick={() => handleclick(item)}
                   className="border border-white qpaper_rectangle"
                 >
-                  <div className="qpaper_faculty_name">{item.facultyName}</div>
+                  <div className="qpaper_faculty_name">
+                    {item.teacher_name}
+                  </div>
                   <div className="qpaper_term_date">
-                    {/* <div className="qpaper_term">{item.term}</div> */}
                     <div className="qpaper_term">{item.exam_name}</div>
                     <div className="qpaper_date">{item.exam_date}</div>
                   </div>
