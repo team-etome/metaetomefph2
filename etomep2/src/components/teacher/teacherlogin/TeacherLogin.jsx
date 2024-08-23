@@ -285,13 +285,13 @@ function TeacherLogin() {
                       <h6 style={{color:'#526D82'}}>Reach Us On</h6>
                     </div>
                     <div className="ad_lg_social_icons">
-                    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="ad_lg_circle">
+                    <a href="https://www.linkedin.com/showcase/etomebyresolute/" target="_blank" rel="noopener noreferrer" className="ad_lg_circle">
                       <img src={linkedin} alt="LinkedIn" />
                     </a>
-                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"className="ad_lg_circle">
+                    <a href="https://www.instagram.com/etome_india?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer"className="ad_lg_circle">
                       <img src={instagram} alt="Instagram" />
                     </a>
-                    <a href="mailto:development@resoluteindia.co.in" target="_blank" rel="noopener noreferrer"className="ad_lg_circle">
+                    <a href="mailto:info@etome.in" target="_blank" rel="noopener noreferrer"className="ad_lg_circle">
                       <img src={gmail} alt="Gmail" />
                     </a>
                     </div>
