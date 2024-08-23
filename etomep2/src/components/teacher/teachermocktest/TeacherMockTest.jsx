@@ -37,6 +37,15 @@ function TeacherMockTest() {
   const APIURL = useSelector((state) => state.APIURL.url);
   const exampaperinfo = useSelector((state) => state.exampaperinfo);
 
+
+  const location = useLocation();
+  const formData = location.state || {}; 
+  
+
+  console.log(formData,"form dataaaaaa")
+
+
+  
   const exam_id = exampaperinfo.exampaperinfo?.id;
   console.log(exam_id, "exam id");
   console.log(exampaperinfo, "exampaperinfo reducer");
@@ -259,8 +268,7 @@ const handleBackClick = () => {
     <div className="mock_question_generator">
       <Row xs={2} className="mock_test_generator_header">
         <Col className="mock_test_generator_header_title">
-        <IoChevronBackSharp onClick={handleBackClick}className="teacher_mock_back" />
-          <h6>Subject Namerrrrrrrrr</h6>
+          {/* <h6>Subject Namerrrrrrrrr</h6> */}
         </Col>
         <Col className="mock_generator_header_submit">
           <button onClick={handleExport} disabled={loading}>

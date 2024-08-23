@@ -26,11 +26,24 @@ function TeacherTestAdd() {
   // const handleSubmit = () => {
   //   navigate('');
   // }
-  const handleBackClick = () => {
-    navigate("/teachertestlist");
-  };
+  // const handleBackClick = () => {
+  //   navigate("/teachertestlist");
+  // };
+
   const handlenavigate = () => {
-    navigate("/teachermocktest");
+    
+    const formData = {
+      examName,
+      examDate,
+      subject,
+      topic,
+      duration,
+      outOfMarks,
+      teacherCode,
+    };
+  
+    // Pass formData as state to the navigate function
+    navigate("/teachermocktest", { state: formData });
   };
 
   return (
@@ -38,7 +51,7 @@ function TeacherTestAdd() {
       <Container className="teacher_testadd_form">
         <div className="teacher_test_add_header">
           {/* <Link to="/teachertestlist"> */}
-         
+
           {/* </Link> */}
           <h1 className="teacher_testadd_title">Test</h1>
         </div>
@@ -51,28 +64,52 @@ function TeacherTestAdd() {
                   Exam Name
                   <span style={{ color: "red" }}>*</span>
                 </label>
-                <input type="text" id="examname" name="examname" />
+                <input
+                  type="text"
+                  id="examname"
+                  name="examname"
+                  value={examName}
+                  onChange={(e) => setExamName(e.target.value)}
+                />
               </div>
               <div className="teacher_testadd_group">
                 <label htmlFor="examdate">
                   Exam Date
                   <span style={{ color: "red" }}>*</span>
                 </label>
-                <input type="date" id="examdate" name="examdate" />
+                <input
+                  type="date"
+                  id="examdate"
+                  name="examdate"
+                  value={examDate}
+                  onChange={(e) => setExamDate(e.target.value)}
+                />
               </div>
               <div className="teacher_testadd_group">
                 <label htmlFor="testsub">
                   Subject
                   <span style={{ color: "red" }}>*</span>
                 </label>
-                <input type="text" id="testsub" name="testsub" />
+                <input
+                  type="text"
+                  id="testsub"
+                  name="testsub"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                />
               </div>
               <div className="teacher_testadd_group">
                 <label htmlFor="testtopic">
                   Topic
                   <span style={{ color: "red" }}>*</span>
                 </label>
-                <input type="text" id="testtopic" name="testtopic" />
+                <input
+                  type="text"
+                  id="testtopic"
+                  name="testtopic"
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)}
+                />
               </div>
             </Col>
             <Col md={6}>
@@ -81,21 +118,40 @@ function TeacherTestAdd() {
                   Duration
                   <span style={{ color: "red" }}>*</span>
                 </label>
-                <input  type="number" id="testduration" name="testduration" />
+                <input
+                  type="number"
+                  id="testduration"
+                  name="testduration"
+                  value={duration}
+                  onChange={(e) => setDuration(e.target.value)}
+                  placeholder="Duration in minutes"
+                />
               </div>
               <div className="teacher_testadd_group">
                 <label htmlFor="testoutofmarks">
                   Out Of Marks
                   <span style={{ color: "red" }}>*</span>
                 </label>
-                <input type="text" id="testoutofmarks" name="testoutofmarks" />
+                <input
+                  type="text"
+                  id="testoutofmarks"
+                  name="testoutofmarks"
+                  value={outOfMarks}
+                  onChange={(e) => setOutOfMarks(e.target.value)}
+                />
               </div>
               <div className="teacher_testadd_group">
                 <label htmlFor="teachercode">
                   Teacher Code
                   <span style={{ color: "red" }}>*</span>
                 </label>
-                <input type="text" id="teachercode" name="teachercode" />
+                <input
+                  type="text"
+                  id="teachercode"
+                  name="teachercode"
+                  value={teacherCode}
+                  onChange={(e) => setTeacherCode(e.target.value)}
+                />
               </div>
             </Col>
             <div className="teacher_testadd_submit">
