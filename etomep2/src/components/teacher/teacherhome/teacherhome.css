@@ -55,6 +55,11 @@ background-color: #E7E6FB;
 .tchr_rscr_mat{
   border: 1px solid aqua;
   height: 30vh;
+  overflow-y: auto;
+  display: flex; /* Use flexbox */
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  gap: 10px; /* Optional: Adjust gap between items */
+  padding: 10px;
 }
 .tchr_rsr_title{
   display: flex;
@@ -70,11 +75,16 @@ background-color: #E7E6FB;
   border: 1px solid blueviolet;
 }
 .tchr_pdf{
-  border: 1px solid black;
-  width: 80px;
+  width: calc(25% - 10px); /* 25% width to fit 4 items per row with gap consideration */
   height: 80px;
   text-align: center;
   padding-top: 10px;
+}
+.tchr_pdf p{
+  width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .tchr_icon{
   height: 46px;

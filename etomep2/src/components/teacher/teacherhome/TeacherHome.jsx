@@ -59,6 +59,43 @@ function TeacherHome() {
             <div className='tchr_rscr_mat'>
               <div className='tchr_pdf'>
                <AiOutlineFilePdf className='tchr_icon'/>
+               <p>titleeeetitleeeetitleeeetitleeeetitleeee</p>
+              </div>
+              <div className='tchr_pdf'>
+               <AiOutlineFilePdf className='tchr_icon'/>
+               <p>titleeee</p>
+              </div><div className='tchr_pdf'>
+               <AiOutlineFilePdf className='tchr_icon'/>
+               <p>titleeee</p>
+              </div><div className='tchr_pdf'>
+               <AiOutlineFilePdf className='tchr_icon'/>
+               <p>titleeee</p>
+              </div><div className='tchr_pdf'>
+               <AiOutlineFilePdf className='tchr_icon'/>
+               <p>titleeee</p>
+              </div><div className='tchr_pdf'>
+               <AiOutlineFilePdf className='tchr_icon'/>
+               <p>titleeee</p>
+              </div><div className='tchr_pdf'>
+               <AiOutlineFilePdf className='tchr_icon'/>
+               <p>titleeee</p>
+              </div><div className='tchr_pdf'>
+               <AiOutlineFilePdf className='tchr_icon'/>
+               <p>titleeee</p>
+              </div><div className='tchr_pdf'>
+               <AiOutlineFilePdf className='tchr_icon'/>
+               <p>titleeee</p>
+              </div>
+              <div className='tchr_pdf'>
+               <AiOutlineFilePdf className='tchr_icon'/>
+               <p>titleeee</p>
+              </div>
+              <div className='tchr_pdf'>
+               <AiOutlineFilePdf className='tchr_icon'/>
+               <p>titleeee</p>
+              </div>
+              <div className='tchr_pdf'>
+               <AiOutlineFilePdf className='tchr_icon'/>
                <p>titleeee</p>
               </div>
             </div>
