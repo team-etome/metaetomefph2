@@ -8,9 +8,10 @@ frontend:
       commands:
         - npm run build
   artifacts:
-    baseDirectory: vite-build
+    baseDirectory: dist  # Update this if your Vite output directory is different
     files:
       - '**/*'
   cache:
     paths:
       - node_modules/**/*
+
