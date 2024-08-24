@@ -12,7 +12,7 @@ function TeacherClassView() {
   const location = useLocation()
   const { item } = location.state || {};
   console.log(item,'item')
-
+ 
   const handleTouchStart = (e) => {
     const touch = e.touches[0];
     scrollContainerRef.current.startX = touch.clientX;

@@ -4,6 +4,10 @@ import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import "../teachertestadd/teachertestadd.css";
+import Swal from 'sweetalert2';
+
+
+
 
 function TeacherTestAdd() {
   const [showUploadArea, setShowUploadArea] = useState(false);
@@ -17,34 +21,52 @@ function TeacherTestAdd() {
   const [outOfMarks, setOutOfMarks] = useState("");
   const [teacherCode, setTeacherCode] = useState("");
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
+
+
+
+  
+  
+  // const handleFileChange = (event) => {
+  //   setSelectedFile(event.target.files[0]);
+  // };
 
   const navigate = useNavigate();
 
-  // const handleSubmit = () => {
-  //   navigate('');
-  // }
-  // const handleBackClick = () => {
-  //   navigate("/teachertestlist");
-  // };
-
   const handlenavigate = () => {
-    
+    const missingFields = [];
+
+    if (!examName) missingFields.push('Exam Name');
+    if (!examDate) missingFields.push('Exam Date');
+    // if (!subject) missingFields.push('Subject');
+    if (!topic) missingFields.push('Topic');
+    if (!duration) missingFields.push('Duration');
+    if (!outOfMarks) missingFields.push('Out of Marks');
+    if (!teacherCode) missingFields.push('Teacher Code');
+
+    if (missingFields.length > 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Missing Information',
+            text: `Please fill in the following fields before proceeding: ${missingFields.join(', ')}`,
+        });
+        return; 
+    }
+
     const formData = {
       examName,
       examDate,
-      subject,
+      // subject,
       topic,
       duration,
       outOfMarks,
       teacherCode,
     };
-  
-    // Pass formData as state to the navigate function
+
     navigate("/teachermocktest", { state: formData });
-  };
+};
+
+
+
 
   return (
     <div className="teacher_test_adding">
@@ -85,7 +107,8 @@ function TeacherTestAdd() {
                   onChange={(e) => setExamDate(e.target.value)}
                 />
               </div>
-              <div className="teacher_testadd_group">
+
+              {/* <div className="teacher_testadd_group">
                 <label htmlFor="testsub">
                   Subject
                   <span style={{ color: "red" }}>*</span>
@@ -97,7 +120,9 @@ function TeacherTestAdd() {
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                 />
-              </div>
+              </div> */}
+
+
               <div className="teacher_testadd_group">
                 <label htmlFor="testtopic">
                   Topic
