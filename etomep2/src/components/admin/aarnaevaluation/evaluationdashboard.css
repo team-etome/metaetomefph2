@@ -15,7 +15,10 @@
   .evaluation_container_scroll::-webkit-scrollbar-thumb {
     background: #A8BFD1;
   }
-
+.tchr_person{
+  width: 40px;
+  height: 40px;
+}
 
 .evaluation_list{
   display: flex;
