@@ -34,9 +34,8 @@ function TeacherResultView() {
   return (
     <Container className='teacher_result_view_container'>
         <div style={{display: 'flex', alignItems: 'center', marginBottom:'10px'}}>
-            <Link to='/teacheraarna'>
-                <IoChevronBackSharp className='teacher_result_view_back' />
-            </Link>
+           
+                
             <h1 className='teacher_result_view_title'>Class : 10 B</h1>
         </div>
         <div className='teacher_result_view_scrollable'>

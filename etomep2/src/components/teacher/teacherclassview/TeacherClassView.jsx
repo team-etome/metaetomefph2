@@ -9,10 +9,10 @@ import { useLocation } from "react-router-dom";
 function TeacherClassView() {
   const scrollContainerRef = useRef(null);
 
-  const location = useLocation()
+  const location = useLocation();
   const { item } = location.state || {};
-  console.log(item,'item')
- 
+  console.log(item, "item");
+
   const handleTouchStart = (e) => {
     const touch = e.touches[0];
     scrollContainerRef.current.startX = touch.clientX;
@@ -45,15 +45,15 @@ function TeacherClassView() {
         >
           <Row className="tech_clsvw_hd_rw" md={2} xs={1}>
             <Col className="teacher_clsview_ti_cl">
-                
               <div>
-             
-                <h1 className="teacher_clsview_title">Class {item.class} {item.division}</h1>
+                <h1 className="teacher_clsview_title">
+                  Class {item.class} {item.division}
+                </h1>
               </div>
             </Col>
             <Col className="teacher_clsview_ti_cl">
-              <div 
-              className="tch_cls_view_search"
+              <div
+                className="tch_cls_view_search"
                 // style={{
                 //   width: "100%",
                 //   display: "flex",
@@ -103,49 +103,48 @@ function TeacherClassView() {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            <Link to = '/teacherassignment'  className="no-underline-link">
+            <Link to="/teacherassignment" className="no-underline-link">
               <div className="tch_vw_snd_rw ">
-                <h1 className="tch_vw_scrll_hding" >Assignment</h1>
+                <h1 className="tch_vw_scrll_hding">Assignment</h1>
               </div>
             </Link>
 
-            <Link to ='/teacherrefrencelist'  className="no-underline-link">
-            <div className="tch_vw_snd_rw">
-              <h1 className="tch_vw_scrll_hding">Reference</h1>
-            </div>
+            <Link to="/teacherrefrencelist" className="no-underline-link">
+              <div className="tch_vw_snd_rw">
+                <h1 className="tch_vw_scrll_hding">Reference</h1>
+              </div>
             </Link>
-            
-            <Link to ='/teachertestlist'  className="no-underline-link">
-            <div className="tch_vw_snd_rw">
-              <h1 className="tch_vw_scrll_hding">Test</h1>
-            </div>
+
+            <Link to="/teachertestlist" className="no-underline-link">
+              <div className="tch_vw_snd_rw">
+                <h1 className="tch_vw_scrll_hding">Test</h1>
+              </div>
             </Link>
-            
-         
-            <div className="tch_vw_snd_rw" >
-              <h1 className="tch_vw_scrll_hding">Result</h1>
-            </div>
-          
+
+            <Link to="/teacherresultview" className="no-underline-link">
+              <div className="tch_vw_snd_rw">
+                <h1 className="tch_vw_scrll_hding">Result</h1>
+              </div>
+            </Link>
           </div>
           <Row>
             <h1 className="tch_vw_sndrw_hd">Students List</h1>
             <div className="tch_vw_card_container">
-              {item.students
-                .map((student, index) => (
-                  <div className="tch_vw_card" key={index}>
-                    <h3>{student.student_name}</h3>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        paddingTop :"10px"
-                      }}
-                    >
-                      <p1>{student.dob}</p1>
-                      <p>{student.admission_no}</p>
-                    </div>
+              {item.students.map((student, index) => (
+                <div className="tch_vw_card" key={index}>
+                  <h3>{student.student_name}</h3>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      paddingTop: "10px",
+                    }}
+                  >
+                    <p1>{student.dob}</p1>
+                    <p>{student.admission_no}</p>
                   </div>
-                ))}
+                </div>
+              ))}
             </div>
           </Row>
         </Row>
