@@ -21,7 +21,9 @@
     background: #A8BFD1;
   }
 
-
+.fac_search_col{
+  /* border: 1px solid red; */
+}
   .faculty_lisit_circle{
     position: absolute;
     top: 85px;
@@ -123,14 +125,14 @@
   align-items: center;
 }
 .search_filter_main{
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   flex-direction: row;
-  padding-left: 41vw;
-  padding-right: 0vw;
+  padding-left: 40vw;
+  padding-right: 0;
   padding-bottom: 10px;
-  
+  /* border: 1px solid blue; */
 }
 
 .search_filter {
