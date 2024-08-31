@@ -9,6 +9,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
 import pdficon from '../../../assets/pdficon.svg'
+import { RiPresentationLine } from "react-icons/ri";
 
 function SubjectDashboard() {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -111,57 +112,57 @@ function SubjectDashboard() {
               <Col md={5} sm={12} xs={12} className="sbtchr_sb_tchr">
                 <div className="sbtchr_sb_list">
                   <div className="sbtchr_gp">
-                    <h6>Subject Teachers</h6>
+                    <h6>Scheduled Classes</h6>
                     <div className="sbheading-divider"></div>
                     {/* <hr style={{border:'1px solid red'}}/> */}
                     {/* <hr className="heading-divider" /> */}
                     <div className="sbtchr_hd_list">
                       <div className="sbtchr_list">
                         <div className="sbtchr_person_name">
-                          <IoPersonCircleOutline className="sbtchr_person" />
+                          <RiPresentationLine className="sbtchr_person" />
                           <div className="sbtchr_sub">
-                            <p>Teacher Nameeee</p>
+                            <p>10 B</p>
                           </div>
                         </div>
                         <div className="sbtchr_sub_phn">
-                          <p>Subject</p>
-                          <p >Phone Number</p>
+                          <p>Subject: Physics</p>
+                          {/* <p >Phone Number</p> */}
                         </div>
                       </div>
                       <div className="sbtchr_list">
                         <div className="sbtchr_person_name">
-                          <IoPersonCircleOutline className="sbtchr_person" />
+                          <RiPresentationLine className="sbtchr_person" />
                           <div className="sbtchr_sub">
-                            <p>Teacher Nameeee</p>
+                            <p>11 A</p>
                           </div>
                         </div>
                         <div className="sbtchr_sub_phn">
-                          <p>Subject</p>
-                          <p >Phone Number</p>
+                          <p>Subject: Chemistry</p>
+                          {/* <p >Phone Number</p> */}
                         </div>
                       </div>
                       <div className="sbtchr_list">
                         <div className="sbtchr_person_name">
-                          <IoPersonCircleOutline className="sbtchr_person" />
+                          <RiPresentationLine className="sbtchr_person" />
                           <div className="sbtchr_sub">
                             <p>Teacher Nameeee</p>
                           </div>
                         </div>
                         <div className="sbtchr_sub_phn">
                           <p>Subject</p>
-                          <p >Phone Number</p>
+                          {/* <p >Phone Number</p> */}
                         </div>
                       </div>
                       <div className="sbtchr_list">
                         <div className="sbtchr_person_name">
-                          <IoPersonCircleOutline className="sbtchr_person" />
+                          <RiPresentationLine className="sbtchr_person" />
                           <div className="sbtchr_sub">
                             <p>Teacher Nameeee</p>
                           </div>
                         </div>
                         <div className="sbtchr_sub_phn">
                           <p>Subject</p>
-                          <p >9989993455</p>
+                          {/* <p >9989993455</p> */}
                         </div>
                       </div>
                     </div>
