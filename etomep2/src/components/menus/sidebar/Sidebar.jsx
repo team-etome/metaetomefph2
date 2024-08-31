@@ -157,22 +157,23 @@ function Sidebar() {
             </Link>
 
 
-
+            <Link  style={{ textDecoration: "none", color: "inherit" }}>
             <Col className={`menu_item_col ${activeItem === "eyora" ? "active" : ""}`}>
               <div className="icon_container_div">
                 <TbScanEye className="icon_img" />
                 <span className="icon-text">Eyora</span>
               </div>
             </Col>
+            </Link>
 
-
-            <Col className={`menu_item_col ${activeItem === "settings" ? "active" : ""}`}>
-              <div className="icon_container_div">
-                <SlSettings className="icon_img" />
-                <span className="icon-text">Settings</span>
-              </div>
-            </Col>
-
+            <Link style={{ textDecoration: "none", color: "inherit" }}>
+              <Col className={`menu_item_col ${activeItem === "settings" ? "active" : ""}`}>
+                <div className="icon_container_div">
+                  <SlSettings className="icon_img" />
+                  <span className="icon-text">Settings</span>
+                </div>
+              </Col>
+            </Link>
 
 
           </>

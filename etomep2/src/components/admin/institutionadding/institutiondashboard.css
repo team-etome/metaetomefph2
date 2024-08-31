@@ -5,6 +5,7 @@
 }
 .institution_dashboard_tab{
   width: 100%;
+  padding-left: 2vw;
 }
 .institution_dashboard_tab .nav-link {
     padding: 10px 15px;

@@ -97,10 +97,13 @@ align-items: center;
 }
 .textbook_search{
   padding-left: 50%;
+  /* border: 1px solid red; */
+  
 }
 .search_dropdwon_textbook{
   width: 100%;
   margin-left: 1%;
+  /* border: 1px solid blue; */
 }
 .inputgroup_search{
   width: 100%;
@@ -140,7 +143,7 @@ align-items: center;
   background-color: #ffffff;
   /* border: none; */
   margin-top: 0px;
-  width: 150px;
+  width: 240px;
   border-radius: 6px;
   height: 30px;
   /* border: 1px solid red !important; */
@@ -162,6 +165,16 @@ align-items: center;
   background-color: transparent;
   color:#526D82 ;
 }
+/* Remove the background color when the dropdown is clicked */
+.dropdown_tb_toggle:focus,
+.dropdown_tb_toggle:active,
+.dropdown_tb_toggle.show {
+  background-color: transparent !important; /* Remove the background color */
+  border-color: transparent !important; /* Optional: Remove the border color */
+  box-shadow: none !important; /* Remove any focus box-shadow */
+  color: #526D82;
+}
+
 @media (max-width:576px) {
    
   .ad_lk_tb_rectangle{
