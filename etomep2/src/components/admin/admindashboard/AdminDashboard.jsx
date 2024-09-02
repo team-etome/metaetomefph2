@@ -104,7 +104,7 @@ function AdminDashboard() {
               <h1 className='dash_grt_headr'>Welcome!</h1>
             </Row>
             <Row className='dash_snd_row'>
-              <Col style={{ display: "flex", justifyContent: "space-between", }} md={5} sm={12} xs={12}>
+              <Col style={{ display: "flex", justifyContent: "space-between", }} className='dsh_snd_col' md={5} sm={12} xs={12}>
                 <div className='dash_student_card'>
                   <img className='student_icon_dash' src={studenticon} alt='icons' />
                   <p>Total Students</p>
@@ -117,21 +117,21 @@ function AdminDashboard() {
                 </div>
 
               </Col>
-              <Col md={7} sm={12} xs={12}>
+              <Col md={7} sm={12} xs={12} className='dsh_lka'>
                 <div className="loka_card">
 
                 </div>
               </Col>
             </Row>
-            <Row >
-              <Col md={5} xs={12} sm={12}>
+            <Row className='rw_cl_nt'>
+              <Col md={5} xs={12} sm={12} className='dsh_clnd'>
                 <Calendar
                   onChange={handleDateChange}
                   value={selectedDate}
                   className="custom_calendar"
                 />
               </Col>
-              <Col md={7} xs={12} sm={12} style={{ paddingTop: "4%" }} >
+              <Col md={7} xs={12} sm={12}  className='dsh_nt' >
               <h5 className='notes_header'>Notes</h5>
               <div className="fixed_footer">
                       <FormControl

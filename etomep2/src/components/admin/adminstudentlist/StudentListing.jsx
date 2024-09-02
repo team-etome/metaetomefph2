@@ -64,8 +64,8 @@ function StudentListing() {
             <Row>
               {studentListData.map((item, index) => (
                 <Col
-                  lg={3}
-                  md={4}
+                  lg={4}
+                  md={3}
                   sm={12}
                   xs={12}
                   key={index}

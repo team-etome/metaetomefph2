@@ -54,6 +54,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         width: 50vh;
+        padding-left: 30px;
     }
     
     .faculty_view_group {
@@ -234,6 +235,7 @@
             text-align: left;
             padding-left: 0px;
             margin-left: 0px;
+            padding-left: 30px !important;
         }
     
         .faculty_view_group{

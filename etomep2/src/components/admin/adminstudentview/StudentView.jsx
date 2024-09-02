@@ -44,7 +44,7 @@ function StudentView() {
                 <h4>Personal Information</h4>
               </div>
 
-              <Col md={4}>
+              <Col md={6}>
                 <div className="personal_info_field">
                   <label htmlFor="name">Name</label>
                   <input
@@ -91,7 +91,7 @@ function StudentView() {
               <input type="text" id="addpincoderess" value={student.pincode || ''} name="pincode" readOnly />
             </div> */}
               </Col>
-              <Col md={4}>
+              <Col md={6}>
                 <div className="personal_info_field">
                   <label htmlFor="gender">Gender</label>
                   <input
@@ -143,11 +143,11 @@ function StudentView() {
                   />
                 </div>
               </Col>
-              <Col md={4}>
+              {/* <Col md={4}>
                 <div>
                   <img src={amritha} alt="" className="profile_picture" />
                 </div>
-              </Col>
+              </Col> */}
             </Row>
             <Row style={{ paddingTop: "20px" }}>
               <div className="student_heading">
