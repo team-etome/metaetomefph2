@@ -92,12 +92,12 @@ function AdminDashboard() {
     <div className="admin_dashboard">
 
       <Container className='admin_dasboard_container'>
-        <Row >
+        {/* <Row >
 
-          {/* <Row>
+          <Row>
 
-          </Row> */}
-        </Row>
+          </Row>
+        </Row> */}
         <Row className='admin_dashboard_row'>
           <Col md={7} className='dashboard_content_row'>
             <Row className='dashbord_greetings_row' >
