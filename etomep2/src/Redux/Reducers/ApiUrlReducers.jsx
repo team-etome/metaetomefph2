@@ -4,10 +4,10 @@ const initialState = {
 
 
 
-    url :"https://www.etomeindia.com"
+    url :"https://www.etomeindia.com/"
 
 
-
+    
 
 }
 
