@@ -18,6 +18,7 @@
     overflow-x: auto;
     -ms-overflow-style: none;
     scrollbar-width: none; 
+    margin-left: 10px;
   }
 
   

@@ -28,6 +28,7 @@
         color: #526D82 ;
         font-size: 35px;
         margin-left: 10px;
+        padding-left: 30px;
     }
     
     .evaluation_group {
@@ -112,6 +113,8 @@
         padding-right: 0px;
         display: flex;
         justify-content: flex-end;
+        /* border: 1px solid red; */
+        margin-left: 8%;
     }
     .evaluation_button {
         padding: 10px 20px;
@@ -216,12 +219,20 @@
         align-items: center;
         align-content: center;
     }
+    .modal_searchbar_input:focus {
+        outline: none; /* Ensures that no outline appears on focus */
+        box-shadow: none; /* Removes any box-shadow */
+        border: 0.5px solid #526D82;
+      }
     .modal_searchbar_icon{
         z-index: 2;
         height: 20px;
         width: 20px;
         color: #D8D4D4;
         right: 15px;
+    }
+    .modal_searchbar_icon.hidden {
+        display: none !important;
     }
       .modal_evaluation_submit{
         padding: 10px 20px;
@@ -301,7 +312,8 @@
         .submit_evaluation {
             padding-right: 0px;
             padding-left: 20px;
-            margin-left: 20px;
+            /* margin-left: 20px; */
+            margin-left: 10%;
             margin-right: 0px;
         }
     

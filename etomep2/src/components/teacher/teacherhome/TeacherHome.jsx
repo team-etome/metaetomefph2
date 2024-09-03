@@ -9,6 +9,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
 import pdficon from '../../../assets/pdficon.svg'
+import subteachr from '../../../assets/subteachr.png'
 // import Dashimg1 from "../../../assets/dashimgone.png";
 // import Dashimg from "../../../assets/dashimg.png";
 
@@ -113,7 +114,10 @@ function TeacherHome() {
               <Col md={5} sm={12} xs={12} className="tchr_sb_tchr">
                 <div className="tchr_sb_list">
                   <div className="tchr_gp">
+                    <div className="tchr_hd">
+                    <img src={subteachr} alt="subject teacher" className="sub_tchr_icon" />
                     <h6>Subject Teachers</h6>
+                    </div>
                     <div className="heading-divider"></div>
                     {/* <hr style={{border:'1px solid red'}}/> */}
                     {/* <hr className="heading-divider" /> */}
@@ -171,7 +175,7 @@ function TeacherHome() {
                 </div>
               </Col>
             </Row>
-            <Row >
+            <Row className="cld_nt_tchr">
               <Col md={5} xs={12} sm={12}>
                 <Calendar
                   onChange={handleDateChange}
@@ -179,7 +183,7 @@ function TeacherHome() {
                   className="custom_calendar_tchr "
                 />
               </Col>
-              <Col md={7} xs={12} sm={12} style={{ paddingTop: "8%" }} >
+              <Col md={7} xs={12} sm={12} className="nt_hd_tch" >
               <h5 className='notes_header_tchr'>Notes</h5>
               <div className="fixed_footer_tchr ">
                       <FormControl

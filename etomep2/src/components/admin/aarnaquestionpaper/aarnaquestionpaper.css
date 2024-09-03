@@ -160,7 +160,11 @@ height: 75vh;
   border-radius: 17px;
   padding-right: 40px; 
 }
-
+.qp_list_ad_search_bar:focus {
+  outline: none; /* Ensures that no outline appears on focus */
+  box-shadow: none; /* Removes any box-shadow */
+  border: 0.5px solid #526D82;
+}
 .qp_list_searchbar_icon {
   right: 15px;
 }

@@ -72,7 +72,7 @@ function StudentView() {
               }}
             > */}
               {/* <Link to="/teacherstudentdashboard"> */}
-                <IoChevronBackSharp onClick={handleBackClick} className="teacher_student_view_back" />
+                {/* <IoChevronBackSharp onClick={handleBackClick} className="teacher_student_view_back" /> */}
               {/* </Link> */}
               <h1 className="teaher_student_view_title">{student.student_name} </h1>
               <div style={{ flex: "1" }}></div>
@@ -131,7 +131,7 @@ function StudentView() {
                 <h4>Personal Information</h4>
               </div>
 
-              <Col md={4}>
+              <Col md={6}>
                 <div className="teacher_personal_info_field">
                   <label htmlFor="name">Name</label>
                   <input
@@ -174,7 +174,7 @@ function StudentView() {
                   />
                 </div>
               </Col>
-              <Col md={4}>
+              <Col md={6}>
                 <div className="teacher_personal_info_field">
                   <label htmlFor="gender">Gender</label>
                   <input
@@ -226,11 +226,11 @@ function StudentView() {
                   />
                 </div>
               </Col>
-              <Col md={4}>
+              {/* <Col md={4}> */}
                 {/* <div>
               <img src={amritha}  alt="" className='teacher_profile_picture'/>
             </div> */}
-              </Col>
+              {/* </Col> */}
             </Row>
             <Row style={{ paddingTop: "20px" }}>
               <div className="teacher_student_heading">

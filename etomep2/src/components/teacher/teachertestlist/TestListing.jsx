@@ -62,9 +62,9 @@ function TestListing() {
                 <Col className='test_list'>
                     <div className='test_header'>
                         <h2>Test</h2>
-                        <div className="test_search_filter_icon d-flex align-items-center">
+                        {/* <div className="test_search_filter_icon d-flex align-items-center">
                             <BsFilterRight className="bs-filter-right" />
-                        </div>
+                        </div> */}
                     </div>
                     <hr />
                     <div className='test_body'>
