@@ -30,6 +30,7 @@ overflow: hidden;
     color: #526D82 ;
     font-size: 30px;
     margin-left: 10px;
+    padding-left: 30px;
 }
 
 .faculty_group {
@@ -208,6 +209,7 @@ overflow: hidden;
         text-align: left;
         padding-left: 0px;
         margin-left: 0px;
+        padding-left: 30px;
     }
 
     .faculty_group, .faculty_group_select {

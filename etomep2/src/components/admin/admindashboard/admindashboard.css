@@ -15,8 +15,7 @@
 .dashboard_content_row {
   border: 1px solid #9DB2BF;
   border-radius: 8px;
-  height: auto;
-
+  height: 86vh;
   width: 850px;
 }
 
@@ -34,9 +33,24 @@
   height: 200px;
   display: flex;
   margin-top: 8px;
+}
+/* .dsh_snd_col{
+  border: 1px solid red;
 
 }
-
+.dsh_lka{
+  border: 1px solid black;
+}
+.dsh_clnd{
+  border: 1px solid aqua;
+} */
+.dsh_nt{
+  /* border: 1px solid palevioletred; */
+  padding-top: 4%;
+}
+.rw_cl_nt{
+  padding-top: 0px;
+}
 .dash_student_card {
   width: 150px;
   height: 200px;
@@ -294,3 +308,50 @@ padding-bottom: 10PX;
   font-weight: 400;
   padding-top: 1vh;
 }
+
+@media (max-width: 768px){
+  .admin_dashboard {
+    overflow-x: auto;
+    /* overflow-y: hidden;  */
+    padding-left: 2vh;
+  }
+
+  .dashboard_content_row {
+    height:50vh ;
+  }
+
+
+  /* .dsh_snd_col{
+    border: 1px solid red;
+  }
+  .dsh_lka{
+    border: 1px solid black;
+    margin-top: 4vh;
+  }
+  .dsh_clnd{
+    border: 1px solid aqua;
+    margin-top: 26vh;
+  }
+  .dsh_nt{
+    border: 1px solid palevioletred;
+  } */
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* .dsh_snd_col{
+    border: 1px solid red;
+  
+  }
+  .dsh_lka{
+    border: 1px solid black;
+  }
+  .dsh_clnd{
+    border: 1px solid aqua;
+  }
+  .dsh_nt{
+    border: 1px solid palevioletred;
+  } */
+}
+/* @media (min-width: 1024px) {
+
+} */

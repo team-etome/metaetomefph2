@@ -105,7 +105,8 @@ function ResultFilter() {
     control: (base, state) => ({
       ...base,
       width: '100%',
-      minHeight: '40px',
+      minHeight: "40px",
+      height: "50px",
       border: '1px solid #526D82',
       borderRadius: '8px',
       boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 'none',
@@ -135,7 +136,11 @@ function ResultFilter() {
     }),
     dropdownIndicator: (base) => ({
       ...base,
-      color: '#526D82',
+      color: "#526D82",
+      paddingTop: "0px",
+    }),
+    indicatorSeparator: (base) => ({
+      display: "none",
     }),
     indicatorsContainer: (base) => ({
       ...base,
@@ -164,7 +169,7 @@ function ResultFilter() {
         </Link> */}
         <h1 className='result_filter_title'>Result</h1>
         </div>
-        <div style={{ border: '0.5px solid #526D82' }}></div>
+        <div style={{ border: '0.5px solid #526D82'}}></div>
         <div className="result_filter_scrollable">
             <Row style={{paddingTop:'20px', paddingLeft:'20px', paddingRight:'20px'}}>
                 <Col md={3}>

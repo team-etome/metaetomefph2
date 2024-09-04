@@ -4,7 +4,10 @@ const initialState = {
 
 
 
-    url :"https://www.etomeindia.com/"
+    url :"https://www.etomeindia.com"
+    // url : 'http://192.168.52.210:8000'
+
+
 
 
     

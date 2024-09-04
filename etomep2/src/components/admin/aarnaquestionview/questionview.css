@@ -43,6 +43,7 @@
         color: #526D82 ;
         font-size: 30px;
         margin-left: 10px;
+        padding-left: 30px;
     }
     
     .question_view_group {
@@ -96,13 +97,15 @@
         border-radius: 8px;
     }
     .question_block{
-        width: 75px;
-        height: 40px;
-        background-color: #FDE9E6;
+        width: 40px;
+        height: 30px;
+        /* background-color: #FDE9E6; */
         border: none;
         border-radius: 8px;
-        color: #EA4035;
+        /* color: #EA4035; */
+        color: #526D82;
         font-weight: 700px;
+        cursor: pointer;
     }
     @media (max-width: 700px) {
         .question_view_container {

@@ -289,7 +289,7 @@ const handleBackClick = () => {
             }}
           >
             {/* <Link to="/aarnanavbar"> */}
-              <IoChevronBackSharp onClick={handleBackClick} className="qpaper_back" />
+              {/* <IoChevronBackSharp onClick={handleBackClick} className="qpaper_back" /> */}
             {/* </Link> */}
             <h1 className="qpaper_title">Question Setting</h1>
           </div>

@@ -208,7 +208,7 @@ function FacultyView() {
               }}
             >
               {/* <Link to="/institutionadding"> */}
-                <IoChevronBackSharp onClick={handleBackClick} className="faculty_view_back" />
+                {/* <IoChevronBackSharp onClick={handleBackClick} className="faculty_view_back" /> */}
               {/* </Link> */}
               <h1 className="faculty_view_title">
                 {faculty

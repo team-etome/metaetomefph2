@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import "../aarnaevaluationview/evaluationview.css";
 import { useLocation } from "react-router-dom";
@@ -95,7 +96,7 @@ const handleBackClick = () =>{
               }}
             >
               {/* <Link to="/aarnanavbar"> */}
-                <IoChevronBackSharp onClick={handleBackClick} className="evaluation_view_back" />
+                {/* <IoChevronBackSharp onClick={handleBackClick} className="evaluation_view_back" /> */}
               {/* </Link> */}
               <h1 className="evaluation_view_title">{evaluationData?.class_name || ""}</h1>
               <div style={{ flex: "1" }}></div>
@@ -109,7 +110,8 @@ const handleBackClick = () =>{
                   }}
                 >
                   {/* <button className="evaluation_edit">Delete</button> */}
-                  <button type="button" onClick={handleDelete} className="evaluation_edit">Delete</button>
+                  {/* <button type="button" onClick={handleDelete} className="evaluation_edit">Delete</button> */}
+                <MdDelete onClick={handleDelete} className="evaluation_edit"/>
                 </div>
               ) : (
                 <div style={{ position: "relative" }} ref={dropdownRef}>
@@ -135,7 +137,8 @@ const handleBackClick = () =>{
                       }}
                     >
                       {/* <button className="evaluation_block">Block</button> */}
-                      <button type="button" onClick={handleDelete} className="evaluation_edit">Delete</button>
+                      {/* <button type="button" onClick={handleDelete} className="evaluation_edit">Delete</button> */}
+                      <MdDelete onClick={handleDelete} className="evaluation_edit"/>
                     </div>
                   )}
                 </div>
@@ -222,7 +225,7 @@ const handleBackClick = () =>{
               <Row>
                 <Col md={12}>
                   <div className="evaluation_align_section">
-                    <p>Selected Faculties</p>
+                    <p className="slt_fc">Selected Faculties</p>
                     <div className="evaluation_assign_layout">
                       <div className="evaluation_selected_items">
                         {evaluationData?.teacher_name || ""}

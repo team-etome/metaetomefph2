@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdDelete } from "react-icons/md";
 import Layout_01_S from "../../../assets/Layout_01_S.png";
 import '../aarnaseatview/seatview.css'
 
@@ -51,7 +52,7 @@ function SeatView() {
             }}
           >
             {/* <Link to="/aarnanavbar"> */}
-              <IoChevronBackSharp onClick={handleBackClick} className="seat_view_back" />
+              {/* <IoChevronBackSharp onClick={handleBackClick} className="seat_view_back" /> */}
             {/* </Link> */}
             <h1 className="seat_view_title">Seat List</h1>
             <div style={{ flex: "1" }}></div>
@@ -64,7 +65,8 @@ function SeatView() {
                   paddingRight: "30px",
                 }}
               >
-                <button className="seat_block">Block</button>
+                {/* <button className="seat_block">Block</button> */}
+                <MdDelete className="seat_block"/>
               </div>
             ) : (
               <div style={{ position: "relative" }} ref={dropdownRef}>
@@ -89,7 +91,9 @@ function SeatView() {
                       gap: "10px",
                     }}
                   >
-                    <button className="seat_block">Block</button>
+                    {/* <button className="seat_block">Block</button> */}
+                <MdDelete className="seat_block"/>
+
                   </div>
                 )}
               </div>

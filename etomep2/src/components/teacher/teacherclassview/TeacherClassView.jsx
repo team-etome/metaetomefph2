@@ -51,24 +51,15 @@ function TeacherClassView() {
                 </h1>
               </div>
             </Col>
-            <Col className="teacher_clsview_ti_cl">
+            {/* <Col className="teacher_clsview_ti_cl">
               <div
                 className="tch_cls_view_search"
-                // style={{
-                //   width: "100%",
-                //   display: "flex",
-                //   justifyContent: "flex-end",
-                //   flexDirection: "row",
-                //   paddingLeft: "1vw",
-                //   border:'1px solid red'
-                // }}
               >
                 <div
                   style={{
                     width: "100%",
                     display: "flex",
                     justifyContent: "flex-end",
-                    // border:'1px solid green'
                   }}
                   className="tch_clsvw_search_filter d-flex align-items-center"
                 >
@@ -94,7 +85,7 @@ function TeacherClassView() {
                   </Form>
                 </div>
               </div>
-            </Col>
+            </Col> */}
           </Row>
           <div
             className="scrollable-container"

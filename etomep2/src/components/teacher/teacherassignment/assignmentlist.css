@@ -110,10 +110,11 @@
   .assignment_item {
     background-color: #ffffff;
     cursor: pointer;
-    padding: 8px;
+    /* padding: 8px; */
     margin-bottom: 10px;
     transition: background-color 0.3s;
     border: none;
+    margin-left: 26px;
 }
   
   .assignment_item:hover {

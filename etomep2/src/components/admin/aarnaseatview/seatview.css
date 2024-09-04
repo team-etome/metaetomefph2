@@ -42,6 +42,7 @@
         color: #526D82 ;
         font-size: 30px;
         margin-left: 10px;
+        padding-left: 30px;
     }
     
     .seat_view_group {
@@ -91,13 +92,20 @@
         border-radius: 8px;
     }
     .seat_block{
-        width: 75px;
+        /* width: 75px;
         height: 50px;
         background-color: #FDE9E6;
         border: none;
         border-radius: 8px;
         color: #EA4035;
+        font-weight: 700px; */
+        width: 40px;
+        height: 30px;
+        border: none;
+        border-radius: 8px;
+        color: #526D82;
         font-weight: 700px;
+        cursor: pointer;
     }
     .selected_img{
         width: 95%;

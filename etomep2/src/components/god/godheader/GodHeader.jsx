@@ -27,9 +27,9 @@ function GodHeader() {
               variant="underline"
               activeKey={activeTab}
               onSelect={(k) => setActiveTab(k)}
-              className="navbar_text"
+              className="navbar_text d-flex justify-content-between"
             >
-              <Nav.Item>
+              {/* <Nav.Item>
                 <Nav.Link eventKey="Institution" className="no-underline">
                   Institution
                 </Nav.Link>
@@ -43,6 +43,30 @@ function GodHeader() {
                 <Nav.Link eventKey="Course" className="no-underline">
                   Course
                 </Nav.Link>
+              </Nav.Item>
+              <div>
+                <h6>Logout</h6>
+              </div>
+            </Nav> */}
+            <div className="d-flex gd_tb">
+                <Nav.Item>
+                  <Nav.Link eventKey="Institution" className="no-underline">
+                    Institution
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="Textbook" className="no-underline">
+                    Textbook
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="Course" className="no-underline">
+                    Course
+                  </Nav.Link>
+                </Nav.Item>
+              </div>
+              <Nav.Item>
+                <Nav.Link className="no-underline">Logout</Nav.Link>
               </Nav.Item>
             </Nav>
             <div className="dashboard-container">

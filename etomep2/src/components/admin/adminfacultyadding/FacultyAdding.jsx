@@ -281,7 +281,7 @@ function FacultyAdding() {
             }}
           >
             {/* <Link to="/institutionadding"> */}
-              <IoChevronBackSharp  onClick={handleBackClick} className="faculty_back" />
+              {/* <IoChevronBackSharp  onClick={handleBackClick} className="faculty_back" /> */}
             {/* </Link> */}
             <h1 className="faculty_title">Add Faculty</h1>
           </div>

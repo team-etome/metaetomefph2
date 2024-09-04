@@ -18,6 +18,8 @@ function StudentDashboard() {
   const [standard, setStandard] = useState("");
   const [division, setDivision] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacher = useSelector((state) => state.teacherinfo);
   const teacher_id = teacher.teacherinfo?.teacher_id;
@@ -90,12 +92,15 @@ function StudentDashboard() {
               <div className="student_search_filter ">
                 <Form className="d-flex form_search">
                   <div className="position-relative">
-                    <BsSearch className="position-absolute top-50 translate-middle-y ms-2 student_search_icon" />
+                    {/* <BsSearch className="position-absolute top-50 translate-middle-y ms-2 student_search_icon" /> */}
+                    <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 student_search_icon ${searchQuery ? 'hidden' : ''}`} />
                     <Form.Control
                       type="search"
                       placeholder="Search"
                       className="ps-6 teacher_student_search_input"
                       aria-label="Search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                     />
 
                   </div>

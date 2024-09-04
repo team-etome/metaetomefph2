@@ -4,7 +4,7 @@
     width:150vw ;
   margin-top: 16px;
   margin-right: 2vw;
-  margin-left: 2vw;
+  margin-left: 1vw;
   }
   
   .faculty_container_scroll::-webkit-scrollbar {
@@ -132,7 +132,7 @@
   padding-left: 40vw;
   padding-right: 0;
   padding-bottom: 10px;
-  /* border: 1px solid blue; */
+  
 }
 
 .search_filter {
@@ -141,6 +141,7 @@
   width: 10%;
   display: flex;
   justify-content: flex-end;
+  
 }
 .inst_search_icon{
 z-index: 2;
@@ -149,14 +150,29 @@ width: 20px;
 color: #D8D4D4;
 right: 15px;
 } 
+.inst_search_icon.hidden {
+  display: none;
+}
 .inst_search{
-  /* border: 1px solid red; */
+  outline: none;
+}
+/* .ad_sch{
+  border: 1px solid red;
+} */
+ .search_bar{
+  outline: none;
+ }
+ .search_bar:focus {
+  outline: none; /* Ensures that no outline appears on focus */
+  box-shadow: none; /* Removes any box-shadow */
+  border: 0.5px solid #526D82;
 }
 .search_filter .form-control {
   width: 350px !important;
   border-radius: 17px;
   color: #767676;
   padding-left: 30px;
+  outline: none;
 }
 
 .search_filter .form-control::placeholder {

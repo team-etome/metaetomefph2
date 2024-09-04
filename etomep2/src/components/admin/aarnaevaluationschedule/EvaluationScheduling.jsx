@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 
 function EvaluationScheduling() {
   const [showModal, setShowModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [classNumber, setClassNumber] = useState(null);
   const [subject, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
@@ -212,7 +213,7 @@ const handleBackClick = () =>{
             }}
           >
             {/* <Link to="/aarnanavbar"> */}
-              <IoChevronBackSharp onClick={handleBackClick} className="evaluation_back" />
+              {/* <IoChevronBackSharp onClick={handleBackClick} className="evaluation_back" /> */}
             {/* </Link> */}
             <h1 className="evaluation_title">Evaluation Scheduling</h1>
           </div>
@@ -306,12 +307,17 @@ const handleBackClick = () =>{
               <div className="modal_div_assign">
                 <Form className="d-flex">
                   <div className="position-relative">
-                    <BsSearch className="position-absolute top-50 translate-middle-y ms-2 modal_searchbar_icon" />
+                    {/* <BsSearch className="position-absolute top-50 translate-middle-y ms-2 modal_searchbar_icon" /> */}
+                    {/* <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 modal_searchbar_icon ${searchQuery ? 'hidden' : ''}`} /> */}
+                    <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 modal_searchbar_icon ${searchQuery ? 'hidden' : ''}`} />
+                    
                     <Form.Control
                       type="search"
                       placeholder="Search by Name or Id"
                       className="ps-3 modal_searchbar_input"
                       aria-label="Search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
                 </Form>

@@ -196,10 +196,10 @@ function FacultyDashboard() {
       >
         <Row>
           <Col md={6} ></Col>
-          <Col md={6} className='fac_search_col'>
+          {/* <Col md={6} className='fac_search_col'>
             <div className="search_filter_main">
               <Form className="d-flex inst_search">
-                <div className="position-relative">
+                <div className="position-relative ad_sch">
                   <BsSearch className="position-absolute top-50 translate-middle-y ms-2 inst_search_icon" />
                   <Form.Control
                     type="search"
@@ -208,11 +208,29 @@ function FacultyDashboard() {
                     aria-label="Search"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
+                    
                   />
                 </div>
               </Form>
             </div>
-          </Col>
+          </Col> */}
+          <Col md={6} className='fac_search_col'>
+            <div className="search_filter_main">
+                <Form className="d-flex inst_search">
+                    <div className="position-relative ad_sch">
+                        <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 inst_search_icon ${searchQuery ? 'hidden' : ''}`} />
+                        <Form.Control
+                            type="search"
+                            placeholder="Search by name"
+                            className="ps-3 search_bar"
+                            aria-label="Search"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </div>
+                </Form>
+            </div>
+        </Col>
         </Row>
         <Row>
           {filteredFacultyList.map((item, index) => (

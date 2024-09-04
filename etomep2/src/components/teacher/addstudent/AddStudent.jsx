@@ -183,7 +183,7 @@ function AddStudent() {
             {/* <Link to="/teacherstudentdashboard">
               <IoChevronBackSharp className="teacher_studentadd_back" />
             </Link> */}
-                <IoChevronBackSharp onClick={handleBackClick} className="teacher_studentadd_back" />
+                {/* <IoChevronBackSharp onClick={handleBackClick} className="teacher_studentadd_back" /> */}
             <h1 className="teacher_studentadd_title">Add Student</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>

@@ -1,10 +1,10 @@
 .result_filter_container {
     height:80vh;
-    padding-top: 10vh;
-    width: 80%;
+    padding-top: 6vh;
+    width: 100%;
     }
     .result_filter_form{
-        height: 50vh;
+        height: 40vh;
         width: 100%;
         background-color: #fff;
         padding-top: 5px;
@@ -29,6 +29,7 @@
         color: #526D82 ;
         font-size: 35px;
         margin-left: 10px;
+        padding-left: 10px;
     }
     
     .result_filter_group {
@@ -126,7 +127,7 @@
         border: 1px solid #526D82;
     }
 
-    .result_filter_scrollable {
+    /* .result_filter_scrollable {
             height: calc(70vh - 250px);
             overflow-y: auto; 
             overflow-x: hidden; 
@@ -147,7 +148,7 @@
       
       .result_filter_scrollable::-webkit-scrollbar-thumb:hover {
         background-color: #8FA2B6; 
-      }
+      } */
       
     @media (max-width: 700px) {
         .result_filter_container {
@@ -166,7 +167,8 @@
             border-radius: 8px;
             border: none;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border: 1px solid red;
+            /* border: 1px solid red; */
+            height: 60vh;
         }
  
         .result_filter_back {
@@ -191,9 +193,10 @@
     
         .submit_result_filter {
             padding-right: 0px;
-            padding-left: 20px;
-            margin-left: 20px;
+            padding-left: 0px;
+            margin-left: 0px;
             margin-right: 0px;
+            /* border: 1px solid red; */
         }
     
         .submit_result_filter button {

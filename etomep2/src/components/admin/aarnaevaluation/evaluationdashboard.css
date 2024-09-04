@@ -23,7 +23,7 @@
 .evaluation_list{
   display: flex;
   justify-content: center;
-  padding-top: 40px;
+  padding-top: 10px !important;
   margin-top: 5px;
 }
 .evaluation_adding_button {
@@ -132,7 +132,11 @@ margin-left: 0;
   border-radius: 17px;
   padding-right: 40px; 
 }
-
+.evaluation_list_ad_search_bar:focus {
+  outline: none; /* Ensures that no outline appears on focus */
+  box-shadow: none; /* Removes any box-shadow */
+  /* border: 0.5px solid #526D82; */
+}
 .evaluation_list_searchbar_icon {
   right: 15px;
 }
