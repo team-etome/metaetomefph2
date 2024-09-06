@@ -6,7 +6,7 @@ import studentexcel from "../../utils/studentexcel";
 import { BsSearch } from "react-icons/bs";
 import { FaCalendarAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import '../studentdashboard/studentdashboard.css';
+import "../studentdashboard/studentdashboard.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
@@ -21,6 +21,9 @@ function StudentDashboard() {
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacher = useSelector((state) => state.teacherinfo);
   const teacher_id = teacher.teacherinfo?.teacher_id;
+
+  const [search, setSearch] = useState("");
+  const [filteredStudentList, setFilteredStudentList] = useState([]);
 
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -38,20 +41,20 @@ function StudentDashboard() {
   };
 
   const handleClick = (item) => {
-    navigate('/teacherstudentview', { state: { student: item } });
+    navigate("/teacherstudentview", { state: { student: item } });
   };
 
   const handleFileUpload = async () => {
     if (!file) return;
     setIsLoading(true);
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('teacher',teacher_id)
+    formData.append("file", file);
+    formData.append("teacher", teacher_id);
 
     try {
       await axios.post(`${APIURL}/api/studentexcel`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
       // Handle success (e.g., show a success message, refresh student list)
@@ -66,7 +69,9 @@ function StudentDashboard() {
   useEffect(() => {
     const fetchFacultyData = async () => {
       try {
-        const response = await axios.get(`${APIURL}/api/addstudent/${teacher_id}`);
+        const response = await axios.get(
+          `${APIURL}/api/addstudent/${teacher_id}`
+        );
         setStudentList(response.data);
         setStandard(response.data[0].standard);
         setDivision(response.data[0].division);
@@ -77,16 +82,32 @@ function StudentDashboard() {
     fetchFacultyData();
   }, [APIURL, teacher_id]);
 
-  return (
+  useEffect(() => {
+    setFilteredStudentList(
+      studentlist.filter((student) =>
+        student.student_name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, studentlist]);
 
-    <div className='teacher_student_dashboard'>
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  return (
+    <div className="teacher_student_dashboard">
       <Container fluid>
-        <Row style={{ paddingLeft: "2vw", paddingBottom: '1vw'}} className="std_list">
+        <Row
+          style={{ paddingLeft: "2vw", paddingBottom: "1vw" }}
+          className="std_list"
+        >
           <Col md={6} className="class_number">
-            <h4>Class: {standard} {division}</h4>
+            <h4>
+              Class: {standard} {division}
+            </h4>
           </Col>
           <Col md={6} className="student_search_col">
-            <div className="student_search_filter_main" >
+            <div className="student_search_filter_main">
               <div className="student_search_filter ">
                 <Form className="d-flex form_search">
                   <div className="position-relative">
@@ -96,8 +117,9 @@ function StudentDashboard() {
                       placeholder="Search"
                       className="ps-6 teacher_student_search_input"
                       aria-label="Search"
+                      value={search}
+                      onChange={handleSearchChange}
                     />
-
                   </div>
                 </Form>
               </div>
@@ -105,15 +127,15 @@ function StudentDashboard() {
           </Col>
         </Row>
         <Row className="teacher_studentdashboard_container">
-          {studentlist.map((item, index) => (
+          {filteredStudentList.map((item, index) => (
             <Col lg={3} md={6} sm={6} xs={12} key={index}>
-              <div onClick={() => handleClick(item)} className="student_rectangle">
-
+              <div
+                onClick={() => handleClick(item)}
+                className="student_rectangle"
+              >
                 <div className="student_name1">{item.student_name}</div>
                 <div className="student_date_id">
-                  <div className="student_id">
-                    Admission No.{item.roll_no}
-                  </div>
+                  <div className="student_id">Admission No.{item.roll_no}</div>
                 </div>
               </div>
             </Col>
@@ -121,19 +143,24 @@ function StudentDashboard() {
         </Row>
       </Container>
       <div className="student_adding_button">
-        <Button className={`student_adding student_adding_my_button ${isActive ? 'active' : ''}`} onClick={handleAddClick}>
+        <Button
+          className={`student_adding student_adding_my_button ${
+            isActive ? "active" : ""
+          }`}
+          onClick={handleAddClick}
+        >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
         </Button>
         {showOptions && (
           <>
             <div className="student_overlay" onClick={handleAddClick}></div>
             <div className="student_fab-options">
-            <Link
-                to="/teachertimetable"
-                className="student_fab_option_link"
-              >
+              <Link to="/teachertimetable" className="student_fab_option_link">
                 <div className="student_fab_text">Add Timetable</div>
-                <Button className="student_fab_option" style={{marginTop:'12px'}}>
+                <Button
+                  className="student_fab_option"
+                  style={{ marginTop: "12px" }}
+                >
                   <MdOutlineCalendarMonth className="student_fab_icon" />
                 </Button>
               </Link>
@@ -148,7 +175,10 @@ function StudentDashboard() {
                 className="student_fab_option_link"
               >
                 <div className="student_fab_text">Add Student</div>
-                <Button className="student_fab_option" style={{marginTop:'72px'}}>
+                <Button
+                  className="student_fab_option"
+                  style={{ marginTop: "72px" }}
+                >
                   <IoMdAdd className="student_fab_icon" />
                 </Button>
               </Link>
@@ -164,7 +194,10 @@ function StudentDashboard() {
                 className="student_fab_option_link"
               >
                 <div className="student_fab_text">Download Excel Template</div>
-                <Button className="student_fab_option" style={{marginTop:'132px'}}>
+                <Button
+                  className="student_fab_option"
+                  style={{ marginTop: "132px" }}
+                >
                   <IoMdDownload className="student_fab_icon" />
                 </Button>
               </div>
@@ -180,7 +213,10 @@ function StudentDashboard() {
                 className="student_fab_option_link"
               >
                 <div className="student_fab_text">Upload Through Excel</div>
-                <Button className="student_fab_option" style={{marginTop:'190px'}}>
+                <Button
+                  className="student_fab_option"
+                  style={{ marginTop: "190px" }}
+                >
                   <MdUpload className="student_fab_icon" />
                 </Button>
               </div>
@@ -212,7 +248,9 @@ function StudentDashboard() {
                       />{" "}
                       Uploading...
                     </>
-                  ) : "Upload File"}
+                  ) : (
+                    "Upload File"
+                  )}
                 </Button>
               )}
             </div>
@@ -220,7 +258,7 @@ function StudentDashboard() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
 export default StudentDashboard;

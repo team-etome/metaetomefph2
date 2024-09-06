@@ -57,38 +57,37 @@ function TeacherLogin() {
       });
       return;
     }
+  
     try {
       const data = {
         email: email,
         password: password,
       };
       const response = await axios.post(`${APIURL}/api/teacherlogin`, data);
-      dispatch(teacherinfo(response.data.teacher));
-
+      if (response.data.teacher) {
+        dispatch(teacherinfo(response.data.teacher));
+        Swal.fire({
+          title: "Success!",
+          text: "Login Successfully",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
+        navigate("/teacherhome");
+      } else if (response.data.error) {
+        throw new Error(response.data.error);
+      }
+    } catch (error) {
+      let message = "Invalid Email id or Password";
+      if (error.response) {
+        // Custom error handling from the server
+        message = error.response.data.error || message;
+      }
       Swal.fire({
-        title: "Success!",
-        text: "Login Successfully",
-        icon: "success",
+        title: "Error!",
+        text: message,
+        icon: "error",
         confirmButtonText: "Ok",
       });
-
-      navigate("/teacherhome");
-    } catch (error) {
-      if (error.response && error.response.status === 405) {
-        Swal.fire({
-          title: "Blocked!",
-          text: "User has been blocked",
-          icon: "error",
-          confirmButtonText: "Ok",
-        });
-      } else {
-        Swal.fire({
-          title: "Error!",
-          text: "Invalid Email id or Password",
-          icon: "error",
-          confirmButtonText: "Ok",
-        });
-      }
     }
   };
 

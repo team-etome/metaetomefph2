@@ -64,17 +64,19 @@ function ClassAdding() {
   //   }
   // };
   const handleClassNameChange = (e) => {
-    const value = parseInt(e.target.value, 10);
-    if (value > 0 && value <= 12) {
+    const value = e.target.value;
+    
+    // Allow empty input and ensure only numbers are entered
+    if (value === "" || /^[0-9]+$/.test(value)) {
       setClassName(value);
-      if (value < 11) {
+      
+      // If the value is less than 11, disable the stream field
+      if (parseInt(value, 10) < 11 || value === "") {
         setStream("");
         setStreamDisabled(true); // Disable stream if class is less than 11
       } else {
         setStreamDisabled(false); // Enable stream if class is 11 or 12
       }
-    } else if (value <= 0) {
-      setClassName("");
     }
   };
 
@@ -192,6 +194,14 @@ function ClassAdding() {
       width:'89%'
     }),
   };
+  const handleDivisionChange = (e) => {
+    const value = e.target.value.toUpperCase(); // Convert input to uppercase
+    const regex = /^[A-Z]*$/; // Regular expression to allow only uppercase letters
+  
+    if (regex.test(value)) {
+      setDivision(value); // Update the division state if the input is valid
+    }
+  };
   return (
     <div>
       <Container className="class_add">
@@ -265,7 +275,7 @@ function ClassAdding() {
                       name="class_division"
                       placeholder=""
                       value={division}
-                      onChange={(e) => setDivision(e.target.value)}
+                      onChange={handleDivisionChange}
                     style={{ textTransform: "capitalize" }}
                     maxLength={10}
                     />

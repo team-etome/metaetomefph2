@@ -14,7 +14,6 @@ function AddCustomer() {
   const [email, setEmail] = useState("");
   const [board, setBoard] = useState("");
   const [custboard, setCustBoard] = useState("");
-  const [databaseCode, setDatabaseCode] = useState("");
   const [address, setAddress] = useState("");
   const [region, setRegion] = useState("");
   const [medium, setMedium] = useState([]);
@@ -114,7 +113,7 @@ function AddCustomer() {
       if (!publisherName.length) missingFields.push("publisher name");
       if (!board) missingFields.push("board of education");
       if (!imageFile) missingFields.push("image file");
-      if (!databaseCode) missingFields.push("database code");
+      // if (!databaseCode) missingFields.push("database code");
       if (!address) missingFields.push("address");
       if (!region) missingFields.push("region");
       // if (!institutionType) missingFields.push("type of institution");
@@ -154,7 +153,7 @@ function AddCustomer() {
       formData.append("publisher_name", JSON.stringify(publisherValues));
       formData.append("eduational_body", custboard);
       formData.append("logo", imageFile);
-      formData.append("database_code", databaseCode);
+      // formData.append("database_code", databaseCode);
       formData.append("address", address);
       formData.append("region", region);
       // formData.append("institute_type", institutionType);
@@ -513,20 +512,7 @@ function AddCustomer() {
                 styles={customStyles}
               />
             </div>
-            <div className="input_container">
-              <label for="databaseCode" style={{ fontWeight: "600" }}>
-                Database Code
-              </label>
-              <input
-                type="text"
-                id="databaseCode"
-                name="databaseCode"
-                value={databaseCode}
-                style={{ textTransform: "capitalize" }}
-                maxLength="100"
-                onChange={(e) => setDatabaseCode(e.target.value)}
-              />
-            </div>
+           
             <div className="input_container">
               <label for="address" style={{ fontWeight: "600" }}>
                 Address
