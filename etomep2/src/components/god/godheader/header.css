@@ -1,4 +1,6 @@
 .no-underline {
     text-decoration: none !important;
   }
-  
+  .gd_tb{
+    gap: 20px;
+  }

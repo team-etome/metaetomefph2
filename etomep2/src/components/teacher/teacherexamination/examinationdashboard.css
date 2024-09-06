@@ -14,6 +14,7 @@
     overflow-y: auto;
     height: 75vh;
     width:100% ;
+    
 }
 
   .teacher_examination_container::-webkit-scrollbar {
@@ -125,6 +126,9 @@ width: 20px;
 color: #D8D4D4;
 right: 15px;
 } 
+.examdashboard_search_icon.hidden {
+  display: none !important;
+}
 .examdashboard_search_filter .form-control {
   width: 350px !important;
   border-radius: 17px;
@@ -156,6 +160,11 @@ right: 15px;
   border-radius: 17px;
   color: #767676;
   /* border: 1px solid green; */
+  }
+  .examdashboard_search_input:focus {
+    outline: none; /* Ensures that no outline appears on focus */
+    box-shadow: none; /* Removes any box-shadow */
+    /* border: 0.5px solid #526D82; */
   }
   .my-button {
     background-color: #526D82;

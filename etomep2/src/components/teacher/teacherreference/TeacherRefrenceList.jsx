@@ -108,9 +108,9 @@ const handleBackClick = () => {
           <div className="refrence_header">
         
             <h2>References</h2>
-            <div className="refrence_search_filter_icon d-flex align-items-center">
+            {/* <div className="refrence_search_filter_icon d-flex align-items-center">
               <BsFilterRight className="refrence-bs-filter-right" />
-            </div>
+            </div> */}
           </div>
           <hr />
           <div className="refrence_body">

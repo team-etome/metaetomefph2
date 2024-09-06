@@ -50,6 +50,7 @@
         color: #526D82 ;
         font-size: 30px;
         margin-left: 10px;
+        padding-left: 30px;
     }
     
     .class_view_group {
@@ -214,7 +215,7 @@
             font-size: 24px;
             flex-grow: 1;
             text-align: left;
-            padding-left: 0px;
+            padding-left: 10px;
             margin-left: 0px;
         }
     

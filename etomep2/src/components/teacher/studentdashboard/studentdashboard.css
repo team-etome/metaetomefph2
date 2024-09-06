@@ -149,6 +149,11 @@ height: 35px;
 border-radius: 17px;
 color: #767676;
 }
+.teacher_student_search_input:focus {
+  outline: none; /* Ensures that no outline appears on focus */
+  box-shadow: none; /* Removes any box-shadow */
+  border: 0.5px solid #526D82;
+}
 /* style={{
   width: "400px",
   height: "35px",
@@ -213,7 +218,9 @@ color: #767676;
   color: #D8D4D4;
   right: 15px;
 }
-
+.student_search_icon.hidden {
+  display: none !important;
+}
   .student_adding_my_button {
     background-color: #526D82;
     border: none;

@@ -2,10 +2,11 @@
     height: 100vh;
     padding-top: 12vh;
     background-color: #F8FEFF;
+    
  
   }
   .loka_navbar_row{
-    padding-left: 2vw;
+    padding-left: 3vw;
     padding-top: 1vw;
   }
 .loka_dashboard_tab .nav-link {

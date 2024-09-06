@@ -14,6 +14,9 @@ function ExaminationDashboard() {
   const [showOptions, setShowOptions] = useState(false);
   const [file, setFile] = useState(null);
   const [examinationListData, setExaminationListData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+
   const navigate = useNavigate();
 
   const teacher = useSelector((state) => state.teacherinfo);
@@ -98,21 +101,17 @@ function ExaminationDashboard() {
               >
                 <Form className="d-flex">
                   <div className="position-relative">
-                    <BsSearch
+                    {/* <BsSearch
                       className="examdashboard_search_icon position-absolute top-50 translate-middle-y ms-2"
-                      // style={{
-                      //   zIndex: 2,
-                      //   height: "20px",
-                      //   width: "20px",
-                      //   color: "#D8D4D4",
-                      //   right: "15px",
-                      // }}
-                    />
+                    /> */}
+                    <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 examdashboard_search_icon ${searchQuery ? 'hidden' : ''}`} />
                     <Form.Control
                       type="search"
                       placeholder="Search"
                       className="ps-6 examdashboard_search_input"
                       aria-label="Search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
                 </Form>

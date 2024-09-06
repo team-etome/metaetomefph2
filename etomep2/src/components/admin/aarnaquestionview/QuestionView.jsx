@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdDelete } from "react-icons/md";
 import "../aarnaquestionview/questionview.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -89,7 +90,7 @@ const handleBackClick =() =>{
               }}
             >
               {/* <Link to="/aarnanavbar"> */}
-                <IoChevronBackSharp onClick={handleBackClick} className="question_view_back" />
+                {/* <IoChevronBackSharp onClick={handleBackClick} className="question_view_back" /> */}
               {/* </Link> */}
               <h1 className="question_view_title">{questionPaper?.exam_name || ""}</h1>
               <div style={{ flex: "1" }}></div>
@@ -105,13 +106,14 @@ const handleBackClick =() =>{
                   }}
                 >
                   {/* <button className="question_edit">Edit</button> */}
-                  <button
+                  {/* <button
                     onClick={handleDelete}
                     type="button"
                     className="question_block"
                   >
                     Delete
-                  </button>
+                  </button> */}
+                  <MdDelete className="question_block" onClick={handleDelete}/>
                 </div>
               ) : (
                 <div style={{ position: "relative" }} ref={dropdownRef}>
@@ -137,13 +139,15 @@ const handleBackClick =() =>{
                       }}
                     >
                       {/* <button className="question_edit">Edit</button> */}
-                      <button
+                      {/* <button
                         onClick={handleDelete}
                         type="button"
                         className="question_block"
                       >
                         Delete
-                      </button>
+                      </button> */}
+                  <MdDelete className="question_block" onClick={handleDelete}/>
+
                     </div>
                   )}
                 </div>

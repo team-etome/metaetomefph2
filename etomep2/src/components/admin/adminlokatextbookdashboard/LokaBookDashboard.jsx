@@ -77,7 +77,7 @@ function LokaBookDashboard() {
       <Container
         fluid
         className="admin_loka_textbook_dashboard"
-        style={{ marginTop: "16px" }}
+        // style={{ marginTop: "16px" }}
       >
         <div className="textbook_search">
           <Row className="search_dropdwon_textbook">
@@ -103,9 +103,9 @@ function LokaBookDashboard() {
               </Dropdown>
               <div className="separator"></div>
               <InputGroup className="inputgroup_search">
-                <BsSearch className="position-absolute top-50 translate-middle-y ms-2 book_searchbar_icon" />
+                <BsSearch className="position-absolute top-50 translate-middle-y ms-1 book_searchbar_icon" />
                 <FormControl
-                  className="ps-5 book_search_input"
+                  className="ps-4 book_search_input"
                   placeholder="Search..."
                   aria-label="Search"
                   value={searchTerm}

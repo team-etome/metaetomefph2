@@ -99,7 +99,7 @@
   .ad_lk_lib_list{
   display: flex;
   justify-content: center;
-  padding-top: 40px;
+  padding-top: 20px;
   margin-top: 5px;
   }
   .ad_lk_lib_add {
@@ -123,6 +123,12 @@
   }
   .lib_search_nav{
     left: 5%;
+    padding-bottom: 10px;
+  }
+  .library_search_input:focus {
+    outline: none;
+    box-shadow: none; 
+    border: 0.5px solid #526D82;
   }
   .lib_inputgroup_search{
     width: 80%;

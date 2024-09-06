@@ -515,9 +515,9 @@ function LokaLibrary() {
               marginBottom: "10px",
             }}
           >
-            <Link to="/adminlokanavbar">
+            {/* <Link to="/adminlokanavbar">
               <IoChevronBackSharp className="loka_lib_back" />
-            </Link>
+            </Link> */}
             <h1 className="loka_lib_title">Add Library</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>
