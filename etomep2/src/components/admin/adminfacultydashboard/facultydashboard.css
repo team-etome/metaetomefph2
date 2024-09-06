@@ -21,9 +21,7 @@
     background: #A8BFD1;
   }
 
-.fac_search_col{
-  /* border: 1px solid red; */
-}
+
   .faculty_lisit_circle{
     position: absolute;
     top: 85px;
@@ -150,6 +148,7 @@ width: 20px;
 color: #D8D4D4;
 right: 15px;
 } 
+
 .inst_search_icon.hidden {
   display: none;
 }
@@ -167,6 +166,7 @@ right: 15px;
   box-shadow: none; /* Removes any box-shadow */
   border: 0.5px solid #526D82;
 }
+
 .search_filter .form-control {
   width: 350px !important;
   border-radius: 17px;
@@ -446,4 +446,11 @@ border-radius: 8% !important;
     text-overflow:ellipsis;
     width:200px;
   }
+}
+
+
+.inactive-faculty {
+  opacity: 0.6; 
+  background-color: #f8f9fa; 
+  
 }

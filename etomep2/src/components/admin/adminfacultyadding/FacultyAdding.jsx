@@ -6,7 +6,7 @@ import Select from "react-select";
 import "../adminfacultyadding/facultyadding.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Swal from 'sweetalert2'; 
+import Swal from "sweetalert2";
 
 function FacultyAdding() {
   const [firstName, setFirstName] = useState("");
@@ -18,16 +18,14 @@ function FacultyAdding() {
   const [gender, setGender] = useState(null);
   const [loading, setLoading] = useState(false);
 
-
   const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
 
-  const admin_id = admininfo ? admininfo.admininfo?.admin_id : '';
+  const admin_id = admininfo ? admininfo.admininfo?.admin_id : "";
 
-  console.log(admin_id,"admin id")
+  console.log(admin_id, "admin id");
 
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const genderOptions = [
     { value: "Female", label: "Female" },
     { value: "Male", label: "Male" },
@@ -47,10 +45,12 @@ function FacultyAdding() {
       { value: password, label: "Password" },
     ];
 
-    const missingFields = requiredFields.filter(field => !field.value);
+    const missingFields = requiredFields.filter((field) => !field.value);
 
     if (missingFields.length > 0) {
-      const missingFieldLabels = missingFields.map(field => field.label).join(", ");
+      const missingFieldLabels = missingFields
+        .map((field) => field.label)
+        .join(", ");
       Swal.fire({
         icon: "error",
         title: "Missing Required Information",
@@ -59,44 +59,44 @@ function FacultyAdding() {
       return;
     }
 
-  // Validate first name and last name length
-  // if (firstName.length < 3) {
-  //   Swal.fire({
-  //     icon: "error",
-  //     title: "Invalid First Name",
-  //     text: "First name must be at least 3 characters long.",
-  //   });
-  //   return;
-  // }
+    // Validate first name and last name length
+    // if (firstName.length < 3) {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Invalid First Name",
+    //     text: "First name must be at least 3 characters long.",
+    //   });
+    //   return;
+    // }
 
-  // if (lastName.length < 3) {
-  //   Swal.fire({
-  //     icon: "error",
-  //     title: "Invalid Last Name",
-  //     text: "Last name must be at least 3 characters long.",
-  //   });
-  //   return;
-  // }
-  // Validate first name and last name for special characters
-  const nameRegex = /^[A-Za-z]+$/;
+    // if (lastName.length < 3) {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Invalid Last Name",
+    //     text: "Last name must be at least 3 characters long.",
+    //   });
+    //   return;
+    // }
+    // Validate first name and last name for special characters
+    const nameRegex = /^[A-Za-z\s]+$/;
 
-  if (!nameRegex.test(firstName)) {
-    Swal.fire({
-      icon: "error",
-      title: "Invalid First Name",
-      text: "First name must contain only letters.",
-    });
-    return;
-  }
+    if (!nameRegex.test(firstName)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid First Name",
+        text: "First name must contain only letters and spaces.",
+      });
+      return;
+    }
 
-  if (!nameRegex.test(lastName)) {
-    Swal.fire({
-      icon: "error",
-      title: "Invalid Last Name",
-      text: "Last name must contain only letters.",
-    });
-    return;
-  }
+    if (!nameRegex.test(lastName)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Last Name",
+        text: "Last name must contain only letters and spaces.",
+      });
+      return;
+    }
     // Validate phone number
     if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
       Swal.fire({
@@ -124,9 +124,9 @@ function FacultyAdding() {
       const response = await axios.post(`${APIURL}/api/addteacher`, formData);
 
       Swal.fire({
-        icon: 'success',
-        title: 'Registration Successful',
-        text: 'Faculty has been added successfully!',
+        icon: "success",
+        title: "Registration Successful",
+        text: "Faculty has been added successfully!",
       });
 
       setFirstName("");
@@ -137,15 +137,15 @@ function FacultyAdding() {
       setPassword("");
       setGender(null);
       setLoading(false);
-      
-      navigate('/institutionadding');
+
+      navigate("/institutionadding");
     } catch (error) {
       console.error("Error submitting form:", error);
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!',
-        footer: 'Please check the data and try again.'
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        footer: "Please check the data and try again.",
       });
       setLoading(false);
     }
@@ -157,14 +157,13 @@ function FacultyAdding() {
   //     first_name: firstName,
   //     last_name: lastName,
   //     email: email,
-  //     phone_number: phoneNumber, 
-  //     gender: gender ? gender.value : null, 
-  //     employee_id: employeeId, 
+  //     phone_number: phoneNumber,
+  //     gender: gender ? gender.value : null,
+  //     employee_id: employeeId,
   //     password: password,
   //     admin_id: admin_id,
   //   };
 
-    
   //   if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
   //     Swal.fire({
   //       icon: "error",
@@ -185,7 +184,6 @@ function FacultyAdding() {
   //     setPassword("");
   //     setGender(null);
 
-      
   //     Swal.fire({
   //       icon: 'success',
   //       title: 'Registration Successful',
@@ -193,8 +191,6 @@ function FacultyAdding() {
   //     });
 
   //     navigate('/institutionadding')
-
-      
 
   //   } catch (error) {
   //     console.error("Error submitting form:", error);
@@ -204,7 +200,7 @@ function FacultyAdding() {
   //       text: 'Something went wrong!',
   //       footer: 'Please check the data and try again.'
   //     });
-      
+
   //   }
   // };
   const handlePhoneNumberChange = (e) => {
@@ -251,7 +247,7 @@ function FacultyAdding() {
     dropdownIndicator: (base) => ({
       ...base,
       color: "#526D82",
-      paddingTop:'0px'
+      paddingTop: "0px",
     }),
     indicatorSeparator: (base) => ({
       display: "none",
@@ -281,7 +277,12 @@ function FacultyAdding() {
             }}
           >
             {/* <Link to="/institutionadding"> */}
-              {/* <IoChevronBackSharp  onClick={handleBackClick} className="faculty_back" /> */}
+
+            <IoChevronBackSharp
+              onClick={handleBackClick}
+              className="faculty_back"
+            />
+
             {/* </Link> */}
             <h1 className="faculty_title">Add Faculty</h1>
           </div>
@@ -390,7 +391,11 @@ function FacultyAdding() {
                   />
                 </div>
                 <div className="submit_faculty">
-                  <button onClick={handleSubmit} type="submit" className="faculty_button">
+                  <button
+                    onClick={handleSubmit}
+                    type="submit"
+                    className="faculty_button"
+                  >
                     Submit
                   </button>
                 </div>

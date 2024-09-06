@@ -48,7 +48,7 @@ function GodLogin() {
 
       Swal.fire({
         title: "Success!",
-        text: "Added Successfully",
+        text: "Login Successfully",
         icon: "success",
         confirmButtonText: "Ok",
       });

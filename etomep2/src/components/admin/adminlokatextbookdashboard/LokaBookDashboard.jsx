@@ -127,17 +127,21 @@ function LokaBookDashboard() {
                   key={index}
                   className="ad_lk_tb_list"
                 >
-                  <div className="border border-white ad_lk_tb_rectangle">
-                    <div className="ad_loka_tb_img">
+                  <div  className="border border-white ad_lk_tb_rectangle">
+                 
+                    <div  className="ad_loka_tb_img">
+                      
                       <img src={item.textbook_image} alt="Textbook" />
+                      
                     </div>
                     <div className="admin_tb_texts">
                       <div className="admin_loka_publishername">
-                        {item.publisher_name}
+                        {item.textbook_details.publisher_name}
                       </div>
-                      <div className="ad_loka_tb_subject">{item.subject}</div>
+                      <div className="ad_loka_tb_subject">{item.textbook_details.subject}</div>
                     </div>
                   </div>
+                 
                 </Col>
               ))
             ) : (

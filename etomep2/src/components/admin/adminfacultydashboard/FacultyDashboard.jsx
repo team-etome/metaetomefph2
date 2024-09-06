@@ -10,7 +10,7 @@ import generateExcelFile from "../../utils/generateExcelFile";
 import { useSelector, useDispatch } from "react-redux";
 import { adminteacherinfo } from "../../../Redux/Actions/AdminTeacherInfoAction";
 import { BsSearch, BsFilterRight } from "react-icons/bs";
-
+import Swal from "sweetalert2";
 function FacultyDashboard() {
   const [isActive, setIsActive] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
@@ -55,90 +55,32 @@ function FacultyDashboard() {
     fileInputRef.current.click();
   };
 
-  // const handleFileUpload = async () => {
-  //   if (!file) {
-  //     alert("Please select a file to upload.");
-  //     return;
-  //   }
-
-  //   setIsLoading(true);
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   formData.append("adminId", admin_id);
-
-  //   try {
-  //     const response = await axios.post(
-  //       `${APIURL}/api/excelteacher`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-  //     console.log("File uploaded successfully:", response);
-  //   alert("Upload successful");
-  //   fetchFacultyData();
-  //   setShowOptions(false);
-  //   setFile(null);
-  // } catch (error) {
-  //   console.error("Error uploading file:", error);
-
-  //   let errorMessage = "An error occurred during file upload.";
-  //   if (error.response) {
-  //     if (typeof error.response.data === 'string') {
-  //       errorMessage = error.response.data;
-  //     } else if (error.response.data && error.response.data.message) {
-  //       errorMessage = error.response.data.message;
-  //     }
-  //   }
-
-    //   alert("Upload successful");
-    //   fetchFacultyData();
-
-    //   console.log(response.data);
-    //   setShowOptions(false);
-    //   setFile(null);
-    // } catch (error) {
-    //   console.error("Error uploading file:", error);
-      // alert("Error during file upload.");
-      // const errorMessage = error.response?.data?.message || "Error during file upload.";
-      // alert(errorMessage);
-      // let errorMessage = "Error during file upload.";
-
-      
-      // if (error.response && error.response.data) {
-      //   if (typeof error.response.data === 'string') {
-      //     errorMessage = error.response.data;
-      //   } else if (error.response.data.message) {
-      //     errorMessage = error.response.data.message;
-      //   }
-      // }
-      // alert(errorMessage);
-
-      // const errorMessage = 
-      // typeof error.response?.data === 'string' 
-      // ? error.response?.data 
-      // : error.response?.data?.message || "Error during file upload.";
-
-  //   alert(errorMessage);
-
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
   const handleFileUpload = async () => {
+    console.log("entereddddd")
     if (!file) {
-      alert("Please select a file to upload.");
+      Swal.fire({
+        icon: "error",
+        title: "No File Selected",
+        text: "Please select a file to upload.",
+      });
       return;
     }
 
-    setIsLoading(true);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("adminId", admin_id);
 
     try {
+      // Show loading indicator
+      Swal.fire({
+        title: "Uploading...",
+        text: "Please wait while the file is being uploaded.",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
       console.log("Starting file upload...");
       const response = await axios.post(
         `${APIURL}/api/excelteacher`,
@@ -151,25 +93,35 @@ function FacultyDashboard() {
       );
 
       console.log("File uploaded successfully:", response);
-      alert("Upload successful");
+
+      // Close the loading alert and show success
+      Swal.fire({
+        icon: "success",
+        title: "Upload Successful",
+        text: "File has been uploaded successfully.",
+      });
+
       await fetchFacultyData();
       setShowOptions(false);
       setFile(null);
     } catch (error) {
       console.error("Error uploading file:", error);
 
-      // let errorMessage = "An error occurred during file upload.";
+      let errorMessage = "An error occurred during file upload.";
       if (error.response) {
-        if (typeof error.response.data === 'string') {
+        if (typeof error.response.data === "string") {
           errorMessage = error.response.data;
         } else if (error.response.data && error.response.data.message) {
           errorMessage = error.response.data.message;
         }
       }
 
-      alert(errorMessage);
-    } finally {
-      setIsLoading(false);
+      // Close the loading alert and show error
+      Swal.fire({
+        icon: "error",
+        title: "Upload Failed",
+        text: errorMessage,
+      });
     }
   };
 
@@ -181,7 +133,6 @@ function FacultyDashboard() {
     navigate("/facultyview", { state: { faculty: facultyData } });
   };
 
-
   const filteredFacultyList = facultyListData.filter(
     (faculty) =>
       faculty.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -190,10 +141,7 @@ function FacultyDashboard() {
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
-      <Container
-        fluid
-        className="faculty_container_scroll"
-      >
+      <Container fluid className="faculty_container_scroll">
         <Row>
           <Col md={6} ></Col>
           {/* <Col md={6} className='fac_search_col'>
@@ -237,11 +185,21 @@ function FacultyDashboard() {
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="fac_list">
               <div
                 onClick={() => handleclick(item)}
-                className="border border-white faculty_rectangle"
+                className={`faculty_rectangle ${
+                  !item.status ? "" : "inactive-faculty"
+                }`}
               >
-                <div className="faculty_list_medium" style={{textTransform:'capitalize'}}>ID:{item.employee_id}</div>
+                <div
+                  className="faculty_list_medium"
+                  style={{ textTransform: "capitalize" }}
+                >
+                  ID:{item.employee_id}
+                </div>
                 <div className="faculty_profile_name">
-                  <div className="faculty_list_facultyname"style={{textTransform:'capitalize'}}>
+                  <div
+                    className="faculty_list_facultyname"
+                    style={{ textTransform: "capitalize" }}
+                  >
                     {item.first_name}
                   </div>
                 </div>
@@ -277,13 +235,8 @@ function FacultyDashboard() {
           <>
             <div className="overlay" onClick={handleAddClick}></div>
             <div className="fab-options">
-
               <Link to="/facultyadding" className="fab_option_link">
-                <Button
-                  className="fab-option"
-                  style={{ marginTop: "10px" }}
-                >
-
+                <Button className="fab-option" style={{ marginTop: "10px" }}>
                   <IoMdAdd className="fab-icon" />
                 </Button>
                 <div className="fab-text">Add Faculty</div>
@@ -328,6 +281,7 @@ function FacultyDashboard() {
               <input
                 type="file"
                 onChange={handleFileChange}
+                accept=".xls,.xlsx"
                 style={{ display: "none" }}
                 ref={fileInputRef}
               />
@@ -336,12 +290,6 @@ function FacultyDashboard() {
                   className="upload_button"
                   onClick={handleFileUpload}
                   disabled={isLoading}
-                  // style={{
-                  //   backgroundColor: "#526D82",
-                  //   border: "none",
-                  //   marginTop: "200px",
-                  //   marginRight:'70px',
-                  // }}
                 >
                   {isLoading ? "Uploading..." : "Upload File"}
                 </Button>
