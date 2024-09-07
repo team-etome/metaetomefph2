@@ -33,6 +33,9 @@ function ClassAdding() {
 
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
 
+
+  console.log(teacherinfo,"teacher info")
+
   const m = admininfo ? admininfo.admininfo?.medium : null;
 
   // const mediumOption = m ? [{ value: m, label: m }] : [];
@@ -81,9 +84,12 @@ function ClassAdding() {
   };
 
   const teacherOptions = teacherinfo.adminteacherinfo?.map((teacher) => ({
+    id    : teacher.id,
     value: `${teacher.first_name} ${teacher.last_name}`, // Assuming you want to use names as value; could be `teacher.id` or similar if needed
     label: `${teacher.first_name} ${teacher.last_name}`, // Display format in the dropdown
   }));
+
+  console.log(teacherOptions,"kjfhbidwghius")
 
   // const handleSubmit = (e) => {
 

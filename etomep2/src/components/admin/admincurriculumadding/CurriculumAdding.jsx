@@ -23,11 +23,14 @@ function CurriculumAdding() {
   const [selectedPublisher, setSelectedPublisher] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
 
+  const [editMode, setEditMode] = useState(false); 
+  const [editIndex, setEditIndex] = useState(null); 
+
   const [curriculumEntries, setCurriculumEntries] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  console.log(curriculumEntries, "helooooo");
+  console.log(faculty, "helooooo");
 
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
   const classinfo = useSelector((state) => state.adminclassinfo);
@@ -40,7 +43,7 @@ function CurriculumAdding() {
   const class_name = classinfo?.adminclassinfo?.className;
   const division = classinfo?.adminclassinfo?.division;
   const stream = classinfo?.adminclassinfo?.stream;
-  const class_teacher = classinfo?.adminclassinfo?.teacher.value;
+  const class_teacher = classinfo?.adminclassinfo?.teacher.id;
   const medium = classinfo?.adminclassinfo?.medium.value;
 
   console.log(classinfo, "classinfo");
@@ -57,17 +60,18 @@ function CurriculumAdding() {
     }
   }, [admininfo]);
 
-
-
   const APIURL = useSelector((state) => state.APIURL.url);
 
   console.log(selectedPublisher, selectedSubject, "ssssssss");
 
   const facultyOptions = teacherinfo.adminteacherinfo?.map((teacher) => ({
+    id   : teacher.id,
     value: `${teacher.first_name} ${teacher.last_name}`,
     label: `${teacher.first_name} ${teacher.last_name}`,
   }));
+  
 
+  console.log(facultyOptions,"faculty option")
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
@@ -76,9 +80,10 @@ function CurriculumAdding() {
           // Match the educational_body from admininfo with the subject educational_body
           const filteredSubjects = response.data.subject_names.filter(
             (subject) =>
-              subject.educational_body === admininfo?.admininfo?.educational_body
+              subject.educational_body ===
+              admininfo?.admininfo?.educational_body
           );
-  
+
           const subjectOptions = filteredSubjects.map((subject) => ({
             value: subject.subject_name,
             label: subject.subject_name,
@@ -89,7 +94,7 @@ function CurriculumAdding() {
         console.error("Failed to fetch curriculum data:", error);
       }
     };
-  
+
     fetchSubjects();
   }, [APIURL, admininfo]);
 
@@ -169,9 +174,10 @@ function CurriculumAdding() {
   const handleAddNew = () => {
     // Check if all required fields are selected
     let missingFields = [];
-    if (!selectedPublisher) missingFields.push("Publisher Name");
-    if (!selectedSubject) missingFields.push("Subject");
-    if (!faculty) missingFields.push("Faculty");
+    if (!selectedPublisher || !selectedSubject || !faculty) {
+      alert("Please make sure all fields are selected before adding.");
+      return;
+    }
 
     if (missingFields.length > 0) {
       const missingFieldsString = missingFields
@@ -180,6 +186,7 @@ function CurriculumAdding() {
       alert(
         `Please make sure all fields are selected before adding. Missing: ${missingFieldsString}.`
       );
+
       return;
     }
 
@@ -191,7 +198,7 @@ function CurriculumAdding() {
         entry.faculty.value === faculty.value
     );
 
-    if (isDuplicate) {
+     if (isDuplicate && !editMode) {
       Swal.fire({
         icon: "error",
         title: "Duplicate Entry",
@@ -200,11 +207,25 @@ function CurriculumAdding() {
       return;
     }
 
-    // Add the new entry if it's not a duplicate
-    setCurriculumEntries((prevEntries) => [
-      ...prevEntries,
-      { selectedPublisher, selectedSubject, faculty },
-    ]);
+    
+    if (editMode) {
+      // Update the existing entry
+      const updatedEntries = [...curriculumEntries];
+      updatedEntries[editIndex] = {
+        selectedPublisher,
+        selectedSubject,
+        faculty,
+      };
+      setCurriculumEntries(updatedEntries);
+      setEditMode(false); // Exit edit mode
+      setEditIndex(null);
+    } else {
+      // Add a new entry if not in edit mode
+      setCurriculumEntries((prevEntries) => [
+        ...prevEntries,
+        { selectedPublisher, selectedSubject, faculty },
+      ]);
+    }
 
     // Clear the current selections after adding
     setSelectedPublisher(null);
@@ -266,6 +287,51 @@ function CurriculumAdding() {
   const handleBackClick = () => {
     navigate("/classadding");
   };
+
+  const handleEdit = (index) => {
+    // Set the form values to the selected entry
+    const entry = curriculumEntries[index];
+    setSelectedPublisher(entry.selectedPublisher);
+    setSelectedSubject(entry.selectedSubject);
+    setFaculty(entry.faculty);
+    setEditIndex(index);
+    setEditMode(true); // Set the index of the entry being edited
+    setSelectedRow(null);
+  };
+
+
+
+
+
+
+ const handleDelete = () => {
+    if (selectedRow !== null) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setCurriculumEntries((prevEntries) =>
+            prevEntries.filter((_, i) => i !== selectedRow)
+          );
+          setSelectedRow(null); // Clear the selected row
+          Swal.fire("Deleted!", "Your entry has been deleted.", "success");
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "No Row Selected",
+        text: "Please select a row to delete.",
+      });
+    }
+  };
+
   return (
     <div className="curriculum_container">
       <Container className="curriculum_add">
@@ -288,11 +354,15 @@ function CurriculumAdding() {
           <div className="curriculum_scroll">
             <Row>
               <div className="edit_delete">
-                {/* <div className="curriculum_edit"> */}
-                <FiEdit className="curriculum_edit" />
-                {/* </div> */}
-                {/* <div className="curriculum_delete"> */}
-                <RiDeleteBin6Line className="curriculum_delete" />
+                <FiEdit
+                 onClick={() => handleEdit(selectedRow)}
+                  className="curriculum_edit"
+                />
+
+                <RiDeleteBin6Line
+                  onClick={handleDelete}
+                  className="curriculum_delete"
+                />
 
                 {/* </div> */}
               </div>
@@ -377,11 +447,10 @@ function CurriculumAdding() {
                       display: "flex",
                       justifyContent: "center",
                       alignContent: "center",
+                      
                     }}
-                    onClick={() => setSelectedRow(1)}
-                    className={
-                      selectedRow === 1 ? "selected" : "curriculum_row"
-                    }
+                    onClick={() => setSelectedRow(index)} // Set selected row index
+                    className={selectedRow === index ? "selected" : "curriculum_row"}
                   >
                     <Col md={3} className="curriculum_list">
                       {entry.selectedPublisher.label}
