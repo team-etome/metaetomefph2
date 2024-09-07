@@ -168,7 +168,7 @@ function Customerdashboard() {
                   <div>
                     <Link to='/addcustomer'>
                       <Button
-                        onClick={() => handleOptionClick("School")}
+                        // onClick={() => handleOptionClick("School")}
                         className="customer_dashboard_add_option_icon"
                         // style={{ backgroundColor: 'white', border: 'none', color: '#526D82', width: '100px' }}
                       >
