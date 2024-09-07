@@ -6,6 +6,7 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { RiShareBoxFill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
 
 function ClassView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
@@ -68,7 +69,9 @@ function ClassView() {
                   }}
                 >
                   {/* <button className="class_edit">Edit</button> */}
-                  <FiEdit className="class_edit_icon" />
+               
+                  <MdDelete className="evaluation_edit" />
+
                   {/* <button className="class_block">Block</button> */}
                 </div>
               ) : (

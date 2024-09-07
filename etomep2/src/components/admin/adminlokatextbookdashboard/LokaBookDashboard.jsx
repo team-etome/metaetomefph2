@@ -26,6 +26,7 @@ function LokaBookDashboard() {
   const publisher_name = admininfo.admininfo?.publisher_name;
   const navigate = useNavigate();
 
+  const [filteredTextbooks, setFilteredTextbooks] = useState([]);
 
   console.log(lokabookListData,"clgggggggggggggggggg")
 
@@ -35,9 +36,10 @@ function LokaBookDashboard() {
 
   const filteredBooks = lokabookListData.filter(
     (item) =>
-      (!selectedPublisher || item.publisher_name === selectedPublisher) &&
+      (!selectedPublisher || item.textbook_details.publisher_name === selectedPublisher) &&
       (!searchTerm ||
-        item.subject.toLowerCase().includes(searchTerm.toLowerCase()))
+        item.textbook_details.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.textbook_details.class_name.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   useEffect(() => {
@@ -106,7 +108,7 @@ function LokaBookDashboard() {
                 <BsSearch className="position-absolute top-50 translate-middle-y ms-1 book_searchbar_icon" />
                 <FormControl
                   className="ps-4 book_search_input"
-                  placeholder="Search..."
+                  placeholder="Search by Class or Publisher name"
                   aria-label="Search"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -139,6 +141,7 @@ function LokaBookDashboard() {
                         {item.textbook_details.publisher_name}
                       </div>
                       <div className="ad_loka_tb_subject">{item.textbook_details.subject}</div>
+                      <div className="ad_loka_tb_subject">class: {item.textbook_details.class_name}</div>
                     </div>
                   </div>
                  

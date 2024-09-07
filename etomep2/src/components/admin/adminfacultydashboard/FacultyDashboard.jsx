@@ -19,6 +19,9 @@ function FacultyDashboard() {
   const [facultyListData, setFacultyListData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+
+  console.log(facultyListData,"uygr8estp97wer ")
+
   const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
   const admin_id = admininfo ? admininfo?.admininfo?.admin_id : null;
@@ -144,24 +147,7 @@ function FacultyDashboard() {
       <Container fluid className="faculty_container_scroll">
         <Row>
           <Col md={6} ></Col>
-          {/* <Col md={6} className='fac_search_col'>
-            <div className="search_filter_main">
-              <Form className="d-flex inst_search">
-                <div className="position-relative ad_sch">
-                  <BsSearch className="position-absolute top-50 translate-middle-y ms-2 inst_search_icon" />
-                  <Form.Control
-                    type="search"
-                    placeholder="Search by name"
-                    className="ps-3 search_bar"
-                    aria-label="Search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    
-                  />
-                </div>
-              </Form>
-            </div>
-          </Col> */}
+          
           <Col md={6} className='fac_search_col'>
             <div className="search_filter_main">
                 <Form className="d-flex inst_search">

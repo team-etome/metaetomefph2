@@ -17,6 +17,11 @@ function LokaTextbook() {
   const [textbookName, setTextbookName] = useState("");
   const [subjectOptions, setSubjectOptions] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
+
+
+
+  const [mediumOptions, setMediumOptions] = useState([]); 
+  const [selectedMedium, setSelectedMedium] = useState(null);
   const [medium, setMedium] = useState("");
   const [m, setM] = useState("");
   const [volume, setVolume] = useState("");
@@ -25,6 +30,7 @@ function LokaTextbook() {
   const [imageFile, setImageFile] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
   const [data, setData] = useState("");
+  const [selectedPublisher, setSelectedPublisher] = useState("");
 
   const [showChapterDiv, setShowChapterDiv] = useState(false);
 
@@ -35,33 +41,60 @@ function LokaTextbook() {
   console.log(chapters, "chaptersssssssssssssss");
 
   const admininfo = useSelector((state) => state.admininfo);
-  const admin_id = admininfo.admininfo?.admin_id
+  const admin_id = admininfo.admininfo?.admin_id;
 
-  console.log(admin_id,"admin id")
+  console.log(admininfo, " admininfo");
+  
+
+  console.log(subjectOptions,"fihgseioyfg")
+
+  useEffect(() => {
+    if (admininfo?.admininfo?.publisher_name) {
+      const publishers = admininfo.admininfo.publisher_name.map(
+        (publisher) => ({
+          value: publisher,
+          label: publisher,
+        })
+      );
+      setPublisherName(publishers);
+    }
+  }, [admininfo]);
 
   const APIURL = useSelector((state) => state.APIURL.url);
+
   useEffect(() => {
-    // Fetch subjects from the backend
     const fetchSubjects = async () => {
       try {
         const response = await axios.get(`${APIURL}/api/addsubject`);
-        const subjectsData = response.data.map((subject) => subject.subject);
-        const uniqueSubjects = [...new Set(subjectsData)].map((subject) => ({
-          value: subject,
-          label: subject,
+        const allSubjects = response.data;
+
+        // Filter subjects based on educational body in admininfo
+        const filteredSubjects = allSubjects.filter(
+          (subject) =>
+            subject.educational_body === admininfo?.admininfo?.educational_body
+        );
+
+        // Map filtered subjects to Select options
+        const subjectOptions = filteredSubjects.map((subject) => ({
+          value: subject.subject,
+          label: subject.subject,
         }));
-        setSubjectOptions(uniqueSubjects);
+
+        setSubjectOptions(subjectOptions);
       } catch (error) {
         console.error("Error fetching subjects:", error);
       }
     };
 
     fetchSubjects();
-  }, [APIURL]);
+  }, [APIURL, admininfo]);
+
+
+
 
   const handleMediumChange = (selectedOptions) => {
     setM(selectedOptions.value);
-    setMedium(selectedOptions);
+    setSelectedMedium(selectedOptions);
   };
 
   const { id } = useParams();
@@ -97,9 +130,10 @@ function LokaTextbook() {
       );
       setVolume(data[0].volume || "");
       setMedium({ value: data[0].medium, label: data[0].medium } || "");
-      setPublisherName({
-        value: data[0].publisher_name,
-        label: data[0].publisher_name,
+     
+      setSelectedPublisher({
+        value: data[0]?.publisher_name,
+        label: data[0]?.publisher_name,
       });
 
       setTotalChaptersInput(data[0].total_chapters);
@@ -117,70 +151,28 @@ function LokaTextbook() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (admininfo?.admininfo?.medium) {
+      // Parse the medium if it's a JSON string
+      const mediums = JSON.parse(admininfo.admininfo.medium);
+
+      // Map mediums to Select options
+      const mediumOptions = mediums.map((medium) => ({
+        value: medium,
+        label: medium,
+      }));
+
+      setMediumOptions(mediumOptions);
+    }
+  }, [admininfo]);
+
   const [loading, setLoading] = useState(false);
 
   const handlePublisherChange = (selectedOptions) => {
-    setPublisherName(selectedOptions);
+    setSelectedPublisher(selectedOptions);
     setP(selectedOptions.value);
   };
-  const publishers = [
-    "MADHUBAN",
-    "GOYAL",
-    "VIVA - EDUCATION",
-    "ANAND",
-    "UGS",
-    "INDIANNICA",
-    "BOSEM",
-    "GLOBAL",
-    "ANAND BOOKS",
-    "APC",
-    "BOARD",
-    "NEW SARASWATI",
-    "Cambridge",
-    "Amenta",
-    "Marina Publication",
-    "Bharati Bhavan",
-    "Inspiration Publication",
-    "Saraswati Publication",
-    "Goyal Brothers",
-    "Jay Cee",
-    "Kips",
-    "Assam Book Dipo",
-    "NEDSSS Publication",
-    "ASTPPCL",
-    "Assam Book depot",
-    "NEDSSS Publi.",
-    "CBSE/Dhanpat Raj & C",
-    "TYCHEE",
-    "Progress",
-    "Headword Publishing Company",
-    "Acevision Publisher Pvt Ltd",
-    "Arya Publishing Company",
-    "Edutree Publishers Pvt Ltd",
-    "Evergreen Publications Ltd",
-    "Orient BlackSwan",
-    "Full Marks Pvt Ltd",
-    "Langers International",
-    "Vision Publications",
-    "Avichal Publishing Co.",
-    "Prachi India Pvt. Ltd.",
-    "O. U. P.",
-    "Black Pearl Publications",
-    "Selina Publications",
-    "Goyal Prakashan",
-    "Dhanpat Rai & Co.",
-    "Unisec Publications",
-    "Morning Star",
-    "Avichal Publishing Co.",
-    "Huda Publications",
-    "I. U. P.",
-    "NCERT",
-  ];
-  const publisherOptions = publishers.map((publisher) => ({
-    value: publisher,
-    label: publisher,
-  }));
-
+  
   const handleTabChange = (e, tab) => {
     e.preventDefault();
     setSelectedTab(tab);
@@ -194,11 +186,6 @@ function LokaTextbook() {
     }
   };
 
-  // const handleChapterInputChange = (index, fieldName, value) => {
-  //   const updatedChapters = [...chapters];
-  //   updatedChapters[index][fieldName] = value;
-  //   setChapters(updatedChapters);
-  // };
 
   const handleChapterInputChange = (index, field, value) => {
     const updatedChapters = [...chapters];
@@ -206,76 +193,40 @@ function LokaTextbook() {
     setChapters(updatedChapters);
   };
 
-  const clearPdfFile = () => {
-    setPdfFile(null);
-  };
+ 
 
   const clearImageFile = () => {
     setImageFile(null);
   };
 
-  // const renderChapterInputs = () => {
-  //   return chapters.map((chapter, index) => (
-  //     <div
-  //       key={index}
-  //       style={{
-  //         display: "flex",
-  //         padding: "0px",
-  //         marginTop: index === 0 ? "0px" : "20px",
-  //       }}
-  //     >
-  //       <div style={{ marginLeft: "0px" }}>
-  //         <label>
-  //           <input
-  //             type="text"
-  //             placeholder="Chapter Name"
-  //             style={{
-  //               border: "none",
-  //               borderBottom: "1px solid black",
-  //               width: "200px",
-  //               outline: "none",
-  //             }}
-  //             maxLength={50}
-  //             value={chapter.name}
-  //             onChange={(e) =>
-  //               handleChapterInputChange(index, "name", e.target.value)
-  //             }
-  //           />
-  //         </label>
-  //       </div>
-  //       <div>
-  //         <label style={{ marginLeft: "20px" }}>
-  //           <input
-  //             onChange={(e) => handleFileChange(index, e.target.files[0])}
-  //             id="pdf-upload"
-  //             type="file"
-  //             accept=".pdf"
-  //             style={{
-  //               border: "none",
-  //               width: "180px",
-  //               outline: "none",
-  //             }}
-  //           />
-  //         </label>
-  //       </div>
-  //     </div>
-  //   ));
-  // };
-
-
+  
 
   const renderChapterInputs = () => {
     return chapters.map((chapter, index) => (
-      <div key={index} style={{ display: "flex", padding: "0px", marginTop: index === 0 ? "0px" : "20px" }}>
+      <div
+        key={index}
+        style={{
+          display: "flex",
+          padding: "0px",
+          marginTop: index === 0 ? "0px" : "20px",
+        }}
+      >
         <div style={{ marginLeft: "0px" }}>
           <label>
             <input
               type="text"
               placeholder="Chapter Name"
-              style={{ border: "none", borderBottom: "1px solid black", width: "200px", outline: "none" }}
+              style={{
+                border: "none",
+                borderBottom: "1px solid black",
+                width: "200px",
+                outline: "none",
+              }}
               maxLength={50}
               value={chapter.name}
-              onChange={(e) => handleChapterInputChange(index, "name", e.target.value)}
+              onChange={(e) =>
+                handleChapterInputChange(index, "name", e.target.value)
+              }
             />
           </label>
         </div>
@@ -293,26 +244,8 @@ function LokaTextbook() {
       </div>
     ));
   };
-  
 
-
-
-
-
-
-
-  //   const handleTotalChaptersChange = (e) => {
-  //     const totalChapters = parseInt(e.target.value);
-  //     setTotalChaptersInput(totalChapters);
-  //     const updatedChapters = Array.from(
-  //       { length: totalChapters },
-  //       (_, index) => ({
-  //         name: "",
-  //         pageNo: "",
-  //       })
-  //     );
-  //     setChapters(updatedChapters);
-  //   };
+ 
   const handleTotalChaptersChange = (e) => {
     const totalChapters = parseInt(e.target.value, 10);
     // Set whether to show chapter inputs based on the number of chapters entered
@@ -351,24 +284,12 @@ function LokaTextbook() {
     setImageFile(file);
   };
 
-  // const handlePdfUpload = (e) => {
-  //   const file = e.target.files[0];
-  //   setPdfFile(file);
-  // };
-
-  // const handlePdfUpload = (index, e) => {
-  //   const file = e.target.files[0];
-  //   const updatedChapters = [...chapters];
-  //   updatedChapters[index].pdfFile = file;
-  //   setChapters(updatedChapters);
-  // };
 
   const handleFileChange = (index, file) => {
     const updatedChapters = [...chapters];
     updatedChapters[index].pdfFile = file;
     setChapters(updatedChapters);
   };
- 
 
   const handleVolumeChange = (e) => {
     const value = e.target.value;
@@ -386,7 +307,7 @@ function LokaTextbook() {
     if (
       !classValue ||
       !textbookName ||
-      !medium ||
+      !selectedMedium ||
       !selectedSubject ||
       !publisherName ||
       !imageFile || // Ensure that an image file is selected
@@ -397,7 +318,12 @@ function LokaTextbook() {
       if (!classValue) missingFields.push("class");
       if (!textbookName) missingFields.push("textbook name");
       if (!selectedSubject) missingFields.push("Subject");
-      if (!medium) missingFields.push("medium");
+
+
+      if (!selectedMedium) missingFields.push("selectedMedium");
+
+
+
       if (!publisherName) missingFields.push("publisher name");
       if (!imageFile) missingFields.push("image file");
       if (!chapters.length) missingFields.push("chapters");
@@ -414,25 +340,18 @@ function LokaTextbook() {
     }
 
     try {
-      // Create FormData to send file and other data
+  
       const formData = new FormData();
       formData.append("class_name", classValue);
       formData.append("text_name", textbookName);
       formData.append("subject", selectedSubject.label);
       formData.append("volume", volume);
       formData.append("textbook_front_page", imageFile);
-      formData.append("medium", medium.label);
-      formData.append("publisher_name", publisherName.label);
+      formData.append("medium", selectedMedium.value);
+      formData.append("publisher_name", selectedPublisher.value);
       formData.append("admin", admin_id);
 
-      // Append chapters data (only name and PDF file) to FormData
-      // chapters.forEach((chapter, index) => {
-      //   formData.append(`chapters[${index}][name]`, chapter.name);
-      //   if (chapter.pdfFile) {
-      //     formData.append(`chapters[${index}][pdfFile]`, chapter.pdfFile);
-      //   }
-      // });
-
+      
 
       chapters.forEach((chapter, index) => {
         formData.append(`chapters[${index}][name]`, chapter.name);
@@ -441,9 +360,7 @@ function LokaTextbook() {
         }
       });
 
-
-
-      // Send the form data to the backend
+      
       const response = await axios.post(
         `${APIURL}/api/admin-create-textbook/`,
         formData,
@@ -454,7 +371,7 @@ function LokaTextbook() {
         }
       );
 
-      // Show success message
+
       Swal.fire({
         icon: "success",
         title: "Success!",
@@ -474,121 +391,23 @@ function LokaTextbook() {
     }
   };
 
-  const mediumbook = [
-    "Malayalam",
-    "english",
-    "hindi",
-    "kannada",
-    "urudu",
-    "telgu",
-    "tamil",
-    "konkani",
-  ];
+  // const mediumbook = [
+  //   "Malayalam",
+  //   "english",
+  //   "hindi",
+  //   "kannada",
+  //   "urudu",
+  //   "telgu",
+  //   "tamil",
+  //   "konkani",
+  // ];
 
-  const textbookMeium = mediumbook.map((bookmedium) => ({
-    value: bookmedium,
-    label: bookmedium,
-  }));
+  // const textbookMeium = mediumbook.map((bookmedium) => ({
+  //   value: bookmedium,
+  //   label: bookmedium,
+  // }));
 
-  // const handleUpdate = async () => {
-  //   if (
-  //     !classValue ||
-  //     !textbookName ||
-  //     !medium ||
-  //     !selectedSubject ||
-  //     !publisherName ||
-  //     !pdfFile ||
-  //     !imageFile
-  //   ) {
-  //     let missingFields = [];
-
-  //     if (!classValue) missingFields.push("class");
-  //     if (!textbookName) missingFields.push("textbook name");
-  //     if (!selectedSubject) missingFields.push("Subject");
-  //     if (!medium) missingFields.push("medium");
-  //     if (!publisherName) missingFields.push("publisher name");
-  //     if (!pdfFile) missingFields.push("PDF file");
-  //     if (!imageFile) missingFields.push("image file");
-
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Missing Required Information",
-  //       text: `Please complete the following fields: ${missingFields.join(
-  //         ", "
-  //       )}.`,
-  //     });
-  //     setLoading(false);
-  //     return;
-  //   }
-
-  //   const confirmResult = await Swal.fire({
-  //     title: "Confirm Update",
-  //     text: "Are you sure you want to update this textbook?",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, update it!",
-  //   });
-
-  //   if (confirmResult.isConfirmed) {
-  //     setLoading(true);
-
-  //     try {
-  //       const formData = new FormData();
-  //       formData.append("id", id);
-  //       formData.append("class_name", classValue);
-  //       formData.append("text_name", textbookName);
-  //       formData.append("subject", selectedSubject.label);
-  //       formData.append("volume", volume);
-  //       formData.append("textbook_pdf", pdfFile);
-  //       formData.append("textbook_front_page", imageFile);
-  //       formData.append("medium", m);
-
-  //       if (Array.isArray(publisherName)) {
-  //         publisherName.forEach((publisher, index) => {
-  //           formData.append(`publisher_name[${index}]`, publisher.value);
-  //         });
-  //       } else {
-  //         formData.append("publisher_name", publisherName.value);
-  //       }
-
-  //       chapters.forEach((chapter, index) => {
-  //         formData.append(`chapter_name[${index}]`, chapter.name);
-  //         formData.append(`page_no[${index}]`, chapter.pageNo);
-  //       });
-
-  //       console.log("FormData:", formData);
-
-  //       const response = await axios.put(
-  //         `${APIURL}/api/update-textbook`,
-  //         formData,
-  //         {
-  //           headers: {
-  //             "Content-Type": "multipart/form-data",
-  //           },
-  //         }
-  //       );
-
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Success!",
-  //         text: "Textbook updated successfully!",
-  //       });
-
-  //       navigate("/GodHeader");
-  //     } catch (error) {
-  //       console.error("Error updating textbook:", error);
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "Oops...",
-  //         text: "Something went wrong!",
-  //       });
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  // };
+ 
 
   const customStyles = {
     control: (base, state) => ({
@@ -653,9 +472,7 @@ function LokaTextbook() {
               marginBottom: "10px",
             }}
           >
-            {/* <Link to="/adminlokanavbar">
-              <IoChevronBackSharp className="loka_back" />
-            </Link> */}
+ 
             <h1 className="loka_title">Add Textbooks</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>
@@ -693,8 +510,8 @@ function LokaTextbook() {
                     id="mediumbook"
                     name="mediumbook"
                     // list=''
-                    options={textbookMeium}
-                    value={medium}
+                    options={mediumOptions}
+                    value={selectedMedium}
                     style={{ textTransform: "capitalize" }}
                     onChange={handleMediumChange}
                     maxLength="100"
@@ -713,7 +530,7 @@ function LokaTextbook() {
                     value={volume}
                     maxLength="100"
                     style={{ textTransform: "capitalize" }}
-                    // onChange={(e) => setVolume(e.target.value)}
+             
                     onChange={handleVolumeChange}
                   />
                 </div>
@@ -734,10 +551,10 @@ function LokaTextbook() {
                   <Select
                     id="publisherName"
                     name="publisherName"
-                    options={publisherOptions}
+                    options={publisherName}
                     placeholder=""
                     // isMulti
-                    value={publisherName}
+                    value={selectedPublisher}
                     maxLength="100"
                     onChange={handlePublisherChange}
                     styles={customStyles}
@@ -755,19 +572,7 @@ function LokaTextbook() {
                 <div>
                   <div style={{ marginLeft: "0px" }}>
                     <div style={{ display: "flex" }}>
-                      {/* <div className="lokatb_textbutton_container" style={{}}>
-                            <button
-                              style={{
-                                ...(selectedTab === "pdf"
-                                  ? { border: "4px solid black" }
-                                  : {}),
-                              }}
-                              onClick={(e) => handleTabChange(e,"pdf")}
-                              className={selectedTab === "pdf" ? "active" : ""}
-                            >
-                              Textbook Pdf
-                            </button>
-                          </div> */}
+                     
                       <div className="lokatb_textbutton_container" style={{}}>
                         <button
                           style={{
@@ -786,59 +591,7 @@ function LokaTextbook() {
                     </div>
                   </div>
 
-                  {/* {selectedTab === "pdf" && (
-                        <div style={{ marginLeft: "10px" }}>
-                          <label htmlFor="pdf" style={{}}></label>
-                          <div className="admin_textbook_image_upload_container">
-                            <div className="admin_textbook_upload_placeholder">
-                              {pdfFile ? (
-                                <>
-                                  <embed
-                                    src={URL.createObjectURL(pdfFile)}
-                                    type="application/pdf"
-                                    width="100%"
-                                    height="200px"
-                                  />
-                                  <button
-                                    onClick={clearPdfFile}
-                                    style={{
-                                      border: "none",
-                                      background: "none",
-                                      cursor: "pointer",
-                                    }}
-                                  >
-                                    <FaRedo
-                                      style={{
-                                        color: "blue",
-                                        fontSize: "20px",
-                                      }}
-                                      title="Change PDF"
-                                    />
-                                  </button>
-                                </>
-                              ) : (
-                                <>
-                                  <label
-                                    htmlFor="pdf-upload"
-                                    className="admin_textbook_upload_label"
-                                  >
-                                    Upload PDF
-                                  </label>
-                                  <input
-                                    id="pdf-upload"
-                                    type="file"
-                                    accept=".pdf"
-                                    className="admin_textbook_upload_input"
-                                    onChange={handlePdfUpload}
-                                  />
-                                </>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      )} */}
-
-                  {/* {selectedTab === "frontPage" && ( */}
+             
                   <div>
                     <label htmlFor="photo" style={{}}></label>
                     <div className="admin_textbook_image_upload_container">

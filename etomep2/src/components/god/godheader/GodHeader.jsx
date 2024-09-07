@@ -13,10 +13,23 @@ function GodHeader() {
     validTabs.includes(storedTab) ? storedTab : "Institution"
   );
 
-  // Update local storage when activeTab changes
   useEffect(() => {
     localStorage.setItem("activeTab", activeTab);
   }, [activeTab]);
+
+  const handleLogout = () => {
+    localStorage.clear();
+
+    sessionStorage.clear();
+
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+
+    window.location.href = "/godlogin";
+  };
 
   return (
     <div className="header-container" style={{ minHeight: "100vh" }}>
@@ -48,7 +61,7 @@ function GodHeader() {
                 <h6>Logout</h6>
               </div>
             </Nav> */}
-            <div className="d-flex gd_tb">
+              <div className="d-flex gd_tb">
                 <Nav.Item>
                   <Nav.Link eventKey="Institution" className="no-underline">
                     Institution
@@ -66,7 +79,9 @@ function GodHeader() {
                 </Nav.Item>
               </div>
               <Nav.Item>
-                <Nav.Link className="no-underline">Logout</Nav.Link>
+                <Nav.Link onClick={handleLogout} className="no-underline">
+                  Logout
+                </Nav.Link>
               </Nav.Item>
             </Nav>
             <div className="dashboard-container">
