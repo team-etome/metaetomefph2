@@ -95,7 +95,7 @@ function AddCustomer() {
       !email ||
       !publisherName.length ||
       !board ||
-      !databaseCode ||
+      // !databaseCode ||
       !address ||
       !region ||
       // !institutionType ||
