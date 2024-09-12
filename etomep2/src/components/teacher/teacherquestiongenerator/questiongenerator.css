@@ -28,10 +28,13 @@
   color: #526D82;
   font-weight: 500;
   font-size: 28px;
-  overflow: hidden; /* Ensures text overflow is handled */
-  white-space: nowrap; /* Prevents text from wrapping */
+  overflow: hidden;
+  /* Ensures text overflow is handled */
+  white-space: nowrap;
+  /* Prevents text from wrapping */
   text-overflow: ellipsis;
 }
+
 .teacher_question_back {
   color: #526D82;
   height: 32px;
@@ -39,6 +42,7 @@
   margin-left: 10px;
   cursor: pointer;
 }
+
 .question_generator_header_submit {
   display: flex;
   justify-content: end;
@@ -59,12 +63,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
 }
 
 .teacher_question_header {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
+
 }
 
 .teacher_question_number {
@@ -81,16 +87,18 @@
 
 .teacher_question_footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 15px;
+
 }
 
 .question_actions {
   display: flex;
   justify-content: end;
   padding-right: 15px;
+
 }
 
 .drag_handle {
@@ -141,6 +149,7 @@
   margin-top: 20px;
   padding-left: 10px;
   display: flex;
+
 }
 
 .text-editor {
@@ -187,6 +196,7 @@
 .answer_editor_container {
   display: flex;
   margin-bottom: 15px;
+  justify-content: flex-end;
 }
 
 .points-input {
@@ -254,5 +264,4 @@
   overflow: hidden;
   text-transform: capitalize;
   max-width: 700px;
-
 }

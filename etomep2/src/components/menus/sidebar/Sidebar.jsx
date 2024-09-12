@@ -76,7 +76,7 @@ function Sidebar() {
           <Link key={index} to={item.path} style={{ textDecoration: "none", color: "inherit" }}>
             <Col className={`menu_item_col ${activeItem === item.label.toLowerCase() ? "active" : ""}`}>
               <div className="icon_container_div">
-                {item.icon}
+                <span className="icon_img "> {item.icon}</span>
                 <span className="icon-text">{item.label}</span>
               </div>
             </Col>
