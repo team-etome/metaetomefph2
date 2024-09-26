@@ -397,14 +397,14 @@ function MobileSidebar({ show, onClose }) {
                 activeItem === "teacherprofile" ? "active" : ""
               }`}
               onClick={() => handleMenuItemClick("teacherprofile")}
-              style={{
-                width: "100%",
-                height: "100px",
-                paddingTop: "10px",
-                display: "flex",
-                justifyContent: "flex-start",
-                paddingLeft: "30px",
-              }}
+              // style={{
+              //   width: "100%",
+              //   height: "100px",
+              //   paddingTop: "10px",
+              //   display: "flex",
+              //   justifyContent: "flex-start",
+              //   paddingLeft: "30px",
+              // }}
             >
               <div
                 onClick={handleTeacherProfileNavigate}
@@ -507,14 +507,15 @@ function MobileSidebar({ show, onClose }) {
                 activeItem === "adminprofile" ? "active" : ""
               }`}
               onClick={() => handleMenuItemClick("adminprofile")}
-              style={{
-                width: "100%",
-                height: "100px",
-                paddingTop: "10px",
-                display: "flex",
-                justifyContent: "flex-start",
-                paddingLeft: "30px",
-              }}
+              // style={{
+              //   width: "100%",
+              //   height: "100px",
+              //   paddingTop: "10px",
+              //   display: "flex",
+              //   justifyContent: "flex-start",
+              //   paddingLeft: "30px",
+              //   border:'1px solid red'
+              // }}
             >
               <div
                 onClick={handleAdminProfileNavigate}
