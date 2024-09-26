@@ -51,12 +51,18 @@ function AdminDashboard() {
     setNewNoteText(''); // Clear the input field after adding the note
   };
 
+
+// Delete note
+const handleDeleteNote = (indexToDelete) => {
+  const dateKey = formattedDate(selectedDate);
+  const updatedNotes = notes[dateKey].filter((_, index) => index !== indexToDelete);
+
+  setNotes({
+    ...notes,
+    [dateKey]: updatedNotes.length > 0 ? updatedNotes : undefined // Remove date if no notes left
+  });
+};
   const selectedNotes = notes[formattedDate(selectedDate)] || [];
-
-
-
-
-
 
 
   const [showThisDate, setShowThisDate] = useState(true);
@@ -149,7 +155,8 @@ function AdminDashboard() {
                       <div key={index} className="note_item">
                         <p>{note.text}</p>
                         <span className="note_date">{note.date}</span>
-                        <button className="delete_note" onClick={() => console.log('Delete note functionality')}>🗑️</button>
+                        {/* <button className="delete_note" onClick={() => console.log('Delete note functionality')}>🗑️</button> */}
+                        <button className="delete_note" onClick={() => handleDeleteNote(index)}>🗑️</button>
                       </div>
                     ))}
                   </div>
