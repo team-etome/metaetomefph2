@@ -93,33 +93,32 @@ function FacultyDashboard() {
   //     }
   //   }
 
-    //   alert("Upload successful");
-    //   fetchFacultyData();
+  //   alert("Upload successful");
+  //   fetchFacultyData();
 
-    //   console.log(response.data);
-    //   setShowOptions(false);
-    //   setFile(null);
-    // } catch (error) {
-    //   console.error("Error uploading file:", error);
-      // alert("Error during file upload.");
-      // const errorMessage = error.response?.data?.message || "Error during file upload.";
-      // alert(errorMessage);
-      // let errorMessage = "Error during file upload.";
+  //   console.log(response.data);
+  //   setShowOptions(false);
+  //   setFile(null);
+  // } catch (error) {
+  //   console.error("Error uploading file:", error);
+  // alert("Error during file upload.");
+  // const errorMessage = error.response?.data?.message || "Error during file upload.";
+  // alert(errorMessage);
+  // let errorMessage = "Error during file upload.";
 
-      
-      // if (error.response && error.response.data) {
-      //   if (typeof error.response.data === 'string') {
-      //     errorMessage = error.response.data;
-      //   } else if (error.response.data.message) {
-      //     errorMessage = error.response.data.message;
-      //   }
-      // }
-      // alert(errorMessage);
+  // if (error.response && error.response.data) {
+  //   if (typeof error.response.data === 'string') {
+  //     errorMessage = error.response.data;
+  //   } else if (error.response.data.message) {
+  //     errorMessage = error.response.data.message;
+  //   }
+  // }
+  // alert(errorMessage);
 
-      // const errorMessage = 
-      // typeof error.response?.data === 'string' 
-      // ? error.response?.data 
-      // : error.response?.data?.message || "Error during file upload.";
+  // const errorMessage =
+  // typeof error.response?.data === 'string'
+  // ? error.response?.data
+  // : error.response?.data?.message || "Error during file upload.";
 
   //   alert(errorMessage);
 
@@ -160,7 +159,7 @@ function FacultyDashboard() {
 
       // let errorMessage = "An error occurred during file upload.";
       if (error.response) {
-        if (typeof error.response.data === 'string') {
+        if (typeof error.response.data === "string") {
           errorMessage = error.response.data;
         } else if (error.response.data && error.response.data.message) {
           errorMessage = error.response.data.message;
@@ -181,7 +180,6 @@ function FacultyDashboard() {
     navigate("/facultyview", { state: { faculty: facultyData } });
   };
 
-
   const filteredFacultyList = facultyListData.filter(
     (faculty) =>
       faculty.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -190,12 +188,9 @@ function FacultyDashboard() {
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
-      <Container
-        fluid
-        className="faculty_container_scroll"
-      >
+      <Container fluid className="faculty_container_scroll">
         <Row>
-          <Col md={6} ></Col>
+          <Col md={6}></Col>
           {/* <Col md={6} className='fac_search_col'>
             <div className="search_filter_main">
               <Form className="d-flex inst_search">
@@ -214,53 +209,78 @@ function FacultyDashboard() {
               </Form>
             </div>
           </Col> */}
-          <Col md={6} className='fac_search_col'>
+          <Col md={6} className="fac_search_col">
             <div className="search_filter_main">
-                <Form className="d-flex inst_search">
-                    <div className="position-relative ad_sch">
-                        <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 inst_search_icon ${searchQuery ? 'hidden' : ''}`} />
-                        <Form.Control
-                            type="search"
-                            placeholder="Search by name"
-                            className="ps-3 search_bar"
-                            aria-label="Search"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                    </div>
-                </Form>
+              <Form className="d-flex inst_search">
+                <div className="position-relative ad_sch">
+                  <BsSearch
+                    className={`position-absolute top-50 translate-middle-y ms-2 inst_search_icon ${
+                      searchQuery ? "hidden" : ""
+                    }`}
+                  />
+                  <Form.Control
+                    type="search"
+                    placeholder="Search by name"
+                    className="ps-3 search_bar"
+                    aria-label="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </Form>
             </div>
-        </Col>
+          </Col>
         </Row>
         <Row>
-          {filteredFacultyList.map((item, index) => (
-            <Col lg={3} md={4} sm={6} xs={6} key={index} className="fac_list">
-              <div
-                onClick={() => handleclick(item)}
-                className="border border-white faculty_rectangle"
-              >
-                <div className="faculty_list_medium" style={{textTransform:'capitalize'}}>ID:{item.employee_id}</div>
-                <div className="faculty_profile_name">
-                  <div className="faculty_list_facultyname"style={{textTransform:'capitalize'}}>
-                    {item.first_name}
+          {/* {filteredFacultyList.length > 0 ? ( */}
+          {
+            filteredFacultyList.map((item, index) => (
+              <Col lg={3} md={4} sm={6} xs={6} key={index} className="fac_list">
+                <div
+                  onClick={() => handleclick(item)}
+                  className="border border-white faculty_rectangle"
+                >
+                  <div
+                    className="faculty_list_medium"
+                    style={{ textTransform: "capitalize" }}
+                  >
+                    ID:{item.employee_id}
+                  </div>
+                  <div className="faculty_profile_name">
+                    <div
+                      className="faculty_list_facultyname"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      {item.first_name}
+                    </div>
+                  </div>
+                  <div className="faculty_lisit_circle">
+                    <div className="faculty_number_div">
+                      <img
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          borderRadius: "50%",
+                        }}
+                        src={amritha}
+                        alt=""
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className="faculty_lisit_circle">
-                  <div className="faculty_number_div">
-                    <img
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                      }}
-                      src={amritha}
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </div>
-            </Col>
-          ))}
+              </Col>
+            ))
+            // ) : (
+            //   <Col>
+            //     <div className="no-classes-message">
+            //       <h3>
+
+            //       No classes available for the selected number.
+            //       </h3>
+            //     </div>
+            //   </Col>
+            // )
+          }
         </Row>
       </Container>
 
@@ -277,13 +297,8 @@ function FacultyDashboard() {
           <>
             <div className="overlay" onClick={handleAddClick}></div>
             <div className="fab-options">
-
               <Link to="/facultyadding" className="fab_option_link">
-                <Button
-                  className="fab-option"
-                  style={{ marginTop: "10px" }}
-                >
-
+                <Button className="fab-option" style={{ marginTop: "10px" }}>
                   <IoMdAdd className="fab-icon" />
                 </Button>
                 <div className="fab-text">Add Faculty</div>

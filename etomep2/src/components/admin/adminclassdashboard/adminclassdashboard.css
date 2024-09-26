@@ -261,7 +261,15 @@ display: flex;
 justify-content: center;
 align-items: center;
 }
+.no-classes-message{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.no-classes-message h3{
+  color: #526D82;
 
+}
 /* @media (max-width: 768px) {
 .cls_vw_flt_dv {
   transform: translateX(100%);

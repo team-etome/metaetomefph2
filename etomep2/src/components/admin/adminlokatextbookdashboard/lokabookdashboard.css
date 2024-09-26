@@ -180,7 +180,15 @@ align-items: center;
   box-shadow: none !important; /* Remove any focus box-shadow */
   color: #526D82;
 }
+.no-books-message{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.no-books-message h3{
+  color: #526D82;
 
+}
 @media (max-width:576px) {
    
   .ad_lk_tb_rectangle{

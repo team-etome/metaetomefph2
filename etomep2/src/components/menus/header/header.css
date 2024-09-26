@@ -19,17 +19,30 @@
 .header_institution{
     display: flex;
     gap: 10px;
-    justify-content: center;
+    /* justify-content: center;
     align-content: center;
-    align-items: center;
+    align-items: center; */
+    /* border: 1px solid red; */
+    width: 30%;
+    justify-content: flex-end;
 }
 .header_institution h6{
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 50px; /* Reduce width to ensure overflow */
-  max-width: 150px;
-  
+  width: 400px; /* Reduce width to ensure overflow */
+  max-width: 500px;
+  /* border: 1px solid aqua; */
+}
+.header_institution p{
+    font-size: 1rem;
+}
+.hd_title{
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: right;
 }
 @media (max-width: 800px),(max-height:490px ) {
     .header_container{

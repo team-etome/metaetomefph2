@@ -64,11 +64,11 @@ function Header() {
             </div>
           </Navbar.Brand>
           <div className="header_institution">
-            <div>
+            <div className="hd_title">
               <h6 style={{ color: "#9DB2BF", fontSize: "20px" }}>
                 {admininfo.admininfo?.institute_name}
               </h6>
-              <p style={{ color: "#727272", fontSize: "12px" }}>
+              <p style={{ color: "#727272",}}>
                 {admininfo.admininfo?.email}
               </p>
             </div>

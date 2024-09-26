@@ -190,7 +190,10 @@ function AdminClassdashboard() {
           ) : (
             <Col>
               <div className="no-classes-message">
+                <h3>
+
                 No classes available for the selected number.
+                </h3>
               </div>
             </Col>
           )}
