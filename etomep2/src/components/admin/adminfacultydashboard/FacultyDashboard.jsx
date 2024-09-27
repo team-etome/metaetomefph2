@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Col, Container, Row, Button, Form } from "react-bootstrap";
 import { IoIosAdd, IoMdDownload, IoMdAdd } from "react-icons/io";
+import { IoPersonSharp } from "react-icons/io5";
 import { MdUpload } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -191,7 +192,7 @@ function FacultyDashboard() {
                 </div>
                 <div className="faculty_lisit_circle">
                   <div className="faculty_number_div">
-                    <img
+                    {/* <img
                       style={{
                         width: "50px",
                         height: "50px",
@@ -199,7 +200,12 @@ function FacultyDashboard() {
                       }}
                       src={amritha}
                       alt=""
-                    />
+                    /> */}
+                    <IoPersonSharp style={{
+                        width: "40px",
+                        height: "50px",
+                        borderRadius: "50%",
+                      }}/>
                   </div>
                 </div>
               </div>

@@ -216,9 +216,9 @@ function ClassAdding() {
                 {/* <Link to="/institutionadding"> */}
                 <Link to="/institutionadding" onClick={() => sessionStorage.setItem("activeTab", "Class")}>
 
-                  <IoChevronBackSharp
+                  {/* <IoChevronBackSharp
                   className="class_add_back"
-                  />
+                  /> */}
                 </Link>
                 <h1 className="class_title" >
                   Class Adding
