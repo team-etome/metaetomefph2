@@ -10,7 +10,7 @@ import generateExcelFile from "../../utils/generateExcelFile";
 import { useSelector, useDispatch } from "react-redux";
 import { adminteacherinfo } from "../../../Redux/Actions/AdminTeacherInfoAction";
 import { BsSearch, BsFilterRight } from "react-icons/bs";
-
+import Swal from "sweetalert2";
 function FacultyDashboard() {
   const [isActive, setIsActive] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
@@ -18,6 +18,9 @@ function FacultyDashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [facultyListData, setFacultyListData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+
+
+  console.log(facultyListData,"uygr8estp97wer ")
 
   const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
@@ -55,89 +58,32 @@ function FacultyDashboard() {
     fileInputRef.current.click();
   };
 
-  // const handleFileUpload = async () => {
-  //   if (!file) {
-  //     alert("Please select a file to upload.");
-  //     return;
-  //   }
-
-  //   setIsLoading(true);
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   formData.append("adminId", admin_id);
-
-  //   try {
-  //     const response = await axios.post(
-  //       `${APIURL}/api/excelteacher`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-  //     console.log("File uploaded successfully:", response);
-  //   alert("Upload successful");
-  //   fetchFacultyData();
-  //   setShowOptions(false);
-  //   setFile(null);
-  // } catch (error) {
-  //   console.error("Error uploading file:", error);
-
-  //   let errorMessage = "An error occurred during file upload.";
-  //   if (error.response) {
-  //     if (typeof error.response.data === 'string') {
-  //       errorMessage = error.response.data;
-  //     } else if (error.response.data && error.response.data.message) {
-  //       errorMessage = error.response.data.message;
-  //     }
-  //   }
-
-  //   alert("Upload successful");
-  //   fetchFacultyData();
-
-  //   console.log(response.data);
-  //   setShowOptions(false);
-  //   setFile(null);
-  // } catch (error) {
-  //   console.error("Error uploading file:", error);
-  // alert("Error during file upload.");
-  // const errorMessage = error.response?.data?.message || "Error during file upload.";
-  // alert(errorMessage);
-  // let errorMessage = "Error during file upload.";
-
-  // if (error.response && error.response.data) {
-  //   if (typeof error.response.data === 'string') {
-  //     errorMessage = error.response.data;
-  //   } else if (error.response.data.message) {
-  //     errorMessage = error.response.data.message;
-  //   }
-  // }
-  // alert(errorMessage);
-
-  // const errorMessage =
-  // typeof error.response?.data === 'string'
-  // ? error.response?.data
-  // : error.response?.data?.message || "Error during file upload.";
-
-  //   alert(errorMessage);
-
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
   const handleFileUpload = async () => {
+    console.log("entereddddd")
     if (!file) {
-      alert("Please select a file to upload.");
+      Swal.fire({
+        icon: "error",
+        title: "No File Selected",
+        text: "Please select a file to upload.",
+      });
       return;
     }
 
-    setIsLoading(true);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("adminId", admin_id);
 
     try {
+      // Show loading indicator
+      Swal.fire({
+        title: "Uploading...",
+        text: "Please wait while the file is being uploaded.",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
       console.log("Starting file upload...");
       const response = await axios.post(
         `${APIURL}/api/excelteacher`,
@@ -150,14 +96,21 @@ function FacultyDashboard() {
       );
 
       console.log("File uploaded successfully:", response);
-      alert("Upload successful");
+
+      // Close the loading alert and show success
+      Swal.fire({
+        icon: "success",
+        title: "Upload Successful",
+        text: "File has been uploaded successfully.",
+      });
+
       await fetchFacultyData();
       setShowOptions(false);
       setFile(null);
     } catch (error) {
       console.error("Error uploading file:", error);
 
-      // let errorMessage = "An error occurred during file upload.";
+      let errorMessage = "An error occurred during file upload.";
       if (error.response) {
         if (typeof error.response.data === "string") {
           errorMessage = error.response.data;
@@ -166,9 +119,12 @@ function FacultyDashboard() {
         }
       }
 
-      alert(errorMessage);
-    } finally {
-      setIsLoading(false);
+      // Close the loading alert and show error
+      Swal.fire({
+        icon: "error",
+        title: "Upload Failed",
+        text: errorMessage,
+      });
     }
   };
 
@@ -190,97 +146,65 @@ function FacultyDashboard() {
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
       <Container fluid className="faculty_container_scroll">
         <Row>
-          <Col md={6}></Col>
-          {/* <Col md={6} className='fac_search_col'>
+          <Col md={6} ></Col>
+          
+          <Col md={6} className='fac_search_col'>
             <div className="search_filter_main">
-              <Form className="d-flex inst_search">
-                <div className="position-relative ad_sch">
-                  <BsSearch className="position-absolute top-50 translate-middle-y ms-2 inst_search_icon" />
-                  <Form.Control
-                    type="search"
-                    placeholder="Search by name"
-                    className="ps-3 search_bar"
-                    aria-label="Search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    
-                  />
-                </div>
-              </Form>
+                <Form className="d-flex inst_search">
+                    <div className="position-relative ad_sch">
+                        <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 inst_search_icon ${searchQuery ? 'hidden' : ''}`} />
+                        <Form.Control
+                            type="search"
+                            placeholder="Search by name"
+                            className="ps-3 search_bar"
+                            aria-label="Search"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </div>
+                </Form>
             </div>
-          </Col> */}
-          <Col md={6} className="fac_search_col">
-            <div className="search_filter_main">
-              <Form className="d-flex inst_search">
-                <div className="position-relative ad_sch">
-                  <BsSearch
-                    className={`position-absolute top-50 translate-middle-y ms-2 inst_search_icon ${
-                      searchQuery ? "hidden" : ""
-                    }`}
-                  />
-                  <Form.Control
-                    type="search"
-                    placeholder="Search by name"
-                    className="ps-3 search_bar"
-                    aria-label="Search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-              </Form>
-            </div>
-          </Col>
+        </Col>
         </Row>
         <Row>
-          {/* {filteredFacultyList.length > 0 ? ( */}
-          {
-            filteredFacultyList.map((item, index) => (
-              <Col lg={3} md={4} sm={6} xs={6} key={index} className="fac_list">
+          {filteredFacultyList.map((item, index) => (
+            <Col lg={3} md={4} sm={6} xs={6} key={index} className="fac_list">
+              <div
+                onClick={() => handleclick(item)}
+                className={`faculty_rectangle ${
+                  !item.status ? "" : "inactive-faculty"
+                }`}
+              >
                 <div
-                  onClick={() => handleclick(item)}
-                  className="border border-white faculty_rectangle"
+                  className="faculty_list_medium"
+                  style={{ textTransform: "capitalize" }}
                 >
+                  ID:{item.employee_id}
+                </div>
+                <div className="faculty_profile_name">
                   <div
-                    className="faculty_list_medium"
+                    className="faculty_list_facultyname"
                     style={{ textTransform: "capitalize" }}
                   >
-                    ID:{item.employee_id}
-                  </div>
-                  <div className="faculty_profile_name">
-                    <div
-                      className="faculty_list_facultyname"
-                      style={{ textTransform: "capitalize" }}
-                    >
-                      {item.first_name}
-                    </div>
-                  </div>
-                  <div className="faculty_lisit_circle">
-                    <div className="faculty_number_div">
-                      <img
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          borderRadius: "50%",
-                        }}
-                        src={amritha}
-                        alt=""
-                      />
-                    </div>
+                    {item.first_name}
                   </div>
                 </div>
-              </Col>
-            ))
-            // ) : (
-            //   <Col>
-            //     <div className="no-classes-message">
-            //       <h3>
-
-            //       No classes available for the selected number.
-            //       </h3>
-            //     </div>
-            //   </Col>
-            // )
-          }
+                <div className="faculty_lisit_circle">
+                  <div className="faculty_number_div">
+                    <img
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        borderRadius: "50%",
+                      }}
+                      src={amritha}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </Col>
+          ))}
         </Row>
       </Container>
 
@@ -343,6 +267,7 @@ function FacultyDashboard() {
               <input
                 type="file"
                 onChange={handleFileChange}
+                accept=".xls,.xlsx"
                 style={{ display: "none" }}
                 ref={fileInputRef}
               />
@@ -351,12 +276,6 @@ function FacultyDashboard() {
                   className="upload_button"
                   onClick={handleFileUpload}
                   disabled={isLoading}
-                  // style={{
-                  //   backgroundColor: "#526D82",
-                  //   border: "none",
-                  //   marginTop: "200px",
-                  //   marginRight:'70px',
-                  // }}
                 >
                   {isLoading ? "Uploading..." : "Upload File"}
                 </Button>

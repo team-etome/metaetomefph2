@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import { FaSave } from "react-icons/fa";
 import { MdBlockFlipped } from "react-icons/md";
 import { CgUnblock } from "react-icons/cg";
-import { Tooltip as ReactTooltip } from 'react-tooltip';
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 function FacultyView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
@@ -97,17 +97,17 @@ function FacultyView() {
   const handleSaveClick = async () => {
     // Ask for confirmation before saving
     const result = await Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "Do you want to save these changes?",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes, save it!',
-      cancelButtonText: 'No, cancel!',
+      confirmButtonText: "Yes, save it!",
+      cancelButtonText: "No, cancel!",
     });
-  
+
     if (result.isConfirmed) {
       console.log("Entered handleSaveClick");
-  
+
       const data = {
         first_name: firstName,
         last_name: lastName,
@@ -117,7 +117,7 @@ function FacultyView() {
         employee_id: employeeId,
         action: action,
       };
-  
+
       try {
         const response = await axios.put(
           `${APIURL}/api/teacherdetails/${faculty.id}`,
@@ -128,7 +128,7 @@ function FacultyView() {
             },
           }
         );
-  
+
         console.log(response, "responseeee");
         Swal.fire({
           icon: "success",
@@ -208,7 +208,7 @@ function FacultyView() {
               }}
             >
               {/* <Link to="/institutionadding"> */}
-                {/* <IoChevronBackSharp onClick={handleBackClick} className="faculty_view_back" /> */}
+              {/* <IoChevronBackSharp onClick={handleBackClick} className="faculty_view_back" /> */}
               {/* </Link> */}
               <h1 className="faculty_view_title">
                 {faculty
@@ -245,27 +245,29 @@ function FacultyView() {
                   {/* <MdBlockFlipped  onClick={handleBlockClick}/> */}
                   {isBlocked ? (
                     <CgUnblock
-                    // className="faculty_block"
+                      // className="faculty_block"
                       style={{
                         width: "40px",
                         height: "50px",
                         color: "green",
                         cursor: "pointer",
-                        
                       }}
-                       title="Unblock"
+                      title="Unblock"
                       onClick={handleUnBlockClick}
                     />
                   ) : (
                     <MdBlockFlipped
-                      style={{ width: "40px", height: "50px", color: "red" ,cursor:"pointer"}}
+                      style={{
+                        width: "40px",
+                        height: "50px",
+                        color: "red",
+                        cursor: "pointer",
+                      }}
                       onClick={handleBlockClick}
                       title="Block"
                     />
                   )}
-                  
                 </div>
-                
               ) : (
                 <div style={{ position: "relative" }} ref={dropdownRef}>
                   <button
@@ -304,25 +306,29 @@ function FacultyView() {
                           title="Save"
                         />
                       )}
-                       {isBlocked ? (
-                    <CgUnblock
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        color: "green",
-                        cursor: "pointer",
-                        
-                      }}
-                       title="Unblock"
-                      onClick={handleUnBlockClick}
-                    />
-                  ) : (
-                    <MdBlockFlipped
-                      style={{ width: "50px", height: "50px", color: "red" ,cursor:"pointer"}}
-                      onClick={handleBlockClick}
-                      title="Block"
-                    />
-                  )}
+                      {isBlocked ? (
+                        <CgUnblock
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            color: "green",
+                            cursor: "pointer",
+                          }}
+                          title="Unblock"
+                          onClick={handleUnBlockClick}
+                        />
+                      ) : (
+                        <MdBlockFlipped
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            color: "red",
+                            cursor: "pointer",
+                          }}
+                          onClick={handleBlockClick}
+                          title="Block"
+                        />
+                      )}
                     </div>
                   )}
                 </div>
@@ -342,7 +348,7 @@ function FacultyView() {
                     value={firstName}
                     readOnly={!isEditing}
                     onChange={(e) => setFirstName(e.target.value)}
-                    style={{textTransform:'capitalize'}}
+                    style={{ textTransform: "capitalize" }}
                   />
                 </div>
                 <div className="faculty_view_group">
@@ -353,7 +359,7 @@ function FacultyView() {
                     name="last_name"
                     value={lastName}
                     readOnly={!isEditing}
-                    style={{textTransform:'capitalize'}}
+                    style={{ textTransform: "capitalize" }}
                     onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
@@ -389,7 +395,7 @@ function FacultyView() {
                     name="gender"
                     value={gender}
                     readOnly={!isEditing}
-                    style={{textTransform:'capitalize'}}
+                    style={{ textTransform: "capitalize" }}
                     onChange={(e) => setGender(e.target.value)}
                   />
                 </div>
@@ -401,7 +407,7 @@ function FacultyView() {
                     name="employee_id"
                     value={employeeId}
                     readOnly={!isEditing}
-                    style={{textTransform:'capitalize'}}
+                    style={{ textTransform: "capitalize" }}
                     onChange={(e) => setEmployeeId(e.target.value)}
                   />
                 </div>
@@ -418,19 +424,28 @@ function FacultyView() {
             <div>
               <h6>Subject Fields</h6>
             </div>
-            <Col>
-              <div className="subject_class_card">
-                <div className="subject_class_body">
-                  <h6>English</h6>
-                  <div className="class_card">
-                    <p>Class : </p>
-                    <div className="card_class_number">1</div>
-                    <div className="card_class_number">1</div>
-                    <div className="card_class_number">1</div>
+           
+                <Col >
+                
+                  <div className="subject_class_card">
+                  {faculty.curriculam && faculty.curriculam.length > 0 ? (
+              faculty.curriculam.map((subject, index) => (
+                    <div key={index} className="subject_class_body">
+                      <h6>{subject.subject_name}</h6>
+                      <div className="class_card">
+                        <p>Class:</p>
+                        <div className="card_class_number">
+                          {subject.class_name}
+                        </div>
+                      </div>
+                    </div>
+                      ))
+                    ) : (
+                      <p>No subjects assigned</p>
+                    )}
                   </div>
-                </div>
-              </div>
-            </Col>
+                </Col>
+            
           </div>
         </Row>
       </Container>
