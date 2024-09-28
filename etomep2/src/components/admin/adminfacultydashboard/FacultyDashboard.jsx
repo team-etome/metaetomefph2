@@ -12,6 +12,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { adminteacherinfo } from "../../../Redux/Actions/AdminTeacherInfoAction";
 import { BsSearch, BsFilterRight } from "react-icons/bs";
 import Swal from "sweetalert2";
+
+
+
 function FacultyDashboard() {
   const [isActive, setIsActive] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
@@ -69,9 +72,15 @@ function FacultyDashboard() {
   useEffect(() => {
     fetchFacultyData(); // Now use fetchFacultyData inside useEffect
   }, [APIURL]);
+
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
+  
+//  const validateLastName = (lastname) => {
+//     const regex = /^[a-zA-Z\s]*$/; // Allows only letters and spaces
+//     return regex.test(lastname);
+//   };
 
   const openFileSelector = () => {
     fileInputRef.current.click();
