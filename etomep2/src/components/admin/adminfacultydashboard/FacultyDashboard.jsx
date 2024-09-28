@@ -32,25 +32,43 @@ function FacultyDashboard() {
 
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   const fetchFacultyData = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const response = await axios.get(
+  //         `${APIURL}/api/teacherdetails/${admin_id}`
+  //       );
+  //       setFacultyListData(response.data);
+  //       dispatch(adminteacherinfo(response.data));
+  //     } catch (error) {
+  //       console.error("Failed to fetch faculty data:", error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   fetchFacultyData();
+  // }, [APIURL]);
+  // Move fetchFacultyData outside of useEffect
+  const fetchFacultyData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `${APIURL}/api/teacherdetails/${admin_id}`
+      );
+      setFacultyListData(response.data);
+      dispatch(adminteacherinfo(response.data));
+    } catch (error) {
+      console.error("Failed to fetch faculty data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchFacultyData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(
-          `${APIURL}/api/teacherdetails/${admin_id}`
-        );
-        setFacultyListData(response.data);
-        dispatch(adminteacherinfo(response.data));
-      } catch (error) {
-        console.error("Failed to fetch faculty data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchFacultyData();
+    fetchFacultyData(); // Now use fetchFacultyData inside useEffect
   }, [APIURL]);
-
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -75,7 +93,7 @@ function FacultyDashboard() {
     formData.append("adminId", admin_id);
 
     try {
-      // Show loading indicator
+      
       Swal.fire({
         title: "Uploading...",
         text: "Please wait while the file is being uploaded.",
@@ -98,7 +116,7 @@ function FacultyDashboard() {
 
       console.log("File uploaded successfully:", response);
 
-      // Close the loading alert and show success
+      
       Swal.fire({
         icon: "success",
         title: "Upload Successful",
@@ -120,7 +138,7 @@ function FacultyDashboard() {
         }
       }
 
-      // Close the loading alert and show error
+      
       Swal.fire({
         icon: "error",
         title: "Upload Failed",
