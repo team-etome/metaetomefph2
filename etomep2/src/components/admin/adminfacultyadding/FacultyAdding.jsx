@@ -32,6 +32,14 @@ function FacultyAdding() {
     { value: "Other", label: "Other" },
   ];
 
+  const toTitleCase = (str) => {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -78,6 +86,10 @@ function FacultyAdding() {
     //   return;
     // }
     // Validate first name and last name for special characters
+    const formattedFirstName = toTitleCase(firstName);
+    const formattedLastName = toTitleCase(lastName);
+    const formattedEmployeeId = toTitleCase(employeeId);
+
     const nameRegex = /^[A-Za-z\s]+$/;
 
     if (!nameRegex.test(firstName)) {
@@ -111,12 +123,15 @@ function FacultyAdding() {
 
     try {
       const formData = {
-        first_name: firstName,
-        last_name: lastName,
+        // first_name: firstName,
+        // last_name: lastName,
+        first_name: formattedFirstName,
+        last_name: formattedLastName,
         email: email,
         phone_number: phoneNumber,
         gender: gender.value,
-        employee_id: employeeId,
+        // employee_id: employeeId,
+        employee_id: formattedEmployeeId,
         password: password,
         admin_id: admin_id,
       };

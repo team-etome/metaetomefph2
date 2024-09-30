@@ -77,10 +77,10 @@ function FacultyDashboard() {
     setFile(event.target.files[0]);
   };
   
-//  const validateLastName = (lastname) => {
-//     const regex = /^[a-zA-Z\s]*$/; // Allows only letters and spaces
-//     return regex.test(lastname);
-//   };
+ const validateLastName = (lastname) => {
+    const regex = /^[a-zA-Z\s]*$/; // Allows only letters and spaces
+    return regex.test(lastname);
+  };
 
   const openFileSelector = () => {
     fileInputRef.current.click();
