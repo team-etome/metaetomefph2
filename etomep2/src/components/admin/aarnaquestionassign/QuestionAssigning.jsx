@@ -134,6 +134,15 @@ function QuestionAssigning() {
       setSelectedDivision(selectedOption);
     };
 
+    const toTitleCase = (str) => {
+      return str
+        .toLowerCase()
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    };
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -164,6 +173,8 @@ function QuestionAssigning() {
       });
       return;
     }
+    const formattedExamName = toTitleCase(examName);
+    const formattedTerm = toTitleCase(term);
 
     setLoading(true);
 
@@ -171,14 +182,16 @@ function QuestionAssigning() {
       const formData = {
         subject: selectedSubject,
         teacher: selectedTeacher,
-        exam_name: examName,
+        // exam_name: examName,
+        exam_name: formattedExamName,
         exam_date: examDate,
         class_name: selectedClass.label,
         division: selectedDivision.label,
         start_time: startTime,
         end_time: endTime,
         total_marks: totalMark,
-        term: term,
+        // term: term,
+        term: formattedTerm,
         instructions: instruction,
         admin   :admin_id
       };

@@ -340,10 +340,10 @@ function CurriculumAdding() {
             <Col>
               <div className="curriculum_header">
                 {/* <Link to="/classadding"> */}
-                <IoChevronBackSharp
+                {/* <IoChevronBackSharp
                   onClick={handleBackClick}
                   className="curriculum_back"
-                />
+                /> */}
                 {/* </Link> */}
                 <h1 className="curriculum_title">Add Curriculum</h1>
               </div>
