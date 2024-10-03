@@ -7,6 +7,7 @@ import amritha from "../../../assets/amritha.png";
 import "../studentview/studentview.css";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 
 function StudentView() {
@@ -85,7 +86,7 @@ function StudentView() {
                     paddingRight: "30px",
                   }}
                 >
-                  <FiEdit className='teacher_student_edit'/>
+                  <MdDelete className='teacher_student_edit'/>
                   {/* <button className="teacher_student_edit">Edit</button> */}
                 </div>
               ) : (

@@ -48,6 +48,14 @@ function ReferenceAdding() {
   const division = teachersubjectinfo.teachersubjectinfo?.division;
   const subject = teachersubjectinfo.teachersubjectinfo?.subject;
 
+  const toTitleCase = (str) => {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -57,7 +65,8 @@ function ReferenceAdding() {
     formData.append("class_name", class_name);
     formData.append("division", division);
     formData.append("subject", subject);
-    formData.append("title", referenceTitle);
+    formData.append("title", toTitleCase(referenceTitle)); 
+    // formData.append("title", referenceTitle);
 
     if (selectedTab === "pdf" && selectedFile) {
       formData.append("textbook_pdf", selectedFile);
@@ -111,7 +120,9 @@ const handleBackClick = () => {
                   <span style={{ color: "red" }}>*</span>
                 </label>
                 <input 
-                onChange={(e)=>setReferenceTitle(e.target.value)}
+                // onChange={(e)=>setReferenceTitle(e.target.value)}
+                onChange={(e) => setReferenceTitle(toTitleCase(e.target.value))}
+                style={{ textTransform: "capitalize" }}
                 type="text" id="reftitle" name="reftitle" />
               </div>
             </Col>

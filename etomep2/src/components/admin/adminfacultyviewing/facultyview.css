@@ -237,7 +237,9 @@
             margin-left: 0px;
             padding-left: 30px !important;
         }
-    
+    .faculty_edit{
+      margin-left: 10px;
+    }
         .faculty_view_group{
             margin: 0 10px 20px 10px;
             position: relative;

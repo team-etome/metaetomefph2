@@ -51,13 +51,21 @@ function AssignmentAdding() {
       },
     });
   };
-
+  const toTitleCase = (str) => {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
   const handleSubmit = async () => {
+    
     try {
       setIsLoading(true); // Set loading state to true
 
       const formData = new FormData();
-      formData.append("title", title);
+      // formData.append("title", title);
+      formData.append("title", toTitleCase(title)); 
       formData.append("due_date", duedate);
       formData.append("mark", mark);
       formData.append("pdf", selectedFile);
@@ -124,7 +132,9 @@ function AssignmentAdding() {
                   id="title"
                   name="title"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  // onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) => setTitle(toTitleCase(e.target.value))}
+                  style={{ textTransform: "capitalize" }}
                 />
               </div>
               {/* <div className="teacher_assignmentadd_group">
