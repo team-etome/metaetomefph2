@@ -24,14 +24,16 @@
 
   .faculty_lisit_circle{
     position: absolute;
-    top: 85px;
+    /* top: 85px; */
+    top: 65px;
     left: 20px;
     transform: translateY(-150%);
+    /* background-color: #404F60; */
 
   }
   .faculty_number_div{
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background-color: #FFFF;
     display: flex;
@@ -39,6 +41,7 @@
     align-items: center;
     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
     color: #526D82;
+    /* border: 1px solid red; */
    
   }
   .faculty_list_facultyname {

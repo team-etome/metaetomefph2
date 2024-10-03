@@ -150,6 +150,15 @@ margin-left: 0;
   margin-left: 15px;
   color: #545454;
 }
+.no-evaluations-message{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.no-evaluations-message h3{
+  color: #526D82;
+
+}
 @media (max-width:576px) {
    
   .qpaper_rectangle{

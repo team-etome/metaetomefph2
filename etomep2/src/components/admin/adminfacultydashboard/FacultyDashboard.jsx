@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Col, Container, Row, Button, Form } from "react-bootstrap";
 import { IoIosAdd, IoMdDownload, IoMdAdd } from "react-icons/io";
+import { IoPersonSharp } from "react-icons/io5";
 import { MdUpload } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -11,6 +12,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { adminteacherinfo } from "../../../Redux/Actions/AdminTeacherInfoAction";
 import { BsSearch, BsFilterRight } from "react-icons/bs";
 import Swal from "sweetalert2";
+
+
+
 function FacultyDashboard() {
   const [isActive, setIsActive] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
@@ -31,27 +35,51 @@ function FacultyDashboard() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchFacultyData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(
-          `${APIURL}/api/teacherdetails/${admin_id}`
-        );
-        setFacultyListData(response.data);
-        dispatch(adminteacherinfo(response.data));
-      } catch (error) {
-        console.error("Failed to fetch faculty data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchFacultyData = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const response = await axios.get(
+  //         `${APIURL}/api/teacherdetails/${admin_id}`
+  //       );
+  //       setFacultyListData(response.data);
+  //       dispatch(adminteacherinfo(response.data));
+  //     } catch (error) {
+  //       console.error("Failed to fetch faculty data:", error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    fetchFacultyData();
+  //   fetchFacultyData();
+  // }, [APIURL]);
+  // Move fetchFacultyData outside of useEffect
+  const fetchFacultyData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `${APIURL}/api/teacherdetails/${admin_id}`
+      );
+      setFacultyListData(response.data);
+      dispatch(adminteacherinfo(response.data));
+    } catch (error) {
+      console.error("Failed to fetch faculty data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchFacultyData(); // Now use fetchFacultyData inside useEffect
   }, [APIURL]);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
+  };
+  
+ const validateLastName = (lastname) => {
+    const regex = /^[a-zA-Z\s]*$/; // Allows only letters and spaces
+    return regex.test(lastname);
   };
 
   const openFileSelector = () => {
@@ -74,7 +102,7 @@ function FacultyDashboard() {
     formData.append("adminId", admin_id);
 
     try {
-      // Show loading indicator
+      
       Swal.fire({
         title: "Uploading...",
         text: "Please wait while the file is being uploaded.",
@@ -97,7 +125,7 @@ function FacultyDashboard() {
 
       console.log("File uploaded successfully:", response);
 
-      // Close the loading alert and show success
+      
       Swal.fire({
         icon: "success",
         title: "Upload Successful",
@@ -119,7 +147,7 @@ function FacultyDashboard() {
         }
       }
 
-      // Close the loading alert and show error
+      
       Swal.fire({
         icon: "error",
         title: "Upload Failed",
@@ -191,7 +219,7 @@ function FacultyDashboard() {
                 </div>
                 <div className="faculty_lisit_circle">
                   <div className="faculty_number_div">
-                    <img
+                    {/* <img
                       style={{
                         width: "50px",
                         height: "50px",
@@ -199,7 +227,12 @@ function FacultyDashboard() {
                       }}
                       src={amritha}
                       alt=""
-                    />
+                    /> */}
+                    <IoPersonSharp style={{
+                        width: "40px",
+                        height: "50px",
+                        borderRadius: "50%",
+                      }}/>
                   </div>
                 </div>
               </div>

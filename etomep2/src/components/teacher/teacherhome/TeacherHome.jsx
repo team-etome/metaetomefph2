@@ -49,6 +49,18 @@ function TeacherHome() {
     setNewNoteText(''); // Clear the input field after adding the note
   };
 
+
+// Delete note
+const handleDeleteNote = (indexToDelete) => {
+  const dateKey = formattedDate(selectedDate);
+  const updatedNotes = notes[dateKey].filter((_, index) => index !== indexToDelete);
+
+  setNotes({
+    ...notes,
+    [dateKey]: updatedNotes.length > 0 ? updatedNotes : undefined // Remove date if no notes left
+  });
+};
+
   const selectedNotes = notes[formattedDate(selectedDate)] || [];
 
 
@@ -65,6 +77,8 @@ function TeacherHome() {
     setSelectedAssignment(assignment);
     setShowModal(true);
   };
+
+
   const notifications = {
     thisDate: [
       { id: 1, title: "Reshma Shared the Question Paper" },
@@ -201,7 +215,8 @@ function TeacherHome() {
                       <div key={index} className="note_item_tchr ">
                         <p>{note.text}</p>
                         <span className="note_date_tchr ">{note.date}</span>
-                        <button className="delete_note_tchr " onClick={() => console.log('Delete note functionality')}>🗑️</button>
+                        {/* <button className="delete_note_tchr " onClick={() => console.log('Delete note functionality')}>🗑️</button> */}
+                        <button className="delete_note_tchr" onClick={() => handleDeleteNote(index)}>🗑️</button>
                       </div>
                     ))}
                   </div>

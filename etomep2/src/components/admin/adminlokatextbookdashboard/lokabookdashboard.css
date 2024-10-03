@@ -10,6 +10,7 @@
   height: 70vh;
   overflow-y: auto; 
   overflow-x: hidden; 
+  margin-top: 12px;
 }
 
 .admin_loka_tb_list_scroll::-webkit-scrollbar {
@@ -75,8 +76,8 @@ cursor: pointer;
 .ad_lk_tb_list{
 display: flex;
 justify-content: center;
-padding-top: 14px;
-margin-top: 2px;
+/* padding-top: 4px; */
+/* margin-top: 20px; */
 }
 .ad_lk_tb_add {
 display: flex;
@@ -99,19 +100,33 @@ align-items: center;
 }
 .textbook_search{
   padding-left: 50%;
+  /* border: 1px solid red; */
   
 }
 .search_dropdwon_textbook{
   width: 100%;
-  margin-left: 4%;
+  margin-left: 2%;
+  /* border: 1px solid violet; */
+}
+.book_search_col{
+  background-color: #ffff;
+  /* padding:0px; */
+  border-radius: 8px;
+  height: 40px;
+  /* border: 1px solid cyan !important; */
+  display: flex;
+  margin-left: 8%;
+  width: 90%;
 }
 .inputgroup_search{
   width: 100%;
+  /* border: 1px solid orange; */
   /* margin-left: 0vw; */
 }
 .book_search_input{
   border-radius: 6px !important;
   height: 30px;
+  width: 100% !important;
   /* left: 2%; */
   top: 10%;
   /* margin-right: 1rem; */
@@ -129,17 +144,7 @@ align-items: center;
   width: 20px;
   color: #D8D4D4;
 }
-.book_search_col{
-  background-color: #ffff;
-  /* padding:0px; */
-  border-radius: 8px;
-  height: 40px;
-  /* border: 0.5px solid #9DB2BF; */
-  
-  display: flex;
-  margin-left: 100px;
-  width: 84%;
-}
+
 .separator {
   width: 1px;
   height: 100%;
@@ -148,23 +153,18 @@ align-items: center;
 }
 .dropdown_tb{
   background-color: #ffffff;
-  /* border: none; */
   margin-top: 0px;
   width: 240px;
   border-radius: 6px;
   height: 30px;
-  /* top: 10%; */
-  /* margin-left: 1rem; */
   border: none;
 }
 .dropdown_tb_toggle{
   background-color: #ffffff;
   border: none;
-  /* margin-top: 0px; */
-  width: 140px;
+  width: 158px;
   border-radius: 6px;
-  height: 26px;
-  /* border: 1px solid blue; */
+  height: 28px;
   top: 0%;
 }
 /* .dropdown_tb_toggle:hover{
@@ -175,12 +175,20 @@ align-items: center;
 .dropdown_tb_toggle:focus,
 .dropdown_tb_toggle:active,
 .dropdown_tb_toggle.show {
-  background-color: transparent !important; /* Remove the background color */
-  border-color: transparent !important; /* Optional: Remove the border color */
-  box-shadow: none !important; /* Remove any focus box-shadow */
+  background-color: transparent !important; 
+  border-color: transparent !important; 
+  box-shadow: none !important; 
   color: #526D82;
 }
+.no-books-message{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.no-books-message h3{
+  color: #526D82;
 
+}
 @media (max-width:576px) {
    
   .ad_lk_tb_rectangle{
@@ -210,8 +218,7 @@ align-items: center;
     padding-top: 2vh;
     padding-left: 0% !important;
     width: 100%;
-    padding-right: 5%;
-
+    /* padding-right: 5%; */
   }
   .search_dropdwon_textbook{
     display: flex;
@@ -220,13 +227,41 @@ align-items: center;
     /* margin-left: 5%; */
     width: 100% !important;
   }
+  .dropdown_tb{
+    width: 80%;
+    margin-left: 0%;
+  }
+  .dropdown_tb_toggle{
+    width: 100% !important;
+    white-space: nowrap;    
+    overflow: hidden;    
+    text-overflow: ellipsis;  
+    max-width: 140px; 
+  }
+  .dropdown_tb_toggle:focus,
+  .dropdown_tb_toggle:active,
+  .dropdown_tb_toggle.show {
+    background-color: transparent !important; 
+    border-color: transparent !important; 
+    box-shadow: none !important; 
+    color: #526D82;
+  }
+  .inputgroup_search{
+    width: 100%;
+  }
+  .book_search_input{
+    width: 100% !important;
+    white-space: nowrap;    
+    overflow: hidden;    
+    text-overflow: ellipsis;  
+    max-width: 240px; 
+  }
+  .book_searchbar_icon{
+    display: none;
+  }
   .book_search_col{
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    width: 90% !important;
-    margin-left: 5px;
-    margin-right: 50px;
+    width: 100% !important;
+    margin-right: 30%;
   }
   .lib_search_nav{
     padding-top: 2vh;

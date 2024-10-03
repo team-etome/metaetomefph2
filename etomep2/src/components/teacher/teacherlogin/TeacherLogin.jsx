@@ -197,7 +197,7 @@ function TeacherLogin() {
               <div className={`teacher_flip_card_inner ${isFlipped ? "flipped" : ""}`}>
                 <div className="teacher_flip_card_front">
                   <div className="switch_forgott">
-                    <p className="admin_form_title" style={{ marginBottom: "0px" }}>
+                    <p className="admin_form_title" style={{ marginBottom: "15px" }}>
                       Teacher Login
                     </p>
                     <div className="button_box" style={{}}>

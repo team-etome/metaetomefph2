@@ -208,7 +208,7 @@ function SeatAssigning() {
             }}
           >
             {/* <Link to="/aarnanavbar"> */}
-              <IoChevronBackSharp onClick={handleBackClick} className="seat_back" />
+              {/* <IoChevronBackSharp onClick={handleBackClick} className="seat_back" /> */}
             {/* </Link> */}
             <h1 className="seat_title">Seat Assigning</h1>
           </div>

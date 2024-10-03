@@ -346,3 +346,22 @@
   transition: left 0.5s ease;
 
 }
+
+
+@media (max-width: 430px) {
+  .switch_forgott{
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid red; */
+  }
+  .admin_form_title {
+    font-size: 1.5rem;
+    /* margin-left: 5%; */
+    margin-top: 10%;
+    /* border: 1px solid green; */
+}
+.button_box {
+  /* border: 1px solid green; */
+  /* margin-top: 14px; */
+}
+}

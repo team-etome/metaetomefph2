@@ -54,6 +54,7 @@
     justify-content: flex-end;
     /* border: 1px solid yellow; */
     margin-bottom: 50px;
+    
 }
   .bottom_section {
     background-color: #FFFFFF;
@@ -207,6 +208,7 @@ display: none;
     .profile_card{
         height: 70vh;
     }
+    
 }
 @media (min-width: 710px) and (max-width:1024px) {
     .profile_card{

@@ -41,6 +41,13 @@ function ClassAdding() {
   // const mediumOption = m ? [{ value: m, label: m }] : [];
   // console.log(mediumOption,"medium option")
 
+  const toTitleCase = (str) => {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   useEffect(() => {
     if (m) {
@@ -134,13 +141,17 @@ function ClassAdding() {
       });
       return;
     }
+    const formattedStream = toTitleCase(stream);
+    const formattedDivision = toTitleCase(division);
 
     const classData = {
       medium,
       teacher,
       className,
-      stream,
-      division,
+      // stream,
+      // division,
+      stream: formattedStream,
+      division: formattedDivision,
     };
 
     dispatch(adminclassinfo(classData));
@@ -216,9 +227,9 @@ function ClassAdding() {
                 {/* <Link to="/institutionadding"> */}
                 <Link to="/institutionadding" onClick={() => sessionStorage.setItem("activeTab", "Class")}>
 
-                  <IoChevronBackSharp
+                  {/* <IoChevronBackSharp
                   className="class_add_back"
-                  />
+                  /> */}
                 </Link>
                 <h1 className="class_title" >
                   Class Adding

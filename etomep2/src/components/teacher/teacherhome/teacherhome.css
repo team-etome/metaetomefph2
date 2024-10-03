@@ -563,13 +563,13 @@ font-size: 1.2rem;
     width: 100%;
     }
     .tchr_sb_tchr{
-      margin-left: 0px;
+      margin-left: 10px;
       height: 40vh !important;
-      width: 100%;
-      padding-top: 10px;
+      width: 100% !important;
+      padding-top: 20px;
     }
     .cld_nt_tchr{
-      padding-top: 70%;
+      padding-top: 84%;
     }
     .custom_calendar_tchr{
       padding: 0;

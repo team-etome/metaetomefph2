@@ -104,15 +104,15 @@ function LokaBookDashboard() {
                 </Dropdown.Menu>
               </Dropdown>
               <div className="separator"></div>
-              <InputGroup className="inputgroup_search">
-                <BsSearch className="position-absolute top-50 translate-middle-y ms-1 book_searchbar_icon" />
+              <InputGroup className="inputgroup_search position-relative">
                 <FormControl
-                  className="ps-4 book_search_input"
+                  className="ps-2 book_search_input"
                   placeholder="Search by Class or Publisher name"
                   aria-label="Search"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
+                <BsSearch className="position-absolute top-50 translate-middle-y end-0  book_searchbar_icon"/>
               </InputGroup>
             </div>
           </Row>
@@ -149,7 +149,10 @@ function LokaBookDashboard() {
               ))
             ) : (
               <div className="no-books-message">
+                <h3>
+
                 No books available for the selected publisher.
+                </h3>
               </div>
             )}
           </Row>

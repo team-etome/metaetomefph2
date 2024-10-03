@@ -89,7 +89,7 @@ function LokaTextbook() {
     fetchSubjects();
   }, [APIURL, admininfo]);
 
-
+  
 
 
   const handleMediumChange = (selectedOptions) => {
@@ -298,7 +298,13 @@ function LokaTextbook() {
       setVolume(value);
     }
   };
-
+  const toTitleCase = (str) => {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
     setLoading(true); // Show the loading spinner
@@ -338,7 +344,7 @@ function LokaTextbook() {
       setLoading(false);
       return;
     }
-
+    
     try {
   
       const formData = new FormData();
