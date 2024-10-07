@@ -447,7 +447,7 @@ function FacultyView() {
                     ) : (
                       <p>No subjects assigned</p>
                     )} */}
-                                    {faculty?.curriculam?.length > 0 ? (
+                {faculty?.curriculam?.length > 0 ? (
                   faculty.curriculam.map((subject, index) => (
                     <div key={index} className="subject_class_body">
                       <h6>{subject.subject_name}</h6>
