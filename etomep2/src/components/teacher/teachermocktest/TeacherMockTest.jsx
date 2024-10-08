@@ -309,7 +309,7 @@ function TeacherMockTest() {
             </button>
           </Col>
         </Row>
-        <Row>
+        <Row className="tst_gen_bdy">
           <div className="mock_text_editor">
             {subsections.map((subsection, subsectionIndex) => (
               <Droppable

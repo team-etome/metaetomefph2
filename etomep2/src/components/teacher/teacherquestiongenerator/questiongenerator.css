@@ -17,7 +17,22 @@
   display: flex;
   justify-content: space-between;
 }
+.qs_gn_bdy{
+  height: 90vh;
+  overflow-y: auto;
+}
 
+.qs_gn_bdy::-webkit-scrollbar {
+  width: 6px; 
+}
+
+.qs_gn_bdy::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.qs_gn_bdy::-webkit-scrollbar-thumb {
+  background: #A8BFD1;
+}
 .question_generator_header_title {
   display: flex;
   align-items: center;
