@@ -156,7 +156,9 @@ function ResultFilter() {
     menuList: (base) => ({
       ...base,
       maxHeight: '150px', // Set the max height for the list items
-      padding: '0'
+      padding: '0',
+      overflowY: 'auto',
+
     }),
   };
   

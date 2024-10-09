@@ -301,7 +301,7 @@ function ViewInstitution() {
                     readOnly
                   />
                 </div>
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <label
                     for="databaseCode"
                     className="form-label"
@@ -317,7 +317,7 @@ function ViewInstitution() {
                     style={{ marginBottom: "50px" }}
                     readOnly
                   />
-                </div>
+                </div> */}
                 <div className="mb-3">
                   <label
                     for="medium"

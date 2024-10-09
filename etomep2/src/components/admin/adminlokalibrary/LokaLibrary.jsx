@@ -497,10 +497,24 @@ function LokaLibrary() {
       ...base,
       alignItems: "center",
     }),
+    // menu: (base) => ({
+    //   ...base,
+    //   zIndex: 9999,
+    //   position: "absolute",
+    // }),
     menu: (base) => ({
       ...base,
       zIndex: 9999,
       position: "absolute",
+      width: '89%',
+      maxHeight: '150px', 
+      overflowY: 'auto', 
+    }),
+    menuList: (base) => ({
+      ...base,
+      maxHeight: '150px',
+      overflowY: 'auto',
+      paddingRight: '10px'
     }),
   };
 
