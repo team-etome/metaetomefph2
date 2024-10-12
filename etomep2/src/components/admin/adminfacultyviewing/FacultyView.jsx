@@ -17,7 +17,6 @@ function FacultyView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const dropdownRef = useRef(null);
-  const location = useLocation();
   const [formData, setFormData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [action, setAction] = useState("");
@@ -32,11 +31,16 @@ function FacultyView() {
   const navigate = useNavigate();
   const APIURL = useSelector((state) => state.APIURL.url);
 
+
+  const location = useLocation();
+
+  const faculty = location.state?.faculty;  
+
   console.log(action, "ssssss");
 
   console.log(isEditing, "editiongggggg");
 
-  const faculty = location.state?.faculty;
+  // const faculty = location.state?.faculty;
 
   console.log(faculty, "facultyyyy");
 
@@ -428,7 +432,7 @@ function FacultyView() {
                 <Col >
                 
                   <div className="subject_class_card">
-                  {faculty.curriculam && faculty.curriculam.length > 0 ? (
+                  {/* {faculty.curriculam && faculty.curriculam.length > 0 ? (
               faculty.curriculam.map((subject, index) => (
                     <div key={index} className="subject_class_body">
                       <h6>{subject.subject_name}</h6>
@@ -442,7 +446,23 @@ function FacultyView() {
                       ))
                     ) : (
                       <p>No subjects assigned</p>
-                    )}
+                    )} */}
+                {faculty?.curriculam?.length > 0 ? (
+                  faculty.curriculam.map((subject, index) => (
+                    <div key={index} className="subject_class_body">
+                      <h6>{subject.subject_name}</h6>
+                      <div className="class_card">
+                        <p>Class:</p>
+                        <div className="card_class_number">
+                          {subject.class_name}
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>No subjects assigned</p>
+                )}
+
                   </div>
                 </Col>
             

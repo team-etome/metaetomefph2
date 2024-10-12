@@ -66,6 +66,9 @@ function ExaminationDashboard() {
     
   };
 
+  const filteredExamList = examinationListData.filter((exam) =>
+    exam.exam_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
 
   return (
@@ -111,6 +114,7 @@ function ExaminationDashboard() {
                       className="ps-6 examdashboard_search_input"
                       aria-label="Search"
                       value={searchQuery}
+                      // onChange={(e) => setSearchQuery(e.target.value)}
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
@@ -120,7 +124,7 @@ function ExaminationDashboard() {
           </Col>
         </Row>
         <Row className="teacher_examination_container">
-          {examinationListData.map((item, index) => (
+          {filteredExamList.map((item, index) => (
             <Col
               lg={3}
               md={6}

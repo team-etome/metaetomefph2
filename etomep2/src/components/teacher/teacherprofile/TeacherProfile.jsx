@@ -6,6 +6,7 @@ import "../teacherprofile/teacherprofile.css";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../../Redux/Actions/TeacherLogoutInfoAction";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 function TeacherProfile() {
   const teacherinfo = useSelector((state) => state.teacherinfo);
