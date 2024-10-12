@@ -252,6 +252,7 @@
   min-height: 120px;
 overflow: hidden;
 text-transform: capitalize;
+max-width: 700px;
   
 
 }
