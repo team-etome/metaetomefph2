@@ -57,6 +57,9 @@ function TeacherMockTest() {
   const subject      = teacher_subject.teachersubjectinfo?.subject
   const admin        = teacher_subject.teachersubjectinfo?.admin
 
+
+  console.log(admin,"adminnnnn")
+
   console.log(className,"durationnnnn")
 
 
