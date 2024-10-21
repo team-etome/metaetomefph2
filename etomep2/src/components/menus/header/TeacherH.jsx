@@ -70,7 +70,7 @@ function TeacherH() {
               </h6> */}
               <h6 style={{ color: "#727272", fontSize: "20px", fontWeight:'400',}}>
                 {}
-               Navya Maria jaisonnnnn
+{/*                Navya Maria jaisonnnnn */}
               </h6>
             </div>
             <img
