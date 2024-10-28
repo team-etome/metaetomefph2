@@ -10,8 +10,11 @@ import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
 import pdficon from '../../../assets/pdficon.svg'
 import subteachr from '../../../assets/subteachr.png'
-// import Dashimg1 from "../../../assets/dashimgone.png";
-// import Dashimg from "../../../assets/dashimg.png";
+import { useSelector } from "react-redux";
+import axios from "axios";
+
+
+
 
 function TeacherHome() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -25,6 +28,10 @@ function TeacherHome() {
     ],
   });
   const [newNoteText, setNewNoteText] = useState('');
+  const teacherinfo = useSelector((state) => state.teacherinfo);
+  const teacher_id = teacherinfo.teacherinfo?.teacher_id
+
+  const APIURL = useSelector((state) => state.APIURL.url);
 
   const formattedDate = (date) => {
     const year = date.getFullYear();
@@ -37,18 +44,33 @@ function TeacherHome() {
     setSelectedDate(date);
   };
 
-  const handleAddNote = () => {
+  const handleAddNote = async () => {
     if (newNoteText.trim() === '') return; // Prevent adding empty notes
-
+  
     const dateKey = formattedDate(selectedDate);
     const newNote = { text: newNoteText, date: dateKey };
+  
+    // Update local state
     setNotes({
       ...notes,
       [dateKey]: notes[dateKey] ? [...notes[dateKey], newNote] : [newNote]
     });
-    setNewNoteText(''); // Clear the input field after adding the note
+    setNewNoteText(''); 
+  
+   
+    const noteData = {
+      teacher : teacher_id,
+      date: dateKey,
+      note: newNoteText,
+    };
+  
+    try {
+      const response = await axios.post(`${APIURL}/api/note`, noteData);
+      console.log('Note saved:', response.data);
+    } catch (error) {
+      console.error('Error saving note:', error);
+    }
   };
-
 
 // Delete note
 const handleDeleteNote = (indexToDelete) => {
@@ -70,8 +92,7 @@ const handleDeleteNote = (indexToDelete) => {
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [value, setValue] = useState(new Date());
 
-  // const state = useSelector(state => state);
-  // console.log(state);
+
 
   const handleAssignmentClick = (assignment) => {
     setSelectedAssignment(assignment);
@@ -215,7 +236,6 @@ const handleDeleteNote = (indexToDelete) => {
                       <div key={index} className="note_item_tchr ">
                         <p>{note.text}</p>
                         <span className="note_date_tchr ">{note.date}</span>
-                        {/* <button className="delete_note_tchr " onClick={() => console.log('Delete note functionality')}>🗑️</button> */}
                         <button className="delete_note_tchr" onClick={() => handleDeleteNote(index)}>🗑️</button>
                       </div>
                     ))}
