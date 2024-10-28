@@ -189,9 +189,9 @@ function GodLogin() {
               >
                 Sign in
               </button>
-              <p className="signup-link">
+              {/* <p className="signup-link">
                 <a href="">Forgot Password?</a>
-              </p>
+              </p> */}
             </form>
           </Col>
         </Row>

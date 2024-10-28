@@ -127,7 +127,8 @@ function EvaluationScheduling() {
     menuList: (base) => ({
       ...base,
       maxHeight: '250px', // Set the max height for the list items
-      padding: '0'
+      padding: '0',
+      overflowY: 'auto',
     }),
   };
  

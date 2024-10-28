@@ -63,15 +63,15 @@ function TeacherH() {
               <img src={etomelogo} alt="etome logo" />
             </div>
           </Navbar.Brand>
-          <div className="header_institution">
+          <div className="tch_header_institution" style={{}}>
             <div>
-              <h6 style={{ color: "#red", fontSize: "30px" }}>
+              {/* <h6 style={{ color: "#red", fontSize: "30px" }}>
                 {}
+              </h6> */}
+              <h6 style={{ color: "#727272", fontSize: "20px", fontWeight:'400',}}>
+                {}
+{/*                Navya Maria jaisonnnnn */}
               </h6>
-              <p style={{ color: "#727272", fontSize: "12px" }}>
-                {}
-               teacher
-              </p>
             </div>
             <img
               onClick={handlenavigate}

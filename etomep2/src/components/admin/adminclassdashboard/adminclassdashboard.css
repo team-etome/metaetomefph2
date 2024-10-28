@@ -288,7 +288,7 @@ align-items: center;
 
 .class_rectangle{
   width: 250px !important;
-  height: 80px !important;
+  height: 100px !important;
 }
 .class_number_div{
   width: 50px;
@@ -306,7 +306,7 @@ align-items: center;
   overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
-    width:70px;
+    width:120px;
 }
 .class_list{
 padding:4px;

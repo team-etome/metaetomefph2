@@ -61,7 +61,7 @@ const handleBackClick = () =>{
               // }}
             >
               {/* <Link to="/teacherexamination"> */}
-                <IoChevronBackSharp onClick={handleBackClick}className="teacher_view_back" />
+                {/* <IoChevronBackSharp onClick={handleBackClick}className="teacher_view_back" /> */}
               {/* </Link> */}
               <h1 className="teacher_view_title">Question Creation</h1>
               <div style={{ flex: "1" }}></div>
