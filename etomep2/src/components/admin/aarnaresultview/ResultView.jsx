@@ -22,8 +22,8 @@ function ResultView() {
         obtainedMark: 0,
       };
     }
-    studentDataMap[key].scores[item.subject] = item.total_mark || "Pending";
-    if (item.total_mark !== "Pending") {
+    studentDataMap[key].scores[item.subject] = item.question_paper_total_marks || "Pending";
+    if (item.question_paper_total_marks !== "Pending") {
       studentDataMap[key].obtainedMark += parseFloat(item.total_mark); // Sum marks if available
     }
   });
@@ -71,7 +71,7 @@ function ResultView() {
                 {/* Assuming each subject max score is 100 */}
                 <td>{student.obtainedMark}</td>
                 <td>
-                  {student.obtainedMark >= resultData.subjects.length * 35
+                  {student.obtainedMark >= resultData.subjects.length * 20
                     ? "Pass"
                     : "Failed"}
                 </td>

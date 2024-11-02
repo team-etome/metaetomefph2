@@ -20,6 +20,7 @@ function ClassAdding() {
   const [loading, setLoading] = useState(false);
 
   const [mediumOption, setMediumOption] = useState([]);
+  const [streamDisabled, setStreamDisabled] = useState(true);
 
 
   const dispatch = useDispatch();
@@ -264,7 +265,10 @@ function ClassAdding() {
                       placeholder=""
                       value={stream}
                       onChange={(e) => setStream(e.target.value)}
-                    style={{ textTransform: "capitalize" }}
+                      style={{
+                        textTransform: "capitalize",
+                        backgroundColor: streamDisabled ? "#e0e0e0" : "white", // Gray background when disabled
+                      }}
                     readOnly={parseInt(className, 10) < 11}
                     />
                     <label htmlFor="class_category">Stream</label>

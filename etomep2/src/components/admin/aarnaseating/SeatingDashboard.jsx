@@ -55,8 +55,8 @@ function SeatingDashboard() {
     navigate("/seatassigning");
   };
 
-  const handleclick = () => {
-    navigate("/seatview");
+  const handleclick = (item) => {
+    navigate("/seatview", { state: { seatingData: item } });
   };
 
   return (
@@ -98,7 +98,7 @@ function SeatingDashboard() {
                 className="seat_list"
               >
                 <div
-                  onClick={handleclick}
+                  onClick={() => handleclick(item)}
                   className="border border-white seat_rectangle"
                 >
                   <div className="seat_hall_date">
