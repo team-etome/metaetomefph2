@@ -30,53 +30,115 @@ function SeatAssigning() {
   const [selectedClass, setSelectedClass] = useState([]);
   const [teacherOptions, setTeacherOptions] = useState([]);
   const [classOptions, setClassOptions] = useState([]);
+  const [studentCount, setStudentsCount] = useState([]);
+
+  console.log(studentCount, "student count");
+
+  console.log(classOptions, "class option");
 
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
   const classinfo = useSelector((state) => state.adminallclassinfo);
   const admininfo = useSelector((state) => state.admininfo);
 
-  const admin = admininfo.admininfo?.admin_id
-  console.log(admin,"admin id")
+  const admin_id = admininfo.admininfo?.admin_id;
+
   console.log(teacherinfo, "teacher info");
   console.log(classinfo, "class info");
 
   useEffect(() => {
-    mapTeachers();
-    mapClasses();
-  }, [teacherinfo, classinfo]);
+    const fetchTeacherInfo = async () => {
+      try {
+        const response = await axios.get(
+          `${APIURL}/api/teacherdetails/${admin_id}`
+        );
+        const teacherOptions = response.data.map((teacher) => ({
+          value: `${teacher.first_name} ${teacher.last_name}`,
+          label: `${teacher.first_name} ${teacher.last_name}`,
+        }));
+        setTeacherOptions(teacherOptions);
+      } catch (error) {
+        console.error("Failed to fetch teacher data", error);
+      }
+    };
+    fetchTeacherInfo();
+  }, [APIURL, admin_id]);
 
-  const mapTeachers = () => {
-    const options = teacherinfo.adminteacherinfo?.map((teacher, index) => ({
-      id: index,
-      value: `${teacher.first_name} ${teacher.last_name}`,
-      label: `${teacher.first_name} ${teacher.last_name}`,
-    }));
-    setTeacherOptions(options);
-  };
+  // Fetch class information
+  useEffect(() => {
+    const fetchClassInfo = async () => {
+      try {
+        const response = await axios.get(
+          `${APIURL}/api/addClassname/${admin_id}`
+        );
 
-  const mapClasses = () => {
-    const options = classinfo.adminallclassinfo?.map((classItem, index) => ({
-      id: index,
-      value: `${classItem.class_name} ${classItem.division}`,
-      label: `${classItem.class_name} ${classItem.division}`,
-    }));
-    setClassOptions(options);
-  };
+        const updatedClassOptions = response.data.map((classItem) => {
+          // Find the specific count for the class and division
+          const matchedCount = studentCount.student_counts.find(
+            (countItem) =>
+              countItem.class_name === classItem.class_name &&
+              countItem.division === classItem.division
+          );
+
+          // If student count is found, use the remaining_count; otherwise, use the total count from overall_student_counts
+          const totalStudentCount = matchedCount
+            ? matchedCount.remaining_count
+            : studentCount.overall_student_counts.find(
+                (overallCount) =>
+                  overallCount.class_name === classItem.class_name &&
+                  overallCount.division === classItem.division
+              )?.total_student_count || 0;
+
+          return {
+            value: `${classItem.class_name} ${classItem.division}`,
+            label: `${classItem.class_name} ${classItem.division} (${totalStudentCount})`,
+          };
+        });
+        setClassOptions(updatedClassOptions);
+      } catch (error) {
+        console.error("Failed to fetch class data", error);
+      }
+    };
+
+    fetchClassInfo();
+  }, [APIURL, admin_id, studentCount]);
 
   const handleLayoutSelect = (layout) => {
     setSelectedLayout(layout);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setShowModal(true);
+
+    const formData = {
+      examdate,
+      admin_id,
+    };
+
+    try {
+      // Fetch student counts from the backend
+      const response = await axios.post(
+        `${APIURL}/api/getStudentCounts`,
+        formData
+      );
+      const studentCounts = response.data;
+
+      // Set the student counts in state
+      setStudentsCount(studentCounts);
+
+      // Show the modal after setting the student counts
+      setShowModal(true);
+    } catch (error) {
+      console.error("Failed to fetch student counts", error);
+      Swal.fire("Error", "Could not fetch student data.", "error");
+    }
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setSelectedTeacher([]);
+    setSelectedClass([]);
   };
-
   const handleTeacherSelect = (teacher) => {
     setSelectedTeacher((prevSelectedTeachers) => {
       if (prevSelectedTeachers.includes(teacher.value)) {
@@ -98,63 +160,25 @@ function SeatAssigning() {
     });
   };
 
-  const customStyles = {
-    control: (base, state) => ({
-      ...base,
-      width: "100%",
-      minHeight: "40px",
-      border: "1px solid #526D82",
-      borderRadius: "8px",
-      boxShadow: state.isFocused ? "0 0 0 1px #526D82" : "none",
-      "&:hover": {
-        borderColor: "none", // Darker border on hover
-      },
-      "&:focus": {
-        borderColor: "#526D82", // Ensures the border color when the element is focused
-        outline: "none", // Removes the default outline when focused
-      },
-    }),
-    placeholder: (base) => ({
-      ...base,
-      color: "#526D82",
-    }),
-    singleValue: (base) => ({
-      ...base,
-      color: "#000",
-    }),
-    option: (base) => ({
-      ...base,
-      color: "#000",
-    }),
-    valueContainer: (base) => ({
-      ...base,
-      padding: "0 10px",
-    }),
-    dropdownIndicator: (base) => ({
-      ...base,
-      color: "#526D82",
-    }),
-    indicatorsContainer: (base) => ({
-      ...base,
-      alignItems: "center",
-    }),
-    menu: (base) => ({
-      ...base,
-      zIndex: 9999,
-      position: "absolute",
-      width: '89%',
-      maxHeight: '150px', 
-      overflowY: 'auto',
-    }),
-    menuList: (base) => ({
-      ...base,
-      maxHeight: '150px',
-      overflowY: 'auto',
-      paddingRight: '10px'
-    }),
-  };
-
   const handleFormSubmit = async () => {
+    if (!startTime || !endTime) {
+      Swal.fire(
+        "Validation Error",
+        "Please set both start time and end time.",
+        "error"
+      );
+      return;
+    }
+
+    if (endTime <= startTime) {
+      Swal.fire(
+        "Validation Error",
+        "End time must be after start time.",
+        "error"
+      );
+      return;
+    }
+
     const formData = {
       hallNo,
       studentperbench,
@@ -166,14 +190,12 @@ function SeatAssigning() {
       selectedTeacher,
       selectedClass,
       selectedLayout,
-      admin
+      admin_id,
     };
-
-    console.log(selectedClass,"selected classsssss")
 
     try {
       const response = await axios.post(`${APIURL}/api/seating`, formData);
-  
+
       if (response.status === 200) {
         // Success case
         Swal.fire(
@@ -185,25 +207,35 @@ function SeatAssigning() {
       }
     } catch (error) {
       const statusCode = error.response?.status;
-      const errorMessage = error.response?.data?.message || "There was an error submitting the form";
-  
-      if (statusCode === 400) {
-        Swal.fire("Error", errorMessage, "error");
-      } else if (statusCode === 404) {
-        Swal.fire("Error", "Student or class not found.", "error");
-      } else if (statusCode === 409) {
-        Swal.fire("Conflict", errorMessage, "warning");
-      } else if (statusCode === 500) {
-        Swal.fire("Error", "An internal server error occurred.", "error");
-      } else {
-        Swal.fire("Error", "Unexpected error occurred.", "error");
+      const errorMessage =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        "There was an error submitting the form";
+
+      // Display error message based on status code
+      switch (statusCode) {
+        case 400:
+          Swal.fire("Error", errorMessage, "error");
+          break;
+        case 404:
+          Swal.fire("Error", "Student or class not found.", "error");
+          break;
+        case 409:
+          Swal.fire("Conflict", errorMessage, "warning");
+          break;
+        case 500:
+          Swal.fire("Error", "An internal server error occurred.", "error");
+          break;
+        default:
+          Swal.fire("Error", "Unexpected error occurred.", "error");
+          break;
       }
     }
   };
 
-  const handleBackClick = () => {
-    navigate ('/aarnanavbar')
-  }
+  // const handleBackClick = () => {
+  //   navigate ('/aarnanavbar')
+  // }
 
   return (
     <div>
@@ -217,7 +249,7 @@ function SeatAssigning() {
             }}
           >
             {/* <Link to="/aarnanavbar"> */}
-              {/* <IoChevronBackSharp onClick={handleBackClick} className="seat_back" /> */}
+            {/* <IoChevronBackSharp onClick={handleBackClick} className="seat_back" /> */}
             {/* </Link> */}
             <h1 className="seat_title">Seat Assigning</h1>
           </div>
@@ -244,7 +276,7 @@ function SeatAssigning() {
                     No. of Columns<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     id="column_no"
                     name="column_no"
                     value={columnNo}
@@ -258,7 +290,7 @@ function SeatAssigning() {
                     No. of Tables<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     id="table_no"
                     name="table_no"
                     value={numberoftables}
@@ -274,7 +306,7 @@ function SeatAssigning() {
                     Students per Bench<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     id="students_bench"
                     name="students_bench"
                     value={studentperbench}
@@ -307,7 +339,7 @@ function SeatAssigning() {
                         name="start_time"
                         value={startTime}
                         onChange={(e) => setStartTime(e.target.value)}
-                        style={{width:'100%'}}
+                        style={{ width: "100%" }}
                       />
                     </div>
                   </Col>
@@ -322,8 +354,7 @@ function SeatAssigning() {
                         name="end_time"
                         value={endTime}
                         onChange={(e) => setEndTime(e.target.value)}
-                        style={{width:'100%'}}
-
+                        style={{ width: "100%" }}
                       />
                     </div>
                   </Col>

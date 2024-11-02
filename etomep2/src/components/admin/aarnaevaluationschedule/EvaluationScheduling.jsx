@@ -1,77 +1,110 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import Select from "react-select";
 import { BsSearch } from "react-icons/bs";
 import "../aarnaevaluationschedule/evaluationscheduling.css";
-import { useSelector } from "react-redux";
-import axios from 'axios'
-import Swal from 'sweetalert2';
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 function EvaluationScheduling() {
   const [showModal, setShowModal] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [classNumber, setClassNumber] = useState(null);
   const [subject, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [checkedItems, setCheckedItems] = useState([]);
   const [term, setTerm] = useState("");
-  const [selectedTerm, setSelectedTerm] = useState("")
+  const [selectedTerm, setSelectedTerm] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [selectedClass, setSelectedClass] = useState(null);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const classinfo = useSelector((state) => state.adminallclassinfo || {});
-  const teacherinfo = useSelector((state) => state.adminteacherinfo || {});
-  const APIURL = useSelector((state) => state.APIURL.url || '');
+  const APIURL = useSelector((state) => state.APIURL.url || "");
 
-  console.log(APIURL,"ugrfwieyotgr78iewy ")
+  const admininfo = useSelector((state) => state.admininfo);
+  const admin_id = admininfo.admininfo?.admin_id;
 
-  const classnumberOptions = classinfo.adminallclassinfo?.map((classItem) => ({
-    value: `${classItem.class_name} ${classItem.division}`,
-    label: `${classItem.class_name} ${classItem.division}`,
-  }));
+  console.log(checkedItems,"admin info")
 
+  useEffect(() => {
+    const fetchclass = async () => {
+      try {
+        const response = await axios.get(
+          `${APIURL}/api/addClassname/${admin_id}`
+        );
+        const classOptions = response.data.map((classItem) => ({
+          value: `${classItem.class_name} ${classItem.division}`,
+          label: `${classItem.class_name} ${classItem.division}`,
+        }));
+        setClassNumber(classOptions);
+      } catch (error) {
+        console.error("Failed to fetch class data", error);
+      }
+    };
+    fetchclass();
+  }, [APIURL, admin_id]);
 
+  // const classnumberOptions = classinfo.adminallclassinfo?.map((classItem) => ({
+  //   value: `${classItem.class_name} ${classItem.division}`,
+  //   label: `${classItem.class_name} ${classItem.division}`,
+  // }));
 
-  const class_name = classinfo.adminallclassinfo?.class_name;
-  const admin     = classinfo.adminallclassinfo[0]?.admin;
-  
+  // const class_name = classinfo.adminallclassinfo?.class_name;
  
 
   useEffect(() => {
-    fetchSubjects();
-    mapTeachers();
-  }, [teacherinfo]);
+    const fetchTeacherInfo = async () => {
+      try {
+        const response = await axios.get(
+          `${APIURL}/api/teacherdetails/${admin_id}`
+        );
+        const teacherOptions = response.data.map((teacher) => ({
+          value: `${teacher.first_name} ${teacher.last_name}`,
+          label: `${teacher.first_name} ${teacher.last_name}`,
+        }));
+        setTeachers(teacherOptions);
+      } catch (error) {
+        console.error("Failed to fetch teacher data", error);
+      }
+    };
+    fetchTeacherInfo();
+  }, [APIURL, admin_id]);
 
-  const mapTeachers = () => {
-    const teacherOptions = teacherinfo.adminteacherinfo?.map((teacher) => ({
-      value: `${teacher.first_name} ${teacher.last_name}`,
-      label: `${teacher.first_name} ${teacher.last_name}`,
-    }));
-    setTeachers(teacherOptions);
-  };
+  // useEffect(() => {
+  //   fetchSubjects();
+  //   // mapTeachers();
+  // }, );
 
-  const fetchSubjects = async () => {
-    try {
-      const response = await axios.get(`${APIURL}/api/curriculam`);
-      const mappedSubjects = response.data.subject_names?.map((sub) => ({
-        value: sub.subject_name,
-        label: sub.subject_name,
-      }));
-      setSubjects(mappedSubjects);
-    } catch (error) {
-      console.error("Failed to fetch subjects:", error);
-    }
-  };
+  // const mapTeachers = () => {
+  //   const teacherOptions = teacherinfo.adminteacherinfo?.map((teacher) => ({
+  //     value: `${teacher.first_name} ${teacher.last_name}`,
+  //     label: `${teacher.first_name} ${teacher.last_name}`,
+  //   }));
+  //   setTeachers(teacherOptions);
+  // };
 
-
-
- 
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      try {
+        const response = await axios.get(`${APIURL}/api/curriculam`);
+        const mappedSubjects = response.data.subject_names?.map((sub) => ({
+          value: sub.subject_name,
+          label: sub.subject_name,
+        }));
+        setSubjects(mappedSubjects);
+      } catch (error) {
+        console.error("Failed to fetch subjects:", error);
+      }
+    };
   
-
+    fetchSubjects();
+  }, [APIURL]); 
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -120,18 +153,16 @@ function EvaluationScheduling() {
     menu: (base) => ({
       ...base,
       zIndex: 9999,
-      position: 'absolute',
-      maxHeight: '150px', // Set the max height for the dropdown list
-      overflowY: 'auto' // Add vertical scrolling
+      position: "absolute",
+      maxHeight: "150px", // Set the max height for the dropdown list
+      overflowY: "auto", // Add vertical scrolling
     }),
     menuList: (base) => ({
       ...base,
       maxHeight: '250px', // Set the max height for the list items
-      padding: '0',
-      overflowY: 'auto',
+      padding: '0'
     }),
   };
- 
 
   const handleCheckboxChange = (e, item) => {
     const isChecked = e.target.checked;
@@ -152,30 +183,26 @@ function EvaluationScheduling() {
     setShowModal(true);
   };
 
-
-  
-
   const handleCloseModal = () => {
     setShowModal(false);
+    setCheckedItems("")
   };
 
   const sendData = async (event) => {
-    console.log("enterddddddd")
+    console.log("enterddddddd");
     event.preventDefault();
     const data = {
-      classNumber: classNumber.label,
+      classNumber: selectedClass ? selectedClass.value : null, 
       term: term,
       subjects: selectedSubject.label,
       end_date: endDate,
       teacher: checkedItems.map((teacher) => teacher.label),
-      admin: admin,
+      admin: admin_id,
     };
 
-   
-  
     try {
       const response = await axios.post(`${APIURL}/api/evaluationadding`, data);
-      console.log(response,"response")
+      console.log(response, "response");
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
@@ -197,9 +224,9 @@ function EvaluationScheduling() {
       setShowModal(false);
     }
   };
-const handleBackClick = () =>{
-  navigate('/aarnanavbar')
-}
+  const handleBackClick = () => {
+    navigate("/aarnanavbar");
+  };
 
   return (
     <div>
@@ -214,7 +241,7 @@ const handleBackClick = () =>{
             }}
           >
             {/* <Link to="/aarnanavbar"> */}
-              {/* <IoChevronBackSharp onClick={handleBackClick} className="evaluation_back" /> */}
+            {/* <IoChevronBackSharp onClick={handleBackClick} className="evaluation_back" /> */}
             {/* </Link> */}
             <h1 className="evaluation_title">Evaluation Scheduling</h1>
           </div>
@@ -226,11 +253,12 @@ const handleBackClick = () =>{
                   <label htmlFor="class_no">
                     Class Number<span style={{ color: "red" }}>*</span>
                   </label>
+
                   <Select
-                    options={classnumberOptions}
+                    options={classNumber}
                     styles={customStyles}
-                    value={classNumber} // this should be an object with the same structure as items in options or null
-                    onChange={setClassNumber} // ensure this handler updates the state appropriately
+                    value={selectedClass}
+                    onChange={setSelectedClass}
                     placeholder="Select Class..."
                   />
                 </div>
@@ -250,9 +278,13 @@ const handleBackClick = () =>{
                   <label htmlFor="term">
                     Term<span style={{ color: "red" }}>*</span>
                   </label>
-                    
-                    <input onChange={(e) => setTerm(e.target.value)} type="text" style={{ textTransform: "capitalize" }}/>
-                    {/* <Select
+
+                  <input
+                    onChange={(e) => setTerm(e.target.value)}
+                    type="text"
+                    style={{ textTransform: "capitalize" }}
+                  />
+                  {/* <Select
                     options={term}
                     styles={customStyles}
                     value={selectedSubject}
@@ -279,7 +311,12 @@ const handleBackClick = () =>{
                   <label htmlFor="end_date">
                     End Date<span style={{ color: "red" }}>*</span>
                   </label>
-                  <input  onChange={(e) => setEndDate(e.target.value)} type="date" id="end_date" name="end_date" />
+                  <input
+                    onChange={(e) => setEndDate(e.target.value)}
+                    type="date"
+                    id="end_date"
+                    name="end_date"
+                  />
                   {/* <Select options={termOptions} styles={customStyles} value={term} onChange={setTerm} placeholder=''/> */}
                 </div>
               </Col>
@@ -310,8 +347,12 @@ const handleBackClick = () =>{
                   <div className="position-relative">
                     {/* <BsSearch className="position-absolute top-50 translate-middle-y ms-2 modal_searchbar_icon" /> */}
                     {/* <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 modal_searchbar_icon ${searchQuery ? 'hidden' : ''}`} /> */}
-                    <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 modal_searchbar_icon ${searchQuery ? 'hidden' : ''}`} />
-                    
+                    <BsSearch
+                      className={`position-absolute top-50 translate-middle-y ms-2 modal_searchbar_icon ${
+                        searchQuery ? "hidden" : ""
+                      }`}
+                    />
+
                     <Form.Control
                       type="search"
                       placeholder="Search by Name or Id"
@@ -340,12 +381,9 @@ const handleBackClick = () =>{
           </Row>
         </Modal.Body>
         <Modal.Footer style={{ border: "none" }}>
-         
           <button onClick={sendData} className="modal_evaluation_submit">
             Submit
           </button>
-           
-
         </Modal.Footer>
       </Modal>
     </div>

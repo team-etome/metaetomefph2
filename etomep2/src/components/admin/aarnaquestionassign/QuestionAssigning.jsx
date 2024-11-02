@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import "../aarnaquestionassign/questionassigning.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Select from "react-select";
 import axios from "axios";
 import Swal from "sweetalert2";
+
+import { adminteacherinfo } from "../../../Redux/Actions/AdminTeacherInfoAction";
 
 function QuestionAssigning() {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -25,22 +27,22 @@ function QuestionAssigning() {
   const [instruction, setInstruction] = useState("");
   const [term, setTerm] = useState("");
   const [loading, setLoading] = useState(false);
-  const[classDetails,setClassDetails] = useState([])
+  const [classDetails, setClassDetails] = useState([]);
 
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
   const admininfo = useSelector((state) => state.admininfo);
 
-  const navigate = useNavigate()
- 
-  console.log(classDetails,"class detailssssss")
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const admin_id = admininfo.admininfo?.admin_id
+  console.log(classDetails, "class detailssssss");
 
+  const admin_id = admininfo.admininfo?.admin_id;
 
-   console.log(selectedClass,selectedDivision,subjects,"classs ")
-   console.log(selectedDivision,subjects," division")
-   console.log(subjects,"subject")
+  console.log(selectedClass, selectedDivision, subjects, "classs ");
+  console.log(selectedDivision, subjects, " division");
+  console.log(subjects, "subject");
 
   // useEffect(()=>{
 
@@ -49,22 +51,23 @@ function QuestionAssigning() {
   //     try{
   //       const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`)
   //       setClassDetails(response.data)
-       
+
   //     }catch(error){
   //       console.error("Failed to fetch class data")
   //     }
-  
-  
+
   //   }
-  
+
   //   fetchclass();
-  
+
   // } ,[APIURL])
 
   useEffect(() => {
     const fetchClass = async () => {
       try {
-        const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`);
+        const response = await axios.get(
+          `${APIURL}/api/addClassname/${admin_id}`
+        );
         setClassDetails(response.data);
       } catch (error) {
         console.error("Failed to fetch class data");
@@ -72,6 +75,21 @@ function QuestionAssigning() {
     };
     fetchClass();
   }, [APIURL, admin_id]);
+
+  useEffect(() => {
+    const fetchTeacherInfo = async () => {
+      try {
+        const response = await axios.get(
+          `${APIURL}/api/teacherdetails/${admin_id}`
+        );
+        dispatch(adminteacherinfo(response.data));
+      } catch (error) {
+        console.error("Failed to fetch teacher data", error);
+      }
+    };
+
+    fetchTeacherInfo();
+  }, [APIURL, admin_id, dispatch]);
 
   useEffect(() => {
     if (selectedClass && selectedDivision) {
@@ -107,14 +125,12 @@ function QuestionAssigning() {
     mapTeachers();
   }, [teacherinfo]);
 
-  
   const classOptions = Array.from(
     new Set(classDetails.map((item) => item.class_name))
   ).map((className) => ({
     value: className,
     label: className,
   }));
-
 
   const divisionOptions = classDetails
     .filter((item) => item.class_name === selectedClass?.value)
@@ -123,36 +139,43 @@ function QuestionAssigning() {
       label: item.division,
     }));
 
-    const handleClassChange = (selectedOption) => {
-      console.log("enteredddd")
-      setSelectedClass(selectedOption);
-      setSelectedDivision(null); 
-      setSubjects([]);
-    };
-  
-    const handleDivisionChange = (selectedOption) => {
-      setSelectedDivision(selectedOption);
-    };
+  const handleClassChange = (selectedOption) => {
+    console.log("enteredddd");
+    setSelectedClass(selectedOption);
+    setSelectedDivision(null);
+    setSubjects([]);
+  };
 
-    const toTitleCase = (str) => {
-      return str
-        .toLowerCase()
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
-    };
+  const handleDivisionChange = (selectedOption) => {
+    setSelectedDivision(selectedOption);
+  };
 
+  const toTitleCase = (str) => {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    
+    if (endTime && startTime && endTime <= startTime) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Time",
+        text: "End time must be after the start time.",
+      });
+      return;
+    }
+
     const requiredFields = [
       { value: selectedSubject, label: "Subject" },
       { value: selectedTeacher, label: "Teacher" },
       { value: examName, label: "Exam Name" },
       { value: examDate, label: "Exam Date" },
-    
+
       { value: term, label: "Term" },
       { value: totalMark, label: "Total Mark" },
       { value: startTime, label: "Start Time" },
@@ -193,7 +216,7 @@ function QuestionAssigning() {
         // term: term,
         term: formattedTerm,
         instructions: instruction,
-        admin   :admin_id
+        admin: admin_id,
       };
 
       const response = await axios.post(
@@ -201,9 +224,7 @@ function QuestionAssigning() {
         formData
       );
 
-      navigate('/aarnanavbar')
-
-    
+      navigate("/aarnanavbar");
 
       Swal.fire({
         icon: "success",
@@ -235,7 +256,7 @@ function QuestionAssigning() {
       setLoading(false);
     }
   };
- 
+
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -296,9 +317,9 @@ function QuestionAssigning() {
       paddingRight: '10px'
     }),
   };
-const handleBackClick = () => {
-  navigate('/aarnanavbar');
-}
+  // const handleBackClick = () => {
+  //   navigate('/aarnanavbar');
+  // }
   return (
     <div>
       <Container className="qpaper_assign_container">
@@ -311,9 +332,9 @@ const handleBackClick = () => {
             }}
           >
             {/* <Link to="/aarnanavbar"> */}
-              {/* <IoChevronBackSharp onClick={handleBackClick} className="qpaper_back" /> */}
+            {/* <IoChevronBackSharp onClick={handleBackClick} className="qpaper_back" /> */}
             {/* </Link> */}
-            <h1 className="qpaper_title">Question Setting</h1>
+            <h1 className="qpaper_title">Question Assigning</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>
           <div className="qpaper_form_scrollable">
@@ -361,7 +382,6 @@ const handleBackClick = () => {
                   />
                 </div>
 
-                
                 <div className="qpaper_group">
                   <label htmlFor="division">Division</label>
                   <Select
@@ -371,13 +391,11 @@ const handleBackClick = () => {
                       (option) => option.value === selectedDivision?.value
                     )}
                     onChange={handleDivisionChange}
-                    placeholder="Select a division"
+                    placeholder="Select class before selecting division"
                     isClearable={true}
                     isDisabled={!selectedClass}
                   />
                 </div>
-
-
 
                 <div className="qpaper_group">
                   <label htmlFor="subject">
@@ -392,12 +410,11 @@ const handleBackClick = () => {
                     onChange={(option) =>
                       setSelectedSubject(option ? option.value : null)
                     }
-                    placeholder="Select a subject"
+                    placeholder="Select Class and Division before selecting subject"
                     isClearable={true}
                   />
                 </div>
 
-                
                 {/* <div className="qpaper_group">
                   <label htmlFor="t_mark" style={{top:'10%'}}>
                     Instruction<span style={{ color: "red"}}>*</span>
@@ -426,6 +443,7 @@ const handleBackClick = () => {
                     onChange={(e) => setStartTime(e.target.value)}
                   />
                 </div>
+
                 <div className="qpaper_group">
                   <label htmlFor="e_time">
                     End Time<span style={{ color: "red" }}>*</span>
@@ -451,11 +469,11 @@ const handleBackClick = () => {
                   />
                 </div>
                 <div className="qpaper_group">
-                  <label htmlFor="t_mark">
+                  <label  htmlFor="t_mark">
                     Total Mark<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     id="t_mark"
                     value={totalMark}
                     onChange={(e) => setTotalMark(e.target.value)}

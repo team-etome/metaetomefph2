@@ -99,29 +99,8 @@ function CurriculumAdding() {
   }, [APIURL, admininfo]);
 
   const handleSubmit = (e) => {
-    // console.log("enteredddddd")
-
     e.preventDefault();
-    // validation
-    // const requiredFields = [
-    //   { value: publisher, label: "Publisher Name" },
-    //   { value: subject, label: " Subject" },
-    //   { value: faculty, label: "faculty" },
-
-    // ];
-
-    // const missingFields = requiredFields.filter((field) => !field.value);
-
-    // if (missingFields.length > 0) {
-    //   const missingFieldLabels = missingFields.map((field) => field.label).join(", ");
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Missing Required Information",
-    //     text: `Please complete the following fields: ${missingFieldLabels}.`,
-    //   });
-    //   return;
-    // }
-
+  
     const payload = {
       class_name: class_name,
       division: division,
@@ -131,12 +110,11 @@ function CurriculumAdding() {
       medium: medium,
       entries: curriculumEntries,
     };
-
+  
     axios
       .post(`${APIURL}/api/addClassname`, payload)
       .then((response) => {
         console.log("Data submitted successfully:", response.data);
-        // Handle further actions after successful submission like redirecting
         Swal.fire({
           icon: "success",
           title: "Success",
@@ -144,8 +122,50 @@ function CurriculumAdding() {
         });
         navigate("/institutionadding");
       })
-
       .catch((error) => {
+        if (error.response) {
+          // Handle specific errors from the backend
+          const { status, data } = error.response;
+          
+          let errorMessage = "An error occurred. Please try again.";
+          
+          switch (status) {
+            case 400:
+              errorMessage = data.error || "Invalid request data. Please check your entries.";
+              break;
+            case 401:
+              errorMessage = data.error || "Admin not found.";
+              break;
+            case 402:
+              errorMessage = data.error || "Faculty not found.";
+              break;
+            case 403:
+              errorMessage = data.error || "Subject not found.";
+              break;
+            case 404:
+              errorMessage = data.error || "Something went wrong on the server.";
+              break;
+            case 405:
+              errorMessage = data.error || "Teacher is already assigned as a class teacher.";
+              break;
+            default:
+              errorMessage = data.error || "Unexpected error occurred.";
+              break;
+          }
+  
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: errorMessage,
+          });
+        } else {
+          // If there's no response (network error, etc.)
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Failed to connect to the server. Please check your internet connection.",
+          });
+        }
         console.error("Failed to submit data:", error);
       });
   };
@@ -171,6 +191,8 @@ function CurriculumAdding() {
   //         setFaculty(null);
   //     }
   // };
+
+
   const handleAddNew = () => {
     // Check if all required fields are selected
     let missingFields = [];
