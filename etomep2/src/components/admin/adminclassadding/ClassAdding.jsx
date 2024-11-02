@@ -205,11 +205,28 @@ function ClassAdding() {
       ...base,
       alignItems: "center",
     }),
+    // menu: (base) => ({
+    //   ...base,
+    //   zIndex: 9999,
+    //   position: "absolute",
+    //   width:'89%',
+    //   maxHeight: "90px",
+    //   overflow: "auto",
+
+    // }),
     menu: (base) => ({
       ...base,
       zIndex: 9999,
       position: "absolute",
-      width:'89%'
+      width: '89%',
+      maxHeight: '150px', 
+      overflowY: 'auto', 
+    }),
+    menuList: (base) => ({
+      ...base,
+      maxHeight: '150px',
+      overflowY: 'auto',
+      paddingRight: '10px'
     }),
   };
   const handleDivisionChange = (e) => {

@@ -159,8 +159,8 @@ function EvaluationScheduling() {
     }),
     menuList: (base) => ({
       ...base,
-      maxHeight: "250px", // Set the max height for the list items
-      padding: "0",
+      maxHeight: '250px', // Set the max height for the list items
+      padding: '0'
     }),
   };
 

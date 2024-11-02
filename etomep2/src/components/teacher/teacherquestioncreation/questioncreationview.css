@@ -51,7 +51,7 @@
         display: flex;
         align-items: center;
         margin-bottom: 10px;
-        padding-left: 20px;
+        padding-left: 0px;
     }
     .teacher_view_title{
         font-weight: 500;

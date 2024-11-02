@@ -40,22 +40,46 @@ function AddStudent() {
     const file = e.target.files[0];
     setImageFile(file);
   };
+  const toTitleCase = (str) => {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+  const capitalizedStudentName = toTitleCase(studentName);
+  const capitalizedStudentRollno = toTitleCase(studentRollno);
+  const capitalizedStudentAdmission = toTitleCase(studentAdmission);
+  const capitalizedStudentGuardian = toTitleCase(studentGuardian);
+  const capitalizedStudentFather = toTitleCase(studentFather);
+  const capitalizedStudentMother = toTitleCase(studentMother);
+  const capitalizedStudentAddress = toTitleCase(studentAddress);
+
     const formData = {
-      student_name: studentName,
-      admission_no: studentAdmission,
-      roll_no: studentRollno,
+      // student_name: studentName,
+      student_name: capitalizedStudentName,
+      // admission_no: studentAdmission,
+      // roll_no: studentRollno,
+      admission_no: capitalizedStudentAdmission,
+      roll_no: capitalizedStudentRollno,
       number: studentPhone,
       email: studentEmail,
       gender: studentGender,
       dob: studentDob,
       // category: studentcategory,
       start_date: studentJoined,
-      guardian: studentGuardian,
-      fathers_name: studentFather,
-      mothers_name: studentMother,
-      address: studentAddress,
+      // guardian: studentGuardian,
+      // fathers_name: studentFather,
+      // mothers_name: studentMother,
+      // address: studentAddress,
+      guardian: capitalizedStudentGuardian,
+      fathers_name: capitalizedStudentFather,
+      mothers_name: capitalizedStudentMother,
+      address: capitalizedStudentAddress,
       teacher: teacher_id,
     };
     if (studentPhone.length !== 10 || isNaN(studentPhone)) {
@@ -115,6 +139,8 @@ function AddStudent() {
       setStudentPhone(numericValue);
     }
   };
+
+
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -159,10 +185,24 @@ function AddStudent() {
       ...base,
       alignItems: "center",
     }),
+    // menu: (base) => ({
+    //   ...base,
+    //   zIndex: 9999,
+    //   position: "absolute",
+    // }),
     menu: (base) => ({
       ...base,
       zIndex: 9999,
       position: "absolute",
+      width: '89%',
+      maxHeight: '150px', 
+      overflowY: 'auto', 
+    }),
+    menuList: (base) => ({
+      ...base,
+      maxHeight: '150px',
+      overflowY: 'auto',
+      paddingRight: '10px'
     }),
   };
   const handleBackClick = () => {

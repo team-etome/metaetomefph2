@@ -4,15 +4,21 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { PiGraduationCap } from "react-icons/pi";
 import amritha from "../../../assets/amritha.png";
+import { FaSave } from "react-icons/fa";
+import { MdBlockFlipped } from "react-icons/md";
+import { CgUnblock } from "react-icons/cg";
 import "../studentview/studentview.css";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 
 function StudentView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [isBlocked, setIsBlocked] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -20,6 +26,8 @@ function StudentView() {
 
   const location = useLocation();
   const { student } = location.state || {};
+  // const classDetails = location.state?.student;
+
 
   console.log(student, "studetn");
 
@@ -85,7 +93,7 @@ function StudentView() {
                     paddingRight: "30px",
                   }}
                 >
-                  <FiEdit className='teacher_student_edit'/>
+                  <MdDelete className='teacher_student_edit'/>
                   {/* <button className="teacher_student_edit">Edit</button> */}
                 </div>
               ) : (

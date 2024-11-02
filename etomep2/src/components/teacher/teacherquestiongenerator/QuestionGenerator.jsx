@@ -273,7 +273,7 @@ const handleBackClick = () => {
             </button>
           </Col>
         </Row>
-        <Row>
+        <Row className="qs_gn_bdy">
           <div className="text-editor">
             {subsections.map((subsection, subsectionIndex) => (
               <Droppable

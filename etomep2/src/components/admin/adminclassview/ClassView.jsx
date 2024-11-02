@@ -7,10 +7,16 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { RiShareBoxFill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 function ClassView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
+
+
+  const APIURL = useSelector((state) => state.APIURL.url);
 
   console.log(selectedRowIndex, "aaaa");
 
@@ -21,6 +27,63 @@ function ClassView() {
 
   console.log(classDetails,4)
 
+  // const handleDelete = async () => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!",
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       try {
+  //         await axios.delete(`${APIURL}/api/addClassname/${classDetails.class}`);
+  //         Swal.fire("Deleted!", "Class has been deleted.", "success");
+  //         navigate("/institutionadding"); 
+  //       } catch (error) {
+  //         console.error(
+  //           "There was an error deleting the class!",
+  //           error
+  //         );
+  //         Swal.fire(
+  //           "Failed!",
+  //           "There was a problem deleting the class.",
+  //           "error"
+  //         );
+  //       }
+  //     }
+  //   });
+  // };
+  const handleDelete = async () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          
+          const classId = classDetails?.id || classDetails?.class; 
+          await axios.delete(`${APIURL}/api/addClassname/${classId}`);
+          Swal.fire("Deleted!", "Class has been deleted.", "success");
+          navigate("/institutionadding");
+        } catch (error) {
+          console.error("There was an error deleting the class!", error.response);
+          Swal.fire(
+            "Failed!",
+            "There was a problem deleting the class.",
+            "error"
+          );
+        }
+      }
+    });
+  };
   
 
   const toggleEditBlockButtons = (e) => {
@@ -70,7 +133,7 @@ function ClassView() {
                 >
                   {/* <button className="class_edit">Edit</button> */}
                
-                  <MdDelete className="evaluation_edit" />
+                  <MdDelete className="evaluation_edit" onClick={handleDelete} />
 
                   {/* <button className="class_block">Block</button> */}
                 </div>

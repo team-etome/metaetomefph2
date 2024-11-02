@@ -295,7 +295,10 @@ function MobileSidebar({ show, onClose }) {
     localStorage.setItem("activeTab", activeItem);
     navigate("/adminlokanavbar");
   };
-
+  const handleMenuItemClick = (item) => {
+    setActiveItem(item);
+  };
+  
   const handleAdminProfileNavigate = () => {
     navigate("/adminprofile");
   };

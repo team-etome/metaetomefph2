@@ -277,6 +277,15 @@ function CurriculumAdding() {
       zIndex: 9999,
       position: "absolute",
       marginTop: 0,
+      width: '89%',
+      maxHeight: '150px', 
+      overflowY: 'auto', 
+    }),
+    menuList: (base) => ({
+      ...base,
+      maxHeight: '150px',
+      overflowY: 'auto',
+      paddingRight: '10px'
     }),
     placeholder: (base) => ({
       ...base,

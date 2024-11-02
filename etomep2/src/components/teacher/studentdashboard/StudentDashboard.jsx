@@ -7,8 +7,10 @@ import { BsSearch } from "react-icons/bs";
 import { FaCalendarAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import "../studentdashboard/studentdashboard.css";
+import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import axios from "axios";
+
 
 function StudentDashboard() {
   const [isActive, setIsActive] = useState(false);
@@ -46,43 +48,119 @@ function StudentDashboard() {
     navigate("/teacherstudentview", { state: { student: item } });
   };
 
+  // const handleFileUpload = async () => {
+  //   if (!file) return;
+  //   setIsLoading(true);
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("teacher", teacher_id);
+
+  //   try {
+  //     await axios.post(`${APIURL}/api/studentexcel`, formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     });
+  //     // Handle success (e.g., show a success message, refresh student list)
+  //   } catch (error) {
+  //     console.error("Failed to upload file:", error);
+  //     // Handle error (e.g., show an error message)
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+  // Fetch student list data
+  const fetchFacultyData = async () => {
+    try {
+      const response = await axios.get(`${APIURL}/api/addstudent/${teacher_id}`);
+      setStudentList(response.data);
+      setStandard(response.data[0].standard);
+      setDivision(response.data[0].division);
+    } catch (error) {
+      console.error("Failed to fetch faculty data:", error);
+    }
+  };
+
+  // File upload with error handling and success message
   const handleFileUpload = async () => {
     if (!file) return;
-    setIsLoading(true);
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("teacher", teacher_id);
 
     try {
-      await axios.post(`${APIURL}/api/studentexcel`, formData, {
+      Swal.fire({
+        title: "Uploading...",
+        text: "Please wait while the file is being uploaded.",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      console.log("Starting file upload...");
+      const response = await axios.post(`${APIURL}/api/studentexcel`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      // Handle success (e.g., show a success message, refresh student list)
+
+      console.log("File uploaded successfully:", response);
+
+      Swal.fire({
+        icon: "success",
+        title: "Upload Successful",
+        text: "File has been uploaded successfully.",
+      });
+
+      // Refresh the student list
+      await fetchFacultyData();
+      setShowOptions(false);
+      setFile(null);
     } catch (error) {
-      console.error("Failed to upload file:", error);
-      // Handle error (e.g., show an error message)
+      console.error("Error uploading file:", error);
+
+      let errorMessage = "An error occurred during file upload.";
+      if (error.response) {
+        if (typeof error.response.data === "string") {
+          errorMessage = error.response.data;
+        } else if (error.response.data && error.response.data.message) {
+          errorMessage = error.response.data.message;
+        }
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Upload Failed",
+        text: errorMessage,
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
+
+  // useEffect(() => {
+  //   const fetchFacultyData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${APIURL}/api/addstudent/${teacher_id}`
+  //       );
+  //       setStudentList(response.data);
+  //       setStandard(response.data[0].standard);
+  //       setDivision(response.data[0].division);
+  //     } catch (error) {
+  //       console.error("Failed to fetch faculty data:", error);
+  //     }
+  //   };
+  //   fetchFacultyData();
+  // }, [APIURL, teacher_id]);
+
   useEffect(() => {
-    const fetchFacultyData = async () => {
-      try {
-        const response = await axios.get(
-          `${APIURL}/api/addstudent/${teacher_id}`
-        );
-        setStudentList(response.data);
-        setStandard(response.data[0].standard);
-        setDivision(response.data[0].division);
-      } catch (error) {
-        console.error("Failed to fetch faculty data:", error);
-      }
-    };
     fetchFacultyData();
   }, [APIURL, teacher_id]);
+
 
   useEffect(() => {
     setFilteredStudentList(

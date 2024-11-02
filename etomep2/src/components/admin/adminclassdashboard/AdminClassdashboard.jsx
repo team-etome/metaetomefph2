@@ -129,8 +129,8 @@ function AdminClassdashboard() {
               <Col
                 lg={3}
                 md={4}
-                sm={6}
-                xs={6}
+                sm={12}
+                xs={12}
                 key={index}
                 className="class_list"
               >
