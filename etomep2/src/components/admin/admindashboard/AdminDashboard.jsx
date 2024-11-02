@@ -17,19 +17,25 @@ import "react-calendar/dist/Calendar.css";
 import studenticon from "../../../assets/studenticon.png";
 import teachericon from "../../../assets/teachericon.png";
 import { useSelector } from "react-redux";
+import axios from "axios";
+
 
 function AdminDashboard() {
-  // clandar part
+
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [notes, setNotes] = useState({});
   const [newNoteText, setNewNoteText] = useState("");
+
+  const [studentCount, setStudentCount] = useState(0);
+  const [teacherCount, setTeacherCount] = useState(0);
+
 
   const APIURL = useSelector((state) => state.APIURL.url);
 
   const admininfo = useSelector((state) => state.admininfo);
   const admin_id = admininfo.admininfo?.admin_id;
 
-  console.log(admin_id, "admin id");
 
   const formattedDate = (date) => {
     const year = date.getFullYear();
@@ -44,16 +50,38 @@ function AdminDashboard() {
 
   const handleAddNote = () => {
     if (newNoteText.trim() === "") return;
-
-    const dateKey = formattedDate(selectedDate);
+  
+    const dateKey = formattedDate(selectedDate); 
     const newNote = { text: newNoteText, date: dateKey };
+  
+   
     setNotes({
       ...notes,
       [dateKey]: notes[dateKey] ? [...notes[dateKey], newNote] : [newNote],
     });
-    q;
+  
+ 
+    const noteData = {
+      note: newNoteText,
+      date: dateKey,
+      admin: admin_id,
+    };
+
+  
+   
+    axios.post(`${APIURL}/api/note`, noteData)
+      .then((response) => {
+        console.log(response.data.message); 
+      })
+      .catch((error) => {
+        console.error('Error saving note:', error); 
+      });
+  
+  
     setNewNoteText("");
   };
+
+  
 
   // Delete note
   const handleDeleteNote = (indexToDelete) => {
@@ -74,10 +102,8 @@ function AdminDashboard() {
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [notifications, setNotifications] = useState([]);
 
-  console.log(notifications, "ghfusrdg");
 
   const state = useSelector((state) => state);
-  console.log(state);
 
   const handleAssignmentClick = (notification) => {
     setSelectedAssignment(notification);
@@ -149,6 +175,28 @@ function AdminDashboard() {
   //   }
   // }, [admin_id, APIURL]);
 
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const response = await axios.get(
+          `${APIURL}/api/teachserstudentcount/${admin_id}`
+        );
+        setStudentCount(response.data.data.total_students || 0);
+        setTeacherCount(response.data.data.total_teachers || 0);
+        console.log(response.data.data,"dataaaaaaa")
+      } catch (error) {
+        console.error("Error fetching student and teacher count:", error);
+      }
+    };
+
+    if (admin_id) {
+      fetchCounts();
+    }
+  }, [admin_id, APIURL]);
+
+
+
   return (
     <div className="admin_dashboard">
       <Container className="admin_dasboard_container">
@@ -177,8 +225,8 @@ function AdminDashboard() {
                     src={studenticon}
                     alt="icons"
                   />
-                  <p>Total Students</p>
-                  <p>22547</p>
+                   <p>Total Students</p>
+                   <p>{studentCount}</p>
                 </div>
                 <div className="dash_teacher_card">
                   <img
@@ -186,8 +234,8 @@ function AdminDashboard() {
                     src={teachericon}
                     alt="icons"
                   />
-                  <p>Total Teachers</p>
-                  <p>225</p>
+                    <p>Total Teachers</p>
+                    <p>{teacherCount}</p>
                 </div>
               </Col>
               <Col md={7} sm={12} xs={12} className="dsh_lka">
@@ -222,7 +270,6 @@ function AdminDashboard() {
                       <div key={index} className="note_item">
                         <p>{note.text}</p>
                         <span className="note_date">{note.date}</span>
-                        {/* <button className="delete_note" onClick={() => console.log('Delete note functionality')}>🗑️</button> */}
                         <button
                           className="delete_note"
                           onClick={() => handleDeleteNote(index)}
