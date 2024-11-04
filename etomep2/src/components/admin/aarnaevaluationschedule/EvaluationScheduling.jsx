@@ -21,6 +21,8 @@ function EvaluationScheduling() {
   const [selectedTerm, setSelectedTerm] = useState("");
   const [endDate, setEndDate] = useState("");
   const [selectedClass, setSelectedClass] = useState(null);
+  const [examDates, setExamDates] = useState([]);
+  const [selectedExamDate, setSelectedExamDate] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -30,7 +32,9 @@ function EvaluationScheduling() {
   const admininfo = useSelector((state) => state.admininfo);
   const admin_id = admininfo.admininfo?.admin_id;
 
-  console.log(checkedItems,"admin info")
+  console.log(term, "term");
+
+  console.log(selectedExamDate, "exam dates");
 
   useEffect(() => {
     const fetchclass = async () => {
@@ -50,14 +54,6 @@ function EvaluationScheduling() {
     fetchclass();
   }, [APIURL, admin_id]);
 
-  // const classnumberOptions = classinfo.adminallclassinfo?.map((classItem) => ({
-  //   value: `${classItem.class_name} ${classItem.division}`,
-  //   label: `${classItem.class_name} ${classItem.division}`,
-  // }));
-
-  // const class_name = classinfo.adminallclassinfo?.class_name;
- 
-
   useEffect(() => {
     const fetchTeacherInfo = async () => {
       try {
@@ -76,19 +72,6 @@ function EvaluationScheduling() {
     fetchTeacherInfo();
   }, [APIURL, admin_id]);
 
-  // useEffect(() => {
-  //   fetchSubjects();
-  //   // mapTeachers();
-  // }, );
-
-  // const mapTeachers = () => {
-  //   const teacherOptions = teacherinfo.adminteacherinfo?.map((teacher) => ({
-  //     value: `${teacher.first_name} ${teacher.last_name}`,
-  //     label: `${teacher.first_name} ${teacher.last_name}`,
-  //   }));
-  //   setTeachers(teacherOptions);
-  // };
-
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
@@ -102,9 +85,10 @@ function EvaluationScheduling() {
         console.error("Failed to fetch subjects:", error);
       }
     };
-  
+
     fetchSubjects();
-  }, [APIURL]); 
+  }, [APIURL]);
+
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -159,8 +143,8 @@ function EvaluationScheduling() {
     }),
     menuList: (base) => ({
       ...base,
-      maxHeight: '250px', // Set the max height for the list items
-      padding: '0'
+      maxHeight: "250px", // Set the max height for the list items
+      padding: "0",
     }),
   };
 
@@ -178,6 +162,38 @@ function EvaluationScheduling() {
     }
   };
 
+  useEffect(() => {
+    if (selectedClass && selectedSubject) {
+      const fetchExamDates = async () => {
+        try {
+          const response = await axios.get(
+            `${APIURL}/api/getexamdate/${admin_id}`,
+            {
+              params: {
+                class: selectedClass.label,
+                subject: selectedSubject.label,
+              },
+            }
+          );
+
+          setExamDates(response.data);
+        } catch (error) {
+          console.error("Failed to fetch exam dates", error);
+        }
+      };
+      fetchExamDates();
+    }
+  }, [APIURL, admin_id, selectedClass, selectedSubject]);
+
+  const examDateOptions =
+    examDates.length > 0
+      ? examDates.map((item) => ({
+          value: item.date,
+          label: item.date,
+          term: item.term,
+        }))
+      : [{ value: null, label: "No exams scheduled" }];
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setShowModal(true);
@@ -185,19 +201,20 @@ function EvaluationScheduling() {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setCheckedItems("")
+    setCheckedItems("");
   };
 
   const sendData = async (event) => {
     console.log("enterddddddd");
     event.preventDefault();
     const data = {
-      classNumber: selectedClass ? selectedClass.value : null, 
+      classNumber: selectedClass ? selectedClass.value : null,
       term: term,
       subjects: selectedSubject.label,
       end_date: endDate,
       teacher: checkedItems.map((teacher) => teacher.label),
       admin: admin_id,
+      exam_date: selectedExamDate.label,
     };
 
     try {
@@ -223,9 +240,6 @@ function EvaluationScheduling() {
     } finally {
       setShowModal(false);
     }
-  };
-  const handleBackClick = () => {
-    navigate("/aarnanavbar");
   };
 
   return (
@@ -260,6 +274,7 @@ function EvaluationScheduling() {
                     value={selectedClass}
                     onChange={setSelectedClass}
                     placeholder="Select Class..."
+                    isSearchable={false}
                   />
                 </div>
                 {/* <div className="evaluation_group">
@@ -274,13 +289,41 @@ function EvaluationScheduling() {
                     placeholder=""
                   />
                 </div> */}
+
+                <div className="evaluation_group">
+                  <label htmlFor="term">
+                    Exam Date<span style={{ color: "red" }}>*</span>
+                  </label>
+
+                  <Select
+                    
+                    options={examDateOptions}
+                    styles={customStyles}
+                    value={
+                      examDateOptions.find(
+                        (option) => option.value === selectedExamDate
+                      ) || null
+                    }
+                    onChange={(option) => {
+                      setSelectedExamDate(option.value);
+                      setTerm(option.term);
+                    }}
+                    placeholder="Select Exam Date..."
+                    isDisabled={examDates.length === 0}
+                    isSearchable={false}
+                    
+                    maxMenuHeight={150}
+                  />
+                </div>
+
                 <div className="evaluation_group">
                   <label htmlFor="term">
                     Term<span style={{ color: "red" }}>*</span>
                   </label>
 
                   <input
-                    onChange={(e) => setTerm(e.target.value)}
+                  value={term}
+                    // onChange={(e) => setTerm(e.target.value)}
                     type="text"
                     style={{ textTransform: "capitalize" }}
                   />
@@ -305,6 +348,8 @@ function EvaluationScheduling() {
                     value={selectedSubject}
                     onChange={setSelectedSubject}
                     placeholder="Select Subject..."
+                    isSearchable={false}
+                    
                   />
                 </div>
                 <div className="evaluation_group">
