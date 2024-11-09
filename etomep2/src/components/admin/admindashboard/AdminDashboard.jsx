@@ -110,70 +110,70 @@ function AdminDashboard() {
     setShowModal(true);
   };
 
-  useEffect(() => {
-    let socket;
+  // useEffect(() => {
+  //   let socket;
 
-    if (admin_id) {
-      const connectWebSocket = () => {
-        const socketUrl = `ws://192.168.1.42:8000/ws/reports/${admin_id}/`;
-        console.log(`Connecting WebSocket: ${socketUrl}`);
-        socket = new WebSocket(socketUrl);
+  //   if (admin_id) {
+  //     const connectWebSocket = () => {
+  //       const socketUrl = `ws://192.168.1.42:8000/ws/reports/${admin_id}/`;
+  //       console.log(`Connecting WebSocket: ${socketUrl}`);
+  //       socket = new WebSocket(socketUrl);
 
-        socket.onopen = () => {
-          console.log("WebSocket connection established.");
-        };
+  //       socket.onopen = () => {
+  //         console.log("WebSocket connection established.");
+  //       };
 
-        socket.onmessage = (event) => {
-          console.log("WebSocket message received:", event);
-          try {
-            const data = JSON.parse(event.data);
-            console.log("Parsed WebSocket message:", data);
-            if (data && data.message) {
-              const newNotification = {
-                id: new Date().getTime(),
-                title: (
-                  <span  >
-                    <strong className="highlight-text">Issue Reported:</strong> {data.message.description}{" "}
-                    in Hall {data.message.hall_number} reported by Teacher{" "}
-                    {data.message.teacher_name} on {data.message.date}
-                  </span>
-                ),
-                time: new Date(),
-              };
-              setNotifications((prevNotifications) => [
-                newNotification,
-                ...prevNotifications,
-              ]);
-            }
-          } catch (error) {
-            console.error("Error parsing WebSocket message:", error);
-          }
-        };
+  //       socket.onmessage = (event) => {
+  //         console.log("WebSocket message received:", event);
+  //         try {
+  //           const data = JSON.parse(event.data);
+  //           console.log("Parsed WebSocket message:", data);
+  //           if (data && data.message) {
+  //             const newNotification = {
+  //               id: new Date().getTime(),
+  //               title: (
+  //                 <span  >
+  //                   <strong className="highlight-text">Issue Reported:</strong> {data.message.description}{" "}
+  //                   in Hall {data.message.hall_number} reported by Teacher{" "}
+  //                   {data.message.teacher_name} on {data.message.date}
+  //                 </span>
+  //               ),
+  //               time: new Date(),
+  //             };
+  //             setNotifications((prevNotifications) => [
+  //               newNotification,
+  //               ...prevNotifications,
+  //             ]);
+  //           }
+  //         } catch (error) {
+  //           console.error("Error parsing WebSocket message:", error);
+  //         }
+  //       };
 
-        socket.onerror = (error) => {
-          console.error("WebSocket error:", error);
-        };
+  //       socket.onerror = (error) => {
+  //         console.error("WebSocket error:", error);
+  //       };
 
-        socket.onclose = (event) => {
-          console.log("WebSocket connection closed:", event);
+  //       socket.onclose = (event) => {
+  //         console.log("WebSocket connection closed:", event);
        
-          if (!event.wasClean) {
-            console.log("Attempting to reconnect WebSocket...");
-            setTimeout(() => connectWebSocket(), 5000);
-          }
-        };
-      };
+  //         if (!event.wasClean) {
+  //           console.log("Attempting to reconnect WebSocket...");
+  //           setTimeout(() => connectWebSocket(), 5000);
+  //         }
+  //       };
+  //     };
 
-      connectWebSocket();
+  //     connectWebSocket();
 
-      return () => {
-        if (socket) {
-          console.log("Closing WebSocket connection.");
-          socket.close();
-        }
-      };
-    }
-  }, [admin_id, APIURL]);
+  //     return () => {
+  //       if (socket) {
+  //         console.log("Closing WebSocket connection.");
+  //         socket.close();
+  //       }
+  //     };
+  //   }
+  // }, [admin_id, APIURL]);
 
 
   useEffect(() => {
@@ -209,7 +209,7 @@ function AdminDashboard() {
         <Row className="admin_dashboard_row">
           <Col md={7} className="dashboard_content_row">
             <Row className="dashbord_greetings_row">
-              <h1 className="dash_grt_headr">Welcome!</h1>
+              <h1 className="dash_grt_headr">Welcome</h1>
             </Row>
             <Row className="dash_snd_row">
               <Col
@@ -293,7 +293,7 @@ function AdminDashboard() {
             </Row>
           </Col>
 
-          <Col md={6} className="notification_section">
+          {/* <Col md={6} className="notification_section">
             <div className="notification_content_1">
               <div className="notification_bar">
                 <LuBellDot className="notification_bell" />
@@ -316,7 +316,7 @@ function AdminDashboard() {
                 )}
               </div>
             </div>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </div>
