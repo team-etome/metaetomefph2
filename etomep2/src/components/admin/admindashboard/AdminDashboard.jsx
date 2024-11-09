@@ -294,6 +294,7 @@ function AdminDashboard() {
           </Col>
 
           {/* <Col md={6} className="notification_section">
+
             <div className="notification_content_1">
               <div className="notification_bar">
                 <LuBellDot className="notification_bell" />
