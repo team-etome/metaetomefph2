@@ -110,7 +110,7 @@ function TeacherTestAdd() {
 
               {/* <div className="teacher_testadd_group">
                 <label htmlFor="testsub">
-                  Subject
+                  St
                   <span style={{ color: "red" }}>*</span>
                 </label>
                 <input

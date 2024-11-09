@@ -108,9 +108,15 @@ function TeacherClassView() {
 
             <Link to="/teachertestlist" className="no-underline-link">
               <div className="tch_vw_snd_rw">
-                <h1 className="tch_vw_scrll_hding">Test</h1>
+                <h1 className="tch_vw_scrll_hding">Mock Tests</h1>
               </div>
             </Link>
+            <Link to="/teachermcqlist" className="no-underline-link">
+              <div className="tch_vw_snd_rw">
+                <h1 className="tch_vw_scrll_hding">MCQ</h1>
+              </div>
+            </Link>
+           
 
             <Link to="/teacherresultview" className="no-underline-link">
               <div className="tch_vw_snd_rw">

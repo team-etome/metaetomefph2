@@ -3,7 +3,7 @@
   background-color: #DDE6ED;
   width: 100%;
   height: 100vh;
-  border: 1px solid red;
+ 
 }
 
 .mock_test_generator_header {
@@ -17,7 +17,7 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   display: flex;
   justify-content: space-between;
-  border: 1px solid cyan;
+ 
 }
 .tst_gen_bdy{
   height: 90vh;
@@ -81,7 +81,8 @@
 .mock_question_header {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
+  
 }
 
 .mock_question_number {
@@ -102,16 +103,20 @@
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 15px;
+
+ 
 }
 
 .mk_question_actions {
   display: flex;
   justify-content: end;
-  padding-right: 15px;
+  padding-right: 22px;
+ 
+ 
 }
 
 .mk_drag_handle {
-  margin-right: 34%;
+  margin-right: 48%;
 }
 
 .mk_icon {
@@ -204,6 +209,7 @@
 .mk_answer_editor_container {
   display: flex;
   margin-bottom: 15px;
+ justify-content: flex-end;
 }
 
 .mk-points-input {
@@ -270,6 +276,6 @@
 overflow: hidden;
 text-transform: capitalize;
 max-width: 700px;
-  
+ 
 
 }

@@ -72,6 +72,11 @@ import TeacherProfilePage from './pages/teacherpage/TeacherProfilePage';
 import TeacherForgot from './components/teacher/teacherforgotpassword/TeacherForgot';
 import TeacherNewPassword from './components/teacher/teachernewpassword/TeacherNewPassword';
 import TeacherMockTest from './components/teacher/teachermocktest/TeacherMockTest';
+import TeacherMcq from './components/teacher/teachermcq/TeacherMcq';
+import TeachermcqListpage from './pages/teacherpage/TeachermcqListpage';
+import McqaddingForm from './components/teacher/teachermcq/McqaddingForm';
+import TeacherMcqaddPage from './pages/teacherpage/TeacherMcqaddPage';
+
 
 
 function App() {
@@ -159,7 +164,10 @@ function App() {
           <Route path="/teacherforgot" element={<TeacherForgot />} />
           <Route path="/teachernewpassword" element={<TeacherNewPassword />} />
           <Route path="/teachermocktest" element={<TeacherMockTest />} />
-
+          <Route path="/teachermcqlist" element={<TeachermcqListpage/>} />
+          <Route path="/teachermcqadd" element={<TeacherMcqaddPage/>}/>
+          <Route path="/teachermcq" element={<TeacherMcq/>} />
+          
 
 
 

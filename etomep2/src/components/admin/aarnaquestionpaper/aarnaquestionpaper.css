@@ -14,10 +14,11 @@ height: 75vh;
   height: 80vh;
   /* padding-top: 6vh; */
  }
-.qpaper_container_scroll {
+.qpaper_container_scroll_1{
   overflow-y: auto; 
   overflow-x: hidden; 
     height: 75vh;
+    margin-top: 16px;
     /* max-height: calc(100vh - 200px); */
     width:150vw ;
     /* padding-top: 0vh; */

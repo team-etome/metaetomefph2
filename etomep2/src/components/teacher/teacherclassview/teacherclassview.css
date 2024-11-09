@@ -107,9 +107,9 @@
       white-space: nowrap; 
       -webkit-overflow-scrolling: touch;
       justify-content: space-around;
-      padding-top: 2.5%;
+      padding-top: 2%;
       /* padding: 1px; */
-      padding-left: 15px;
+      padding-left: 12px;
       height: 18%;
       flex-grow: 1; 
       /* command */
@@ -117,11 +117,13 @@
       overflow-x: auto;
       -ms-overflow-style: none;
       scrollbar-width: none; 
+      padding-bottom: 60px;
+     
     }
     
     .tch_vw_snd_rw {
       display: inline-block;
-      width: 320px;
+      width: 260px;
       height: 60px;
       /* margin-right: 10px; */
       border-radius: 8px;

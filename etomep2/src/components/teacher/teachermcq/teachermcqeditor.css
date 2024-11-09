@@ -1,0 +1,138 @@
+/* text editor css file */
+.mcq-generator {
+    height: auto;
+    background-color: #DDE6ED;
+    width: 100%;
+    height: 100vh;
+    
+}
+  
+.mcq_header_row{
+    background-color: #ffff !important;
+    height: 10vh;
+    width: 100vw;
+    z-index: 10;
+    position: sticky;
+    top: 0;
+    left: 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);   
+}
+
+.mcq_generator_header_title h6{
+    margin-left: 15px;
+    color: #526D82;
+    font-weight: 500;
+    font-size: 28px;
+    overflow: hidden; /* Ensures text overflow is handled */
+    white-space: nowrap; /* Prevents text from wrapping */
+    text-overflow: ellipsis;
+    height: 10vh;
+    margin-top: 3%;
+}
+
+.mcq_generator_header_submit{
+    display: flex;
+    justify-content: end;
+    padding-right: 24px;
+    align-items: center;
+    height: 10vh;
+   
+}
+
+.mcq_generator_header_submit button {
+    width: 180px;
+    height: 42px;
+    border-radius: 8px;
+    color: #fff;
+    background-color: #526D82;
+    font-size: 18px;
+  }
+
+
+  .mcq_gen_bdy{
+    height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .mcq_gen_bdy::-webkit-scrollbar {
+    width: 6px; 
+  }
+  
+  .mcq_gen_bdy::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .mcq_gen_bdy::-webkit-scrollbar-thumb {
+    background: #A8BFD1;
+  }
+  .mcq_text_editor {
+    width: 92%;
+    padding-top: 20px;
+   padding-left: 10%;
+    overflow-y: scroll;
+  }
+  .section-container {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+   .mcq_subsection_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   }
+   .mcq_subsection_textarea {
+    width: 96%;
+    height: auto;
+    min-height: 50px;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 0.5px solid #676767;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 15px;
+   
+  }
+  .mcq-question-container {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    background-color: #ffff;
+    border: 0.5px solid #676767;
+  }
+  
+  .mcq-question-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+  }
+  .option-input {
+    border-radius: 6px;
+    margin-left: 0.5rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .mcq-option-item {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+   
+  }
+  
+  .mcq-radio .form-check-input {
+    margin-left: 0;
+    margin-right: 0.3rem;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+ .mcq-submit-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }

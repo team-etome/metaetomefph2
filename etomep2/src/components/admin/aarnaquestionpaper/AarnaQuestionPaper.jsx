@@ -67,7 +67,7 @@ function AarnaQuestionPaper() {
 
   return (
     <div className="questionpaper_dashboard">
-      <Container fluid className="qpaper_container_scroll">
+      <Container fluid className="qpaper_container_scroll_1">
         <Row>
           <div className="qp_list_search_filter_main d-flex">
             <Form className="d-flex">
