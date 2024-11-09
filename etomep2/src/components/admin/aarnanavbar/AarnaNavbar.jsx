@@ -20,7 +20,7 @@ function AarnaNavbar() {
 
 console.log(activeTab, "active tabbbbb");
 
-// Update local storage when activeTab changes
+
 useEffect(() => {
 localStorage.setItem("activeTab", activeTab);
 }, [activeTab]);

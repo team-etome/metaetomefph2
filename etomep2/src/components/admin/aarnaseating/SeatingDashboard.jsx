@@ -16,7 +16,6 @@ function SeatingDashboard() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-
   const filteredSeatingData = seatingData.filter((item) => {
     return (
       item.exam_date.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -27,9 +26,6 @@ function SeatingDashboard() {
   
 
   const admin_id = admininfo.admininfo?.admin_id;
-
-  console.log(seatingData, "seatinggggggggggg");
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,7 +65,7 @@ function SeatingDashboard() {
         <Row>
           <div className="seat_list_search_filter_main d-flex">
             <Form className="d-flex">
-              {/* Change: Use position-relative to correctly position the search icon */}
+            
               <div className="position-relative">
                 <Form.Control
                   type="search"
@@ -83,7 +79,7 @@ function SeatingDashboard() {
                 className="position-absolute top-50 translate-middle-y seat_list_searchbar_icon" />
               </div>
             </Form>
-            {/* Change: Adjust filter icon alignment */}
+           
           </div>
         </Row>
         <Row>

@@ -38,7 +38,7 @@ function ResultView() {
         <Link to="/aarnanavbar">
           <IoChevronBackSharp className="result_view_back" />
         </Link>
-        <h1 className="result_view_title">Class : 10 B</h1>
+        <h1 className="result_view_title">Class : 9 A</h1>
       </div>
       <div className="result_view_scrollable">
         <table className="table">

@@ -24,6 +24,7 @@ function AdminLogin() {
   const [showPassword, setShowPassword]   = useState(false);
   const [btnPosition, setBtnPosition]     = useState('0');
   const navigate                          = useNavigate();
+  const [loading, setLoading]             = useState(false);  
   const APIURL                            = useSelector((state) => state.APIURL.url);
 
 
@@ -33,6 +34,8 @@ function AdminLogin() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -44,13 +47,13 @@ function AdminLogin() {
       });
       return;
     }
+    setLoading(true);
     try {
       const data = {
         email: email,
         password: password,
       };
       const response = await axios.post(`${APIURL}/api/adminLogin`, data);
-      console.log(response.data,"dataaaaaa")
       dispatch(admininfo(response.data.admin_details)); 
       navigate("/admindashboard");
       Swal.fire({
@@ -76,6 +79,7 @@ function AdminLogin() {
         });
       }
     }
+    setLoading(false);
   };
 
   const [isFlipped, setIsFlipped] = useState(false);
@@ -93,15 +97,6 @@ function AdminLogin() {
   };
 
 
-  // const handleLeftClick = () => {
-  //   setBtnPosition('0');
-  //   navigate('/');
-  // };
-
-  // const handleRightClick = () => {
-  //   setBtnPosition('110px');
-  //   navigate("/teacherlogin");
-  // };
   
   return (
     <div
