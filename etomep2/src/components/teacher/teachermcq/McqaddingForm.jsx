@@ -5,37 +5,13 @@ import "./teachermcq.css"
 
 function McqaddingForm() {
   const [examName, setExamName] = useState("");
-  const [examDate, setExamDate] = useState("");
+  const [negativeMark, setNegativeMark] = useState("");
   const [topic, setTopic] = useState("");
   const [duration, setDuration] = useState("");
   const [outOfMarks, setOutOfMarks] = useState("");
   const [teacherCode, setTeacherCode] = useState("");
 
-  // const handleCreateQuestion = () => {
-  //   const missingFields = [];
-
-  //   if (!examName) missingFields.push('Exam Name');
-  //   if (!examDate) missingFields.push('Exam Date');
-  //   if (!topic) missingFields.push('Topic');
-  //   if (!duration) missingFields.push('Duration');
-  //   if (!outOfMarks) missingFields.push('Out of Marks');
-  //   if (!teacherCode) missingFields.push('Teacher Code');
-
-  //   if (missingFields.length > 0) {
-  //     Swal.fire({
-  //       icon: 'warning',
-  //       title: 'Missing Information',
-  //       text: `Please fill in the following fields before proceeding: ${missingFields.join(', ')}`,
-  //     });
-  //   } else {
-  //     Swal.fire({
-  //       icon: 'success',
-  //       title: 'Success',
-  //       text: 'Question created successfully!',
-  //     });
-  //   }
-  // };
-
+  
   return (
     <div className="mcqform_teacher_test_adding">
       <Container className="mcqform_teacher_testadd_form">
@@ -54,8 +30,8 @@ function McqaddingForm() {
                   type="text"
                   id="examname"
                   name="examname"
-                  // value={examName}
-                  // onChange={(e) => setExamName(e.target.value)}
+                  value={examName}
+                  onChange={(e) => setExamName(e.target.value)}
                 />
               </div>
               
@@ -67,8 +43,8 @@ function McqaddingForm() {
                   type="text"
                   id="testtopic"
                   name="testtopic"
-                  // value={topic}
-                  // onChange={(e) => setTopic(e.target.value)}
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)}
                 />
               </div>
               <div className="mcqform_teacher_testadd_group">
@@ -79,8 +55,8 @@ function McqaddingForm() {
                   type="text"
                   id="testoutofmarks"
                   name="testoutofmarks"
-                  // value={outOfMarks}
-                  // onChange={(e) => setOutOfMarks(e.target.value)}
+                  value={outOfMarks}
+                  onChange={(e) => setOutOfMarks(e.target.value)}
                 />
               </div>
             </Col>
@@ -93,8 +69,8 @@ function McqaddingForm() {
                   type="number"
                   id="testduration"
                   name="testduration"
-                  // value={duration}
-                  // onChange={(e) => setDuration(e.target.value)}
+                  value={duration}
+                  onChange={(e) => setDuration(e.target.value)}
                   placeholder="Duration in minutes"
                 />
               </div>
