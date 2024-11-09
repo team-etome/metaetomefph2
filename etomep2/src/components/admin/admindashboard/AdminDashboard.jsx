@@ -209,7 +209,7 @@ function AdminDashboard() {
         <Row className="admin_dashboard_row">
           <Col md={7} className="dashboard_content_row">
             <Row className="dashbord_greetings_row">
-              <h1 className="dash_grt_headr">Welcome!</h1>
+              <h1 className="dash_grt_headr">Welcome</h1>
             </Row>
             <Row className="dash_snd_row">
               <Col
@@ -293,7 +293,8 @@ function AdminDashboard() {
             </Row>
           </Col>
 
-{/*           <Col md={6} className="notification_section">
+          {/* <Col md={6} className="notification_section">
+
             <div className="notification_content_1">
               <div className="notification_bar">
                 <LuBellDot className="notification_bell" />
