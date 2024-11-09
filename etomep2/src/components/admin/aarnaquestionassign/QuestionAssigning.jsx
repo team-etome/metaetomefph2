@@ -19,8 +19,6 @@ function QuestionAssigning() {
   const [subjects, setSubjects] = useState([]);
   const [examName, setExamName] = useState("");
   const [examDate, setExamDate] = useState("");
-  // const [classNo, setClassNo] = useState("");
-  // const [division, setDivision] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [totalMark, setTotalMark] = useState("");
@@ -29,38 +27,20 @@ function QuestionAssigning() {
   const [loading, setLoading] = useState(false);
   const [classDetails, setClassDetails] = useState([]);
 
+
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
   const admininfo = useSelector((state) => state.admininfo);
 
+
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  console.log(classDetails, "class detailssssss");
-
   const admin_id = admininfo.admininfo?.admin_id;
 
-  console.log(selectedClass, selectedDivision, subjects, "classs ");
-  console.log(selectedDivision, subjects, " division");
-  console.log(subjects, "subject");
 
-  // useEffect(()=>{
 
-  //   const fetchclass = async()=>{
-
-  //     try{
-  //       const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`)
-  //       setClassDetails(response.data)
-
-  //     }catch(error){
-  //       console.error("Failed to fetch class data")
-  //     }
-
-  //   }
-
-  //   fetchclass();
-
-  // } ,[APIURL])
+ 
 
   useEffect(() => {
     const fetchClass = async () => {
@@ -106,10 +86,10 @@ function QuestionAssigning() {
         }));
         setSubjects(mappedSubjects);
       } else {
-        setSubjects([]); // Clear subjects if no match is found
+        setSubjects([]);
       }
     } else {
-      setSubjects([]); // Clear subjects if class or division is not selected
+      setSubjects([]); 
     }
   }, [selectedClass, selectedDivision, classDetails]);
 
@@ -140,7 +120,6 @@ function QuestionAssigning() {
     }));
 
   const handleClassChange = (selectedOption) => {
-    console.log("enteredddd");
     setSelectedClass(selectedOption);
     setSelectedDivision(null);
     setSubjects([]);
@@ -180,7 +159,7 @@ function QuestionAssigning() {
       { value: totalMark, label: "Total Mark" },
       { value: startTime, label: "Start Time" },
       { value: endTime, label: "End Time" },
-      // { value: instruction, label: "Instruction" },
+
     ];
 
     const missingFields = requiredFields.filter((field) => !field.value);
@@ -205,7 +184,6 @@ function QuestionAssigning() {
       const formData = {
         subject: selectedSubject,
         teacher: selectedTeacher,
-        // exam_name: examName,
         exam_name: formattedExamName,
         exam_date: examDate,
         class_name: selectedClass.label,
@@ -213,7 +191,6 @@ function QuestionAssigning() {
         start_time: startTime,
         end_time: endTime,
         total_marks: totalMark,
-        // term: term,
         term: formattedTerm,
         instructions: instruction,
         admin: admin_id,
@@ -232,7 +209,7 @@ function QuestionAssigning() {
         text: "Data saved successfully!",
       });
 
-      // Clear form fields after successful submission
+   
       setExamName("");
       setExamDate("");
       setSelectedClass("");
@@ -317,9 +294,7 @@ function QuestionAssigning() {
       paddingRight: '10px'
     }),
   };
-  // const handleBackClick = () => {
-  //   navigate('/aarnanavbar');
-  // }
+
   return (
     <div>
       <Container className="qpaper_assign_container">
@@ -331,9 +306,7 @@ function QuestionAssigning() {
               marginBottom: "10px",
             }}
           >
-            {/* <Link to="/aarnanavbar"> */}
-            {/* <IoChevronBackSharp onClick={handleBackClick} className="qpaper_back" /> */}
-            {/* </Link> */}
+           
             <h1 className="qpaper_title">Question Assigning</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>
@@ -415,20 +388,7 @@ function QuestionAssigning() {
                   />
                 </div>
 
-                {/* <div className="qpaper_group">
-                  <label htmlFor="t_mark" style={{top:'10%'}}>
-                    Instruction<span style={{ color: "red"}}>*</span>
-                  </label>
-                  <textarea
-                    className="qpaper_group_textarea"
-                    id="t_mark"
-                    name="t_mark"
-                    rows="4"
-                    cols="40"
-                    required
-                    onChange={(e) => setInstruction(e.target.value)}
-                  ></textarea>
-                </div> */}
+              
               </Col>
 
               <Col md={6}>
