@@ -13,7 +13,6 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LuBellDot } from "react-icons/lu";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-// import Dashimg1 from "../../../assets/dashimgone.png";
 import studenticon from "../../../assets/studenticon.png";
 import teachericon from "../../../assets/teachericon.png";
 import { useSelector } from "react-redux";
@@ -50,38 +49,38 @@ function AdminDashboard() {
 
   const handleAddNote = () => {
     if (newNoteText.trim() === "") return;
-  
-    const dateKey = formattedDate(selectedDate); 
+
+    const dateKey = formattedDate(selectedDate);
     const newNote = { text: newNoteText, date: dateKey };
-  
-   
+
+
     setNotes({
       ...notes,
       [dateKey]: notes[dateKey] ? [...notes[dateKey], newNote] : [newNote],
     });
-  
- 
+
+
     const noteData = {
       note: newNoteText,
       date: dateKey,
       admin: admin_id,
     };
 
-  
-   
+
+
     axios.post(`${APIURL}/api/note`, noteData)
       .then((response) => {
-        console.log(response.data.message); 
+        console.log(response.data.message);
       })
       .catch((error) => {
-        console.error('Error saving note:', error); 
+        console.error('Error saving note:', error);
       });
-  
-  
+
+
     setNewNoteText("");
   };
 
-  
+
 
   // Delete note
   const handleDeleteNote = (indexToDelete) => {
@@ -156,7 +155,7 @@ function AdminDashboard() {
 
   //       socket.onclose = (event) => {
   //         console.log("WebSocket connection closed:", event);
-       
+
   //         if (!event.wasClean) {
   //           console.log("Attempting to reconnect WebSocket...");
   //           setTimeout(() => connectWebSocket(), 5000);
@@ -184,7 +183,7 @@ function AdminDashboard() {
         );
         setStudentCount(response.data.data.total_students || 0);
         setTeacherCount(response.data.data.total_teachers || 0);
-        console.log(response.data.data,"dataaaaaaa")
+        console.log(response.data.data, "dataaaaaaa")
       } catch (error) {
         console.error("Error fetching student and teacher count:", error);
       }
@@ -200,100 +199,87 @@ function AdminDashboard() {
   return (
     <div className="admin_dashboard">
       <Container className="admin_dasboard_container">
-        {/* <Row >
-
-          <Row>
-
-          </Row>
-        </Row> */}
         <Row className="admin_dashboard_row">
-          <Col md={7} className="dashboard_content_row">
-            <Row className="dashbord_greetings_row">
-              <h1 className="dash_grt_headr">Welcome!</h1>
-            </Row>
-            <Row className="dash_snd_row">
-              <Col
-                style={{ display: "flex", justifyContent: "space-between" }}
-                className="dsh_snd_col"
-                md={5}
-                sm={12}
-                xs={12}
-              >
-                <div className="dash_student_card">
-                  <img
-                    className="student_icon_dash"
-                    src={studenticon}
-                    alt="icons"
-                  />
-                   <p>Total Students</p>
-                   <p>{studentCount}</p>
-                </div>
-                <div className="dash_teacher_card">
-                  <img
-                    className="teacher_icon_dash"
-                    src={teachericon}
-                    alt="icons"
-                  />
+          <Col md={8} xs={12} className="dashboard_content_row" >
+
+            <h1 className="dash_grt_headr">Welcome!</h1>
+
+            <Col xs={12} className="admin_dash_cl_1">
+              <Col md={5} className="dash_snd_Col">
+                <Col xs={12} style={{ display: "flex" }} className="dsh_snd_col">
+                  <div className="dash_student_card">
+                    <img
+                      className="student_icon_dash"
+                      src={studenticon}
+                      alt="icons"
+                    />
+                    <p>Total Students</p>
+                    <p>{studentCount}</p>
+                  </div>
+                  <div className="dash_teacher_card">
+                    <img
+                      className="teacher_icon_dash"
+                      src={teachericon}
+                      alt="icons"
+                    />
                     <p>Total Teachers</p>
                     <p>{teacherCount}</p>
-                </div>
-              </Col>
-              <Col md={7} sm={12} xs={12} className="dsh_lka">
-                <div className="loka_card"></div>
-              </Col>
-            </Row>
-            <Row className="rw_cl_nt">
-              <Col md={5} xs={12} sm={12} className="dsh_clnd">
-                <Calendar
-                  onChange={handleDateChange}
-                  value={selectedDate}
-                  className="custom_calendar"
-                />
-              </Col>
-              <Col md={7} xs={12} sm={12} className="dsh_nt">
-                <h5 className="notes_header">Notes</h5>
-                <div className="fixed_footer">
-                  <FormControl
-                    as="textarea"
-                    placeholder="Enter note text"
-                    value={newNoteText}
-                    onChange={(e) => setNewNoteText(e.target.value)}
-                    className="txt_form"
-                  />
-                  <button className="dash_noteadd_btn" onClick={handleAddNote}>
-                    +
-                  </button>
-                </div>
-                <div className="dash_note_min_div">
-                  <div className="notes_section">
-                    {selectedNotes.map((note, index) => (
-                      <div key={index} className="note_item">
-                        <p>{note.text}</p>
-                        <span className="note_date">{note.date}</span>
-                        <button
-                          className="delete_note"
-                          onClick={() => handleDeleteNote(index)}
-                        >
-                          🗑️
-                        </button>
-                      </div>
-                    ))}
                   </div>
-                </div>
-                {/* <div className="fixed_footer">
-                      <FormControl
-                        as="textarea"
-                        placeholder="Enter note text"
-                        value={newNoteText}
-                        onChange={(e) => setNewNoteText(e.target.value)}
-                      />
-                    </div>
-                      <button className='dash_noteadd_btn' onClick={handleAddNote}>+ Add New</button> */}
+                </Col>
+                <Col className="dsh_clnd">
+                  <Calendar
+                    onChange={handleDateChange}
+                    value={selectedDate}
+                    className="custom_calendar"
+                  />
+                </Col>
               </Col>
-            </Row>
+
+              <Col md={7} className="rw_cl_nt">
+
+                <Col className="notes-container">
+                  <h5 className="notes_header">Reminders</h5>
+                  <div className="fixed_footer">
+                    <FormControl
+                      as="textarea"
+                      placeholder="Add new reminder"
+                      value={newNoteText}
+                      onChange={(e) => setNewNoteText(e.target.value)}
+                      className="txt_form"
+                    />
+                    <button className="dash_noteadd_btn" onClick={handleAddNote}>
+                      +
+                    </button>
+                  </div>
+                  <div className="dash_note_min_div">
+                    <div className="notes_section">
+                      {selectedNotes.map((note, index) => (
+                        <div key={index} className="note_item">
+                          <p>{note.text}</p>
+                          <span className="note_date">{note.date}</span>
+                          <button
+                            className="delete_note"
+                            onClick={() => handleDeleteNote(index)}
+                          >
+                            🗑️
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                </Col>
+              </Col>
+
+
+
+            </Col>
+
+
+
           </Col>
 
-{/*           <Col md={6} className="notification_section">
+          <Col md={4} xs={0} className="notification_section">
             <div className="notification_content_1">
               <div className="notification_bar">
                 <LuBellDot className="notification_bell" />
@@ -315,8 +301,13 @@ function AdminDashboard() {
                   <p>No notifications available.</p>
                 )}
               </div>
+              <div className="notification_footer">
+                <button className="see_all_button">See all Notifications</button>
+              </div>
             </div>
-          </Col> */}
+          </Col>
+
+
         </Row>
       </Container>
     </div>
