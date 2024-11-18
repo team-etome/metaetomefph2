@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import React, { useState, useRef } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  ProgressBar,
+} from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { MdOutlineDelete } from "react-icons/md";
@@ -7,8 +14,34 @@ import { TbSection } from "react-icons/tb";
 import { PiDotsSix } from "react-icons/pi";
 import TeacherTextEditor from "../teachertexteditor/TeacherTextEditor";
 import "./teachermcqeditor.css";
+import { useLocation } from "react-router-dom";
+import html2canvas from "html2canvas";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 function TeacherMcq() {
+  const location = useLocation();
+  const formData = location.state;
+
+  const duration = formData.duration;
+  const examName = formData.examName;
+  const outOfMarks = formData.outOfMarks;
+  const teacherCode = formData.teacherCode;
+  const topic = formData.topic;
+  const negativeMark = formData.negativeMark;
+
+  const teacher_subject = useSelector((state) => state?.teachersubjectinfo);
+
+  console.log(teacher_subject, "teacher subjecttttttt");
+  const APIURL = useSelector((state) => state.APIURL.url);
+
+  const className = teacher_subject.teachersubjectinfo?.class;
+  const division = teacher_subject.teachersubjectinfo?.division;
+  const subject = teacher_subject.teachersubjectinfo?.subject;
+  const admin = teacher_subject.teachersubjectinfo?.admin;
+
+  console.log(formData, "formdat");
+
   const [sections, setSections] = useState([
     {
       name: "Main Section",
@@ -16,37 +49,189 @@ function TeacherMcq() {
         {
           id: 1,
           question: "",
-          answerKey: "",
-          options: ["", "", "", ""],
+          answerKey: null,
+          options: [],
         },
       ],
     },
   ]);
 
+  const questionRefs = useRef([]);
+  const [progress, setProgress] = useState(0);
+  const [isExporting, setIsExporting] = useState(false);
+
   const [lastQuestionId, setLastQuestionId] = useState(1);
 
-  const addQuestion = () => {
-    const newSections = [...sections];
-    const newQuestionId = lastQuestionId + 1;
-    const lastSectionIndex = newSections.length - 1;
+  const captureQuestionImage = async (sectionIndex, questionIndex) => {
+    const questionElement = questionRefs.current[sectionIndex]?.[questionIndex];
+    if (!questionElement) {
+      console.error("Question element not found");
+      return null;
+    }
+    captureQuestionImage;
 
-    newSections[lastSectionIndex].questions.push({
-      id: newQuestionId, // Use the global lastQuestionId for continuity
-      question: "",
-      answerKey: "",
-      options: ["", "", "", ""],
+    try {
+      const canvas = await html2canvas(questionElement, { scale: 1 });
+      const imageData = canvas.toDataURL("image/png");
+      return imageData;
+    } catch (error) {
+      console.error("Error capturing question:", error);
+      return null;
+    }
+  };
+
+  // Function to save the captured image in state
+  const saveQuestionImage = async (sectionIndex, questionIndex) => {
+    const imageData = await captureQuestionImage(sectionIndex, questionIndex);
+    if (imageData) {
+      const updatedSections = [...sections];
+      updatedSections[sectionIndex].questions[questionIndex].questionImage =
+        imageData;
+      setSections(updatedSections);
+    }
+  };
+
+  const exportQuestions = async () => {
+    setIsExporting(true);
+    let totalQuestions = 0;
+    sections.forEach((section) => {
+      totalQuestions += section.questions.length;
     });
 
-    setSections(newSections);
-    setLastQuestionId(newQuestionId); // Update the lastQuestionId globally
+    console.log("Total Questions:", totalQuestions);
+
+    let completedQuestions = 0;
+    let tempProgress = 0;
+    const exportedData = [];
+
+    // Loop through sections and questions
+    for (let sectionIndex = 0; sectionIndex < sections.length; sectionIndex++) {
+      const section = sections[sectionIndex];
+      const exportedSection = { name: section.name, questions: [] };
+
+      for (
+        let questionIndex = 0;
+        questionIndex < section.questions.length;
+        questionIndex++
+      ) {
+        await saveQuestionImage(sectionIndex, questionIndex); // Ensure the image is saved
+        const question = sections[sectionIndex].questions[questionIndex];
+
+        exportedSection.questions.push({
+          id: question.id,
+          questionImage: question.questionImage, // Use the saved image
+          answerKey: question.answerKey,
+          options: question.options,
+        });
+
+        completedQuestions++;
+        tempProgress = Math.round((completedQuestions / totalQuestions) * 100);
+        setProgress(tempProgress); // Update progress locally
+      }
+
+      exportedData.push(exportedSection);
+    }
+
+    console.log("Exported Data:", exportedData);
+
+    // Prepare the request data
+    const requestData = {
+      test: "MCQ", // You can adjust this value
+      // formData: formData,
+       duration : formData.duration,
+       exam_name : formData.examName,
+       out_of_mark : formData.outOfMarks,
+       teacher_code : formData.teacherCode,
+       topic : formData.topic,
+      negative_marks : formData.negativeMark,
+      individual_mark : formData.individualMark,
+      class: teacher_subject.teachersubjectinfo?.class,
+      division: teacher_subject.teachersubjectinfo?.division,
+      subject: teacher_subject.teachersubjectinfo?.subject,
+      admin: teacher_subject.teachersubjectinfo?.admin,
+      questions: exportedData,
+    };
+
+    console.log(requestData, "requestData");
+
+    try {
+      // Send the data to the backend using Axios
+      const response = await axios.post(`${APIURL}/api/test`, requestData);
+
+      // Handle successful export
+      if (response.status === 200) {
+        alert("Export completed successfully!");
+      } else {
+        alert("Failed to export questions.");
+      }
+    } catch (error) {
+      console.error("Error exporting questions:", error);
+      alert("Failed to export questions. Please try again.");
+    } finally {
+      // Reset progress and exporting state
+      setIsExporting(false);
+      setProgress(0);
+    }
+  };
+
+  const addQuestion = (sectionIndex) => {
+    const defaultOptionCount = 4; // Set the default number of options for each question
+    const generateOptions = () =>
+      Array.from(
+        { length: defaultOptionCount },
+        (_, i) => `Option ${String.fromCharCode(65 + i)}`
+      );
+
+    setSections((prev) => {
+      const updatedSections = [...prev];
+
+      // Ensure questions array exists for the section
+      if (!updatedSections[sectionIndex].questions) {
+        updatedSections[sectionIndex].questions = [];
+      }
+
+      const newQuestionId = lastQuestionId + 1; // Get the new question ID
+      setLastQuestionId(newQuestionId); // Update the state for the last question ID
+
+      updatedSections[sectionIndex].questions.push({
+        id: newQuestionId, // Use the new question ID
+        question: "",
+        questionImage: null,
+        answerKey: null,
+        options: generateOptions(),
+      });
+
+      return updatedSections;
+    });
+  };
+  // Function to update question text
+  const updateQuestionText = (sectionIndex, questionIndex, value) => {
+    const updatedSections = [...sections];
+    updatedSections[sectionIndex].questions[questionIndex].question = value;
+    setSections(updatedSections);
   };
 
   const addSection = () => {
-    setSections([
-      ...sections,
+    const defaultOptionCount = 4;
+    const generateOptions = () =>
+      Array.from(
+        { length: defaultOptionCount },
+        (_, i) => `Option ${String.fromCharCode(65 + i)}`
+      );
+
+    setSections((prev) => [
+      ...prev,
       {
-        name: `Section ${sections.length + 1}`,
-        questions: [],
+        name: `Section ${prev.length + 1}`,
+        questions: [
+          {
+            id: 1,
+            question: "",
+            questionImage: null,
+            answerKey: null,
+            options: generateOptions(),
+          },
+        ],
       },
     ]);
   };
@@ -71,24 +256,44 @@ function TeacherMcq() {
     });
 
     setSections(newSections);
-    setLastQuestionId(questionId - 1); // Update lastQuestionId to the highest used ID
+    setLastQuestionId(questionId - 1);
   };
 
-  const handleOptionChange = (sectionIndex, questionIndex, optionIndex, value) => {
+  const handleOptionChange = (
+    sectionIndex,
+    questionIndex,
+    optionIndex,
+    value
+  ) => {
     const newSections = [...sections];
-    newSections[sectionIndex].questions[questionIndex].options[optionIndex] = value;
+    newSections[sectionIndex].questions[questionIndex].options[optionIndex] =
+      value;
     setSections(newSections);
   };
 
-  const handleNumberOfOptionsChange = (sectionIndex, questionIndex, numberOfOptions) => {
-    const newSections = [...sections];
-    const currentOptions = newSections[sectionIndex].questions[questionIndex].options;
-    const updatedOptions = currentOptions.slice(0, numberOfOptions);
-    while (updatedOptions.length < numberOfOptions) {
-      updatedOptions.push("");
-    }
-    newSections[sectionIndex].questions[questionIndex].options = updatedOptions;
-    setSections(newSections);
+  const handleNumberOfOptionsChange = (
+    sectionIndex,
+    questionIndex,
+    numberOfOptions
+  ) => {
+    setSections((prev) => {
+      const updatedSections = [...prev];
+      const question = updatedSections[sectionIndex].questions[questionIndex];
+      const currentOptions = question.options.slice(0, numberOfOptions);
+
+      while (currentOptions.length < numberOfOptions) {
+        currentOptions.push(
+          `Option ${String.fromCharCode(65 + currentOptions.length)}`
+        );
+      }
+
+      if (question.answerKey >= numberOfOptions) {
+        question.answerKey = null; // Reset answerKey if invalid
+      }
+
+      question.options = currentOptions;
+      return updatedSections;
+    });
   };
 
   const handleSectionNameChange = (index, newName) => {
@@ -103,11 +308,15 @@ function TeacherMcq() {
     const { source, destination } = result;
 
     const sourceSectionIndex = parseInt(source.droppableId.split("-")[1]);
-    const destinationSectionIndex = parseInt(destination.droppableId.split("-")[1]);
+    const destinationSectionIndex = parseInt(
+      destination.droppableId.split("-")[1]
+    );
 
     const sourceQuestions = Array.from(sections[sourceSectionIndex].questions);
     const [removed] = sourceQuestions.splice(source.index, 1);
-    const destinationQuestions = Array.from(sections[destinationSectionIndex].questions);
+    const destinationQuestions = Array.from(
+      sections[destinationSectionIndex].questions
+    );
     destinationQuestions.splice(destination.index, 0, removed);
 
     const newSections = [...sections];
@@ -125,9 +334,23 @@ function TeacherMcq() {
             <h6>Fundamentals of Digital Systems</h6>
           </Col>
           <Col className="mcq_generator_header_submit">
-            <Button variant="primary">Export Questions</Button>
+            <Button
+              variant="primary"
+              onClick={exportQuestions}
+              disabled={isExporting}
+            >
+              {isExporting ? `Exporting... ${progress}%` : "Export Questions"}
+            </Button>{" "}
           </Col>
         </Row>
+
+        {isExporting && (
+          <Row className="my-3">
+            <Col>
+              <ProgressBar now={progress} label={`${progress}%`} />
+            </Col>
+          </Row>
+        )}
 
         <Row className="mcq_gen_bdy">
           <div className="mcq_text_editor">
@@ -139,7 +362,7 @@ function TeacherMcq() {
               >
                 {(provided) => (
                   <div
-                    ref={provided.innerRef}
+                    ref={provided.innerRef} // Correctly assign ref for Droppable
                     {...provided.droppableProps}
                     className="section-container p-3 mb-4"
                   >
@@ -148,7 +371,9 @@ function TeacherMcq() {
                         className="mcq_subsection_textarea"
                         type="text"
                         value={section.name}
-                        onChange={(e) => handleSectionNameChange(sectionIndex, e.target.value)}
+                        onChange={(e) =>
+                          handleSectionNameChange(sectionIndex, e.target.value)
+                        }
                         placeholder="Section Name"
                       />
                       <MdOutlineDelete
@@ -165,13 +390,25 @@ function TeacherMcq() {
                       >
                         {(provided) => (
                           <div
-                            ref={provided.innerRef}
+                            ref={(el) => {
+                              provided.innerRef(el);
+                              if (!questionRefs.current[sectionIndex]) {
+                                questionRefs.current[sectionIndex] = [];
+                              }
+                              questionRefs.current[sectionIndex][
+                                questionIndex
+                              ] = el;
+                            }}
+                            {...provided.innerRef}
                             {...provided.draggableProps}
+                            {...provided.dragHandleProps}
                             className="mcq-question-container"
                           >
                             <div className="mock_question_header">
                               <div className="mock_question_number">
-                                <h6 style={{ fontSize: "20px" }}>{question.id})</h6>
+                                <h6 style={{ fontSize: "20px" }}>
+                                  {question.id})
+                                </h6>
                               </div>
                               <div className="mock-editor-wrapper">
                                 <TeacherTextEditor
@@ -179,9 +416,17 @@ function TeacherMcq() {
                                   editorData={question.question}
                                   setEditorData={(data) => {
                                     const newSections = [...sections];
-                                    newSections[sectionIndex].questions[questionIndex].question = data;
+                                    newSections[sectionIndex].questions[
+                                      questionIndex
+                                    ].question = data;
                                     setSections(newSections);
                                   }}
+                                  onBlur={() =>
+                                    saveQuestionImage(
+                                      sectionIndex,
+                                      questionIndex
+                                    )
+                                  }
                                 />
                               </div>
                             </div>
@@ -200,43 +445,69 @@ function TeacherMcq() {
                                         parseInt(e.target.value)
                                       )
                                     }
-                                    defaultValue={4}
+                                    defaultValue={2}
                                   >
                                     <option value={2}>Add 2 options</option>
                                     <option value={3}>Add 3 options</option>
                                     <option value={4}>Add 4 options</option>
                                     <option value={5}>Add 5 options</option>
+                                    <option value={6}>Add 6 options</option>
+                                    <option value={7}>Add 7 options</option>
+                                    <option value={8}>Add 8 options</option>
                                   </Form.Select>
                                 </Col>
                               </Row>
                               <Row xs={2}>
                                 <Col>
                                   <div className="options-container d-flex flex-wrap">
-                                    {question.options.map((option, optionIndex) => (
-                                      <div
-                                        key={optionIndex}
-                                        className="mcq-option-item d-flex align-items-center me-3"
-                                      >
-                                        <span className="me-1">{String.fromCharCode(97 + optionIndex)}.</span>
-                                        <Form.Check
-                                          type="radio"
-                                          name={`answerKey-${sectionIndex}-${questionIndex}`}
-                                          checked={question.answerKey === optionIndex}
-                                          onChange={() => {
-                                            const newSections = [...sections];
-                                            newSections[sectionIndex].questions[questionIndex].answerKey = optionIndex;
-                                            setSections(newSections);
-                                          }}
-                                          className="mcq-radio"
-                                        />
-                                      </div>
-                                    ))}
+                                    {question.options.map(
+                                      (option, optionIndex) => (
+                                        <div
+                                          key={optionIndex}
+                                          className="mcq-option-item d-flex align-items-center me-3"
+                                        >
+                                          <span className="me-1">
+                                            {String.fromCharCode(
+                                              65 + optionIndex
+                                            )}
+                                            .
+                                          </span>
+                                          <Form.Check
+                                            type="radio"
+                                            name={`answerKey-${sectionIndex}-${questionIndex}`}
+                                            checked={
+                                              question.answerKey === option
+                                            }
+                                            onChange={() => {
+                                              const newSections = [...sections];
+                                              newSections[
+                                                sectionIndex
+                                              ].questions[
+                                                questionIndex
+                                              ].answerKey = option;
+                                              setSections(newSections);
+                                            }}
+                                            className="mcq-radio"
+                                          />
+                                        </div>
+                                      )
+                                    )}
                                   </div>
                                 </Col>
-                                <Col style={{ display: "flex", justifyContent: "flex-end" }}>
+                                <Col
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "flex-end",
+                                  }}
+                                >
                                   <button
                                     className="mk_delete_question_button"
-                                    onClick={() => removeQuestion(sectionIndex, questionIndex)}
+                                    onClick={() =>
+                                      removeQuestion(
+                                        sectionIndex,
+                                        questionIndex
+                                      )
+                                    }
                                   >
                                     <MdOutlineDelete className="mk_icon" />
                                   </button>
@@ -254,7 +525,9 @@ function TeacherMcq() {
             ))}
 
             <Row className="mk_action_buttons">
-              <Col onClick={addQuestion}>
+              <Col onClick={() => addQuestion(sections.length - 1)}>
+                {" "}
+                {/* Pass the section index */}
                 <IoAddCircleOutline className="mk_icon" />
               </Col>
               <hr className="mk_divider" />
