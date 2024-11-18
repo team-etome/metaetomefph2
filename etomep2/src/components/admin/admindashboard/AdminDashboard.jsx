@@ -200,6 +200,7 @@ function AdminDashboard() {
     <div className="admin_dashboard">
       <Container className="admin_dasboard_container">
         <Row className="admin_dashboard_row">
+
           <Col md={8} xs={12} className="dashboard_content_row" >
 
             <h1 className="dash_grt_headr">Welcome!</h1>
@@ -222,6 +223,7 @@ function AdminDashboard() {
                       src={teachericon}
                       alt="icons"
                     />
+
                     <p>Total Teachers</p>
                     <p>{teacherCount}</p>
                   </div>
@@ -279,7 +281,9 @@ function AdminDashboard() {
 
           </Col>
 
+
           <Col md={4} xs={0} className="notification_section">
+
             <div className="notification_content_1">
               <div className="notification_bar">
                 <LuBellDot className="notification_bell" />

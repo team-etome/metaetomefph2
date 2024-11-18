@@ -12,6 +12,7 @@ function ResultView() {
   console.log(resultData, "Received result data");
 
   const studentDataMap = {};
+
   resultData.student_marks.forEach((item) => {
     const key = `${item.roll_no}-${item.student_name}`;
     if (!studentDataMap[key]) {
@@ -20,15 +21,28 @@ function ResultView() {
         name: item.student_name,
         scores: {},
         obtainedMark: 0,
+        totalMark: 0,
       };
     }
-    studentDataMap[key].scores[item.subject] = item.question_paper_total_marks || "Pending";
-    if (item.question_paper_total_marks !== "Pending") {
-      studentDataMap[key].obtainedMark += parseFloat(item.total_mark); // Sum marks if available
+
+    studentDataMap[key].scores[item.subject] =
+      item.question_paper_total_marks || "Pending";
+
+    if (!isNaN(parseFloat(item.question_paper_total_marks))) {
+      studentDataMap[key].obtainedMark += parseFloat(
+        item.question_paper_total_marks
+      );
     }
+
+    if (!isNaN(parseFloat(item.total_mark))) {
+      studentDataMap[key].totalMark += parseFloat(item.total_mark);
+    }
+
   });
 
   const students = Object.values(studentDataMap);
+
+  console.log(students, "students");
 
   return (
     <Container className="result_view_container">
@@ -38,7 +52,7 @@ function ResultView() {
         <Link to="/aarnanavbar">
           <IoChevronBackSharp className="result_view_back" />
         </Link>
-        <h1 className="result_view_title">Class : 10 B</h1>
+        <h1 className="result_view_title">Class : 9 A</h1>
       </div>
       <div className="result_view_scrollable">
         <table className="table">
@@ -51,8 +65,9 @@ function ResultView() {
                   {subject}
                 </th>
               ))}
-              {/* <th>Total Mark</th> */}
-              <th>Obtained Mark</th>
+              <th>Total Obtained Marks</th>
+              <th>Maximum Total Marks</th>
+
               <th>Progress</th>
             </tr>
           </thead>
@@ -70,8 +85,10 @@ function ResultView() {
                 {/* <td>{resultData.subjects.length * 100}</td>{" "} */}
                 {/* Assuming each subject max score is 100 */}
                 <td>{student.obtainedMark}</td>
+                  <td>{student.totalMark}</td>
+
                 <td>
-                  {student.obtainedMark >= resultData.subjects.length * 20
+                  {student.obtainedMark <= resultData.subjects.length * 30
                     ? "Pass"
                     : "Failed"}
                 </td>

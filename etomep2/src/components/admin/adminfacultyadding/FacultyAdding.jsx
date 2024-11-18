@@ -67,25 +67,6 @@ function FacultyAdding() {
       return;
     }
 
-    // Validate first name and last name length
-    // if (firstName.length < 3) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Invalid First Name",
-    //     text: "First name must be at least 3 characters long.",
-    //   });
-    //   return;
-    // }
-
-    // if (lastName.length < 3) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Invalid Last Name",
-    //     text: "Last name must be at least 3 characters long.",
-    //   });
-    //   return;
-    // }
-    // Validate first name and last name for special characters
     const formattedFirstName = toTitleCase(firstName);
     const formattedLastName = toTitleCase(lastName);
     const formattedEmployeeId = toTitleCase(employeeId);
@@ -123,14 +104,11 @@ function FacultyAdding() {
 
     try {
       const formData = {
-        // first_name: firstName,
-        // last_name: lastName,
         first_name: formattedFirstName,
         last_name: formattedLastName,
         email: email,
         phone_number: phoneNumber,
         gender: gender.value,
-        // employee_id: employeeId,
         employee_id: formattedEmployeeId,
         password: password,
         admin_id: admin_id,
@@ -156,71 +134,23 @@ function FacultyAdding() {
       navigate("/institutionadding");
     } catch (error) {
       console.error("Error submitting form:", error);
+
+      const errorMessage =
+        error.response?.data?.message ||
+        "Something went wrong! Please try again.";
+
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Something went wrong!",
+        text: errorMessage,
         footer: "Please check the data and try again.",
       });
       setLoading(false);
     }
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const formData = {
-  //     first_name: firstName,
-  //     last_name: lastName,
-  //     email: email,
-  //     phone_number: phoneNumber,
-  //     gender: gender ? gender.value : null,
-  //     employee_id: employeeId,
-  //     password: password,
-  //     admin_id: admin_id,
-  //   };
-
-  //   if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Invalid Phone Number",
-  //       text: "Please enter a valid 10-digit phone number.",
-  //     });
-  //     setLoading(false);
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axios.post(`${APIURL}/api/addteacher`, formData);
-  //     console.log("Success:", response.data);
-  //     setFirstName("");
-  //     setLastName("");
-  //     setEmail("");
-  //     setEmployeeId("");
-  //     setPhoneNumber("");
-  //     setPassword("");
-  //     setGender(null);
-
-  //     Swal.fire({
-  //       icon: 'success',
-  //       title: 'Registration Successful',
-  //       text: 'Faculty has been added successfully!',
-  //     });
-
-  //     navigate('/institutionadding')
-
-  //   } catch (error) {
-  //     console.error("Error submitting form:", error);
-  //     Swal.fire({
-  //       icon: 'error',
-  //       title: 'Oops...',
-  //       text: 'Something went wrong!',
-  //       footer: 'Please check the data and try again.'
-  //     });
-
-  //   }
-  // };
+  
   const handlePhoneNumberChange = (e) => {
     const value = e.target.value;
-    // Remove any non-numeric characters
     const numericValue = value.replace(/\D/g, "");
     if (numericValue.length <= 10) {
       setPhoneNumber(numericValue);
@@ -271,24 +201,20 @@ function FacultyAdding() {
       ...base,
       alignItems: "center",
     }),
-    // menu: (base) => ({
-    //   ...base,
-    //   zIndex: 9999,
-    //   position: "absolute",
-    // }),
+   
     menu: (base) => ({
       ...base,
       zIndex: 9999,
       position: "absolute",
-      width: '89%',
-      maxHeight: '150px', 
-      overflowY: 'auto', 
+      width: "89%",
+      maxHeight: "150px",
+      overflowY: "auto",
     }),
     menuList: (base) => ({
       ...base,
-      maxHeight: '150px',
-      overflowY: 'auto',
-      paddingRight: '10px'
+      maxHeight: "150px",
+      overflowY: "auto",
+      paddingRight: "10px",
     }),
   };
   const handleBackClick = () => {
@@ -305,14 +231,7 @@ function FacultyAdding() {
               marginBottom: "10px",
             }}
           >
-            {/* <Link to="/institutionadding"> */}
-
-            {/* <IoChevronBackSharp
-              onClick={handleBackClick}
-              className="faculty_back"
-            /> */}
-
-            {/* </Link> */}
+        
             <h1 className="faculty_title">Add Faculty</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>
@@ -384,7 +303,7 @@ function FacultyAdding() {
                     id="phone_no"
                     name="phone_no"
                     value={phoneNumber}
-                    // onChange={(e) => setPhoneNumber(e.target.value)}
+                  
                     onChange={handlePhoneNumberChange}
                     style={{ textTransform: "capitalize" }}
                     maxLength={10}
