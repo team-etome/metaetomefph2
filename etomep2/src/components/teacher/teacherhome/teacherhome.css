@@ -48,10 +48,10 @@ background-color: #E7E6FB;
 width: 50%;
 margin-left: 10px;
 border-radius: 8px;
-height: 260px;
+height: 240px;
 overflow-x: auto;
-  overflow-y: hidden;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+overflow-y: hidden;
+box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
 }
 .tchr_drpdwn{

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Col, Container, Row,FormControl, Tabs, Tab, Nav, Dropdown } from "react-bootstrap";
+import { Col, Container, Row, FormControl, Tabs, Tab, Nav, Dropdown } from "react-bootstrap";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { LuBellDot } from "react-icons/lu";
@@ -46,24 +46,24 @@ function TeacherHome() {
 
   const handleAddNote = async () => {
     if (newNoteText.trim() === '') return; // Prevent adding empty notes
-  
+
     const dateKey = formattedDate(selectedDate);
     const newNote = { text: newNoteText, date: dateKey };
-  
+
     // Update local state
     setNotes({
       ...notes,
       [dateKey]: notes[dateKey] ? [...notes[dateKey], newNote] : [newNote]
     });
-    setNewNoteText(''); 
-  
-   
+    setNewNoteText('');
+
+
     const noteData = {
-      teacher : teacher_id,
+      teacher: teacher_id,
       date: dateKey,
       note: newNoteText,
     };
-  
+
     try {
       const response = await axios.post(`${APIURL}/api/note`, noteData);
       console.log('Note saved:', response.data);
@@ -72,16 +72,16 @@ function TeacherHome() {
     }
   };
 
-// Delete note
-const handleDeleteNote = (indexToDelete) => {
-  const dateKey = formattedDate(selectedDate);
-  const updatedNotes = notes[dateKey].filter((_, index) => index !== indexToDelete);
+  // Delete note
+  const handleDeleteNote = (indexToDelete) => {
+    const dateKey = formattedDate(selectedDate);
+    const updatedNotes = notes[dateKey].filter((_, index) => index !== indexToDelete);
 
-  setNotes({
-    ...notes,
-    [dateKey]: updatedNotes.length > 0 ? updatedNotes : undefined // Remove date if no notes left
-  });
-};
+    setNotes({
+      ...notes,
+      [dateKey]: updatedNotes.length > 0 ? updatedNotes : undefined // Remove date if no notes left
+    });
+  };
 
   const selectedNotes = notes[formattedDate(selectedDate)] || [];
 
@@ -120,14 +120,14 @@ const handleDeleteNote = (indexToDelete) => {
   return (
     <div className="teacher_home">
       <Container className="teacher_home_container">
-        
+
         <Row className="teacher_home_row">
           <Col className="dashboard_section" md={7}>
-          <Row className="tchr_head">
-          <h1>Welcome !</h1>
-        </Row>
-            <Row className="tchr_db_rsrce_sub">
-              <Col md={7} sm={12} xs={12}  className="tchr_rscr_mtr">
+            <Row className="tchr_head">
+              <h1>Welcome!</h1>
+            </Row>
+            <Col className="tchr_db_rsrce_sub">
+              <Col md={7} sm={12} xs={12} className="tchr_rscr_mtr">
                 <div className="tchr_rsr_title">
                   <h6>Resource Materials</h6>
                   <select name="" id="" className="tchr_drpdwn">
@@ -146,72 +146,17 @@ const handleDeleteNote = (indexToDelete) => {
                   </div>
                 </div>
               </Col>
-              <Col md={5} sm={12} xs={12} className="tchr_sb_tchr">
-                <div className="tchr_sb_list">
-                  <div className="tchr_gp">
-                    <div className="tchr_hd">
-                    <img src={subteachr} alt="subject teacher" className="sub_tchr_icon" />
-                    <h6>Subject Teachers</h6>
-                    </div>
-                    <div className="heading-divider"></div>
-                    {/* <hr style={{border:'1px solid red'}}/> */}
-                    {/* <hr className="heading-divider" /> */}
-                    <div className="sb_tchr_hd_list">
-                      <div className="sb_tchr_list">
-                        <div className="tchr_person_name">
-                          <IoPersonCircleOutline className="tchr_person" />
-                          <div className="tchr_sub">
-                            <p>Teacher Nameeee</p>
-                          </div>
-                        </div>
-                        <div className="tchr_sub_phn">
-                          <p>Subject</p>
-                          <p >Phone Number</p>
-                        </div>
-                      </div>
-                      <div className="sb_tchr_list">
-                        <div className="tchr_person_name">
-                          <IoPersonCircleOutline className="tchr_person" />
-                          <div className="tchr_sub">
-                            <p>Teacher Nameeee</p>
-                          </div>
-                        </div>
-                        <div className="tchr_sub_phn">
-                          <p>Subject</p>
-                          <p >Phone Number</p>
-                        </div>
-                      </div>
-                      <div className="sb_tchr_list">
-                        <div className="tchr_person_name">
-                          <IoPersonCircleOutline className="tchr_person" />
-                          <div className="tchr_sub">
-                            <p>Teacher Nameeee</p>
-                          </div>
-                        </div>
-                        <div className="tchr_sub_phn">
-                          <p>Subject</p>
-                          <p >Phone Number</p>
-                        </div>
-                      </div>
-                      <div className="sb_tchr_list">
-                        <div className="tchr_person_name">
-                          <IoPersonCircleOutline className="tchr_person" />
-                          <div className="tchr_sub">
-                            <p>Teacher Nameeee</p>
-                          </div>
-                        </div>
-                        <div className="tchr_sub_phn">
-                          <p>Subject</p>
-                          <p >9989993455</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-            <Row className="cld_nt_tchr">
               <Col md={5} xs={12} sm={12}>
+                <Calendar
+                  onChange={handleDateChange}
+                  value={selectedDate}
+                  className="custom_calendar_tchr "
+                />
+              </Col>
+
+            </Col>
+            <Row className="cld_nt_tchr">
+              {/* <Col md={5} xs={12} sm={12}>
                 <Calendar
                   onChange={handleDateChange}
                   value={selectedDate}
@@ -241,16 +186,8 @@ const handleDeleteNote = (indexToDelete) => {
                     ))}
                   </div>
                 </div>
-                    {/* <div className="fixed_footer">
-                      <FormControl
-                        as="textarea"
-                        placeholder="Enter note text"
-                        value={newNoteText}
-                        onChange={(e) => setNewNoteText(e.target.value)}
-                      />
-                    </div>
-                      <button className='dash_noteadd_btn' onClick={handleAddNote}>+ Add New</button> */}
-              </Col>
+                 
+              </Col> */}
             </Row>
           </Col>
           <Col md={4} className="teacher_home_section">
