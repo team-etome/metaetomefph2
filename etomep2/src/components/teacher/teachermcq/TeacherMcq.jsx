@@ -14,7 +14,7 @@ import { TbSection } from "react-icons/tb";
 import { PiDotsSix } from "react-icons/pi";
 import TeacherTextEditor from "../teachertexteditor/TeacherTextEditor";
 import "./teachermcqeditor.css";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -23,24 +23,14 @@ function TeacherMcq() {
   const location = useLocation();
   const formData = location.state;
 
-  const duration = formData.duration;
-  const examName = formData.examName;
-  const outOfMarks = formData.outOfMarks;
-  const teacherCode = formData.teacherCode;
-  const topic = formData.topic;
-  const negativeMark = formData.negativeMark;
-
   const teacher_subject = useSelector((state) => state?.teachersubjectinfo);
 
   console.log(teacher_subject, "teacher subjecttttttt");
   const APIURL = useSelector((state) => state.APIURL.url);
 
-  const className = teacher_subject.teachersubjectinfo?.class;
-  const division = teacher_subject.teachersubjectinfo?.division;
-  const subject = teacher_subject.teachersubjectinfo?.subject;
-  const admin = teacher_subject.teachersubjectinfo?.admin;
-
   console.log(formData, "formdat");
+
+  const navigate = useNavigate();
 
   const [sections, setSections] = useState([
     {
@@ -64,10 +54,13 @@ function TeacherMcq() {
 
   const captureQuestionImage = async (sectionIndex, questionIndex) => {
     const questionElement = questionRefs.current[sectionIndex]?.[questionIndex];
+
+    console.log(questionElement, "question element");
     if (!questionElement) {
       console.error("Question element not found");
       return null;
     }
+
     captureQuestionImage;
 
     try {
@@ -138,13 +131,13 @@ function TeacherMcq() {
     const requestData = {
       test: "MCQ", // You can adjust this value
       // formData: formData,
-       duration : formData.duration,
-       exam_name : formData.examName,
-       out_of_mark : formData.outOfMarks,
-       teacher_code : formData.teacherCode,
-       topic : formData.topic,
-      negative_marks : formData.negativeMark,
-      individual_mark : formData.individualMark,
+      duration: formData.duration,
+      exam_name: formData.examName,
+      out_of_mark: formData.outOfMarks,
+      teacher_code: formData.teacherCode,
+      topic: formData.topic,
+      negative_marks: formData.negativeMark,
+      individual_mark: formData.individualMark,
       class: teacher_subject.teachersubjectinfo?.class,
       division: teacher_subject.teachersubjectinfo?.division,
       subject: teacher_subject.teachersubjectinfo?.subject,
@@ -161,6 +154,7 @@ function TeacherMcq() {
       // Handle successful export
       if (response.status === 200) {
         alert("Export completed successfully!");
+        navigate("/teachermcqlist");
       } else {
         alert("Failed to export questions.");
       }
@@ -389,37 +383,38 @@ function TeacherMcq() {
                         index={questionIndex}
                       >
                         {(provided) => (
-                          <div
-                            ref={(el) => {
-                              provided.innerRef(el);
-                              if (!questionRefs.current[sectionIndex]) {
-                                questionRefs.current[sectionIndex] = [];
-                              }
-                              questionRefs.current[sectionIndex][
-                                questionIndex
-                              ] = el;
-                            }}
-                            {...provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className="mcq-question-container"
-                          >
+                          <div 
+                         
+                          className="mcq-question-container">
                             <div className="mock_question_header">
                               <div className="mock_question_number">
                                 <h6 style={{ fontSize: "20px" }}>
                                   {question.id})
                                 </h6>
                               </div>
-                              <div className="mock-editor-wrapper">
+
+                              <div
+                                ref={(el) => {
+                                  if (!questionRefs.current[sectionIndex]) {
+                                    questionRefs.current[sectionIndex] = [];
+                                  }
+                                  questionRefs.current[sectionIndex][
+                                    questionIndex
+                                  ] = el;
+                                }}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                className="mock-editor-wrapper"
+                              >
                                 <TeacherTextEditor
                                   placeholder="Type question here..."
                                   editorData={question.question}
                                   setEditorData={(data) => {
-                                    const newSections = [...sections];
-                                    newSections[sectionIndex].questions[
+                                    const updatedSections = [...sections];
+                                    updatedSections[sectionIndex].questions[
                                       questionIndex
                                     ].question = data;
-                                    setSections(newSections);
+                                    setSections(updatedSections);
                                   }}
                                   onBlur={() =>
                                     saveQuestionImage(

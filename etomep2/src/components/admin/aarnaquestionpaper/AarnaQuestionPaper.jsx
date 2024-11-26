@@ -58,10 +58,10 @@ function AarnaQuestionPaper() {
       item.subject_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.teacher_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      // item.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.class_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.division.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.total_marks.toLowerCase().includes(searchTerm.toLowerCase())
+      item.division.toLowerCase().includes(searchTerm.toLowerCase()) 
+      // item.total_marks.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 

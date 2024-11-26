@@ -74,24 +74,26 @@ function SeatAssigning() {
 
         const updatedClassOptions = response.data.map((classItem) => {
           // Find the specific count for the class and division
-          const matchedCount = studentCount.student_counts.find(
+          const matchedCount = studentCount.overall_student_counts.find(
             (countItem) =>
               countItem.class_name === classItem.class_name &&
               countItem.division === classItem.division
           );
 
           // If student count is found, use the remaining_count; otherwise, use the total count from overall_student_counts
-          const totalStudentCount = matchedCount
-            ? matchedCount.remaining_count
-            : studentCount.overall_student_counts.find(
-                (overallCount) =>
-                  overallCount.class_name === classItem.class_name &&
-                  overallCount.division === classItem.division
-              )?.total_student_count || 0;
+          // const totalStudentCount = matchedCount
+          //   ? matchedCount.remaining_count
+          //   : studentCount.overall_student_counts.find(
+          //       (overallCount) =>
+          //         overallCount.class_name === classItem.class_name &&
+          //         overallCount.division === classItem.division
+          //     )?.total_student_count || 0;
+
+          const remainingStudents = matchedCount ? matchedCount.remaining_students : 0;
 
           return {
             value: `${classItem.class_name} ${classItem.division}`,
-            label: `${classItem.class_name} ${classItem.division} (${totalStudentCount})`,
+            label: `${classItem.class_name} ${classItem.division} (${remainingStudents })`,
           };
         });
         setClassOptions(updatedClassOptions);

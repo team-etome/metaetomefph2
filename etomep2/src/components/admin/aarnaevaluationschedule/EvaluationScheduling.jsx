@@ -214,8 +214,10 @@ function EvaluationScheduling() {
       end_date: endDate,
       teacher: checkedItems.map((teacher) => teacher.label),
       admin: admin_id,
-      exam_date: selectedExamDate.label,
+      exam_date: selectedExamDate
     };
+
+    console.log(data, "''ssssssss");
 
     try {
       const response = await axios.post(`${APIURL}/api/evaluationadding`, data);
@@ -226,16 +228,23 @@ function EvaluationScheduling() {
           title: "Success",
           text: "Evaluation schedule added successfully!",
         });
-        navigate("/aarnanavbar");
+        // navigate("/aarnanavbar");
       } else {
         throw new Error(`Unexpected response status: ${response.status}`);
       }
     } catch (error) {
       console.error("Failed to submit evaluation schedule:", error);
+
+      // Extract the error message from the response
+      const errorMessage =
+        error.response && error.response.data && error.response.data.message
+          ? error.response.data.message
+          : "Failed to add evaluation schedule. Please try again.";
+
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Failed to add evaluation schedule. Please try again.",
+        text: errorMessage, // Display the specific error message
       });
     } finally {
       setShowModal(false);

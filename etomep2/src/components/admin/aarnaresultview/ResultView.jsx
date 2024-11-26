@@ -9,6 +9,14 @@ function ResultView() {
   const location = useLocation();
   const resultData = location.state?.resultData || [];
 
+
+  const class_name = location.state?.className || "Default Class";  // Provide a default value if not found
+  const division   = location.state?.division || "Default Division"; // Provide a default value if not found
+
+  console.log(class_name, division, "Received data");
+
+
+
   console.log(resultData, "Received result data");
 
   const studentDataMap = {};
@@ -52,7 +60,7 @@ function ResultView() {
         <Link to="/aarnanavbar">
           <IoChevronBackSharp className="result_view_back" />
         </Link>
-        <h1 className="result_view_title">Class : 9 A</h1>
+        <h1 className="result_view_title">{class_name} {division}</h1>
       </div>
       <div className="result_view_scrollable">
         <table className="table">

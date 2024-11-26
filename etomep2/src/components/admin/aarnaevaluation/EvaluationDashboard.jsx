@@ -13,7 +13,6 @@ function EvaluationDashboard() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-
   const filteredEvaluationListData = evaluationListData.filter((item) => {
     return (
       item.class_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -26,12 +25,10 @@ function EvaluationDashboard() {
     );
   });
 
-
   console.log(evaluationListData, "evaluationnnnn");
 
-  
   const admininfo = useSelector((state) => state.admininfo);
-  const admin_id = admininfo.admininfo?.admin_id
+  const admin_id = admininfo.admininfo?.admin_id;
 
   const navigate = useNavigate();
   const APIURL = useSelector((state) => state.APIURL.url);
@@ -47,7 +44,9 @@ function EvaluationDashboard() {
   useEffect(() => {
     const fetchEvaluations = async () => {
       try {
-        const response = await axios.get(`${APIURL}/api/evaluationadding/${admin_id}`);
+        const response = await axios.get(
+          `${APIURL}/api/evaluationadding/${admin_id}`
+        );
         setEvaluationListData(response.data);
       } catch (error) {
         console.error(
@@ -94,7 +93,7 @@ function EvaluationDashboard() {
             {/* Change: Adjust filter icon alignment */}
           </div>
         </Row>
-       <Row>
+        <Row>
           {filteredEvaluationListData.length > 0 ? (
             filteredEvaluationListData.map((item, index) => (
               <Col
@@ -110,13 +109,27 @@ function EvaluationDashboard() {
                   className="border border-white evaluation_rectangle"
                 >
                   <div className="evaluation_term">{item.term}</div>
+
                   <div className="evaluation_class_date">
                     <div className="evaluation_class">
-                      Class: {item.class_name}
+                      <div>{item.teacher_name}</div>
                     </div>
-                    <div className="evaluation_date">{item.date}</div>
+
+                    <div>
+                      <div
+                        style={{
+                          marginLeft: "30px",
+                        }}
+                      >
+                        End date : {item.end_date}
+                      </div>
+                    </div>
                   </div>
-                  <div className="evaluation_subject">{item.subject_name}</div>
+
+                  <div className="evaluation_subject">
+                    {" "}
+                    {item.class_name} {item.division}-{item.subject_name}
+                  </div>
                 </div>
               </Col>
             ))
