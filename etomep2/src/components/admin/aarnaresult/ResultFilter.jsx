@@ -5,7 +5,7 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import Select from "react-select";
 import "../aarnaresult/resultfilter.css";
 import { useSelector } from "react-redux";
-import axios from 'axios'
+import axios from "axios";
 
 function ResultFilter() {
   const [classNo, setClassNo] = useState("");
@@ -13,7 +13,7 @@ function ResultFilter() {
   const [year, setYear] = useState("");
   const [term, setTerm] = useState(null);
 
-  console.log(classNo,"class number")
+  console.log(classNo, "class number");
 
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ function ResultFilter() {
   const class_name = classinfo.adminallclassinfo?.class_name;
   const APIURL = useSelector((state) => state.APIURL.url);
 
-  console.log(APIURL,"api url")
+  console.log(APIURL, "api url");
 
   const [classNoOptions, setClassNoOptions] = useState([]);
   const [allDivisionOptions, setAllDivisionOptions] = useState({});
@@ -84,16 +84,25 @@ function ResultFilter() {
     event.preventDefault();
     const key = `${classNo.label}-${division.label}`;
 
-    console.log(key,"key")
+    console.log(key, "key");
     const classId = classMap[key];
 
-    console.log(classId,"class id")
+    console.log(classId, "class id");
 
     if (classId) {
       try {
-        const response = await axios.get(`${APIURL}/api/evaluationmark/${classId}`)
+        const response = await axios.get(
+          `${APIURL}/api/evaluationmark/${classId}`
+        );
         console.log("Response:", response.data);
-        navigate("/adminresultview", { state: { resultData: response.data } });
+        console.log(classNo.label, division.label, "kagf;ouiadskgfseuodig");
+        navigate("/adminresultview", {
+          state: {
+            resultData: response.data,
+            className: classNo.label,
+            division: division.label,
+          },
+        });
       } catch (error) {
         console.error("Error:", error);
       }
@@ -157,12 +166,9 @@ function ResultFilter() {
     menuList: (base) => ({
       ...base,
 
-
-      maxHeight: '150px', // Set the max height for the list items
-      padding: '0',
-      overflowY: 'auto',
-
-
+      maxHeight: "150px", // Set the max height for the list items
+      padding: "0",
+      overflowY: "auto",
     }),
   };
 
@@ -189,7 +195,7 @@ function ResultFilter() {
             <Col md={3}>
               <div className="result_filter_group">
                 <label htmlFor="class_no">
-                  Class No.<span style={{ color: "red" }}>*</span>
+                  Class Name.<span style={{ color: "red" }}>*</span>
                 </label>
                 <Select
                   id="class_no"

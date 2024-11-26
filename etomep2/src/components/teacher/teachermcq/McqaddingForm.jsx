@@ -13,6 +13,7 @@ function McqaddingForm() {
   const [teacherCode, setTeacherCode] = useState("");
   const [individualMark, setIndividualMark] = useState("");
 
+
   const navigate = useNavigate();
 
   const handlenavigate = () => {
@@ -23,7 +24,7 @@ function McqaddingForm() {
       duration,
       outOfMarks,
       teacherCode, 
-      individualMark
+      individualMark,
     };
 
     navigate("/teachermcq", { state: formData });
@@ -133,6 +134,10 @@ function McqaddingForm() {
                   onChange={(e) => setTeacherCode(e.target.value)}
                 />
               </div>
+
+            
+
+
             </Col>
             <div className="mcqform_teacher_testadd_submit">
               <button onClick={handlenavigate} type="button">

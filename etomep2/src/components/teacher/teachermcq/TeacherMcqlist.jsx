@@ -1,73 +1,112 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from 'react-icons/io';
+import React, { useState, useEffect } from "react";
+import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from "react-icons/io";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
-
-import "./teachermcq.css"
+import { useSelector } from "react-redux";
+import axios from "axios";
+import "./teachermcq.css";
 
 function TeacherMcqList() {
-    const [showThisMonth, setShowThisMonth] = useState(true);
-    const [showPreviousMonth, setShowPreviousMonth] = useState(true);
-    const navigate = useNavigate();
+  const [showThisMonth, setShowThisMonth] = useState(true);
+  const [showPreviousMonth, setShowPreviousMonth] = useState(true);
 
-   
-    const thisMonthTests = [
-        { id: 1, exam_name: 'maths', exam_date: '11/5/2024' },
-        { id: 2, exam_name: 'new mock', exam_date: '11/5/2024' }
-    ];
+  const [thisMonthTests, setThisMonthTests] = useState([]);
+  const [previousMonthTests, setPreviousMonthTests] = useState([]);
 
-    const previousMonthTests = [
-       
-    ];
+  const [mcqdata, setMcqData] = useState([]);
 
-    const handleAddClick = () => {
-        navigate('/teachermcqadd');
+  console.log(mcqdata, "dattatttata");
+
+  const navigate = useNavigate();
+
+  const teacher = useSelector((state) => state.teacherinfo);
+  const teacher_id = teacher.teacherinfo?.teacher_id;
+
+  const APIURL = useSelector((state) => state.APIURL.url);
+
+  console.log(teacher_id, "teacher id");
+
+  useEffect(() => {
+    if (teacher_id) {
+      axios
+        .get(`${APIURL}/api/mcqanswer/${teacher_id}`)
+        .then((response) => {
+          console.log(response.data, "API Response");
+          // Assuming the API response separates tests by month
+          setMcqData(response.data);
+          setThisMonthTests(response.data.this_month_tests || []);
+          setPreviousMonthTests(response.data.previous_month_tests || []);
+        })
+        .catch((error) => {
+          console.error("Error fetching MCQ tests:", error);
+        });
     }
+  }, [teacher_id]);
 
-    return (
-        <Container className="mcqlist_test_container">
-            <Row>
-                <Col className="mcqlist_test_list">
-                    <div className="mcqlist_test_header">
-                        <h2>Multiple choices Question</h2>
-                    </div>
-                    <hr />
-                    <div className="mcqlist_test_body">
-                        <div className="mcqlist_test_week" onClick={() => setShowThisMonth(!showThisMonth)}>
-                            <span>This Month</span>
-                            {showThisMonth ? <IoIosArrowUp className="mcqlist_test_icon" /> : <IoIosArrowDown className="mcqlist_test_icon" />}
-                        </div>
-                        {showThisMonth && thisMonthTests.map((test) => (
-                            <div key={test.id} className="mcqlist_test_item mb-3 p-2">
-                                <h5>{test.exam_name}</h5>
-                                <p>Posted On: {test.exam_date}</p>
-                            </div>
-                        ))}
+  const handleAddClick = () => {
+    navigate("/teachermcqadd");
+  };
 
-                        <div className="mcqlist_test_week" onClick={() => setShowPreviousMonth(!showPreviousMonth)}>
-                            <span>Previous Month</span>
-                            {showPreviousMonth ? <IoIosArrowUp className="mcqlist_test_icon" /> : <IoIosArrowDown className="mcqlist_test_icon" />}
-                        </div>
-                        {showPreviousMonth && previousMonthTests.map((test) => (
-                            <div key={test.id} className="mcqlist_test_item mb-3 p-2">
-                                <h5>{test.exam_name}</h5>
-                                <p>Posted On: {test.exam_date}</p>
-                            </div>
-                        ))}
-                    </div>
-                    <div className="mcqlist_test_teacher_button">
+  return (
+    <Container className="mcqlist_test_container">
+      <Row>
+        <Col className="mcqlist_test_list">
+          <div className="mcqlist_test_header">
+            <h2>Multiple choices Question</h2>
+          </div>
+          <hr />
+          <div className="mcqlist_test_body">
+            <div
+              className="mcqlist_test_week"
+              onClick={() => setShowThisMonth(!showThisMonth)}
+            >
+              <span>This Month</span>
+              {showThisMonth ? (
+                <IoIosArrowUp className="mcqlist_test_icon" />
+              ) : (
+                <IoIosArrowDown className="mcqlist_test_icon" />
+              )}
+            </div>
 
-                        <Button className="mcqlist_add_button"  onClick={handleAddClick}>
-                            <IoIosAdd style={{ height: "40px", width: "40px", color: "#fff" }} />
-                        </Button>
+            {showThisMonth &&
+              thisMonthTests.map((test) => (
+                <div key={test.id} className="mcqlist_test_item mb-3 p-2">
+                  <h5>{test.exam_name}</h5>
+                  <p>Posted On: {test.exam_date}</p>
+                </div>
+              ))}
 
-                    </div>
-                
-                </Col>
-            </Row>
-        </Container>
-    );
+            <div
+              className="mcqlist_test_week"
+              onClick={() => setShowPreviousMonth(!showPreviousMonth)}
+            >
+              <span>Previous Month</span>
+              {showPreviousMonth ? (
+                <IoIosArrowUp className="mcqlist_test_icon" />
+              ) : (
+                <IoIosArrowDown className="mcqlist_test_icon" />
+              )}
+            </div>
+
+            {showPreviousMonth &&
+              previousMonthTests.map((test) => (
+                <div key={test.id} className="mcqlist_test_item mb-3 p-2">
+                  <h5>{test.exam_name}</h5>
+                  <p>Posted On: {test.exam_date}</p>
+                </div>
+              ))}
+          </div>
+          <div className="mcqlist_test_teacher_button">
+            <Button className="mcqlist_add_button" onClick={handleAddClick}>
+              <IoIosAdd
+                style={{ height: "40px", width: "40px", color: "#fff" }}
+              />
+            </Button>
+          </div>
+        </Col>
+      </Row>
+    </Container>
+  );
 }
 
 export default TeacherMcqList;

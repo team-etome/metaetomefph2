@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
+import { Container, Row, Col, Spinner, Alert,ProgressBar } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "../teacherquestiongenerator/questiongenerator.css";
 import { IoAddCircleOutline } from "react-icons/io5";
@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { IoChevronBackSharp } from "react-icons/io5";
-
 
 function QuestionGenerator() {
   const [subsections, setSubsections] = useState([
@@ -39,8 +38,9 @@ function QuestionGenerator() {
   const exampaperinfo = useSelector((state) => state.exampaperinfo);
 
   const exam_id = exampaperinfo.exampaperinfo?.id;
-  console.log(exam_id, "exam id");
-  console.log(exampaperinfo, "exampaperinfo reducer");
+
+  const [progress, setProgress] = useState(0); // Track export progress
+  const [isExporting, setIsExporting] = useState(false); // Exporting status
 
   useEffect(() => {
     if (triggerExport) {
@@ -58,23 +58,68 @@ function QuestionGenerator() {
     setSubsections(newSubsections);
   };
 
+  // Helper to calculate the next global ID
+  const getNextGlobalId = (subsections) => {
+    return (
+      subsections.reduce(
+        (total, subsection) => total + subsection.questions.length,
+        0
+      ) + 1
+    );
+  };
+
+  // Helper to recalculate global IDs for all questions across subsections
+  const recalculateGlobalIds = (subsections) => {
+    let globalId = 1;
+    subsections.forEach((subsection) => {
+      subsection.questions.forEach((question) => {
+        question.id = globalId++;
+      });
+    });
+  };
+
+  // const addQuestion = () => {
+  //   const newSubsections = [...subsections];
+  //   const newQuestionId = lastQuestionId + 1;
+
+  //   newSubsections[currentSubsectionIndex].questions.push({
+  //     id: newQuestionId,
+  //     question: "",
+  //     answer: "",
+  //     points: 5,
+  //     showAnswer: false,
+  //   });
+  //   setSubsections(newSubsections);
+  //   setLastQuestionId(newQuestionId);
+  // };
+
   const addQuestion = () => {
     const newSubsections = [...subsections];
-    const newQuestionId = lastQuestionId + 1;
-    newSubsections[currentSubsectionIndex].questions.push({
-      id: newQuestionId,
+    const currentQuestions = newSubsections[currentSubsectionIndex].questions;
+
+    // Add the new question with the next global ID
+    currentQuestions.push({
+      id: getNextGlobalId(newSubsections), // Calculate the next global ID
       question: "",
       answer: "",
       points: 5,
       showAnswer: false,
     });
+
     setSubsections(newSubsections);
-    setLastQuestionId(newQuestionId);
   };
 
+  // const addSubsection = () => {
+  //   setSubsections([...subsections, { name: "New Section", questions: [] }]);
+  //   setCurrentSubsectionIndex(subsections.length);
+  // };
+
   const addSubsection = () => {
-    setSubsections([...subsections, { name: "New Section", questions: [] }]);
-    setCurrentSubsectionIndex(subsections.length);
+    setSubsections((prevSubsections) => [
+      ...prevSubsections,
+      { name: "New Section", questions: [] },
+    ]);
+    setCurrentSubsectionIndex(subsections.length); // Set to the new subsection index
   };
 
   const removeSubsection = (index) => {
@@ -82,11 +127,24 @@ function QuestionGenerator() {
     setSubsections(newSubsections);
   };
 
+  // const removeQuestion = (subsectionIndex, questionIndex) => {
+  //   const newSubsections = [...subsections];
+  //   newSubsections[subsectionIndex].questions = newSubsections[
+  //     subsectionIndex
+  //   ].questions.filter((_, i) => i !== questionIndex);
+  //   setSubsections(newSubsections);
+  // };
+
   const removeQuestion = (subsectionIndex, questionIndex) => {
     const newSubsections = [...subsections];
-    newSubsections[subsectionIndex].questions = newSubsections[
-      subsectionIndex
-    ].questions.filter((_, i) => i !== questionIndex);
+    const currentQuestions = newSubsections[subsectionIndex].questions;
+
+    // Remove the question
+    currentQuestions.splice(questionIndex, 1);
+
+    // Recalculate global IDs for all questions
+    recalculateGlobalIds(newSubsections);
+
     setSubsections(newSubsections);
   };
 
@@ -158,14 +216,12 @@ function QuestionGenerator() {
   };
 
   const exportQuestionsToJson = async () => {
-    Swal.fire({
-      title: "Exporting...",
-      text: "Please wait while we export the questions.",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+    setIsExporting(true);
+    const totalQuestions = subsections.reduce(
+      (acc, section) => acc + section.questions.length,
+      0
+    );
+    let processedQuestions = 0;
 
     console.log("Capturing questions and answers as images...");
 
@@ -189,6 +245,11 @@ function QuestionGenerator() {
             const answerImage = answerElement
               ? await captureElement(answerElement)
               : "Image not captured";
+
+            processedQuestions++;
+            setProgress(
+              Math.floor((processedQuestions / totalQuestions) * 100)
+            ); // Update progress
 
             return {
               question_number: q.id,
@@ -244,35 +305,40 @@ function QuestionGenerator() {
         showConfirmButton: true,
       });
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
+      setIsExporting(false); // Stop exporting
+      setProgress(0); // Reset progress// Stop loading
     }
   };
 
   const handleExport = () => {
-    setLoading(true); // Start loading as soon as export is initiated
-    setTriggerExport(true); // Set the trigger to initiate the export
+    setProgress(0); // Reset progress
+    setIsExporting(true); // Start exporting
+    exportQuestionsToJson();
   };
-const handleBackClick = () => {
-  navigate('/teacherquestionview')
-}
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="question_generator">
         <Row xs={2} className="question_generator_header">
           <Col className="question_generator_header_title">
-          {/* <IoChevronBackSharp onClick={handleBackClick}className="teacher_question_back" /> */}
+            {/* <IoChevronBackSharp onClick={handleBackClick}className="teacher_question_back" /> */}
             {/* <h6>Subject Namerrrrrrrrr</h6> */}
           </Col>
           <Col className="question_generator_header_submit">
-            <button onClick={handleExport} disabled={loading}>
-              {loading ? (
-                <Spinner animation="border" size="sm" />
-              ) : (
-                "Export Questions"
-              )}
+            <button onClick={handleExport} disabled={isExporting}>
+              {isExporting ? `Exporting... ${progress}%` : "Export Questions"}
             </button>
           </Col>
         </Row>
+        {isExporting && (
+          <Row className="my-3">
+            <Col>
+              <ProgressBar now={progress} label={`${progress}%`} />
+            </Col>
+          </Row>
+        )}
+
         <Row className="qs_gn_bdy">
           <div className="text-editor">
             {subsections.map((subsection, subsectionIndex) => (
@@ -327,15 +393,15 @@ const handleBackClick = () => {
                               className="question-container"
                             >
                               <div className="teacher_question_header">
-                                <div  className="teacher_question_number">
+                                <div className="teacher_question_number">
                                   <h6 style={{ fontSize: "20px" }}>{q.id})</h6>
                                 </div>
-                                <div  className="editor-wrapper">
+                                <div className="editor-wrapper">
                                   <TeacherTextEditor
                                     ref={(el) =>
-                                    (questionRefs.current[subsectionIndex][
-                                      questionIndex
-                                    ] = el)
+                                      (questionRefs.current[subsectionIndex][
+                                        questionIndex
+                                      ] = el)
                                     }
                                     placeholder="Type question here..."
                                     editorData={q.question}
@@ -347,7 +413,6 @@ const handleBackClick = () => {
                                         data
                                       )
                                     }
-
                                   />
                                 </div>
                               </div>
@@ -364,18 +429,16 @@ const handleBackClick = () => {
                                 >
                                   Answer Key
                                 </div>
-
                               </div>
 
                               {q.showAnswer && (
-                                <div  className="answer_editor_container">
+                                <div className="answer_editor_container">
                                   <div className="editor-wrapper">
                                     <TeacherTextEditor
-                                    
                                       ref={(el) =>
-                                      (answerRefs.current[subsectionIndex][
-                                        questionIndex
-                                      ] = el)
+                                        (answerRefs.current[subsectionIndex][
+                                          questionIndex
+                                        ] = el)
                                       }
                                       placeholder="Type answer here..."
                                       editorData={q.answer}
@@ -387,7 +450,6 @@ const handleBackClick = () => {
                                           data
                                         )
                                       }
-
                                     />
                                   </div>
                                   <div className="points-input">

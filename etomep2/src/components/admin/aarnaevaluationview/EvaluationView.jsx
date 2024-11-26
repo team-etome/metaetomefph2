@@ -8,9 +8,8 @@ import "../aarnaevaluationview/evaluationview.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
-
 
 function EvaluationView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
@@ -51,38 +50,36 @@ function EvaluationView() {
 
   const handleDelete = async () => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${APIURL}/api/evaluationadding/${evaluationData.id}`);
-          Swal.fire(
-            'Deleted!',
-            'Evaluation has been deleted.',
-            'success'
+          await axios.delete(
+            `${APIURL}/api/evaluationadding/${evaluationData.id}`
           );
-          navigate("/aarnanavbar"); 
+          Swal.fire("Deleted!", "Evaluation has been deleted.", "success");
+          navigate("/aarnanavbar");
         } catch (error) {
           console.error("There was an error deleting the evaluation!", error);
           Swal.fire(
-            'Failed!',
-            'There was a problem deleting the evaluation.',
-            'error'
+            "Failed!",
+            "There was a problem deleting the evaluation.",
+            "error"
           );
         }
       }
     });
   };
 
-const handleBackClick = () =>{
-  navigate('/aarnanavbar')
-}
+  const handleBackClick = () => {
+    navigate("/aarnanavbar");
+  };
   return (
     <div>
       <Container className="evaluation_view_container">
@@ -96,9 +93,11 @@ const handleBackClick = () =>{
               }}
             >
               {/* <Link to="/aarnanavbar"> */}
-                {/* <IoChevronBackSharp onClick={handleBackClick} className="evaluation_view_back" /> */}
+              {/* <IoChevronBackSharp onClick={handleBackClick} className="evaluation_view_back" /> */}
               {/* </Link> */}
-              <h1 className="evaluation_view_title">Class : {evaluationData?.class_name || ""}</h1>
+              <h1 className="evaluation_view_title">
+                Class : {evaluationData?.class_name || ""} {evaluationData?.division}
+              </h1>
               <div style={{ flex: "1" }}></div>
               {windowWidth > 800 ? (
                 <div
@@ -111,7 +110,10 @@ const handleBackClick = () =>{
                 >
                   {/* <button className="evaluation_edit">Delete</button> */}
                   {/* <button type="button" onClick={handleDelete} className="evaluation_edit">Delete</button> */}
-                <MdDelete onClick={handleDelete} className="evaluation_edit"/>
+                  <MdDelete
+                    onClick={handleDelete}
+                    className="evaluation_edit"
+                  />
                 </div>
               ) : (
                 <div style={{ position: "relative" }} ref={dropdownRef}>
@@ -138,7 +140,10 @@ const handleBackClick = () =>{
                     >
                       {/* <button className="evaluation_block">Block</button> */}
                       {/* <button type="button" onClick={handleDelete} className="evaluation_edit">Delete</button> */}
-                      <MdDelete onClick={handleDelete} className="evaluation_edit"/>
+                      <MdDelete
+                        onClick={handleDelete}
+                        className="evaluation_edit"
+                      />
                     </div>
                   )}
                 </div>
@@ -152,7 +157,9 @@ const handleBackClick = () =>{
                   <div className="evaluation_view_group">
                     <label htmlFor="class_no">Class</label>
                     <input
-                      value={evaluationData?.class_name || ""}
+                      value={`${evaluationData?.class_name || ""}  ${
+                        evaluationData?.division || ""
+                      }`}
                       type="text"
                       id="class_no"
                       name="class_no"

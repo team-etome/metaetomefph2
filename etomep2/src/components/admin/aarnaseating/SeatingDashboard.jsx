@@ -33,6 +33,7 @@ function SeatingDashboard() {
       try {
         const response = await axios.get(`${APIURL}/api/seating/${admin_id}`);
         setSeatingData(response.data);
+        console.log(response.data,"if gwerfieuwrgfef")
       } catch (error) {
         console.error("Error fetching seating data:", error);
       }
@@ -102,7 +103,7 @@ function SeatingDashboard() {
                     <div className="seat_date">{item.exam_date}</div>
                   </div>
                   <div className="seat_facultyno">
-                    No. of Faculties : {item.teacher_count}
+                    Faculty : {item.teacher}
                   </div>
                   <div className="seat_time">
                     {item.start_time}-{item.end_time}
