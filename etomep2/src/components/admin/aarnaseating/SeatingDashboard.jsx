@@ -13,17 +13,16 @@ function SeatingDashboard() {
   const APIURL = useSelector((state) => state.APIURL.url);
   const admininfo = useSelector((state) => state.admininfo);
 
+  console.log(seatingData, "seating dataaaaaaa");
 
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredSeatingData = seatingData.filter((item) => {
-    return (
-      item.exam_date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.hall_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.teacher.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    return item.classes
+      .join(",")
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
   });
-  
 
   const admin_id = admininfo.admininfo?.admin_id;
   const navigate = useNavigate();
@@ -33,7 +32,7 @@ function SeatingDashboard() {
       try {
         const response = await axios.get(`${APIURL}/api/seating/${admin_id}`);
         setSeatingData(response.data);
-        console.log(response.data,"if gwerfieuwrgfef")
+        console.log(response.data, "if gwerfieuwrgfef");
       } catch (error) {
         console.error("Error fetching seating data:", error);
       }
@@ -66,21 +65,19 @@ function SeatingDashboard() {
         <Row>
           <div className="seat_list_search_filter_main d-flex">
             <Form className="d-flex">
-            
               <div className="position-relative">
                 <Form.Control
                   type="search"
-                  placeholder="Search"
+                  placeholder="Search by class"
                   className="ps-3 seat_list_ad_search_bar"
                   aria-label="Search"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  
                 />
-                <BsSearch 
-                className="position-absolute top-50 translate-middle-y seat_list_searchbar_icon" />
+                <BsSearch className="position-absolute top-50 translate-middle-y seat_list_searchbar_icon" />
               </div>
             </Form>
-           
           </div>
         </Row>
         <Row>
@@ -102,12 +99,8 @@ function SeatingDashboard() {
                     <div className="seat_hallno">{item.hall_name}</div>
                     <div className="seat_date">{item.exam_date}</div>
                   </div>
-                  <div className="seat_facultyno">
-                    Faculty : {item.teacher}
-                  </div>
-                  <div className="seat_time">
-                    {item.start_time}-{item.end_time}
-                  </div>
+                  <div className="seat_facultyno">Faculty : {item.teacher}</div>
+                  <div className="seat_time">{item.classes.join(",")}</div>
                 </div>
               </Col>
             ))

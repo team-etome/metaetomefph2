@@ -101,6 +101,8 @@ function AdminDashboard() {
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [notifications, setNotifications] = useState([]);
 
+  console.log(notifications,"notificationssssss")
+
 
   const state = useSelector((state) => state);
 
@@ -114,7 +116,7 @@ function AdminDashboard() {
 
   //   if (admin_id) {
   //     const connectWebSocket = () => {
-  //       const socketUrl = `ws://192.168.1.42:8000/ws/reports/${admin_id}/`;
+  //       const socketUrl = `ws://192.168.1.40:8000/ws/reports/${admin_id}/`;
   //       console.log(`Connecting WebSocket: ${socketUrl}`);
   //       socket = new WebSocket(socketUrl);
 

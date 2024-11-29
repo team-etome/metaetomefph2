@@ -51,18 +51,28 @@ function AarnaQuestionPaper() {
   };
 
   // Filter the question papers based on the search term
+  //   const filteredQpaperListData = qpaperListData.filter((item) => {
+  //   return (
+  //     item.class_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     item.division.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     const combined = (item.class_name + " " + item.division + " " + item.subject_name).toLowerCase();
+
+  //   );
+  // });
+
   const filteredQpaperListData = qpaperListData.filter((item) => {
-    return (
-      item.exam_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.exam_date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.subject_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.teacher_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      // item.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.class_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.division.toLowerCase().includes(searchTerm.toLowerCase()) 
-      // item.total_marks.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Remove spaces from class_name, division, and subject_name and combine them into one string
+    const combined = (
+      item.class_name.replace(/\s+/g, '') +
+      item.division.replace(/\s+/g, '') 
+ 
+    ).toLowerCase();
+  
+    // Remove spaces from searchTerm
+    const searchTermWithoutSpaces = searchTerm.replace(/\s+/g, '').toLowerCase();
+  
+    // Check if the search term (without spaces) is found in the combined string
+    return combined.includes(searchTermWithoutSpaces);
   });
 
   return (
@@ -74,7 +84,7 @@ function AarnaQuestionPaper() {
               <div className="position-relative">
                 <Form.Control
                   type="search"
-                  placeholder="Search"
+                  placeholder="Search by class"
                   className="ps-3 qp_list_ad_search_bar"
                   aria-label="Search"
                   value={searchTerm}
@@ -100,14 +110,14 @@ function AarnaQuestionPaper() {
                   onClick={() => handleclick(item)}
                   className="border border-white qpaper_rectangle"
                 >
-                  <div className="qpaper_faculty_name">
-                    {item.teacher_name}
-                  </div>
+                  <div className="qpaper_faculty_name">{item.teacher_name}</div>
                   <div className="qpaper_term_date">
                     <div className="qpaper_term">{item.exam_name}</div>
                     <div className="qpaper_date">{item.exam_date}</div>
                   </div>
-                  <div className="qpaper_subject">{item.subject_name}</div>
+                  <div className="qpaper_subject">
+                    {item.class_name} {item.division} - {item.subject_name}
+                  </div>
                 </div>
               </Col>
             ))

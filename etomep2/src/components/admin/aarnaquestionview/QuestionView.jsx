@@ -185,8 +185,7 @@ const handleBackClick =() =>{
                     type="email"
                     id="class_name"
                     name="class_name"
-                    value={questionPaper?.class_name || ""}
-                    readOnly
+                    value={questionPaper?.class_name && questionPaper?.division ? `${questionPaper.class_name} ${questionPaper.division}` : ""}                    readOnly
                   />
                 </div>
                 <div className="question_view_group">
