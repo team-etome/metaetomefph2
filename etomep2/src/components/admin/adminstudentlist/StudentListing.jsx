@@ -8,16 +8,22 @@ import { useSelector } from "react-redux";
 
 function StudentListing() {
   const navigate = useNavigate();
-  const { id } = useParams();
-  console.log(id, "idddd");
-  const [studentListData, setStudentListData] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
+  const { id }   = useParams();
+  
+  const [studentListData, setStudentListData]     =  useState([]);
+  const [loading, setLoading]                     =  useState(true);
+  const [error, setError]                         =  useState(null);
 
-  console.log(studentListData, "dataaaaaa");
+
+  const [className , setClassName]   = useState()
+  const [division  ,  setDivision]   = useState()
+
+  console.log(className, "classs");
+  console.log(division, "divison");
 
   const handleStudentClick = (student) => {
-    navigate("/studentview", { state: { student } });
+    navigate("/studentview", { state: { student ,  className, 
+      division,  } });
   };
 
   // const handleBackClick = () => {
@@ -29,7 +35,11 @@ function StudentListing() {
     axios
       .get(`${APIURL}/api/studentdetails/${id}`)
       .then((response) => {
-        setStudentListData(response.data);
+
+        setStudentListData(response.data.students);
+        setClassName(response.data.class_name , response.data.division);
+        setDivision(response.data.division);
+
         setLoading(false);
       })
       .catch((error) => {

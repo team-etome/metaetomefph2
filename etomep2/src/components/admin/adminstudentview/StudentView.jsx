@@ -10,6 +10,11 @@ function StudentView() {
   const location = useLocation();
   const { student } = location.state || {};
 
+  const { className } = location.state || {};
+  const { division } = location.state || {};
+
+  console.log(student, "student");
+
   const subjects = [
     { name: "English", score: 100 },
     { name: "Maths", score: 98 },
@@ -162,7 +167,7 @@ function StudentView() {
                     type="text"
                     id="standard"
                     name="standard"
-                    value="11 B"
+                    value={`${className || ""} ${division || ""}`}
                     readOnly
                   />
                 </div>
@@ -188,13 +193,23 @@ function StudentView() {
                     readOnly
                   />
                 </div>
-                <div className="school_info">
+                {/* <div className="school_info">
                   <label htmlFor="category">Category</label>
                   <input
                     type="text"
                     id="category"
                     name="category"
                     value="Science"
+                    readOnly
+                  />
+                </div> */}
+                   <div className="school_info">
+                  <label htmlFor="academic_year">Academic Year</label>
+                  <input
+                    type="text"
+                    id="academic_year"
+                    name="academic_year"
+                    value="2024-2025"
                     readOnly
                   />
                 </div>
@@ -213,16 +228,7 @@ function StudentView() {
                     readOnly
                   />
                 </div>
-                <div className="school_info">
-                  <label htmlFor="academic_year">Academic Year</label>
-                  <input
-                    type="text"
-                    id="academic_year"
-                    name="academic_year"
-                    value="2024-2025"
-                    readOnly
-                  />
-                </div>
+             
               </Col>
             </Row>
 

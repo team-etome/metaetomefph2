@@ -14,15 +14,18 @@ function EvaluationDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredEvaluationListData = evaluationListData.filter((item) => {
-    return (
-      item.class_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.division.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.subject_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.teacher_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.start_date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.end_date.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Combine class_name and division, remove spaces, and make the string lowercase
+    const combined = (
+      item.class_name.replace(/\s+/g, "") + item.division.replace(/\s+/g, "")
+    ).toLowerCase();
+
+    // Remove spaces from searchTerm and make it lowercase
+    const searchTermWithoutSpaces = searchTerm
+      .replace(/\s+/g, "")
+      .toLowerCase();
+
+    // Check if the search term (without spaces) is found in the combined string
+    return combined.includes(searchTermWithoutSpaces);
   });
 
   console.log(evaluationListData, "evaluationnnnn");
@@ -81,7 +84,7 @@ function EvaluationDashboard() {
               <div className="position-relative">
                 <Form.Control
                   type="search"
-                  placeholder="Search"
+                  placeholder="Search by class"
                   className="ps-3 evaluation_list_ad_search_bar"
                   aria-label="Search"
                   value={searchTerm}

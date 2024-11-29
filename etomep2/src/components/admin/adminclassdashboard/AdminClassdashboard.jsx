@@ -138,15 +138,15 @@ function AdminClassdashboard() {
                   onClick={() =>handleclick(item)}
                   className="border border-white class_rectangle"
                 >
-                  <div className="class_list_medium" style={{textTransform:'capitalize'}}>{item.medium}</div>
+                  <div className="class_list_medium" style={{textTransform:'capitalize'}}>Medium : {item.medium}</div>
                 <div className="class_profile_name">
-                  <div>
+                  {/* <div>
                     <img
                       src={item.admin_logo}
                       alt="profile pic"
                       className="faculty_profile_photo"
                     />
-                  </div>
+                  </div> */}
                   <div className="class_list_facultyname"  style={{textTransform:'capitalize'}}>
                     {item.class_teacher}
                   </div>
