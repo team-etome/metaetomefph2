@@ -36,7 +36,7 @@ function StudentListing() {
       .get(`${APIURL}/api/studentdetails/${id}`)
       .then((response) => {
 
-        setStudentListData(response.data.students);
+        setStudentListData(response.data.students||[]);
         setClassName(response.data.class_name , response.data.division);
         setDivision(response.data.division);
 
@@ -62,7 +62,7 @@ function StudentListing() {
          
               <h1 className="student_title">Student List</h1>
               <div className="studentlist_number">
-                ({studentListData.length})
+                ({studentListData?.length||0})
               </div>
             </div>
             {/* <div style={{ border: "0.5px solid #526D82" }}></div> */}
