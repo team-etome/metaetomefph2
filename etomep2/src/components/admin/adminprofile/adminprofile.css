@@ -215,3 +215,10 @@ display: none;
         left: 53%;
       }
 }
+
+
+.highlighted {
+  border: 2px solid #4CAF50;  /* Green border for editing mode */
+  background-color: #f0f8ff;  /* Light blue background */
+  outline: none;  /* Remove default outline */
+}

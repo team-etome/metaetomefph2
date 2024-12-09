@@ -79,7 +79,8 @@ function AssignmentAdding() {
         title: "Submitting Form",
         text: "Please wait...",
         allowOutsideClick: false,
-        onBeforeOpen: () => {
+        showConfirmButton: false, // Explicitly hide the "OK" button
+        didOpen: () => {
           Swal.showLoading();
         },
       });

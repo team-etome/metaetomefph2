@@ -36,6 +36,8 @@ function SeatAssigning() {
 
   console.log(classOptions, "class option");
 
+  const today = new Date().toISOString().split("T")[0];
+
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
   const classinfo = useSelector((state) => state.adminallclassinfo);
@@ -89,11 +91,13 @@ function SeatAssigning() {
           //         overallCount.division === classItem.division
           //     )?.total_student_count || 0;
 
-          const remainingStudents = matchedCount ? matchedCount.remaining_students : 0;
+          const remainingStudents = matchedCount
+            ? matchedCount.remaining_students
+            : 0;
 
           return {
             value: `${classItem.class_name} ${classItem.division}`,
-            label: `${classItem.class_name} ${classItem.division} (${remainingStudents })`,
+            label: `${classItem.class_name} ${classItem.division} (${remainingStudents})`,
           };
         });
         setClassOptions(updatedClassOptions);
@@ -235,9 +239,14 @@ function SeatAssigning() {
     }
   };
 
-  // const handleBackClick = () => {
-  //   navigate ('/aarnanavbar')
-  // }
+  const handlePositiveInputChange = (e, setter) => {
+    const value = parseInt(e.target.value, 10);
+    if (value > 0) {
+      setter(value);
+    } else {
+      setter(""); // Clears the input if the value is less than or equal to 0
+    }
+  };
 
   return (
     <div>
@@ -268,7 +277,7 @@ function SeatAssigning() {
                     id="hall_no"
                     name="hall_no"
                     value={hallNo}
-                    onChange={(e) => setHallNo(e.target.value)}
+                    onChange={(e) => handlePositiveInputChange(e, setHallNo)}
                     style={{ textTransform: "capitalize" }}
                     maxLength="50"
                   />
@@ -282,7 +291,7 @@ function SeatAssigning() {
                     id="column_no"
                     name="column_no"
                     value={columnNo}
-                    onChange={(e) => setColumnNo(e.target.value)}
+                    onChange={(e) => handlePositiveInputChange(e, setColumnNo)}
                     style={{ textTransform: "capitalize" }}
                     maxLength="50"
                   />
@@ -296,7 +305,9 @@ function SeatAssigning() {
                     id="table_no"
                     name="table_no"
                     value={numberoftables}
-                    onChange={(e) => setNumberoftables(e.target.value)}
+                    onChange={(e) =>
+                      handlePositiveInputChange(e, setNumberoftables)
+                    }
                     style={{ textTransform: "capitalize" }}
                     maxLength="50"
                   />
@@ -312,7 +323,9 @@ function SeatAssigning() {
                     id="students_bench"
                     name="students_bench"
                     value={studentperbench}
-                    onChange={(e) => setStudentperbench(e.target.value)}
+                    onChange={(e) =>
+                      handlePositiveInputChange(e, setStudentperbench)
+                    }
                     style={{ textTransform: "capitalize" }}
                     maxLength="50"
                   />
@@ -326,6 +339,7 @@ function SeatAssigning() {
                     id="exam_date"
                     name="exam_date"
                     value={examdate}
+                    min={today}
                     onChange={(e) => setExamdate(e.target.value)}
                   />
                 </div>

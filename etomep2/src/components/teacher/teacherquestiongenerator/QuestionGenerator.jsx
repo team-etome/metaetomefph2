@@ -39,6 +39,10 @@ function QuestionGenerator() {
 
   const exam_id = exampaperinfo.exampaperinfo?.id;
 
+  const total_marks = exampaperinfo.exampaperinfo?.total_marks;
+
+  console.log(total_marks,"total marks")
+
   const [progress, setProgress] = useState(0); // Track export progress
   const [isExporting, setIsExporting] = useState(false); // Exporting status
 
@@ -51,12 +55,43 @@ function QuestionGenerator() {
     }
   }, [triggerExport]);
 
+
+  // const handlePointsChange = (subsectionIndex, questionIndex, event) => {
+  //   const newSubsections = [...subsections];
+  //   newSubsections[subsectionIndex].questions[questionIndex].points =
+  //     event.target.value;
+  //   setSubsections(newSubsections);
+  // };
+
+
   const handlePointsChange = (subsectionIndex, questionIndex, event) => {
     const newSubsections = [...subsections];
-    newSubsections[subsectionIndex].questions[questionIndex].points =
-      event.target.value;
+    const newPoints = parseInt(event.target.value, 10) || 0;
+    const totalAllocatedMarks = newSubsections.reduce(
+      (acc, subsection) =>
+        acc +
+        subsection.questions.reduce((sum, q) => sum + q.points, 0),
+      0
+    );
+  
+    if (totalAllocatedMarks - newSubsections[subsectionIndex].questions[questionIndex].points + newPoints > total_marks) {
+      Swal.fire({
+        icon: "error",
+        title: "Exceeds Total Marks",
+        text: `Total allocated marks cannot exceed ${total_marks}.`,
+      });
+      return;
+    }
+  
+    newSubsections[subsectionIndex].questions[questionIndex].points = newPoints;
     setSubsections(newSubsections);
   };
+
+
+
+
+
+
 
   // Helper to calculate the next global ID
   const getNextGlobalId = (subsections) => {
@@ -311,11 +346,36 @@ function QuestionGenerator() {
     }
   };
 
+  // const handleExport = () => {
+  //   setProgress(0); 
+  //   setIsExporting(true);
+  //   exportQuestionsToJson();
+  // };
+
+
   const handleExport = () => {
+    const totalAllocatedMarks = subsections.reduce(
+      (acc, subsection) =>
+        acc +
+        subsection.questions.reduce((sum, q) => sum + q.points, 0),
+      0
+    );
+  
+    if (totalAllocatedMarks > total_marks) {
+      Swal.fire({
+        icon: "error",
+        title: "Cannot Export",
+        text: `Total allocated marks (${totalAllocatedMarks}) exceed the allowed total of ${total_marks}. Please adjust the marks.`,
+      });
+      return;
+    }
+  
     setProgress(0); // Reset progress
     setIsExporting(true); // Start exporting
     exportQuestionsToJson();
   };
+
+
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>

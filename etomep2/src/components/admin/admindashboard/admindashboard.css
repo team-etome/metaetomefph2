@@ -361,3 +361,23 @@
     padding: 0px 00px 0 0px;
   }
 }
+
+
+.edit_note_input {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.edit_buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit_buttons button {
+  margin: 0 4px;
+}
+
+.note_actions {
+  display: flex;
+  gap: 8px;
+}

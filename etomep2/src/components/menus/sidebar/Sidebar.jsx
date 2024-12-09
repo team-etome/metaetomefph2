@@ -54,7 +54,7 @@ function Sidebar() {
     { path: "/institutionadding", icon: <RxDashboard />, label: "Institution" },
     { path: "/adminlokanavbar", icon: <PiBook />, label: "Loka" },
     { path: "/aarnanavbar", icon: <SlNote />, label: "Aarna" },
-    { path: "/eyora", icon: <TbScanEye />, label: "Eyora" },
+    // { path: "/eyora", icon: <TbScanEye />, label: "Eyora" },
     { path: "/settings", icon: <SlSettings />, label: "Settings" }
   ];
 

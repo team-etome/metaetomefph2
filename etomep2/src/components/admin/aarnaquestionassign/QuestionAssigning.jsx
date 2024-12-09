@@ -27,20 +27,15 @@ function QuestionAssigning() {
   const [loading, setLoading] = useState(false);
   const [classDetails, setClassDetails] = useState([]);
 
-
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
   const admininfo = useSelector((state) => state.admininfo);
-
-
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const admin_id = admininfo.admininfo?.admin_id;
 
-
-
- 
+  const today = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
     const fetchClass = async () => {
@@ -89,7 +84,7 @@ function QuestionAssigning() {
         setSubjects([]);
       }
     } else {
-      setSubjects([]); 
+      setSubjects([]);
     }
   }, [selectedClass, selectedDivision, classDetails]);
 
@@ -129,6 +124,18 @@ function QuestionAssigning() {
     setSelectedDivision(selectedOption);
   };
 
+  const termOptions = Array.from({ length: 10 }, (_, i) => ({
+    value: `term${i + 1}`,
+    label: `Term ${i + 1}`,
+  }));
+
+  const handleTermChange = (selectedOption) => {
+    setTerm(selectedOption?.value || null);
+    console.log("Selected Term:", selectedOption);
+  };
+
+  console.log(term, "termmmmm");
+
   const toTitleCase = (str) => {
     return str
       .toLowerCase()
@@ -159,7 +166,6 @@ function QuestionAssigning() {
       { value: totalMark, label: "Total Mark" },
       { value: startTime, label: "Start Time" },
       { value: endTime, label: "End Time" },
-
     ];
 
     const missingFields = requiredFields.filter((field) => !field.value);
@@ -209,7 +215,6 @@ function QuestionAssigning() {
         text: "Data saved successfully!",
       });
 
-   
       setExamName("");
       setExamDate("");
       setSelectedClass("");
@@ -224,11 +229,16 @@ function QuestionAssigning() {
 
       setLoading(false);
     } catch (error) {
-      console.error("Failed to submit form:", error.response.data);
+      console.error(
+        "Failed to submit form:",
+        error.response?.data?.message || error.message
+      );
+      const errorMessage =
+        error.response?.data?.error || "Failed to save data.";
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Failed to save data.",
+        text: errorMessage,
       });
       setLoading(false);
     }
@@ -283,16 +293,33 @@ function QuestionAssigning() {
       ...base,
       zIndex: 9999,
       position: "absolute",
-      width: '89%',
-      maxHeight: '150px', 
-      overflowY: 'auto', 
+      width: "89%",
+      maxHeight: "150px",
+      overflowY: "auto",
     }),
     menuList: (base) => ({
       ...base,
-      maxHeight: '150px',
-      overflowY: 'auto',
-      paddingRight: '10px'
+      maxHeight: "150px",
+      overflowY: "auto",
+      paddingRight: "10px",
     }),
+  };
+
+  const handleTotalMarkChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    if (value > 0 && value <= 200) {
+      setTotalMark(value.toString());
+    } else if (value > 200) {
+      setTotalMark("200"); // Set the total mark to the maximum if the value exceeds 200
+      Swal.fire({
+        icon: "warning",
+        title: "Maximum Limit Exceeded",
+        text: "The total mark cannot exceed 200.",
+      });
+    } else {
+      // If the value is zero, negative, or not a number, we reset it or keep it empty
+      setTotalMark("");
+    }
   };
 
   return (
@@ -306,8 +333,7 @@ function QuestionAssigning() {
               marginBottom: "10px",
             }}
           >
-           
-            <h1 className="qpaper_title">Question Assigning</h1>
+            <h1 className="qpaper_title">Faculty Assigning</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>
           <div className="qpaper_form_scrollable">
@@ -334,9 +360,9 @@ function QuestionAssigning() {
                     type="date"
                     id="exam_date"
                     value={examDate}
+                    min={today}
                     onChange={(e) => setExamDate(e.target.value)}
                     style={{ textTransform: "capitalize" }}
-                    maxLength="50"
                   />
                 </div>
                 <div className="qpaper_group">
@@ -387,8 +413,6 @@ function QuestionAssigning() {
                     isClearable={true}
                   />
                 </div>
-
-              
               </Col>
 
               <Col md={6}>
@@ -415,7 +439,7 @@ function QuestionAssigning() {
                     onChange={(e) => setEndTime(e.target.value)}
                   />
                 </div>
-                <div className="qpaper_group">
+                {/* <div className="qpaper_group">
                   <label htmlFor="term">
                     Term<span style={{ color: "red" }}>*</span>
                   </label>
@@ -425,18 +449,30 @@ function QuestionAssigning() {
                     value={term}
                     onChange={(e) => setTerm(e.target.value)}
                     style={{ textTransform: "capitalize" }}
-                    maxLength="10"
+                  />
+                </div> */}
+                <div className="qpaper_group">
+                  <label htmlFor="term">
+                    Term<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <Select
+                    options={termOptions}
+                    styles={customStyles}
+                    value={termOptions.find((option) => option.value === term)}
+                    onChange={handleTermChange}
+                    placeholder="Select Term"
+                    isClearable={true}
                   />
                 </div>
                 <div className="qpaper_group">
-                  <label  htmlFor="t_mark">
+                  <label htmlFor="t_mark">
                     Total Mark<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="number"
                     id="t_mark"
                     value={totalMark}
-                    onChange={(e) => setTotalMark(e.target.value)}
+                    onChange={handleTotalMarkChange}
                     style={{ textTransform: "capitalize" }}
                     maxLength="10"
                   />

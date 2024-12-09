@@ -18,9 +18,7 @@ function LokaTextbook() {
   const [subjectOptions, setSubjectOptions] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
 
-
-
-  const [mediumOptions, setMediumOptions] = useState([]); 
+  const [mediumOptions, setMediumOptions] = useState([]);
   const [selectedMedium, setSelectedMedium] = useState(null);
   const [medium, setMedium] = useState("");
   const [m, setM] = useState("");
@@ -44,9 +42,8 @@ function LokaTextbook() {
   const admin_id = admininfo.admininfo?.admin_id;
 
   console.log(admininfo, " admininfo");
-  
 
-  console.log(subjectOptions,"fihgseioyfg")
+  console.log(subjectOptions, "fihgseioyfg");
 
   useEffect(() => {
     if (admininfo?.admininfo?.publisher_name) {
@@ -89,9 +86,6 @@ function LokaTextbook() {
     fetchSubjects();
   }, [APIURL, admininfo]);
 
-  
-
-
   const handleMediumChange = (selectedOptions) => {
     setM(selectedOptions.value);
     setSelectedMedium(selectedOptions);
@@ -130,7 +124,7 @@ function LokaTextbook() {
       );
       setVolume(data[0].volume || "");
       setMedium({ value: data[0].medium, label: data[0].medium } || "");
-     
+
       setSelectedPublisher({
         value: data[0]?.publisher_name,
         label: data[0]?.publisher_name,
@@ -172,34 +166,67 @@ function LokaTextbook() {
     setSelectedPublisher(selectedOptions);
     setP(selectedOptions.value);
   };
-  
+
   const handleTabChange = (e, tab) => {
     e.preventDefault();
     setSelectedTab(tab);
   };
-  const handleClassValueChange = (e) => {
-    const value = parseInt(e.target.value);
-    if (!isNaN(value) && value > 0) {
-      setClassValue(value);
-    } else {
-      setClassValue("");
+  const handleClassValueChange = (event) => {
+    const inputValue = event.target.value;
+    const numericValue = parseInt(inputValue, 10);
+    if (numericValue > 0 && numericValue <= 12) {
+      setClassValue(inputValue); // Only set the value if it is within the valid range
+    } else if (inputValue === "") {
+      setClassValue(""); // Allow clearing the input
     }
+    // Do not update the state if the value is negative or zero
   };
 
+  // const handleChapterInputChange = (index, field, value) => {
+  //   const updatedChapters = [...chapters];
+  //   updatedChapters[index][field] = value;
+  //   setChapters(updatedChapters);
+  // };
 
   const handleChapterInputChange = (index, field, value) => {
     const updatedChapters = [...chapters];
     updatedChapters[index][field] = value;
-    setChapters(updatedChapters);
-  };
 
- 
+    // Optionally add inline validation feedback
+    if (!value.trim()) {
+        updatedChapters[index].error = "Chapter name is required";
+    } else {
+        updatedChapters[index].error = "";
+    }
+
+    setChapters(updatedChapters);
+};
 
   const clearImageFile = () => {
     setImageFile(null);
   };
 
-  
+
+
+  const validateChapters = () => {
+    let isValid = true;
+    let errorMessage = "";
+
+    for (let chapter of chapters) {
+        if (!chapter.name.trim()) {
+            errorMessage = "All chapters must have a name.";
+            isValid = false;
+            break;
+        }
+        if (!chapter.pdfFile) {
+            errorMessage = "All chapters must have a PDF file uploaded.";
+            isValid = false;
+            break;
+        }
+    }
+
+    return { isValid, errorMessage };
+};
 
   const renderChapterInputs = () => {
     return chapters.map((chapter, index) => (
@@ -245,7 +272,6 @@ function LokaTextbook() {
     ));
   };
 
- 
   const handleTotalChaptersChange = (e) => {
     const totalChapters = parseInt(e.target.value, 10);
     // Set whether to show chapter inputs based on the number of chapters entered
@@ -284,7 +310,6 @@ function LokaTextbook() {
     setImageFile(file);
   };
 
-
   const handleFileChange = (index, file) => {
     const updatedChapters = [...chapters];
     updatedChapters[index].pdfFile = file;
@@ -310,6 +335,8 @@ function LokaTextbook() {
     setLoading(true); // Show the loading spinner
 
     // Validate required fields
+    const { isValid, errorMessage } = validateChapters();
+
     if (
       !classValue ||
       !textbookName ||
@@ -325,10 +352,7 @@ function LokaTextbook() {
       if (!textbookName) missingFields.push("textbook name");
       if (!selectedSubject) missingFields.push("Subject");
 
-
       if (!selectedMedium) missingFields.push("selectedMedium");
-
-
 
       if (!publisherName) missingFields.push("publisher name");
       if (!imageFile) missingFields.push("image file");
@@ -344,9 +368,8 @@ function LokaTextbook() {
       setLoading(false);
       return;
     }
-    
+
     try {
-  
       const formData = new FormData();
       formData.append("class_name", classValue);
       formData.append("text_name", textbookName);
@@ -357,8 +380,6 @@ function LokaTextbook() {
       formData.append("publisher_name", selectedPublisher.value);
       formData.append("admin", admin_id);
 
-      
-
       chapters.forEach((chapter, index) => {
         formData.append(`chapters[${index}][name]`, chapter.name);
         if (chapter.pdfFile) {
@@ -366,7 +387,6 @@ function LokaTextbook() {
         }
       });
 
-      
       const response = await axios.post(
         `${APIURL}/api/admin-create-textbook/`,
         formData,
@@ -376,7 +396,6 @@ function LokaTextbook() {
           },
         }
       );
-
 
       Swal.fire({
         icon: "success",
@@ -412,8 +431,6 @@ function LokaTextbook() {
   //   value: bookmedium,
   //   label: bookmedium,
   // }));
-
- 
 
   const customStyles = {
     control: (base, state) => ({
@@ -469,15 +486,15 @@ function LokaTextbook() {
       ...base,
       zIndex: 9999,
       position: "absolute",
-      width: '89%',
-      maxHeight: '150px', 
-      overflowY: 'auto', 
+      width: "89%",
+      maxHeight: "150px",
+      overflowY: "auto",
     }),
     menuList: (base) => ({
       ...base,
-      maxHeight: '150px',
-      overflowY: 'auto',
-      paddingRight: '10px'
+      maxHeight: "150px",
+      overflowY: "auto",
+      paddingRight: "10px",
     }),
   };
 
@@ -492,7 +509,6 @@ function LokaTextbook() {
               marginBottom: "10px",
             }}
           >
- 
             <h1 className="loka_title">Add Textbooks</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>
@@ -550,7 +566,6 @@ function LokaTextbook() {
                     value={volume}
                     maxLength="100"
                     style={{ textTransform: "capitalize" }}
-             
                     onChange={handleVolumeChange}
                   />
                 </div>
@@ -592,7 +607,6 @@ function LokaTextbook() {
                 <div>
                   <div style={{ marginLeft: "0px" }}>
                     <div style={{ display: "flex" }}>
-                     
                       <div className="lokatb_textbutton_container" style={{}}>
                         <button
                           style={{
@@ -611,7 +625,6 @@ function LokaTextbook() {
                     </div>
                   </div>
 
-             
                   <div>
                     <label htmlFor="photo" style={{}}></label>
                     <div className="admin_textbook_image_upload_container">

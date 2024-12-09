@@ -489,10 +489,10 @@ function MobileSidebar({ show, onClose }) {
               }`}
               onClick={() => handleMenuItemClick("eyora")}
             >
-              <div className="mob_icon_container_div">
+              {/* <div className="mob_icon_container_div">
                 <TbScanEye className="mob_icon_img" />
                 <span className="mob_icon_text">Eyora</span>
-              </div>
+              </div> */}
             </Col>
             <Col
               className={`mob_menu_item_col ${

@@ -16,6 +16,8 @@ function AarnaQuestionPaper() {
   const admininfo = useSelector((state) => state.admininfo);
   const admin_id = admininfo.admininfo?.admin_id;
 
+  console.log(qpaperListData, "qpaper dataaaaaa");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,14 +65,14 @@ function AarnaQuestionPaper() {
   const filteredQpaperListData = qpaperListData.filter((item) => {
     // Remove spaces from class_name, division, and subject_name and combine them into one string
     const combined = (
-      item.class_name.replace(/\s+/g, '') +
-      item.division.replace(/\s+/g, '') 
- 
+      item.class_name.replace(/\s+/g, "") + item.division.replace(/\s+/g, "")
     ).toLowerCase();
-  
+
     // Remove spaces from searchTerm
-    const searchTermWithoutSpaces = searchTerm.replace(/\s+/g, '').toLowerCase();
-  
+    const searchTermWithoutSpaces = searchTerm
+      .replace(/\s+/g, "")
+      .toLowerCase();
+
     // Check if the search term (without spaces) is found in the combined string
     return combined.includes(searchTermWithoutSpaces);
   });
@@ -118,6 +120,19 @@ function AarnaQuestionPaper() {
                   <div className="qpaper_subject">
                     {item.class_name} {item.division} - {item.subject_name}
                   </div>
+                
+                    <div
+                      style={{
+                        color: "green",
+                        marginLeft: "12px",
+                        marginTop: "15px",
+                        fontWeight: "bold",
+                        
+                      }}
+                    >
+                      {item.status === "completed" ? "Completed" : "Pending"}
+                    </div>
+                
                 </div>
               </Col>
             ))

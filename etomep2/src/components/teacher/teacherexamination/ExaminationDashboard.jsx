@@ -5,9 +5,8 @@ import { useNavigate } from "react-router-dom";
 import "../teacherexamination/examinationdashboard.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { exampaperinfo } from "../../../Redux/Actions/ExamPaperInfoAction";
-
 
 function ExaminationDashboard() {
   const [isActive, setIsActive] = useState(false);
@@ -16,14 +15,13 @@ function ExaminationDashboard() {
   const [examinationListData, setExaminationListData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-
   const navigate = useNavigate();
 
   const teacher = useSelector((state) => state.teacherinfo);
   const teacher_id = teacher.teacherinfo?.teacher_id;
   const APIURL = useSelector((state) => state.APIURL.url);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (teacher_id) {
@@ -58,18 +56,14 @@ function ExaminationDashboard() {
     return () => clearInterval(interval);
   }, []);
 
-
   const handleClick = (exam) => {
     dispatch(exampaperinfo(exam));
-    navigate("/teacherquestionview", { state: { exam : exam } });
-    
-    
+    navigate("/teacherquestionview", { state: { exam: exam } });
   };
 
   const filteredExamList = examinationListData.filter((exam) =>
     exam.exam_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
 
   return (
     <div style={{}} className="teacher_examination_dashboard">
@@ -85,7 +79,8 @@ function ExaminationDashboard() {
             <h4>Assigned Exams</h4>
           </Col>
           <Col md={6}>
-            <div className="examdashboard_search_filter_main"
+            <div
+              className="examdashboard_search_filter_main"
               // style={{
               //   width: "100%",
               //   display: "flex",
@@ -94,7 +89,7 @@ function ExaminationDashboard() {
               //   paddingLeft: "1vw",
               // }}
             >
-              <div 
+              <div
                 // style={{
                 //   width: "80%",
                 //   display: "flex",
@@ -107,7 +102,11 @@ function ExaminationDashboard() {
                     {/* <BsSearch
                       className="examdashboard_search_icon position-absolute top-50 translate-middle-y ms-2"
                     /> */}
-                    <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 examdashboard_search_icon ${searchQuery ? 'hidden' : ''}`} />
+                    <BsSearch
+                      className={`position-absolute top-50 translate-middle-y ms-2 examdashboard_search_icon ${
+                        searchQuery ? "hidden" : ""
+                      }`}
+                    />
                     <Form.Control
                       type="search"
                       placeholder="Search"
@@ -133,7 +132,8 @@ function ExaminationDashboard() {
               key={index}
               className="examination_list"
             >
-               <div onClick={() => handleClick(item)}
+              <div
+                onClick={() => handleClick(item)}
                 className="border border-white examination_rectangle"
               >
                 <div className="examiantion_term">{item.exam_name}</div>
@@ -144,6 +144,20 @@ function ExaminationDashboard() {
                   <div className="examination_date">{item.exam_date}</div>
                 </div>
                 <div className="examination_subject">{item.subject_name}</div>
+
+                {/* Show "Completed" if status is completed */}
+                {item.status === "completed" && (
+                  <div
+                    style={{
+                      color: "green",
+                      fontWeight: "bold",
+                      marginTop: "10px",
+                      textAlign: "center",
+                    }}
+                  >
+                    Completed
+                  </div>
+                )}
               </div>
             </Col>
           ))}

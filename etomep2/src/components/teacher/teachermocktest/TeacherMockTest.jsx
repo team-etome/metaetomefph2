@@ -20,7 +20,7 @@ function TeacherMockTest() {
     {
       name: "Main Section",
       questions: [
-        { id: 1, question: "", answer: "", points: 5, showAnswer: false },
+        { id: 1, question: "", answer: "", points: 0, showAnswer: false },
       ],
     },
   ]);
@@ -60,7 +60,7 @@ function TeacherMockTest() {
 
   console.log(admin,"adminnnnn")
 
-  console.log(className,"durationnnnn")
+  console.log(outOfMarks,"outOfMarks")
 
 
   console.log(formData, "form dataaaaaa");
@@ -74,12 +74,58 @@ function TeacherMockTest() {
     }
   }, [triggerExport]);
 
+
+
+  // const handlePointsChange = (subsectionIndex, questionIndex, event) => {
+  //   const newSubsections = [...subsections];
+  //   newSubsections[subsectionIndex].questions[questionIndex].points =
+  //     event.target.value;
+  //   setSubsections(newSubsections);
+  // };
+
+
   const handlePointsChange = (subsectionIndex, questionIndex, event) => {
+    const newPoints = parseInt(event.target.value, 10);
+  
+    if (isNaN(newPoints) && event.target.value !== "") {
+      // Allow the user to enter valid numbers, or leave empty (backspace).
+      return;
+    }
+  
+    // If the user backspaces and the value becomes empty, we allow it.
+    if (event.target.value === "") {
+      const newSubsections = [...subsections];
+      newSubsections[subsectionIndex].questions[questionIndex].points = 0;
+      setSubsections(newSubsections);
+      return;
+    }
+  
+    // Temporarily update the question's points value
     const newSubsections = [...subsections];
-    newSubsections[subsectionIndex].questions[questionIndex].points =
-      event.target.value;
-    setSubsections(newSubsections);
+    const currentQuestion = newSubsections[subsectionIndex].questions[questionIndex];
+    currentQuestion.points = newPoints;
+  
+    // Calculate the total points for the subsection
+    const totalPoints = newSubsections[subsectionIndex].questions.reduce(
+      (sum, question) => sum + question.points,
+      0
+    );
+  
+    if (totalPoints > outOfMarks) {
+      // If total points exceed outOfMarks, reset the question's points to the previous value
+      currentQuestion.points = parseInt(event.target.defaultValue, 10); // use default value if the new value exceeds max
+      Swal.fire({
+        icon: "error",
+        title: "Exceeds Maximum Marks!",
+        text: `Total marks cannot exceed the maximum limit of ${outOfMarks}`,
+        showConfirmButton: true,
+      });
+    } else {
+      setSubsections(newSubsections); // Update state if within limit
+    }
   };
+  
+
 
   const addQuestion = () => {
     const newSubsections = [...subsections];

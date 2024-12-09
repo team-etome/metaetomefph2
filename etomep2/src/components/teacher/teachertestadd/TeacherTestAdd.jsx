@@ -4,10 +4,7 @@ import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import "../teachertestadd/teachertestadd.css";
-import Swal from 'sweetalert2';
-
-
-
+import Swal from "sweetalert2";
 
 function TeacherTestAdd() {
   const [showUploadArea, setShowUploadArea] = useState(false);
@@ -21,11 +18,8 @@ function TeacherTestAdd() {
   const [outOfMarks, setOutOfMarks] = useState("");
   const [teacherCode, setTeacherCode] = useState("");
 
+  const today = new Date().toISOString().split("T")[0];
 
-
-
-  
-  
   // const handleFileChange = (event) => {
   //   setSelectedFile(event.target.files[0]);
   // };
@@ -35,21 +29,23 @@ function TeacherTestAdd() {
   const handlenavigate = () => {
     const missingFields = [];
 
-    if (!examName) missingFields.push('Exam Name');
-    if (!examDate) missingFields.push('Exam Date');
+    if (!examName) missingFields.push("Exam Name");
+    if (!examDate) missingFields.push("Exam Date");
     // if (!subject) missingFields.push('Subject');
-    if (!topic) missingFields.push('Topic');
-    if (!duration) missingFields.push('Duration');
-    if (!outOfMarks) missingFields.push('Out of Marks');
-    if (!teacherCode) missingFields.push('Teacher Code');
+    if (!topic) missingFields.push("Topic");
+    if (!duration) missingFields.push("Duration");
+    if (!outOfMarks) missingFields.push("Out of Marks");
+    if (!teacherCode) missingFields.push("Teacher Code");
 
     if (missingFields.length > 0) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Missing Information',
-            text: `Please fill in the following fields before proceeding: ${missingFields.join(', ')}`,
-        });
-        return; 
+      Swal.fire({
+        icon: "warning",
+        title: "Missing Information",
+        text: `Please fill in the following fields before proceeding: ${missingFields.join(
+          ", "
+        )}`,
+      });
+      return;
     }
 
     const formData = {
@@ -63,10 +59,7 @@ function TeacherTestAdd() {
     };
 
     navigate("/teachermocktest", { state: formData });
-};
-
-
-
+  };
 
   return (
     <div className="teacher_test_adding">
@@ -105,6 +98,7 @@ function TeacherTestAdd() {
                   name="examdate"
                   value={examDate}
                   onChange={(e) => setExamDate(e.target.value)}
+                  min={today}
                 />
               </div>
 
@@ -122,7 +116,6 @@ function TeacherTestAdd() {
                 />
               </div> */}
 
-
               <div className="teacher_testadd_group">
                 <label htmlFor="testtopic">
                   Topic
@@ -138,6 +131,7 @@ function TeacherTestAdd() {
               </div>
             </Col>
             <Col md={6}>
+
               <div className="teacher_testadd_group">
                 <label htmlFor="testduration">
                   Duration
@@ -148,10 +142,18 @@ function TeacherTestAdd() {
                   id="testduration"
                   name="testduration"
                   value={duration}
-                  onChange={(e) => setDuration(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    // Only allow values greater than 0
+                    if (value > 0 || value === "") {
+                      setDuration(value);
+                    }
+                  }}
                   placeholder="Duration in minutes"
+                  min="1" // Enforces a minimum value of 1
                 />
               </div>
+
               <div className="teacher_testadd_group">
                 <label htmlFor="testoutofmarks">
                   Out Of Marks
@@ -165,6 +167,8 @@ function TeacherTestAdd() {
                   onChange={(e) => setOutOfMarks(e.target.value)}
                 />
               </div>
+
+
               <div className="teacher_testadd_group">
                 <label htmlFor="teachercode">
                   Teacher Code
@@ -178,6 +182,8 @@ function TeacherTestAdd() {
                   onChange={(e) => setTeacherCode(e.target.value)}
                 />
               </div>
+
+              
             </Col>
             <div className="teacher_testadd_submit">
               <button type="submit" onClick={handlenavigate}>

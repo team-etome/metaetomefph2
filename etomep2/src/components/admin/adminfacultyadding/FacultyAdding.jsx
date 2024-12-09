@@ -148,7 +148,7 @@ function FacultyAdding() {
       setLoading(false);
     }
   };
-  
+
   const handlePhoneNumberChange = (e) => {
     const value = e.target.value;
     const numericValue = value.replace(/\D/g, "");
@@ -201,7 +201,7 @@ function FacultyAdding() {
       ...base,
       alignItems: "center",
     }),
-   
+
     menu: (base) => ({
       ...base,
       zIndex: 9999,
@@ -231,7 +231,6 @@ function FacultyAdding() {
               marginBottom: "10px",
             }}
           >
-        
             <h1 className="faculty_title">Add Faculty</h1>
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>
@@ -247,7 +246,13 @@ function FacultyAdding() {
                     id="first_name"
                     name="first_name"
                     value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    onChange={(e) => {
+                      const alphabeticValue = e.target.value.replace(
+                        /[^a-zA-Z\s]/g,
+                        ""
+                      ); // Allow only alphabets and spaces
+                      setFirstName(alphabeticValue);
+                    }}
                     style={{ textTransform: "capitalize" }}
                     maxLength="50"
                   />
@@ -261,7 +266,13 @@ function FacultyAdding() {
                     id="last_name"
                     name="last_name"
                     value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    onChange={(e) => {
+                      const alphabeticValue = e.target.value.replace(
+                        /[^a-zA-Z\s]/g,
+                        ""
+                      ); // Allow only alphabets and spaces
+                      setLastName(alphabeticValue);
+                    }}
                     style={{ textTransform: "capitalize" }}
                     maxLength="50"
                   />
@@ -286,7 +297,13 @@ function FacultyAdding() {
                     id="employee_id"
                     name="employee_id"
                     value={employeeId}
-                    onChange={(e) => setEmployeeId(e.target.value)}
+                    onChange={(e) => {
+                      const alphanumericValue = e.target.value.replace(
+                        /[^a-zA-Z0-9]/g,
+                        ""
+                      ); // Remove non-alphanumeric characters
+                      setEmployeeId(alphanumericValue);
+                    }}
                     style={{ textTransform: "capitalize" }}
                     maxLength="10"
                   />
@@ -299,11 +316,10 @@ function FacultyAdding() {
                     Phone No:<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     id="phone_no"
                     name="phone_no"
                     value={phoneNumber}
-                  
                     onChange={handlePhoneNumberChange}
                     style={{ textTransform: "capitalize" }}
                     maxLength={10}

@@ -17,6 +17,10 @@ function QuestionView() {
 
   const location = useLocation();
   const questionPaper = location.state?.questionPaper;
+
+  const status = questionPaper.status
+  
+  console.log(questionPaper,"question paper list")
   const APIURL = useSelector((state) => state.APIURL.url);
 
   const navigate = useNavigate();
