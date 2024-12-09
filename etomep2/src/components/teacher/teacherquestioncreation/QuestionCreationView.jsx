@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link,  useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Layout_01_S from "../../../assets/Layout_01_S.png";
@@ -15,7 +15,7 @@ function QuestionCreationView() {
   const navigate = useNavigate();
 
   const exam = location.state?.exam;
-  console.log(exam, "dataaaaaaa");
+  const status = exam.status;
 
   const dropdownRef = useRef(null);
   const handleResize = () => {
@@ -44,16 +44,17 @@ function QuestionCreationView() {
 
   // const handleQuestion = () => {
   //   navigate("/teacherquestioninstruction");}
-const handleBackClick = () =>{
-  navigate('/teacherexamination')
-}
+  const handleBackClick = () => {
+    navigate("/teacherexamination");
+  };
 
   return (
     <div>
       <Container className="teacher_question_view_container">
         <form className="teacher_question_view_form">
           <div className="teacher_question_creation_header">
-            <div className="teacher_question_view_header"
+            <div
+              className="teacher_question_view_header"
               // style={{
               //   display: "flex",
               //   alignItems: "center",
@@ -61,7 +62,7 @@ const handleBackClick = () =>{
               // }}
             >
               {/* <Link to="/teacherexamination"> */}
-                {/* <IoChevronBackSharp onClick={handleBackClick}className="teacher_view_back" /> */}
+              {/* <IoChevronBackSharp onClick={handleBackClick}className="teacher_view_back" /> */}
               {/* </Link> */}
               <h1 className="teacher_view_title">Question Creation</h1>
               <div style={{ flex: "1" }}></div>
@@ -73,7 +74,6 @@ const handleBackClick = () =>{
                     gap: "20px",
                     paddingRight: "30px",
                   }}
-
                 >
                   {/* <button className="teacher_question_edit">Edit</button>
                 <button className="teacher_question_block">Block</button> */}
@@ -108,7 +108,6 @@ const handleBackClick = () =>{
                 </div>
               )}
             </div>
-
 
             <div style={{ border: "0.5px solid #676767" }}></div>
           </div>
@@ -208,23 +207,32 @@ const handleBackClick = () =>{
                   />
                 </div>
 
-                <Link to='/teacherquestiongenerator'>
+                {status === "completed" ? (
                   <div className="teacher_create_question">
-                    <button> Create Question</button>
+
+                
+                    <h4
+                    style={{
+                     cursor:"pointer",
+                      color:"green"
+                    }}
+                    >Question creation Completed</h4>
+                  
                   </div>
-                </Link>
-
-
-
+                ) : (
+                  <Link to="/teacherquestiongenerator">
+                    <div className="teacher_create_question">
+                      <button>Create Question</button>
+                    </div>
+                  </Link>
+                )}
               </Col>
-
             </Row>
           </div>
         </form>
       </Container>
     </div>
   );
-
 }
 
 export default QuestionCreationView;

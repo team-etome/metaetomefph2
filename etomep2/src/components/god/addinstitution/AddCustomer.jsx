@@ -151,7 +151,7 @@ function AddCustomer() {
       formData.append("medium", JSON.stringify(mediumValues));
       formData.append("email_id", email);
       formData.append("publisher_name", JSON.stringify(publisherValues));
-      formData.append("eduational_body", custboard);
+      formData.append("educational_body", custboard);
       formData.append("logo", imageFile);
       // formData.append("database_code", databaseCode);
       formData.append("address", address);

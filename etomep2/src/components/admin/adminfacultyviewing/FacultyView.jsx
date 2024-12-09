@@ -12,6 +12,7 @@ import { FaSave } from "react-icons/fa";
 import { MdBlockFlipped } from "react-icons/md";
 import { CgUnblock } from "react-icons/cg";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import Select from "react-select";
 
 function FacultyView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
@@ -31,10 +32,9 @@ function FacultyView() {
   const navigate = useNavigate();
   const APIURL = useSelector((state) => state.APIURL.url);
 
-
   const location = useLocation();
 
-  const faculty = location.state?.faculty;  
+  const faculty = location.state?.faculty;
 
   console.log(action, "ssssss");
 
@@ -43,6 +43,74 @@ function FacultyView() {
   // const faculty = location.state?.faculty;
 
   console.log(faculty, "facultyyyy");
+
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      width: "95%",
+      minHeight: "40px",
+      height: "50px",
+      border: "1px solid #526D82",
+      borderRadius: "8px",
+      boxShadow: state.isFocused ? "0 0 0 1px #526D82" : "none",
+      "&:hover": {
+        borderColor: "none",
+      },
+      "&:focus": {
+        borderColor: "#526D82",
+        outline: "none",
+      },
+    }),
+    placeholder: (base) => ({
+      ...base,
+      color: "#526D82",
+    }),
+    singleValue: (base) => ({
+      ...base,
+      color: "#000",
+    }),
+    option: (base) => ({
+      ...base,
+      color: "#000",
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: "0 10px",
+    }),
+    dropdownIndicator: (base) => ({
+      ...base,
+      color: "#526D82",
+      paddingTop: "0px",
+    }),
+    indicatorSeparator: (base) => ({
+      display: "none",
+    }),
+    indicatorsContainer: (base) => ({
+      ...base,
+      alignItems: "center",
+    }),
+
+    menu: (base) => ({
+      ...base,
+      zIndex: 9999,
+      position: "absolute",
+      width: "89%",
+      maxHeight: "150px",
+      overflowY: "auto",
+    }),
+    menuList: (base) => ({
+      ...base,
+      maxHeight: "150px",
+      overflowY: "auto",
+      paddingRight: "10px",
+    }),
+  };
+
+  const genderOptions = [
+    { value: "Female", label: "Female" },
+    { value: "Male", label: "Male" },
+    { value: "Other", label: "Other" },
+  ];
 
   useEffect(() => {
     if (faculty) {
@@ -153,6 +221,7 @@ function FacultyView() {
   };
 
   const handleBlock = async (currentAction) => {
+    console.log(currentAction, "current action");
     console.log("Entered handleBlock");
 
     try {
@@ -180,7 +249,7 @@ function FacultyView() {
         Swal.fire({
           icon: "success",
           title: `Faculty ${
-            currentAction ? "blocked" : "unblocked"
+            currentAction === "block" ? "blocked" : "unblocked"
           } successfully`,
         }).then(() => {
           navigate("/institutionadding");
@@ -196,9 +265,7 @@ function FacultyView() {
       });
     }
   };
-  const handleBackClick = () => {
-    navigate("/institutionadding");
-  };
+
   return (
     <div>
       <Container className="faculty_view_container">
@@ -351,7 +418,10 @@ function FacultyView() {
                     name="first_name"
                     value={firstName}
                     readOnly={!isEditing}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Allow only alphabets and spaces
+                      setFirstName(value);
+                    }}
                     style={{ textTransform: "capitalize" }}
                   />
                 </div>
@@ -363,8 +433,11 @@ function FacultyView() {
                     name="last_name"
                     value={lastName}
                     readOnly={!isEditing}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Allow only alphabets and spaces
+                      setLastName(value);
+                    }}
                     style={{ textTransform: "capitalize" }}
-                    onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
                 <div className="faculty_view_group">
@@ -383,7 +456,7 @@ function FacultyView() {
                 <div className="faculty_view_group">
                   <label htmlFor="phone_no">Phone No</label>
                   <input
-                    type="text"
+                    type="number"
                     id="phone_no"
                     name="phone_no"
                     value={phoneNumber}
@@ -391,7 +464,8 @@ function FacultyView() {
                     onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </div>
-                <div className="faculty_view_group">
+
+                {/* <div className="faculty_view_group">
                   <label htmlFor="gender">Gender</label>
                   <input
                     type="text"
@@ -402,7 +476,34 @@ function FacultyView() {
                     style={{ textTransform: "capitalize" }}
                     onChange={(e) => setGender(e.target.value)}
                   />
+                </div> */}
+
+                <div className="faculty_view_group">
+                  <label htmlFor="gender">Gender</label>
+                  {isEditing ? (
+                    <Select
+                      options={genderOptions}
+                      styles={customStyles}
+                      value={genderOptions.find(
+                        (option) => option.value === gender
+                      )}
+                      onChange={setGender}
+                      placeholder=""
+                      style={{ textTransform: "capitalize" }}
+                      maxLength={10}
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      id="gender"
+                      name="gender"
+                      value={gender}
+                      readOnly
+                      style={{ textTransform: "capitalize" }}
+                    />
+                  )}
                 </div>
+
                 <div className="faculty_view_group">
                   <label htmlFor="employee_id">Employee Id</label>
                   <input
@@ -428,11 +529,10 @@ function FacultyView() {
             <div>
               <h6>Subject Fields</h6>
             </div>
-           
-                <Col >
-                
-                  <div className="subject_class_card">
-                  {/* {faculty.curriculam && faculty.curriculam.length > 0 ? (
+
+            <Col>
+              <div className="subject_class_card">
+                {/* {faculty.curriculam && faculty.curriculam.length > 0 ? (
               faculty.curriculam.map((subject, index) => (
                     <div key={index} className="subject_class_body">
                       <h6>{subject.subject_name}</h6>
@@ -462,10 +562,8 @@ function FacultyView() {
                 ) : (
                   <p>No subjects assigned</p>
                 )}
-
-                  </div>
-                </Col>
-            
+              </div>
+            </Col>
           </div>
         </Row>
       </Container>

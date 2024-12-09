@@ -29,6 +29,8 @@ function EvaluationScheduling() {
 
   const APIURL = useSelector((state) => state.APIURL.url || "");
 
+  const today = new Date().toISOString().split("T")[0]; 
+
   const admininfo = useSelector((state) => state.admininfo);
   const admin_id = admininfo.admininfo?.admin_id;
 
@@ -214,7 +216,7 @@ function EvaluationScheduling() {
       end_date: endDate,
       teacher: checkedItems.map((teacher) => teacher.label),
       admin: admin_id,
-      exam_date: selectedExamDate
+      exam_date: selectedExamDate,
     };
 
     console.log(data, "''ssssssss");
@@ -228,7 +230,7 @@ function EvaluationScheduling() {
           title: "Success",
           text: "Evaluation schedule added successfully!",
         });
-        // navigate("/aarnanavbar");
+        navigate("/aarnanavbar");
       } else {
         throw new Error(`Unexpected response status: ${response.status}`);
       }
@@ -305,9 +307,15 @@ function EvaluationScheduling() {
                   </label>
 
                   <Select
-                    
                     options={examDateOptions}
-                    styles={customStyles}
+                    styles={{
+                      ...customStyles,
+                      menu: (base) => ({
+                        ...base,
+                        maxHeight: "500px", // Maximum height of the dropdown menu
+                        // overflowY: "auto", // Enable vertical scroll
+                      }),
+                    }}
                     value={
                       examDateOptions.find(
                         (option) => option.value === selectedExamDate
@@ -320,8 +328,8 @@ function EvaluationScheduling() {
                     placeholder="Select Exam Date..."
                     isDisabled={examDates.length === 0}
                     isSearchable={false}
-                    
                     maxMenuHeight={150}
+                    
                   />
                 </div>
 
@@ -331,7 +339,7 @@ function EvaluationScheduling() {
                   </label>
 
                   <input
-                  value={term}
+                    value={term}
                     // onChange={(e) => setTerm(e.target.value)}
                     type="text"
                     style={{ textTransform: "capitalize" }}
@@ -358,7 +366,6 @@ function EvaluationScheduling() {
                     onChange={setSelectedSubject}
                     placeholder="Select Subject..."
                     isSearchable={false}
-                    
                   />
                 </div>
                 <div className="evaluation_group">
@@ -370,6 +377,7 @@ function EvaluationScheduling() {
                     type="date"
                     id="end_date"
                     name="end_date"
+                    min={today}
                   />
                   {/* <Select options={termOptions} styles={customStyles} value={term} onChange={setTerm} placeholder=''/> */}
                 </div>

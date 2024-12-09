@@ -123,7 +123,7 @@ function Customerdashboard() {
                               <Card.Title className='customer_dashboard_card_body_title' >{customer.institute_name}</Card.Title>
                             </div>
                             <div style={{ display: 'flex', justifyContent: "space-between" }}>
-                              <Card.Text className="customer_dashboard_card_body_text" >{customer.eduational_body}</Card.Text>
+                              <Card.Text className="customer_dashboard_card_body_text" >{customer.eduacational_body}</Card.Text>
                               <Card.Text className="customer_dashboard_card_body_text">{customer.institute_code}</Card.Text>
                             </div>
                           </Card.Body>

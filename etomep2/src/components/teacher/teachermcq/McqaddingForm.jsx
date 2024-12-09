@@ -13,7 +13,6 @@ function McqaddingForm() {
   const [teacherCode, setTeacherCode] = useState("");
   const [individualMark, setIndividualMark] = useState("");
 
-
   const navigate = useNavigate();
 
   const handlenavigate = () => {
@@ -23,14 +22,12 @@ function McqaddingForm() {
       topic,
       duration,
       outOfMarks,
-      teacherCode, 
+      teacherCode,
       individualMark,
     };
 
     navigate("/teachermcq", { state: formData });
   };
-
-  
 
   return (
     <div className="mcqform_teacher_test_adding">
@@ -78,10 +75,15 @@ function McqaddingForm() {
                   id="testoutofmarks"
                   name="testoutofmarks"
                   value={outOfMarks}
-                  onChange={(e) => setOutOfMarks(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    // Allow empty string or only update if value is a positive number
+                    if (value === "" || (!isNaN(value) && value > 0)) {
+                      setOutOfMarks(value);
+                    }
+                  }}
                 />
               </div>
-
               <div className="mcqform_teacher_testadd_group">
                 <label htmlFor="testoutofmarks">
                   Individual Mark <span style={{ color: "red" }}>*</span>
@@ -91,7 +93,13 @@ function McqaddingForm() {
                   id="testoutofmarks"
                   name="testoutofmarks"
                   value={individualMark}
-                  onChange={(e) => setIndividualMark(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    // Allow empty string or only update if value is a positive number
+                    if (value === "" || (!isNaN(value) && value > 0)) {
+                      setIndividualMark(value);
+                    }
+                  }}
                 />
               </div>
             </Col>
@@ -105,20 +113,33 @@ function McqaddingForm() {
                   id="testduration"
                   name="testduration"
                   value={duration}
-                  onChange={(e) => setDuration(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    // Allow empty string or value greater than zero
+                    if (value === "" || value > 0) {
+                      setDuration(value);
+                    }
+                  }}
                   placeholder="Duration in minutes"
                 />
               </div>
+
               <div className="mcqform_teacher_testadd_group">
                 <label htmlFor="examdate">
                   Negative Mark <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   type="number"
-                  id=""
+                  id="examdate"
                   name="examdate"
                   value={negativeMark}
-                  onChange={(e) => setNegativeMark(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    // Only update if value is greater than or equal to zero
+                    if (value >= 0) {
+                      setNegativeMark(value);
+                    }
+                  }}
                   placeholder=""
                 />
               </div>
@@ -134,10 +155,6 @@ function McqaddingForm() {
                   onChange={(e) => setTeacherCode(e.target.value)}
                 />
               </div>
-
-            
-
-
             </Col>
             <div className="mcqform_teacher_testadd_submit">
               <button onClick={handlenavigate} type="button">

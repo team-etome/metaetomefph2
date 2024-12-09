@@ -14,10 +14,11 @@ import { TbSection } from "react-icons/tb";
 import { PiDotsSix } from "react-icons/pi";
 import TeacherTextEditor from "../teachertexteditor/TeacherTextEditor";
 import "./teachermcqeditor.css";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function TeacherMcq() {
   const location = useLocation();
@@ -29,6 +30,13 @@ function TeacherMcq() {
   const APIURL = useSelector((state) => state.APIURL.url);
 
   console.log(formData, "formdat");
+
+  const outOfMarks = formData?.outOfMarks;
+  const individual_mark = formData?.individualMark;
+
+  const maxQuestions = Math.floor(outOfMarks / individual_mark);
+
+  console.log(outOfMarks, "asdasdsa");
 
   const navigate = useNavigate();
 
@@ -169,7 +177,21 @@ function TeacherMcq() {
   };
 
   const addQuestion = (sectionIndex) => {
-    const defaultOptionCount = 4; // Set the default number of options for each question
+    const totalQuestions = sections.reduce(
+      (acc, section) => acc + section.questions.length,
+      0
+    );
+
+    if (totalQuestions >= maxQuestions) {
+      Swal.fire({
+        icon: "error",
+        title: "Maximum Questions Limit Reached",
+        text: `You can add a maximum of ${maxQuestions} questions.`,
+      });
+      return;
+    }
+
+    const defaultOptionCount = 4;
     const generateOptions = () =>
       Array.from(
         { length: defaultOptionCount },
@@ -265,6 +287,31 @@ function TeacherMcq() {
     setSections(newSections);
   };
 
+  // const handleNumberOfOptionsChange = (
+  //   sectionIndex,
+  //   questionIndex,
+  //   numberOfOptions
+  // ) => {
+  //   setSections((prev) => {
+  //     const updatedSections = [...prev];
+  //     const question = updatedSections[sectionIndex].questions[questionIndex];
+  //     const currentOptions = question.options.slice(0, numberOfOptions);
+
+  //     while (currentOptions.length < numberOfOptions) {
+  //       currentOptions.push(
+  //         `Option ${String.fromCharCode(65 + currentOptions.length)}`
+  //       );
+  //     }
+
+  //     if (question.answerKey >= numberOfOptions) {
+  //       question.answerKey = null;
+  //     }
+
+  //     question.options = currentOptions;
+  //     return updatedSections;
+  //   });
+  // };
+
   const handleNumberOfOptionsChange = (
     sectionIndex,
     questionIndex,
@@ -273,19 +320,24 @@ function TeacherMcq() {
     setSections((prev) => {
       const updatedSections = [...prev];
       const question = updatedSections[sectionIndex].questions[questionIndex];
-      const currentOptions = question.options.slice(0, numberOfOptions);
 
+      // Slice the options to match the new number of options
+      let currentOptions = question.options.slice(0, numberOfOptions);
+
+      // If the options are fewer than the new number, add new options
       while (currentOptions.length < numberOfOptions) {
         currentOptions.push(
           `Option ${String.fromCharCode(65 + currentOptions.length)}`
         );
       }
 
+      // Reset the answerKey if it's no longer valid
       if (question.answerKey >= numberOfOptions) {
         question.answerKey = null; // Reset answerKey if invalid
       }
 
       question.options = currentOptions;
+
       return updatedSections;
     });
   };
@@ -383,9 +435,7 @@ function TeacherMcq() {
                         index={questionIndex}
                       >
                         {(provided) => (
-                          <div 
-                         
-                          className="mcq-question-container">
+                          <div className="mcq-question-container">
                             <div className="mock_question_header">
                               <div className="mock_question_number">
                                 <h6 style={{ fontSize: "20px" }}>
@@ -440,8 +490,9 @@ function TeacherMcq() {
                                         parseInt(e.target.value)
                                       )
                                     }
-                                    defaultValue={2}
+                                    value={question.options.length}
                                   >
+                                    <option>Select Options</option>
                                     <option value={2}>Add 2 options</option>
                                     <option value={3}>Add 3 options</option>
                                     <option value={4}>Add 4 options</option>

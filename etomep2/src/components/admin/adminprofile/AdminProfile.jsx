@@ -1,17 +1,87 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Col, Container, Row, Form } from "react-bootstrap";
 import { RiEdit2Fill } from "react-icons/ri";
 import "../adminprofile/adminprofile.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import axios from "axios";
+import Swal from "sweetalert2";
 function AdminProfile() {
   const location = useLocation();
-  const admininfo = location.state?.admininfo || useSelector((state) => state.admininfo?.admininfo);
+  const admininfo =
+    location.state?.admininfo ||
+    useSelector((state) => state.admininfo?.admininfo);
+  console.log(admininfo, "admin info");
   const navigate = useNavigate();
 
+  const [isPasswordEditable, setIsPasswordEditable] = useState(false);
+  const [password, setPassword] = useState();
+  const APIURL = useSelector((state) => state.APIURL.url);
+
+  const admin_id = admininfo?.admin_id;
+  console.log(admin_id, "admin id");
+
+  const passwordInputRef = useRef(null);
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+const handleChangePassword = () => {
+  setIsPasswordEditable((prev) => !prev); // Toggle password edit mode
+  if (!isPasswordEditable) {
+    // Focus on the password field when entering edit mode
+    setTimeout(() => {
+      passwordInputRef.current?.focus(); // Use the ref to focus the field
+    }, 0);
+  }
+};
+
+  const handleSavePassword = async () => {
+    // Check if the password is empty
+    if (!password || password === "*****") {
+      Swal.fire({
+        icon: "warning",
+        title: "Password is required",
+        text: "Please enter a new password before saving.",
+        showConfirmButton: true,
+      });
+      return; // Stop execution if password is empty
+    }
+
+    try {
+      const data = {
+        id: admin_id,
+        password: password,
+      };
+
+      const response = await axios.put(`${APIURL}/api/addadmin`, data);
+
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Password Updated",
+          // text: response.data.message,
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        setIsPasswordEditable(false); // Switch back to read-only mode
+      } else {
+        console.error("Unexpected response status:", response.status);
+      }
+    } catch (error) {
+      console.error("Error updating password:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to update password. Please try again.",
+        showConfirmButton: true,
+      });
+    }
+  };
+
   const handleBack = () => {
-    navigate('/admindashboard');
+    navigate("/admindashboard");
   };
 
   const handleLogout = () => {
@@ -22,14 +92,18 @@ function AdminProfile() {
     });
     localStorage.clear();
     sessionStorage.clear();
-    navigate('/');
+    navigate("/");
   };
 
   return (
     <div className="admin_profile">
       <div className="background_section top_section">
-        <button onClick={handleBack} className="back_button">&lt;</button>
-        <button onClick={handleLogout} className="logout_button">Logout</button>
+        <button onClick={handleBack} className="back_button">
+          &lt;
+        </button>
+        <button onClick={handleLogout} className="logout_button">
+          Logout
+        </button>
       </div>
       <div className="background_section bottom_section"></div>
       <Container className="content_container">
@@ -37,7 +111,13 @@ function AdminProfile() {
           <Col md={8}>
             <div className="profile_card">
               <div className="admin_profile_edit">
-                <button>Edit</button>
+                {isPasswordEditable ? (
+                  <button onClick={handleSavePassword}>Save Password</button>
+                ) : (
+                  <button onClick={handleChangePassword}>
+                    Change Password
+                  </button>
+                )}
                 <RiEdit2Fill className="admin_profile_edit_icon" />
               </div>
               <Form className="profile_form">
@@ -96,7 +176,9 @@ function AdminProfile() {
                 <Row>
                   <Col md={6}>
                     <div className="admin_profile_group">
-                      <label htmlFor="boardofeducation">Board Of Education</label>
+                      <label htmlFor="boardofeducation">
+                        Board Of Education
+                      </label>
                       <input
                         type="text"
                         id="boardofeducation"
@@ -104,6 +186,22 @@ function AdminProfile() {
                         readOnly
                         value={admininfo?.educational_body || ""}
                       />
+                    </div>
+                    <div className="admin_profile_group">
+                    <label htmlFor="boardofeducation">
+                        Password
+                      </label>
+                    <input
+                      type="text"
+                      id="password"
+                      name="password"
+                      placeholder="*****"
+                      readOnly={!isPasswordEditable}
+                      value={password}
+                      ref={passwordInputRef} 
+                      onChange={handlePasswordChange}
+                      className={isPasswordEditable ? "highlighted" : ""}
+                    />
                     </div>
                   </Col>
                   <Col md={6}>
@@ -114,7 +212,7 @@ function AdminProfile() {
                         id="phn_no"
                         name="phn_no"
                         readOnly
-                        value={admininfo?.number || ''}
+                        value={admininfo?.number || ""}
                       />
                     </div>
                   </Col>
@@ -125,7 +223,11 @@ function AdminProfile() {
         </Row>
       </Container>
       <div className="profile_image_container">
-        <img src={admininfo?.logo} alt="Institution Logo" className="profile_image" />
+        <img
+          src={admininfo?.logo}
+          alt="Institution Logo"
+          className="profile_image"
+        />
       </div>
     </div>
   );

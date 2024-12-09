@@ -222,7 +222,7 @@ function ViewInstitution() {
                         type="text"
                         className="form-control"
                         id="educationBoard"
-                        value={institution.eduational_body}
+                        value={institution.eduacational_body}
                         style={{ marginBottom: "50px" }}
                         readOnly
                       />
