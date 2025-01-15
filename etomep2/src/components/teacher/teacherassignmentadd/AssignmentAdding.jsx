@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-
 function AssignmentAdding() {
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -16,9 +15,7 @@ function AssignmentAdding() {
   const [mark, setMark] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-
-  console.log(title , duedate ,mark ,"stateeeeeez")
-
+  console.log(title, duedate, mark, "stateeeeeez");
 
   const APIURL = useSelector((state) => state.APIURL.url);
   const teachersubjectinfo = useSelector((state) => state.teachersubjectinfo);
@@ -51,6 +48,8 @@ function AssignmentAdding() {
       },
     });
   };
+
+
   const toTitleCase = (str) => {
     return str
       .toLowerCase()
@@ -59,13 +58,34 @@ function AssignmentAdding() {
       .join(" ");
   };
   const handleSubmit = async () => {
-    
     try {
+      // Collect missing fields
+      const missingFields = [];
+      if (!title) missingFields.push("Title");
+      if (!duedate) missingFields.push("Due Date");
+      if (!mark) missingFields.push("Mark");
+      if (!selectedFile) missingFields.push("PDF");
+      if (!teacher_id) missingFields.push("Teacher ID");
+      if (!class_name) missingFields.push("Class Name");
+      if (!division) missingFields.push("Division");
+      if (!subject) missingFields.push("Subject");
+
+      // If there are missing fields, show an alert and stop submission
+      if (missingFields.length > 0) {
+        Swal.fire({
+          icon: "error",
+          title: "Missing Information",
+          text: `Please fill in the following fields: ${missingFields.join(
+            ", "
+          )}`,
+        });
+        return; // Stop execution if validation fails
+      }
+
       setIsLoading(true); // Set loading state to true
 
       const formData = new FormData();
-      // formData.append("title", title);
-      formData.append("title", toTitleCase(title)); 
+      formData.append("title", toTitleCase(title));
       formData.append("due_date", duedate);
       formData.append("mark", mark);
       formData.append("pdf", selectedFile);
@@ -92,7 +112,7 @@ function AssignmentAdding() {
       });
 
       Swal.close(); // Close loading spinner
-      navigate('/teacherassignment')
+      navigate("/teacherassignment");
       // Show success message using Swal
       Swal.fire({
         icon: "success",
@@ -103,13 +123,16 @@ function AssignmentAdding() {
       console.log("Form data submitted successfully:", response.data);
     } catch (error) {
       console.error("Error submitting form data:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Submission Failed",
+        text: "There was an error submitting the form. Please try again.",
+      });
     } finally {
       setIsLoading(false); // Set loading state to false
     }
   };
-  const handleBackClick =() =>{
-    navigate('/teacherassignment')
-  }
+
   return (
     <div className="teacher_assignment_adding">
       <Container className="teacher_assignment_form">
@@ -119,7 +142,7 @@ function AssignmentAdding() {
           </Link> */}
           <h1 className="teacher_assignmentadd_title">Assignment</h1>
         </div>
-        <hr style={{ border: "1px solid #526D82"}} />
+        <hr style={{ border: "1px solid #526D82" }} />
         <div className="teacher_assignment_adding_scroll">
           <Row>
             <Col md={12}>
@@ -163,6 +186,7 @@ function AssignmentAdding() {
                   id="duedate"
                   name="duedate"
                   value={duedate}
+                  min={new Date().toISOString().split("T")[0]} // Set minimum date to today's date
                   onChange={(e) => setDueDate(e.target.value)}
                 />
               </div>
@@ -172,7 +196,7 @@ function AssignmentAdding() {
                   <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id="mark"
                   name="mark"
                   value={mark}

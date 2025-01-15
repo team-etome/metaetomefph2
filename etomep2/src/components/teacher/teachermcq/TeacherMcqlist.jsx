@@ -32,17 +32,22 @@ function TeacherMcqList() {
         .get(`${APIURL}/api/mcqanswer/${teacher_id}`)
         .then((response) => {
           console.log(response.data, "API Response");
-          // Assuming the API response separates tests by month
+          const thisMonthTests = (response.data.this_month_tests || []).sort(
+            (a, b) => new Date(b.exam_date) - new Date(a.exam_date)
+          );
+          const previousMonthTests = (response.data.previous_month_tests || []).sort(
+            (a, b) => new Date(b.exam_date) - new Date(a.exam_date)
+          );
+  
           setMcqData(response.data);
-          setThisMonthTests(response.data.this_month_tests || []);
-          setPreviousMonthTests(response.data.previous_month_tests || []);
+          setThisMonthTests(thisMonthTests);
+          setPreviousMonthTests(previousMonthTests);
         })
         .catch((error) => {
           console.error("Error fetching MCQ tests:", error);
         });
     }
   }, [teacher_id]);
-
   const handleAddClick = () => {
     navigate("/teachermcqadd");
   };

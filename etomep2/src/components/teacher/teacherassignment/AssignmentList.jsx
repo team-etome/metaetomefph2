@@ -46,7 +46,13 @@ function AssignmentList() {
             subject,
           },
         });
-        setAssignments(response.data.assignments);
+
+        // Sort assignments by `assigned_date` in descending order
+        const sortedAssignments = response.data.assignments.sort(
+          (a, b) => new Date(b.assigned_date) - new Date(a.assigned_date)
+        );
+
+        setAssignments(sortedAssignments);
       } catch (error) {
         console.error("Error fetching assignments:", error);
       }
@@ -63,7 +69,7 @@ function AssignmentList() {
 
     assignments.forEach((assignment) => {
       const assignedDate = new Date(assignment.assigned_date);
-      console.log(assignedDate,"assigned date fff")
+      console.log(assignedDate, "assigned date fff");
       if (
         assignedDate.getMonth() === currentMonth &&
         assignedDate.getFullYear() === currentYear
