@@ -29,6 +29,9 @@ function EvaluationScheduling() {
 
   const APIURL = useSelector((state) => state.APIURL.url || "");
 
+  
+  console.log(classNumber,"classss numberrrrrrrrrrrrrrrr")
+
   const today = new Date().toISOString().split("T")[0]; 
 
   const admininfo = useSelector((state) => state.admininfo);
@@ -140,7 +143,7 @@ function EvaluationScheduling() {
       ...base,
       zIndex: 9999,
       position: "absolute",
-      maxHeight: "150px", // Set the max height for the dropdown list
+      maxHeight: "300px", // Set the max height for the dropdown list
       overflowY: "auto", // Add vertical scrolling
     }),
     menuList: (base) => ({
@@ -287,6 +290,7 @@ function EvaluationScheduling() {
                     placeholder="Select Class..."
                     isSearchable={false}
                   />
+
                 </div>
                 {/* <div className="evaluation_group">
                   <label htmlFor="division">

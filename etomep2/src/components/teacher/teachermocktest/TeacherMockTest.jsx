@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import { IoChevronBackSharp } from "react-icons/io5";
 import "../teachermocktest/teachermocktest.css";
 import { useLocation } from "react-router-dom";
+import pLimit from "p-limit";
 
 function TeacherMockTest() {
   const [subsections, setSubsections] = useState([
@@ -32,12 +33,12 @@ function TeacherMockTest() {
   const [triggerExport, setTriggerExport] = useState(false);
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const [lastQuestionId, setLastQuestionId] = useState(1); 
+  const [lastQuestionId, setLastQuestionId] = useState(1);
   const navigate = useNavigate();
 
   const APIURL = useSelector((state) => state.APIURL.url);
 
-  console.log(APIURL,"api")
+  console.log(APIURL, "api");
   const teacher_subject = useSelector((state) => state?.teachersubjectinfo);
 
   console.log(teacher_subject, "teacher subject");
@@ -45,23 +46,21 @@ function TeacherMockTest() {
   const location = useLocation();
   const formData = location?.state || {};
 
-  const duration     =  formData.duration
-  const examDate     =  formData.examDate
-  const examName     =  formData.examName
-  const outOfMarks   =  formData.outOfMarks
-  const teacherCode  =  formData.teacherCode
-  const topic        =  formData.topic
+  const duration = formData.duration;
+  const examDate = formData.examDate;
+  const examName = formData.examName;
+  const outOfMarks = formData.outOfMarks;
+  const teacherCode = formData.teacherCode;
+  const topic = formData.topic;
 
-  const className    = teacher_subject.teachersubjectinfo?.class
-  const division     = teacher_subject.teachersubjectinfo?.division
-  const subject      = teacher_subject.teachersubjectinfo?.subject
-  const admin        = teacher_subject.teachersubjectinfo?.admin
+  const className = teacher_subject.teachersubjectinfo?.class;
+  const division = teacher_subject.teachersubjectinfo?.division;
+  const subject = teacher_subject.teachersubjectinfo?.subject;
+  const admin = teacher_subject.teachersubjectinfo?.admin;
 
+  console.log(admin, "adminnnnn");
 
-  console.log(admin,"adminnnnn")
-
-  console.log(outOfMarks,"outOfMarks")
-
+  console.log(outOfMarks, "outOfMarks");
 
   console.log(formData, "form dataaaaaa");
 
@@ -74,8 +73,6 @@ function TeacherMockTest() {
     }
   }, [triggerExport]);
 
-
-
   // const handlePointsChange = (subsectionIndex, questionIndex, event) => {
   //   const newSubsections = [...subsections];
   //   newSubsections[subsectionIndex].questions[questionIndex].points =
@@ -83,15 +80,14 @@ function TeacherMockTest() {
   //   setSubsections(newSubsections);
   // };
 
-
   const handlePointsChange = (subsectionIndex, questionIndex, event) => {
     const newPoints = parseInt(event.target.value, 10);
-  
+
     if (isNaN(newPoints) && event.target.value !== "") {
       // Allow the user to enter valid numbers, or leave empty (backspace).
       return;
     }
-  
+
     // If the user backspaces and the value becomes empty, we allow it.
     if (event.target.value === "") {
       const newSubsections = [...subsections];
@@ -99,18 +95,19 @@ function TeacherMockTest() {
       setSubsections(newSubsections);
       return;
     }
-  
+
     // Temporarily update the question's points value
     const newSubsections = [...subsections];
-    const currentQuestion = newSubsections[subsectionIndex].questions[questionIndex];
+    const currentQuestion =
+      newSubsections[subsectionIndex].questions[questionIndex];
     currentQuestion.points = newPoints;
-  
+
     // Calculate the total points for the subsection
     const totalPoints = newSubsections[subsectionIndex].questions.reduce(
       (sum, question) => sum + question.points,
       0
     );
-  
+
     if (totalPoints > outOfMarks) {
       // If total points exceed outOfMarks, reset the question's points to the previous value
       currentQuestion.points = parseInt(event.target.defaultValue, 10); // use default value if the new value exceeds max
@@ -124,8 +121,6 @@ function TeacherMockTest() {
       setSubsections(newSubsections); // Update state if within limit
     }
   };
-  
-
 
   const addQuestion = () => {
     const newSubsections = [...subsections];
@@ -226,59 +221,166 @@ function TeacherMockTest() {
     }
   };
 
+  // const exportQuestionsToJson = async () => {
+  //   try {
+  //     Swal.fire({
+  //       title: "Exporting...",
+  //       text: "Please wait while we export the questions.",
+  //       allowOutsideClick: false,
+  //       didOpen: () => {
+  //         Swal.showLoading();
+  //       },
+  //     });
+
+  //     console.log("Capturing questions and answers as images...");
+
+  //     const sectionsWithImages = await Promise.all(
+  //       subsections.map(async (subsection, sectionIndex) => {
+  //         const questionsWithImages = await Promise.all(
+  //           subsection.questions.map(async (q, questionIndex) => {
+  //             const questionElement =
+  //               questionRefs.current[sectionIndex]?.[
+  //                 questionIndex
+  //               ]?.getEditorRef();
+  //             const answerElement =
+  //               answerRefs.current[sectionIndex]?.[questionIndex]?.getEditorRef();
+
+  //             const questionImage = questionElement
+  //               ? await captureElement(questionElement)
+  //               : "Image not captured";
+  //             const answerImage = answerElement
+  //               ? await captureElement(answerElement)
+  //               : "Image not captured";
+
+  //             return {
+  //               question_number: q.id,
+  //               question: questionImage,
+  //               answer: answerImage,
+  //               marks: q.points,
+  //             };
+  //           })
+  //         );
+
+  //         return {
+  //           sectionName: subsection.name,
+  //           questions: questionsWithImages,
+  //         };
+  //       })
+  //     );
+
+  //     console.log("Captured data: ", sectionsWithImages);
+  //     setExportedData(sectionsWithImages);
+  //     await sendToBackend(sectionsWithImages,APIURL);
+  //   } catch (error) {
+  //     console.error("Error during export:", error);
+  //     Swal.close(); // Close the loader in case of any error
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Export failed!",
+  //       text: "There was an issue during the export process.",
+  //       showConfirmButton: true,
+  //     });
+  //   }
+  // };
+
   const exportQuestionsToJson = async () => {
+    const limit = pLimit(5); // Limit to 5 concurrent requests at a time
+
     try {
+      let totalQuestions = subsections.reduce(
+        (sum, subsection) => sum + subsection.questions.length,
+        0
+      );
+      let completedQuestions = 0;
+
       Swal.fire({
         title: "Exporting...",
-        text: "Please wait while we export the questions.",
+        html: '<div id="progress-bar-container" style="margin-top: 10px;"></div>',
         allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading();
+          const progressBarContainer = Swal.getHtmlContainer().querySelector(
+            "#progress-bar-container"
+          );
+          if (progressBarContainer) {
+            progressBarContainer.innerHTML = `
+              <div style="width: 100%; background-color: #e0e0e0; border-radius: 5px;">
+                <div id="progress-bar" style="width: 0%; background-color: #4caf50; height: 20px; border-radius: 5px;"></div>
+              </div>
+              <p id="progress-text" style="text-align: center; margin-top: 10px;">0 / ${totalQuestions} Questions Exported</p>
+            `;
+          }
         },
       });
-  
-      console.log("Capturing questions and answers as images...");
-  
+
+      const updateProgressBar = () => {
+        const progressBar =
+          Swal.getHtmlContainer().querySelector("#progress-bar");
+        const progressText =
+          Swal.getHtmlContainer().querySelector("#progress-text");
+        if (progressBar && progressText) {
+          const progressPercentage = Math.round(
+            (completedQuestions / totalQuestions) * 100
+          );
+          progressBar.style.width = `${progressPercentage}%`;
+          progressText.innerText = `${completedQuestions} / ${totalQuestions} Questions Exported`;
+        }
+      };
+
       const sectionsWithImages = await Promise.all(
         subsections.map(async (subsection, sectionIndex) => {
           const questionsWithImages = await Promise.all(
-            subsection.questions.map(async (q, questionIndex) => {
-              const questionElement =
-                questionRefs.current[sectionIndex]?.[
-                  questionIndex
-                ]?.getEditorRef();
-              const answerElement =
-                answerRefs.current[sectionIndex]?.[questionIndex]?.getEditorRef();
-  
-              const questionImage = questionElement
-                ? await captureElement(questionElement)
-                : "Image not captured";
-              const answerImage = answerElement
-                ? await captureElement(answerElement)
-                : "Image not captured";
-  
-              return {
-                question_number: q.id,
-                question: questionImage,
-                answer: answerImage,
-                marks: q.points,
-              };
+            subsection.questions.map((q, questionIndex) => {
+              return limit(async () => {
+                const questionElement =
+                  questionRefs.current[sectionIndex]?.[
+                    questionIndex
+                  ]?.getEditorRef();
+                const answerElement =
+                  answerRefs.current[sectionIndex]?.[
+                    questionIndex
+                  ]?.getEditorRef();
+
+                const questionImage = questionElement
+                  ? await captureElement(questionElement)
+                  : "Image not captured";
+                const answerImage = answerElement
+                  ? await captureElement(answerElement)
+                  : "Image not captured";
+
+                completedQuestions++;
+                updateProgressBar();
+
+                return {
+                  question_number: q.id,
+                  question: questionImage,
+                  answer: answerImage,
+                  marks: q.points,
+                };
+              });
             })
           );
-  
+
           return {
             sectionName: subsection.name,
             questions: questionsWithImages,
           };
         })
       );
-  
+
       console.log("Captured data: ", sectionsWithImages);
       setExportedData(sectionsWithImages);
-      await sendToBackend(sectionsWithImages,APIURL);
+      await sendToBackend(sectionsWithImages, APIURL);
+
+      Swal.fire({
+        icon: "success",
+        title: "Export successful!",
+        text: "The questions were successfully exported.",
+        showConfirmButton: true,
+      });
     } catch (error) {
       console.error("Error during export:", error);
-      Swal.close(); // Close the loader in case of any error
+      Swal.close();
       Swal.fire({
         icon: "error",
         title: "Export failed!",
@@ -288,26 +390,23 @@ function TeacherMockTest() {
     }
   };
 
-
-
-
-  const sendToBackend = async (sectionsWithImages,  APIURL) => {
+  const sendToBackend = async (sectionsWithImages, APIURL) => {
     const data = {
       // question_id: exam_id,
-      questions     : sectionsWithImages,
-      duration      : duration || "default_duration",
-      exam_date     : examDate || "default_examDate",
-      exam_name     : examName || "default_examName",
-      out_of_mark   : outOfMarks || "default_outOfMarks",
-      teacher_code  : teacherCode || "default_teacherCode",
-      topic         : topic || "default_topic",
-      class         : className ,
-      division      : division,
-      subject       : subject ,
-      admin         : admin,
-      test          : "Mock Test",
+      questions: sectionsWithImages,
+      duration: duration || "default_duration",
+      exam_date: examDate || "default_examDate",
+      exam_name: examName || "default_examName",
+      out_of_mark: outOfMarks || "default_outOfMarks",
+      teacher_code: teacherCode || "default_teacherCode",
+      topic: topic || "default_topic",
+      class: className,
+      division: division,
+      subject: subject,
+      admin: admin,
+      test: "Mock Test",
     };
-  
+
     try {
       const response = await axios.post(`${APIURL}/api/test`, data);
       console.log("Data successfully sent to the backend:", response.data);
@@ -334,7 +433,7 @@ function TeacherMockTest() {
     }
   };
 
-  const handleExport = () => { 
+  const handleExport = () => {
     setLoading(true); // Start loading as soon as export is initiated
     setTriggerExport(true); // Set the trigger to initiate the export
   };

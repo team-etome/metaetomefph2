@@ -30,63 +30,87 @@ function AssignmentEditor({ placeholder }) {
 
   const handleExport = async () => {
     try {
-      // Find the ck-editor__editable div where the actual content is stored
-      const editorContent = editorRef.current.editor.ui.view.editable.element;
+        // Check for missing fields
+        const missingFields = [];
 
-      if (!editorContent) {
-        throw new Error("CKEditor content not found");
-      }
+        if (!title) missingFields.push("Title");
+        if (!duedate) missingFields.push("Due Date");
+        if (!mark) missingFields.push("Mark");
+        if (!teacher_id) missingFields.push("Teacher");
+        if (!class_name) missingFields.push("Class Name");
+        if (!division) missingFields.push("Division");
+        if (!subject) missingFields.push("Subject");
+      
 
-      // Convert CKEditor content to Image
-      const dataUrl = await toPng(editorContent, { backgroundColor: null });
-      const blob = await (await fetch(dataUrl)).blob();
+        if (missingFields.length > 0) {
+            Swal.fire({
+                icon: "warning",
+                title: "Missing Fields",
+                text: `Please fill in the following fields: ${missingFields.join(", ")}`,
+            });
+            return;
+        }
 
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("due_date", duedate);
-      formData.append("mark", mark);
-      formData.append("teacher", teacher_id);
-      formData.append("class_name", class_name);
-      formData.append("division", division);
-      formData.append("subject", subject);
-      formData.append("image", blob, "content.png"); // Add the blob image as a file
+        // Find the ck-editor__editable div where the actual content is stored
+        const editorContent = editorRef.current.editor.ui.view.editable.element;
 
-      // Show loading spinner using Swal
-      Swal.fire({
-        title: "Submitting Form",
-        text: "Please wait...",
-        allowOutsideClick: false,
-        onBeforeOpen: () => {
-          Swal.showLoading();
-        },
-      });
+        if (!editorContent) {
+            throw new Error("CKEditor content not found");
+        }
 
-      const response = await axios.post(`${APIURL}/api/assignment`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+        // Convert CKEditor content to Image
+        const dataUrl = await toPng(editorContent, { backgroundColor: null });
+        const blob = await (await fetch(dataUrl)).blob();
 
-      Swal.close(); // Close loading spinner
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("due_date", duedate);
+        formData.append("mark", mark);
+        formData.append("teacher", teacher_id);
+        formData.append("class_name", class_name);
+        formData.append("division", division);
+        formData.append("subject", subject);
+        formData.append("image", blob, "content.png"); // Add the blob image as a file
 
-      // Show success message using Swal
-      Swal.fire({
-        icon: "success",
-        title: "Form Submitted Successfully!",
-        text: "Your assignment has been submitted.",
-      }).then(() => {
-        navigate("/teacherassignment");
-      });
-      console.log("Form data submitted successfully:", response.data);
+        // Show loading spinner using Swal
+        Swal.fire({
+            title: "Submitting Form",
+            text: "Please wait...",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+
+        const response = await axios.post(`${APIURL}/api/assignment`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+
+        Swal.close(); // Close loading spinner
+
+        // Show success message using Swal
+        Swal.fire({
+            icon: "success",
+            title: "Form Submitted Successfully!",
+            text: "Your assignment has been submitted.",
+        }).then(() => {
+            navigate("/teacherassignment");
+        });
+        console.log("Form data submitted successfully:", response.data);
     } catch (error) {
-      console.error("Error submitting form data:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Submission Failed",
-        text: "There was an error submitting your assignment.",
-      });
+        console.error("Error submitting form data:", error);
+        Swal.fire({
+            icon: "error",
+            title: "Submission Failed",
+            text: "There was an error submitting your assignment.",
+        });
     }
-  };
+};
+
+
+
   const handleBackClick = () => {
     navigate('/teacherassignmentadding')
   }
@@ -113,6 +137,7 @@ function AssignmentEditor({ placeholder }) {
               // ref={editorRef}
             >
               <CKEditor
+              sty
                 // editor={ClassicEditor}
                 ref={editorRef} // Set the ref directly on CKEditor
                 editor={ClassicEditor}
