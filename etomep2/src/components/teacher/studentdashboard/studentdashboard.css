@@ -97,7 +97,10 @@ height: 100vh;
 {
   /* background-color: red; */
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 5px;
+  margin-right: 25px;
   padding-bottom: 1.4vh;
 
 }
@@ -144,10 +147,13 @@ height: 100vh;
 
 }
 .teacher_student_search_input{
-width: 400px;
-height: 35px;
-border-radius: 17px;
-color: #767676;
+  width: 100%; /* Default width */
+  max-width: 350px; /* Maximum width */
+  height: 35px;
+  border-radius: 17px;
+  color: #767676;
+  padding-left: 30px;
+  transition: width 0.3s ease; /* Smooth resizing */
 }
 .teacher_student_search_input:focus {
   outline: none; /* Ensures that no outline appears on focus */
@@ -163,19 +169,21 @@ color: #767676;
 .student_search_filter_main{
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  flex-direction: row;
+  /* flex-direction: row;
   padding-left: 2vw;
-  padding-right: 0vw;
+  padding-right: 0vw; */
   /* padding-bottom: 20px; */
+  justify-content:flex-end;
+  align-items: center;
 }
 
 .student_search_filter {
   display: flex;
   align-items: center;
-  width: 400px;
-  justify-content: flex-end;
-  padding-right: 5vh;
+  width: 100%;
+  justify-content: center;
+  /* gap: 0px;
+  padding-right: 5vh; */
 }
 
 .student_search_filter .form-control {
@@ -397,7 +405,29 @@ color: #767676;
   border-radius: 0;
   }
   
-@media (max-width: 700px) {
+  @media (max-width: 1024px) {
+    .teacher_student_search_input {
+      max-width: 300px; /* Adjusted width for medium screens */
+    }
+  
+    .student_search_filter_main {
+      justify-content: center; /* Center align for medium screens */
+    }
+  }
+
+@media (max-width: 768px) {
+  .std_list {
+    flex-direction: column; /* Stack columns vertically */
+    align-items: center; /* Center-align stacked columns */
+    gap: 10px; /* Add space between stacked items */
+  }
+  .teacher_student_search_input {
+    max-width: 100%; /* Adjusted width for small screens */
+  }
+  .student_search_filter_main {
+    justify-content: center; /* Center align search on small screens */
+    width: 100%;
+  }
   .student_rectangle{
     width: 250px !important;
     height: 120px !important;
@@ -450,9 +480,9 @@ color: #767676;
   }
   .student_search_filter_main{
     /* border: 1px solid blue; */
-    width: 320px;
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content:center;
     /* margin-left: 100%; */
   }
   
@@ -477,4 +507,146 @@ color: #767676;
       text-overflow: ellipsis;
       width: 150px;
   }
+}
+
+
+
+
+.action_buttons_wrapper {
+  display: flex;
+  justify-content: flex-end; /* Align items to the left */
+  align-items: center; /* Aligns buttons vertically */
+  gap: 15px; /*Space between Button 1 and the wrapper */
+  /* position: relative; */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  /* margin-left: 0; No gap between button and parent  */
+  /* margin-right: 30px; */
+}
+
+.action_button_1 {
+  width: 100px; /* Slightly increased width */
+  height: 37px; /* Slightly reduced height */
+  /* padding: 6px 14px; Reduced height and width */
+  border: none;
+  border-radius: 6px;
+  background-color: #3D8D40;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.action_button_1:hover {
+  background-color: darkgreen;
+}
+
+.action_button_2_wrapper {
+  display: flex;
+  align-items: center; /* Align text and slider inline */
+  gap: 5px; /* Space between "Select All" and the slider */
+  /* position: relative; */
+}
+
+.select_all_text {
+  font-size: 14px; /* Adjust text size */
+  color: #333; /* Text color */
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px; /* Adjusted size */
+  height: 20px; /* Adjusted size */
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px; /* Slightly smaller than slider height */
+  width: 14px; /* Slightly smaller than slider width */
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .student_search_and_actions_wrapper {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center-align items */
+    gap: 20px;
+  }
+  .action_buttons_wrapper {
+    /* flex-direction: column; */
+    align-items:center;
+    justify-content: center;
+    /* gap: 20px; */
+    width: 100%;
+  }
+
+  .action_button_2_wrapper {
+    justify-content: flex-end; /* Align inline elements to the right */
+  }
+
+  .switch {
+    width: 35px;
+    height: 18px;
+  }
+
+  .slider:before {
+    height: 12px;
+    width: 12px;
+    transform: translateX(18px);
+  }
+  .action_button_1 {
+    width: 90%; /* Take most of the width */
+  }
+}
+
+
+.student_search_and_actions_col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.student_search_and_actions_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content:end;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  width: 100%;
+  gap: 20px; /* Space between search and actions */
+}
+.student_search_form {
+  flex: 1; /* Allow search to take available space */
+  display: flex;
+  justify-content:end;
+  max-width: 400px; /* Limit the maximum width */
 }

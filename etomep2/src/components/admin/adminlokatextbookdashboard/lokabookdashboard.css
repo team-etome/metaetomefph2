@@ -354,3 +354,43 @@ align-items: center;
     width: 80%;
   }
 }
+.book_search_input {
+  border: none; 
+  outline: none; 
+}
+
+.book_search_input.focused::placeholder {
+  color: #aaa; /* Placeholder text color when focused */
+}
+
+.book_searchbar_icon {
+  color: #999; /* Search icon styling */
+  transition: opacity 0.3s ease;
+}
+
+.inputgroup_search {
+  position: relative; /* Keeps elements aligned */
+}
+
+.book_searchbar_icon {
+  pointer-events: none; /* Icon is decorative, no user interaction */
+}
+.dropdown_tb {
+  width: 100%; /* Ensures the dropdown adapts to parent container */
+  max-width: 240px; /* Adjust based on design requirements */
+}
+
+.dropdown_tb_toggle {
+  display: inline-block;
+  width: 100%; /* Ensures it uses full available width */
+  text-align: left; /* Aligns text to the left */
+  white-space: nowrap; /* Prevents wrapping of text */
+  overflow: hidden; /* Hides overflowing text */
+  text-overflow: ellipsis; /* Adds ellipsis when text overflows */
+}
+
+@media (max-width: 768px) {
+  .dropdown_tb_toggle {
+    max-width: 160px; /* Reduce the max width for smaller screens */
+  }
+}

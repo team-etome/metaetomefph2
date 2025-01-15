@@ -262,3 +262,70 @@ height: 75vh;
       opacity: 0;
     }
   }
+
+
+
+
+
+ /* Vertical Pagination Alignment */
+.pagination-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+/* Pagination Button Styling */
+.pagination-btn {
+  border: none;
+  background-color:white;
+  color: black;
+  padding: 8px 12px;
+  font-family: 'Poppins', sans-serif; /* Using Poppins font */
+  font-size: 16px; /* Adjust text size */
+}
+
+/* pagination buttton for numeric */
+.pagination-numeric{
+  color: black;
+  font-size: 12px; /* Font size for the text */
+  padding: 5px 10px; /* Optional: Adjust padding for better appearance */
+  cursor: pointer;
+  border: 1px solid #526d82;
+  border-radius: 100%; /* Make the button fully rounded */
+  margin-bottom: 5px;
+}
+/* Active Page Button */
+.pagination-numeric.active {
+  background-color: #9DB2BF;  ; 
+  color: white !important; 
+  cursor: pointer;
+}
+
+/* Active Button State */
+.pagination-btn.active {
+  background-color: #526d82 !important; /* Background color */
+  color: white !important;
+  font-weight: bold;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Fixed Right Sidebar (Pagination Wrapper) */
+.pagination-wrapper {
+  position: fixed;
+  top: 35%;
+  right: 0px;
+  transform: translateY(-50%);
+  z-index: 50;
+  background: white; /* Optional: Background for contrast */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  width: 60px; /*Width for the fixed panel*/
+}
+
+/* Pagination item styling */
+.pagination-item {
+  font-family: 'Poppins', sans-serif;
+}

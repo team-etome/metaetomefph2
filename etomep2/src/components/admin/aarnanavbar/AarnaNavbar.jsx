@@ -36,7 +36,8 @@ localStorage.setItem("activeTab", activeTab);
                                 variant="underline"
                                 activeKey={activeTab}
                                 onSelect={(k) => setActiveTab(k)}
-                                className="ad_aarna_navbar_tab"
+                                // className="ad_aarna_navbar_tab"
+                                className="ad_aarna_navbar_tab d-flex flex-row overflow-auto"
                                 // style={{border:'1px solid green', width:'100%' }}
                             >
                                 {/* <Nav.Item>

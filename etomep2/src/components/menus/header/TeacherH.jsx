@@ -63,7 +63,7 @@ function TeacherH() {
               <img src={etomelogo} alt="etome logo" />
             </div>
           </Navbar.Brand>
-          <div className="tch_header_institution" style={{}}>
+          <div className="tch_header_institution">
             <div>
               {/* <h6 style={{ color: "#red", fontSize: "30px" }}>
                 {}

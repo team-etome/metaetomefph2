@@ -48,7 +48,6 @@ function TeacherRefrenceList() {
       const division = teacher_subject.teachersubjectinfo?.division;
       const subject = teacher_subject.teachersubjectinfo?.subject;
       const teacher_id = teacher.teacherinfo?.teacher_id;
-  
       try {
         const response = await axios.get(`${APIURL}/api/reference`, {
           params: {
@@ -58,18 +57,13 @@ function TeacherRefrenceList() {
             subject,
           },
         });
-  
-        // Sort references by date in descending order
-        const sortedReferences = response.data.reference.sort(
-          (a, b) => new Date(b.date) - new Date(a.date)
-        );
-  
-        setReferences(sortedReferences);
+        
+        setReferences(response.data.reference);
       } catch (error) {
         console.error("Error fetching references:", error);
       }
     };
-  
+
     fetchReferences();
   }, [APIURL, teacher, teacher_subject]);
 

@@ -240,8 +240,7 @@ function QuestionGenerator() {
       return "Element not captured";
     }
     try {
-
-      const canvas = await html2canvas(element, { scale: 2 });   // scale:4
+      const canvas = await html2canvas(element, { scale: 4 });
       const dataUrl = canvas.toDataURL("image/png");
       console.log("Capture successful", dataUrl);
       return dataUrl;
@@ -251,131 +250,62 @@ function QuestionGenerator() {
     }
   };
 
-  // const exportQuestionsToJson = async () => {
-  //   setIsExporting(true);
-  //   const totalQuestions = subsections.reduce(
-  //     (acc, section) => acc + section.questions.length,
-  //     0
-  //   );
-  //   let processedQuestions = 0;
-
-  //   console.log("Capturing questions and answers as images...");
-
-  //   const sectionsWithImages = await Promise.all(
-  //     subsections.map(async (subsection, sectionIndex) => {
-  //       const questionsWithImages = await Promise.all(
-  //         subsection.questions.map(async (q, questionIndex) => {
-  //           const questionElement =
-  //             questionRefs.current[sectionIndex]?.[
-  //               questionIndex
-  //             ]?.getEditorRef();
-  //           const answerElement =
-  //             answerRefs.current[sectionIndex]?.[questionIndex]?.getEditorRef();
-
-  //           console.log(questionElement, "question Element ");
-  //           console.log(answerElement, "answer Element "); 
-
-  //           const questionImage = questionElement
-  //             ? await captureElement(questionElement)
-  //             : "Image not captured";
-  //           const answerImage = answerElement
-  //             ? await captureElement(answerElement)
-  //             : "Image not captured";
-
-  //           processedQuestions++;
-  //           setProgress(
-  //             Math.floor((processedQuestions / totalQuestions) * 100)
-  //           ); 
-
-  //           return {
-  //             question_number: q.id,
-  //             question: questionImage,
-  //             answer: answerImage,
-  //             marks: q.points,
-  //           };
-  //         })
-  //       );
-
-  //       return {
-  //         sectionName: subsection.name,
-  //         questions: questionsWithImages,
-  //       };
-  //     })
-  //   );
-
-  //   setExportedData(sectionsWithImages);
-  //   console.log("dataaaaaassssss", JSON.stringify(sectionsWithImages, null, 2));
-  //   sendToBackend(sectionsWithImages);
-  // };
-
-
   const exportQuestionsToJson = async () => {
     setIsExporting(true);
-  
     const totalQuestions = subsections.reduce(
       (acc, section) => acc + section.questions.length,
       0
     );
     let processedQuestions = 0;
-    const formattedSections = [];
-  
-    console.log("Capturing questions and answers as images...");
-  
-    const processQuestion = async (subsectionIndex, questionIndex) => {
-      const questionElement =
-        questionRefs.current[subsectionIndex]?.[questionIndex]?.getEditorRef();
-      const answerElement =
-        answerRefs.current[subsectionIndex]?.[questionIndex]?.getEditorRef();
-  
-      console.log(questionElement, "question Element");
-      console.log(answerElement, "answer Element");
-  
-      const questionImage = questionElement
-        ? await captureElement(questionElement)
-        : "Image not captured";
-      const answerImage = answerElement
-        ? await captureElement(answerElement)
-        : "Image not captured";
-  
-      return {
-        question_number: subsections[subsectionIndex].questions[questionIndex].id,
-        question: questionImage,
-        answer: answerImage,
-        marks: subsections[subsectionIndex].questions[questionIndex].points,
-      };
-    };
-  
-    const processSubsection = async (sectionIndex) => {
-      const subsection = subsections[sectionIndex];
-      const questionsWithImages = [];
-  
-      for (let questionIndex = 0; questionIndex < subsection.questions.length; questionIndex++) {
-        const questionData = await processQuestion(sectionIndex, questionIndex);
-        questionsWithImages.push(questionData);
-  
-        // Update progress and yield control to avoid freezing the UI
-        processedQuestions++;
-        setProgress(Math.floor((processedQuestions / totalQuestions) * 100));
-        await new Promise((resolve) => setTimeout(resolve, 0));
-      }
-  
-      formattedSections.push({
-        sectionName: subsection.name,
-        questions: questionsWithImages,
-      });
-    };
-  
-    // Process subsections sequentially
-    for (let sectionIndex = 0; sectionIndex < subsections.length; sectionIndex++) {
-      await processSubsection(sectionIndex);
-    }
-  
-    setExportedData(formattedSections);
-    console.log("Exported Data:", JSON.stringify(formattedSections, null, 2));
-    sendToBackend(formattedSections);
-  };
 
-  
+    console.log("Capturing questions and answers as images...");
+
+    const sectionsWithImages = await Promise.all(
+      subsections.map(async (subsection, sectionIndex) => {
+        const questionsWithImages = await Promise.all(
+          subsection.questions.map(async (q, questionIndex) => {
+            const questionElement =
+              questionRefs.current[sectionIndex]?.[
+                questionIndex
+              ]?.getEditorRef();
+            const answerElement =
+              answerRefs.current[sectionIndex]?.[questionIndex]?.getEditorRef();
+
+            console.log(questionElement, "question Element "); // Debug log
+            console.log(answerElement, "answer Element "); // Debug log
+
+            const questionImage = questionElement
+              ? await captureElement(questionElement)
+              : "Image not captured";
+            const answerImage = answerElement
+              ? await captureElement(answerElement)
+              : "Image not captured";
+
+            processedQuestions++;
+            setProgress(
+              Math.floor((processedQuestions / totalQuestions) * 100)
+            ); // Update progress
+
+            return {
+              question_number: q.id,
+              question: questionImage,
+              answer: answerImage,
+              marks: q.points,
+            };
+          })
+        );
+
+        return {
+          sectionName: subsection.name,
+          questions: questionsWithImages,
+        };
+      })
+    );
+
+    setExportedData(sectionsWithImages);
+    console.log("dataaaaaassssss", JSON.stringify(sectionsWithImages, null, 2));
+    sendToBackend(sectionsWithImages);
+  };
 
   const sendToBackend = async (sectionsWithImages) => {
     const data = {

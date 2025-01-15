@@ -2,6 +2,7 @@
     position: relative;
     min-height: 100vh;
     overflow: hidden;
+    padding: 10px; /* Add padding for smaller screens */
   }
   
   .background_section {
@@ -61,6 +62,7 @@
     z-index: 2;
     padding-top: 20vh; 
     padding-left: 10vw;
+    padding-right: 10vw; /* Adjust for smaller screens */
   }
   
   .profile_card {
@@ -68,8 +70,10 @@
     border-radius: 10px;
     box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    height: 55vh;
+    height: auto;
+    max-height: 70vh;
     width: 100%;
+    overflow-y: auto; /* Add scrolling for overflow */
   }
   
   .profile_header {
@@ -81,7 +85,7 @@
   .admin_profile_edit{
     background: none;
     /* border: 1px solid purple; */
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     color: #d01313;
     display: flex;
@@ -107,34 +111,33 @@
   
   .profile_image_container {
     position: absolute;
-    top: 10%; 
-    left: 55%;
+    top: 10%;
+    left: 50%;
     transform: translateX(-50%);
-    z-index: 3; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 150px;
     height: 150px;
-    overflow: hidden;
     border-radius: 50%;
-    /* border: 2px solid #e09833; */
+    overflow: hidden;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 3;
   }
   
   .profile_image {
-    width: 145px;
-    height: 145px;
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: fill; /* Prevent stretching */
   }
+  /* Profile Image hover effect */
+.profile_image_container:hover .profile_image {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
   .profile_form{
     padding-top: 30px;
   }
   .profile_form {
     max-height: calc(70vh - 120px);
-    overflow-y: scroll; 
-    overflow-x: hidden; 
+    overflow:visible; 
 }
 
   .profile_form::-webkit-scrollbar {
@@ -158,13 +161,13 @@
     margin-top: 0px;
 }
 .admin_profile_group input{
-    width: 95%;
-    border: 0.5px solid #526D82;
-    border-radius: 8px;
-    height: 50px;
-    box-sizing: border-box;
-    outline: none;
-    padding: 1px 10px 12px 10px;
+  width: 100%; /* Full width for small screens */
+  border: 0.5px solid #526D82;
+  border-radius: 8px;
+  height: 50px;
+  padding: 10px;
+  box-sizing: border-box;
+  outline: none;
 }
 .admin_profile_group label{
     position: absolute;
@@ -202,7 +205,7 @@ display: none;
     }
     
 }
-@media (min-width: 710px) and (max-width:1024px) {
+@media (min-width: 768px) and (max-width:1024px) {
     .profile_card{
         width: 100%;
         height: auto;
@@ -211,14 +214,93 @@ display: none;
         padding-left: 0;
     }
     .profile_image_container {
-        top: 15%; 
-        left: 53%;
-      }
+      top: 10%; /* Adjust for tablets */
+      left: 45%;
+    }
+  
+    .profile_image {
+      width: 100%;
+      height: 100%;
+    }
+  
+    /* Refine container size and padding */
+    .profile_card {
+      width: 100%;
+      height: auto;
+    }
+    
+    .content_container {
+      padding-left: 0;
+    }
 }
-
 
 .highlighted {
   border: 2px solid #4CAF50;  /* Green border for editing mode */
-  background-color: #f0f8ff;  /* Light blue background */
+  background-color: #f0f8ff;
+  
   outline: none;  /* Remove default outline */
+}
+
+
+
+/* Small Screens */
+@media (max-width: 768px) {
+  .profile_card {
+    max-height: none; /* Allow auto height */
+    height: 83vh;
+  }
+
+  .profile_image_container {
+    top: 9%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+  }
+
+  .content_container {
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-top: 15vh; /* Adjust padding for smaller screens */
+  }
+
+  .admin_profile_group input {
+    height: 40px;
+    padding: 8px;
+  }
+  .profile_image {
+    width: 100%;
+    height: 100%;
+    object-fit: fill; /* Prevent stretching */
+  }
+}
+
+/* Very Small Screens (e.g., Mobile Phones) */
+@media (max-width: 480px) {
+  .profile_image_container {
+    top: 5%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+  }
+
+  .content_container {
+    padding: 10px; /* Reduce padding for very small screens */
+    padding-top: 10vh;
+  }
+
+  .profile_card {
+    padding: 15px; /* Reduce padding */
+    height: 85vh;
+    max-height: none;
+  }
+
+  .profile_image {
+    width: 100%;
+    height: 100%;
+    /* object-fit:fill; Prevent stretching */
+  }
+
+  .admin_profile_group input {
+    font-size: 14px; /* Adjust font size */
+  }
 }

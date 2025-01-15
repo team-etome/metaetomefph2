@@ -24,6 +24,7 @@ function LokaBookDashboard() {
   const admin_id = admininfo.admininfo?.admin_id;
   const [selectedPublisher, setSelectedPublisher] = useState("");
   const publisher_name = admininfo.admininfo?.publisher_name;
+  const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
 
   const [filteredTextbooks, setFilteredTextbooks] = useState([]);
@@ -84,35 +85,39 @@ function LokaBookDashboard() {
         <div className="textbook_search">
           <Row className="search_dropdwon_textbook">
             <div className="book_search_col">
-              <Dropdown className="dropdown_tb">
-                <Dropdown.Toggle
-                  variant="outline-secondary"
-                  id="dropdown-basic"
-                  className="dropdown_tb_toggle"
+            <Dropdown className="dropdown_tb">
+            <Dropdown.Toggle
+              variant="outline-secondary"
+              id="dropdown-basic"
+              className="dropdown_tb_toggle"
+            >
+              {selectedPublisher || "Select Publisher"}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {(publisher_name || []).map((publisher, index) => (
+                <Dropdown.Item
+                  key={index}
+                  onClick={() => handlePublisherSelect(publisher)}
                 >
-                  {selectedPublisher || "Select Publisher"}
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {(publisher_name || []).map((publisher, index) => (
-                    <Dropdown.Item
-                      key={index}
-                      onClick={() => handlePublisherSelect(publisher)}
-                    >
-                      {publisher}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
+                  {publisher}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
               <div className="separator"></div>
               <InputGroup className="inputgroup_search position-relative">
+                {!searchTerm && !isFocused && (
+                  <BsSearch className="position-absolute top-50 translate-middle-y end-0 book_searchbar_icon" />
+                )}
                 <FormControl
-                  className="ps-2 book_search_input"
-                  placeholder="Search by Class or Publisher name"
+                  className={`ps-2 book_search_input ${isFocused ? "focused" : ""}`}
+                  placeholder={isFocused ? "Search by Class or Publisher name" : "Search"}
                   aria-label="Search"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
                 />
-                <BsSearch className="position-absolute top-50 translate-middle-y end-0  book_searchbar_icon"/>
               </InputGroup>
             </div>
           </Row>

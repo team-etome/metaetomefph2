@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Col, Container, Row, Form } from "react-bootstrap";
+import { Col, Container, Row, Form,Pagination } from "react-bootstrap";
 import { IoIosAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import "../aarnaseating/seatdashboard.css";
@@ -10,12 +10,14 @@ import axios from "axios";
 function SeatingDashboard() {
   const [isActive, setIsActive] = useState(false);
   const [seatingData, setSeatingData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12; // Define how many items per page for pagination
   const APIURL = useSelector((state) => state.APIURL.url);
   const admininfo = useSelector((state) => state.admininfo);
 
-  console.log(seatingData, "seating dataaaaaaa");
 
-  const [searchTerm, setSearchTerm] = useState("");
+  console.log(seatingData, "seating dataaaaaaa");
 
   const filteredSeatingData = seatingData.filter((item) => {
     return item.classes
@@ -45,7 +47,7 @@ function SeatingDashboard() {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [APIURL, admin_id]);
 
   const handleButtonClick = () => {
     navigate("/seatassigning");
@@ -54,6 +56,18 @@ function SeatingDashboard() {
   const handleclick = (item) => {
     navigate("/seatview", { state: { seatingData: item } });
   };
+
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredSeatingData.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+  const totalPages = Math.ceil(filteredSeatingData.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
@@ -81,8 +95,8 @@ function SeatingDashboard() {
           </div>
         </Row>
         <Row>
-          {filteredSeatingData.length > 0 ? (
-            filteredSeatingData.map((item, index) => (
+          {currentItems.length > 0 ? (
+              currentItems.map((item, index) => (
               <Col
                 lg={3}
                 md={6}
@@ -110,6 +124,38 @@ function SeatingDashboard() {
             </div>
           )}
         </Row>
+        {/* Pagination Controls */}
+        <div className="pagination-wrapper">
+          <div className="d-flex flex-column align-items-center">
+            <button
+              className="pagination-btn mb-2"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+            <Pagination className="d-flex flex-column">
+              {[...Array(totalPages).keys()].map((_, index) => (
+                <div
+                  className={`pagination-numeric ${
+                    currentPage === index + 1 ? "active" : ""
+                  }`}
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </div>
+              ))}
+            </Pagination>
+            <button
+              className="pagination-btn mt-2"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </div>
       </Container>
       <div className="seat_adding_button">
         <button

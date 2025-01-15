@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Col, Container, Row, Button, Form, Spinner } from "react-bootstrap";
+import { Col, Container, Row, Button, Form, Spinner,Modal } from "react-bootstrap";
 import { IoIosAdd, IoMdDownload, IoMdAdd } from "react-icons/io";
 import { MdUpload, MdOutlineCalendarMonth } from "react-icons/md";
 import studentexcel from "../../utils/studentexcel";
@@ -26,11 +26,18 @@ function StudentDashboard() {
   const teacher = useSelector((state) => state.teacherinfo);
   const teacher_id = teacher.teacherinfo?.teacher_id;
 
+  const [selectAll, setSelectAll] = useState(false); // State for "Select All"
+
   const [search, setSearch] = useState("");
   const [filteredStudentList, setFilteredStudentList] = useState([]);
+  const [showModal, setShowModal] = useState(false); // Modal state
+  const [selectedDivision, setSelectedDivision] = useState("Division A"); // Selected division in modal
 
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+  const toggleSelectAll = () => {
+    setSelectAll(!selectAll); // Toggle "Select All" state
+  };
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -174,42 +181,79 @@ function StudentDashboard() {
     setSearch(event.target.value);
   };
 
+  useEffect(() => {
+    // Fetch student data
+    const exampleData = [
+      { id: 1, student_name: "Dilna Marry Jhone", roll_no: "316587" },
+      { id: 2, student_name: "Student Two", roll_no: "316588" },
+      { id: 3, student_name: "Student Three", roll_no: "316589" },
+    ];
+    setStudentList(exampleData);
+    setFilteredStudentList(exampleData);
+  }, []);
+
+  const handlePromoteClick = () => {
+    setShowModal(true); // Open modal
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false); // Close modal
+  };
+
+  const handleDivisionChange = (event) => {
+    setSelectedDivision(event.target.value); // Update division
+  };
+
+  const handleSubmit = () => {
+    console.log("Promoting students to:", selectedDivision);
+    setShowModal(false); // Close modal on submit
+  };
+  // style={{border:"2px solid red"}}
   return (
     <div className="teacher_student_dashboard">
       <Container fluid>
         <Row
           style={{ paddingLeft: "2vw", paddingBottom: "1vw" }}
-          className="std_list"
+          className="std_list" 
         >
-          <Col md={6} className="class_number">
+          <Col md={4} className="class_number">
             <h4>
               Class: {standard} {division}
             </h4>
-          </Col>
-          <Col md={6} className="student_search_col">
-            <div className="student_search_filter_main">
-              <div className="student_search_filter ">
-                <Form className="d-flex form_search">
-                  <div className="position-relative">
-                    {/* <BsSearch className="position-absolute top-50 translate-middle-y ms-2 student_search_icon" /> */}
-                    <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 student_search_icon ${searchQuery ? 'hidden' : ''}`} />
-                    <Form.Control
-                      type="search"
-                      placeholder="Search"
-                      className="ps-6 teacher_student_search_input"
-                      aria-label="Search"
-
-                      value={search}
-                      onChange={handleSearchChange}
-
-                    />
-                  </div>
-                </Form>
+          </Col> 
+          <Col md={8} className="student_search_and_actions_col">
+            <div className="student_search_and_actions_wrapper">
+              <Form className="d-flex student_search_form">
+                <div className="position-relative">
+                  <BsSearch
+                    className={`position-absolute top-50 translate-middle-y ms-2 student_search_icon ${
+                      searchQuery ? "hidden" : ""
+                    }`}
+                  />
+                  <Form.Control
+                    type="search"
+                    placeholder="Search"
+                    className="teacher_student_search_input"
+                    aria-label="Search"
+                    value={search}
+                    onChange={handleSearchChange}
+                  />
+                </div>
+              </Form>
+              <div className="action_buttons_wrapper">
+                <button className="action_button_1">Promote</button>
+                <div className="action_button_2_wrapper">
+                  <div className="select_all_text">Select All</div>
+                  <label className="switch">
+                    <input type="checkbox" />
+                    <span className="slider round"></span>
+                  </label>
+                </div>
               </div>
             </div>
           </Col>
         </Row>
-        <Row className="teacher_studentdashboard_container">
+        <Row className="teacher_studentdashboard_container" >
           {filteredStudentList.map((item, index) => (
             <Col lg={3} md={6} sm={6} xs={12} key={index}>
               <div

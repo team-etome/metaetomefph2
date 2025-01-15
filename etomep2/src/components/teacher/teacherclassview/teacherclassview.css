@@ -103,29 +103,42 @@
 
     .scrollable-container {
       display: flex;
-      overflow-x: hidden; 
       white-space: nowrap; 
       -webkit-overflow-scrolling: touch;
-      justify-content: space-around;
-      padding-top: 2%;
+      /* justify-content: space-around; */
+      padding: 10px;
       /* padding: 1px; */
-      padding-left: 12px;
+      padding-left: 20px;
       height: 18%;
       flex-grow: 1; 
       /* command */
       flex-wrap: nowrap; 
       overflow-x: auto;
       -ms-overflow-style: none;
-      scrollbar-width: none; 
+      /* scrollbar-width: thin;  */
+      gap: 15px; /* Space between items */
       padding-bottom: 60px;
      
+    }
+
+    .scrollable-container::-webkit-scrollbar {
+      height: 6px; /* Height of the scrollbar */
+    }
+    
+    .scrollable-container::-webkit-scrollbar-thumb {
+      background: #526D82; /* Scrollbar thumb color */
+      border-radius: 10px; /* Round scrollbar edges */
+    }
+    
+    .scrollable-container::-webkit-scrollbar-track {
+      background: #d3d3d3; /* Scrollbar track color */
     }
     
     .tch_vw_snd_rw {
       display: inline-block;
       width: 260px;
       height: 60px;
-      /* margin-right: 10px; */
+      margin-right: 10px;
       border-radius: 8px;
       /* border: 1px solid #526D82; */
       background-color: #ffffff;
@@ -144,9 +157,8 @@
     .tch_vw_sndrw_hd{
       color:#526D82;
       font-weight: 400;
-     font-size: 24px;
-     
-     margin-left: 20px;
+      font-size: 24px;
+      /* margin-left: 80px; */
     }
     .tch_vw_card_container{
       display: grid;
@@ -224,9 +236,10 @@
     .tch_clsvw_search_filter {
       margin-right: 40px;
     }
-    .tch_vw_card_container{
-      grid-template-columns: repeat(2, 1fr); /* Two cards per row on mobile */
-    }
+    /* .tch_vw_card_container{
+      grid-template-columns: repeat(1, 1fr); Two cards per row on mobile
+      margin-left: 50px;
+    } */
     .tch_cls_view_search{
       /* margin-left: 75vw; */
       /* padding-right: 0vw; */
@@ -247,14 +260,26 @@
       border-radius: 17px;
       color: #767676;
       }
-      .scrollable-container {
-        padding-top: 8%;
-        gap: 15px;
+    .scrollable-container {
+        overflow-x: auto; /* Ensure scrolling is enabled */
+        gap: 10px;
       }
-      .tch_vw_snd_rw {
+    .tch_vw_snd_rw {
         width: 220px;
         height: 60px;
 
       }
   }
   
+
+  @media (max-width:476px) {
+     .tch_vw_card_container{
+      /* grid-template-columns: repeat(1, 1fr); */
+      /* justify-content: center; */
+      /* align-items: center; */
+      margin-left: 20%;
+    }
+    .tch_vw_sndrw_hd{
+      margin-left: 24%;
+    }
+  }

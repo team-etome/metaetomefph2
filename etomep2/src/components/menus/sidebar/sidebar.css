@@ -124,12 +124,13 @@
   position: fixed;
   top: 0;
   left: -100%;
-  width: 80%;
+  width: 50%; /* manage the width of sidebar */
   background-color: white;
   box-shadow: 2px 0 5px rgba(157, 157, 157, 0.5);
   transition: left 0.3s ease;
   z-index: 9999;
   height: 100vh;
+  overflow-y: auto; /* Allows scrolling for large menus */
 
 }
 
@@ -140,8 +141,7 @@
 .mobile_sidebar_header {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  padding-top: 28px;
+  padding: 15px;/* Add more padding for a clean layout */
 
 }
 
@@ -150,6 +150,7 @@
   justify-content: flex-start;
   align-items: center;
   padding-left: 40px;
+  width: 100%; /* Ensures the column occupies full width */
 }
 
 .mob_icon_container_div {
@@ -193,6 +194,7 @@
 }
 
 .mob_pofile_container_div {
+  margin-top: 20px; /* Space before profile section */
   border-radius: 50%;
   width: 48px;
   height: 48px;

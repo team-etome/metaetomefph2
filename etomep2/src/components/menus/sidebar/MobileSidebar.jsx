@@ -314,7 +314,7 @@ function MobileSidebar({ show, onClose }) {
           onClick={onClose}
           style={{ width: "30px", height: "30px" }}
         />
-        <FiBell style={{ width: "20px", height: "20px", marginTop: "5px" }} />
+        {/* <FiBell style={{ width: "20px", height: "20px", marginTop: "5px" }} /> */}
       </div>
       <Row
         style={{
@@ -325,7 +325,7 @@ function MobileSidebar({ show, onClose }) {
           width: "100%",
           alignItems: "center",
           alignContent: "center",
-          marginTop: "15%",
+          marginTop: "10%",
         }}
       >
         {teacher_token ? (
@@ -483,17 +483,17 @@ function MobileSidebar({ show, onClose }) {
                 </div>
               </Link>
             </Col>
-            <Col
+            {/* <Col
               className={`mob_menu_item_col ${
                 activeItem === "eyora" ? "active" : ""
               }`}
               onClick={() => handleMenuItemClick("eyora")}
             >
-              {/* <div className="mob_icon_container_div">
+              <div className="mob_icon_container_div">
                 <TbScanEye className="mob_icon_img" />
                 <span className="mob_icon_text">Eyora</span>
-              </div> */}
-            </Col>
+              </div>
+            </Col> */}
             <Col
               className={`mob_menu_item_col ${
                 activeItem === "settings" ? "active" : ""

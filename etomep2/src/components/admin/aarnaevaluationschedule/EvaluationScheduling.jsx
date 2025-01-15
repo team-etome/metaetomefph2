@@ -29,9 +29,6 @@ function EvaluationScheduling() {
 
   const APIURL = useSelector((state) => state.APIURL.url || "");
 
-  
-  console.log(classNumber,"classss numberrrrrrrrrrrrrrrr")
-
   const today = new Date().toISOString().split("T")[0]; 
 
   const admininfo = useSelector((state) => state.admininfo);
@@ -143,7 +140,7 @@ function EvaluationScheduling() {
       ...base,
       zIndex: 9999,
       position: "absolute",
-      maxHeight: "300px", // Set the max height for the dropdown list
+      maxHeight: "150px", // Set the max height for the dropdown list
       overflowY: "auto", // Add vertical scrolling
     }),
     menuList: (base) => ({
@@ -284,13 +281,25 @@ function EvaluationScheduling() {
 
                   <Select
                     options={classNumber}
-                    styles={customStyles}
+                    styles={{
+                      ...customStyles,
+                      menu: (base) => ({
+                        ...base,
+                        maxHeight: "200px", // Maximum height of the dropdown menu
+                        overflowY: "auto",
+                        zIndex: 9999, // Enable vertical scroll
+                      }),
+                      menuList: (base) => ({
+                        ...base,
+                        maxHeight: "200px", // Maximum height of individual items
+                        overflowY: "auto",
+                      }),
+                    }}
                     value={selectedClass}
                     onChange={setSelectedClass}
                     placeholder="Select Class..."
                     isSearchable={false}
                   />
-
                 </div>
                 {/* <div className="evaluation_group">
                   <label htmlFor="division">
@@ -316,8 +325,14 @@ function EvaluationScheduling() {
                       ...customStyles,
                       menu: (base) => ({
                         ...base,
-                        maxHeight: "500px", // Maximum height of the dropdown menu
-                        // overflowY: "auto", // Enable vertical scroll
+                        maxHeight: "200px", // Maximum height of the dropdown menu
+                        overflowY: "auto",
+                        zIndex: 9999, // Enable vertical scroll
+                      }),
+                      menuList: (base) => ({
+                        ...base,
+                        maxHeight: "200px", // Maximum height of individual items
+                        overflowY: "auto",
                       }),
                     }}
                     value={
@@ -365,7 +380,20 @@ function EvaluationScheduling() {
                   {/* <input type="text" id='students_bench' name='students_bench' /> */}
                   <Select
                     options={subject}
-                    styles={customStyles}
+                    styles={{
+                      ...customStyles,
+                      menu: (base) => ({
+                        ...base,
+                        maxHeight: "200px", // Maximum height of the dropdown menu
+                        overflowY: "auto",
+                        zIndex: 9999, // Enable vertical scroll
+                      }),
+                      menuList: (base) => ({
+                        ...base,
+                        maxHeight: "200px", // Maximum height of individual items
+                        overflowY: "auto",
+                      }),
+                    }}
                     value={selectedSubject}
                     onChange={setSelectedSubject}
                     placeholder="Select Subject..."

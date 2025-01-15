@@ -31,7 +31,7 @@ function McqaddingForm() {
 
   return (
     <div className="mcqform_teacher_test_adding">
-      <Container className="mcqform_teacher_testadd_form">
+      <Container className="mcqform_teacher_testadd_form" >
         <div className="mcqform_teacher_test_add_header">
           <h1 className="mcqform_teacher_testadd_title">
             Multiple Choices Question
@@ -155,14 +155,39 @@ function McqaddingForm() {
                   onChange={(e) => setTeacherCode(e.target.value)}
                 />
               </div>
+              {/* <Col md={6}> */}
+                <div className="upload-section">
+                  <div className="upload-buttons">
+                    <button
+                      className="upload-btn"
+                      style={{
+                        backgroundColor: "#526D82",
+                        color: "#fff",
+                      }}
+                    >
+                      Upload PDF
+                    </button>
+                    <button onClick={handlenavigate} className="create-btn">
+                      Create Manually
+                    </button>
+                  </div>
+                  <div className="drop-area">
+                    <p>Drop file anywhere to upload</p>
+                    <p>or</p>
+                    <input
+                      type="file"
+                      className="select-file-input"
+                      accept="application/pdf"
+                    />
+                  </div>
+                </div>
+              {/* </Col> */}
             </Col>
-            <div className="mcqform_teacher_testadd_submit">
-              <button onClick={handlenavigate} type="button">
-                Create Question
-              </button>
-            </div>
           </Row>
         </div>
+        <div className="teacher_assignadd_submit">
+                    <button type="submit">Submit</button>
+                  </div>
       </Container>
     </div>
   );

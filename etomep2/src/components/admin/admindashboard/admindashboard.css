@@ -42,9 +42,10 @@
   justify-content: center;
   padding: 0px 20px 0 20px;
 }
-
+.notes_section{
+  margin-left: 0px !important;
+}
 .notes-container {
- 
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 12px;
@@ -149,12 +150,17 @@
 }
 
 .txt_form {
-  width: 88%;
-  padding-top: 20px;
+  flex-grow: 1; /* Takes remaining space */
+  height: 50px; /* Sets uniform height */
+  padding: 10px;
+  font-size: 16px; /* Adjust font size if necessary */
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  resize: none; /* Prevent resizing */
 }
 
 .dash_noteadd_btn {
-  width: 10%;
+  /* width: 10%;
   border-radius: 2px;
   height: 60px;
   border: 1px solid #657d8f;
@@ -162,7 +168,18 @@
   color: #526D82;
   border-radius: 6px;
   font-size: 26PX;
-  margin-top: 8px;
+  margin-top: 8px; */
+  width: 50px; /* Makes the button a square */
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid #657d8f;
+  background-color: transparent;
+  color: #526D82;
+  font-size: 24px; /* Adjust as needed */
+  margin-left: 10px;
 }
 
 .dash_noteadd_btn:hover {
@@ -360,6 +377,25 @@
   
     padding: 0px 00px 0 0px;
   }
+  .admin_dash_cl_1 {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center; 
+  }
+  .dash_grt_headr{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center; 
+  }
+
+  .dsh_clnd,
+  .rw_cl_nt {
+    width: 100%;
+    margin-top: 25px;
+  }
+
 }
 
 
@@ -380,4 +416,9 @@
 .note_actions {
   display: flex;
   gap: 8px;
+}
+@media (max-width: 768px) {
+  .dash_noteadd_btn{
+    margin-left:8px ;
+  }
 }

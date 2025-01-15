@@ -87,7 +87,7 @@ function TeacherClassView() {
               </div>
             </Col> */}
           </Row>
-          <div
+          {/* <div
             className="scrollable-container"
             ref={scrollContainerRef}
             onTouchStart={handleTouchStart}
@@ -117,6 +117,43 @@ function TeacherClassView() {
               </div>
             </Link>
            
+
+            <Link to="/teacherresultview" className="no-underline-link">
+              <div className="tch_vw_snd_rw">
+                <h1 className="tch_vw_scrll_hding">Result</h1>
+              </div>
+            </Link>
+          </div> */}
+          <div
+            className="scrollable-container"
+            ref={scrollContainerRef}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <Link to="/teacherassignment" className="no-underline-link">
+              <div className="tch_vw_snd_rw">
+                <h1 className="tch_vw_scrll_hding">Assignment</h1>
+              </div>
+            </Link>
+
+            <Link to="/teacherrefrencelist" className="no-underline-link">
+              <div className="tch_vw_snd_rw">
+                <h1 className="tch_vw_scrll_hding">Reference</h1>
+              </div>
+            </Link>
+
+            <Link to="/teachertestlist" className="no-underline-link">
+              <div className="tch_vw_snd_rw">
+                <h1 className="tch_vw_scrll_hding">Mock Tests</h1>
+              </div>
+            </Link>
+
+            <Link to="/teachermcqlist" className="no-underline-link">
+              <div className="tch_vw_snd_rw">
+                <h1 className="tch_vw_scrll_hding">MCQ</h1>
+              </div>
+            </Link>
 
             <Link to="/teacherresultview" className="no-underline-link">
               <div className="tch_vw_snd_rw">

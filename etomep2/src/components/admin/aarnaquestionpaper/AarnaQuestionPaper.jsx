@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Col, Container, Row, Form } from "react-bootstrap";
+import { Col, Container, Row, Form, Pagination } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
 import "../aarnaquestionpaper/aarnaquestionpaper.css";
 import { IoIosAdd } from "react-icons/io";
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 function AarnaQuestionPaper() {
   const [isActive, setIsActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const APIURL = useSelector((state) => state.APIURL.url);
   const [qpaperListData, setQpaperListData] = useState([]);
 
@@ -19,6 +20,7 @@ function AarnaQuestionPaper() {
   console.log(qpaperListData, "qpaper dataaaaaa");
 
   const navigate = useNavigate();
+  const itemsPerPage = 12; // Define how many items per page for pagination
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,20 +64,37 @@ function AarnaQuestionPaper() {
   //   );
   // });
 
+  // const filteredQpaperListData = qpaperListData.filter((item) => {
+  //   // Remove spaces from class_name, division, and subject_name and combine them into one string
+  //   const combined = (
+  //     item.class_name.replace(/\s+/g, "") + item.division.replace(/\s+/g, "")
+  //   ).toLowerCase();
+
+  //   // Remove spaces from searchTerm
+  //   const searchTermWithoutSpaces = searchTerm
+  //     .replace(/\s+/g, "")
+  //     .toLowerCase();
+
+  //   // Check if the search term (without spaces) is found in the combined string
+  //   return combined.includes(searchTermWithoutSpaces);
+  // });
+
   const filteredQpaperListData = qpaperListData.filter((item) => {
-    // Remove spaces from class_name, division, and subject_name and combine them into one string
     const combined = (
-      item.class_name.replace(/\s+/g, "") + item.division.replace(/\s+/g, "")
+      item.class_name.replace(/\s+/g, "") +
+      item.division.replace(/\s+/g, "") +
+      item.subject_name.replace(/\s+/g, "")
     ).toLowerCase();
-
-    // Remove spaces from searchTerm
-    const searchTermWithoutSpaces = searchTerm
-      .replace(/\s+/g, "")
-      .toLowerCase();
-
-    // Check if the search term (without spaces) is found in the combined string
-    return combined.includes(searchTermWithoutSpaces);
+    return combined.includes(searchTerm.replace(/\s+/g, "").toLowerCase());
   });
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredQpaperListData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredQpaperListData.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="questionpaper_dashboard">
@@ -97,7 +116,7 @@ function AarnaQuestionPaper() {
             </Form>
           </div>
         </Row>
-        <Row>
+        {/* <Row>
           {filteredQpaperListData.length > 0 ? (
             filteredQpaperListData.map((item, index) => (
               <Col
@@ -141,7 +160,78 @@ function AarnaQuestionPaper() {
               <h3>No exams scheduled</h3>
             </div>
           )}
+        </Row> */}
+        {/* List question papers */}
+        <Row>
+          {currentItems.length > 0 ? (
+            currentItems.map((item, index) => (
+              <Col lg={3} md={6} sm={12} xs={12} key={index} className="qpaper_list">
+                <div
+                  onClick={() => handleclick(item)}
+                  className="border border-white qpaper_rectangle"
+                >
+                  <div className="qpaper_faculty_name">{item.teacher_name}</div>
+                  <div className="qpaper_term_date">
+                    <div className="qpaper_term">{item.exam_name}</div>
+                    <div className="qpaper_date">{item.exam_date}</div>
+                  </div>
+                  <div className="qpaper_subject">
+                    {item.class_name} {item.division} - {item.subject_name}
+                  </div>
+                  <div
+                    className={`status-text ${item.status === "completed" ? "text-success" : "text-danger"}`}
+                    style={{
+                      marginLeft: "12px",
+                      marginTop: "15px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {item.status === "completed" ? "Completed" : "Pending"}
+                  </div>
+                </div>
+              </Col>
+            ))
+          ) : (
+            <div className="no-exams-message">
+              <h3>No exams scheduled</h3>
+            </div>
+          )}
         </Row>
+        {/* Pagination Controls */}
+        <div className="pagination-wrapper">
+          <div className="d-flex flex-column align-items-center">
+          <button
+            className="pagination-btn mb-2"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Prev
+          </button>
+          <Pagination className="d-flex flex-column">
+              {[...Array(totalPages).keys()].map((_, index) => (
+                <div
+                className={`pagination-numeric ${
+                  currentPage === index + 1 ? "active" : ""
+                }`}
+                key={index}
+                active={currentPage === index + 1}
+                onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+               
+                  </div>
+              ))}
+            </Pagination>
+
+            <button
+              className="pagination-btn mt-2"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </div> 
       </Container>
       <div className="qpaper_adding_button">
         <button

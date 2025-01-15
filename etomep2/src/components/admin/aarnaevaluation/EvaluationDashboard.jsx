@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Col, Container, Row, Form } from "react-bootstrap";
+import { Col, Container, Row, Form,Pagination } from "react-bootstrap";
 import "../aarnaevaluation/evaluationdashboard.css";
 import { IoIosAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,8 @@ import { BsSearch, BsFilterRight } from "react-icons/bs";
 function EvaluationDashboard() {
   const [isActive, setIsActive] = useState(false);
   const [evaluationListData, setEvaluationListData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12; // Define how many items per page for pagination
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -60,7 +62,7 @@ function EvaluationDashboard() {
     };
 
     fetchEvaluations();
-  }, []);
+  }, [APIURL, admin_id]);
 
   const handleButtonClick = () => {
     navigate("/evaluationscheduling");
@@ -69,6 +71,18 @@ function EvaluationDashboard() {
   const handleclick = (evaluationData) => {
     navigate("/evaluationview", { state: { evaluation: evaluationData } });
   };
+
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredEvaluationListData.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+  const totalPages = Math.ceil(filteredEvaluationListData.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
@@ -97,8 +111,8 @@ function EvaluationDashboard() {
           </div>
         </Row>
         <Row>
-          {filteredEvaluationListData.length > 0 ? (
-            filteredEvaluationListData.map((item, index) => (
+          {currentItems.length > 0 ? (
+              currentItems.map((item, index) => (
               <Col
                 lg={3}
                 md={6}
@@ -142,6 +156,38 @@ function EvaluationDashboard() {
             </div>
           )}
         </Row>
+        {/* Pagination Controls */}
+        <div className="pagination-wrapper">
+          <div className="d-flex flex-column align-items-center">
+            <button
+              className="pagination-btn mb-2"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+            <Pagination className="d-flex flex-column">
+              {[...Array(totalPages).keys()].map((_, index) => (
+                <div
+                  className={`pagination-numeric ${
+                    currentPage === index + 1 ? "active" : ""
+                  }`}
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </div>
+              ))}
+            </Pagination>
+            <button
+              className="pagination-btn mt-2"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </div>
       </Container>
       <div className="evaluation_adding_button">
         <button

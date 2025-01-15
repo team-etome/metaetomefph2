@@ -134,7 +134,7 @@
         height: 50px;
     }
     .class_curriculum_view{
-        padding-left: 35px;
+        padding-left: 30px;
         padding-top: 30px;
     }
     .curriculum_view{
@@ -306,4 +306,26 @@
 
     
 
+    .subject_list_label {
+        display: inline;
+        position: absolute; /* Position relative to the container */
+        top: 23px; /* Adjust vertical placement on the border */
+        left: 120px; /* Adjust horizontal placement */
+        background-color: #fff; /* Ensure label has a background */
+        padding: 0 8px; /* Add padding for aesthetics */
+        font-size: 16px; /* Consistent font size */
+        color: #526D82; /* Label color */
+        z-index: 1; /* Ensure it appears above the border */
+        transition: all 0.3s ease; /* Smooth transitions */
+    }
+    
+    .class_curriculum_view {
+        position: relative; /* Enables absolute positioning for the label */
+         /* Add a border to highlight the label position */
+        border-radius: 8px;
+        padding: 20px; /* Optional: internal padding for content */
+        margin-bottom: 20px;
+        background-color: #fff; /* Ensure a clean background */
+        overflow: hidden; /* Prevent content from spilling outside */
+    }
     

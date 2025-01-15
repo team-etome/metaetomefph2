@@ -221,7 +221,7 @@ function AdminLogin() {
                       style={{ fontSize: "20px", color: "#526D82" }}
                     >
                       {" "}
-                      Email Address
+                      E-mail Address
                     </label>
                     <input
                       placeholder="Enter email"

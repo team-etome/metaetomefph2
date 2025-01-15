@@ -182,3 +182,27 @@
       width: 250px;
     }
   }
+
+
+
+  
+
+
+.ad_aarna_navbar_tab {
+    white-space: nowrap; 
+    overflow-x: auto; /* Enable horizontal scrolling */
+    scrollbar-width: thin; /* Firefox - thin scrollbar */
+}
+
+.ad_aarna_navbar_tab::-webkit-scrollbar {
+    height: 8px; /* Adjust scrollbar height */
+}
+
+.ad_aarna_navbar_tab::-webkit-scrollbar-thumb {
+    background: #888; /* Style for scrollbar thumb */
+    border-radius: 4px;
+}
+
+.ad_aarna_navbar_tab::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}

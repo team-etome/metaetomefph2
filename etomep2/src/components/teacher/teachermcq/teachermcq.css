@@ -133,14 +133,14 @@
 
 .mcqform_teacher_test_adding {
     height: 100vh;
-    padding-top: 14vh;
+    padding-top: 12vh;
     background-color: #DDE6ED;
     padding-left: 30vh;
     width: 80%;
 }
 
 .mcqform_teacher_testadd_form {
-    height: 90%;
+    height: 100%;
     width: 100%;
     background-color: #fff;
     padding-top: 20px;
@@ -325,3 +325,124 @@
     font-size: 14px;
   }
 }
+
+
+
+
+
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    /* align-items: flex-start; */
+    justify-content: flex-start;
+    /* gap: 20px; Adds spacing between child elements */
+    /* padding: 20px; */
+    border-radius: 8px;
+    /* background-color: #fff; */
+    /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); */
+    width: 100%;
+    height: 40%;
+  }
+  
+  .upload-buttons {
+    display: flex;
+    gap: 15px; /* Adds spacing between buttons */
+  }
+  
+  .upload-btn,
+  .create-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #526D82;
+    background-color: transparent;
+    color: #526D82;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .upload-btn:hover {
+    background-color: #405d6e;
+    color: #fff;
+  }
+  
+  .create-btn:hover {
+    background-color: #526D82;
+    color: #fff;
+  }
+  
+  .drop-area {
+    width: 100%;
+    text-align: center;
+    border: 2px dashed #526D82;
+    border-radius: 8px;
+    padding: 20px;
+    color: #526D82;
+  }
+  
+  /* .drop-area p {
+    margin: 5px 0;
+  } */
+  
+  .select-file-input {
+    display: flex;
+    /* margin: 10px auto; */
+    width: 30vh;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    color: #526D82;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .select-file-input:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .teacher_assignadd_submit {
+    display: flex;
+    justify-content: flex-start; /* Aligns button to the left */
+    width: 100%;
+  }
+  
+  .teacher_assignadd_submit button {
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #526D82;
+    border: 1px solid #526D82;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .teacher_assignadd_submit button:hover {
+    background-color: #526D82;
+    color: #fff;
+  }
+  
+  @media (max-width: 768px) {
+    .upload-section {
+      padding: 10px;
+      gap: 10px;
+    }
+  
+    .upload-buttons {
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+  
+    .upload-btn,
+    .create-btn {
+      width: 100%;
+    }
+  
+    .drop-area {
+      padding: 10px;
+    }
+  
+    .teacher_assignadd_submit button {
+      width: 100%;
+    }
+  }  

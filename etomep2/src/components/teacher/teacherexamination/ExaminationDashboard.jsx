@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Col, Container, Row, Form } from "react-bootstrap";
+import { Col, Container, Row, Form ,Pagination} from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import "../teacherexamination/examinationdashboard.css";
@@ -14,6 +14,9 @@ function ExaminationDashboard() {
   const [file, setFile] = useState(null);
   const [examinationListData, setExaminationListData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12; // Number of items per page
 
   const navigate = useNavigate();
 
@@ -64,6 +67,12 @@ function ExaminationDashboard() {
   const filteredExamList = examinationListData.filter((exam) =>
     exam.exam_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredExamList.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredExamList.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div style={{}} className="teacher_examination_dashboard">
@@ -123,7 +132,7 @@ function ExaminationDashboard() {
           </Col>
         </Row>
         <Row className="teacher_examination_container">
-          {filteredExamList.map((item, index) => (
+        {currentItems.map((item, index) => (
             <Col
               lg={3}
               md={6}
@@ -162,6 +171,38 @@ function ExaminationDashboard() {
             </Col>
           ))}
         </Row>
+        {/* Pagination Controls */}
+        <div className="pagination-wrapper">
+          <div className="d-flex flex-column align-items-center">
+            <button
+              className="pagination-btn mb-2"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+            <Pagination className="d-flex flex-column">
+              {[...Array(totalPages).keys()].map((_, index) => (
+                <div
+                  className={`pagination-numeric ${
+                    currentPage === index + 1 ? "active" : ""
+                  }`}
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </div>
+              ))}
+            </Pagination>
+            <button
+              className="pagination-btn mt-2"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </div>
       </Container>
     </div>
   );

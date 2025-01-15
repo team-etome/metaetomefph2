@@ -27,11 +27,19 @@ function TeacherHome() {
       { text: 'Some note for 11/08/2023', date: '11/08/2023' }
     ],
   });
+  const subjectTeachers = [
+    { name: "Murthi Divakar", subject: "Physics", phone: "9231485931" },
+    { name: "Murthi Divakar", subject: "Chemistry", phone: "9234255234" },
+    { name: "Murthi Divakar", subject: "Maths", phone: "9231485931" },
+    { name: "Murthi Divakar", subject: "Hindi", phone: "9234255234" },
+  ];
+
   const [newNoteText, setNewNoteText] = useState('');
   const teacherinfo = useSelector((state) => state.teacherinfo);
   const teacher_id = teacherinfo.teacherinfo?.teacher_id
 
   const APIURL = useSelector((state) => state.APIURL.url);
+  
 
   const formattedDate = (date) => {
     const year = date.getFullYear();
@@ -120,43 +128,57 @@ function TeacherHome() {
   return (
     <div className="teacher_home">
       <Container className="teacher_home_container">
-
         <Row className="teacher_home_row">
           <Col className="dashboard_section" md={7}>
             <Row className="tchr_head">
               <h1>Welcome!</h1>
             </Row>
-            <Col className="tchr_db_rsrce_sub">
-              <Col md={7} sm={12} xs={12} className="tchr_rscr_mtr">
-                <div className="tchr_rsr_title">
-                  <h6>Resource Materials</h6>
-                  <select name="" id="" className="tchr_drpdwn">
-                    <option value="class1">Class 11A</option>
-                    <option value="class2">Class 2B</option>
-                  </select>
-                </div>
-                <div className="tchr_rscr_mat">
-                  <div className="tchr_pdf">
-                    <img src={pdficon} className="tchr_icon" />
-                    <p>titleeeetitleeeetitleeeetitleeeetitleeee</p>
-                  </div>
-                  <div className="tchr_pdf">
-                    <img src={pdficon} className="tchr_icon" />
-                    <p>titleeeetitleeeetitleeeetitleeeetitleeee</p>
-                  </div>
-                </div>
-              </Col>
-              <Col md={5} xs={12} sm={12}>
-                <Calendar
-                  onChange={handleDateChange}
-                  value={selectedDate}
-                  className="custom_calendar_tchr "
-                />
-              </Col>
+            <Row>
+              {/* <Col className="tchr_db_rsrce_sub"> */}
 
-            </Col>
+                <Col md={7} sm={12} xs={12} className=" tchr_rscr_mtr ">
+                  <div className="tchr_rsr_title">
+                    <h6>Resource Materials</h6>
+                    <select name="" id="" className="tchr_drpdwn">
+                      <option value="class1">Class 11A</option>
+                      <option value="class2">Class 2B</option>
+                    </select>
+                  </div>
+                  <div className="tchr_rscr_mat">
+                    <div className="tchr_pdf">
+                      <img src={pdficon} className="tchr_icon" />
+                      <p>titleeeetitleeeetitleeeetitleeeetitleeee</p>
+                    </div>
+                    <div className="tchr_pdf">
+                      <img src={pdficon} className="tchr_icon" />
+                      <p>titleeeetitleeeetitleeeetitleeeetitleeee</p>
+                    </div>
+                  </div>
+                </Col>
+                {/* Subject Teachers */}
+                <Col md={5} sm={12} xs={12} >
+                  <div className="subject_teachers">
+                    <div className="section_header">
+                      <span className="section_title">Subject Teachers</span>
+                      <hr className="section_divider" />
+                    </div>
+                    <div className="teacher_list">
+                      {subjectTeachers.map((teacher, index) => (
+                        <div key={index} className="teacher_card">
+                          <div className="teacher_info">
+                            <span className="teacher_name">{teacher.name}</span>
+                            <span className="teacher_subject">{teacher.subject}</span>
+                          </div>
+                          <span className="teacher_phone">{teacher.phone}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Col>
+              {/* </Col> */}
+            </Row>
             <Row className="cld_nt_tchr">
-              {/* <Col md={5} xs={12} sm={12}>
+              <Col md={5} xs={12} sm={12}>
                 <Calendar
                   onChange={handleDateChange}
                   value={selectedDate}
@@ -178,16 +200,21 @@ function TeacherHome() {
                 <div className='dash_note_min_div_tchr '>
                   <div className="notes_section_tchr ">
                     {selectedNotes.map((note, index) => (
-                      <div key={index} className="note_item_tchr ">
-                        <p>{note.text}</p>
-                        <span className="note_date_tchr ">{note.date}</span>
-                        <button className="delete_note_tchr" onClick={() => handleDeleteNote(index)}>🗑️</button>
+                      <Row>
+                      <div key={index} className="note_item_tchr">
+                          <Col md={9}>
+                            <p className="note_text_tchr">{note.text}</p>
+                          </Col>
+                          <Col md={3}>
+                            <button className="delete_note_tchr" onClick={() => handleDeleteNote(index)}>🗑️</button>
+                            <span className="note_date_tchr ">{note.date}</span>
+                          </Col>
                       </div>
+                      </Row>
                     ))}
                   </div>
                 </div>
-                 
-              </Col> */}
+              </Col>
             </Row>
           </Col>
           <Col md={4} className="teacher_home_section">

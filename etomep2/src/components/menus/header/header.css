@@ -124,13 +124,17 @@
 
 }
 @media (min-width:799px) {
-.header_menu{
-    display: none;
+    .header_menu{
+        display: none;
+    }
+    .notification_icon {
+        display: none;
+    }
 }
-.notification_icon {
-    display: none;
-}
-
+@media (max-width:799px) {
+    .tch_header_institution {
+        display: none !important; /* Hide the profile section */
+    }
 }
 @media (max-height:491px) {
     .header_menu{

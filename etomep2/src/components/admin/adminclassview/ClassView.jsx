@@ -233,15 +233,15 @@ function ClassView() {
                 </div>
               </Link>
             </Row>
-            <Row className="class_curriculum_view">
-              <div className="curriculum_view">
+            {/* <Row className="class_curriculum_view">
+              <div className="curriculum_view" style={{border:"2px solid black"}}>
                 {classDetails?.curriculum?.map((item, index) => (
                   <Row
                     key={index}
                     className={`curriculum_row_highlight ${
                       index === selectedRowIndex ? "selected-row" : ""
                     }`}
-                    onClick={() => handleRowClick(index)} // Handle row click to toggle selection
+                    onClick={() => handleRowClick(index)}
                   >
                     <Col md={4}>
                       <p>{item.subject}</p>
@@ -254,6 +254,32 @@ function ClassView() {
                     </Col>
                   </Row>
                 ))}
+              </div>
+            </Row> */}
+            <Row className="class_curriculum_view">
+              <label htmlFor="subject_list" className="subject_list_label">Subject List</label>
+              <div className="class_view_group">
+                  <div className="curriculum_view">
+                      {classDetails?.curriculum?.map((item, index) => (
+                          <Row
+                              key={index}
+                              className={`curriculum_row_highlight ${
+                                  index === selectedRowIndex ? "selected-row" : ""
+                              }`}
+                              onClick={() => handleRowClick(index)}
+                          >
+                              <Col md={4}>
+                                  <p>{item.subject}</p>
+                              </Col>
+                              <Col md={4}>
+                                  <p>{item.publisher_name}</p>
+                              </Col>
+                              <Col md={4}>
+                                  <p>{item.teacher}</p>
+                              </Col>
+                          </Row>
+                      ))}
+                  </div>
               </div>
             </Row>
           </div>

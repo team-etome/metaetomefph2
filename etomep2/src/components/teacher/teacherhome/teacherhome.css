@@ -18,7 +18,7 @@
   color: #526D82;
   margin-left: 0px;
   margin-top: 0px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   width: 50%;
   height: 50px;
   /* padding-left: 0; */
@@ -43,6 +43,7 @@
   display: flex;
   margin-top: 8px;
 }
+
 .tchr_rscr_mtr{
 background-color: #E7E6FB;
 width: 50%;
@@ -66,6 +67,7 @@ box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   outline: none;
   font-size: 0.9rem;
   font-weight: 500;
+  margin-right: 10px;
 }
 
 .tchr_rscr_mat{
@@ -82,6 +84,7 @@ box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   padding-top: 16px;
 }
 .tchr_rsr_title h6{
+  margin-left: 10px;
   color: #727272;
   font-weight: 500;
   font-size: 1.2rem;
@@ -464,13 +467,14 @@ align-items: center;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(44, 43, 43, 0.1);
   padding: 14px;
-  margin-top: 78px;
+  /* margin-top: 78px; */
 }
+
 .notes_header_tchr  {
   color: #526D82;
   font-weight: 500;
-padding-bottom: 10PX;
-font-size: 1.2rem;
+  padding-bottom: 10PX;
+  font-size: 1.2rem;
 }
 .fixed_footer_tchr {
   display: flex;
@@ -479,14 +483,17 @@ font-size: 1.2rem;
 }
 .txt_form_tchr {
   width: 88%;
+  resize: none; /* Prevent manual resizing */
 }
 .dash_noteadd_btn_tchr {
   width: 10%;
-  border-radius: 50px;
+  border-radius: 30px;
   height: 50px;
   border: 1px solid #657d8f;
   background-color: #526D82;
   color: #fff;
+  justify-content: center;
+  align-items: center;
   /* margin-top: 10px; */
   font-size: 26PX;
 }
@@ -495,11 +502,11 @@ font-size: 1.2rem;
   color: #fff;
 }
 .dash_note_min_div_tchr  {
-  /* border: 1px solid red; */
-  height: 210px;
-  overflow-y: auto; 
-  overflow-x: hidden; 
+  height: auto; /* Adjust height dynamically */
+  max-height: 300px; /* Optional: Limit maximum height */
+  overflow-y: auto;
   margin-bottom: 10px;
+  padding: 15px; /* Add padding for better spacing */
   
 }
 
@@ -512,7 +519,31 @@ font-size: 1.2rem;
 }
 
 .dash_note_min_div_tchr ::-webkit-scrollbar-thumb {
-  background: #A8BFD1;
+  background: #a8bfd1;
+}
+
+.notes_section_tchr {
+  max-height: 200px; /* Adjust as per your design */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Hide horizontal overflow */
+  padding-right: 10px; /* Add padding for scrollbar spacing */
+}
+
+.notes_section_tchr::-webkit-scrollbar {
+  width: 6px; /* Scrollbar width */
+}
+
+.notes_section_tchr::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Scrollbar track color */
+}
+
+.notes_section_tchr::-webkit-scrollbar-thumb {
+  background: #a8bfd1; /* Scrollbar thumb color */
+  border-radius: 4px; /* Rounded corners for the scrollbar */
+}
+
+.notes_section_tchr::-webkit-scrollbar-thumb:hover {
+  background: #8fa2b6; /* Hover color for the scrollbar thumb */
 }
 /* 
 .notes_section {
@@ -527,23 +558,35 @@ font-size: 1.2rem;
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-  height: 50px;
+  align-items:flex-start;
+  word-wrap: break-word; /* Ensure long words break into the next line */
+  height: auto; /* Adjust height based on content */
 }
+
+.note_text_tchr {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5; /* Add spacing between lines */
+  word-wrap: break-word; /* Ensure long words break into the next line */
+  padding: 10px;
+}
+
 .note_date_tchr  {
+  display: flex;
   font-size: 12px;
   color: #6c757d;
   margin-right: 10px;
+
 }
 .delete_note_tchr {
+  justify-content: center;
   background: none;
   border: none;
   cursor: pointer;
   color: #d9534f;
 }
 .nt_hd_tch{
-  padding-top: 9%;
+  padding-top: 8%;
 }
 @media (max-width:768px) {
   .teacher_home_section {
@@ -560,22 +603,31 @@ font-size: 1.2rem;
   }
   .tchr_rscr_mtr{
     background-color: #E7E6FB;
-    width: 100%;
+    width: 96%;
+    margin-bottom: 20px;
     }
-    .tchr_sb_tchr{
+  .tchr_sb_tchr{
       margin-left: 10px;
       height: 40vh !important;
       width: 100% !important;
       padding-top: 20px;
     }
-    .cld_nt_tchr{
-      padding-top: 84%;
-    }
-    .custom_calendar_tchr{
+
+  .custom_calendar_tchr{
       padding: 0;
     }
-    .nt_hd_tch{
+  .nt_hd_tch{
       padding-top: 6%;
+    }
+  .dash_note_min_div_tchr {
+      max-height: 300px; /* Limit height for smaller screens */
+    }
+  .note_item_tchr {
+      /* flex-direction: column; Stack items vertically */
+      align-items: flex-start;
+    }
+  .delete_note_tchr {
+      margin-top: 10px; /* Add space for stacked layout */
     }
 }
 
@@ -603,3 +655,108 @@ font-size: 1.2rem;
     display: none;
   }
 } */
+ 
+
+.subject_teachers,
+.notes_section {
+  margin-left : 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  height: 300px; /* Set the height of the entire section */
+  overflow: hidden; /* Hide content overflowing the container */
+  position: relative; /* Ensure positioning for fixed header */
+}
+
+.section_header {
+  position: sticky; /* Keep the header fixed */
+  top: 0; /* Stick to the top of the container */
+  background-color: #fff; /* Match the background color */
+  /* z-index: ; Ensure the header stays on top */
+  padding-bottom: 5px; /* Add spacing for visual separation */
+}
+
+.section_title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #526d82;
+  margin-bottom: 0;
+}
+.section_divider {
+  border: none;
+  height: 1px;
+  background-color: #ddd;
+  margin: 5px 0; /* Add spacing around the line */
+}
+
+.notes_list {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+
+.teacher_list {
+  max-height: calc(100% - 50px); /* Adjust for header height */
+  overflow-y: auto; /* Enable scrolling */
+  padding-right: 10px; /* Add padding for scrollbar spacing */
+}
+.teacher_list::-webkit-scrollbar {
+  width: 6px; /* Scrollbar width */
+}
+
+.teacher_list::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Scrollbar track color */
+}
+
+.teacher_list::-webkit-scrollbar-thumb {
+  background: #a8bfd1; /* Scrollbar thumb color */
+  border-radius: 4px;
+}
+
+.teacher_card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e7e6fb;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.teacher_info {
+  display: flex;
+  flex-direction: column;
+}
+
+.teacher_subject {
+  font-size: 0.9rem;
+  color: #727272;
+}
+
+.teacher_phone {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #526d82;
+}
+
+@media (max-width: 768px) {
+  .subject_teachers {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 15px;
+    width: 100%;
+    height: auto;
+  }
+
+  .teacher_card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .teacher_phone {
+    align-self: flex-end;
+  }
+}

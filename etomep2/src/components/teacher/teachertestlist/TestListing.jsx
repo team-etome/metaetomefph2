@@ -22,38 +22,30 @@ function TestListing() {
     const division = teacher_subject.teachersubjectinfo?.division;
     const subject = teacher_subject.teachersubjectinfo?.subject;
 
+    useEffect(() => {
+        const fetchTests = async () => {
+            try {
+                const response = await axios.get(`${APIURL}/api/test`, {
+                    params: {
+                        teacher_id: teacher_id,
+                        class_name: className,
+                        division: division,
+                        subject: subject
+                    }
+                });
+                setTests(response.data);
+            } catch (error) {
+                console.error('Error fetching test data:', error);
+            }
+        };
 
-useEffect(() => {
-    const fetchTests = async () => {
-        try {
-            const response = await axios.get(`${APIURL}/api/test`, {
-                params: {
-                    teacher_id: teacher_id,
-                    class_name: className,
-                    division: division,
-                    subject: subject
-                }
-            });
+        fetchTests();
+    }, [APIURL, teacher_id, className, division, subject]);
 
-            // Sort tests by date in descending order
-            const sortedTests = response.data.sort((a, b) => new Date(b.exam_date) - new Date(a.exam_date));
-            setTests(sortedTests);
-        } catch (error) {
-            console.error('Error fetching test data:', error);
-        }
-    };
+    // Organize tests by month
+    const thisMonthTests = tests.filter(test => new Date(test.exam_date).getMonth() === new Date().getMonth());
+    const previousMonthTests = tests.filter(test => new Date(test.exam_date).getMonth() === new Date().getMonth() - 1);
 
-    fetchTests();
-}, [APIURL, teacher_id, className, division, subject]);
-
-// Organize tests by month and sort them
-const thisMonthTests = tests
-    .filter(test => new Date(test.exam_date).getMonth() === new Date().getMonth())
-    .sort((a, b) => new Date(b.exam_date) - new Date(a.exam_date));
-
-const previousMonthTests = tests
-    .filter(test => new Date(test.exam_date).getMonth() === new Date().getMonth() - 1)
-    .sort((a, b) => new Date(b.exam_date) - new Date(a.exam_date));
     const handleAddClick = () => {
         navigate('/teachertestadd');
     }
@@ -62,10 +54,6 @@ const previousMonthTests = tests
         setSelectedAssignment(assignment);
         setShowModal(true);
     }
-
-
-
-
 
     return (
         <Container className='test_container'>
