@@ -3,7 +3,7 @@ import AarnaNavbar from '../../components/admin/aarnanavbar/AarnaNavbar'
 import MainHeader from '../../components/menus/common/MainHeader/';
 
 
-function AarnaNavbarPage() {
+function  AarnaNavbarPage() {
   return (
     <div>
       <MainHeader/>

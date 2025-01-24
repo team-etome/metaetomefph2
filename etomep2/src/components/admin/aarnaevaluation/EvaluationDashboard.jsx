@@ -15,20 +15,7 @@ function EvaluationDashboard() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredEvaluationListData = evaluationListData.filter((item) => {
-    // Combine class_name and division, remove spaces, and make the string lowercase
-    const combined = (
-      item.class_name.replace(/\s+/g, "") + item.division.replace(/\s+/g, "")
-    ).toLowerCase();
-
-    // Remove spaces from searchTerm and make it lowercase
-    const searchTermWithoutSpaces = searchTerm
-      .replace(/\s+/g, "")
-      .toLowerCase();
-
-    // Check if the search term (without spaces) is found in the combined string
-    return combined.includes(searchTermWithoutSpaces);
-  });
+  
 
   console.log(evaluationListData, "evaluationnnnn");
 
@@ -73,6 +60,18 @@ function EvaluationDashboard() {
   };
 
 
+  const filteredEvaluationListData = evaluationListData
+    .filter((item) => {
+      const combined = (
+        item.class_name.replace(/\s+/g, "") + item.division.replace(/\s+/g, "")
+      ).toLowerCase();
+      const searchTermWithoutSpaces = searchTerm
+        .replace(/\s+/g, "")
+        .toLowerCase();
+      return combined.includes(searchTermWithoutSpaces);
+    })
+    .sort((a, b) => new Date(b.end_date) - new Date(a.end_date)); // Sort by latest end_date
+
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -83,7 +82,6 @@ function EvaluationDashboard() {
   const totalPages = Math.ceil(filteredEvaluationListData.length / itemsPerPage);
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
-
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
       <Container

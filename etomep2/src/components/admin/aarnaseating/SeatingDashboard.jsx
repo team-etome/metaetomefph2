@@ -17,14 +17,8 @@ function SeatingDashboard() {
   const admininfo = useSelector((state) => state.admininfo);
 
 
-  console.log(seatingData, "seating dataaaaaaa");
 
-  const filteredSeatingData = seatingData.filter((item) => {
-    return item.classes
-      .join(",")
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-  });
+
 
   const admin_id = admininfo.admininfo?.admin_id;
   const navigate = useNavigate();
@@ -42,6 +36,7 @@ function SeatingDashboard() {
 
     fetchSeatingData();
 
+    console.log(seatingData,'seating')
     const interval = setInterval(() => {
       setIsActive((prevState) => !prevState);
     }, 2000);
@@ -58,6 +53,19 @@ function SeatingDashboard() {
   };
 
 
+  
+
+
+
+  const filteredSeatingData = seatingData
+    .filter((item) => {
+      return item.classes
+        .join(",")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+    })
+    .sort((a, b) => new Date(b.exam_date) - new Date(a.exam_date)); // Sort by latest date
+
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -68,6 +76,7 @@ function SeatingDashboard() {
   const totalPages = Math.ceil(filteredSeatingData.length / itemsPerPage);
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>

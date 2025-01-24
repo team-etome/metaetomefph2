@@ -37,7 +37,9 @@ function AarnaQuestionPaper() {
       }
     };
 
-    fetchData();
+    fetchData(qpaperListData, "listttt");
+
+    console.log();
 
     const interval = setInterval(() => {
       setIsActive((prevState) => !prevState);
@@ -79,19 +81,23 @@ function AarnaQuestionPaper() {
   //   return combined.includes(searchTermWithoutSpaces);
   // });
 
-  const filteredQpaperListData = qpaperListData.filter((item) => {
-    const combined = (
-      item.class_name.replace(/\s+/g, "") +
-      item.division.replace(/\s+/g, "") +
-      item.subject_name.replace(/\s+/g, "")
-    ).toLowerCase();
-    return combined.includes(searchTerm.replace(/\s+/g, "").toLowerCase());
-  });
-
+  const filteredQpaperListData = qpaperListData
+    .filter((item) => {
+      const combined = (
+        item.class_name.replace(/\s+/g, "") +
+        item.division.replace(/\s+/g, "") +
+        item.subject_name.replace(/\s+/g, "")
+      ).toLowerCase();
+      return combined.includes(searchTerm.replace(/\s+/g, "").toLowerCase());
+    })
+    .sort((a, b) => new Date(b.exam_date) - new Date(a.exam_date)); // Sort by date, latest first
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredQpaperListData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredQpaperListData.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
   const totalPages = Math.ceil(filteredQpaperListData.length / itemsPerPage);
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
@@ -165,7 +171,14 @@ function AarnaQuestionPaper() {
         <Row>
           {currentItems.length > 0 ? (
             currentItems.map((item, index) => (
-              <Col lg={3} md={6} sm={12} xs={12} key={index} className="qpaper_list">
+              <Col
+                lg={3}
+                md={6}
+                sm={12}
+                xs={12}
+                key={index}
+                className="qpaper_list"
+              >
                 <div
                   onClick={() => handleclick(item)}
                   className="border border-white qpaper_rectangle"
@@ -179,7 +192,11 @@ function AarnaQuestionPaper() {
                     {item.class_name} {item.division} - {item.subject_name}
                   </div>
                   <div
-                    className={`status-text ${item.status === "completed" ? "text-success" : "text-danger"}`}
+                    className={`status-text ${
+                      item.status === "completed"
+                        ? "text-success"
+                        : "text-danger"
+                    }`}
                     style={{
                       marginLeft: "12px",
                       marginTop: "15px",
@@ -200,26 +217,25 @@ function AarnaQuestionPaper() {
         {/* Pagination Controls */}
         <div className="pagination-wrapper">
           <div className="d-flex flex-column align-items-center">
-          <button
-            className="pagination-btn mb-2"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </button>
-          <Pagination className="d-flex flex-column">
+            <button
+              className="pagination-btn mb-2"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+            <Pagination className="d-flex flex-column">
               {[...Array(totalPages).keys()].map((_, index) => (
                 <div
-                className={`pagination-numeric ${
-                  currentPage === index + 1 ? "active" : ""
-                }`}
-                key={index}
-                active={currentPage === index + 1}
-                onClick={() => handlePageChange(index + 1)}
+                  className={`pagination-numeric ${
+                    currentPage === index + 1 ? "active" : ""
+                  }`}
+                  key={index}
+                  active={currentPage === index + 1}
+                  onClick={() => handlePageChange(index + 1)}
                 >
                   {index + 1}
-               
-                  </div>
+                </div>
               ))}
             </Pagination>
 
@@ -231,7 +247,7 @@ function AarnaQuestionPaper() {
               Next
             </button>
           </div>
-        </div> 
+        </div>
       </Container>
       <div className="qpaper_adding_button">
         <button
