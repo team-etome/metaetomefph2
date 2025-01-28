@@ -79,52 +79,52 @@ function StudentView() {
                 marginBottom: "10px",
               }}
             > */}
-              {/* <Link to="/teacherstudentdashboard"> */}
-                {/* <IoChevronBackSharp onClick={handleBackClick} className="teacher_student_view_back" /> */}
-              {/* </Link> */}
-              <h1 className="teaher_student_view_title">{student.student_name} </h1>
-              <div style={{ flex: "1" }}></div>
-              {windowWidth > 800 ? (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    gap: "20px",
-                    paddingRight: "30px",
-                  }}
+            {/* <Link to="/teacherstudentdashboard"> */}
+            {/* <IoChevronBackSharp onClick={handleBackClick} className="teacher_student_view_back" /> */}
+            {/* </Link> */}
+            <h1 className="teaher_student_view_title">{student.student_name} </h1>
+            <div style={{ flex: "1" }}></div>
+            {windowWidth > 800 ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: "20px",
+                  paddingRight: "30px",
+                }}
+              >
+                {/* <MdDelete className='teacher_student_edit'/> */}
+                <button className="teacher_student_edit">Edit</button>
+              </div>
+            ) : (
+              <div style={{ position: "relative" }} ref={dropdownRef}>
+                <button
+                  className="teacher_student_verticaldot"
+                  onClick={toggleEditBlockButtons}
                 >
-                  <MdDelete className='teacher_student_edit'/>
-                  {/* <button className="teacher_student_edit">Edit</button> */}
-                </div>
-              ) : (
-                <div style={{ position: "relative" }} ref={dropdownRef}>
-                  <button
-                    className="teacher_student_verticaldot"
-                    onClick={toggleEditBlockButtons}
+                  <BsThreeDotsVertical />
+                </button>
+                {showEditBlockButtons && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      right: "0",
+                      backgroundColor: "white",
+                      boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+                      borderRadius: "5px",
+                      padding: "10px",
+                      zIndex: "1000",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "10px",
+                    }}
                   >
-                    <BsThreeDotsVertical />
-                  </button>
-                  {showEditBlockButtons && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        right: "0",
-                        backgroundColor: "white",
-                        boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-                        borderRadius: "5px",
-                        padding: "10px",
-                        zIndex: "1000",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "10px",
-                      }}
-                    >
-                    <FiEdit className='teacher_student_edit'/>
+                    <FiEdit className='teacher_student_edit' />
 
-                    </div>
-                  )}
-                </div>
-              )}
+                  </div>
+                )}
+              </div>
+            )}
             {/* </div> */}
 
             {/* </div> */}
@@ -139,7 +139,7 @@ function StudentView() {
                 <h4>Personal Information</h4>
               </div>
 
-              <Col md={6}>
+              <Col md={4}>
                 <div className="teacher_personal_info_field">
                   <label htmlFor="name">Name</label>
                   <input
@@ -182,7 +182,7 @@ function StudentView() {
                   />
                 </div>
               </Col>
-              <Col md={6}>
+              <Col md={4}>
                 <div className="teacher_personal_info_field">
                   <label htmlFor="gender">Gender</label>
                   <input
@@ -234,11 +234,11 @@ function StudentView() {
                   />
                 </div>
               </Col>
-              {/* <Col md={4}> */}
-                {/* <div>
-              <img src={amritha}  alt="" className='teacher_profile_picture'/>
-            </div> */}
-              {/* </Col> */}
+              <Col md={4}>
+                <div>
+                  <img src={amritha} alt="" className='teacher_profile_picture' />
+                </div>
+              </Col>
             </Row>
             <Row style={{ paddingTop: "20px" }}>
               <div className="teacher_student_heading">
@@ -298,8 +298,8 @@ function StudentView() {
                     type="text"
                     id="join_date"
                     name="join_date"
-                    value = {student.start_date}
-                    style={{paddingBottom:'10px', marginTop:'0vh'}}
+                    value={student.start_date}
+                    style={{ paddingBottom: '10px', marginTop: '0vh' }}
                     readOnly
                   />
                 </div>
