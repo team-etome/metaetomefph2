@@ -1,318 +1,361 @@
 .teacher_student_view_container {
-    height: 100vh;
-    padding-top: 100px;
-    background-color: #DDE6ED;
-    width: 100%;
-    padding-left: 80px;
-    }
-    .teacher_student_view_form{
-        height: 90%;
-        width: 100%;
-        background-color: #fff;
-        padding-top: 1%;
-        border-radius: 15px;
-        padding-bottom: 100px;
-        overflow: hidden;
-    }
-    .teacher_student_header{
-        height: 70px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important; 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-left: 2vw !important;
-        padding-bottom: 10px;
-               
-    }
-    .teacher_student_scrollable {
-        overflow-x: hidden;
-        overflow-y: auto; /* Enable vertical scrolling */
-        max-height: calc(100vh - 250px); /* Adjust based on your header size */
-        padding-bottom: 50px;
-      }
-    .teacher_student_view_back {
-        color: #526D82;
-        height: 32px;
-        width: 32px;
-        /* margin-left: 10px; */
-        display: flex;
-        justify-content: flex-start;
-        cursor: pointer;
-    }
-    
-    
-    .teaher_student_view_title{
-        font-weight: 500;
-        color: #526D82 ;
-        font-size: 30px;
-        margin-left: 10px;
-        width: 500px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    } 
-    
-    .student_view_group {
-        margin-left: 50px;
-        margin-right: 30px;
-        margin-bottom: 20px;
-        position: relative;
-        padding-top: 15px;
-        margin-top: 0px;
-    }
-    .student_view_group input{
-        width: 100%;
-        border: 1px solid #526D82;
-        border-radius: 8px;
-        height: 50px;
-        box-sizing: border-box;
-        outline: none;
-        padding: 1px 10px 12px 10px;
-    }
-    .student_view_group label{
-        position: absolute;
-        top: 5%;
-        left: 5%;
-        background: #fff;
-        color: #526D82;
-        font-size: 16px;
-        transition: all 0.3s;
-        pointer-events: none;
-        padding: 0 4px;
-        z-index: 1;
-    }
-    .teacher_personal_info{
-        padding-left: 1%;
-        padding-top: 35px !important;
-    }
-    .teacher_personal_info_field{
-        display: flex;
-        padding-top: 20px;
-        padding-left: 30px;
+  height: 100vh;
+  padding-top: 100px;
+  background-color: #DDE6ED;
+  width: 100%;
+  padding-left: 80px;
+}
 
-    }
-    .teacher_personal_info_field label{
-        /* border: 1px solid green; */
-        width: 50%;
-        color: #526D82;
-    }
+.teacher_student_view_form {
+  height: 90%;
+  width: 100%;
+  background-color: #fff;
+  padding-top: 1%;
+  border-radius: 15px;
+  padding-bottom: 100px;
+  overflow: hidden;
+}
 
-    .teacher_personal_info_field input{
-        /* border: 1px solid red; */
-        border: none;
-        width: 100%;
-        color: #9B9B9B;
-    }
-    .teacher_student_heading{
-        padding-left: 25px;
-    }
-    .teacher_result_heading{
-        padding-right: 100px;
-        display: flex;
-        justify-content: flex-start;
-        padding-top: 10px;
-        padding-left: 30px;
-        width: 100%;
-    }
-    .teacher_result_heading button{
-        background-color: #526D82;
-        color: #fff;
-        border: 1px solid #526D82;
-    }
-    .teacher_result_heading button:hover{
-        background-color: #526D82;
-        color: #fff;
-        border: 1px solid #526D82;
-    }
-    .teacher_school_info{
-        display: flex;
-        gap: 0px;
-        padding-left: 10px;
-        padding-top: 20px;
-        padding-right: 0px;
-    }
-    .teacher_school_info label{
-        margin-left: 30px;
-        width: 90%;
-        color: #526D82;
-    }
-    .teacher_school_info input{
-        width: 90%;
-        height: 30px;
-        border: none;
-        color: #9B9B9B;
-        padding-top: 0px;
-        padding-bottom: 0px;
-    }
-    .teacher_profile_picture{
-        width: 200px;
-        height: 200px;
-        /* padding-right: 10px;
+.teacher_student_header {
+  height: 70px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2vw !important;
+  padding-bottom: 10px;
+
+}
+
+.teacher_student_scrollable {
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  max-height: calc(100vh - 250px);
+  /* Adjust based on your header size */
+  padding-bottom: 50px;
+}
+
+.teacher_student_view_back {
+  color: #526D82;
+  height: 32px;
+  width: 32px;
+  /* margin-left: 10px; */
+  display: flex;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+
+.teaher_student_view_title {
+  font-weight: 500;
+  color: #526D82;
+  font-size: 30px;
+  margin-left: 10px;
+  width: 500px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.student_view_group {
+  margin-left: 50px;
+  margin-right: 30px;
+  margin-bottom: 20px;
+  position: relative;
+  padding-top: 15px;
+  margin-top: 0px;
+}
+
+.student_view_group input {
+  width: 100%;
+  border: 1px solid #526D82;
+  border-radius: 8px;
+  height: 50px;
+  box-sizing: border-box;
+  outline: none;
+  padding: 1px 10px 12px 10px;
+}
+
+.student_view_group label {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  background: #fff;
+  color: #526D82;
+  font-size: 16px;
+  transition: all 0.3s;
+  pointer-events: none;
+  padding: 0 4px;
+  z-index: 1;
+}
+
+.teacher_personal_info {
+  padding-left: 1%;
+  padding-top: 35px !important;
+}
+
+.teacher_personal_info_field {
+  display: flex;
+  padding-top: 20px;
+  padding-left: 30px;
+
+}
+
+.teacher_personal_info_field label {
+  /* border: 1px solid green; */
+  width: 50%;
+  color: #526D82;
+}
+
+.teacher_personal_info_field input {
+  /* border: 1px solid red; */
+  border: none;
+  width: 100%;
+  color: #9B9B9B;
+}
+
+.teacher_student_heading {
+  padding-left: 25px;
+}
+
+.teacher_result_heading {
+  padding-right: 100px;
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 10px;
+  padding-left: 30px;
+  width: 100%;
+}
+
+.teacher_result_heading button {
+  background-color: #526D82;
+  color: #fff;
+  border: 1px solid #526D82;
+}
+
+.teacher_result_heading button:hover {
+  background-color: #526D82;
+  color: #fff;
+  border: 1px solid #526D82;
+}
+
+.teacher_school_info {
+  display: flex;
+  gap: 0px;
+  padding-left: 10px;
+  padding-top: 20px;
+  padding-right: 0px;
+}
+
+.teacher_school_info label {
+  margin-left: 30px;
+  width: 90%;
+  color: #526D82;
+}
+
+.teacher_school_info input {
+  width: 90%;
+  height: 30px;
+  border: none;
+  color: #9B9B9B;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.teacher_profile_picture {
+  width: 175px;
+  height: 211px;
+  /* padding-right: 10px;
         padding-left: 30px; */
-        margin-left: 50px;
-        margin-right: 20px;
-        margin-top: 0px;
-        margin-bottom: 10px;
-    }
-    .results_container {
-        display: flex;
-        justify-content: space-around;
-        border: 1px solid #526D82;
-        padding: 20px;
-        border-radius: 8px;
-        margin-left: 30px;
-        margin-right: 30px;
-      }
-      
-      .subject-_container {
-        text-align: center;
-      }
-      
-      .subject_name {
-        font-size: 16px;
-        color: #526D82;
-        margin-bottom: 5px; /* space between name and score */
-      }
-      
-      .subject_score {
-        font-size: 16px;
-        color: #526D82;
-      }
-      .results-header {
-        font-weight: bold;
-        /* padding-top: 10px; */
-      }
-
-      .header-subject-name{
-        padding-bottom: 10px;
-        padding-top: 0px;
-        color: #526D82;
-      }
-      .header-subject-score{
-        color: #526D82;
-      }
-.teacher_student_title{
-    font-weight: 500;
-    color: #526D82 ;
-    font-size: 30px;
-    margin-left: 25px;  
+  margin-left: 50px;
+  margin-right: 0px !important;
+  margin-top: 0px;
+  margin-bottom: 10px;
 }
 
-  
-  .teacher_student_scrollable::-webkit-scrollbar {
-    width: 8px; 
-  }
-  
-  .teacher_student_scrollable::-webkit-scrollbar-track {
-    background-color: #fff; 
-  }
-  
-  .teacher_student_scrollable::-webkit-scrollbar-thumb {
-    background-color: #A8BFD1; 
-    border-radius: 4px;
-  }
-  
-  .teacher_student_scrollable::-webkit-scrollbar-thumb:hover {
-    background-color: #8FA2B6; 
-  }
-  .teacher_student_edit{
-    width: 25px;
-    height: 25px;
-    /* background-color: transparent; */
-    /* border: 1px solid #526D82; */
-    border-radius: 8px;
-    color: #526D82;
+.results_container {
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid #526D82;
+  padding: 20px;
+  border-radius: 8px;
+  margin-left: 30px;
+  margin-right: 30px;
 }
+
+.subject-_container {
+  text-align: center;
+}
+
+.subject_name {
+  font-size: 16px;
+  color: #526D82;
+  margin-bottom: 5px;
+  /* space between name and score */
+}
+
+.subject_score {
+  font-size: 16px;
+  color: #526D82;
+}
+
+.results-header {
+  font-weight: bold;
+  /* padding-top: 10px; */
+}
+
+.header-subject-name {
+  padding-bottom: 10px;
+  padding-top: 0px;
+  color: #526D82;
+}
+
+.header-subject-score {
+  color: #526D82;
+}
+
+.teacher_student_title {
+  font-weight: 500;
+  color: #526D82;
+  font-size: 30px;
+  margin-left: 25px;
+}
+
+
+.teacher_student_scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.teacher_student_scrollable::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+.teacher_student_scrollable::-webkit-scrollbar-thumb {
+  background-color: #A8BFD1;
+  border-radius: 4px;
+}
+
+.teacher_student_scrollable::-webkit-scrollbar-thumb:hover {
+  background-color: #8FA2B6;
+}
+
+.teacher_student_edit {
+  width: 80px;
+  height: 35px;
+  background-color: white;
+  border: 1px solid #526D82;
+  border-radius: 8px;
+  color: #526D82;
+}
+
 /* .teacher_student_edit:hover{
     background-color: #526D82;
     color: #fff;
 } */
-.teacher_student_verticaldot{
-    display: none;
+.teacher_student_verticaldot {
+  display: none;
 }
+
 .teacher_result_view_scrollable {
-  overflow-x: auto; /* Allow horizontal scrolling */
-  overflow-y: auto; /* Allow vertical scrolling */
-  max-height: calc(100vh - 150px); /* Adjust height to fit the screen */
+  overflow-x: auto;
+  /* Allow horizontal scrolling */
+  overflow-y: auto;
+  /* Allow vertical scrolling */
+  max-height: calc(100vh - 150px);
+  /* Adjust height to fit the screen */
   padding-bottom: 10px;
 }
 
 
-    @media (max-width: 800px) {
-      .teacher_student_view_container {
-        height: 100vh;
-        padding-top: 100px;
-        background-color: #DDE6ED;
-        width: 100%;
-        padding-left: 10px;
-        }
-        .teacher_personal_info_field{
-          display: flex;
-          padding-top: 20px;
-          padding-left: 20px;
-      }
-      .teacher_school_info{
-        padding-left: 0px;
-        padding-right: 10px;
-    }
-    .teacher_result_heading Button{
-      padding-left: 10px;
-      padding-right: 10px;
-      display: flex;
-      justify-content: flex-start;
-      background-color: #526D82;
+@media (max-width: 800px) {
+  .teacher_student_view_container {
+    height: 100vh;
+    padding-top: 100px;
+    background-color: #DDE6ED;
+    width: 100%;
+    padding-left: 10px;
   }
+
+  .teacher_personal_info_field {
+    display: flex;
+    padding-top: 20px;
+    padding-left: 20px;
+  }
+  .teacher_profile_picture{
+    margin-top: 10px;
+}
+
+  .teacher_school_info {
+    padding-left: 0px;
+    padding-right: 10px;
+  }
+
+  .teacher_result_heading Button {
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: flex-start;
+    background-color: #526D82;
+  }
+
   /* .result_heading button{
       background-color: transparent;
       color: #526D82;
       border: 1px solid #526D82;
   } */
-        .teacher_student_scrollable {
-            scrollbar-width: thin;
-            scrollbar-color: #526D82 #DDE6ED;
-          }
-          
-          .teacher_student_scrollable::-webkit-scrollbar {
-            width: 8px;
-          }
-          
-          .teacher_student_scrollable::-webkit-scrollbar-track {
-            background: #DDE6ED;
-          }
-          
-          .teacher_student_scrollable::-webkit-scrollbar-thumb {
-            background-color: #526D82;
-            border-radius: 20px;
-          }
-          .teacher_student_verticaldot{
-            display: flex;
-            background-color: transparent;
-            color: #526D82;
-            font-size: 30px;
-        }
-        .result_view_container {
-          padding: 10px;
-      }
-      .teacher_result_view_scrollable {
-        overflow-x: auto;
-        overflow-y: auto;
-        max-height: calc(100vh - 150px);
-        padding-bottom: 10px;
-    }
-    .table {
-      display: block;
-      width: 100%;
-      overflow-x: auto; /* Horizontal scrolling */
-      white-space: nowrap; /* Prevent line breaks */
-    }
-    .teacher_student_edit{
-      width: 30px;
-      height: 50px;
-      background-color: transparent;
-      cursor: pointer;
-      /* border: 1px solid #526D82;
+  .teacher_student_scrollable {
+    scrollbar-width: thin;
+    scrollbar-color: #526D82 #DDE6ED;
+  }
+
+  .teacher_student_scrollable::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .teacher_student_scrollable::-webkit-scrollbar-track {
+    background: #DDE6ED;
+  }
+
+  .teacher_student_scrollable::-webkit-scrollbar-thumb {
+    background-color: #526D82;
+    border-radius: 20px;
+  }
+
+  .teacher_student_verticaldot {
+    display: flex;
+    background-color: transparent;
+    color: #526D82;
+    font-size: 30px;
+  }
+
+  .result_view_container {
+    padding: 10px;
+  }
+
+  .teacher_result_view_scrollable {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+    padding-bottom: 10px;
+  }
+
+  .table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    /* Horizontal scrolling */
+    white-space: nowrap;
+    /* Prevent line breaks */
+  }
+
+  .teacher_student_edit {
+    width: 30px;
+    height: 50px;
+    background-color: transparent;
+    cursor: pointer;
+    /* border: 1px solid #526D82;
       border-radius: 8px; */
   }
-    
-    }
-    
+
+}
