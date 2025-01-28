@@ -404,6 +404,76 @@ height: 100vh;
   margin-right: 80px;
   border-radius: 0;
   }
+
+
+
+  .modal-content {
+    border-radius: 12px;
+    border: none;
+    padding: 10px;
+    /* margin-top: 0px !important; */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .custom-modal{
+    border-radius: 12px !important;
+    border: none;
+    padding: 10px;
+    /* margin-top: 0px !important; */
+    margin-top: 50px !important;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    height: 300px !important;
+  }
+  
+  .modal-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .modal-description {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+    margin-left: 20px;
+  }
+  
+  .division-dropdown {
+    width: 40%;
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #f8f9fa;
+    margin-left: 20px;
+  }
+  
+  .submit-btn {
+    background-color: #526D82;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    width: 100px;
+    height: 40px;
+    transition: 0.3s;
+  }
+  .footer-submit-btn{
+    padding-left: 350px;
+    margin-top: 10px;
+    border-radius: 12px;
+  }
+  
+  .submit-btn:hover {
+    background-color: #526D82;
+  }
+
+
+
+
+
   
   @media (max-width: 1024px) {
     .teacher_student_search_input {

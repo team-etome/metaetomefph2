@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Col, Container, Row, Button, Form, Spinner,Modal } from "react-bootstrap";
+import { Col, Container, Row, Button, Form, Spinner, Modal } from "react-bootstrap";
 import { IoIosAdd, IoMdDownload, IoMdAdd } from "react-icons/io";
 import { MdUpload, MdOutlineCalendarMonth } from "react-icons/md";
 import studentexcel from "../../utils/studentexcel";
@@ -31,7 +31,8 @@ function StudentDashboard() {
   const [search, setSearch] = useState("");
   const [filteredStudentList, setFilteredStudentList] = useState([]);
   const [showModal, setShowModal] = useState(false); // Modal state
-  const [selectedDivision, setSelectedDivision] = useState("Division A"); // Selected division in modal
+  const [selectedDivision, setSelectedDivision] = useState("Division A");
+
 
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -214,21 +215,20 @@ function StudentDashboard() {
       <Container fluid>
         <Row
           style={{ paddingLeft: "2vw", paddingBottom: "1vw" }}
-          className="std_list" 
+          className="std_list"
         >
           <Col md={4} className="class_number">
             <h4>
               Class: {standard} {division}
             </h4>
-          </Col> 
+          </Col>
           <Col md={8} className="student_search_and_actions_col">
             <div className="student_search_and_actions_wrapper">
               <Form className="d-flex student_search_form">
                 <div className="position-relative">
                   <BsSearch
-                    className={`position-absolute top-50 translate-middle-y ms-2 student_search_icon ${
-                      searchQuery ? "hidden" : ""
-                    }`}
+                    className={`position-absolute top-50 translate-middle-y ms-2 student_search_icon ${searchQuery ? "hidden" : ""
+                      }`}
                   />
                   <Form.Control
                     type="search"
@@ -241,7 +241,7 @@ function StudentDashboard() {
                 </div>
               </Form>
               <div className="action_buttons_wrapper">
-                <button className="action_button_1">Promote</button>
+                <button className="action_button_1" onClick={handlePromoteClick}>Promote</button>
                 <div className="action_button_2_wrapper">
                   <div className="select_all_text">Select All</div>
                   <label className="switch">
@@ -269,11 +269,31 @@ function StudentDashboard() {
           ))}
         </Row>
       </Container>
+      {/* Promote Modal */}
+      <Modal show={showModal} onHide={handleModalClose} centered className="custom-modal">
+        <Modal.Header closeButton>
+        </Modal.Header>
+        <div>
+        <Modal.Title className="modal-title">Promote to Class 8</Modal.Title>
+          <p className="modal-description">
+            Select division in which student has to be promoted
+          </p>
+          <Form.Select className="division-dropdown" value={selectedDivision} onChange={handleDivisionChange}>
+            <option>Division A</option>
+            <option>Division B</option>
+            <option>Division C</option>
+          </Form.Select>
+        </div>
+        <div className="footer-submit-btn">
+          <button variant="primary" className="submit-btn" onClick={handleSubmit}>
+            Submit
+          </button>
+        </div>
+      </Modal>
       <div className="student_adding_button">
         <Button
-          className={`student_adding student_adding_my_button ${
-            isActive ? "active" : ""
-          }`}
+          className={`student_adding student_adding_my_button ${isActive ? "active" : ""
+            }`}
           onClick={handleAddClick}
         >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
