@@ -18,14 +18,16 @@ function ClassView() {
 
   const APIURL = useSelector((state) => state.APIURL.url);
 
-  console.log(selectedRowIndex, "aaaa");
+  // console.log(selectedRowIndex, "aaaa");
 
   const location = useLocation();
   const navigate = useNavigate();
 
   const classDetails = location.state?.class;
 
-  console.log(classDetails,4)
+  console.log(classDetails,"classssssss")
+
+  // console.log(classDetails,4)
 
   // const handleDelete = async () => {
   //   Swal.fire({
@@ -56,6 +58,18 @@ function ClassView() {
   //     }
   //   });
   // };
+
+
+
+  const handleEdit = () => {
+    if (classDetails) {
+      navigate("/classadding", { state: { classData: { ...classDetails } } });
+      // console.log(classDetails)
+    }
+  };
+  
+
+
   const handleDelete = async () => {
     Swal.fire({
       title: "Are you sure?",
@@ -131,7 +145,8 @@ function ClassView() {
                     paddingRight: "30px",
                   }}
                 >
-                  {/* <button className="class_edit">Edit</button> */}
+                  <FiEdit className="class_edit" onClick={handleEdit}/>
+
                
                   <MdDelete className="evaluation_edit" onClick={handleDelete} />
 

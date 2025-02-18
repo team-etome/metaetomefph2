@@ -17,16 +17,21 @@ function StudentDashboard() {
   const [showOptions, setShowOptions] = useState(false);
   const [file, setFile] = useState(null);
   const [studentlist, setStudentList] = useState([]);
+  console.log(studentlist)
   const [standard, setStandard] = useState("");
   const [division, setDivision] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [error, setError] = useState(false); // Track API failure
+  const [selectedStudents, setSelectedStudents] = useState([]); // Selected students list
+  console.log(selectedStudents)
 
   const APIURL = useSelector((state) => state.APIURL.url);
   const teacher = useSelector((state) => state.teacherinfo);
   const teacher_id = teacher.teacherinfo?.teacher_id;
 
   const [selectAll, setSelectAll] = useState(false); // State for "Select All"
+
 
   const [search, setSearch] = useState("");
   const [filteredStudentList, setFilteredStudentList] = useState([]);
@@ -39,6 +44,16 @@ function StudentDashboard() {
   const toggleSelectAll = () => {
     setSelectAll(!selectAll); // Toggle "Select All" state
   };
+
+  const handleSelectAllToggle = () => {
+    if (selectAll) {
+      setSelectedStudents([]); // Unselect all students
+    } else {
+      setSelectedStudents(filteredStudentList.map((student) => student.id)); // Store only IDs
+    }
+    setSelectAll(!selectAll);
+  };
+
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -56,6 +71,15 @@ function StudentDashboard() {
     navigate("/teacherstudentview", { state: { student: item } });
   };
 
+  const handleStudentClick = (student) => {
+    if (selectedStudents.includes(student.id)) {
+      // Remove student if already selected
+      setSelectedStudents(selectedStudents.filter((id) => id !== student.id));
+    } else {
+      // Add student ID to the list
+      setSelectedStudents([...selectedStudents, student.id]);
+    }
+  };
   // const handleFileUpload = async () => {
   //   if (!file) return;
   //   setIsLoading(true);
@@ -79,15 +103,22 @@ function StudentDashboard() {
   // };
   // Fetch student list data
   const fetchFacultyData = async () => {
+    setError(false); // Reset error before fetching
     try {
       const response = await axios.get(`${APIURL}/api/addstudent/${teacher_id}`);
-      setStudentList(response.data);
-      setStandard(response.data[0].standard);
-      setDivision(response.data[0].division);
+      if (response.data.length === 0) {
+        setError(true); // If no data is returned, show error message
+      } else {
+        setStudentList(response.data);
+        setStandard(response.data[0]?.standard || "");
+        setDivision(response.data[0]?.division || "");
+      }
     } catch (error) {
       console.error("Failed to fetch faculty data:", error);
+      setError(true); // Mark API failure
     }
   };
+
 
   // File upload with error handling and success message
   const handleFileUpload = async () => {
@@ -185,9 +216,9 @@ function StudentDashboard() {
   useEffect(() => {
     // Fetch student data
     const exampleData = [
-      { id: 1, student_name: "Dilna Marry Jhone", roll_no: "316587" },
-      { id: 2, student_name: "Student Two", roll_no: "316588" },
-      { id: 3, student_name: "Student Three", roll_no: "316589" },
+      // { id: 1, student_name: "Dilna Marry Jhone", roll_no: "316587" },
+      // { id: 2, student_name: "Student Two", roll_no: "316588" },
+      // { id: 3, student_name: "Student Three", roll_no: "316589" },
     ];
     setStudentList(exampleData);
     setFilteredStudentList(exampleData);
@@ -209,6 +240,37 @@ function StudentDashboard() {
     console.log("Promoting students to:", selectedDivision);
     setShowModal(false); // Close modal on submit
   };
+
+  const senddatatobackend = () => {
+    handleSubmitSelectedStudents();
+    handleSubmit();
+  }
+
+  const handleSubmitSelectedStudents = async () => {
+    if (selectedStudents.length === 0) {
+      alert("No students selected!");
+      return;
+    }
+    let divis = selectedDivision.split(" ")
+
+    try {
+      const response = await axios.post(`${APIURL}/api/studentpromote`, {
+        students: selectedStudents,  // Sending list of selected students
+        Division: divis[1],  // Sending selected division
+      });
+
+      console.log("Response from backend:", response.data);
+
+      alert("Students submitted successfully!");
+      setSelectedStudents([]); // Clear selection after submission
+      setSelectAll(false); // Reset "Select All" toggle
+    } catch (error) {
+      console.error("Error submitting students:", error);
+      alert("Failed to submit students!");
+    }
+  };
+
+
   // style={{border:"2px solid red"}}
   return (
     <div className="teacher_student_dashboard">
@@ -245,7 +307,7 @@ function StudentDashboard() {
                 <div className="action_button_2_wrapper">
                   <div className="select_all_text">Select All</div>
                   <label className="switch">
-                    <input type="checkbox" />
+                    <input type="checkbox" checked={selectAll} onChange={handleSelectAllToggle} />
                     <span className="slider round"></span>
                   </label>
                 </div>
@@ -253,12 +315,18 @@ function StudentDashboard() {
             </div>
           </Col>
         </Row>
-        <Row className="teacher_studentdashboard_container" >
+        {/* <Row className="teacher_studentdashboard_container" >
           {filteredStudentList.map((item, index) => (
             <Col lg={3} md={6} sm={6} xs={12} key={index}>
               <div
-                onClick={() => handleClick(item)}
+                // onClick={() => handleStudentClick(item)}
+                onClick={() => selectAll ? handleStudentClick(item) : handleClick(item)}
                 className="student_rectangle"
+                style={{
+                  backgroundColor: selectedStudents.includes(item.id) ? "#DFE9EF" : "white",
+                  cursor: "pointer",
+                  transition: "background-color 0.3s ease", // Smooth transition effect
+                }}
               >
                 <div className="student_name1">{item.student_name}</div>
                 <div className="student_date_id">
@@ -267,14 +335,47 @@ function StudentDashboard() {
               </div>
             </Col>
           ))}
+        </Row> */}
+        <Row className="teacher_studentdashboard_container">
+          {error ? (
+            <Col className="text-center">
+              <h5 style={{ color: "#526D82", marginTop: "20px" }}>No student data available.</h5>
+            </Col>
+          ) : (
+            filteredStudentList.length > 0 ? (
+              filteredStudentList.map((item, index) => (
+                <Col lg={3} md={6} sm={6} xs={12} key={index}>
+                  <div
+                    onClick={() => selectAll ? handleStudentClick(item) : handleClick(item)}
+                    className="student_rectangle"
+                    style={{
+                      backgroundColor: selectedStudents.includes(item.id) ? "#DFE9EF" : "white",
+                      cursor: "pointer",
+                      transition: "background-color 0.3s ease",
+                    }}
+                  >
+                    <div className="student_name1">{item.student_name}</div>
+                    <div className="student_date_id">
+                      <div className="student_id">Admission No.{item.roll_no}</div>
+                    </div>
+                  </div>
+                </Col>
+              ))
+            ) : (
+              <Col className="text-center">
+                <h5 style={{ color: "#666", marginTop: "20px" }}>No students found.</h5>
+              </Col>
+            )
+          )}
         </Row>
+
       </Container>
       {/* Promote Modal */}
       <Modal show={showModal} onHide={handleModalClose} centered className="custom-modal">
         <Modal.Header closeButton>
         </Modal.Header>
         <div>
-        <Modal.Title className="modal-title">Promote to Class 8</Modal.Title>
+          <Modal.Title className="modal-title">Promote to Class 8</Modal.Title>
           <p className="modal-description">
             Select division in which student has to be promoted
           </p>
@@ -285,7 +386,7 @@ function StudentDashboard() {
           </Form.Select>
         </div>
         <div className="footer-submit-btn">
-          <button variant="primary" className="submit-btn" onClick={handleSubmit}>
+          <button variant="primary" className="submit-btn" onClick={senddatatobackend} >
             Submit
           </button>
         </div>

@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import "../adminlokatextbookdashboard/lokabookdashboard.css";
 import axios from "axios";
 
+
 function LokaBookDashboard() {
   const [isActive, setIsActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,6 +31,10 @@ function LokaBookDashboard() {
   const [filteredTextbooks, setFilteredTextbooks] = useState([]);
 
   console.log(lokabookListData,"clgggggggggggggggggg")
+
+const handleEditTextbook = (textbook) => {
+  navigate("/LokaTextbookEdit", { state: { textbook } });
+};
 
   const handlePublisherSelect = (publisher) => {
     setSelectedPublisher(publisher);
@@ -134,7 +139,9 @@ function LokaBookDashboard() {
                   key={index}
                   className="ad_lk_tb_list"
                 >
-                  <div  className="border border-white ad_lk_tb_rectangle">
+                  <div  className="border border-white ad_lk_tb_rectangle" 
+                  onClick={() => handleEditTextbook(item)}
+                  style={{ cursor: "pointer" }}>
                  
                     <div  className="ad_loka_tb_img">
                       

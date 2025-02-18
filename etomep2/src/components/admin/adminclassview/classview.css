@@ -93,22 +93,23 @@
       font-size: 17px;
       color: #526D82;
     }
-    .class_edit_icon{
+    /* .class_edit_icon{
         width: 30px;
         height: 50px;
         background-color: transparent;
         cursor: pointer;
         color: #526D82;
-        /* border: 1px solid #526D82; */
+        border: 1px solid #526D82;
         border-radius: 8px;
-    }
+    } */
     .verticaldot{
         display: none;
     }
     .class_edit{
-        width: 75px;
-        height: 50px;
-        background-color: #526D82;
+        width: 30px;
+        height: 30px;
+        /* color: white */
+        /* background-color: #526D82; */
         border-radius: 8px;
     }
     .class_block{
