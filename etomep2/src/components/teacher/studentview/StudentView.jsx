@@ -94,7 +94,7 @@ function StudentView() {
                 }}
               >
                 {/* <MdDelete className='teacher_student_edit'/> */}
-                <button className="teacher_student_edit">Edit</button>
+                <button className="teacher_student_edit" onClick={toggleEditBlockButtons}>Edit</button>
               </div>
             ) : (
               <div style={{ position: "relative" }} ref={dropdownRef}>
@@ -253,7 +253,7 @@ function StudentView() {
                     type="text"
                     id="standard"
                     name="standard"
-                    value={student.class_name}
+                    value={student.standard}
                     readOnly
                   />
                 </div>

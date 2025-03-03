@@ -165,21 +165,28 @@ function TeacherClassView() {
             <h1 className="tch_vw_sndrw_hd">Students List</h1>
             <div className="tch_vw_card_container">
               {item.students.map((student, index) => (
-                <div className="tch_vw_card" key={index}>
-                  <h3>{student.student_name}</h3>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      paddingTop: "10px",
-                    }}
-                  >
-                    <p1>{student.dob}</p1>
-                    <p>{student.admission_no}</p>
+                <Link
+                  to="/teacherclassstudentview"
+                  className="no-underline-link"
+                  state={{ student }}
+                  key={index}
+                >
+                  <div className="tch_vw_card" key={index}>
+                    <h3>{student.student_name}</h3>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        paddingTop: "10px",
+                      }}
+                    >
+                      <p>{student.dob}</p>
+                      <p>{student.admission_no}</p>
+                    </div>
                   </div>
-                </div>
+                  </Link>
               ))}
-            </div>
+                </div>
           </Row>
         </Row>
       </Container>

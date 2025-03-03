@@ -77,6 +77,7 @@ import TeachermcqListpage from './pages/teacherpage/TeachermcqListpage';
 import McqaddingForm from './components/teacher/teachermcq/McqaddingForm';
 import TeacherMcqaddPage from './pages/teacherpage/TeacherMcqaddPage';
 import LokaTextbookEdit from './components/admin/adminloka/LokaTextbookEdit';
+import TeacherClassStudentView from './components/teacher/teacherclassstudentview/TeacherClassStudentView';
 
 
 
@@ -171,6 +172,8 @@ function App() {
           <Route path="/teachermcqlist" element={<TeachermcqListpage/>} />
           <Route path="/teachermcqadd" element={<TeacherMcqaddPage/>}/>
           <Route path="/teachermcq" element={<TeacherMcq/>} />
+          <Route path="/teacherclassstudentview" element={<TeacherClassStudentView />} />
+
           
 
 

@@ -99,6 +99,21 @@ display: flex;
 justify-content: center;
 align-items: center;
 }
+
+
+.loading-text {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0; /* Light grey background while loading */
+}
+
+
 .textbook_search{
   padding-left: 50%;
   /* border: 1px solid red; */
@@ -394,3 +409,31 @@ align-items: center;
     max-width: 160px; /* Reduce the max width for smaller screens */
   }
 }
+
+
+
+/* Center the loader inside the image div */
+.custom-loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust based on your image height */
+  width: 100px;  /* Adjust based on your image width */
+  margin: auto;
+}
+
+/* Fade-in Effect for Images */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+

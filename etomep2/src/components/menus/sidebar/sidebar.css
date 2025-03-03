@@ -53,6 +53,9 @@
   justify-content: center;
   font-size: 22px;
 }
+.menu_item_col.active .icon_img {
+  color: white !important; /* Change icon color when active */
+}
 
 .icon-text {
   position: absolute;
@@ -79,6 +82,8 @@
   font-size: 25px;
   opacity: 1;
 }
+
+
 
 .sidenav_fstdiv:hover .icon_container_div .icon-text {
   opacity: 1;
@@ -220,3 +225,5 @@
   font-size: 25px;
   opacity: 1;
 }
+
+

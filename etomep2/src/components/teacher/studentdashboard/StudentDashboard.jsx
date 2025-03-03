@@ -38,6 +38,7 @@ function StudentDashboard() {
   const [showModal, setShowModal] = useState(false); // Modal state
   const [selectedDivision, setSelectedDivision] = useState("Division A");
 
+  console.log(studentlist,"student")
 
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -375,7 +376,8 @@ function StudentDashboard() {
         <Modal.Header closeButton>
         </Modal.Header>
         <div>
-          <Modal.Title className="modal-title">Promote to Class 8</Modal.Title>
+          <Modal.Title className="modal-title">Promote to Class {parseInt(standard, 10) + 1}
+          </Modal.Title>
           <p className="modal-description">
             Select division in which student has to be promoted
           </p>

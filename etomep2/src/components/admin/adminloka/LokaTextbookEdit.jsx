@@ -8,6 +8,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
+import { RxCross2 } from "react-icons/rx";
 
 
 function LokaTextbookEdit() {
@@ -22,7 +23,6 @@ function LokaTextbookEdit() {
   const [textbookName, setTextbookName] = useState("");
   const [subjectOptions, setSubjectOptions] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
-
   const [mediumOptions, setMediumOptions] = useState([]);
   const [selectedMedium, setSelectedMedium] = useState(null);
   const [medium, setMedium] = useState("");
@@ -35,7 +35,6 @@ function LokaTextbookEdit() {
   const [data, setData] = useState("");
   const [selectedPublisher, setSelectedPublisher] = useState("");
   const [ids, setiIds] = useState("");
-
   const [showChapterDiv, setShowChapterDiv] = useState(false);
 
   console.log(pdfFile, "subjectttttt");
@@ -172,7 +171,7 @@ function LokaTextbookEdit() {
     const updatedChapters = [...chapters];
     updatedChapters[index][field] = value;
 
-   
+
     if (!value.trim()) {
       updatedChapters[index].error = "Chapter name is required";
     } else {
@@ -187,7 +186,7 @@ function LokaTextbookEdit() {
   };
 
 
-  
+
 
 
   const validateChapters = () => {
@@ -268,13 +267,28 @@ function LokaTextbookEdit() {
   // };
 
 
+  const handleDeleteChapter = (index) => {
+    setChapters((prevChapters) => {
+      const updatedChapters = prevChapters.filter((_, i) => i !== index);
+
+      // Ensure we only update state if updatedChapters is defined
+      if (updatedChapters) {
+        setTotalChaptersInput(updatedChapters.length);
+      }
+
+      return updatedChapters;
+    });
+  };
+
+
+
   const renderChapterInputs = () => {
     return chapters.map((chapter, index) => {
       const fileName =
         chapter.pdfFile && typeof chapter.pdfFile === "string"
           ? chapter.pdfFile.split("/").pop().split("?")[0]
           : chapter.pdfFile?.name || "No file chosen";
-  
+
       return (
         <div
           key={index}
@@ -296,7 +310,7 @@ function LokaTextbookEdit() {
                 style={{
                   border: "none",
                   borderBottom: "1px solid black",
-                  width: "160px",
+                  width: "120px",
                   outline: "none",
                 }}
                 maxLength={50}
@@ -307,8 +321,8 @@ function LokaTextbookEdit() {
               />
             </label>
           </div>
-           {/* Choose File Button */}
-           <button
+          {/* Choose File Button */}
+          <button
             onClick={(e) => {
               e.preventDefault();
               document.getElementById(`pdf-upload-${index}`).click();
@@ -326,11 +340,11 @@ function LokaTextbookEdit() {
           >
             Choose File
           </button>
-  
+
           {/* File Name Display */}
           <span
             style={{
-              minWidth: "200px",
+              maxWidth: "100px",
               textAlign: "left",
               fontSize: "14px",
               color: "#333",
@@ -341,7 +355,7 @@ function LokaTextbookEdit() {
           >
             {fileName}
           </span>
-  
+
           {/* Hidden File Input */}
           <input
             id={`pdf-upload-${index}`}
@@ -350,11 +364,31 @@ function LokaTextbookEdit() {
             style={{ display: "none" }}
             onChange={(e) => handleFileChange(index, e.target.files[0])}
           />
+          {/* Delete Button */}
+          <RxCross2 style={{
+            color:"red",
+            
+          }} onClick={() => handleDeleteChapter(index)}/>
+
+          {/* <button
+            
+            style={{
+              backgroundColor: "red",
+              color: "white",
+              border: "none",
+              padding: "5px 10px",
+              cursor: "pointer",
+              borderRadius: "5px",
+            }}
+          >
+            Delete
+          </button> */}
         </div>
+
       );
     });
   };
-  
+
 
   // const handleTotalChaptersChange = (e) => {
   //   const totalChapters = parseInt(e.target.value, 10);
@@ -397,25 +431,25 @@ function LokaTextbookEdit() {
       setChapters([]);
       return;
     }
-  
+
     setTotalChaptersInput(totalChapters);
-  
+
     setChapters((prevChapters) => {
       let newChapters = [...prevChapters];
-  
+
       while (newChapters.length < totalChapters) {
         newChapters.push({ name: "", pdfFile: null });
       }
-  
+
       newChapters = newChapters.slice(0, totalChapters);
-  
+
       return newChapters;
     });
   };
-  
 
-  console.log(chapters,"chaptersss")
-  console.log(totalChaptersInput,"total chapter")
+
+  console.log(chapters, "chaptersss")
+  console.log(totalChaptersInput, "total chapter")
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -439,8 +473,8 @@ function LokaTextbookEdit() {
       return updatedChapters;
     });
   };
-  
-  
+
+
 
   const handleVolumeChange = (e) => {
     const value = e.target.value;
@@ -514,7 +548,7 @@ function LokaTextbookEdit() {
       if (chapters.length > 0) {
         chapters.forEach((chapter, index) => {
           formData.append(`chapters[${index}][name]`, chapter.name);
-  
+
           let pdfFileName = "No file chosen";
           if (chapter.pdfFile) {
             if (typeof chapter.pdfFile === "string") {
@@ -525,15 +559,16 @@ function LokaTextbookEdit() {
               pdfFileName = chapter.pdfFile.name;
             }
           }
-  
+
           formData.append(`chapters[${index}][pdfFile]`, pdfFileName);
-        });}
+        });
+      }
 
 
-      console.log( "FormData being sent:");
+      console.log("FormData being sent:");
       for (let pair of formData.entries()) {
         console.log(pair[0], ":", pair[1]);
-    }    
+      }
 
 
       const response = await axios.put(
@@ -650,10 +685,14 @@ function LokaTextbookEdit() {
   };
 
   useEffect(() => {
-    if (textbookData) {
-      setClassValue(textbookData.textbook_details.class_name || "");
-      setTextbookName(textbookData.textbook_details.text_name || "");
-      setSelectedSubject({ value: textbookData.textbook_details.subject, label: textbookData.textbook_details.subject } || "");
+    if (textbookData && textbookData.textbook_details) {
+      setClassValue(textbookData.textbook_details?.class_name || "");
+      setTextbookName(textbookData.textbook_details?.text_name || "");
+      setSelectedSubject(
+        textbookData.textbook_details?.subject
+          ? { value: textbookData.textbook_details.subject, label: textbookData.textbook_details.subject }
+          : null
+      );
       setVolume(textbookData.textbook_details.volume || "");
       // Ensure `mediumOptions` is available before setting selectedMedium
       const selectedMediumOption = mediumOptions.find(
@@ -678,18 +717,19 @@ function LokaTextbookEdit() {
         setChapters(
           textbookData.chapters.chapters.map((chapter) => {
             ({
-            name: chapters.chapter_name || "",
-            pdfFile: typeof chapter.textbook_pdf === "string"
-          ? chapter.textbook_pdf.split("/").pop().split("?")[0]  // Extract filename correctly
-          : null,
+              name: chapters.chapter_name || "",
+              pdfFile: typeof chapter.textbook_pdf === "string"
+                ? chapter.textbook_pdf.split("/").pop().split("?")[0]  // Extract filename correctly
+                : null,
 
-          })})
+            })
+          })
         );
       }
     }
   }, [textbookData, mediumOptions]);
 
-  
+
 
   useEffect(() => {
     if (textbookData?.chapters) {
@@ -699,7 +739,7 @@ function LokaTextbookEdit() {
             prevChapters[index]?.name ||
             textbookData.chapters.chapters?.[index]?.chapter_name ||
             "",
-            pdfFile:
+          pdfFile:
             prevChapters[index]?.pdfFile ||
             (textbookData.chapters.chapters?.[index]?.textbook_pdf
               ? textbookData.chapters.chapters[index].textbook_pdf.split("/").pop().split("?")[0] // Extract only file name
@@ -708,7 +748,7 @@ function LokaTextbookEdit() {
       });
     }
   }, [textbookData, totalChaptersInput]);
-  
+
 
   // useEffect(() => {
   //   if (textbookData?.chapters) {
@@ -727,7 +767,7 @@ function LokaTextbookEdit() {
   //     });
   //   }
   // }, [textbookData, totalChaptersInput]);
-  
+
 
   // useEffect(() => {
   //   if (data && data[0].chapter_info) {
@@ -776,15 +816,16 @@ function LokaTextbookEdit() {
               <Col md={6}>
                 <div className="loka_textbook_group">
                   <label htmlFor="class">Class</label>
-                  <input
-                    type="text"
-                    id="class"
-                    name="class"
-                    value={classValue}
-                    maxLength="2"
-                    style={{}}
-                    onChange={handleClassValueChange}
-                  />
+                  {(textbookData?.textbook_details?.class_name ?? "") && (
+                    <input
+                      type="text"
+                      id="class"
+                      name="class"
+                      value={classValue}
+                      maxLength="2"
+                      onChange={handleClassValueChange}
+                    />
+                  )}
                 </div>
                 <div className="loka_textbook_group">
                   <label htmlFor="textbookName">Textbook Name</label>

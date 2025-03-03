@@ -195,6 +195,7 @@ function ClassView() {
                     id="category"
                     name="category"
                     style={{ textTransform: "capitalize" }}
+                    className={(!classDetails?.category || classDetails.category === "null") ? "input-empty" : ""}
                     value={classDetails ? classDetails.category : "null"}
                     readOnly
                   />

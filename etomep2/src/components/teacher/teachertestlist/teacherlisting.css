@@ -237,3 +237,18 @@
         font-size: 14px;
       }
     }
+
+
+    .delete-icon {
+      height: 24px;
+      width: 24px;
+      cursor: pointer;
+      color: #ff898b; /* initial color */
+      transition: color 0.3s ease;
+    }
+    
+    .delete-icon:hover {
+      color: red; /* change to red on hover */
+    }
+
+    
