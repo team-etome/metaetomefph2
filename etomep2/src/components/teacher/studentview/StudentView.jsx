@@ -12,24 +12,28 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { useLocation } from "react-router-dom";
-
+import { IoMdClose } from "react-icons/io";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import defaultimage from '../../../../src/assets/default.jpg'
 function StudentView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isBlocked, setIsBlocked] = useState(false);
-
+  const [image, setImage] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false); // New state for edit mode
 
   const navigate = useNavigate();
-
   const dropdownRef = useRef(null);
-
   const location = useLocation();
   const { student } = location.state || {};
-  // const classDetails = location.state?.student;
 
 
-  console.log(student, "studetn");
+
+  console.log(student , "student");
+
+  const APIURL = useSelector((state) => state.APIURL.url || "");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -53,6 +57,7 @@ function StudentView() {
   const handleBackClick = () => {
     navigate("/teacherstudentdashboard");
   };
+
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     document.addEventListener("mousedown", handleClickOutside);
@@ -66,23 +71,82 @@ function StudentView() {
     e.preventDefault();
     setShowEditBlockButtons((prevState) => !prevState);
   };
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Create an object URL for the selected file
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl); // Set the uploaded image URL
+      // setIsEditMode(false)
+    }
+  };
+
+  const handleEditClick = (event) => {
+    event.preventDefault();
+
+    if (isEditMode) {
+      handleSave();
+    } else {
+      setIsEditMode(true);
+    }
+  };
+
+  const handleClose = () => {
+    setIsEditMode(false);
+  };
+
+  const handleSave = async () => {
+    // Validate data before saving
+    if (!student.id || !image) {
+      alert("Missing student ID or image. Please ensure all fields are set.");
+      return;
+    }
+  
+    const data = new FormData();
+    data.append("student_id", student.id);
+  
+    // Ensure that the image is correctly appended
+    const fileInput = document.querySelector('input[name="image"]');
+    const file = fileInput ? fileInput.files[0] : null;
+    
+    if (!file) {
+      alert("No image selected!");
+      return;
+    }
+    
+    data.append("image", file);  // Append the selected file correctly
+  
+    try {
+      const response = await axios.put(
+        `${APIURL}/api/addstudent`, 
+        data, 
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+  
+      if (response.status === 200) {
+        alert("Student data saved successfully!");
+        setIsEditMode(false); // Exit edit mode after saving
+      } else {
+        alert("Failed to save data. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error saving data:", error);
+      alert("An error occurred. Please check the console for details.");
+    }
+  };
 
   return (
     <div>
       <Container className="teacher_student_view_container">
         <form className="teacher_student_view_form">
           <div className="teacher_student_header">
-            {/* <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "10px",
-              }}
-            > */}
-            {/* <Link to="/teacherstudentdashboard"> */}
-            {/* <IoChevronBackSharp onClick={handleBackClick} className="teacher_student_view_back" /> */}
-            {/* </Link> */}
-            <h1 className="teaher_student_view_title">{student.student_name} </h1>
+            <h1 className="teaher_student_view_title">
+              {student.student_name}{" "}
+            </h1>
             <div style={{ flex: "1" }}></div>
             {windowWidth > 800 ? (
               <div
@@ -93,8 +157,15 @@ function StudentView() {
                   paddingRight: "30px",
                 }}
               >
-                {/* <MdDelete className='teacher_student_edit'/> */}
-                <button className="teacher_student_edit" onClick={toggleEditBlockButtons}>Edit</button>
+
+                <button
+                  type="button"
+                  className="teacher_student_edit"
+                  onClick={handleEditClick}
+                >
+                  {isEditMode ? "Save" : "Edit"}
+                </button>
+
               </div>
             ) : (
               <div style={{ position: "relative" }} ref={dropdownRef}>
@@ -119,16 +190,11 @@ function StudentView() {
                       gap: "10px",
                     }}
                   >
-                    <FiEdit className='teacher_student_edit' />
-
+                    <FiEdit className="teacher_student_edit" />
                   </div>
                 )}
               </div>
             )}
-            {/* </div> */}
-
-            {/* </div> */}
-            {/* <div style={{ border: "0.5px solid #526D82" }}></div> */}
           </div>
           <div className="teacher_student_scrollable">
             <Row
@@ -235,11 +301,83 @@ function StudentView() {
                 </div>
               </Col>
               <Col md={4}>
-                <div>
-                  <img src={amritha} alt="" className='teacher_profile_picture' />
-                </div>
+                {isEditMode ? (
+                  <div
+                    style={{
+                      width: "180px",
+                      marginLeft: "2px",
+                      height: "217px",
+                      position: "relative",
+                      border: "2px solid black",
+                    }}
+                  >
+                    {/* Close Button */}
+                    <IoMdClose
+                      style={{
+                        position: "absolute",
+                        right: "10px",
+                        top: "10px",
+                        cursor: "pointer",
+                        zIndex: 2,
+                      }}
+                      onClick={handleClose}
+                    />
+
+                    {/* Uploaded Image Preview */}
+                    {image && (
+                      <img
+                        src={image}
+                        alt="Uploaded Preview"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          zIndex: 1,
+                        }}
+                      />
+                    )}
+
+                    {/* File Input */}
+                    <input
+                      type="file"
+                      id="image"
+                      name="image"
+                      onChange={handleImageChange}
+                      className="student_image_upload"
+                      style={{
+                        position: "absolute",
+                        bottom: "10px",
+                        left: "10px",
+                        zIndex: 3,
+
+                        padding: "5px",
+                        cursor: "pointer",
+                      }}
+                    />
+                  </div>
+                ) : (
+                  // Display current image when not in edit mode
+                  <div
+                    style={{
+                      border: "2px solid black",
+                      width: "180px",
+                      marginLeft: "2px",
+                      height: "217px",
+                    }}
+                  >
+                    <img
+                      src={student.image || defaultimage}
+                      alt="Profile"
+                      className="teacher_profile_picture"
+                    />
+                  </div>
+                )}
               </Col>
             </Row>
+
             <Row style={{ paddingTop: "20px" }}>
               <div className="teacher_student_heading">
                 <div className="teacher_student_title">
@@ -279,110 +417,59 @@ function StudentView() {
                     readOnly
                   />
                 </div>
-                {/* <div className="teacher_school_info">
-                  <label htmlFor="category">Category</label>
-                  <input
-                    type="text"
-                    id="category"
-                    name="category"
-                    value="Science"
-                    readOnly
-                  />
-                </div> */}
               </Col>
-
               <Col md={3}>
-                <div className="teacher_school_info" >
+                <div className="teacher_school_info">
                   <label htmlFor="join_date">Joining Date</label>
                   <input
                     type="text"
                     id="join_date"
                     name="join_date"
                     value={student.start_date}
-                    style={{ paddingBottom: '10px', marginTop: '0vh' }}
+                    style={{ paddingBottom: "10px", marginTop: "0vh" }}
                     readOnly
                   />
                 </div>
-                {/* <div className="teacher_school_info">
-                  <label htmlFor="academic_year">Academic Year</label>
-                  <input
-                    type="text"
-                    id="academic_year"
-                    name="academic_year"
-                    value="2024-2025"
-                    readOnly
-                  />
-                </div> */}
               </Col>
             </Row>
+          </div>
 
-            <Row className="mt-4">
-              <div className="teacher_result_heading">
-                <div className="teacher_student_title">
-                  <Button onClick={handleSubmit}>
-                    <PiGraduationCap />
-                    &nbsp; Results
-                  </Button>
-                </div>
-              </div>
-            </Row>
+          {/* Block / Unblock */}
+          <div className="teacher_student_button_group">
+            <Button
+              variant={isBlocked ? "success" : "danger"}
+              className="teacher_student_button"
+              onClick={() => setIsBlocked(!isBlocked)}
+            >
+              {isBlocked ? <CgUnblock /> : <MdBlockFlipped />}
+              {isBlocked ? "Unblock" : "Block"}
+            </Button>
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Button variant="outline-primary" onClick={handleBackClick}>
+              <IoChevronBackSharp /> Back
+            </Button>
           </div>
         </form>
       </Container>
-      <Modal show={showModal} onHide={handleCloseModal} centered size="xl">
-        <Modal.Header
-          closeButton
-          style={{ border: "none", paddingBottom: "0px" }}
-        >
-          {/* <Modal.Title >Student Results</Modal.Title> */}
+
+      {/* Modal for confirming action */}
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ paddingTop: "0px" }}>
-          <div className="teacher_result_view_scrollable">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Terms</th>
-                  <th className="vertical-text">English</th>
-                  <th className="vertical-text">Malayalam</th>
-                  <th className="vertical-text">Social Science</th>
-                  <th className="vertical-text">Physics</th>
-                  <th className="vertical-text">Chemistry</th>
-                  <th className="vertical-text">Biology</th>
-                  <th className="vertical-text">IT</th>
-                  <th className="vertical-text">Maths</th>
-                  <th>Total Mark</th>
-                  <th>Obtained Mark</th>
-                  <th>Progress</th>
-                </tr>
-              </thead>
-              {/* <tbody>
-                {student.map(student => (
-                  <tr >
-                    <td>{student.term}</td>
-                    <td className="no-border-right">{student.scores.English}</td>
-                    <td className="no-border-right">{student.scores.Malayalam}</td>
-                    <td className="no-border-right">{student.scores.SocialScience}</td>
-                    <td className="no-border-right">{student.scores.Physics}</td>
-                    <td className="no-border-right">{student.scores.Chemistry}</td>
-                    <td className="no-border-right">{student.scores.Biology}</td>
-                    <td className="no-border-right">{student.scores.IT}</td>
-                    <td className="no-border-right">{student.scores.Maths}</td>
-                    <td>{student.totalMark}</td>
-                    <td>{student.obtainedMark}</td>
-                    <td>{student.progress}</td>
-                  </tr>
-                ))}
-              </tbody> */}
-            </table>
-          </div>
+        <Modal.Body>
+          <h5>Do you want to save changes?</h5>
         </Modal.Body>
-        {/* <Modal.Footer style={{ border: 'none' }}>
-  <Link to="/aarnanavbar" style={{ textDecoration: 'none' }}>
-    <Button variant="primary" onClick={handleCloseModal} className='modal_submit'>
-      Submit
-    </Button>
-  </Link>
-</Modal.Footer> */}
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleCloseModal}>
+            Save
+          </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );

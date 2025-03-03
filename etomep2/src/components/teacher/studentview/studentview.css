@@ -166,14 +166,22 @@
 .teacher_profile_picture {
   width: 175px;
   height: 211px;
-  /* padding-right: 10px;
-        padding-left: 30px; */
-  margin-left: 50px;
+
   margin-right: 0px !important;
   margin-top: 0px;
   margin-bottom: 10px;
+ 
 }
 
+
+.student_image_upload{
+
+  margin-top: 70px;
+  width: 100px;
+  margin-left: 38px;
+
+
+}
 .results_container {
   display: flex;
   justify-content: space-around;
