@@ -13,7 +13,9 @@ import amritha from "../../../assets/amritha.png";
 import { BsSearch } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import "../adminlokatextbookdashboard/lokabookdashboard.css";
+import { FadeLoader } from "react-spinners";
 import axios from "axios";
+
 
 function LokaBookDashboard() {
   const [isActive, setIsActive] = useState(false);
@@ -29,7 +31,11 @@ function LokaBookDashboard() {
 
   const [filteredTextbooks, setFilteredTextbooks] = useState([]);
 
-  console.log(lokabookListData,"clgggggggggggggggggg")
+  console.log(lokabookListData, "clgggggggggggggggggg")
+
+  const handleEditTextbook = (textbook) => {
+    navigate("/LokaTextbookEdit", { state: { textbook } });
+  };
 
   const handlePublisherSelect = (publisher) => {
     setSelectedPublisher(publisher);
@@ -75,35 +81,46 @@ function LokaBookDashboard() {
     }
   };
 
+  const [imageLoaded, setImageLoaded] = useState({}); // Track when image is ready to display
+
+  const handleImageLoad = (index) => {
+    setTimeout(() => {
+      setImageLoaded((prevState) => ({
+        ...prevState,
+        [index]: true, // Show image after 3 seconds
+      }));
+    }, 1000);
+  };
+
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
       <Container
         fluid
         className="admin_loka_textbook_dashboard"
-        // style={{ marginTop: "16px" }}
+      // style={{ marginTop: "16px" }}
       >
         <div className="textbook_search">
           <Row className="search_dropdwon_textbook">
             <div className="book_search_col">
-            <Dropdown className="dropdown_tb">
-            <Dropdown.Toggle
-              variant="outline-secondary"
-              id="dropdown-basic"
-              className="dropdown_tb_toggle"
-            >
-              {selectedPublisher || "Select Publisher"}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {(publisher_name || []).map((publisher, index) => (
-                <Dropdown.Item
-                  key={index}
-                  onClick={() => handlePublisherSelect(publisher)}
+              <Dropdown className="dropdown_tb">
+                <Dropdown.Toggle
+                  variant="outline-secondary"
+                  id="dropdown-basic"
+                  className="dropdown_tb_toggle"
                 >
-                  {publisher}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
+                  {selectedPublisher || "Select Publisher"}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {(publisher_name || []).map((publisher, index) => (
+                    <Dropdown.Item
+                      key={index}
+                      onClick={() => handlePublisherSelect(publisher)}
+                    >
+                      {publisher}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
               <div className="separator"></div>
               <InputGroup className="inputgroup_search position-relative">
                 {!searchTerm && !isFocused && (
@@ -134,12 +151,26 @@ function LokaBookDashboard() {
                   key={index}
                   className="ad_lk_tb_list"
                 >
-                  <div  className="border border-white ad_lk_tb_rectangle">
-                 
-                    <div  className="ad_loka_tb_img">
-                      
-                      <img src={item.textbook_image} alt="Textbook" />
-                      
+                  <div className="border border-white ad_lk_tb_rectangle"
+                    onClick={() => handleEditTextbook(item)}
+                    style={{ cursor: "pointer" }}>
+
+                    <div className="ad_loka_tb_img">
+                      {!imageLoaded[index] ? (
+                        <div className="custom-loader-container">
+                          <FadeLoader color="#4B0082" height={15} width={5} radius={2} margin={2} />
+                        </div>
+                      ) : (
+                        <img src={item.textbook_image} alt="Textbook" />
+                      )}
+
+                      {/* Hidden image that loads in the background */}
+                      <img
+                        src={item.textbook_image}
+                        alt="Preload"
+                        onLoad={() => handleImageLoad(index)}
+                        style={{ display: "none" }} // Keep hidden until ready
+                      />
                     </div>
                     <div className="admin_tb_texts">
                       <div className="admin_loka_publishername">
@@ -149,14 +180,14 @@ function LokaBookDashboard() {
                       <div className="ad_loka_tb_subject">class: {item.textbook_details.class_name}</div>
                     </div>
                   </div>
-                 
+
                 </Col>
               ))
             ) : (
               <div className="no-books-message">
                 <h3>
 
-                No books available for the selected publisher.
+                  No books available for the selected publisher.
                 </h3>
               </div>
             )}
@@ -165,9 +196,8 @@ function LokaBookDashboard() {
       </Container>
       <div className="ad_lk_tb_add">
         <button
-          className={`ad_lk_add_button ad_lk_add_button_my_button ${
-            isActive ? "active" : ""
-          }`}
+          className={`ad_lk_add_button ad_lk_add_button_my_button ${isActive ? "active" : ""
+            }`}
           onClick={handleButtonClick}
         >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />

@@ -157,6 +157,7 @@ function StudentView() {
                   paddingRight: "30px",
                 }}
               >
+
                 <button
                   type="button"
                   className="teacher_student_edit"
@@ -164,6 +165,7 @@ function StudentView() {
                 >
                   {isEditMode ? "Save" : "Edit"}
                 </button>
+
               </div>
             ) : (
               <div style={{ position: "relative" }} ref={dropdownRef}>
@@ -389,7 +391,7 @@ function StudentView() {
                     type="text"
                     id="standard"
                     name="standard"
-                    value={student.class_name}
+                    value={student.standard}
                     readOnly
                   />
                 </div>

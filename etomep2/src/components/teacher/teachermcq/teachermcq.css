@@ -446,3 +446,14 @@
       width: 100%;
     }
   }  
+
+
+  /* Section title styling */
+.mcq-section-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-bottom: 2px solid #ccc;
+}

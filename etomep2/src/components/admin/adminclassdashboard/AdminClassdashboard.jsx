@@ -72,6 +72,8 @@ function AdminClassdashboard() {
     fetchclass();
   }, [APIURL]);
 
+  console.log(classDetails,"class details")
+
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
       {/* <div>

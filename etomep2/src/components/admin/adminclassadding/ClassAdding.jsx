@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import "../adminclassadding/classadding.css";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 import { adminclassinfo } from "../../../Redux/Actions/AdminclassAddingInfo";
@@ -10,31 +11,59 @@ import Swal from "sweetalert2";
 import { adminallclassinfo } from "../../../Redux/Actions/AdminAllClassInfoAction";
 
 function ClassAdding() {
-  const [medium, setMedium] = useState("");
-  const [teacher, setTeacher] = useState("");
-  const [className, setClassName] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const classData = location.state?.classData || {}; 
+  console.log(classData,"class data")
+  
+  // Received data
+  // console.log(classData,"classadding")
+  const [className, setClassName] = useState(classData.class_name || "");
+  const [teacher, setTeacher] = useState(classData.class_teacher || "");
+  const [selectedTeacherId, setSelectedTeacherId] = useState(classData.class_teacher || "");
+  const [division, setDivision] = useState(classData.division || "");
+  const [medium, setMedium] = useState(classData.medium || "");
+  const [category, setCategory] = useState(classData.category || "");
+  const [subjectCount, setSubjectCount] = useState(classData.subject_count || "");
+  const [curriculum, setCurriculum] = useState(classData.curriculum || []);
+  const [classid, setClassId] = useState(classData.class || "");
+
+
+  console.log(selectedTeacherId, "selected")
+
+
+
+  console.log(teacher, "teacher")
+
+  // const [medium, setMedium] = useState("");
+  // const [teacher, setTeacher] = useState("");
+  // const [className, setClassName] = useState("");
   const [stream, setStream] = useState("");
-  const [division, setDivision] = useState("");
+  // const [division, setDivision] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [mediumOption, setMediumOption] = useState([]);
   const [streamDisabled, setStreamDisabled] = useState(true);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
-  console.log(medium);
+  // console.log(medium);
 
   const admininfo = useSelector((state) => state.admininfo);
+  console.log(admininfo, "admininfo")
 
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
+  console.log(teacherinfo, "teacherinfo")
 
-  console.log(teacherinfo, "teacher info");
+  // console.log(teacherinfo, "teacher info");
 
   const m = admininfo ? admininfo.admininfo?.medium : null;
+  // console.log(m, "m")
 
-  // const mediumOption = m ? [{ value: m, label: m }] : [];
-  // console.log(mediumOption,"medium option")
+  const mediumOptions = m ? [{ value: m, label: m }] : [];
 
   const toTitleCase = (str) => {
     return str
@@ -45,10 +74,24 @@ function ClassAdding() {
   };
 
   useEffect(() => {
+    if (classData) {
+      setClassName(classData.class_name || "");
+      // setTeacher(classData.class_teacher || "");
+      setDivision(classData.division || "");
+      setMedium(mediumOption.find((option) => option.value === classData.medium) || "");
+      setCategory(classData.category || "");
+      setSubjectCount(classData.subject_count || "");
+      setCurriculum(classData.curriculum || []);
+
+    }
+  }, [mediumOption]);
+
+  useEffect(() => {
     if (m) {
       try {
-        // Parse the JSON string if needed
-        const parsedMedium = JSON.parse(m);
+        // If m is a JSON string, parse it
+        const parsedMedium = typeof m === "string" ? JSON.parse(m) : m;
+
         // Ensure parsedMedium is an array
         if (Array.isArray(parsedMedium)) {
           const options = parsedMedium.map((item) => ({
@@ -56,12 +99,17 @@ function ClassAdding() {
             label: item.trim(),
           }));
           setMediumOption(options);
+        } else {
+          console.error("Medium data is not an array:", parsedMedium);
         }
       } catch (e) {
         console.error("Error parsing medium:", e);
       }
     }
   }, [m]);
+  const handleMediumChange = (selectedOption) => {
+    setMedium(selectedOption); // Set the selected object
+  };
 
   const handleClassNameChange = (e) => {
     const value = e.target.value;
@@ -82,6 +130,20 @@ function ClassAdding() {
       setClassName("");
     }
   };
+  useEffect(() => {
+    if (classData.class_teacher && teacherinfo.adminteacherinfo?.length > 0) {
+      const selectedTeacher = teacherinfo.adminteacherinfo.find(
+        (teacher) => teacher.id === classData.class_teacherid
+      );
+
+      if (selectedTeacher) {
+        setSelectedTeacherId(selectedTeacher.id);
+        setTeacher(`${selectedTeacher.first_name} ${selectedTeacher.last_name}`);
+      }
+    }
+  }, [classData.class_teacher, teacherinfo.adminteacherinfo]);
+
+
 
   const teacherOptions = teacherinfo.adminteacherinfo?.map((teacher) => ({
     id: teacher.id,
@@ -89,7 +151,9 @@ function ClassAdding() {
     label: `${teacher.first_name} ${teacher.last_name}`, // Display format in the dropdown
   }));
 
-  console.log(teacherOptions, "kjfhbidwghius");
+  console.log(teacherOptions, "teacher option")
+
+  // console.log(teacherOptions, "kjfhbidwghius");
 
   // const handleSubmit = (e) => {
 
@@ -138,18 +202,24 @@ function ClassAdding() {
     const formattedDivision = toTitleCase(division);
 
     const classData = {
-      medium,
-      teacher,
+
+      medium:medium.value,
+      teacher: selectedTeacherId,
       className,
+      class_id: classid,
       // stream,
       // division,
       stream: formattedStream,
       division: formattedDivision,
+      category,
+      subjectCount,
+      curriculum
     };
 
     dispatch(adminclassinfo(classData));
     sessionStorage.setItem("activeTab", "Class");
-    navigate("/curriculumadding");
+    // Navigate to CurriculumAdding with class data
+    navigate("/curriculumadding", { state: { classData } });
   };
   const customStyles = {
     control: (base, state) => ({
@@ -229,6 +299,13 @@ function ClassAdding() {
       setDivision(value); // Update the division state if the input is valid
     }
   };
+  // useEffect(() => {
+  //   dispatch(adminallclassinfo()); // Ensure this action fetches the required medium data
+  // }, [dispatch]);
+
+
+
+
   return (
     <div>
       <Container className="class_add">
@@ -289,14 +366,18 @@ function ClassAdding() {
                 </div>
 
                 <div className="class_select">
+
                   <Select
                     options={teacherOptions}
                     styles={customStyles}
-                    value={teacher}
-                    onChange={setTeacher}
+                    value={teacherOptions.find((option) => option.id === selectedTeacherId) || ""}
+                    onChange={(selectedOption) => {
+                      setTeacher(selectedOption.label);  // Store teacher name
+                      setSelectedTeacherId(selectedOption.id);  // Store teacher ID
+                    }}
                     placeholder=""
-                    style={{ textTransform: "capitalize" }}
                   />
+
                   <label htmlFor="class_teacher">
                     Class Teacher<span style={{ color: "red" }}>*</span>
                   </label>
@@ -325,7 +406,7 @@ function ClassAdding() {
                     styles={customStyles}
                     placeholder=""
                     value={medium}
-                    onChange={setMedium}
+                    onChange={handleMediumChange}
                     style={{ textTransform: "capitalize" }}
                     maxLength={50}
                   />

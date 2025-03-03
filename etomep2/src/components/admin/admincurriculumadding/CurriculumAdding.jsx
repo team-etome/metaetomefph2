@@ -5,6 +5,7 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { IoIosAdd } from "react-icons/io";
 import Select from "react-select";
 import { useSelector } from "react-redux";
@@ -14,8 +15,21 @@ import Swal from "sweetalert2";
 function CurriculumAdding() {
   // const [publisher, setPublisher] = useState(null);
   // const [subject, setSubject] = useState(null);
+  const location = useLocation();
+  const classData = location.state?.classData || {}; // Get class data from ClassAdding
+  console.log(classData, "curriculam page")
   const [faculty, setFaculty] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
+
+  const [className, setClassName] = useState(classData.className || "");
+  const [division, setDivision] = useState(classData.division || "");
+  const [medium, setMedium] = useState(classData.medium || "");
+  const [stream, setStream] = useState(classData.stream || "");
+  const [classTeacher, setClassTeacher] = useState(classData.teacher || "");
+  const [classid, setClassId] = useState(classData.class_id|| []);
+  const [category, setCategory] = useState(classData.category || "");
+  const [subjectCount, setSubjectCount] = useState(classData.subjectCount || "");
+  const [curriculum, setCurriculum] = useState(classData.curriculum || []);
 
   const [publisherOptions, setPublisherOptions] = useState([]);
   const [subjectOptions, setSubjectOptions] = useState([]);
@@ -23,30 +37,33 @@ function CurriculumAdding() {
   const [selectedPublisher, setSelectedPublisher] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
 
-  const [editMode, setEditMode] = useState(false); 
-  const [editIndex, setEditIndex] = useState(null); 
+  const [editMode, setEditMode] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
 
   const [curriculumEntries, setCurriculumEntries] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  console.log(faculty, "helooooo");
+  // console.log(faculty, "helooooo");
 
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
   const classinfo = useSelector((state) => state.adminclassinfo);
   const admininfo = useSelector((state) => state.admininfo);
 
-  console.log(admininfo, "hiaufghsdiu");
+  console.log(classinfo, "hiaufghsdiu");
 
   const admin_id = admininfo ? admininfo.admininfo?.admin_id : null;
 
   const class_name = classinfo?.adminclassinfo?.className;
-  const division = classinfo?.adminclassinfo?.division;
-  const stream = classinfo?.adminclassinfo?.stream;
-  const class_teacher = classinfo?.adminclassinfo?.teacher.id;
-  const medium = classinfo?.adminclassinfo?.medium.value;
+  // const division = classinfo?.adminclassinfo?.division;
+  // const stream = classinfo?.adminclassinfo?.stream;
+  const class_teacher = classinfo?.adminclassinfo?.id;
+  // const medium = classinfo?.adminclassinfo?.medium.value;
 
-  console.log(classinfo, "classinfo");
+
+  // console.log(classinfo, "classinfo");
+
+
 
   useEffect(() => {
     if (admininfo?.admininfo?.publisher_name) {
@@ -62,16 +79,37 @@ function CurriculumAdding() {
 
   const APIURL = useSelector((state) => state.APIURL.url);
 
-  console.log(selectedPublisher, selectedSubject, "ssssssss");
+  // console.log(selectedPublisher, selectedSubject, "ssssssss");
 
   const facultyOptions = teacherinfo.adminteacherinfo?.map((teacher) => ({
-    id   : teacher.id,
+    id: teacher.id,
     value: `${teacher.first_name} ${teacher.last_name}`,
     label: `${teacher.first_name} ${teacher.last_name}`,
   }));
-  
+  useEffect(() => {
+    if (classData) {
+      setClassName(classData.class_name || "");
+      setDivision(classData.division || "");
+      setMedium(classData.medium || "");
+      setStream(classData.stream || "");
+      setClassTeacher(classData.teacher || "");
+      setCategory(classData.category || "");
+      setSubjectCount(classData.subject_count || "");
 
-  console.log(facultyOptions,"faculty option")
+      // Check if curriculum exists and map it properly
+      if (classData.curriculum && classData.curriculum.length > 0) {
+        const formattedCurriculum = classData.curriculum.map((entry) => ({
+          selectedPublisher: publisherOptions.find((pub) => pub.value === entry.publisher_name) || { value: entry.publisher_name, label: entry.publisher_name },
+          selectedSubject: subjectOptions.find((sub) => sub.value === entry.subject) || { value: entry.subject, label: entry.subject },
+          faculty: facultyOptions.find((fac) => fac.value === entry.teacher) || { value: entry.teacher, label: entry.teacher },
+        }));
+
+        setCurriculumEntries(formattedCurriculum);
+      }
+    }
+  }, []);
+
+  // console.log(facultyOptions,"faculty option")
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
@@ -100,19 +138,22 @@ function CurriculumAdding() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    const payload = {
+
+    const data = {
+      class_id: classid,
       class_name: class_name,
       division: division,
       stream: stream,
-      class_teacher: class_teacher,
+      class_teacher: classTeacher,
       admin: admin_id,
       medium: medium,
       entries: curriculumEntries,
     };
-  
+
+    console.log(data,"dataaaaaa")
+
     axios
-      .post(`${APIURL}/api/addClassname`, payload)
+      .post(`${APIURL}/api/addClassname`, data)
       .then((response) => {
         console.log("Data submitted successfully:", response.data);
         Swal.fire({
@@ -126,9 +167,9 @@ function CurriculumAdding() {
         if (error.response) {
           // Handle specific errors from the backend
           const { status, data } = error.response;
-          
+
           let errorMessage = "An error occurred. Please try again.";
-          
+
           switch (status) {
             case 400:
               errorMessage = data.error || "Invalid request data. Please check your entries.";
@@ -152,7 +193,7 @@ function CurriculumAdding() {
               errorMessage = data.error || "Unexpected error occurred.";
               break;
           }
-  
+
           Swal.fire({
             icon: "error",
             title: "Error",
@@ -220,7 +261,7 @@ function CurriculumAdding() {
         entry.faculty.value === faculty.value
     );
 
-     if (isDuplicate && !editMode) {
+    if (isDuplicate && !editMode) {
       Swal.fire({
         icon: "error",
         title: "Duplicate Entry",
@@ -228,8 +269,6 @@ function CurriculumAdding() {
       });
       return;
     }
-
-    
     if (editMode) {
       // Update the existing entry
       const updatedEntries = [...curriculumEntries];
@@ -278,8 +317,8 @@ function CurriculumAdding() {
       position: "absolute",
       marginTop: 0,
       width: '89%',
-      maxHeight: '150px', 
-      overflowY: 'auto', 
+      maxHeight: '150px',
+      overflowY: 'auto',
     }),
     menuList: (base) => ({
       ...base,
@@ -335,7 +374,7 @@ function CurriculumAdding() {
 
 
 
- const handleDelete = () => {
+  const handleDelete = () => {
     if (selectedRow !== null) {
       Swal.fire({
         title: "Are you sure?",
@@ -386,7 +425,7 @@ function CurriculumAdding() {
             <Row>
               <div className="edit_delete">
                 <FiEdit
-                 onClick={() => handleEdit(selectedRow)}
+                  onClick={() => handleEdit(selectedRow)}
                   className="curriculum_edit"
                 />
 
@@ -472,7 +511,8 @@ function CurriculumAdding() {
 
             <div>
               <div className="curriculum_listing">
-                {curriculumEntries.map((entry, index) => (
+
+                {/* {curriculumEntries.map((entry, index) => (
                   <Row
                     style={{
                       display: "flex",
@@ -480,7 +520,7 @@ function CurriculumAdding() {
                       alignContent: "center",
                       
                     }}
-                    onClick={() => setSelectedRow(index)} // Set selected row index
+                    onClick={() => setSelectedRow(index)} 
                     className={selectedRow === index ? "selected" : "curriculum_row"}
                   >
                     <Col md={3} className="curriculum_list">
@@ -493,7 +533,33 @@ function CurriculumAdding() {
                       {entry.faculty.label}
                     </Col>
                   </Row>
-                ))}
+                ))} */}
+                {curriculumEntries.length > 0 ? (
+                  curriculumEntries.map((entry, index) => (
+                    <Row
+                      key={index}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignContent: "center",
+                      }}
+                      onClick={() => setSelectedRow(index)} // Set selected row index
+                      className={selectedRow === index ? "selected" : "curriculum_row"}
+                    >
+                      <Col md={3} className="curriculum_list">
+                        {entry.selectedPublisher.label}
+                      </Col>
+                      <Col md={3} className="curriculum_list">
+                        {entry.selectedSubject.label}
+                      </Col>
+                      <Col md={3} className="curriculum_list">
+                        {entry.faculty.label}
+                      </Col>
+                    </Row>
+                  ))
+                ) : (
+                  <p style={{ textAlign: "center", color: "gray" }}>No curriculum added</p>
+                )}
               </div>
 
               <div

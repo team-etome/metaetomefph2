@@ -248,9 +248,8 @@ function FacultyView() {
         console.log(response, "responseeee");
         Swal.fire({
           icon: "success",
-          title: `Faculty ${
-            currentAction === "block" ? "blocked" : "unblocked"
-          } successfully`,
+          title: `Faculty ${currentAction === "block" ? "blocked" : "unblocked"
+            } successfully`,
         }).then(() => {
           navigate("/institutionadding");
         });
@@ -265,13 +264,14 @@ function FacultyView() {
       });
     }
   };
+  console.log(faculty.curriculam, "egffffffr")
 
   return (
     <div>
       <Container className="faculty_view_container">
         <form className="faculty_view_form">
           <div>
-            <div
+            <div className="faculty_view_header"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -286,7 +286,7 @@ function FacultyView() {
                   ? `${faculty.first_name} ${faculty.last_name}`
                   : "Faculty Name"}
               </h1>
-              <div style={{ flex: "1" }}></div>
+              <div style={{ flex: "1", }}></div>
               {windowWidth > 800 ? (
                 <div
                   style={{
@@ -298,45 +298,100 @@ function FacultyView() {
                 >
                   {!isEditing ? (
                     // <button className="faculty_edit" onClick={handleEditClick}>Edit</button>
-                    <FiEdit
-                      className="faculty_edit"
+                    // <FiEdit
+                    //   className="faculty_edit"
+                    //   onClick={handleEditClick}
+                    //   title="Edit"
+                    // />
+                    <div
+                      style={{
+                        width: "70px",
+                        height: "40px",
+                        color: "#526D82",
+                        cursor: "pointer",
+                        padding: "10px",
+                        border: "1px solid #526D82",
+                        borderRadius: "10px"
+                      }}
                       onClick={handleEditClick}
-                      title="Edit"
-                    />
+                    ><p
+                      style={{
+                        paddingLeft: "10px",
+                      }}>Edit</p></div>
                   ) : (
                     // <button className="faculty_save" onClick={handleSaveClick}>Save</button>
-                    <FaSave
-                      className="faculty_save"
+                    // <FaSave
+                    //   className="faculty_save"
+                    //   onClick={handleSaveClick}
+                    //   title="Save"
+                    // />
+                    <div
+                      style={{
+                        width: "70px",
+                        height: "40px",
+                        color: "#526D82",
+                        cursor: "pointer",
+                        padding: "10px",
+                        border: "1px solid #526D82",
+                        borderRadius: "10px"
+                      }}
                       onClick={handleSaveClick}
-                      title="Save"
-                    />
+                    ><p
+                      style={{
+                        paddingLeft: "10px",
+                      }}>Save</p></div>
                   )}
 
                   {/* <button className="faculty_block">Block</button> */}
                   {/* <MdBlockFlipped  onClick={handleBlockClick}/> */}
                   {isBlocked ? (
-                    <CgUnblock
-                      // className="faculty_block"
+                    // <CgUnblock
+                    //   // className="faculty_block"
+                    //   style={{
+                    //     width: "40px",
+                    //     height: "50px",
+                    //     color: "green",
+                    //     cursor: "pointer",
+                    //   }}
+                    //   title="Unblock"
+                    //   onClick={handleUnBlockClick}
+                    // />
+                    <div
                       style={{
-                        width: "40px",
-                        height: "50px",
+                        width: "80px",
+                        height: "40px",
                         color: "green",
                         cursor: "pointer",
+                        background: "#FDE9E6",
+                        padding: "10px",
+                        borderRadius: "10px"
                       }}
-                      title="Unblock"
                       onClick={handleUnBlockClick}
-                    />
+                    ><p>Unblock</p></div>
                   ) : (
-                    <MdBlockFlipped
-                      style={{
-                        width: "40px",
-                        height: "50px",
-                        color: "red",
-                        cursor: "pointer",
-                      }}
+                    // <MdBlockFlipped
+                    //   style={{
+                    //     width: "40px",
+                    //     height: "50px",
+                    //     color: "red",
+                    //     cursor: "pointer",
+                    //   }}
+                    //   onClick={handleBlockClick}
+                    //   title="Block"
+                    // />
+                    <div style={{
+                      width: "80px",
+                      height: "40px",
+                      color: "red",
+                      cursor: "pointer",
+                      background: "#FDE9E6",
+                      padding: "10px",
+                      borderRadius: "10px"
+                    }}
                       onClick={handleBlockClick}
-                      title="Block"
-                    />
+                    ><p style={{
+                      paddingLeft: "10px",
+                    }}>Block</p></div>
                   )}
                 </div>
               ) : (
@@ -405,9 +460,9 @@ function FacultyView() {
                 </div>
               )}
             </div>
-            <div style={{ border: "0.5px solid #526D82" }}></div>
+            {/* <div style={{ border: "0.5px solid #526D82" }}></div> */}
           </div>
-          <div className="faculty_scroll">
+          <div className="faculty_scroll" >
             <Row style={{ paddingTop: "20px" }}>
               <Col md={6}>
                 <div className="faculty_view_group">
@@ -456,6 +511,24 @@ function FacultyView() {
                 <div className="faculty_view_group">
                   <label htmlFor="phone_no">Phone No</label>
                   <input
+                    type="text"
+                    id="phone_no"
+                    name="phone_no"
+                    value={phoneNumber}
+                    readOnly={!isEditing}
+                    maxLength="10"
+                    inputMode="numeric"  // shows numeric keyboard on mobile devices
+                    onChange={(e) => {
+                      // Remove non-digits and update state
+                      const onlyDigits = e.target.value.replace(/\D/g, "");
+                      setPhoneNumber(onlyDigits);
+                    }}
+                  />
+                </div>
+
+                {/* <div className="faculty_view_group">
+                  <label htmlFor="phone_no">Phone No</label>
+                  <input
                     type="number"
                     id="phone_no"
                     name="phone_no"
@@ -463,7 +536,7 @@ function FacultyView() {
                     readOnly={!isEditing}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                   />
-                </div>
+                </div> */}
 
                 {/* <div className="faculty_view_group">
                   <label htmlFor="gender">Gender</label>
@@ -547,15 +620,43 @@ function FacultyView() {
                     ) : (
                       <p>No subjects assigned</p>
                     )} */}
-                {faculty?.curriculam?.length > 0 ? (
+                {/* {faculty?.curriculam?.length > 0 ? (
                   faculty.curriculam.map((subject, index) => (
                     <div key={index} className="subject_class_body">
                       <h6>{subject.subject_name}</h6>
                       <div className="class_card">
-                        <p>Class:</p>
                         <div className="card_class_number">
                           {subject.class_name}
+                          {subject.division}
                         </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>No subjects assigned</p>
+                )} */}
+
+                {faculty?.curriculam?.length > 0 ? (
+                  Object.values(
+                    faculty.curriculam.reduce((acc, subject) => {
+                      if (!acc[subject.subject_name]) {
+                        acc[subject.subject_name] = {
+                          subject_name: subject.subject_name,
+                          classes: [],
+                        };
+                      }
+                      acc[subject.subject_name].classes.push(`${subject.class_name} ${subject.division}`);
+                      return acc;
+                    }, {})
+                  ).map((subjectGroup, index) => (
+                    <div key={index} className="subject_class_body" style={{ border: "2px solid black" }}>
+                      <h6>{subjectGroup.subject_name}</h6>
+                      <div className="class_card" >
+                        {subjectGroup.classes.map((classData, idx) => (
+                          <div key={idx} className="card_class_number">
+                            {classData}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   ))

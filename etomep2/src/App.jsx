@@ -76,6 +76,10 @@ import TeacherMcq from './components/teacher/teachermcq/TeacherMcq';
 import TeachermcqListpage from './pages/teacherpage/TeachermcqListpage';
 import McqaddingForm from './components/teacher/teachermcq/McqaddingForm';
 import TeacherMcqaddPage from './pages/teacherpage/TeacherMcqaddPage';
+import LokaTextbookEdit from './components/admin/adminloka/LokaTextbookEdit';
+import TeacherClassStudentView from './components/teacher/teacherclassstudentview/TeacherClassStudentView';
+
+
 
 
 
@@ -129,6 +133,7 @@ function App() {
           <Route path="/adminlokalibary" element={<AdminLokaLibraryPage/>}/>
           <Route path="/adminresultview" element={<AarnaResultViewPage/>}/>
           <Route path="/adminprofile" element={<AdminProfilePage/>}/>
+          <Route path="/LokaTextbookEdit" element={<LokaTextbookEdit/>}/>
 
 
 
@@ -167,6 +172,8 @@ function App() {
           <Route path="/teachermcqlist" element={<TeachermcqListpage/>} />
           <Route path="/teachermcqadd" element={<TeacherMcqaddPage/>}/>
           <Route path="/teachermcq" element={<TeacherMcq/>} />
+          <Route path="/teacherclassstudentview" element={<TeacherClassStudentView />} />
+
           
 
 

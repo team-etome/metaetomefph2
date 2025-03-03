@@ -143,7 +143,7 @@ function EvaluationDashboard() {
 
                   <div className="evaluation_subject">
                     {" "}
-                    {item.class_name} {item.division}-{item.subject_name}
+                    {item.class_name} {item.division} - {item.subject_name}
                   </div>
                 </div>
               </Col>

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useRef } from "react";
+import Cropper from "react-easy-crop";
 import "../addinstitution/addcustomer.css";
-import { Container,Row, Col, Form, Button, InputGroup, FormControl } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import { FaArrowLeft, FaSpinner, FaRedo, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -26,7 +28,16 @@ function AddCustomer() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const publisherValues = publisherName.map((option) => option.value);
   const mediumValues = medium.map((option) => option.value);
-  
+  const fileInputRef = useRef(null);
+
+  const [imageSrc, setImageSrc] = useState(null);  // Holds the uploaded image
+  const [crop, setCrop] = useState({ x: 0, y: 0 });  // Crop position
+  const [zoom, setZoom] = useState(1);  // Zoom level
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);  // Cropped area
+  const [croppedImage, setCroppedImage] = useState(null);  // Cropped final image
+  const [showCropper, setShowCropper] = useState(false);  // Controls cropper visibility
+
+
 
   const [loading, setLoading] = useState(false);
 
@@ -38,10 +49,83 @@ function AddCustomer() {
     setImageFile(null);
   };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
-    setImageFile(file);
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImageSrc(reader.result);  // Set uploaded image preview
+      setCroppedImage(null);  // Reset cropped image
+      setShowCropper(true);  // Open cropper
+    };
+    reader.readAsDataURL(file);
   };
+
+
+  // const handleImageUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   setImageFile(file);
+  // };
+
+  const createCroppedImage = async (imageSrc, croppedAreaPixels) => {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.src = imageSrc;
+      image.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        if (!ctx) {
+          reject(new Error("Canvas not supported"));
+          return;
+        }
+
+        const size = Math.min(croppedAreaPixels.width, croppedAreaPixels.height);
+        canvas.width = size;
+        canvas.height = size;
+
+        // Make circular cropping
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, 2 * Math.PI);
+        ctx.clip(); // Clip the area to a circle
+
+        ctx.drawImage(
+          image,
+          croppedAreaPixels.x,
+          croppedAreaPixels.y,
+          croppedAreaPixels.width,
+          croppedAreaPixels.height,
+          0,
+          0,
+          size,
+          size
+        );
+
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error("Canvas cropping failed"));
+            return;
+          }
+          resolve(URL.createObjectURL(blob));
+        }, "image/png");  // PNG keeps transparency
+      };
+      image.onerror = (error) => reject(error);
+    });
+  };
+
+
+  const getCroppedImage = async () => {
+    try {
+      const croppedImageUrl = await createCroppedImage(imageSrc, croppedAreaPixels);
+      setCroppedImage(croppedImageUrl);
+      setShowCropper(false);  // Hide the cropper
+    } catch (error) {
+      console.error("Error cropping image:", error);
+    }
+  };
+
+
 
   const handlePublisherChange = (selectedOptions) => {
     // Limit the number of selected options to 5
@@ -62,7 +146,6 @@ function AddCustomer() {
       setMedium(selectedOptions.slice(0, 5));
     }
   };
-
 
   const handleEducationBoard = (selectedOptions) => {
     setCustBoard(selectedOptions.value);
@@ -260,8 +343,6 @@ function AddCustomer() {
     value: medium,
     label: medium,
   }));
-
-
   const educationboard = [
     "CENTRAL BOARD OF SECONDARY EDUCATION (CBSE) ",
     "KERALA BOARD OF PUBLIC EXAMINATION , KERALA",
@@ -274,7 +355,6 @@ function AddCustomer() {
     value: eduboard,
     label: eduboard,
   }));
-
   const [currentInput, setCurrentInput] = useState("");
 
   const handleInputChange = (event) => {
@@ -335,7 +415,7 @@ function AddCustomer() {
       ...base,
       // padding: "0 10px",
       // border:'1px solid red',
-      height:'50px',
+      height: '50px',
       zIndex: 0,
       overflow: 'scroll',
     }),
@@ -360,8 +440,8 @@ function AddCustomer() {
       zIndex: 9999,
       position: "absolute",
       width: '89%',
-      maxHeight: '150px', 
-      overflowY: 'auto', 
+      maxHeight: '150px',
+      overflowY: 'auto',
     }),
     menuList: (base) => ({
       ...base,
@@ -391,66 +471,66 @@ function AddCustomer() {
   return (
     <Container className="add_customer_container">
       <Row className="add_customer_div">
-      <div className="add_customer_header">
-        {/* className="form" */}
-        <div className="add_customer_title">
+        <div className="add_customer_header">
+          {/* className="form" */}
+          <div className="add_customer_title">
             <Link to="/GodHeader">
-              <FaArrowLeft className="customer_back_icon"/>
+              <FaArrowLeft className="customer_back_icon" />
             </Link>
             <h3>Add Institution</h3>
           </div>
-        <hr />
-      </div>
-      <div className="god_addcustomer_scrollable">
-      <Row>
-        <Col>
-          {/* <div className="form-col"> */}
-            <div className="input_container">
-              <label for="institutionName" style={{ fontWeight: "600" }}>
-                Institution Name
-              </label>
-              <input
-                type="text"
-                id="institutionName"
-                name="institutionName"
-                value={institutionName}
-                style={{ textTransform: "capitalize" }}
-                maxLength="100"
-                onChange={(e) => setInstitutionName(e.target.value)}
-              />
-            </div>
-            <div className="input_container">
-              <label for="institutionCode" style={{ fontWeight: "600" }}>
-                Institution Code
-              </label>
-              <input
-                type="text"
-                id="institutionCode"
-                name="institutionCode"
-                value={institutionCode}
-                style={{ textTransform: "capitalize" }}
-                maxLength="10"
-                onChange={(e) => setInstitutionCode(e.target.value)}
-              />
-            </div>
-            <div className="input_container">
-              <label for="email" style={{ fontWeight: "600" }}>
-                Email
-              </label>
-              <input
-                type="text"
-                id="email"
-                name="email"
-                value={email}
-                maxLength="100"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-          {/* </div> */}
-        </Col>
-        <Col>
-          {/* <div className="form-col"> */}
-            <div className="image_container">
+          <hr />
+        </div>
+        <div className="god_addcustomer_scrollable">
+          <Row>
+            <Col>
+              {/* <div className="form-col"> */}
+              <div className="input_container">
+                <label for="institutionName" style={{ fontWeight: "600" }}>
+                  Institution Name
+                </label>
+                <input
+                  type="text"
+                  id="institutionName"
+                  name="institutionName"
+                  value={institutionName}
+                  style={{ textTransform: "capitalize" }}
+                  maxLength="100"
+                  onChange={(e) => setInstitutionName(e.target.value)}
+                />
+              </div>
+              <div className="input_container">
+                <label for="institutionCode" style={{ fontWeight: "600" }}>
+                  Institution Code
+                </label>
+                <input
+                  type="text"
+                  id="institutionCode"
+                  name="institutionCode"
+                  value={institutionCode}
+                  style={{ textTransform: "capitalize" }}
+                  maxLength="10"
+                  onChange={(e) => setInstitutionCode(e.target.value)}
+                />
+              </div>
+              <div className="input_container">
+                <label for="email" style={{ fontWeight: "600" }}>
+                  Email
+                </label>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  value={email}
+                  maxLength="100"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              {/* </div> */}
+            </Col>
+            <Col>
+              {/* <div className="form-col"> */}
+              {/* <div className="image_container">
               <label
                 for="photo"
                 style={{ color: "#707070", fontWeight: "600" }}
@@ -501,63 +581,113 @@ function AddCustomer() {
                   )}
                 </div>
               </div>
-            </div>
-          {/* </div> */}
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          {/* <div className="form-col"> */}
-            <div
-              className="input_container"
-            >
-              <label for="educationBoard" style={{ fontWeight: "600" }}>
-                Board of Education
-              </label>
-              <Select
-                type="text"
-                id="educationBoard"
-                name="educationBoard"
-                list="board-list"
-                options={boardOptions}
-                value={board}
-                onChange={handleEducationBoard}
-                maxLength="100"
-                styles={customStyles}
-              />
-            </div>
-           
-            <div className="input_container">
-              <label for="address" style={{ fontWeight: "600" }}>
-                Address
-              </label>
-              <input
-                type="text"
-                id="address"
-                name="address"
-                value={address}
-                style={{ textTransform: "capitalize" }}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </div>
+            </div> */}
+              <div className="image_container">
+                <label htmlFor="photo">Institution Logo</label>
+                <div className="image-upload-container">
+                  {croppedImage ? (
+                    <>
+                      <img src={croppedImage} alt="Cropped Logo" className="uploaded_image" />
+                      <button
+                        onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                        className="change-image-btn"
+                      >
+                        Change Image
+                      </button>
+                    </>
+                  ) : imageSrc ? (
+                    <>
+                      <img src={imageSrc} alt="Uploaded Image" className="uploaded_image" />
+                      <button onClick={() => setShowCropper(true)} className="change-image-btn">
+                        Crop Image
+                      </button>
+                      <button onClick={() => setImageSrc(null)} className="remove-image-btn">
+                        Remove
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <label htmlFor="image-upload" className="upload-label">
+                        Upload Image
+                      </label>
+                      <input
+                        id="image-upload"
+                        type="file"
+                        accept="image/*"
+                        className="upload-input"
+                        onChange={handleImageUpload}
+                      />
+                    </>
+                  )}
+                  <input
+      ref={fileInputRef}
+      id="image-upload"
+      type="file"
+      accept="image/*"
+      className="upload-input"
+      style={{ display: "none" }}
+      onChange={handleImageUpload}
+    />
+                </div>
+              </div>
 
-            <div className="input_container">
-              <label for="region" style={{ fontWeight: "600" }}>
-                Region
-              </label>
-              <input
-                type="text"
-                id="region"
-                name="region"
-                value={region}
-                style={{ textTransform: "capitalize" }}
-                maxLength="100"
-                onChange={(e) => setRegion(e.target.value)}
-              />
-            </div>
 
-            <div>
-              {/* <div className="input_container">
+              {/* </div> */}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {/* <div className="form-col"> */}
+              <div
+                className="input_container"
+              >
+                <label for="educationBoard" style={{ fontWeight: "600" }}>
+                  Board of Education
+                </label>
+                <Select
+                  type="text"
+                  id="educationBoard"
+                  name="educationBoard"
+                  list="board-list"
+                  options={boardOptions}
+                  value={board}
+                  onChange={handleEducationBoard}
+                  maxLength="100"
+                  styles={customStyles}
+                />
+              </div>
+
+              <div className="input_container">
+                <label for="address" style={{ fontWeight: "600" }}>
+                  Address
+                </label>
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  value={address}
+                  style={{ textTransform: "capitalize" }}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+              </div>
+
+              <div className="input_container">
+                <label for="region" style={{ fontWeight: "600" }}>
+                  Region
+                </label>
+                <input
+                  type="text"
+                  id="region"
+                  name="region"
+                  value={region}
+                  style={{ textTransform: "capitalize" }}
+                  maxLength="100"
+                  onChange={(e) => setRegion(e.target.value)}
+                />
+              </div>
+
+              <div>
+                {/* <div className="input_container">
                 <label htmlFor="medium" style={{ fontWeight: "600" }}>
                   Medium
                 </label>
@@ -582,111 +712,134 @@ function AddCustomer() {
                   />
                 </div>
               </div> */}
-              <div className="input_container">
-                <label htmlFor="medium" style={{ fontWeight: "600" }}>
-                  Medium
+                <div className="input_container">
+                  <label htmlFor="medium" style={{ fontWeight: "600" }}>
+                    Medium
+                  </label>
+                  <Select
+                    id="medium"
+                    name="medium"
+                    options={mediumOptions}
+                    placeholder=""
+                    isMulti
+                    value={medium}
+                    onChange={handleMediumChange}
+                    maxLength="100"
+                    styles={customStyles}
+                  />
+                </div>
+              </div>
+              {/* </div> */}
+            </Col>
+            <Col>
+              {/* <div className="form-col" style={{ marginTop: "1px" }}> */}
+              <div
+                className="input_container"
+              >
+                <label for="publisherName" style={{ fontWeight: "600" }}>
+                  Publisher Name
                 </label>
                 <Select
-                  id="medium"
-                  name="medium"
-                  options={mediumOptions}
+                  id="publisherName"
+                  name="publisherName"
+                  options={publisherOptions}
                   placeholder=""
                   isMulti
-                  value={medium}
-                  onChange={handleMediumChange}
+                  value={publisherName}
+                  onChange={handlePublisherChange}
                   maxLength="100"
                   styles={customStyles}
                 />
               </div>
-            </div>
-          {/* </div> */}
-        </Col>
-        <Col>
-          {/* <div className="form-col" style={{ marginTop: "1px" }}> */}
-            <div
-              className="input_container"
-            >
-              <label for="publisherName" style={{ fontWeight: "600" }}>
-                Publisher Name
-              </label>
-              <Select
-                id="publisherName"
-                name="publisherName"
-                options={publisherOptions}
-                placeholder=""
-                isMulti
-                value={publisherName}
-                onChange={handlePublisherChange}
-                maxLength="100"
-                styles={customStyles}
-              />
-            </div>
-            <div className="input_container">
-              <label for="phone" style={{ fontWeight: "600" }}>
-                Phone Number
-              </label>
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                value={phoneNumber}
-                style={{ textTransform: "capitalize" }}
-                maxLength={10}
-                onChange={handlePhoneNumberChange}
-              />
-            </div>
+              <div className="input_container">
+                <label for="phone" style={{ fontWeight: "600" }}>
+                  Phone Number
+                </label>
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  value={phoneNumber}
+                  style={{ textTransform: "capitalize" }}
+                  maxLength={10}
+                  onChange={handlePhoneNumberChange}
+                />
+              </div>
 
-            <div className="input_container">
-              <label for="password" style={{ fontWeight: "600" }}>
-                Password
-              </label>
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <span onClick={togglePasswordVisibility}>
-                {showPassword ? <FaEye /> : <FaEyeSlash />}
-              </span>
-            </div>
-            <div className="input_container" >
-              <label for="confirmPassword" style={{ fontWeight: "600" }}>
-                Confirm Password
-              </label>
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                id="confirmPassword"
-                name="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                onPaste={(e) => e.preventDefault()}
-              />
-              <span onClick={toggleConfirmPasswordVisibility}>
-                {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
-              </span>
-            </div>
-            <div className="button-container">
-              <button type="submit" value="submit" onClick={handleSubmit}>
-                {loading ? (
-                  <>
-                    <FaSpinner
-                      className="spinner"
-                      style={{ animation: "spin 2s linear infinite" }}
-                    />
-                    &nbsp;Saving...
-                  </>
-                ) : (
-                  "Submit"
-                )}
-              </button>
-            </div>
-          {/* </div> */}
-        </Col>
+              <div className="input_container">
+                <label for="password" style={{ fontWeight: "600" }}>
+                  Password
+                </label>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <span onClick={togglePasswordVisibility}>
+                  {showPassword ? <FaEye /> : <FaEyeSlash />}
+                </span>
+              </div>
+              <div className="input_container" >
+                <label for="confirmPassword" style={{ fontWeight: "600" }}>
+                  Confirm Password
+                </label>
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onPaste={(e) => e.preventDefault()}
+                />
+                <span onClick={toggleConfirmPasswordVisibility}>
+                  {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
+                </span>
+              </div>
+              <div className="button-container">
+                <button type="submit" value="submit" onClick={handleSubmit}>
+                  {loading ? (
+                    <>
+                      <FaSpinner
+                        className="spinner"
+                        style={{ animation: "spin 2s linear infinite" }}
+                      />
+                      &nbsp;Saving...
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
+                </button>
+              </div>
+              {/* </div> */}
+            </Col>
+          </Row>
+        </div>
       </Row>
-      </div>
-      </Row>
+      {showCropper && (
+        <div className="cropper-container">
+          <div className="cropper-wrapper">
+            <Cropper
+              image={imageSrc}
+              crop={crop}
+              zoom={zoom}
+              aspect={1} // Square cropping (needed for circular effect)
+              cropSize={{ width: 150, height: 150 }} // Fixed to profile image size
+              showGrid={false} // Remove grid for cleaner UI
+              onCropChange={setCrop}
+              onZoomChange={setZoom}
+              onCropComplete={(croppedArea, croppedAreaPixels) => setCroppedAreaPixels(croppedAreaPixels)}
+            />
+            {/* Circular Overlay */}
+            <div className="cropper-overlay" style={{ border: "2px solid " }} ></div>
+          </div>
+
+          <Button className="crop-save-btn" onClick={getCroppedImage}>
+            <span className="btn-icon"></span> Crop & Save
+          </Button>
+        </div>
+      )}
     </Container>
   );
 }

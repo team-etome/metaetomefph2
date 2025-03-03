@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import { IoIosArrowDown, IoIosArrowUp, IoIosAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import axios from "axios";
 import "../teacherassignment/assignmentlist.css";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { useSelector } from "react-redux";
+import { MdDelete } from "react-icons/md";
 
 function AssignmentList() {
   const [showThisMonth, setShowThisMonth] = useState(true);
@@ -25,9 +27,26 @@ function AssignmentList() {
     navigate("/teacherassignmentadding");
   };
 
+  // const handleAssignmentClick = (assignment) => {
+  //   setSelectedAssignment(assignment);
+  //   setShowModal(true);
+  // };
+
   const handleAssignmentClick = (assignment) => {
-    setSelectedAssignment(assignment);
-    setShowModal(true);
+    // Check if a PDF is provided
+    if (assignment.pdf && assignment.pdf.trim() !== "") {
+      setSelectedAssignment(assignment);
+      setShowModal(true);
+    }
+    // Otherwise, if an image is provided, open the modal as well
+    else if (assignment.image && assignment.image.trim() !== "") {
+      setSelectedAssignment(assignment);
+      setShowModal(true);
+    }
+    // Otherwise, alert that no document is available
+    else {
+      alert("No document available for this assignment.");
+    }
   };
 
   useEffect(() => {
@@ -63,7 +82,7 @@ function AssignmentList() {
 
     assignments.forEach((assignment) => {
       const assignedDate = new Date(assignment.assigned_date);
-      console.log(assignedDate,"assigned date fff")
+      console.log(assignedDate, "assigned date fff")
       if (
         assignedDate.getMonth() === currentMonth &&
         assignedDate.getFullYear() === currentYear
@@ -82,6 +101,52 @@ function AssignmentList() {
   const handleBackClick = () => {
     navigate("/teacherclassview");
   };
+  // const handleDeleteAssignment = async (id) => {
+  //   if (window.confirm("Are you sure you want to delete this assignment?")) {
+  //     try {
+  //       await axios.delete(`${APIURL}/api/testdelete/${id}/`, {
+  //         params: { type: "assignment" }
+  //       });
+  //       Remove the deleted assignment from the state
+  //       setAssignments(prevAssignments =>
+  //         prevAssignments.filter(assignment => assignment.id !== id)
+  //       );
+  //     } catch (error) {
+  //       console.error("Error deleting assignment:", error);
+  //       alert("Failed to delete assignment.");
+  //     }
+  //   }
+  // };
+  const handleDeleteAssignment = async (id) => {
+    Swal.fire({
+      title: "Are you sure you want to delete this assignment?",
+      text: "You won't be able to revert this deletion!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`${APIURL}/api/testdelete/${id}/`, {
+            params: { type: "assignment" }
+          });
+          // Remove the deleted assignment from the state
+          setAssignments(prevAssignments =>
+            prevAssignments.filter(assignment => assignment.id !== id)
+          );
+          Swal.fire("Deleted!", "Your assignment has been deleted.", "success");
+        } catch (error) {
+          console.error("Error deleting assignment:", error);
+          Swal.fire("Error!", "Failed to delete assignment.", "error");
+        }
+      }
+    });
+  };
+
+
 
   return (
     <Container className="assignment_container">
@@ -110,13 +175,22 @@ function AssignmentList() {
                   className="assignment_item mb-3 p-2"
                   onClick={() => handleAssignmentClick(assignment)}
                 >
-                  <h5>{assignment.title}</h5>
+                  <div className="assignment-item-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <h5>{assignment.title}</h5>
+                    <MdDelete
+                      className="delete-icon"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent opening the modal
+                        handleDeleteAssignment(assignment.id);
+                      }}
+                    />
+                  </div>
                   <p>
-                    Posted On:{" "}
-                    {new Date(assignment.assigned_date).toLocaleDateString()}
+                    Posted On: {new Date(assignment.assigned_date).toLocaleDateString()}
                   </p>
                 </div>
               ))}
+
 
             <div
               className="week"
@@ -136,19 +210,27 @@ function AssignmentList() {
                   className="assignment_item mb-3 p-2"
                   onClick={() => handleAssignmentClick(assignment)}
                 >
-                  <h4>{assignment.title}</h4>
+                  <div className="assignment-item-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <h4>{assignment.title}</h4>
+                    <MdDelete
+                      className="delete-icon"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteAssignment(assignment.id);
+                      }}
+                    />
+                  </div>
                   <p>
-                    Posted On:{" "}
-                    {new Date(assignment.assigned_date).toLocaleDateString()}
+                    Posted On: {new Date(assignment.assigned_date).toLocaleDateString()}
                   </p>
                 </div>
               ))}
+
           </div>
           <div className="assignment_teacher_button">
             <Button
-              className={`teacher_assignment teacher_assignment_my_button ${
-                showModal ? "active" : ""
-              }`}
+              className={`teacher_assignment teacher_assignment_my_button ${showModal ? "active" : ""
+                }`}
               onClick={handleAddClick}
             >
               <IoIosAdd
@@ -162,13 +244,18 @@ function AssignmentList() {
       <Modal
         show={showModal}
         onHide={() => setShowModal(false)}
-        size="lg"
+        size="xl"
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title className="assignment-modal">Assignments</Modal.Title>
+          <div>
+            <Modal.Title className="assignment-modal">Assignments</Modal.Title>
+            {selectedAssignment && (
+              <p className="custom-due-date">Due_Date: {selectedAssignment.due_date}</p>
+            )}
+          </div>
         </Modal.Header>
-        <Modal.Body>
+        {/* <Modal.Body>
           <p className="modal_body">
             <strong>{selectedAssignment?.title}</strong>
           </p>
@@ -178,8 +265,28 @@ function AssignmentList() {
               ? new Date(selectedAssignment.due_date).toLocaleDateString()
               : ""}
           </p>{" "}
-          {/* Add other assignment details here */}
+          Add other assignment details here
+        </Modal.Body> */}
+        <Modal.Body style={{ padding: 0 }}>
+          {selectedAssignment && selectedAssignment.pdf && selectedAssignment.pdf.trim() !== "" ? (
+            // If PDF exists, show it in an iframe:
+            <iframe
+              src={selectedAssignment.pdf}
+              title="PDF Viewer"
+              style={{ width: "100%", height: "80vh", border: "none" }}
+            ></iframe>
+          ) : selectedAssignment && selectedAssignment.image && selectedAssignment.image.trim() !== "" ? (
+            // If image exists, show it:
+            <img
+              src={selectedAssignment.image}
+              alt="Assignment Document"
+              style={{ width: "100%", height: "80vh", objectFit: "contain" }}
+            />
+          ) : (
+            <p style={{ padding: "20px" }}>No document available for this assignment.</p>
+          )}
         </Modal.Body>
+
       </Modal>
     </Container>
   );

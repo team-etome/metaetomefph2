@@ -27,15 +27,15 @@ function AdminProfile() {
     setPassword(e.target.value);
   };
 
-const handleChangePassword = () => {
-  setIsPasswordEditable((prev) => !prev); // Toggle password edit mode
-  if (!isPasswordEditable) {
-    // Focus on the password field when entering edit mode
-    setTimeout(() => {
-      passwordInputRef.current?.focus(); // Use the ref to focus the field
-    }, 0);
-  }
-};
+  const handleChangePassword = () => {
+    setIsPasswordEditable((prev) => !prev); // Toggle password edit mode
+    if (!isPasswordEditable) {
+      // Focus on the password field when entering edit mode
+      setTimeout(() => {
+        passwordInputRef.current?.focus(); // Use the ref to focus the field
+      }, 0);
+    }
+  };
 
   const handleSavePassword = async () => {
     // Check if the password is empty
@@ -106,18 +106,18 @@ const handleChangePassword = () => {
         </button>
       </div>
       <div className="background_section bottom_section"></div>
-      <Container className="content_container">
-        <Row className="justify-content-center">
+      <Container className="content_container"  >
+        <Row className=" profile-card-main-div" >
           <Col md={8}>
             <div className="profile_card">
               <div className="admin_profile_edit">
-                {isPasswordEditable ? (
+                {/* {isPasswordEditable ? (
                   <button onClick={handleSavePassword}>Save Password</button>
                 ) : (
                   <button onClick={handleChangePassword}>
                     Change Password
                   </button>
-                )}
+                )} */}
                 <RiEdit2Fill className="admin_profile_edit_icon" />
               </div>
               <Form className="profile_form">
@@ -188,21 +188,32 @@ const handleChangePassword = () => {
                       />
                     </div>
                     <div className="admin_profile_group">
-                    <label htmlFor="boardofeducation">
+                      <label htmlFor="boardofeducation">
                         Password
                       </label>
-                    <input
-                      type="text"
-                      id="password"
-                      name="password"
-                      placeholder="*****"
-                      readOnly={!isPasswordEditable}
-                      value={password}
-                      ref={passwordInputRef} 
-                      onChange={handlePasswordChange}
-                      className={isPasswordEditable ? "highlighted" : ""}
-                    />
+                      <input
+                        type="text"
+                        id="password"
+                        name="password"
+                        placeholder="*****"
+                        readOnly={!isPasswordEditable}
+                        value={password}
+                        ref={passwordInputRef}
+                        onChange={handlePasswordChange}
+                        className={isPasswordEditable ? "highlighted" : ""}
+                      />
                     </div>
+                    <span
+                      style={{
+                        textDecoration: 'underline',
+                        fontSize: '16px',
+                        color: '#526D82',
+                        cursor: 'pointer',
+                      }}
+                      onClick={isPasswordEditable ? handleSavePassword : handleChangePassword}
+                    >
+                      {isPasswordEditable ? 'Save Password' : 'Change Password'}
+                    </span>
                   </Col>
                   <Col md={6}>
                     <div className="admin_profile_group">
