@@ -129,6 +129,7 @@ function StudentView() {
   
       if (response.status === 200) {
         alert("Student data saved successfully!");
+        navigate("/teacherstudentdashboard"); 
         setIsEditMode(false); // Exit edit mode after saving
       } else {
         alert("Failed to save data. Please try again.");
