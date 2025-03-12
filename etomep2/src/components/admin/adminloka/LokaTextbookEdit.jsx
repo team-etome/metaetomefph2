@@ -185,10 +185,6 @@ function LokaTextbookEdit() {
     setImageFile(null);
   };
 
-
-
-
-
   const validateChapters = () => {
     let isValid = true;
     let errorMessage = "";
@@ -293,12 +289,14 @@ function LokaTextbookEdit() {
         <div
           key={index}
           style={{
+            width:"auto",
             display: "flex",
             padding: "10px",
             marginTop: index === 0 ? "0px" : "20px",
             alignItems: "center",
             borderBottom: "1px solid #ddd",
             justifyContent: "space-between",
+            overflowX: "auto",
           }}
         >
           {/* Chapter Name Input */}
@@ -312,6 +310,7 @@ function LokaTextbookEdit() {
                   borderBottom: "1px solid black",
                   width: "120px",
                   outline: "none",
+                  flexShrink: 0,
                 }}
                 maxLength={50}
                 value={chapter.name}
@@ -328,6 +327,7 @@ function LokaTextbookEdit() {
               document.getElementById(`pdf-upload-${index}`).click();
             }}
             style={{
+              flexShrink: 0,
               backgroundColor: "lightgrey",
               color: "black",
               height: "50px",
@@ -344,6 +344,7 @@ function LokaTextbookEdit() {
           {/* File Name Display */}
           <span
             style={{
+              flexShrink: 0,
               maxWidth: "100px",
               textAlign: "left",
               fontSize: "14px",
@@ -366,7 +367,11 @@ function LokaTextbookEdit() {
           />
           {/* Delete Button */}
           <RxCross2 style={{
+            flexShrink: 0,
             color:"red",
+            width:"20px",
+            height:"20px",
+            marginLeft:"5px"
             
           }} onClick={() => handleDeleteChapter(index)}/>
 
@@ -599,7 +604,7 @@ function LokaTextbookEdit() {
       Swal.fire({
         icon: "success",
         title: "Success!",
-        text: "Textbook created successfully!",
+        text: "Textbook Edit Successfully!",
       });
 
       navigate("/adminlokanavbar");

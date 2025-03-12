@@ -6,4 +6,5 @@ export const EXAM_PAPER_INFO        =   'EXAM_PAPER_INFO'
 export const TEACHER_SUBJECT_INFO   =   'TEACHER_SUBJECT_INFO'
 export const ADMIN_ALL_CLASS_INFO   =   'ADMIN_ALL_CLASS_INFO'
 export const TEACHER_LOGOUT         =   'TEACHER_LOGOUT'
+export const TEACHER_UPDATE         =   'TEACHER_UPDATE' 
 

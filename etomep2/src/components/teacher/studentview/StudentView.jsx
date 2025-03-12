@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col, Button, Modal, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
+import Cropper from "react-easy-crop";
 import { PiGraduationCap } from "react-icons/pi";
 import amritha from "../../../assets/amritha.png";
 import { FaSave } from "react-icons/fa";
@@ -14,6 +15,7 @@ import { MdDelete } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { useSelector, useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 import axios from "axios";
 import defaultimage from '../../../../src/assets/default.jpg'
 function StudentView() {
@@ -27,11 +29,20 @@ function StudentView() {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const location = useLocation();
-  const { student } = location.state || {};
+  // const { student } = location.state || {};
+  const locationState = useLocation().state || {};
+  const [student, setStudent] = useState(locationState.student || {});
+  const [showCropperModal, setShowCropperModal] = useState(false);
 
+  const [profileImage, setProfileImage] = useState(student.image || defaultimage);
+  const [imageSrc, setImageSrc] = useState(null);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [showCropper, setShowCropper] = useState(false);
+  const fileInputRef = useRef(null);
 
-
-  console.log(student , "student");
+  console.log(student, "student");
 
   const APIURL = useSelector((state) => state.APIURL.url || "");
 
@@ -71,13 +82,25 @@ function StudentView() {
     e.preventDefault();
     setShowEditBlockButtons((prevState) => !prevState);
   };
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     Create an object URL for the selected file
+  //     const imageUrl = URL.createObjectURL(file);
+  //     setImage(imageUrl);  Set the uploaded image URL
+  //     setIsEditMode(false)
+  //   }
+  // };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Create an object URL for the selected file
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl); // Set the uploaded image URL
-      // setIsEditMode(false)
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageSrc(reader.result); // Set the Data URL for cropping
+        setShowCropperModal(true);  // Open the crop modal
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -96,49 +119,132 @@ function StudentView() {
   };
 
   const handleSave = async () => {
+    console.log("enterrrrrr")
     // Validate data before saving
-    if (!student.id || !image) {
-      alert("Missing student ID or image. Please ensure all fields are set.");
+    if (!student.id || !profileImage) {
+      Swal.fire({
+        icon: "error",
+        title: "Missing Information",
+        text: "Missing student ID or image. Please ensure all fields are set.",
+      });
       return;
     }
-  
+
     const data = new FormData();
     data.append("student_id", student.id);
-  
+
     // Ensure that the image is correctly appended
-    const fileInput = document.querySelector('input[name="image"]');
-    const file = fileInput ? fileInput.files[0] : null;
-    
-    if (!file) {
-      alert("No image selected!");
+    // const fileInput = document.querySelector('input[name="image"]');
+    // const file = fileInput ? fileInput.files[0] : null;
+
+    // if (!file) {
+    //   alert("No image selected!");
+    //   return;
+    // }
+
+    // data.append("image", file);  // Append the selected file correctly
+    // NEW CODE in handleSave:
+    try {
+      const response = await fetch(profileImage);
+      const blob = await response.blob();
+      const croppedFile = new File([blob], "profile.png", { type: "image/png" });
+      data.append("image", croppedFile);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Error processing cropped image.",
+      });
       return;
     }
-    
-    data.append("image", file);  // Append the selected file correctly
-  
+
+
     try {
       const response = await axios.put(
-        `${APIURL}/api/addstudent`, 
-        data, 
+        `${APIURL}/api/addstudent`,
+        data,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
-  
+
       if (response.status === 200) {
-        alert("Student data saved successfully!");
-        navigate("/teacherstudentdashboard"); 
-        setIsEditMode(false); // Exit edit mode after saving
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Student data saved successfully!",
+        }).then(() => {
+          navigate("/teacherstudentdashboard");
+          setIsEditMode(false); // Exit edit mode after saving
+        });
       } else {
-        alert("Failed to save data. Please try again.");
+        Swal.fire({
+          icon: "error",
+          title: "Failed",
+          text: "Failed to save data. Please try again.",
+        });
       }
     } catch (error) {
       console.error("Error saving data:", error);
-      alert("An error occurred. Please check the console for details.");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred. Please check the console for details.",
+      });
     }
   };
+
+  const createCroppedImage = (imageSrc, croppedAreaPixels) => {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.src = imageSrc;
+      image.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const size = Math.min(croppedAreaPixels.width, croppedAreaPixels.height);
+        canvas.width = size;
+        canvas.height = size;
+
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, 2 * Math.PI);
+        ctx.clip();
+
+        ctx.drawImage(
+          image,
+          croppedAreaPixels.x,
+          croppedAreaPixels.y,
+          croppedAreaPixels.width,
+          croppedAreaPixels.height,
+          0,
+          0,
+          size,
+          size
+        );
+
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error("Canvas cropping failed"));
+            return;
+          }
+          resolve(URL.createObjectURL(blob));
+        }, "image/png");
+      };
+      image.onerror = (error) => reject(error);
+    });
+  };
+
+  const getCroppedImage = async () => {
+    try {
+      const croppedImageUrl = await createCroppedImage(imageSrc, croppedAreaPixels);
+      setProfileImage(croppedImageUrl);
+      setShowCropperModal(false);
+    } catch (error) {
+      console.error("Error cropping image:", error);
+    }
+  };
+
 
   return (
     <div>
@@ -146,7 +252,7 @@ function StudentView() {
         <form className="teacher_student_view_form">
           <div className="teacher_student_header">
             <h1 className="teaher_student_view_title">
-              {student.student_name}{" "}
+              {student?.student_name}{" "}
             </h1>
             <div style={{ flex: "1" }}></div>
             {windowWidth > 800 ? (
@@ -305,9 +411,8 @@ function StudentView() {
                 {isEditMode ? (
                   <div
                     style={{
-                      width: "180px",
-                      marginLeft: "2px",
-                      height: "217px",
+                      width: "200px",
+                      height: "200px",
                       position: "relative",
                       border: "2px solid black",
                     }}
@@ -325,9 +430,9 @@ function StudentView() {
                     />
 
                     {/* Uploaded Image Preview */}
-                    {image && (
+                    {profileImage && (
                       <img
-                        src={image}
+                        src={profileImage}
                         alt="Uploaded Preview"
                         style={{
                           width: "100%",
@@ -364,15 +469,14 @@ function StudentView() {
                   <div
                     style={{
                       border: "2px solid black",
-                      width: "180px",
-                      marginLeft: "2px",
-                      height: "217px",
+                      width: "200px",
+                      height: "200px",
                     }}
                   >
                     <img
                       src={student.image || defaultimage}
                       alt="Profile"
-                      className="teacher_profile_picture"
+                      className="student_profile_picture"
                     />
                   </div>
                 )}
@@ -472,7 +576,34 @@ function StudentView() {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {showCropperModal && (
+        <div className="cropper-container">
+          <div className="cropper-wrapper">
+            <Cropper
+              image={imageSrc}
+              crop={crop}
+              zoom={zoom}
+              aspect={1} // Square cropping for circular effect
+              cropSize={{ width: 150, height: 150 }}
+              showGrid={false} // Cleaner UI without grid
+              onCropChange={setCrop}
+              onZoomChange={setZoom}
+              onCropComplete={(croppedArea, croppedAreaPixels) =>
+                setCroppedAreaPixels(croppedAreaPixels)
+              }
+            />
+            <div className="cropper-overlay"></div>
+          </div>
+          <Button className="crop-save-btn" onClick={getCroppedImage}>
+            Crop & Save
+          </Button>
+        </div>
+      )}
+
+
     </div>
+
   );
 }
 

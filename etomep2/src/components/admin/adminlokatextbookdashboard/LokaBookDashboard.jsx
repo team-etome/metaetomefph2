@@ -128,10 +128,18 @@ function LokaBookDashboard() {
                 )}
                 <FormControl
                   className={`ps-2 book_search_input ${isFocused ? "focused" : ""}`}
-                  placeholder={isFocused ? "Search by Class or Publisher name" : "Search"}
+                  placeholder={isFocused ? "Search by Class" : "Search"}
                   aria-label="Search"
+                  // type="number"
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  // onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    // Allow only digits
+                    if (/^\d*$/.test(value)) {
+                      setSearchTerm(value);
+                    }
+                  }}
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
                 />

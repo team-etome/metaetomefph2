@@ -9,18 +9,30 @@ import { PiBook } from "react-icons/pi";
 import { TbScanEye } from "react-icons/tb";
 import { SlNote, SlSettings } from "react-icons/sl";
 import { MdOutlineClose } from "react-icons/md";
-import amritha from "../../../assets/amritha.png";
+import etome from "../../../assets/etomelogo.png";
 import { FiBell } from "react-icons/fi";
 import { useSelector } from "react-redux";
 
 function MobileSidebar({ show, onClose }) {
   const [activeItem, setActiveItem] = useState(null);
+
+
   const location = useLocation();
   const navigate = useNavigate();
 
-  const teacher             = useSelector((state) => state.teacherinfo);
-  const teacher_token       = teacher.teacherinfo?.teacher_token;
+  const teacher = useSelector((state) => state.teacherinfo);
+  const admin = useSelector((state) => state.admininfo);
+  console.log(admin, "admin")
+
+  console.log(teacher, "teacherrrrrrrrr data")
+  const teacher_token = teacher.teacherinfo?.teacher_token;
   const class_teacher_token = teacher.teacherinfo?.class_teacher_token;
+  const propicimage = teacher.teacherinfo?.image;
+  const adminimage = admin.admininfo?.logo
+  console.log(propicimage, "profilepicccc")
+
+
+  console.log(class_teacher_token, "teacher token")
 
 
 
@@ -29,14 +41,14 @@ function MobileSidebar({ show, onClose }) {
     { path: "/teacherstudentdashboard", icon: <RxDashboard />, label: "My Class" },
     { path: "/teachersubject", icon: <PiBook />, label: "Subjects" },
     { path: "/teacherexamination", icon: <SlNote />, label: "Aarna" },
-    { path: "/settings", icon: <SlSettings />, label: "Settings" },
+    // { path: "/settings", icon: <SlSettings />, label: "Settings" },
   ];
 
   const teacherItems = [
     { path: "/teacherhome", icon: <GoHome />, label: "Home" },
     { path: "/teachersubject", icon: <PiBook />, label: "Subjects" },
     { path: "/teacherexamination", icon: <SlNote />, label: "Aarna" },
-    { path: "/settings", icon: <SlSettings />, label: "Settings" },
+    // { path: "/settings", icon: <SlSettings />, label: "Settings" },
   ];
 
   const otherItems = [
@@ -44,7 +56,7 @@ function MobileSidebar({ show, onClose }) {
     { path: "/institutionadding", icon: <RxDashboard />, label: "Institution" },
     { path: "/adminlokanavbar", icon: <PiBook />, label: "Loka" },
     { path: "/aarnanavbar", icon: <SlNote />, label: "Aarna" },
-    { path: "/settings", icon: <SlSettings />, label: "Settings" },
+    // { path: "/settings", icon: <SlSettings />, label: "Settings" },
   ];
 
 
@@ -56,16 +68,50 @@ function MobileSidebar({ show, onClose }) {
   }
 
 
+  // useEffect(() => {
+  //   const currentPath = location.pathname;
+  //   const active = itemsToDisplay.find((item) => currentPath.includes(item.path));
+  //   setActiveItem(active ? active.label.toLowerCase() : null);
+  // }, [location.pathname, itemsToDisplay]);
+
+  // Define activeRoutesMapping for mobile (same as your desktop mapping)
+  const activeRoutesMapping = {
+    "/admindashboard": ["/admindashboard", "/admindashboard/overview", "/admindashboard/stats"],
+    "/institutionadding": ["/institutionadding", "/facultyview", "/facultyadding", "/classadding", "/curriculumadding"],
+    "/adminlokanavbar": ["/adminlokanavbar", "/adminlokatextbook", "/adminlokalibary"],
+    "/aarnanavbar": ["/aarnanavbar", "/questionview", "/questionadding", "/seatview", "/seatassigning", "/evaluationview", "/evaluationscheduling"],
+    "/teacherhome": ["/teacherhome"],
+    "/teacherstudentdashboard": ["/teacherstudentdashboard", "/teacherstudentview", "/teachertimetable", "/teacherstudentadd"],
+    "/teachersubject": ["/teachersubject", "/teacherclassview", "/teacherassignment", "/teacherassignmentadding", "/teacherrefrencelist", "/teacherreferenceadd", "/teachertestlist", "/teachertestadd", "/teachermcqlist", "/teachermcqadd"],
+    "/teacherexamination": ["/teacherexamination", "/teacherquestionview"],
+    "/settings": ["/settings"],
+  };
+
+  // useEffect to compute activeItem (active parent's path) based on current URL
   useEffect(() => {
     const currentPath = location.pathname;
-    const active = itemsToDisplay.find((item) => currentPath.includes(item.path));
-    setActiveItem(active ? active.label.toLowerCase() : null);
-  }, [location.pathname, itemsToDisplay]);
+    let foundParent = "";
+    Object.keys(activeRoutesMapping).forEach((parent) => {
+      const childPaths = activeRoutesMapping[parent];
+      if (
+        childPaths.some(
+          (childPath) =>
+            currentPath === childPath || currentPath.startsWith(childPath)
+        )
+      ) {
+        foundParent = parent;
+      }
+    });
+    setActiveItem(foundParent);
+  }, [location.pathname]);
 
   const handleProfileNavigate = () => {
-    const profilePath = teacher_token ? "/teacherprofile" : "/adminprofile";
+    const profilePath = (teacher_token || class_teacher_token)
+      ? "/teacherprofile"
+      : "/adminprofile";
     navigate(profilePath);
   };
+
 
 
   // useEffect(() => {
@@ -90,7 +136,7 @@ function MobileSidebar({ show, onClose }) {
   // const handleMenuItemClick = (item) => {
   //   setActiveItem(item);
   // };
-  
+
   // const handleAdminProfileNavigate = () => {
   //   navigate("/adminprofile");
   // };
@@ -98,21 +144,21 @@ function MobileSidebar({ show, onClose }) {
   // const handleTeacherProfileNavigate = () => {
   //   navigate("/teacherprofile");
   // };
-  useEffect(() => {
-    const currentPath = location.pathname;
-    const active = itemsToDisplay.find((item) => currentPath.includes(item.path));
-    setActiveItem(active ? active.label.toLowerCase() : null);
-  }, [location.pathname, itemsToDisplay]);
+  // useEffect(() => {
+  //   const currentPath = location.pathname;
+  //   const active = itemsToDisplay.find((item) => currentPath.includes(item.path));
+  //   setActiveItem(active ? active.label.toLowerCase() : null);
+  // }, [location.pathname, itemsToDisplay]);
 
-  const handleNavigate = () => {
-    const profilePath = teacher_token ? "/adminprofile" : "/teacherprofile";
-    navigate(profilePath);
-  };
+  // const handleNavigate = () => {
+  //   const profilePath = teacher_token ? "/teacherprofile":"/adminprofile" ;
+  //   navigate(profilePath);
+  // };
 
 
   return (
     <div className={`mobile_sidebar ${show ? "show" : ""}`}>
-      <div className="mobile_sidebar_header">
+      <div className="mobile_sidebar_header" >
         <MdOutlineClose onClick={onClose} style={{ width: "30px", height: "30px" }} />
       </div>
       <Row
@@ -128,7 +174,7 @@ function MobileSidebar({ show, onClose }) {
         {itemsToDisplay.map((item, index) => (
           <Col
             key={index}
-            className={`mob_menu_item_col ${activeItem === item.label.toLowerCase() ? "active" : ""}`}
+            className={`mob_menu_item_col ${activeItem === item.path ? "active" : ""}`}
           >
             <Link to={item.path}>
               <div className="mob_icon_container_div">
@@ -138,14 +184,14 @@ function MobileSidebar({ show, onClose }) {
             </Link>
           </Col>
         ))}
-        <div className="mob_menu_item_col" onClick={handleNavigate}>
+        <div className="mob_menu_item_col" onClick={handleProfileNavigate}>
           <div className="mob_pofile_container_div">
             <img
-              src=""
+              src={propicimage || adminimage || ""}
               alt="Profile"
               style={{ width: "46px", height: "46px", borderRadius: "50%" }}
             />
-            <span  className="mob_profile_text">Profile</span>
+            <span className="mob_profile_text">Profile</span>
           </div>
         </div>
       </Row>

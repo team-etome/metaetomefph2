@@ -69,17 +69,15 @@ function StudentListing() {
           </div>
           <div
             className="studentlist_scrollable"
-            style={{ paddingTop: "30px" }}
+            style={{ paddingTop: "30px"}}
           >
             <Row>
               {studentListData.map((item, index) => (
                 <Col
-                  lg={4}
-                  md={3}
-                  sm={12}
-                  xs={12}
+                lg={4} md={6} sm={6} xs={12}
                   key={index}
                   className="studentsss_list"
+                  
                 >
                   <div
                     onClick={() => handleStudentClick(item)}

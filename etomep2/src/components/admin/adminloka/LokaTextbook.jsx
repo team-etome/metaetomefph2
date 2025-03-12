@@ -22,7 +22,7 @@ function LokaTextbook() {
   const [selectedMedium, setSelectedMedium] = useState(null);
   const [medium, setMedium] = useState("");
   const [m, setM] = useState("");
-  const [volume, setVolume] = useState("");
+  const [volume, setVolume] = useState(null);
   const [publisherName, setPublisherName] = useState("");
   const [p, setP] = useState("");
   const [imageFile, setImageFile] = useState(null);
@@ -31,6 +31,14 @@ function LokaTextbook() {
   const [selectedPublisher, setSelectedPublisher] = useState("");
 
   const [showChapterDiv, setShowChapterDiv] = useState(false);
+  const options = [
+    { value: "Vol 1", label: "Vol 1" },
+    { value: "Vol 2", label: "Vol 2" },
+    { value: "Vol 3", label: "Vol 3" },
+    { value: "Part 1", label: "Part 1" },
+    { value: "Part 2", label: "Part 2" },
+    { value: "Part 3", label: "Part 3" },
+  ];
 
   console.log(pdfFile, "subjectttttt");
 
@@ -200,20 +208,20 @@ function LokaTextbook() {
     let errorMessage = "";
 
     for (let chapter of chapters) {
-        if (!chapter.name.trim()) {
-            errorMessage = "All chapters must have a name.";
-            isValid = false;
-            break;
-        }
-        if (!chapter.pdfFile) {
-            errorMessage = "All chapters must have a PDF file uploaded.";
-            isValid = false;
-            break;
-        }
+      if (!chapter.name.trim()) {
+        errorMessage = "All chapters must have a name.";
+        isValid = false;
+        break;
+      }
+      if (!chapter.pdfFile) {
+        errorMessage = "All chapters must have a PDF file uploaded.";
+        isValid = false;
+        break;
+      }
     }
 
     return { isValid, errorMessage };
-};
+  };
 
   const renderChapterInputs = () => {
     return chapters.map((chapter, index) => (
@@ -223,6 +231,9 @@ function LokaTextbook() {
           display: "flex",
           padding: "0px",
           marginTop: index === 0 ? "0px" : "20px",
+          overflowX: "auto",
+          flexWrap: "nowrap",
+          paddingBottom: "10px", // Optional: adds some spacing for the scrollbar
         }}
       >
         <div style={{ marginLeft: "0px" }}>
@@ -230,10 +241,11 @@ function LokaTextbook() {
             <input
               type="text"
               placeholder="Chapter Name"
+              required
               style={{
                 border: "none",
                 borderBottom: "1px solid black",
-                width: "200px",
+                width: "180px",
                 outline: "none",
               }}
               maxLength={50}
@@ -250,6 +262,7 @@ function LokaTextbook() {
               id={`pdf-upload-${index}`}
               type="file"
               accept=".pdf"
+              required
               style={{ border: "none", width: "180px", outline: "none" }}
               onChange={(e) => handleFileChange(index, e.target.files[0])}
             />
@@ -264,33 +277,33 @@ function LokaTextbook() {
     setShowChapterDiv(totalChapters > 5);
 
     if (!isNaN(totalChapters)) {
-        if (totalChapters > 50) {
-            Swal.fire({
-                icon: "warning",
-                title: "Limit Exceeded",
-                text: `You can only enter up to 50 chapters.`,
-            });
-            setTotalChaptersInput(50);
-            setChapters((prevChapters) => {
-                return Array.from({ length: 50 }, (_, index) => ({
-                    name: prevChapters[index]?.name || "",
-                    pdfFile: prevChapters[index]?.pdfFile || null,
-                }));
-            });
-        } else {
-            setTotalChaptersInput(totalChapters);
-            setChapters((prevChapters) => {
-                return Array.from({ length: totalChapters }, (_, index) => ({
-                    name: prevChapters[index]?.name || "", // Preserve entered name
-                    pdfFile: prevChapters[index]?.pdfFile || null, // Preserve uploaded file
-                }));
-            });
-        }
+      if (totalChapters > 50) {
+        Swal.fire({
+          icon: "warning",
+          title: "Limit Exceeded",
+          text: `You can only enter up to 50 chapters.`,
+        });
+        setTotalChaptersInput(50);
+        setChapters((prevChapters) => {
+          return Array.from({ length: 50 }, (_, index) => ({
+            name: prevChapters[index]?.name || "",
+            pdfFile: prevChapters[index]?.pdfFile || null,
+          }));
+        });
+      } else {
+        setTotalChaptersInput(totalChapters);
+        setChapters((prevChapters) => {
+          return Array.from({ length: totalChapters }, (_, index) => ({
+            name: prevChapters[index]?.name || "", // Preserve entered name
+            pdfFile: prevChapters[index]?.pdfFile || null, // Preserve uploaded file
+          }));
+        });
+      }
     } else {
-        setTotalChaptersInput("");
-        setChapters([]);
+      setTotalChaptersInput("");
+      setChapters([]);
     }
-};
+  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -302,13 +315,13 @@ function LokaTextbook() {
 
     // Optionally add inline validation feedback
     if (!value.trim()) {
-        updatedChapters[index].error = "Chapter name is required";
+      updatedChapters[index].error = "Chapter name is required";
     } else {
-        updatedChapters[index].error = "";
+      updatedChapters[index].error = "";
     }
 
     setChapters(updatedChapters);
-};
+  };
 
   const handleFileChange = (index, file) => {
     const updatedChapters = [...chapters];
@@ -316,13 +329,18 @@ function LokaTextbook() {
     setChapters(updatedChapters);
   };
 
-  const handleVolumeChange = (e) => {
-    const value = e.target.value;
-    // Prevent negative values
-    if (/^[a-zA-Z0-9]*$/.test(value)) {
-      setVolume(value);
-    }
+  // const handleVolumeChange = (e) => {
+  //   const value = e.target.value;
+  //   // Prevent negative values
+  //   if (/^[a-zA-Z0-9]*$/.test(value)) {
+  //     setVolume(value);
+  //   }
+  // };
+
+  const handleVolumeChange = (selectedOption) => {
+    setVolume(selectedOption.value);
   };
+
   const toTitleCase = (str) => {
     return str
       .toLowerCase()
@@ -334,8 +352,23 @@ function LokaTextbook() {
     e.preventDefault(); // Prevent the default form submission behavior
     setLoading(true); // Show the loading spinner
 
+    // If the chapter div is visible, validate each chapter's inputs.
+    if (chapters.length > 0) {
+      const { isValid, errorMessage } = validateChapters();
+      if (!isValid) {
+        Swal.fire({
+          icon: "error",
+          title: "Incomplete Chapter Details",
+          text: errorMessage,
+        });
+        setLoading(false);
+        return;
+      }
+    }
+
+
     // Validate required fields
-    const { isValid, errorMessage } = validateChapters();
+    // const { isValid, errorMessage } = validateChapters();
 
     if (
       !classValue ||
@@ -557,7 +590,7 @@ function LokaTextbook() {
               </Col>
 
               <Col md={6}>
-                <div className="loka_textbook_group">
+                {/* <div className="loka_textbook_group">
                   <label htmlFor="volume">Volume</label>
                   <input
                     type="text"
@@ -567,6 +600,17 @@ function LokaTextbook() {
                     maxLength="100"
                     style={{ textTransform: "capitalize" }}
                     onChange={handleVolumeChange}
+                  />
+                </div> */}
+                <div className="loka_textbook_group">
+                  <label htmlFor="volume">Volume</label>
+                  <Select
+                    id="volume"
+                    name="volume"
+                    options={options}
+                    value={options.find(option => option.value === volume)}
+                    onChange={handleVolumeChange}
+                    styles={customStyles}
                   />
                 </div>
                 <div className="loka_textbook_group">
@@ -708,15 +752,14 @@ function LokaTextbook() {
                   />
                 </div>
                 <div
-                  className={`chapter_div ${
-                    totalChaptersInput <= 5 ? "hidden_border" : ""
-                  }`}
+                  className={`chapter_div ${totalChaptersInput <= 5 ? "hidden_border" : ""
+                    }`}
                 >
                   {renderChapterInputs()}
                 </div>
                 <div
                   className="submit_loka"
-                  //   style={{ marginBottom: "50px", marginTop: "30px" }}
+                //   style={{ marginBottom: "50px", marginTop: "30px" }}
                 >
                   <button onClick={handleSubmit}>
                     {loading ? (

@@ -1,13 +1,13 @@
-import {TEACHER_INFO,TEACHER_LOGOUT} from '../Actions/Type'
+import { TEACHER_INFO, TEACHER_LOGOUT, TEACHER_UPDATE } from '../Actions/Type'
 
 
-const initialstate  = {
-    teacherinfo  : null ,
-}
+const initialstate = {
+    teacherinfo: JSON.parse(localStorage.getItem("teacherinfo")) || null,
+};
 
 
-const TeacherInfoReducer = (state = initialstate , action)=>{
-    switch(action.type){
+const TeacherInfoReducer = (state = initialstate, action) => {
+    switch (action.type) {
 
 
         case TEACHER_LOGOUT:
@@ -17,12 +17,25 @@ const TeacherInfoReducer = (state = initialstate , action)=>{
         case TEACHER_INFO:
             return {
                 ...state,
-                teacherinfo  : action.payload
+                teacherinfo: action.payload
             }
+        case TEACHER_UPDATE:
+            // Merge new update with the existing teacher info
+            const updatedTeacher = {
+                ...state.teacherinfo,
+                ...action.payload,
+            };
 
-            
-            default:
-                return state;
+            // Persist the updated teacher info in localStorage so it stays on refresh
+            localStorage.setItem("teacherinfo", JSON.stringify(updatedTeacher));
+
+            return {
+                ...state,
+                teacherinfo: updatedTeacher,
+            };
+
+        default:
+            return state;
     }
 }
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Col, Container, Row, Form } from "react-bootstrap";
-import { RiEdit2Fill } from "react-icons/ri";
+import { RiEdit2Fill, RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import "../adminprofile/adminprofile.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -15,14 +15,18 @@ function AdminProfile() {
   const navigate = useNavigate();
 
   const [isPasswordEditable, setIsPasswordEditable] = useState(false);
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState("");
   const APIURL = useSelector((state) => state.APIURL.url);
 
   const admin_id = admininfo?.admin_id;
   console.log(admin_id, "admin id");
 
   const passwordInputRef = useRef(null);
+  const [showPassword, setShowPassword] = useState(false);
 
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
@@ -66,6 +70,8 @@ function AdminProfile() {
           showConfirmButton: false,
         });
         setIsPasswordEditable(false); // Switch back to read-only mode
+        // Add this line to mask the password after saving:
+        setShowPassword(false);
       } else {
         console.error("Unexpected response status:", response.status);
       }
@@ -106,20 +112,20 @@ function AdminProfile() {
         </button>
       </div>
       <div className="background_section bottom_section"></div>
-      <Container className="content_container"  >
-        <Row className=" profile-card-main-div" >
+      <Container className="content_container">
+        <Row className=" profile-card-main-div">
           <Col md={8}>
             <div className="profile_card">
-              <div className="admin_profile_edit">
-                {/* {isPasswordEditable ? (
+              {/* <div className="admin_profile_edit"> */}
+              {/* {isPasswordEditable ? (
                   <button onClick={handleSavePassword}>Save Password</button>
                 ) : (
                   <button onClick={handleChangePassword}>
                     Change Password
                   </button>
                 )} */}
-                <RiEdit2Fill className="admin_profile_edit_icon" />
-              </div>
+              {/* <RiEdit2Fill className="admin_profile_edit_icon" />
+              </div> */}
               <Form className="profile_form">
                 <Row>
                   <Col md={6}>
@@ -187,33 +193,6 @@ function AdminProfile() {
                         value={admininfo?.educational_body || ""}
                       />
                     </div>
-                    <div className="admin_profile_group">
-                      <label htmlFor="boardofeducation">
-                        Password
-                      </label>
-                      <input
-                        type="text"
-                        id="password"
-                        name="password"
-                        placeholder="*****"
-                        readOnly={!isPasswordEditable}
-                        value={password}
-                        ref={passwordInputRef}
-                        onChange={handlePasswordChange}
-                        className={isPasswordEditable ? "highlighted" : ""}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        textDecoration: 'underline',
-                        fontSize: '16px',
-                        color: '#526D82',
-                        cursor: 'pointer',
-                      }}
-                      onClick={isPasswordEditable ? handleSavePassword : handleChangePassword}
-                    >
-                      {isPasswordEditable ? 'Save Password' : 'Change Password'}
-                    </span>
                   </Col>
                   <Col md={6}>
                     <div className="admin_profile_group">
@@ -226,6 +205,51 @@ function AdminProfile() {
                         value={admininfo?.number || ""}
                       />
                     </div>
+                  </Col>
+                  <Col md={6}>
+                    <div className="admin_profile_group" style={{ position: "relative" }}>
+                      <label htmlFor="password">Password</label>
+                      <input
+                        // Change this line: use a dynamic type based on showPassword
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        placeholder="*****"
+                        readOnly={!isPasswordEditable}
+                        value={password}
+                        ref={passwordInputRef}
+                        onChange={handlePasswordChange}
+                        className={isPasswordEditable ? "highlighted" : ""}
+                      />
+                      {/* The toggle icon */}
+                      {isPasswordEditable && (
+                        <span
+                          className="password-toggle-icon"
+                          onClick={handleTogglePasswordVisibility}
+                          style={{
+                            position: "absolute",
+                            top: "65%",
+                            right: "10px",
+                            transform: "translateY(-50%)",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {showPassword ? <RiEyeOffFill /> : <RiEyeFill />}
+                        </span>
+                      )}
+                    </div>
+
+                    <span
+                      style={{
+                        textDecoration: 'underline',
+                        fontSize: '16px',
+                        color: '#526D82',
+                        cursor: 'pointer',
+                      }}
+                      onClick={isPasswordEditable ? handleSavePassword : handleChangePassword}
+                    >
+                      {isPasswordEditable ? 'Save Password' : 'Change Password'}
+                    </span>
                   </Col>
                 </Row>
               </Form>

@@ -1,6 +1,6 @@
 .container-scroll {
   overflow-y: auto;
-  height: 68vh;
+  height: 74vh;
   width:150vw ;
   margin-top: 16px;
   margin-right: 2vw;
@@ -167,12 +167,12 @@
 
 
 .container-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #F8FEFF;
 }
 
 
 .container-scroll::-webkit-scrollbar-thumb {
-  background: #A8BFD1;
+  background: #F8FEFF;
 }
 
 

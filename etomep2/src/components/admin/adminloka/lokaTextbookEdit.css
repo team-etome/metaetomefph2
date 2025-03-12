@@ -129,9 +129,8 @@
         width: 90%;
         height: 30vh;
         border-radius: 8px;
-        overflow: hidden;
         overflow-y: auto; 
-        overflow-x: hidden; 
+        overflow-x: auto; 
         padding-left: 20px;
         padding-top: 25px;
         padding-bottom: 20px;

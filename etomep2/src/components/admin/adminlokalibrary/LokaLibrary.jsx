@@ -279,7 +279,7 @@ function LokaLibrary() {
   const handleVolumeChange = (e) => {
     const value = e.target.value;
     // Prevent negative values
-    if (/^[a-zA-Z0-9]*$/.test(value)) {
+    if (/^[a-zA-Z0-9 ,.]*$/.test(value)) {
       setVolume(value);
     }
   };

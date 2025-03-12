@@ -11,7 +11,8 @@ function TeacherClassView() {
 
   const location = useLocation();
   const { item } = location.state || {};
-  console.log(item, "item");
+  console.log(item,"item")
+  
 
   const handleTouchStart = (e) => {
     const touch = e.touches[0];
@@ -33,7 +34,7 @@ function TeacherClassView() {
 
   return (
     <div>
-      <Container className="teacher_clsview_container" fluid>
+      <Container className="teacher_clsview_container" fluid  style={{border:"2px solid black"}}>
         <Row
           style={{
             width: "100%",
@@ -43,11 +44,11 @@ function TeacherClassView() {
             justifyContent: "center",
           }}
         >
-          <Row className="tech_clsvw_hd_rw" md={2} xs={1}>
+          <Row className="tech_clsvw_hd_rw" md={2} xs={1} >
             <Col className="teacher_clsview_ti_cl">
               <div>
                 <h1 className="teacher_clsview_title">
-                  Class {item.class} {item.division}
+                  Class {item?.class} {item?.division}
                 </h1>
               </div>
             </Col>
@@ -130,6 +131,7 @@ function TeacherClassView() {
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            
           >
             <Link to="/teacherassignment" className="no-underline-link">
               <div className="tch_vw_snd_rw">
@@ -164,7 +166,7 @@ function TeacherClassView() {
           <Row>
             <h1 className="tch_vw_sndrw_hd">Students List</h1>
             <div className="tch_vw_card_container">
-              {item.students.map((student, index) => (
+              {item?.students.map((student, index) => (
                 <Link
                   to="/teacherclassstudentview"
                   className="no-underline-link"

@@ -30,6 +30,16 @@ function AssignmentEditor({ placeholder }) {
 
   const handleExport = async () => {
     try {
+      // Check if the editor content is empty (remove HTML tags and trim whitespace)
+    const strippedContent = ckData.replace(/<[^>]*>/g, "").trim();
+    if (!strippedContent) {
+      Swal.fire({
+        icon: "error",
+        title: "Empty Content",
+        text: "Please add some questions before exporting.",
+      });
+      return; // Stop further processing if content is empty
+    }
       // Find the ck-editor__editable div where the actual content is stored
       const editorContent = editorRef.current.editor.ui.view.editable.element;
 
@@ -56,6 +66,7 @@ function AssignmentEditor({ placeholder }) {
         title: "Submitting Form",
         text: "Please wait...",
         allowOutsideClick: false,
+        showConfirmButton: false, // This line hides the OK button
         onBeforeOpen: () => {
           Swal.showLoading();
         },

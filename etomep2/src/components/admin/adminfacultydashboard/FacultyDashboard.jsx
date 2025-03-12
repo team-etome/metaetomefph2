@@ -24,7 +24,7 @@ function FacultyDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
 
 
-  console.log(facultyListData,"uygr8estp97wer ")
+  console.log(facultyListData, "uygr8estp97wer ")
 
   const admininfo = useSelector((state) => state.admininfo);
   const APIURL = useSelector((state) => state.APIURL.url);
@@ -76,8 +76,8 @@ function FacultyDashboard() {
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
-  
- const validateLastName = (lastname) => {
+
+  const validateLastName = (lastname) => {
     const regex = /^[a-zA-Z\s]*$/; // Allows only letters and spaces
     return regex.test(lastname);
   };
@@ -102,7 +102,7 @@ function FacultyDashboard() {
     formData.append("adminId", admin_id);
 
     try {
-      
+
       Swal.fire({
         title: "Uploading...",
         text: "Please wait while the file is being uploaded.",
@@ -125,7 +125,7 @@ function FacultyDashboard() {
 
       console.log("File uploaded successfully:", response);
 
-      
+
       Swal.fire({
         icon: "success",
         title: "Upload Successful",
@@ -147,7 +147,7 @@ function FacultyDashboard() {
         }
       }
 
-      
+
       Swal.fire({
         icon: "error",
         title: "Upload Failed",
@@ -172,36 +172,59 @@ function FacultyDashboard() {
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
-      <Container fluid className="faculty_container_scroll">
-        <Row>
-          <Col md={6} ></Col>
-          
-          <Col md={6} className='fac_search_col'>
+      <div className="search-bar-wrapper">
+        <Row className="search_filter_main_header">
+          <Col md={6}></Col>
+          <Col md={6} className="fac_search_col">
             <div className="search_filter_main">
-                <Form className="d-flex inst_search">
-                    <div className="position-relative ad_sch">
-                        <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 inst_search_icon ${searchQuery ? 'hidden' : ''}`} />
-                        <Form.Control
-                            type="search"
-                            placeholder="Search by name"
-                            className="ps-3 search_bar"
-                            aria-label="Search"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                    </div>
-                </Form>
+              <Form className="d-flex inst_search">
+                <div className="position-relative ad_sch">
+                  <BsSearch
+                    className={`position-absolute top-50 translate-middle-y ms-2 inst_search_icon ${searchQuery ? "hidden" : ""
+                      }`}
+                  />
+                  <Form.Control
+                    type="search"
+                    placeholder="Search by name"
+                    className="ps-3 search_bar"
+                    aria-label="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </Form>
             </div>
-        </Col>
+          </Col>
         </Row>
+      </div>
+      <Container fluid className="faculty_container_scroll">
+        {/* <Row className="search_filter_main_header">
+          <Col md={6} ></Col>
+          <Col md={6} className='fac_search_col'>
+            <div className="search_filter_main" >
+              <Form className="d-flex inst_search">
+                <div className="position-relative ad_sch">
+                  <BsSearch className={`position-absolute top-50 translate-middle-y ms-2 inst_search_icon ${searchQuery ? 'hidden' : ''}`} />
+                  <Form.Control
+                    type="search"
+                    placeholder="Search by name"
+                    className="ps-3 search_bar"
+                    aria-label="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </Form>
+            </div>
+          </Col>
+        </Row> */}
         <Row>
           {filteredFacultyList.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="fac_list">
               <div
                 onClick={() => handleclick(item)}
-                className={`faculty_rectangle ${
-                  !item.status ? "" : "inactive-faculty"
-                }`}
+                className={`faculty_rectangle ${!item.status ? "" : "inactive-faculty"
+                  }`}
               >
                 <div
                   className="faculty_list_medium"
@@ -228,11 +251,20 @@ function FacultyDashboard() {
                       src={amritha}
                       alt=""
                     /> */}
-                    <IoPersonSharp style={{
+                    {item.image ? (
+                      <img
+                        style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                        src={item.image}
+                        alt={item.first_name || "Faculty Profile"}
+                      />
+                    ) : (
+                      <IoPersonSharp style={{
                         width: "40px",
                         height: "50px",
                         borderRadius: "50%",
-                      }}/>
+                      }} />
+                    )
+                    }
                   </div>
                 </div>
               </div>
@@ -243,9 +275,8 @@ function FacultyDashboard() {
 
       <div className="faculty_adding_button">
         <button
-          className={`faculty_adding faculty_adding_my_button ${
-            isActive ? "active" : ""
-          }`}
+          className={`faculty_adding faculty_adding_my_button ${isActive ? "active" : ""
+            }`}
           onClick={handleAddClick}
         >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />

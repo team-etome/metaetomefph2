@@ -60,6 +60,13 @@ function ReferenceAdding() {
     event.preventDefault();
     setLoading(true);
 
+    Swal.fire({
+      title: "Submitting Reference",
+      text: "Please wait...",
+      allowOutsideClick: false,
+      showConfirmButton: false, // No OK button for loading
+    });
+
     const formData = new FormData();
     formData.append("teacher", teacher_id);
     formData.append("class_name", class_name);
@@ -74,28 +81,59 @@ function ReferenceAdding() {
       formData.append("url", selectedUrl);
     }
 
+    // try {
+    //   const response = await axios.post(`${APIURL}/api/reference`, formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   });
+    //   Swal.fire({
+    //     icon: "success",
+    //     title: "Reference added successfully",
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //   });
+    //   navigate('/teacherrefrencelist'); 
+    // } catch (error) {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Error",
+    //     text: "There was an error adding the reference",
+    //   });
+    // } finally {
+    //   setLoading(false); // Set loading to false after submission
+    // }
     try {
       const response = await axios.post(`${APIURL}/api/reference`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+      Swal.close();
+
       Swal.fire({
         icon: "success",
         title: "Reference added successfully",
-        showConfirmButton: false,
-        timer: 1500,
+        text: "Your reference has been added.",
+        confirmButtonText: "OK",
+        allowOutsideClick: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/teacherrefrencelist');
+        }
       });
-      navigate('/teacherrefrencelist'); 
     } catch (error) {
+      Swal.close();
       Swal.fire({
         icon: "error",
         title: "Error",
         text: "There was an error adding the reference",
+        confirmButtonText: "OK",
+        allowOutsideClick: false,
       });
     } finally {
-      setLoading(false); // Set loading to false after submission
-    }
+      setLoading(false);
+    }        
   };
 const handleBackClick = () => {
   navigate('/teacherrefrencelist')
@@ -246,16 +284,16 @@ const handleBackClick = () => {
               )}
             </div> */}
             <div className="teacher_ref_submit">
-              {loading ? (
+              {/* {loading ? (
                 <ThreeDots
                   color="#00BFFF"
                   height={80}
                   width={80}
                   style={{ margin: "20px auto" }}
                 />
-              ) : (
+              ) : ( */}
                 <button onClick={handleSubmit} type="submit">Submit</button>
-              )}
+              {/* )} */}
             </div>
           </Row>
         </div>

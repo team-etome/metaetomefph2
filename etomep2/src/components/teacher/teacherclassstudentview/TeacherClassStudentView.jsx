@@ -4,7 +4,7 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { useNavigate, useLocation } from "react-router-dom";
-import studentPlaceholder from "../../../assets/amritha.png"; // or your own image
+import studentPlaceholder from "../../../assets/Avatar.png"; // or your own image
 import "./teacherclassstudentview.css";
 import { RiGraduationCapLine } from "react-icons/ri";
 
@@ -212,7 +212,7 @@ function TeacherClassStudentView() {
                             <Col md={4} >
                                 <div className="teacher_personal_info_image">
                                     <img
-                                        src={studentPlaceholder}
+                                        src={studentData.image || studentPlaceholder}
                                         alt="Student"
                                         className="teacher_profile_picture"
                                     />

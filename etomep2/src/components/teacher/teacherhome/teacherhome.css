@@ -595,7 +595,7 @@ align-items: center;
   .teacher_home {
     overflow-x: auto;
     /* overflow-y: hidden;  */
-    padding-left: 2vh;
+    padding-left: 0vh;
   }
 
   .dashboard_content_row {
