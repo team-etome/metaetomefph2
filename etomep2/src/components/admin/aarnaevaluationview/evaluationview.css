@@ -245,4 +245,40 @@
         }
     }
 
-    
+
+    /* Submit button container */
+.submit {
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 40px;
+  }
+  
+  /* Submit button style */
+  .submit_button {
+    height: 40px;
+    width: 150px;
+    background-color: #526D82;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit_button:hover {
+    background-color: #435f6a;
+  }
+  
+  .evaluation_datepicker {
+    width: 100%;
+    height: 50px;      
+    border: 1px solid #526D82;
+    border-radius: 8px;  
+    box-sizing: border-box;
+    padding: 1px 10px 12px 10px;
+    font-size: 16px;       
+  }
+  
+  

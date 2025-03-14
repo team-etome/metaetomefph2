@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
-import { FaArrowLeft, FaSpinner, FaRedo } from "react-icons/fa";
+import { FaArrowLeft, FaSpinner, FaRedo ,FaTrash} from "react-icons/fa";
 import Select from "react-select";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -15,7 +15,7 @@ function LokaTextbookEdit() {
 
   const location = useLocation();
   const textbookData = location.state?.textbook || {}; // Get the passed data
-  console.log(textbookData, "classdaaaaaa")
+  console.log(textbookData, "classdaaaaaattttt")
   const [selectedTab, setSelectedTab] = useState("frontPage");
   const [totalChaptersInput, setTotalChaptersInput] = useState("");
   const [chapters, setChapters] = useState([]);
@@ -289,7 +289,7 @@ function LokaTextbookEdit() {
         <div
           key={index}
           style={{
-            width:"auto",
+            width: "auto",
             display: "flex",
             padding: "10px",
             marginTop: index === 0 ? "0px" : "20px",
@@ -368,12 +368,12 @@ function LokaTextbookEdit() {
           {/* Delete Button */}
           <RxCross2 style={{
             flexShrink: 0,
-            color:"red",
-            width:"20px",
-            height:"20px",
-            marginLeft:"5px"
-            
-          }} onClick={() => handleDeleteChapter(index)}/>
+            color: "red",
+            width: "20px",
+            height: "20px",
+            marginLeft: "5px"
+
+          }} onClick={() => handleDeleteChapter(index)} />
 
           {/* <button
             
@@ -802,6 +802,39 @@ function LokaTextbookEdit() {
   //   }
   // }, [data]);
 
+  // New delete handler function
+  const handleDeleteTextbook = async () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This will delete the textbook permanently.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          setLoading(true);
+          await axios.delete(`${APIURL}/api/admin-create-textbook/${ids}`);
+          Swal.fire({
+            icon: "success",
+            title: "Deleted!",
+            text: "The textbook has been deleted.",
+          });
+          navigate("/adminlokanavbar");
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
+        } finally {
+          setLoading(false);
+        }
+      }
+    });
+  };
+
   return (
     <div>
       <Container className="loka_container">
@@ -811,9 +844,20 @@ function LokaTextbookEdit() {
               display: "flex",
               alignItems: "center",
               marginBottom: "10px",
+              justifyContent: "space-between",
             }}
           >
             <h1 className="loka_title">Edit Textbooks</h1>
+            <FaTrash
+              style={{
+                color: "red",
+                fontSize: "24px",
+                cursor: "pointer",
+                marginRight:"10px"
+              }}
+              onClick={handleDeleteTextbook}
+              title="Delete Textbook"
+            />
           </div>
           <div style={{ border: "0.5px solid #526D82" }}></div>
           <div className="loka_form_scroll">
