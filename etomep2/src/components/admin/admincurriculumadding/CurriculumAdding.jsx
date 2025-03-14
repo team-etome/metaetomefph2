@@ -26,7 +26,7 @@ function CurriculumAdding() {
   const [medium, setMedium] = useState(classData.medium || "");
   const [stream, setStream] = useState(classData.stream || "");
   const [classTeacher, setClassTeacher] = useState(classData.teacher || "");
-  const [classid, setClassId] = useState(classData.class_id|| []);
+  const [classid, setClassId] = useState(classData.class_id || []);
   const [category, setCategory] = useState(classData.category || "");
   const [subjectCount, setSubjectCount] = useState(classData.subjectCount || "");
   const [curriculum, setCurriculum] = useState(classData.curriculum || []);
@@ -150,7 +150,7 @@ function CurriculumAdding() {
       entries: curriculumEntries,
     };
 
-    console.log(data,"dataaaaaa")
+    console.log(data, "dataaaaaa")
 
     axios
       .post(`${APIURL}/api/addClassname`, data)
@@ -438,14 +438,16 @@ function CurriculumAdding() {
               </div>
               <div className="delete_edit_mobile">
                 <div className="edit_mobile">
-                  <button>
-                    <FiEdit />
-                  </button>
+                  <FiEdit
+                    onClick={() => handleEdit(selectedRow)}
+                    className="curriculum_edit"
+                  />
                 </div>
                 <div className="delete_mobile">
-                  <button>
-                    <RiDeleteBin6Line />
-                  </button>
+                  <RiDeleteBin6Line
+                    onClick={handleDelete}
+                    className="curriculum_delete"
+                  />
                 </div>
               </div>
             </Row>

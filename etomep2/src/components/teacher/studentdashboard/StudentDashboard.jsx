@@ -10,6 +10,7 @@ import "../studentdashboard/studentdashboard.css";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { FaSpinner } from "react-icons/fa";
 
 
 function StudentDashboard() {
@@ -226,7 +227,15 @@ function StudentDashboard() {
   }, []);
 
   const handlePromoteClick = () => {
-    setShowModal(true); // Open modal
+    if (selectedStudents.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "No Student Selected",
+        text: "Please select at least one student to promote.",
+      });
+      return;
+    }
+    setShowModal(true); // Open modal if at least one student is selected
   };
 
   const handleModalClose = () => {
@@ -363,8 +372,8 @@ function StudentDashboard() {
                 </Col>
               ))
             ) : (
-              <Col className="text-center">
-                <h5 style={{ color: "#666", marginTop: "20px" }}>No students found.</h5>
+              <Col className="text-center student_dashboard_loader">
+                <FaSpinner className="icon-spin" size={30} color="#526D82" />
               </Col>
             )
           )}

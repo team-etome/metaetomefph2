@@ -161,7 +161,7 @@ function TeacherMcq() {
 
       // Handle successful export
       if (response.status === 200) {
-        alert("Export completed successfully!");
+        // alert("Export completed successfully!");
         navigate("/teachermcqlist");
       } else {
         alert("Failed to export questions.");

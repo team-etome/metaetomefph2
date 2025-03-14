@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import amritha from "../../../assets/amritha.png";
 import { RiEdit2Fill } from "react-icons/ri";
@@ -8,12 +8,15 @@ import { logout } from "../../../Redux/Actions/TeacherLogoutInfoAction";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Cropper from "react-easy-crop";
+import Swal from "sweetalert2";
+import { teacherinfo } from "../../../Redux/Actions/TeacherInfoAction";
 
 
 function TeacherProfile() {
   const teacherinfo = useSelector((state) => state.teacherinfo);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedFileName, setSelectedFileName] = useState("");
+  const APIURL = useSelector((state) => state.APIURL.url);
   const [firstName, setFirstName] = useState(
     teacherinfo.teacherinfo?.first_name || ""
   );
@@ -27,12 +30,15 @@ function TeacherProfile() {
   const [institutionCode, setInstitutionCode] = useState(""); // Add default values if available
   const [region, setRegion] = useState("");
   const [boardOfEducation, setBoardOfEducation] = useState("");
-  const [profileImage, setProfileImage] = useState(amritha);
+  const [profileImage, setProfileImage] = useState(
+    teacherinfo.teacherinfo?.image || amritha
+  );
   const [imageSrc, setImageSrc] = useState(null);  // Holds the uploaded image as a DataURL
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [showCropper, setShowCropper] = useState(false);
+  const [teacherId, SetTeacherId] = useState(teacherinfo.teacherinfo?.teacher_id || "")
 
 
   const navigate = useNavigate();
@@ -67,7 +73,36 @@ function TeacherProfile() {
     }
   };
 
-  const handleSave = () => {
+  // const handleSave = () => {
+  //   const formData = new FormData();
+  //   formData.append("first_name", firstName);
+  //   formData.append("last_name", lastName);
+  //   formData.append("email", email);
+  //   formData.append("phone_number", phoneNumber);
+  //   formData.append("institution_code", institutionCode);
+  //   formData.append("region", region);
+  //   formData.append("board_of_education", boardOfEducation);
+  //   if (profileImage !== amritha) {
+  //     formData.append("profile_image", profileImage);
+  //   }
+
+  //   axios
+  //     .put(`${APIURL}/api/addteacher/${teacherId}`, formData)
+  //     .then((response) => {
+  //       console.log("Data saved successfully:", response.data);
+  //       setIsEditing(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("There was an error saving the data!", error);
+  //     });
+  // };
+
+  useEffect(() => {
+    // Update the profileImage state whenever teacherData changes
+    setProfileImage(teacherinfo?.image || amritha);
+  }, [teacherinfo]);
+
+  const handleSave = async () => {
     const formData = new FormData();
     formData.append("first_name", firstName);
     formData.append("last_name", lastName);
@@ -77,17 +112,53 @@ function TeacherProfile() {
     formData.append("region", region);
     formData.append("board_of_education", boardOfEducation);
     if (profileImage !== amritha) {
-      formData.append("profile_image", profileImage);
+      formData.append("image", profileImage);
     }
+    if (profileImage !== amritha) {
+      try {
+        // Convert the blob URL to a Blob
+        const response = await fetch(profileImage);
+        const blob = await response.blob();
+        // Create a File object from the blob
+        const file = new File([blob], "profile.png", { type: blob.type });
+        formData.append("image", file);
+      } catch (error) {
+        console.error("Error converting image:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "There was an error processing the image.",
+        });
+        return;
+      }
+    }
+    console.log(profileImage, "sjdfhgusdgfiuhshid")
 
     axios
-      .post("/api/teacher/update", formData)
+      .put(`${APIURL}/api/addteacher/${teacherId}`, formData)
       .then((response) => {
-        console.log("Data saved successfully:", response.data);
-        setIsEditing(false);
+        const updatedTeacher = response.data.teacher;
+        if (updatedTeacher) {
+          // Update Redux using your teacherinfo action
+          dispatch(teacherinfo(updatedTeacher));
+          // Persist the updated teacher info in localStorage so it persists on refresh
+          localStorage.setItem("teacherinfo", JSON.stringify(updatedTeacher));
+        }
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Data saved successfully!"
+        }).then(() => {
+          setIsEditing(false);
+        });
       })
       .catch((error) => {
         console.error("There was an error saving the data!", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "There was an error saving the data!"
+        });
       });
   };
 
@@ -177,7 +248,7 @@ function TeacherProfile() {
 
   return (
     <div className="teacher_profile">
-      <div className="teacher_background_section teacher_top_section">
+      <div className="teacher_background_section teacher_top_section"  >
         <button onClick={handleback} className="teacher_back_button">
           &lt;
         </button>
@@ -189,12 +260,12 @@ function TeacherProfile() {
       <Container className="teacher_content_container">
         <Row className="justify-content-center">
           <Col md={8}>
-            <div className="teacher_profile_card">
+            <div className="teacher_profile_card" >
               <div className="teacher_profile_edit">
-                <button onClick={handleEditToggle}>
+                <button onClick={isEditing ? handleSave : handleEditToggle}>
                   {isEditing ? "Save" : "Edit"}
                 </button>
-                <RiEdit2Fill className="teacher_profile_edit_icon" />
+                {/* <RiEdit2Fill className="teacher_profile_edit_icon" /> */}
               </div>
               <Form className="teacher_profile_form">
                 <Row>
@@ -336,7 +407,7 @@ function TeacherProfile() {
   )}
 </div> */}
       <div className="teacher_profile_image_container">
-        <img src={profileImage} alt="Profile" className="profile_image" />
+        <img src={profileImage || amritha} alt="Profile" className="profile_image" />
         {isEditing && (
           <div className="input_container_pic">
             <input

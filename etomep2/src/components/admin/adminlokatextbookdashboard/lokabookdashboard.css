@@ -18,11 +18,11 @@
 }
 
 .admin_loka_tb_list_scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;  
+  background: #f8feff;  
 }
 
 .admin_loka_tb_list_scroll::-webkit-scrollbar-thumb {
-  background: #A8BFD1; 
+  background: #f8feff; 
 }
 
 .tb_title_col{

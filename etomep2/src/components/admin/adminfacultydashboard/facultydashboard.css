@@ -1,8 +1,8 @@
 .faculty_container_scroll {
-    overflow-y: auto;
-    height: 75vh;
-    width:150vw ;
-  margin-top: 16px;
+  overflow-y: auto;
+  height: 70vh;
+  width:150vw ;
+  margin-top: 70px;
   margin-right: 2vw;
   margin-left: 1vw;
   }
@@ -13,13 +13,22 @@
   
 
   .faculty_container_scroll::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #F8FEFF;
   }
   
 
   .faculty_container_scroll::-webkit-scrollbar-thumb {
-    background: #A8BFD1;
+    background:#F8FEFF;
   }
+
+  .search-bar-wrapper {
+    position: fixed;
+    z-index: 1000;
+    padding: 10px 0; /* adjust if needed */
+    /* margin-right: 2vw; */
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); optional for separation */
+  } 
+  
 
 
   .faculty_lisit_circle{
@@ -35,7 +44,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-color: #FFFF;
+    background-color: #FFFF;  /*transprante and comment box shadow to hide background*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,7 +101,6 @@
   position: relative;
   margin-bottom: 20px;
   cursor: pointer;
-
 }
 
 

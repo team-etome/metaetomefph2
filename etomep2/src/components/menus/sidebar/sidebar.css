@@ -129,13 +129,13 @@
   position: fixed;
   top: 0;
   left: -100%;
-  width: 50%; /* manage the width of sidebar */
+  width: 55%; /* manage the width of sidebar */
   background-color: white;
   box-shadow: 2px 0 5px rgba(157, 157, 157, 0.5);
   transition: left 0.3s ease;
   z-index: 9999;
   height: 100vh;
-  overflow-y: auto; /* Allows scrolling for large menus */
+  /* overflow-y: auto; Allows scrolling for large menus */
 
 }
 
@@ -154,7 +154,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 40px;
+  padding-left: 30px;
   width: 100%; /* Ensures the column occupies full width */
 }
 
@@ -182,6 +182,7 @@
   position: absolute;
   left: 70px;
   transition: opacity 0.3s ease-in-out, color 0.1s ease-in-out, font-size 0.1s ease-in-out;
+  width: 90px;
 }
 
 .mob_menu_item_col:hover .mob_icon_container_div,

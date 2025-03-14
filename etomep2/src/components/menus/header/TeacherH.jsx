@@ -14,7 +14,8 @@ function TeacherH() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-
+  const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
+  console.log(teacherInfo,"dataaaa")
   const navigate = useNavigate();
 
   const handleBurgerClick = () => {
@@ -75,7 +76,7 @@ function TeacherH() {
             </div>
             <img
               onClick={handlenavigate}
-              src=''
+              src={teacherInfo?.image || " "}
               alt="Profile"
               style={{
                 width: "52px",

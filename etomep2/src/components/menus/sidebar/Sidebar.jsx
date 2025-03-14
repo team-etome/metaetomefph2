@@ -9,6 +9,7 @@ import { SlNote, SlSettings } from "react-icons/sl";
 import { TbScanEye } from "react-icons/tb";
 import "../sidebar/sidebar.css";
 import etomelogo from "../../../assets/etomelogo.png";
+import { NavLink } from "react-router-dom";
 
 function Sidebar() {
   const location = useLocation();
@@ -18,9 +19,64 @@ function Sidebar() {
   const teacher_token = teacher.teacherinfo?.teacher_token;
   const class_teacher_token = teacher.teacherinfo?.class_teacher_token;
 
+
+  const activeRoutesMapping = {
+    // "/teacherhome": ["/teacherhome","/teacherhome/dashboard","/teacherhome/profile","/teacherhome/otherchild"
+    // ],
+    // "/teachersubject": ["/teachersubject","/teachersubject/details","/teachersubject/edit","/teachersubject/childpage"
+    // ],
+    // "/teacherexamination": ["/teacherexamination","/teacherexamination/results","/teacherexamination/analysis","/teacherexamination/childpage"
+    // ],
+    // "/settings": ["/settings","/settings/account","/settings/preferences","/settings/childpage"
+    // ],
+
+
+
+    "/admindashboard": ["/admindashboard","/admindashboard/overview","/admindashboard/stats"
+    ],
+    "/institutionadding": ["/institutionadding","/facultyview","/facultyadding","/classadding","/curriculumadding","/classview"
+    ],
+    "/adminlokanavbar": ["/adminlokanavbar","/adminlokatextbook","/adminlokalibary"
+    ],
+    "/aarnanavbar": ["/aarnanavbar","/questionview","/questionadding","/seatview","/seatassigning","/evaluationview","/evaluationscheduling"
+    ],
+
+
+
+
+    "/teacherhome": ["/teacherhome"
+    ],
+    "/teacherstudentdashboard": ["/teacherstudentdashboard","/teacherstudentview","/teachertimetable","/teacherstudentadd",
+    ],
+    "/teachersubject": ["/teachersubject","/teacherclassview","/teacherassignment","/teacherassignmentadding","/teacherrefrencelist"
+      ,"/teacherreferenceadd","/teachertestlist","/teachertestadd","/teachermcqlist","/teachermcqadd",
+    ],
+    "/teacherexamination": ["/teacherexamination","/teacherquestionview"
+    ]
+  };
+
   useEffect(() => {
-    setActiveItem(location.pathname); // Set the active path based on the URL
+    const currentPath = location.pathname;
+    let foundParent = "";
+    Object.keys(activeRoutesMapping).forEach((parent) => {
+      // If the current path exactly matches or starts with one of the defined child paths,
+      // we consider that parent as active.
+      const childPaths = activeRoutesMapping[parent];
+      if (
+        childPaths.some(
+          (childPath) =>
+            currentPath === childPath || currentPath.startsWith(childPath)
+        )
+      ) {
+        foundParent = parent;
+      }
+    });
+    setActiveItem(foundParent);
   }, [location.pathname]);
+
+  // useEffect(() => {
+  //   setActiveItem(location.pathname);  Set the active path based on the URL
+  // }, [location.pathname]);
 
   // useEffect(() => {
   //   const routes = {
@@ -41,7 +97,7 @@ function Sidebar() {
     { path: "/teacherstudentdashboard", icon: <RxDashboard />, label: "My Class" },
     { path: "/teachersubject", icon: <PiBook />, label: "Subjects" },
     { path: "/teacherexamination", icon: <SlNote />, label: "Aarna" },
-    { path: "/settings", icon: <SlSettings />, label: "Settings" }
+    // { path: "/settings", icon: <SlSettings />, label: "Settings" }
   ];
 
   // Items for general teachers
@@ -49,7 +105,7 @@ function Sidebar() {
     { path: "/teacherhome", icon: <GoHome />, label: "Home" },
     { path: "/teachersubject", icon: <PiBook />, label: "Subjects" },
     { path: "/teacherexamination", icon: <SlNote />, label: "Aarna" },
-    { path: "/settings", icon: <SlSettings />, label: "Settings" }
+    // { path: "/settings", icon: <SlSettings />, label: "Settings" }
   ];
 
   // Items for other roles (admins and others)
@@ -79,7 +135,7 @@ function Sidebar() {
         {itemsToDisplay.map((item, index) => (
           <Link key={index} to={item.path} style={{ textDecoration: "none", color: "inherit" }}>
             {/* <Col className={`menu_item_col ${activeItem === item.label.toLowerCase() ? "active" : ""}`}> */}
-            <Col className={`menu_item_col ${activeItem === item.path ? "active" : ""}`}>
+            <Col className={`menu_item_col ${activeItem.startsWith(item.path) ? "active" : ""}`}>
               <div className="icon_container_div">
                 {/* <span className="icon_img "> {item.icon}</span> */}
                 <span className={`icon_img ${activeItem === item.path ? "active_icon" : ""}`}>{item.icon}</span>

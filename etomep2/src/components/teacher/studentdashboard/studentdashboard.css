@@ -721,3 +721,19 @@ input:checked + .slider:before {
   justify-content:end;
   max-width: 400px; /* Limit the maximum width */
 }
+
+.icon-spin {
+  animation: spin 1s linear infinite;
+}
+.student_dashboard_loader{
+  margin-top: 200px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

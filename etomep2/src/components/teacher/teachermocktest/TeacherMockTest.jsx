@@ -315,7 +315,7 @@ function TeacherMockTest() {
       Swal.fire({
         icon: "success",
         title: "Export successful!",
-        showConfirmButton: false,
+        // showConfirmButton: false,
         timer: 1500,
       }).then(() => {
         navigate("/teachertestlist");

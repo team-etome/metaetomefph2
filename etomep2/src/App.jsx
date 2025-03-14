@@ -101,6 +101,7 @@ function App() {
           <Route path="/coursedashboard" element={<CoursedashboardPage />} />
           {/* <Route path="/school" element={<SchoolPage />} /> */}
 
+
           
           {/* adminside */}
           <Route path="/" element={<AdminLoginPage />} />

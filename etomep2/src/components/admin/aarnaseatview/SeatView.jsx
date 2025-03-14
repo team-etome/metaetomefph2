@@ -4,9 +4,12 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
 import Layout_01_S from "../../../assets/Layout_01_S.png";
 import Layout_02_S from "../../../assets/Layout_02_S.png";
 import "../aarnaseatview/seatview.css";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function SeatView() {
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
@@ -14,8 +17,10 @@ function SeatView() {
   const navigate = useNavigate();
 
   const location = useLocation();
+  const APIURL = useSelector((state) => state.APIURL.url);
 
   const seatingData = location.state?.seatingData || {};
+  console.log(seatingData, "dataaaaaaaa")
 
   const layoutType = seatingData.pattern || "";
   const classes = seatingData.classes || [];
@@ -53,6 +58,31 @@ function SeatView() {
     ? seatingData.teacher
     : [seatingData.teacher];
 
+  
+  const handleDeleteSeat = async () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this deletion!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`${APIURL}/api/seating/${seatingData.id}`);
+          Swal.fire("Deleted!", "Your seating has been deleted.", "success");
+          navigate("/aarnanavbar");
+        } catch (error) {
+          console.error("Error deleting seating:", error);
+          Swal.fire("Error!", "Failed to delete seating.", "error");
+        }
+      }
+    });
+  };
+
   return (
     <div>
       <Container className="seat_view_container">
@@ -80,7 +110,7 @@ function SeatView() {
                   }}
                 >
                   {/* <button className="seat_block">Block</button> */}
-                  <MdDelete className="seat_block" />
+                  <MdDelete className="seat_block" onClick={handleDeleteSeat} />
                 </div>
               ) : (
                 <div style={{ position: "relative" }} ref={dropdownRef}>
@@ -106,7 +136,7 @@ function SeatView() {
                       }}
                     >
                       {/* <button className="seat_block">Block</button> */}
-                      <MdDelete className="seat_block" />
+                      <MdDelete className="seat_block" onClick={handleDeleteSeat} />
                     </div>
                   )}
                 </div>

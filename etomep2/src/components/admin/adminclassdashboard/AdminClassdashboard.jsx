@@ -75,7 +75,7 @@ function AdminClassdashboard() {
   console.log(classDetails,"class details")
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
+    <div style={{ display: "flex", justifyContent: "center", width: "104.5%"}}>
       {/* <div>
       <div className="arrow-button" onClick={() => setIsVisible(!isVisible)}>
         <span>&lt;</span>
