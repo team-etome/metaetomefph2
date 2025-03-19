@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdEdit } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import "../aarnaevaluationview/evaluationview.css";
 import { useLocation } from "react-router-dom";
@@ -12,9 +12,17 @@ import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 
 function EvaluationView() {
+  const [className, setClassName] = useState("");
+  const [division, setDivision] = useState("");
+  const [subject, setSubject] = useState("");
+  const [term, setTerm] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [showEditBlockButtons, setShowEditBlockButtons] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const dropdownRef = useRef(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [ids,setIds] = useState(null);
 
   const location = useLocation();
   const evaluationData = location.state?.evaluation;
@@ -23,6 +31,19 @@ function EvaluationView() {
   const navigate = useNavigate();
 
   console.log(evaluationData, "evaluation dataaaa");
+
+  // Initialize controlled state variables from evaluationData
+  useEffect(() => {
+    if (evaluationData) {
+      setClassName(evaluationData.class_name || "");
+      setDivision(evaluationData.division || "");
+      setSubject(evaluationData.subject_name || "");
+      setTerm(evaluationData.term || "");
+      setStartDate(evaluationData.start_date || "");
+      setEndDate(evaluationData.end_date || "");
+      setIds(evaluationData.id || "")
+    }
+  }, [evaluationData]);
 
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
@@ -77,6 +98,31 @@ function EvaluationView() {
     });
   };
 
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const updatedData = {
+        class_name: className,
+        division: division,
+        subject_name: subject,
+        term: term,
+        start_date: startDate,
+        end_date: endDate,
+        id: ids
+      };
+      await axios.put(`${APIURL}/api/evaluationadding/${evaluationData.id}`, updatedData);
+      Swal.fire("Updated!", "Evaluation has been updated.", "success");
+      setIsEditing(false); // Exit editing mode after update
+    } catch (error) {
+      console.error("Error updating evaluation:", error);
+      Swal.fire("Failed!", "There was a problem updating the evaluation.", "error");
+    }
+  };
+
   const handleBackClick = () => {
     navigate("/aarnanavbar");
   };
@@ -90,6 +136,7 @@ function EvaluationView() {
                 display: "flex",
                 alignItems: "center",
                 marginBottom: "10px",
+                justifyContent: "space-between",
               }}
             >
               {/* <Link to="/aarnanavbar"> */}
@@ -110,6 +157,12 @@ function EvaluationView() {
                 >
                   {/* <button className="evaluation_edit">Delete</button> */}
                   {/* <button type="button" onClick={handleDelete} className="evaluation_edit">Delete</button> */}
+                  {/* <MdEdit
+                    onClick={handleEdit}
+                    className="evaluation_edit"
+                    style={{ cursor: "pointer", fontSize: "24px" }}
+                    title="Edit Evaluation"
+                  /> */}
                   <MdDelete
                     onClick={handleDelete}
                     className="evaluation_edit"
@@ -140,6 +193,12 @@ function EvaluationView() {
                     >
                       {/* <button className="evaluation_block">Block</button> */}
                       {/* <button type="button" onClick={handleDelete} className="evaluation_edit">Delete</button> */}
+                      {/* <MdEdit
+                        onClick={handleEdit}
+                        className="evaluation_edit"
+                        style={{ cursor: "pointer", fontSize: "24px", color: "blue" }}
+                        title="Edit Evaluation"
+                      /> */}
                       <MdDelete
                         onClick={handleDelete}
                         className="evaluation_edit"
@@ -157,13 +216,16 @@ function EvaluationView() {
                   <div className="evaluation_view_group">
                     <label htmlFor="class_no">Class</label>
                     <input
-                      value={`${evaluationData?.class_name || ""}  ${
-                        evaluationData?.division || ""
-                      }`}
+                      value={`${className}${division}`}
                       type="text"
                       id="class_no"
                       name="class_no"
-                      readOnly
+                      readOnly={!isEditing}
+                      onChange={(e) => {
+                        const parts = e.target.value.split(" ");
+                        setClassName(parts[0] || "");
+                        setDivision(parts.slice(1).join(" ") || "");
+                      }}
                     />
                   </div>
                   {/* <div className="evaluation_view_group">
@@ -173,11 +235,12 @@ function EvaluationView() {
                   <div className="evaluation_view_group">
                     <label htmlFor="subject">Subject</label>
                     <input
-                      value={evaluationData?.subject_name || ""}
-                      type="email"
+                      value={subject}
+                      type="text"
                       id="subject"
                       name="subject"
-                      readOnly
+                      readOnly={!isEditing}
+                      onChange={(e) => setSubject(e.target.value)}
                     />
                   </div>
                 </Col>
@@ -185,11 +248,12 @@ function EvaluationView() {
                   <div className="evaluation_view_group">
                     <label htmlFor="term">Term</label>
                     <input
-                      value={evaluationData?.term || ""}
+                      value={term}
                       type="text"
                       id="term"
                       name="term"
-                      readOnly
+                      readOnly={!isEditing}
+                      onChange={(e) => setTerm(e.target.value)}
                     />
                   </div>
                   {/* <div className="evaluation_view_group">
@@ -206,11 +270,11 @@ function EvaluationView() {
                       <div className="evaluation_view_group full-width-group">
                         <label htmlFor="start_time">Start Date</label>
                         <input
-                          value={evaluationData?.start_date || ""}
+                          value={startDate}
                           type="text"
                           id="start_time"
                           name="start_time"
-                          readOnly
+                          readOnly={!isEditing}
                         />
                       </div>
                     </Col>
@@ -218,11 +282,11 @@ function EvaluationView() {
                       <div className="evaluation_view_group full-width-group">
                         <label htmlFor="end_time">End Date</label>
                         <input
-                          value={evaluationData?.end_date || ""}
-                          type="text"
+                          value={endDate}
+                          type="date"
                           id="end_time"
                           name="end_time"
-                          readOnly
+                          readOnly={!isEditing}
                         />
                       </div>
                     </Col>
@@ -242,6 +306,13 @@ function EvaluationView() {
                 </Col>
               </Row>
             </div>
+            {isEditing && (
+              <div className="submit">
+                <button type="submit" className="submit_button" onClick={handleUpdate} >
+                  Submit
+                </button>
+              </div>
+            )}
           </div>
         </form>
       </Container>

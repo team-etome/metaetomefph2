@@ -168,7 +168,7 @@ function AarnaQuestionPaper() {
           )}
         </Row> */}
         {/* List question papers */}
-        <Row>
+        <Row className="justify-content-center" >
           {currentItems.length > 0 ? (
             currentItems.map((item, index) => (
               <Col
@@ -178,18 +178,20 @@ function AarnaQuestionPaper() {
                 xs={12}
                 key={index}
                 className="qpaper_list"
+              // style={{ border: "2px solid red"}}
               >
                 <div className="qpaper_rectangle" onClick={() => handleclick(item)}
                 // style={{ border: "2px solid red"}}
-                ><div className="qpaper_innersection_2">
-                  <div className="qpaper_class">
-                    {item.class_name} {/*{item.division} */}
+                >
+                  <div className="qpaper_innersection_2">
+                    <div className="qpaper_class">
+                      {item.class_name} {/*{item.division} */}
+                    </div>
+                    <div className="qpaper_subject">
+                      {item.subject_name}
+                    </div>
                   </div>
-                  <div className="qpaper_subject">
-                    {item.subject_name}
-                  </div>
-                </div>
-                  
+
                   <div className="qpaper_innersection_1">
                     <div className="qpaper_term"><span className={item.exam_name.length > 20 ? "scrollable" : ""}>{item.exam_name}</span></div>
                     <div className="qpaper_date">{item.exam_date}</div>
@@ -203,7 +205,7 @@ function AarnaQuestionPaper() {
                         style={{
                           // marginLeft: "80px",
                           // marginTop: "15px",
-                          paddingRight:"10px",
+                          paddingRight: "10px",
                           fontWeight: "bold",
                         }}
                       >

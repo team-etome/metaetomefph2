@@ -11,7 +11,7 @@
 }
 
 .dashboard_content_row {
-  border: 1px solid #9f9dbf;
+  /* border: 1px solid #9f9dbf; */
   border-radius: 8px;
   height: 82vh;
   display: flex;

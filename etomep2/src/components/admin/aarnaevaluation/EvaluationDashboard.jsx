@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Col, Container, Row, Form,Pagination } from "react-bootstrap";
+import { Col, Container, Row, Form, Pagination } from "react-bootstrap";
 import "../aarnaevaluation/evaluationdashboard.css";
 import { IoIosAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ function EvaluationDashboard() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  
+
 
   console.log(evaluationListData, "evaluationnnnn");
 
@@ -110,7 +110,7 @@ function EvaluationDashboard() {
         </Row>
         <Row>
           {currentItems.length > 0 ? (
-              currentItems.map((item, index) => (
+            currentItems.map((item, index) => (
               <Col
                 lg={3}
                 md={6}
@@ -118,32 +118,37 @@ function EvaluationDashboard() {
                 xs={12}
                 key={index}
                 className="evaluation_list"
+              // style={{border:"2px solid red"}}
               >
                 <div
                   onClick={() => handleclick(item)}
-                  className="border border-white evaluation_rectangle"
+                  className="evaluation_rectangles"
+                // style={{border:"2px solid red"}}
                 >
-                  <div className="evaluation_term">{item.term}</div>
-
-                  <div className="evaluation_class_date">
-                    <div className="evaluation_class">
-                      <div>{item.teacher_name}</div>
-                    </div>
-
-                    <div>
-                      <div
-                        style={{
-                          marginLeft: "30px",
-                        }}
-                      >
-                        End date : {item.end_date}
-                      </div>
+                  <div className="evaluation_rectangles_innerpart1">
+                    <div className="evaluation_subject">
+                      {" "}
+                      {item.class_name} {item.division} - {item.subject_name}
                     </div>
                   </div>
+                  <div className="evaluation_rectangles_innerpart2">
+                    <div className="evaluation_term">{item.term}</div>
 
-                  <div className="evaluation_subject">
-                    {" "}
-                    {item.class_name} {item.division} - {item.subject_name}
+                    <div className="evaluation_class_date">
+                      <div className="evaluation_class">
+                        <div>{item.teacher_name}</div>
+                      </div>
+
+                      <div>
+                        <div
+                          style={{
+                            marginLeft: "30px",
+                          }}
+                        >
+                          End date : {item.end_date}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Col>
@@ -167,9 +172,8 @@ function EvaluationDashboard() {
             <Pagination className="d-flex flex-column">
               {[...Array(totalPages).keys()].map((_, index) => (
                 <div
-                  className={`pagination-numeric ${
-                    currentPage === index + 1 ? "active" : ""
-                  }`}
+                  className={`pagination-numeric ${currentPage === index + 1 ? "active" : ""
+                    }`}
                   key={index}
                   onClick={() => handlePageChange(index + 1)}
                 >
@@ -189,9 +193,8 @@ function EvaluationDashboard() {
       </Container>
       <div className="evaluation_adding_button">
         <button
-          className={`evaluation_adding evaluation_adding_my_button ${
-            isActive ? "active" : ""
-          }`}
+          className={`evaluation_adding evaluation_adding_my_button ${isActive ? "active" : ""
+            }`}
           onClick={handleButtonClick}
         >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />

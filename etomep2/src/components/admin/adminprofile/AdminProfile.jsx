@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react";
-import { Col, Container, Row, Form } from "react-bootstrap";
+import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import { RiEdit2Fill, RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import "../adminprofile/adminprofile.css";
+import Cropper from "react-easy-crop";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -101,6 +102,141 @@ function AdminProfile() {
     navigate("/");
   };
 
+
+  // Toggle edit mode for the profile image
+  const [isEditing, setIsEditing] = useState(false);
+  // Current profile image state – initialize with admin logo
+  const [profileImage, setProfileImage] = useState(admininfo?.logo);
+  // States for cropping functionality
+  const [imageSrc, setImageSrc] = useState(null);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [showCropper, setShowCropper] = useState(false);
+
+  // Convert the selected image to a DataURL and open the cropper modal
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        setShowCropper(true);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Create cropped image using a canvas
+  const createCroppedImage = (imageSrc, croppedAreaPixels) => {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.src = imageSrc;
+      image.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        // Set canvas dimensions to the minimum of width and height to get a square crop
+        const size = Math.min(croppedAreaPixels.width, croppedAreaPixels.height);
+        canvas.width = size;
+        canvas.height = size;
+
+        // For circular crop (if needed), clip the canvas
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, 2 * Math.PI);
+        ctx.clip();
+
+        ctx.drawImage(
+          image,
+          croppedAreaPixels.x,
+          croppedAreaPixels.y,
+          croppedAreaPixels.width,
+          croppedAreaPixels.height,
+          0,
+          0,
+          size,
+          size
+        );
+
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error("Canvas cropping failed"));
+            return;
+          }
+          resolve(URL.createObjectURL(blob));
+        }, "image/png");
+      };
+      image.onerror = (error) => reject(error);
+    });
+  };
+
+  const getCroppedImage = async () => {
+    try {
+      const croppedImageUrl = await createCroppedImage(imageSrc, croppedAreaPixels);
+      setProfileImage(croppedImageUrl);
+      setShowCropper(false);
+    } catch (error) {
+      console.error("Error cropping image:", error);
+    }
+  };
+
+  const handleUpdateProfileImage = async () => {
+    try {
+      // Convert the current profileImage URL to a Blob.
+      const responseBlob = await fetch(profileImage);
+      const blob = await responseBlob.blob();
+
+      // Create a File object from the blob.
+      const file = new File([blob], "profile.png", { type: blob.type });
+
+      // Prepare form data.
+      const formData = new FormData();
+      formData.append("logo", file); // Use the correct field name as required by your backend.
+      formData.append("id", admin_id);
+
+      // Call the API endpoint to update the profile image.
+      const updateResponse = await axios.put(`${APIURL}/api/addadmin`, formData, {
+        // headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (updateResponse.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Profile Image Updated",
+          text: "Your profile image has been successfully updated.",
+          showConfirmButton: true,
+          confirmButtonText: "OK",
+        }).then(() => {
+          setIsEditing(false); // Exit editing mode.
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to update profile image.",
+          showConfirmButton: true,
+          confirmButtonText: "OK",
+        });
+      }
+    } catch (error) {
+      console.error("Error updating image:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to update profile image.",
+        showConfirmButton: true,
+        confirmButtonText: "OK",
+      });
+    }
+  };
+
+  const handleEditButtonClick = () => {
+    if (isEditing) {
+      handleUpdateProfileImage();
+    } else {
+      setIsEditing(true);
+    }
+  };
+
   return (
     <div className="admin_profile">
       <div className="background_section top_section">
@@ -116,16 +252,19 @@ function AdminProfile() {
         <Row className=" profile-card-main-div">
           <Col md={8}>
             <div className="profile_card">
-              {/* <div className="admin_profile_edit"> */}
-              {/* {isPasswordEditable ? (
+              {<div className="admin_profile_edit">
+                {/* { {isPasswordEditable ? (
                   <button onClick={handleSavePassword}>Save Password</button>
                 ) : (
                   <button onClick={handleChangePassword}>
                     Change Password
                   </button>
-                )} */}
-              {/* <RiEdit2Fill className="admin_profile_edit_icon" />
-              </div> */}
+                )} } */}
+                {/* <RiEdit2Fill className="admin_profile_edit_icon" /> */}
+                <button onClick={handleEditButtonClick}>
+                  {isEditing ? "Save" : "Edit"}
+                </button>
+              </div>}
               <Form className="profile_form">
                 <Row>
                   <Col md={6}>
@@ -258,12 +397,41 @@ function AdminProfile() {
         </Row>
       </Container>
       <div className="profile_image_container">
-        <img
-          src={admininfo?.logo}
-          alt="Institution Logo"
-          className="profile_image"
-        />
+        <img src={profileImage} alt="Institution Logo" className="profile_image" />
+        {isEditing && (
+          <div className="input_container_pic">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="admin_profile_pic"
+            />
+          </div>
+        )}
       </div>
+      {showCropper && (
+        <div className="cropper-container">
+          <div className="cropper-wrapper">
+            <Cropper
+              image={imageSrc}
+              crop={crop}
+              zoom={zoom}
+              aspect={1} // For a square crop – adjust as needed
+              cropSize={{ width: 150, height: 150 }}
+              showGrid={false}
+              onCropChange={setCrop}
+              onZoomChange={setZoom}
+              onCropComplete={(croppedArea, croppedAreaPixels) =>
+                setCroppedAreaPixels(croppedAreaPixels)
+              }
+            />
+            <div className="cropper-overlay"></div>
+          </div>
+          <Button className="crop-save-btn" onClick={getCroppedImage}>
+            Crop & Save
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
