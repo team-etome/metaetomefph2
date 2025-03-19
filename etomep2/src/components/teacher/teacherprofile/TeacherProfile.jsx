@@ -31,8 +31,9 @@ function TeacherProfile() {
   const [region, setRegion] = useState("");
   const [boardOfEducation, setBoardOfEducation] = useState("");
   const [profileImage, setProfileImage] = useState(
-    teacherinfo.teacherinfo?.image || amritha
+    teacherinfo.teacherinfo?.image
   );
+  console.log(teacherinfo.teacherinfo?.image ,"imagee")
   const [imageSrc, setImageSrc] = useState(null);  // Holds the uploaded image as a DataURL
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -97,10 +98,10 @@ function TeacherProfile() {
   //     });
   // };
 
-  useEffect(() => {
+  // useEffect(() => {
     // Update the profileImage state whenever teacherData changes
-    setProfileImage(teacherinfo?.image || amritha);
-  }, [teacherinfo]);
+  //   setProfileImage(teacherinfo?.image);
+  // }, [teacherinfo]);
 
   const handleSave = async () => {
     const formData = new FormData();

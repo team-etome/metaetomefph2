@@ -15,13 +15,15 @@ height: 75vh;
   /* padding-top: 6vh; */
 }
 
+
 .qpaper_container_scroll_1 {
   /* overflow-y: auto;  */
   /* overflow-x: hidden;  */
   height: 75vh;
   margin-top: 16px;
   /* max-height: calc(100vh - 200px); */
-  width: 150vw;
+  width: 100%;
+  
   /* padding-top: 0vh; */
   /* margin-top: 16px; */
 }
@@ -45,6 +47,8 @@ height: 75vh;
   /* padding-top: 10px; */
   margin-top: 15px;
   margin-bottom: 8px;
+  height: auto;
+  /* width: auto; */
 }
 
 .qpaper_adding_button {
@@ -149,7 +153,8 @@ height: 75vh;
   /* overflow:hidden; */
   /* white-space:nowrap; */
   /* text-overflow:ellipsis; */
-  width: 260px;            /* Fixed width container */
+  width: auto;            /* Fixed width container */
+  margin-right: 10px;
   overflow: hidden;        /* Hide overflowing text */
   white-space: nowrap;     /* Keep text on a single line */
   position: relative;
@@ -278,6 +283,11 @@ height: 75vh;
   /* font-weight: 500; */
 }
 
+@media (max-width:1025px) {
+  .questionpaper_dashboard {
+    width: 100%;
+  }
+  }
 @media (max-width:576px) {
 
   .qpaper_rectangle {
@@ -289,6 +299,7 @@ height: 75vh;
     padding: 4px;
     padding-top: 16px;
     margin-top: 8px;
+    width: auto;
   }
 
   /* .qpaper_container_scroll{
@@ -305,6 +316,7 @@ height: 75vh;
 
   .qpaper_subject {
     width: 80%;
+    margin-right: 10px;
   }
 
 

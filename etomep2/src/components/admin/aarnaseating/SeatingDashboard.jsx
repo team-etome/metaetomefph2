@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Col, Container, Row, Form,Pagination } from "react-bootstrap";
+import { Col, Container, Row, Form, Pagination } from "react-bootstrap";
 import { IoIosAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import "../aarnaseating/seatdashboard.css";
@@ -15,11 +15,6 @@ function SeatingDashboard() {
   const itemsPerPage = 12; // Define how many items per page for pagination
   const APIURL = useSelector((state) => state.APIURL.url);
   const admininfo = useSelector((state) => state.admininfo);
-
-
-
-
-
   const admin_id = admininfo.admininfo?.admin_id;
   const navigate = useNavigate();
 
@@ -36,7 +31,7 @@ function SeatingDashboard() {
 
     fetchSeatingData();
 
-    console.log(seatingData,'seating')
+    console.log(seatingData, 'seating')
     const interval = setInterval(() => {
       setIsActive((prevState) => !prevState);
     }, 2000);
@@ -51,10 +46,6 @@ function SeatingDashboard() {
   const handleclick = (item) => {
     navigate("/seatview", { state: { seatingData: item } });
   };
-
-
-  
-
 
 
   const filteredSeatingData = seatingData
@@ -96,7 +87,7 @@ function SeatingDashboard() {
                   aria-label="Search"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  
+
                 />
                 <BsSearch className="position-absolute top-50 translate-middle-y seat_list_searchbar_icon" />
               </div>
@@ -105,7 +96,7 @@ function SeatingDashboard() {
         </Row>
         <Row>
           {currentItems.length > 0 ? (
-              currentItems.map((item, index) => (
+            currentItems.map((item, index) => (
               <Col
                 lg={3}
                 md={6}
@@ -113,17 +104,22 @@ function SeatingDashboard() {
                 xs={12}
                 key={index}
                 className="seat_list"
+              // style={{border:"2px solid black"}}
               >
                 <div
                   onClick={() => handleclick(item)}
-                  className="border border-white seat_rectangle"
+                  className="seat_rectangle"
                 >
-                  <div className="seat_hall_date">
-                    <div className="seat_hallno">{item.hall_name}</div>
-                    <div className="seat_date">{item.exam_date}</div>
+                  <div className="seat_rectangle_innerpart1">
+                    <div className="seat_time">{item.classes.join(",")}</div>
                   </div>
-                  <div className="seat_facultyno">Faculty : {item.teacher}</div>
-                  <div className="seat_time">{item.classes.join(",")}</div>
+                  <div className="seat_rectangle_innerpart2">
+                    <div className="seat_hall_date" >
+                      <div className="seat_hallno">{item.hall_name}</div>
+                      <div className="seat_date">{item.exam_date}</div>
+                    </div>
+                    <div className="seat_facultyno">Faculty : {item.teacher}</div>
+                  </div>
                 </div>
               </Col>
             ))
@@ -146,9 +142,8 @@ function SeatingDashboard() {
             <Pagination className="d-flex flex-column">
               {[...Array(totalPages).keys()].map((_, index) => (
                 <div
-                  className={`pagination-numeric ${
-                    currentPage === index + 1 ? "active" : ""
-                  }`}
+                  className={`pagination-numeric ${currentPage === index + 1 ? "active" : ""
+                    }`}
                   key={index}
                   onClick={() => handlePageChange(index + 1)}
                 >
@@ -168,9 +163,8 @@ function SeatingDashboard() {
       </Container>
       <div className="seat_adding_button">
         <button
-          className={`seat_adding seat_adding_my_button ${
-            isActive ? "active" : ""
-          }`}
+          className={`seat_adding seat_adding_my_button ${isActive ? "active" : ""
+            }`}
           onClick={handleButtonClick}
         >
           <IoIosAdd style={{ height: "40px", width: "40px", color: "#ffff" }} />
