@@ -1,0 +1,187 @@
+.newsidenav_fstdiv {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 110px;
+    overflow: hidden;
+    z-index: 1001;
+    /* border-right: 2px solid #dee2e6; */
+}
+
+
+.newsidebar_menu_item_col {
+    display: flex;
+    color: #939393;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.newsidebar_icon_container_div {
+    width: 48px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: all 0.5s ease-in-out;
+}
+
+.newsidebar_icon_img {
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+/* On hover: icon and text change color */
+.newsidebar_menu_item_col:hover .newsidebar_icon_img,
+.newsidebar_menu_item_col:hover .newsidebar_icon-text {
+  color: #2162B2;
+}
+
+.newsidebar_menu_item_col.active .newsidebar_icon_img,
+.newsidebar_menu_item_col.active .newsidebar_icon-text {
+  color: #2162B2; /* Change icon and text color when active */
+}
+
+.newsidebar_icon-text {
+    display: block;
+    /* Ensure the text is always displayed */
+    opacity: 1;
+    /* Make sure text is visible */
+    font-size: 12px;
+    /* Adjust font size as needed */
+    color: #676767;
+    /* Text color */
+    transition: none;
+    /* Remove transition effects */
+}
+.newsidebar_header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    width: 100%;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+    height: 12vh;
+    padding-left: 16px;
+    padding-top: 32px;
+}
+
+@media (max-height: 490px),
+(max-width:800px) {
+    .newsidenav_fstdiv {
+        display: none !important;
+    }
+}
+
+
+/* mobile side nav css */
+.mobile_newsidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 55%;
+    /* manage the width of newsidebar */
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(157, 157, 157, 0.5);
+    transition: left 0.3s ease;
+    z-index: 9999;
+    height: 100vh;
+    /* overflow-y: auto; Allows scrolling for large menus */
+
+}
+
+.mobile_newsidebar.show {
+    left: 0;
+}
+
+.mobile_newsidebar_header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    /* Add more padding for a clean layout */
+
+}
+
+.mob_menu_item_col {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 30px;
+    width: 100%;
+    /* Ensures the column occupies full width */
+}
+
+.mob_icon_container_div {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #676767;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+}
+
+.mob_icon_img {
+    width: 24px;
+    height: 24px;
+}
+
+.mob_icon_text {
+    font-size: 18px;
+    font-weight: 500;
+    color: #676767;
+    position: absolute;
+    left: 70px;
+    transition: opacity 0.3s ease-in-out, color 0.1s ease-in-out, font-size 0.1s ease-in-out;
+    width: 90px;
+}
+
+.mob_menu_item_col:hover .mob_icon_container_div,
+.mob_menu_item_col.active .mob_icon_container_div {
+    background-color: #526D82;
+    border-color: #526D82;
+    color: #fff;
+}
+
+.mob_menu_item_col:hover .mob_icon_text,
+.mob_menu_item_col.active .mob_icon_text {
+    color: #526D82;
+    font-size: 25px;
+    opacity: 1;
+}
+
+.mob_pofile_container_div {
+    margin-top: 20px;
+    /* Space before profile section */
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #676767;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.mob_profile_text {
+    font-size: 18px;
+    font-weight: 500;
+    color: #676767;
+    position: absolute;
+    left: 70px;
+    transition: opacity 0.3s ease-in-out, color 0.1s ease-in-out, font-size 0.1s ease-in-out;
+}
+
+.mob_pofile_container_div:hover .mob_profile_text {
+    color: #526D82;
+    font-size: 25px;
+    opacity: 1;
+}

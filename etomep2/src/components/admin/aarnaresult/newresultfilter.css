@@ -1,0 +1,246 @@
+/* Main container and header styling */
+.result_main_container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.result_main_header_container {
+    flex: 0 0 auto;
+    padding-top: 24px;
+    margin-left: 24px;
+}
+
+.header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.left-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search_button {
+    margin-left: 15px;
+    width: 100px;
+    height: 40px;
+    color: #2162B2;
+    background: transparent;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    transition: left 0.5s ease;
+}
+
+/* Form select styling */
+.result_select_exam {
+    width: 300px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.result_select_year,
+.result_select_class,
+.result_select_division {
+    width: 200px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+/* Class result container */
+.class-result-container {
+    padding: 0;
+    margin: 24px 0 0 24px;
+    font-size: 24px;
+    font-weight: 600;
+    color: black;
+}
+
+/* Wrapper for tables */
+.result_classes_table {
+    flex: 1 1 auto;
+    margin-left: 24px;
+    margin-top: 24px;
+    max-height: 100%;
+    height: 100%;
+}
+
+.result_table_wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+/* Header container: horizontal scroll only */
+.result-table-header-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    
+}
+
+/* Body container: both vertical and horizontal scroll */
+.result-table-body-container {
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 29vh;
+    max-height: 100% !important;
+    /* border: 2px solid black; */
+}
+.result-table-header-container::-webkit-scrollbar,
+.result-table-body-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* General table styling */
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.result-th,
+.result-td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    min-width: 100px;
+    font-size: 14px;
+    font-weight: normal;
+}
+.result-td-percentage {
+    min-width: 110px;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.result-th-percentage {
+    min-width: 110px;
+    font-size: 14px;
+    font-weight: normal;
+    
+}
+.result-td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    min-width: 100px;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.result-th-marks {
+    min-width: 110px;
+    font-size: 14px;
+    font-weight: normal
+}
+.result-tr{
+    color: black;
+    font-size: 14px;
+    font-weight:400;
+}
+
+/* Subject list column styles */
+.result-th-subjectlist {
+    width: 120px !important;
+    min-width: 120px !important;
+    height: 56px;
+}
+
+.result-th-subjectlist_subjectheading {
+    width: 120px !important;
+    min-width: 120px !important;
+    height: 48px;
+    background-color: #fff;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.result-th-subjectlist_heading {
+    width: 120px !important;
+    min-width: 120px !important;
+    height: 86px;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+}
+
+/* Subject container inside header cells */
+.subject-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.subject-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: black;
+}
+
+.subject-total {
+    font-size: 14px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    padding-top: 4px;
+}
+
+.total-label {
+    font-weight: normal;
+    font-size: 14px;
+    color: black;
+}
+
+.total-value {
+    font-weight: 600;
+    color: black;
+}
+
+/* Sticky left columns */
+.sticky-left {
+    position: sticky;
+    width: 75px !important;
+    left: 0;
+    background: #fff;
+    z-index: 5;
+}
+
+.name-scroll-container {
+    width: 226px !important;
+    max-width: 226px !important;
+    overflow-x: auto;
+    white-space: nowrap;
+    box-sizing: border-box;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.sticky-left-2 {
+    position: sticky;
+    left: 100px;
+    background: #fff;
+    z-index: 5;
+}
+
+/* Sticky right columns */
+.sticky-right-1 {
+    position: sticky;
+    right: 110px;
+    background: #fff;
+    z-index: 5;
+}
+
+.sticky-right-2 {
+    position: sticky;
+    right: 0;
+    background: #fff;
+    z-index: 5;
+}

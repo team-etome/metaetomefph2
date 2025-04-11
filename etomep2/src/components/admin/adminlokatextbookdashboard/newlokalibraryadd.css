@@ -1,0 +1,241 @@
+/* lokalibraryadd.css */
+.lokalibraryadd-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+}
+
+.lokalibraryadd-modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 700px;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.lokalibraryadd-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.lokalibraryadd-close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.lokalibraryadd-modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.lokalibraryadd-form-group {
+    margin-bottom: 15px;
+}
+
+.lokalibraryadd-form-control {
+    width: 100%;
+    height: 48px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.lokalibraryadd-form-label {
+    padding-bottom: 8px;
+    font-size: 16px;
+}
+
+.lokalibraryadd-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    padding: 20px;
+    border-top: 1px solid #eee;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.lokalibraryadd-btn {
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.lokalibraryadd-btn-secondary {
+    background-color: #fff;
+    color: #2162B2;
+    border: 1px solid #2162B2;
+
+}
+
+.lokalibraryadd-btn-danger {
+    background-color: #fff;
+    color: red;
+    border: 1px solid red;
+}
+
+.lokalibraryadd-btn-primary {
+    background-color: #2162B2;
+    color: white;
+}
+
+.custom-input:focus {
+    border-color: #526D82 !important;
+    box-shadow: 0 0 5px rgba(82, 109, 130, 0.6);
+    /* outline: none; */
+}
+
+.admin_library_image_upload_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 233px;
+    width: 100%;
+    border: 2px dashed #526D82;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    position: relative;
+    background-color: #fff;
+}
+
+.admin_library_upload_placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.admin_library_upload_label {
+    background-color: #DAE2E9;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.admin_library_upload_label:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.admin_library_upload_input {
+    display: none;
+}
+
+.lokalibraryadd_chapter-upload-wrapper {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.lokalibraryadd_chapter-upload-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    color: #767676;
+    margin-bottom: 8px;
+}
+
+.lokalibraryadd_chapter-upload-input {
+    width: 208px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #767676;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.lokalibraryadd_chapter-upload-scroll-area {
+    border-radius: 10px;
+    /* background: #fff; */
+    padding: 10px;
+    /* box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1); */
+    border: none !important;
+}
+.lokalibraryadd_chapter-upload-row:not(:last-child) {
+    border-bottom: 2px solid #e0e0e0;
+  }
+  
+
+.lokalibraryadd_chapter-upload-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+
+.lokalibraryadd_chapter-upload-text {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    width: 300px;
+    /* min-width: 300px; */
+    /* max-width: 400px; */
+}
+
+.lokalibraryadd_chapter-upload-file {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #2162B2;
+    color: #2162B2;
+    border-radius: 8px;
+}
+
+.lokalibraryadd_chapter-upload-delete {
+    background: none;
+    border: 1px solid red;
+    color: red;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.lokalibraryadd_custom-file-upload {
+    position: relative;
+}
+
+.lokabook_upload-btn {
+    width:116px;
+    color: #2162B2;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid #2162B2;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+}
+
+.lokalibraryadd_hidden-file {
+    display: none;
+}
+
+.lokalibraryadd_file-name-display {
+    width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #555;
+    font-size: 14px;
+}

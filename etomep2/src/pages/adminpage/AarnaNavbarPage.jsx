@@ -5,7 +5,7 @@ import MainHeader from '../../components/menus/common/MainHeader/';
 
 function  AarnaNavbarPage() {
   return (
-    <div>
+    <div style={{backgroundColor:"#f9f9f9"}}>
       <MainHeader/>
       <AarnaNavbar/>
     </div>

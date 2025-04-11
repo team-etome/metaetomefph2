@@ -1,0 +1,185 @@
+/* Main container and header styling */
+.evaluationdashboard_main_container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.evaluationdashboard_main_header_container {
+    flex: 0 0 auto;
+    padding-top: 24px;
+    margin-left: 24px;
+}
+
+.header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.left-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.evaluationdashboard_search_button {
+    width: 100px;
+    height: 40px;
+    color: #2162B2;
+    background: transparent;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    transition: left 0.5s ease;
+}
+
+.evaluationdashboard_result_add_button {
+    width: 100px;
+    height: 40px;
+    color: #fff;
+    background: #2162B2;
+    /* border: 1px solid #2162B2; */
+    border-radius: 8px;
+    /* margin-left: 630px; */
+    transition: left 0.5s ease;
+}
+
+/* Form select styling */
+.evaluationdashboard_select_class {
+    width: 190px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.evaluationdashboard_select_year {
+    width: 190px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+/* Wrapper for tables */
+.evaluationdashboard_classes_box {
+    flex: 1 1 auto;
+    margin-left: 24px;
+    margin-top: 24px;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+
+/* Container that holds all the boxes in a grid with 3 columns */
+.evaluationdashboard_container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 boxes per row */
+    gap: 1rem;
+    /* space between boxes */
+    padding: 1rem;
+    /* optional padding around the grid */
+    box-sizing: border-box;
+}
+
+/* Each individual box (card) */
+.evaluationdashboard_classes_box_inner {
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #B2B2B2;
+    padding: 1rem;
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
+    max-width: 395px;
+    width: 100%;
+    height: 166px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+/* Optional styling for an icon or image at the top */
+.evaluationdashboard_box_icon_wrapper {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.evaluationdashboard_box_icon {
+    width: 88px;
+    height: 88px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+
+.evaluationdashboard_exam_title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: black;
+}
+
+.evaluationdashboard_exam_date {
+    margin: 0.25rem 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: black;
+}
+
+.evaluationdashboard_faculties {
+    margin: 0.25rem 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: black;
+}
+
+.evaluationdashboard_classes {
+    margin: 0.25rem 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: black;
+}
+
+.evaluationdashboard_classes_input {
+    margin: 0.25rem 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+}
+
+/* Top row: flex alignment for icon + text details */
+.evaluationdashboard_top_row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    /* space between the icon and text block */
+}
+
+/* Text details on top row (right side) */
+.evaluationdashboard_exam_details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    word-wrap: break-word;
+    /* Forces long text to wrap within the container */
+}
+
+/* Typography for top-row text */
+.evaluationdashboard_room_no {
+    /* margin: 0.5rem 0 0.25rem 0; */
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    /* Bold or semibold for emphasis */
+}
+
+/* Bottom row: faculties left, classes right */
+.evaluationdashboard_bottom_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

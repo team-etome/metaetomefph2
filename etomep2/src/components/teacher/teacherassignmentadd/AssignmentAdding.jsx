@@ -205,7 +205,7 @@ function AssignmentAdding() {
                     type="file"
                     className="select-file-input"
                     onChange={handleFileChange}
-                    accept="application/pdf"
+                    accept=".pdf,.docx"
                   />
                   {/* <p>maximum Upload file size: 256 Mb.</p> */}
                   {/* <p>File format: PDF</p> */}

@@ -1,0 +1,182 @@
+/* Main container with white background and rounded corners */
+.seatingview_main_container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.seatingview_main_container_inner {
+    margin: 24px;
+}
+
+.seatingview_main_container_inner_header {
+    height: 223px;
+    margin-bottom: 40px;
+}
+
+/* Top blue bar with the room number */
+.seatingview_header_bar {
+    background-color: #2162B2;
+    color: #ffffff;
+    height: 56px;
+    padding-top: 16px;
+    padding-left: 12px;
+}
+
+.seatingview_header_bar span {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.seatingview_header_bar_bottom {
+    margin-top: 30px;
+}
+
+/* White info area below the blue bar */
+.seatingview_info_area {
+    background-color: #fff;
+    padding-top: 16px;
+    padding-bottom: 0px !important;
+}
+
+/* Rows of info in the white area */
+.seatingview_info_row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.seatingview_info_row.heading p {
+    font-weight: 400;
+    color: #9A9A9A;
+    font-size: 14px;
+    margin: 0;
+    /* Force each p to take up 1/4 of the row for four columns */
+    flex-basis: 25%;
+    text-align: left;
+}
+
+/* The "data" row (values) */
+.seatingview_info_row.data p {
+    font-weight: 400;
+    color: #000;
+    font-size: 16px;
+    margin: 0;
+    flex-basis: 25%;
+    text-align: left;
+    color: black;
+    /* or any color you prefer for data */
+}
+
+.seatingview_info_row.facultiesLabel p {
+    margin: 0;
+    font-weight: 400;
+    color: #9A9A9A;
+    font-size: 14px;
+    flex-basis: 100%;
+    text-align: left;
+}
+
+/* Faculties data row */
+.seatingview_info_row.facultiesData p {
+    font-weight: 400;
+    color: #000;
+    font-size: 16px;
+    margin: 0;
+    flex-basis: 100%;
+    text-align: left;
+}
+
+/* Blue bar for "Student List" and class select on the right */
+.seatingview_studentlist_bar {
+    background-color: #2162B2;
+    color: #ffffff;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Title on the left side of the student list bar */
+.seatingview_studentlist_title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Dropdown on the right side */
+.seatingview_class_select {
+    background-color: #2162B2;
+    color: #fff;
+    border: none;
+    width: 60px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Table for the student list */
+.seatingview_table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* Make header a block element so it stays fixed */
+.seatingview_table thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* Make tbody a scrollable block with a fixed max-height */
+.seatingview_table tbody {
+    display: block;
+    max-height: calc(100vh - 605px); /* Adjust 300px as needed */
+    overflow-y: auto;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.seatingview_table thead tr th {
+    border-bottom: 1px solid #ddd;
+    background-color: #fff !important;
+    color: #8D8A95;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* Body rows: only a bottom border for each row */
+.seatingview_table tbody tr {
+    border-bottom: 1px solid #ddd;
+    color: black;
+    font-size: 14px;
+    font-weight: 400;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* Optionally remove the bottom border on the last row if desired */
+/* .seatingview_table tbody tr:last-child {
+     border-bottom: none;
+   } */
+
+.seatingview_table th,
+.seatingview_table td {
+    border: none;
+    text-align: left;
+    padding: 12px;
+    font-size: 14px;
+}
+
+.sort-arrow {
+    font-size: 12px;
+    /* smaller arrow */
+    color: #9A9A9A;
+    margin-left: 4px;
+}

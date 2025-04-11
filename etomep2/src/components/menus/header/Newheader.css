@@ -1,0 +1,149 @@
+.newheader_container_main {
+    background-color: #fff;
+    height: 81px;
+    width: calc(100% - 156px);
+    z-index: 10;
+    position: fixed;
+    top: 24px;
+    left: 132px;
+    right: 24px;
+    padding-left: 24px !important;
+    /* padding-top: 24px !important; */
+}
+.newheader_container{
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+.newheader_logo{
+    font-size: 28px; 
+    font-weight: bold;
+    margin: 0;
+    color: #222222;
+    padding: 0px !important;
+  }
+.newheader_institution{
+    display: flex;
+    gap: 10px;
+    /* justify-content: center;
+    align-content: center;
+    align-items: center; */
+    /* border: 1px solid red; */
+    width: 50%;
+    justify-content: flex-end;
+}
+.tch_header_institution{
+    display: flex;
+    gap: 4px;
+    /* width: 18%; */
+    justify-content: flex-end;
+
+}
+.tch_header_institution h6{
+    overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 200px; 
+}
+.newheader_institution h6{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 400px; /* Reduce width to ensure overflow */
+  max-width: 500px;
+  /* border: 1px solid aqua; */
+}
+.newheader_institution p{
+    font-size: 1rem;
+}
+.hd_title{
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: right;
+}
+@media (max-width: 800px),(max-height:490px ) {
+    .newheader_container{
+    }
+    .nav-links {
+        display: none !important;
+        justify-content: center;
+    }
+    .search_filter{
+        justify-content: center;
+    }
+    .nav-links,
+    .responsive-buttons,
+    .search_filter {
+        display: block;
+        width: 100%;
+        
+    }
+    .responsive-buttons {
+        display: flex;
+        margin-top: 20px;
+        gap: 10px;
+        margin-left: 20px;
+    }
+    .newheader_institution{
+        display: none !important;
+    }
+    .newheader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .newheader_logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .newheader_menu {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        position: absolute;
+        left: 20px; 
+        color: #526D82;
+    }
+    .newheader_menu svg {
+        height: 25px; 
+        width: 25px; 
+    }
+    .notification_icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 90%;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #526D82;
+    }
+    .notification_icon svg {
+        height: 30px;
+        width: 30px;
+    }
+
+}
+@media (min-width:799px) {
+    .newheader_menu{
+        display: none;
+    }
+    .notification_icon {
+        display: none;
+    }
+}
+@media (max-width:799px) {
+    .tch_header_institution {
+        display: none !important; /* Hide the profile section */
+    }
+}
+@media (max-height:491px) {
+    .header_menu{
+        display:flex;
+    }
+    }
