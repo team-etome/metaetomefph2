@@ -7,7 +7,7 @@ const MainHeader = () => {
 
   return (
     <div>
-      <Header/>
+      {/* <Header/> */}
       <Sidebar/>
       <MobileSidebar/>
     </div>

@@ -10,70 +10,91 @@ import ResultFilter from "../aarnaresult/ResultFilter";
 
 function AarnaNavbar() {
 
-  const [activeTab, setActiveTab] = useState(() => {
-    return localStorage.getItem("aarnaActiveTab") || "Question Paper";
-  });
+    const [activeTab, setActiveTab] = useState(() => {
+        return localStorage.getItem("aarnaActiveTab") || "Question Paper";
+    });
 
-  useEffect(() => {
-    localStorage.setItem("aarnaActiveTab", activeTab);
-  }, [activeTab]);
+    useEffect(() => {
+        localStorage.setItem("aarnaActiveTab", activeTab);
+    }, [activeTab]);
 
-console.log(activeTab, "active tabbbbb");
+    console.log(activeTab, "active tabbbbb");
 
 
-useEffect(() => {
-localStorage.setItem("activeTab", activeTab);
-}, [activeTab]);
+    useEffect(() => {
+        localStorage.setItem("activeTab", activeTab);
+    }, [activeTab]);
 
     return (
-        <div className="aarna_navbar">
+        <div  className="aarna_navbar">
             <Container className="aarna_container">
-                <Row className="aarna_row">
+                <Row  className="aarna_row">
                     <Col md={12}>
-                        {/* Change: Use flex-wrap to allow wrapping on smaller screens */}
-                        <div className="d-flex justify-content-between align-items-center flex-wrap">
-                            <Nav
-                                variant="underline"
-                                activeKey={activeTab}
-                                onSelect={(k) => setActiveTab(k)}
-                                // className="ad_aarna_navbar_tab"
-                                className="ad_aarna_navbar_tab d-flex flex-row overflow-auto"
+
+                        <div>
+                            <div>
+                                <h1 style={{
+                                    fontFamily: "Poppins, sans-serif",
+                                    color: "#222222",
+                                    marginLeft:"18px",
+                                    fontWeight: 600
+                                }}>Aarna</h1>
+                            </div>
+                            {/* Change: Use flex-wrap to allow wrapping on smaller screens */}
+                            <div style={{
+                               
+                                marginTop: "5px"
+                            }} className="d-flex justify-content-between align-items-center flex-wrap">
+
+
+
+
+                                <Nav
+                                    variant="underline"
+                                    activeKey={activeTab}
+                                    onSelect={(k) => setActiveTab(k)}
+                                    // className="ad_aarna_navbar_tab"
+                                    className="ad_aarna_navbar_tab d-flex flex-row overflow-auto"
+                                   
                                 // style={{border:'1px solid green', width:'100%' }}
-                            >
-                                {/* <Nav.Item>
-                                    <Nav.Link eventKey="Progress" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
-                                        Progress
-                                    </Nav.Link>
-                                </Nav.Item> */}
-                                <Nav.Item>
-                                    <Nav.Link eventKey="Question Paper" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
-                                        Question Paper
-                                    </Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link eventKey="Seating" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
-                                        Seating
-                                    </Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link eventKey="Evaluation" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
-                                        Evaluation
-                                    </Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link eventKey="Question Bank" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
-                                        Question Bank
-                                    </Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link eventKey="Result" className="ad_aarna_mob_subhead_one"style={{textDecoration:'none'}}>
-                                        Result
-                                    </Nav.Link>
-                                </Nav.Item>
-                            </Nav>
-                            {/* Change: Group search bar and filter icon into a flex container */}
-                            
+                                >
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="Progress" className="ad_aarna_mob_subhead_one" style={{ textDecoration: 'none' }}>
+                                            Time Table
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="Question Paper" className="ad_aarna_mob_subhead_one" style={{ textDecoration: 'none' }}>
+                                            Question Paper
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="Seating" className="ad_aarna_mob_subhead_one" style={{ textDecoration: 'none' }}>
+                                            Seating
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="Evaluation" className="ad_aarna_mob_subhead_one" style={{ textDecoration: 'none' }}>
+                                            Evaluation
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="Question Bank" className="ad_aarna_mob_subhead_one" style={{ textDecoration: 'none' }}>
+                                            Question Bank
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="Result" className="ad_aarna_mob_subhead_one" style={{ textDecoration: 'none' }}>
+                                            Result
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                </Nav>
+                                {/* Change: Group search bar and filter icon into a flex container */}
+
+                            </div>
+
                         </div>
+
 
                         <div className="ad_institution_dashboard_container">
                             {/* {activeTab === "Progress" && <AarnaProgress />} */}
