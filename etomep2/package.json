@@ -12,6 +12,10 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^41.4.2",
     "@ckeditor/ckeditor5-react": "^7.0.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.0.1",
+    "@mui/x-charts": "^7.28.0",
     "@reduxjs/toolkit": "^2.2.3",
     "@wojtekmaj/react-datetimerange-picker": "^6.0.0",
     "axios": "^1.6.8",

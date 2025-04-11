@@ -17,7 +17,7 @@ function AssignmentAdding() {
   const [isLoading, setIsLoading] = useState(false);
 
 
-  console.log(title , duedate ,mark ,"stateeeeeez")
+  console.log(title, duedate, mark, "stateeeeeez")
 
 
   const APIURL = useSelector((state) => state.APIURL.url);
@@ -59,13 +59,13 @@ function AssignmentAdding() {
       .join(" ");
   };
   const handleSubmit = async () => {
-    
+
     try {
       setIsLoading(true); // Set loading state to true
 
       const formData = new FormData();
       // formData.append("title", title);
-      formData.append("title", toTitleCase(title)); 
+      formData.append("title", toTitleCase(title));
       formData.append("due_date", duedate);
       formData.append("mark", mark);
       formData.append("pdf", selectedFile);
@@ -107,7 +107,7 @@ function AssignmentAdding() {
       setIsLoading(false); // Set loading state to false
     }
   };
-  const handleBackClick =() =>{
+  const handleBackClick = () => {
     navigate('/teacherassignment')
   }
   return (
@@ -119,7 +119,7 @@ function AssignmentAdding() {
           </Link> */}
           <h1 className="teacher_assignmentadd_title">Assignment</h1>
         </div>
-        <hr style={{ border: "1px solid #526D82"}} />
+        <hr style={{ border: "1px solid #526D82" }} />
         <div className="teacher_assignment_adding_scroll">
           <Row>
             <Col md={12}>
@@ -198,7 +198,7 @@ function AssignmentAdding() {
                   </button>
                 </div>
 
-                <div className="drop-area">
+                {/* <div className="drop-area">
                   <p>Drop file any where to upload</p>
                   <p>or</p>
                   <input
@@ -207,8 +207,19 @@ function AssignmentAdding() {
                     onChange={handleFileChange}
                     accept=".pdf,.docx"
                   />
-                  {/* <p>maximum Upload file size: 256 Mb.</p> */}
-                  {/* <p>File format: PDF</p> */}
+                  
+                </div> */}
+                <div className="drop-area">
+                  <p>Drop file anywhere to upload</p>
+                  <p>or</p>
+                  <input
+                    type="file"
+                    className="select-file-input"
+                    onChange={handleFileChange}
+                    accept=".pdf,.doc,.docx,.txt,.xls,.xlsx,.csv"  // Allows only non-image files
+                  />
+                  {/* <p>Maximum Upload file size: 256 Mb.</p> */}
+                  {/* <p>File format: No images allowed</p> */}
                 </div>
               </div>
             </Col>
