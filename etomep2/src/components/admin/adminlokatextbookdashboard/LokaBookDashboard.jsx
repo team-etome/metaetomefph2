@@ -93,7 +93,7 @@ function LokaBookDashboard() {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
+    <div style={{ display: "flex", justifyContent: "center", width: "104.5%"}}>
       <Container
         fluid
         className="admin_loka_textbook_dashboard"

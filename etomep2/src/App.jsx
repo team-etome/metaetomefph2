@@ -76,8 +76,10 @@ import TeacherMcq from './components/teacher/teachermcq/TeacherMcq';
 import TeachermcqListpage from './pages/teacherpage/TeachermcqListpage';
 import McqaddingForm from './components/teacher/teachermcq/McqaddingForm';
 import TeacherMcqaddPage from './pages/teacherpage/TeacherMcqaddPage';
-import LokaTextbookEdit from './components/admin/adminloka/LokaTextbookEdit';
+import LokaTextbookEdit from './components/admin/adminlokatextbookdashboard/NewLokaBookEdit';
 import TeacherClassStudentView from './components/teacher/teacherclassstudentview/TeacherClassStudentView';
+import Examtimetable from './components/admin/aarnatimetable/ExamTimetable';
+import Examtimetableediting from './components/admin/aarnatimetable/Examtimetableediting';
 
 
 
@@ -101,6 +103,8 @@ function App() {
           <Route path="/coursedashboard" element={<CoursedashboardPage />} />
           {/* <Route path="/school" element={<SchoolPage />} /> */}
 
+
+        
 
           
           {/* adminside */}
@@ -135,6 +139,9 @@ function App() {
           <Route path="/adminresultview" element={<AarnaResultViewPage/>}/>
           <Route path="/adminprofile" element={<AdminProfilePage/>}/>
           <Route path="/LokaTextbookEdit" element={<LokaTextbookEdit/>}/>
+          <Route path="/adminexamtimetable" element={<Examtimetable/>} />
+          <Route path="/examtimetableedit" element={<Examtimetableediting />} />
+
 
 
 

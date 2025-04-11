@@ -1,208 +1,304 @@
-.aarna_navbar{
-  background-color:#F8FEFF ;
+.aarna_navbar {
+  background-color: #F9F9F9;
   height: 100vh;
-  padding-top: 1vh !important;
-  
+
+  margin-left: 132px;
+  padding-right: 24px;
+  padding-top: 24px !important;
+
 }
-/* .aarna_container{
-  padding-top: 10vh;
-} */
-.aarna_row{
-  padding-left: 2vw;
-  padding-top: 1vw;
+
+.aarna_container {
+  /* padding-top: 10vh; */
+  /* background-color: #fff; */
+  border-radius: 8px;
+  margin-left: 0px;
+  margin-right: 24px !important;
+  max-width: 100%;
+  height: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
+  box-sizing: border-box;
+  /* padding-top: 24px; */
 }
+
+.aarna_row_main {
+  height: 162px !important;
+  /* width: 1354px !important; */
+  padding-top: 24px;
+  padding-left: 24px;
+  padding-right: 0px !important;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.aarna_row_header {
+  margin-right: 0px;
+}
+
+
+.aarna_row {
+  padding-left: 0px !important;
+  padding-top: 24px;
+  margin-right: 0px;
+}
+
+.ads_institution_dashboard_container {
+  margin-top: 24px;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 100%;
+  height: calc(100% - 190px) !important;
+  max-height: 100%;
+  border-radius: 8px;
+  padding: 0px !important;
+  background-color: #fff;
+}
+
 .ad_aarna_navbar_tab {
-    display: flex;
-    flex-grow: 1;
-    flex-wrap: nowrap; 
-    overflow-x: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none; 
-    margin-left: 10px;
-  }
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  /* margin-left: 10px; */
+}
 
-  
-  .ad_aarna_navbar_tab .nav-link {
-    padding: 10px 5px;
-    border: none;
-  }
-  
-  .ad_aarna_navbar_tab .nav-link.active {
-    font-weight: bold;
-    border-bottom: 2px solid #526D82;
-  }
-  
-  .ad_search_filter_main {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100px;
-  }
-  
-  .search_filter_wrapper {
-    display: flex; 
-    align-items: center;
-  }
-  
-  .ad_search_bar {
-    width: 250px;
-    border-radius: 17px;
-    padding-right: 40px; 
-  }
-  
-  .qp_list_searchbar_icon {
-    right: 15px;
-  }
-  
-  .bs-filter-right {
-    height: 40px;
-    width: 40px;
-  }
-  
-  .ad_search_filter_icon {
-    margin-left: 15px;
-    color: #545454;
-  }
-  .ad_aarna_mob_subhead_one{
-    text-decoration: none;
-    color: #526D82 !important;
-    font-size: 15px;
-    margin-right: 20px;
-  }
-  
- 
-  @media (max-width: 700px) {
+.aarna_title {
+  font-size: 28px;
+  /* Sets the font size */
+  font-weight: 600;
+  /* Semibold - commonly 600 weight */
+  color: #000;
+  /* Sets the text color to black, adjust as needed */
+}
 
-    .ad_aarna_navbar_tab {
-      /* justify-content: flex-start;
+.aarna_header_right_profilepic {
+  display: flex;
+  justify-content: flex-end;
+  /* Aligns content to the right */
+  align-items: center;
+  /* Centers content vertically */
+  /* padding-right: 24px; */
+}
+
+.aarna_header_institution {
+  display: flex;
+  gap: 10px;
+  /* justify-content: center;
+    align-content: center;
+    align-items: center; */
+  /* border: 1px solid red; */
+  /* width: 30%; */
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.aarna_hd_title {
+  /* border: 1px solid black; */
+  font-size: 16px;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+
+.ad_aarna_navbar_tab .nav-link {
+  padding: 10px 5px;
+  border: none;
+}
+
+.ad_aarna_navbar_tab .nav-link.active {
+  font-weight: bold;
+  border-bottom: 2px solid #2162B2;
+  color: #2162B2 !important;
+}
+
+.ad_search_filter_main {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100px;
+}
+
+.search_filter_wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.ad_search_bar {
+  width: 250px;
+  border-radius: 17px;
+  padding-right: 40px;
+}
+
+.qp_list_searchbar_icon {
+  right: 15px;
+}
+
+.bs-filter-right {
+  height: 40px;
+  width: 40px;
+}
+
+.ad_search_filter_icon {
+  margin-left: 15px;
+  color: #545454;
+}
+
+.ad_aarna_mob_subhead_one {
+  text-decoration: none;
+  color: #526D82 !important;
+  font-size: 15px;
+  margin-right: 20px;
+}
+
+
+@media (max-width: 700px) {
+
+  .ad_aarna_navbar_tab {
+    /* justify-content: flex-start;
       margin-top: 10px;
       padding-left: 5%; */
-      display: flex;
-      align-items: center;
-      padding-top: 0px;
-     justify-content: flex-start;
-     margin-top: 10px;
-     padding-left: 0%;
-     padding-bottom: 20px;
-     gap: 0px;
-    }
-    .ad_aarna_mob_subhead_one{
-        color: #9DB2BF!important;
-        width: 127px !important;
-        height:40px !important;
-        border-radius: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid #9DB2BF !important;
-    }
-    .ad_aarna_navbar_tab .nav-link.active {
-        font-weight:400;
-        border-bottom: none ;
-        color: #ffff !important;
-        background-color: #9DB2BF;
-      }
+    display: flex;
+    align-items: center;
+    padding-top: 0px;
+    justify-content: flex-start;
+    margin-top: 10px;
+    padding-left: 0%;
+    padding-bottom: 20px;
+    gap: 0px;
+  }
 
-    .ad_search_filter_main {
-      /* width: 100%;
+  .ad_aarna_mob_subhead_one {
+    color: #9DB2BF !important;
+    width: 127px !important;
+    height: 40px !important;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #9DB2BF !important;
+  }
+
+  .ad_aarna_navbar_tab .nav-link.active {
+    font-weight: 400;
+    border-bottom: none;
+    color: #ffff !important;
+    background-color: #9DB2BF;
+  }
+
+  .ad_search_filter_main {
+    /* width: 100%;
       justify-content: flex-start;
       padding-left: 0; */
-      width: 100%;
-      padding-left: 0%;
-      /* gap: 5px; */
-      padding-right: 0px;
-      padding-left: 90%;
-      margin-right: 0px;
-    }
-  
-    .ad_search_filter_icon {
-      /* margin-left: 5px; */
-      /* padding-left: 5%; */
-      padding-right: 0px;
-      width: 40px;
-      margin-right: 0px;
-    }
-  
-    .ad_search_bar {
-      width: 250px;
-      margin-right: 0px;
-    }
-
+    width: 100%;
+    padding-left: 0%;
+    /* gap: 5px; */
+    padding-right: 0px;
+    padding-left: 90%;
+    margin-right: 0px;
   }
-  @media (min-width: 710px) and (max-width:1024px) {
-    .aarna_navbar{
-      background-color:#F8FEFF ;
-      height: 100vh;
-      padding-top: 10vh;
-    }
-    .aarna_container{
+
+  .ad_search_filter_icon {
+    /* margin-left: 5px; */
+    /* padding-left: 5%; */
+    padding-right: 0px;
+    width: 40px;
+    margin-right: 0px;
+  }
+
+  .ad_search_bar {
+    width: 250px;
+    margin-right: 0px;
+  }
+
+}
+
+@media (min-width: 710px) and (max-width:1024px) {
+  .aarna_navbar {
+    background-color: #F8FEFF;
+    height: 100vh;
+    padding-top: 10vh;
+  }
+
+  /* .aarna_container{
       padding-right: 0vh;
       padding-left: 5vh;
-    }
-    .aarna_row{
+    } */
+  /* .aarna_row{
       padding-left: 0vw;
       padding-top: 1vw;
-    }
-    .ad_aarna_navbar_tab {
-      display: flex;
-      align-items: center;
-      padding-top: 0px;
-     justify-content: flex-start;
-     margin-top: 10px;
-     padding-left: 0%;
-     padding-bottom: 20px;
-     gap: 0px;
-    }
-    .ad_aarna_mob_subhead_one{
-        color: #9DB2BF!important;
-        width: 170px !important;
-        height:40px !important;
-        border-radius: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid #9DB2BF !important;
-    }
-    .ad_aarna_navbar_tab .nav-link.active {
-        font-weight:400;
-        border-bottom: none ;
-        color: #ffff !important;
-        background-color: #9DB2BF;
-      }
-
-    .ad_search_filter_main {
-      width: 100%;
-    }
-  
-    .ad_search_filter_icon {
-      width: 40px;
-    }
-  
-    .ad_search_bar {
-      width: 250px;
-    }
+    } */
+  .ad_aarna_navbar_tab {
+    display: flex;
+    align-items: center;
+    padding-top: 0px;
+    justify-content: flex-start;
+    margin-top: 10px;
+    padding-left: 0%;
+    padding-bottom: 20px;
+    gap: 0px;
   }
 
+  .ad_aarna_mob_subhead_one {
+    color: #9DB2BF !important;
+    width: 170px !important;
+    height: 40px !important;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #9DB2BF !important;
+  }
+
+  .ad_aarna_navbar_tab .nav-link.active {
+    font-weight: 400;
+    border-bottom: none;
+    color: #ffff !important;
+    background-color: #9DB2BF;
+  }
+
+  .ad_search_filter_main {
+    width: 100%;
+  }
+
+  .ad_search_filter_icon {
+    width: 40px;
+  }
+
+  .ad_search_bar {
+    width: 250px;
+  }
+}
 
 
-  
+
+
 
 
 .ad_aarna_navbar_tab {
-    white-space: nowrap; 
-    overflow-x: auto; /* Enable horizontal scrolling */
-    scrollbar-width: thin; /* Firefox - thin scrollbar */
+  white-space: nowrap;
+  overflow-x: auto;
+  /* Enable horizontal scrolling */
+  scrollbar-width: thin;
+  /* Firefox - thin scrollbar */
 }
 
 .ad_aarna_navbar_tab::-webkit-scrollbar {
-    height: 8px; /* Adjust scrollbar height */
+  height: 8px;
+  /* Adjust scrollbar height */
 }
 
 .ad_aarna_navbar_tab::-webkit-scrollbar-thumb {
-    background: #888; /* Style for scrollbar thumb */
-    border-radius: 4px;
+  background: #888;
+  /* Style for scrollbar thumb */
+  border-radius: 4px;
 }
 
 .ad_aarna_navbar_tab::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }

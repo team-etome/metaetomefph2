@@ -1,0 +1,96 @@
+/* AdminQuestionAssigning.css */
+.AdminQuestionAssigning-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+  }
+  
+  .AdminQuestionAssigning-modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 70%;
+    height: 70%;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .AdminQuestionAssigning-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .AdminQuestionAssigning-close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .AdminQuestionAssigning-modal-body {
+    margin-bottom: 20px;
+    height: 70%;
+  }
+  
+  .AdminQuestionAssigning-form-group {
+    margin-bottom: 15px;
+  }
+  
+  .AdminQuestionAssigning-form-control {
+    width: 100%;
+    height: 48px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .AdminQuestionAssigning-form-label{
+    padding-bottom: 8px;
+    font-size: 16px;
+  }
+  
+  .AdminQuestionAssigning-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+  }
+  
+  .AdminQuestionAssigning-btn {
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .AdminQuestionAssigning-btn-secondary {
+    background-color: #fff;
+    color: #2162B2;
+    border: 1px solid #2162B2;
+
+  }
+  
+  .AdminQuestionAssigning-btn-danger {
+    background-color: #fff;
+    color: red;
+    border: 1px solid red;
+  }
+  
+  .AdminQuestionAssigning-btn-primary {
+    background-color: #2162B2;
+    color: white;
+  }
+
+  .custom-input:focus{
+    border-color: #526D82 !important;
+    box-shadow: 0 0 5px rgba(82, 109, 130, 0.6);
+    /* outline: none; */
+  }

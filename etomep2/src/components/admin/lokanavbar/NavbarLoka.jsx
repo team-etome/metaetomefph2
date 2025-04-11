@@ -31,7 +31,7 @@ function NavbarLoka() {
   }, [currentTab]);
 
   return (
-    <div className="loka_dashboard">
+    <div className="loka_dashboard" >
       <Container>
         <Row className="loka_navbar_row">
           <Col md={6}>

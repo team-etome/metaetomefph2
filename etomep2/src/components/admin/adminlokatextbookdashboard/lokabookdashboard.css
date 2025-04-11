@@ -1,6 +1,6 @@
 .admin_loka_textbook_dashboard {
   padding-top: 1px;
-  height: 75vh; 
+  height: 60vh; 
   width:150vw;
   margin-right: 2vw;
   margin-left: 2vw;
@@ -203,7 +203,6 @@ align-items: center;
 }
 .no-books-message h3{
   color: #526D82;
-
 }
 @media (max-width:576px) {
    

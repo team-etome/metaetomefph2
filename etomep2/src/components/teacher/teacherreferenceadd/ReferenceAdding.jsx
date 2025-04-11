@@ -227,7 +227,7 @@ const handleBackClick = () => {
                             <input
                               id="pdf-upload"
                               type="file"
-                              accept=".pdf"
+                              accept=".pdf,.docx"
                               className="refrence_pdf_upload_input"
                               onChange={handleFileChange}
                             />

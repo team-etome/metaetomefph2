@@ -1,0 +1,200 @@
+.examtimetable-adding-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.examtimetable-adding-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    height: 80%;
+    /* max-width: 600px; */
+}
+
+.examtimetable-adding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.examtimetable-adding_form-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.examtimetable-adding_form-header {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.examtimetable-adding_form-input-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.examtimetable-adding_form-label {
+    flex: 1;
+    display: block;
+    text-align: left;
+}
+
+.examtimetable-adding_form-input,
+.examtimetable-adding_form-select {
+    flex: 1;
+    margin-right: 10px;
+    padding: 8px;
+    /* box-sizing: border-box; */
+    border-radius: 8px;
+}
+
+
+.examtimetable-adding_form-input:last-child,
+.examtimetable-adding_form-input:last-child {
+    margin-right: 0;
+}
+
+input,
+select {
+    border-radius: 8px;
+    border: 1px solid #757575;
+}
+
+.examtimetable-adding-form-table-header,
+.examtimetable-adding-form-table-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.examtimetable-adding-form-table-header label,
+.examtimetable-adding-form-table-row input,
+.examtimetable-adding-form-table-row select {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.examtimetable-adding-form-table-header label {
+    font-weight: 400;
+    color: #767676;
+}
+
+.examtimetable-adding-form-table-row input,
+.examtimetable-adding-form-table-row select {
+    padding: 8px;
+    margin-right: 10px;
+}
+
+.examtimetable-adding-form_form-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 320px;
+    flex-grow: 1;
+
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.examtimetable-adding_addnext_button_main {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.examtimetable-adding_clear_button_main {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.examtimetable-adding_addnext_button {
+    /* margin-left: 15px; */
+    width: 100px;
+    height: 40px;
+    color: #2162B2;
+    background: transparent;
+    border: 1px solid #2162B2;
+    border-radius: 10px;
+    transition: left 0.5s ease;
+}
+
+.examtimetable-adding_clear_button {
+    width: 100px;
+    height: 40px;
+    color: #2162B2;
+    background: transparent;
+    border: 1px solid #2162B2;
+    border-radius: 10px;
+    transition: left 0.5s ease;
+}
+
+.examtimetable-adding_save_button {
+    /* margin-left: 15px; */
+    width: 100px;
+    height: 40px;
+    color: white;
+    background: #2162B2;
+    border: 1px solid #2162B2;
+    border-radius: 10px;
+    transition: left 0.5s ease;
+}
+
+/* Ensure the row is positioned relative so the button can be absolutely positioned */
+
+
+.row-with-delete {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.remove-row-btn:focus {
+    outline: none;
+}
+
+/* Style for the delete (cross) button */
+.remove-row-btn {
+    position: absolute;
+    top: 15%;
+    right: 0px;
+    /* transform: translateY(-50%); */
+    background: transparent;
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: none;
+    height: 0px !important;
+    width: 0px !important;
+}
+
+/* Show the delete button when hovering the row */
+.row-with-delete:hover .remove-row-btn {
+    display: block;
+    height: 14px !important;
+    width: 14px !important;
+}
+.row-with-delete:hover {
+    transform: scale(0.99);
+}
+.examtimetable-adding_required {
+    font-weight: 400;
+    color: red;
+}
