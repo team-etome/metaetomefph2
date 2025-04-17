@@ -12,7 +12,7 @@ function SeatingDashboard() {
   const [seatingData, setSeatingData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12; // Define how many items per page for pagination
+  const itemsPerPage = 12; 
   const APIURL = useSelector((state) => state.APIURL.url);
   const admininfo = useSelector((state) => state.admininfo);
   const admin_id = admininfo.admininfo?.admin_id;

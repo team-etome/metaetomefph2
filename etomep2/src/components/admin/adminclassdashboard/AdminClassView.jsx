@@ -2,6 +2,7 @@ import React from "react";
 import "./adminclassview.css";
 import { useState } from "react";
 import AdminClassStudentList from "./AdminClassStudentList";
+import { useEffect } from "react";
 
 const AdminClassView = ({ onClose }) => {
     const [showStudents, setShowStudents] = useState(false);
