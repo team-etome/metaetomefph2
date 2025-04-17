@@ -76,7 +76,7 @@
 /* Container that holds all the boxes in a grid with 3 columns */
 .seating_container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     /* 3 boxes per row */
     gap: 1rem;
     /* space between boxes */

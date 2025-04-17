@@ -99,7 +99,7 @@ const handlenavigate = () => {
             </Col>
           </Row>
         </div>
-        <div className="institution_dashboard_container">
+        <div className="loka_dashboard_container">
           {currentTab === "Textbook" && <NewLokaBookDashboard />}
           {/* {currentTab === "Library" && <LokaLibraryListing />} */}
            {currentTab === "Library" && <NewLokaLibraryDashboard />}

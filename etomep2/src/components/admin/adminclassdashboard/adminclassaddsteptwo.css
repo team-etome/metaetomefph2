@@ -1,0 +1,210 @@
+.adminclassaddsteptwo-main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+.adminclassaddsteptwo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+  }
+  
+  .adminclassaddsteptwo-header-title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .adminclassaddsteptwo-close-btn {
+    font-size: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .adminclassaddsteptwo-step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding: 0 16px;
+    /* Add horizontal padding if desired */
+    padding-left: 24px;
+  }
+  
+  .adminclassaddsteptwo-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+  }
+  
+  .adminclassaddsteptwo-step:not(:last-child)::after {
+    content: ">";
+    color: #A1A1A1;
+    margin-left: 24px;
+    font-size: 24px;
+  }
+  
+  .adminclassaddsteptwo-step-number {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .adminclassaddsteptwo-step.completed .adminclassaddsteptwo-step-number {
+    background-color: #28a745;
+  }
+  
+  .adminclassaddsteptwo-step-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: #BABABA;
+  }
+  
+  .adminclassaddsteptwo-step.active .adminclassaddsteptwo-step-label {
+    color: black;
+  }
+  
+  .adminclassaddsteptwo-modal-step-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+  }
+  
+  .adminclassaddsteptwo-form-label {
+    margin-top: 16px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #767676;
+  }
+  
+  .adminclassaddsteptwo_required {
+    color: red;
+  }
+  
+  .adminclassaddsteptwo_form-control {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    padding: 0 10px;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 16px;
+  }
+  
+  .adminclassaddsteptwo_form-select {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    padding: 0 10px;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 16px;
+  }
+  
+  .adminclassaddsteptwo_step-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 16px;
+  }
+  
+  .adminclassaddsteptwo_step-column_input {
+    flex: 1;
+  }
+  
+  .adminclassaddsteptwo_step-column {
+    flex: 1;
+  }
+  
+  .row-with-delete {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-right: 40px;
+    margin-bottom: 10px;
+  }
+  
+  .remove-row-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
+  }
+  
+  .row-with-delete:hover .remove-row-btn {
+    display: block;
+  }
+  
+  .add-next-btn-container {
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  .add-next-btn {
+    background-color: white;
+    color: #2162B2;
+    width: 120px;
+    height: 40px;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  
+  .adminclassaddsteptwo-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+  }
+  
+  .adminclassaddsteptwo-footer-right button {
+    margin-left: 8px;
+  }
+  
+  .adminclassaddsteptwo_btn-back {
+    background-color: white;
+    color: #444444;
+    border: 1px solid #444444;
+    border-radius: 8px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+  }
+  
+  .adminclassaddsteptwo_btn-clear {
+    background-color: white;
+    color: #2162B2;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+  }
+  
+  .adminclassaddsteptwo_btn-next {
+    background-color: #2162B2;
+    color: white;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+  }  

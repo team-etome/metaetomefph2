@@ -370,7 +370,7 @@ const NewSeatingDashboard = () => {
                     </div>
                 </div>
 
-                <div className="seating_step-row">
+                {/* <div className="seating_step-row">
                     <div className="seating_step-column">
                         <label className="seating-form-label" htmlFor="startTime">Start Time *</label>
                         <input
@@ -390,7 +390,7 @@ const NewSeatingDashboard = () => {
                             onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
                         />
                     </div>
-                </div>
+                </div> */}
 
                 <label className="seating-form-label">Select Layout *</label>
                 <div className="layout-grid">

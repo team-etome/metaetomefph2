@@ -1,0 +1,146 @@
+.adminclassaddstepone-main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.adminclassaddstepone-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 29px 24px;
+    height: 72px;
+}
+
+.adminclassaddstepone-header-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0px;
+    padding: 0px;
+}
+
+.adminclassaddstepone-close-btn {
+    font-size: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* Step Indicator */
+.adminclassaddstepone-step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    /* margin-top: 16px; */
+    margin-bottom: 16px;
+    padding: 0 16px;
+    /* Add horizontal padding if desired */
+    padding-left: 24px;
+}
+
+.adminclassaddstepone-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.adminclassaddstepone-step:not(:last-child)::after {
+    content: ">";
+    color: #A1A1A1;
+    margin-left: 24px;
+    font-size: 24px;
+}
+
+.adminclassaddstepone-step-number {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}
+
+.adminclassaddstepone-step-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: #BABABA;
+}
+
+.adminclassaddstepone-step.active .adminclassaddstepone-step-number {
+    background-color: #2162B2;
+}
+
+.adminclassaddstepone-step.active .adminclassaddstepone-step-label {
+    color: black;
+}
+
+/* Modal Step Content */
+.adminclassaddstepone-modal-step-content {
+    flex: 1;
+    /* Take up remaining space */
+    padding: 0 16px 16px;
+    /* Add extra bottom padding */
+    padding-left: 24px;
+}
+
+/* Form Labels and Inputs */
+.adminclassaddstepone-form-label {
+    margin-top: 16px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #767676;
+    display: inline-block;
+}
+
+.adminclassaddstepone_required {
+    color: red;
+}
+
+.adminclassaddstepone_form-control,
+.adminclassaddstepone_select_year {
+    width: 100%;
+    height: 48px;
+    font-size: 1rem;
+    border: 1px solid #757575;
+    border-radius: 4px;
+    padding: 0 10px;
+    color: black;
+}
+
+.adminclassaddstepone_form-control {
+    margin-bottom: 0;
+    /* We'll use row spacing instead */
+}
+
+/* Footer */
+.adminclassaddstepone-modal-footer {
+    padding: 16px;
+    border-top: 1px solid #ccc;
+}
+
+/* Buttons */
+.adminclassaddstepone_btn-clear {
+    background-color: white;
+    color: #2162B2;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.adminclassaddstepone_btn-next {
+    background-color: #2162B2;
+    color: white;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+    margin-left: 8px;
+}

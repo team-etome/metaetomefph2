@@ -1,0 +1,229 @@
+.facultyview-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.facultyview-modal-container {
+    background: #fff;
+    width: 1058px;
+    /* Adjust based on preference */
+    max-width: 90vw;
+    border-radius: 8px;
+    overflow: hidden;
+    /* So the corners are rounded nicely */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.facultyview-email-row {
+    display: flex;
+    align-items: center;
+    padding: 0 24px 8px 24px;
+    margin-top: 16px;
+    /* You can adjust the spacing if needed */
+}
+
+.facultyview-text-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 24px;
+}
+
+/* Name style */
+.facultyview-name {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 4px;
+}
+
+.facultyview-email {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+}
+
+
+
+.facultyview-profile-image {
+    width: 80px;
+    /* Adjust to suit your design */
+    height: 80px;
+    /* Adjust to suit your design */
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.facultyview-personal-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* Try adjusting to repeat(3, 1fr) or repeat(5, 1fr) if needed */
+    gap: 12px;
+    padding: 0 24px 16px;
+}
+
+.facultyview-header {
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* background-color: #f9f9f9; */
+    flex-shrink: 0;
+}
+
+.facultyview-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+}
+
+.facultyview-close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    color: #333;
+}
+
+/**********************************************
+   * Subtitle
+   **********************************************/
+.facultyview-subtitle {
+    font-size: 14px;
+    color: #666;
+    padding: 0 24px 8px 24px;
+}
+
+/**********************************************
+   * Divider
+   **********************************************/
+.facultyview-divider {
+    margin: 0 24px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+
+/**********************************************
+   * Section Titles
+   **********************************************/
+.facultyview-section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 16px 24px 8px;
+    color: #222222;
+}
+
+.facultyview-info-item {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+.facultyview-info-label {
+    font-weight: 300;
+    font-size: 16px;
+    color: #767676;
+    margin-bottom: 4px;
+}
+
+.facultyview-info-value {
+    font-size: 18px;
+    color: #000;
+    font-weight: 400;
+}
+
+
+.facultyview-subject-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    max-height: 250px;
+    overflow-y: auto;
+    gap: 16px;
+    padding: 0 24px 24px;
+}
+
+.facultyview-subject-card {
+    width: 326px;
+    height: 153px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.facultyview-subject-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #000
+}
+
+.facultyview-subject-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.facultyview-chip {
+    display: flex;
+    /* Enable flexbox */
+    align-items: center;
+    /* Vertically center content */
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #B3B3B3;
+    font-size: 16px;
+    border-radius: 4px;
+    color: #000;
+    height: 40px;
+    width: 42px;
+}
+
+/**********************************************
+   * Footer
+   **********************************************/
+.facultyview-modal-footer {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    padding: 16px 24px;
+    border-top: 1px solid #eee;
+    /* background-color: #f9f9f9; */
+}
+
+.facultyview-btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    border: none;
+    outline: none;
+}
+
+/* Danger Button (Delete) */
+.facultyview-btn-danger {
+    background-color: #fff;
+    color: red;
+    width: 100px;
+    height: 40px;
+    border: 1px solid red;
+}
+
+/* Primary Button (Edit) */
+.facultyview-btn-primary {
+    /* background-color: #2162B2; */
+    background-color: #fff;
+    width: 100px;
+    height: 40px;
+    border: 1px solid#2162B2;
+    color: #2162B2;
+}
