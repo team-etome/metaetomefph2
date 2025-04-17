@@ -20,6 +20,7 @@ function AarnaNavbar() {
     const admininfo = useSelector((state) => state.admininfo);
     console.log(admininfo, "admin info");
 
+
     const navigate = useNavigate();
     
     const [activeTab, setActiveTab] = useState(() => {
@@ -38,13 +39,16 @@ function AarnaNavbar() {
     }, [activeTab]);
 
 
+
     const handlenavigate = () => {
         navigate('/adminprofile', { state: { admininfo: admininfo.admininfo } });
     };
 
+
     return (
-        <div className="aarna_navbar">
+        <div  className="aarna_navbar">
             <Container className="aarna_container">
+
                 <div className="aarna_row_main">
                     <Row className="aarna_row_header">
                         <Col md={6}>
@@ -78,12 +82,14 @@ function AarnaNavbar() {
                         <Col md={12}>
                             {/* Change: Use flex-wrap to allow wrapping on smaller screens */}
                             <div className="d-flex justify-content-between align-items-center flex-wrap">
+
                                 <Nav
                                     variant="underline"
                                     activeKey={activeTab}
                                     onSelect={(k) => setActiveTab(k)}
                                     // className="ad_aarna_navbar_tab"
                                     className="ad_aarna_navbar_tab d-flex flex-row overflow-auto"
+
                                 // style={{border:'1px solid green', width:'100%' }}
                                 >
                                     {/* <Nav.Item>
@@ -93,6 +99,7 @@ function AarnaNavbar() {
                                 </Nav.Item> */}
                                     <Nav.Item>
                                         <Nav.Link eventKey="Time Table" className="ad_aarna_mob_subhead_one" style={{ textDecoration: 'none' }}>
+
                                             Time Table
                                         </Nav.Link>
                                     </Nav.Item>
@@ -124,6 +131,7 @@ function AarnaNavbar() {
                                 </Nav>
                                 {/* Change: Group search bar and filter icon into a flex container */}
 
+
                             </div>
                         </Col>
                     </Row>
@@ -141,6 +149,7 @@ function AarnaNavbar() {
                     {/* {activeTab === "Result" && <ResultFilter />} */}
                     {activeTab === "Result" && <NewResultFilter/>}
                 </div>
+
             </Container>
         </div>
     );

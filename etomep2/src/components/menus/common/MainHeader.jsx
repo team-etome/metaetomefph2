@@ -10,11 +10,13 @@ const MainHeader = () => {
 
   return (
     <div>
+
       <Newsidebar setActiveItemLabel={setActiveItemLabel} />
       {/* <NewHeader activeItemLabel={activeItemLabel} /> */}
       {/* <Header/> */}
       {/* <Sidebar/> */}
       <MobileSidebar />
+
     </div>
   )
 }
