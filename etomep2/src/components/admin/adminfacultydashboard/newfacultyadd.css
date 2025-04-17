@@ -1,5 +1,5 @@
-/* lokatextbookadd.css */
-.lokatextbookadd-backdrop {
+/* facultyadd.css */
+.facultyadd-backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,7 +12,7 @@
     z-index: 1050 !important;
 }
 
-.lokatextbookadd-modal-content {
+.facultyadd-modal-content {
     background: white;
     border-radius: 12px;
     width: 700px;
@@ -24,7 +24,7 @@
     
 }
 
-.lokatextbookadd-modal-header {
+.facultyadd-modal-header {
     padding: 20px;
     border-bottom: 1px solid #eee;
     display: flex;
@@ -33,24 +33,24 @@
     flex-shrink: 0;
 }
 
-.lokatextbookadd-close-button {
+.facultyadd-close-button {
     background: none;
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
 }
 
-.lokatextbookadd-modal-body {
+.facultyadd-modal-body {
     padding: 20px;
     overflow-y: auto;
     flex-grow: 1;
 }
 
-.lokatextbookadd-form-group {
+.facultyadd-form-group {
     margin-bottom: 15px;
 }
 
-.lokatextbookadd-form-control {
+.facultyadd-form-control {
     width: 100%;
     height: 48px;
     padding: 8px;
@@ -58,12 +58,12 @@
     border: 1px solid #ccc;
 }
 
-.lokatextbookadd-form-label {
+.facultyadd-form-label {
     padding-bottom: 8px;
     font-size: 16px;
 }
 
-.lokatextbookadd-modal-footer {
+.facultyadd-modal-footer {
     display: flex;
     justify-content: flex-end;
     margin-right: 10px;
@@ -73,7 +73,7 @@
     flex-shrink: 0;
 }
 
-.lokatextbookadd-btn {
+.facultyadd-btn {
     padding: 10px 20px;
     margin-left: 10px;
     border-radius: 5px;
@@ -81,21 +81,21 @@
     cursor: pointer;
 }
 
-.lokatextbookadd-btn-secondary {
+.facultyadd-btn-secondary {
     background-color: #fff;
     color: #2162B2;
     border: 1px solid #2162B2;
 
 }
 
-.lokatextbookadd-btn-danger {
+.facultyadd-btn-danger {
     background-color: #fff;
     color: red;
     border: 1px solid red;
 }
 
-.lokatextbookadd-btn-primary {
-    background-color: #2162B2;
+.facultyadd-btn-primary {
+    background-color: #BCBCBC;
     color: white;
 }
 
@@ -105,7 +105,7 @@
     /* outline: none; */
 }
 
-.admin_textbook_image_upload_container {
+.admin_faculty_image_upload_container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,35 +118,35 @@
     background-color: #fff;
 }
 
-.admin_textbook_upload_placeholder {
+.admin_faculty_upload_placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
 }
 
-.admin_textbook_upload_label {
+.admin_faculty_upload_label {
     background-color: #DAE2E9;
     padding: 10px 20px;
     border-radius: 5px;
     margin-top: 10px;
 }
 
-.admin_textbook_upload_label:hover {
+.admin_faculty_upload_label:hover {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.admin_textbook_upload_input {
+.admin_faculty_upload_input {
     display: none;
 }
 
-.lokatextbookadd_chapter-upload-wrapper {
+.facultyadd_chapter-upload-wrapper {
     background: #f9f9f9;
     padding: 20px;
     border-radius: 10px;
 }
 
-.lokatextbookadd_chapter-upload-label {
+.facultyadd_chapter-upload-label {
     display: block;
     font-size: 16px;
     font-weight: 500;
@@ -154,7 +154,7 @@
     margin-bottom: 8px;
 }
 
-.lokatextbookadd_chapter-upload-input {
+.facultyadd_chapter-upload-input {
     width: 208px;
     padding: 10px;
     font-size: 16px;
@@ -164,19 +164,19 @@
     display: block;
 }
 
-.lokatextbookadd_chapter-upload-scroll-area {
+.facultyadd_chapter-upload-scroll-area {
     border-radius: 10px;
     /* background: #fff; */
     padding: 10px;
     /* box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1); */
     border: none !important;
 }
-.lokatextbookadd_chapter-upload-row:not(:last-child) {
+.facultyadd_chapter-upload-row:not(:last-child) {
     border-bottom: 2px solid #e0e0e0;
   }
   
 
-.lokatextbookadd_chapter-upload-row {
+.facultyadd_chapter-upload-row {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -184,7 +184,7 @@
     padding-bottom: 10px;
 }
 
-.lokatextbookadd_chapter-upload-text {
+.facultyadd_chapter-upload-text {
     padding: 10px;
     font-size: 14px;
     border: 1px solid #aaa;
@@ -194,7 +194,7 @@
     /* max-width: 400px; */
 }
 
-.lokatextbookadd_chapter-upload-file {
+.facultyadd_chapter-upload-file {
     padding: 8px;
     font-size: 14px;
     border: 1px solid #2162B2;
@@ -202,7 +202,7 @@
     border-radius: 8px;
 }
 
-.lokatextbookadd_chapter-upload-delete {
+.facultyadd_chapter-upload-delete {
     background: none;
     border: 1px solid red;
     color: red;
@@ -213,7 +213,7 @@
     align-items: center;
 }
 
-.lokatextbookadd_custom-file-upload {
+.facultyadd_custom-file-upload {
     position: relative;
 }
 
@@ -228,15 +228,18 @@
     font-size: 12px;
 }
 
-.lokatextbookadd_hidden-file {
+.facultyadd_hidden-file {
     display: none;
 }
 
-.lokatextbookadd_file-name-display {
+.facultyadd_file-name-display {
     width: 120px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     color: #555;
     font-size: 14px;
+}
+.facultyadd_required {
+    color: red;
 }

@@ -1,0 +1,174 @@
+/* Container wrapping everything */
+.newclassdashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.newclassdashboard_main_header_container {
+    flex: 0 0 auto;
+    padding-top: 24px;
+    margin-left: 24px;
+}
+
+.newclassdashboard_header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.newclassdashboard_select_subject {
+    width: 300px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.newclassdashboard_result_add_button {
+    width: 100px;
+    height: 40px;
+    color: #fff;
+    background: #2162B2;
+    /* border: 1px solid #2162B2; */
+    border-radius: 8px;
+    /* margin-left: 630px; */
+    transition: left 0.5s ease;
+    margin-right: 24px;
+}
+
+.newclassdashboard-class-section {
+    flex: 1 1 auto;
+    margin-left: 24px;
+    margin-top: 24px;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+/* Class Section Title */
+.newclassdashboard-class-heading {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #222;
+}
+
+/* Card Container */
+.newclassdashboard-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    height: 142px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: box-shadow 0.3s ease;
+}
+
+.newclassdashboard-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Top row: circle on the left, class teacher on the right */
+.newclassdashboard-card-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    /* Space between circle and teacher text */
+    height: 70px;
+}
+
+/* Circle for the Section (e.g., "1C") */
+.newclassdashboard-circle {
+    width: 68px;
+    height: 68px;
+    background-color: #ddeaf2;
+    color: #2162b2;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Teacher container for "Class Teacher:" label and teacher name */
+.newclassdashboard-teacher-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+/* Text label styles (e.g., "Class Teacher:", "Strength:", "Subjects:") */
+.newclassdashboard-info-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Teacher name style (make it a bit bigger or bolder) */
+.newclassdashboard-teacher-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    margin-top: 2px;
+    color: #222222;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+/* Generic info text style */
+.newclassdashboard-info-text {
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 4px;
+    color: #333;
+}
+
+/* Bottom row: Strength and Subjects side by side */
+.newclassdashboard-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.newclassdashboard-custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.newclassdashboard-custom-modal-content {
+    background-color: #fff;
+    width: 1058px;
+    /* adjust as needed */
+    height: 650px;
+    border-radius: 8px;
+    /* padding: 24px; */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}

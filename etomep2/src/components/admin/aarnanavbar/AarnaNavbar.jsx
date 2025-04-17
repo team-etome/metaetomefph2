@@ -22,7 +22,7 @@ function AarnaNavbar() {
 
 
     const navigate = useNavigate();
-
+    
     const [activeTab, setActiveTab] = useState(() => {
         return localStorage.getItem("aarnaActiveTab") || "Question Paper";
     });

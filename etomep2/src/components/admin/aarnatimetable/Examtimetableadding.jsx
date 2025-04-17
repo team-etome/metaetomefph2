@@ -202,7 +202,7 @@ const Examtimetableadding = ({ onClose }) => {
                     <hr />
                     <div className="examtimetable-adding-form_form-content">
                         <div className="examtimetable-adding-form-table">
-                            <div className="examtimetable-adding-form-table-header">
+                            <div className="examtimetable-adding-form-table-header"> 
                                 <label>
                                     Subject <span className="examtimetable-adding_required">*</span>
                                 </label>

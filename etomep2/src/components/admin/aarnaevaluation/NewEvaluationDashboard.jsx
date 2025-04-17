@@ -3,7 +3,10 @@ import './newevaluationdashboard.css';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { BsFillPersonFill } from "react-icons/bs";
 import image from "../../../assets/b763af54a51c591c7fcb7ddfbae4a92c.jpg"
+import NewEvaluationAdd from './NewEvaluationAdd';
+import NewEvaluationView from './NewEvaluationView';
 
 const NewEvaluationDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
@@ -13,153 +16,119 @@ const NewEvaluationDashboard = () => {
     const [examTypes, setExamTypes] = useState([]);
     const [examYears, setExamYears] = useState([]);
     const [selectedFilterYear, setSelectedFilterYear] = useState("");
-   
- 
+    const [showPopup, setShowPopup] = useState(false);
+    const [showPopupview, setShowPopupView] = useState(false);
+
+
 
     const DummySeatingData = [
         {
             id: 1,
-            roomNo: '201',
-            examName: 'Second Terminal Exam',
-            examDate: '22/07/2025',
-            faculties: 5,
-            classes: ['10E', '8D', '5B'],
+            className: "Class 7 A",
+            subject: "Physics",
+            examName: "Second Terminal Exam 2025",
+            examDeadline: "12/09/2025",
+            facultyAssigned: "Siana Catherine",
+            imgUrl: image  // or any image you prefer
         },
         {
             id: 2,
-            roomNo: '305',
-            examName: 'Quarterly Exam',
-            examDate: '01/09/2025',
-            faculties: 3,
-            classes: ['9A', '9B'],
+            className: "Class 9 B",
+            subject: "Mathematics",
+            examName: "Quarterly Exam 2025",
+            examDeadline: "30/10/2025",
+            facultyAssigned: "Joseph Martin",
+            imgUrl: image
         },
         {
             id: 3,
-            roomNo: '110',
-            examName: 'Annual Exam',
-            examDate: '15/11/2025',
-            faculties: 4,
-            classes: ['12A', '12B', '12C'],
+            className: "Class 10 A",
+            subject: "Biology",
+            examName: "Annual Exam 2025",
+            examDeadline: "15/11/2025",
+            facultyAssigned: "Anita Sharma",
+            imgUrl: image
         },
         {
             id: 1,
-            roomNo: '201',
-            examName: 'Second Terminal Exam',
-            examDate: '22/07/2025',
-            faculties: 5,
-            classes: ['10E', '8D', '5B'],
+            className: "Class 7 A",
+            subject: "Physics",
+            examName: "Second Terminal Exam 2025",
+            examDeadline: "12/09/2025",
+            facultyAssigned: "Siana Catherine",
+            imgUrl: image  // or any image you prefer
         },
         {
             id: 2,
-            roomNo: '305',
-            examName: 'Quarterly Exam',
-            examDate: '01/09/2025',
-            faculties: 3,
-            classes: ['9A', '9B'],
+            className: "Class 9 B",
+            subject: "Mathematics",
+            examName: "Quarterly Exam 2025",
+            examDeadline: "30/10/2025",
+            facultyAssigned: "Joseph Martin",
+            imgUrl: image
         },
         {
             id: 3,
-            roomNo: '110',
-            examName: 'Annual Exam',
-            examDate: '15/11/2025',
-            faculties: 4,
-            classes: ['12A', '12B', '12C'],
+            className: "Class 10 A",
+            subject: "Biology",
+            examName: "Annual Exam 2025",
+            examDeadline: "15/11/2025",
+            facultyAssigned: "Anita Sharma",
+            imgUrl: image
         },
         {
             id: 1,
-            roomNo: '201',
-            examName: 'Second Terminal Exam',
-            examDate: '22/07/2025',
-            faculties: 5,
-            classes: ['10E', '8D', '5B'],
+            className: "Class 7 A",
+            subject: "Physics",
+            examName: "Second Terminal Exam 2025",
+            examDeadline: "12/09/2025",
+            facultyAssigned: "Siana Catherine",
+            imgUrl: image  // or any image you prefer
         },
         {
             id: 2,
-            roomNo: '305',
-            examName: 'Quarterly Exam',
-            examDate: '01/09/2025',
-            faculties: 3,
-            classes: ['9A', '9B'],
+            className: "Class 9 B",
+            subject: "Mathematics",
+            examName: "Quarterly Exam 2025",
+            examDeadline: "30/10/2025",
+            facultyAssigned: "Joseph Martin",
+            imgUrl: image
         },
         {
             id: 3,
-            roomNo: '110',
-            examName: 'Annual Exam',
-            examDate: '15/11/2025',
-            faculties: 4,
-            classes: ['12A', '12B', '12C'],
+            className: "Class 10 A",
+            subject: "Biology",
+            examName: "Annual Exam 2025",
+            examDeadline: "15/11/2025",
+            facultyAssigned: "Anita Sharma",
+            imgUrl: image
         },
         {
             id: 1,
-            roomNo: '201',
-            examName: 'Second Terminal Exam',
-            examDate: '22/07/2025',
-            faculties: 5,
-            classes: ['10E', '8D', '5B'],
+            className: "Class 7 A",
+            subject: "Physics",
+            examName: "Second Terminal Exam 2025",
+            examDeadline: "12/09/2025",
+            facultyAssigned: "Siana Catherine",
+            imgUrl: image  // or any image you prefer
         },
         {
             id: 2,
-            roomNo: '305',
-            examName: 'Quarterly Exam',
-            examDate: '01/09/2025',
-            faculties: 3,
-            classes: ['9A', '9B'],
+            className: "Class 9 B",
+            subject: "Mathematics",
+            examName: "Quarterly Exam 2025",
+            examDeadline: "30/10/2025",
+            facultyAssigned: "Joseph Martin",
+            imgUrl: image
         },
         {
             id: 3,
-            roomNo: '110',
-            examName: 'Annual Exam',
-            examDate: '15/11/2025',
-            faculties: 4,
-            classes: ['12A', '12B', '12C'],
-        },
-        {
-            id: 1,
-            roomNo: '201',
-            examName: 'Second Terminal Exam',
-            examDate: '22/07/2025',
-            faculties: 5,
-            classes: ['10E', '8D', '5B'],
-        },
-        {
-            id: 2,
-            roomNo: '305',
-            examName: 'Quarterly Exam',
-            examDate: '01/09/2025',
-            faculties: 3,
-            classes: ['9A', '9B'],
-        },
-        {
-            id: 3,
-            roomNo: '110',
-            examName: 'Annual Exam',
-            examDate: '15/11/2025',
-            faculties: 4,
-            classes: ['12A', '12B', '12C'],
-        },
-        {
-            id: 1,
-            roomNo: '201',
-            examName: 'Second Terminal Exam',
-            examDate: '22/07/2025',
-            faculties: 5,
-            classes: ['10E', '8D', '5B'],
-        },
-        {
-            id: 2,
-            roomNo: '305',
-            examName: 'Quarterly Exam',
-            examDate: '01/09/2025',
-            faculties: 3,
-            classes: ['9A', '9B'],
-        },
-        {
-            id: 3,
-            roomNo: '110',
-            examName: 'Annual Exam',
-            examDate: '15/11/2025',
-            faculties: 4,
-            classes: ['12A', '12B', '12C'],
+            className: "Class 10 A",
+            subject: "Biology",
+            examName: "Annual Exam 2025",
+            examDeadline: "15/11/2025",
+            facultyAssigned: "Anita Sharma",
+            imgUrl: image
         },
     ];
 
@@ -232,77 +201,83 @@ const NewEvaluationDashboard = () => {
         setFilteredTimetableData(filtered);
     };
     return (
-                <div className="evaluationdashboard_main_container">
-                    <div className="evaluationdashboard_main_header_container">
-                        <div className="header-controls d-flex justify-content-between align-items-center px-3 py-2">
-                            <div className="left-controls">
-                                {/* Exam Type Dropdown */}
-                                <select
-                                    className="form-select form-select-sm evaluationdashboard_select_class"
-                                    // value={selectedExamType}
-                                    // onChange={(e) => setSelectedExamType(e.target.value)}
-                                >
-                                    <option value="">Select Class</option>
-                                    {examTypes.map((type, i) => (
-                                        <option key={i} value={type}>{type}</option>
-                                    ))}
-                                </select>
-                                {/* Exam Year Dropdown */}
-                                <select
-                                    className="form-select form-select-sm evaluationdashboard_select_year"
-                                    // value={selectedFilterYear}
-                                    // onChange={(e) => setSelectedFilterYear(e.target.value)}
-                                >
-                                    <option value="">Select Year</option>
-                                    {/* {examYears.map((year, i) => (
+        <div className="evaluationdashboard_main_container">
+            <div className="evaluationdashboard_main_header_container">
+                <div className="header-controls d-flex justify-content-between align-items-center px-3 py-2">
+                    <div className="left-controls">
+                        {/* Exam Type Dropdown */}
+                        <select
+                            className="form-select form-select-sm evaluationdashboard_select_class"
+                        // value={selectedExamType}
+                        // onChange={(e) => setSelectedExamType(e.target.value)}
+                        >
+                            <option value="">Select Class</option>
+                            {examTypes.map((type, i) => (
+                                <option key={i} value={type}>{type}</option>
+                            ))}
+                        </select>
+                        {/* Exam Year Dropdown */}
+                        <select
+                            className="form-select form-select-sm evaluationdashboard_select_year"
+                        // value={selectedFilterYear}
+                        // onChange={(e) => setSelectedFilterYear(e.target.value)}
+                        >
+                            <option value="">Select Year</option>
+                            {/* {examYears.map((year, i) => (
                                         <option key={i} value={year}>{year}</option>
                                     ))} */}
-                                </select>
-                                <button
-                                    className="btn-primary btn-sm evaluationdashboard_search_button"
-                                    onClick={handleSearch}
-                                >
-                                    Search
-                                </button>
-                            </div>
-                            <div className="left-controls">
-                                <button className="btn-primary btn-sm evaluationdashboard_result_add_button" >+ Add</button>
-                            </div>
-                        </div>
+                        </select>
+                        <button
+                            className="btn-primary btn-sm evaluationdashboard_search_button"
+                            onClick={handleSearch}
+                        >
+                            Search
+                        </button>
                     </div>
-                    <div className="evaluationdashboard_classes_box">
-                        <div className="evaluationdashboard_container">
-                            {DummySeatingData.map((item) => (
-                                <div
-                                    className="evaluationdashboard_classes_box_inner"
-                                    key={item.id}
-                                    onClick={() => handleCardClick(item)}
-                                >
-                                    <div className="evaluationdashboard_top_row">
-                                        <img
-                                            src={image}
-                                            alt="Exam Icon"
-                                            className="evaluationdashboard_box_icon"
-                                        />
-                                        <div className="evaluationdashboard_exam_details">
-                                            <h3 className="evaluationdashboard_room_no">ROOM NO: {item.roomNo}</h3>
-                                            <p className="evaluationdashboard_exam_title">{item.examName}</p>
-                                            <p className="evaluationdashboard_exam_title">{item.examName}</p>
-                                            <p className="evaluationdashboard_exam_date">Date of exam: {item.examDate}</p>
-                                        </div>
-                                    </div>
-                                    <div className="evaluationdashboard_bottom_row">
-                                        <p className="evaluationdashboard_faculties">{item.faculties} Faculties assigned</p>
-                                        <div>
-                                            <span className="evaluationdashboard_classes">Classes: </span>
-                                            <span className="evaluationdashboard_classes_input">{item.classes.join(', ')}</span>
-                                        </div>
-                                    </div>
+                    <div className="left-controls">
+                        <button className="btn-primary btn-sm evaluationdashboard_result_add_button"
+                            onClick={() => setShowPopup(true)} >
+                            + Add
+                        </button>
+                        {showPopup && <NewEvaluationAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
+                    </div>
+                </div>
+            </div>
+            <div className="evaluationdashboard_classes_box">
+                <div className="evaluationdashboard_container">
+                    {DummySeatingData.map((item) => (
+                        <div
+                            className="evaluationdashboard_classes_box_inner"
+                            key={item.id}
+                            onClick={() => setShowPopupView(true)}
+                        >
+                            <div className="evaluationdashboard_top_row">
+                                <img
+                                    src={item.imgUrl}
+                                    alt="Class Icon"
+                                    className="evaluationdashboard_box_icon"
+                                />
+                                <div className="evaluationdashboard_exam_details">
+                                    <p className="evaluationdashboard_class_name">{item.className}</p>
+                                    <p className="evaluationdashboard_subject">{item.subject}</p>
+                                    <p className="evaluationdashboard_exam_title">{item.examName}</p>
+                                    <p className="evaluationdashboard_deadline">
+                                        Deadline: {item.examDeadline}
+                                    </p>
                                 </div>
-                            ))}
-                        </div>
-                    </div>
-                </div >
+                            </div>
+                            <div className="evaluationdashboard_bottom_row">
+                                <p className="evaluationdashboard_faculty">
+                                    <BsFillPersonFill style={{ paddingBottom: "2px", marginRight: "0.5rem" }} />
+                                    Faculty Assigned: {item.facultyAssigned}
+                                </p>
+                            </div>
+                        </div>    
+                    ))}
+                    {showPopupview && <NewEvaluationView isOpen={showPopupview} onClose={() => setShowPopupView(false)} />}
+                </div>
+            </div>
+        </div >
     );
 };
 
