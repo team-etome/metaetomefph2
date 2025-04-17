@@ -10,18 +10,13 @@ import { TbScanEye } from "react-icons/tb";
 import "./Newsidebar.css"
 import etomelogo from "../../../assets/etomelogo.png";
 import { NavLink } from "react-router-dom";
-
 function Newsidebar({ setActiveItemLabel }) {
   const location = useLocation();
   const [activeItem, setActiveItem] = useState("");
-
   const teacher = useSelector(state => state.teacherinfo);
   const teacher_token = teacher.teacherinfo?.teacher_token;
   const class_teacher_token = teacher.teacherinfo?.class_teacher_token;
-
-
   const activeRoutesMapping = {
-
     "/admindashboard": ["/admindashboard","/admindashboard/overview","/admindashboard/stats"
     ],
     "/institutionadding": ["/institutionadding","/facultyview","/facultyadding","/classadding","/curriculumadding","/classview"
@@ -30,10 +25,6 @@ function Newsidebar({ setActiveItemLabel }) {
     ],
     "/aarnanavbar": ["/aarnanavbar","/questionview","/questionadding","/seatview","/seatassigning","/evaluationview","/evaluationscheduling"
     ],
-
-
-
-
     "/teacherhome": ["/teacherhome"
     ],
     "/teacherstudentdashboard": ["/teacherstudentdashboard","/teacherstudentview","/teachertimetable","/teacherstudentadd",
@@ -44,7 +35,6 @@ function Newsidebar({ setActiveItemLabel }) {
     "/teacherexamination": ["/teacherexamination","/teacherquestionview"
     ]
   };
-
   useEffect(() => {
     const currentPath = location.pathname;
     let foundParent = "";
@@ -74,9 +64,6 @@ function Newsidebar({ setActiveItemLabel }) {
     });
     // setActiveItem(foundParent);
   }, [setActiveItemLabel]);
-
-  
-
   // Items for class teachers specifically
   const classTeacherItems = [
     { path: "/teacherhome", icon: <GoHome />, label: "Home" },
@@ -85,7 +72,6 @@ function Newsidebar({ setActiveItemLabel }) {
     { path: "/teacherexamination", icon: <SlNote />, label: "Aarna" },
     // { path: "/settings", icon: <SlSettings />, label: "Settings" }
   ];
-
   // Items for general teachers
   const teacherItems = [
     { path: "/teacherhome", icon: <GoHome />, label: "Home" },
@@ -93,7 +79,6 @@ function Newsidebar({ setActiveItemLabel }) {
     { path: "/teacherexamination", icon: <SlNote />, label: "Aarna" },
     // { path: "/settings", icon: <SlSettings />, label: "Settings" }
   ];
-
   // Items for other roles (admins and others)
   const otherItems = [
     { path: "/admindashboard", icon: <GoHome />, label: "Home" },
@@ -103,7 +88,6 @@ function Newsidebar({ setActiveItemLabel }) {
     // { path: "/eyora", icon: <TbScanEye />, label: "Eyora" },
     // { path: "/settings", icon: <SlSettings />, label: "Settings" }
   ];
-
   // Determine which items to display based on the token presence
   let itemsToDisplay = otherItems;
   if (class_teacher_token) {
@@ -111,7 +95,6 @@ function Newsidebar({ setActiveItemLabel }) {
   } else if (teacher_token) {
     itemsToDisplay = teacherItems;
   }
-
   return (
     <div className="newsidenav_fstdiv">
       <div className="newsidebar_header">
@@ -134,5 +117,4 @@ function Newsidebar({ setActiveItemLabel }) {
     </div>
   );
 }
-
 export default Newsidebar;

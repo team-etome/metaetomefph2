@@ -8,7 +8,7 @@ function AdminDashboardpage() {
 
     <div>
 
-      {/* <MainHeader /> */}
+      <MainHeader />
       <AdminDashboard />
       
     </div>
