@@ -22,6 +22,9 @@ function NewNavbarLoka() {
   const [currentTab, setCurrentTab] = useState(
     localStorage.getItem("currentTab") || "Textbook"
   );
+
+  console.log(currentTab,"current tab..................")
+
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   console.log(currentTab, "activa tab");

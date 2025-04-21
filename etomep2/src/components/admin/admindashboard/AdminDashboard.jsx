@@ -131,7 +131,7 @@ function AdminDashboard() {
   }
 
 
-  console.log(allActions,'all action')
+  console.log(allActions, 'all action')
 
 
 
@@ -139,23 +139,23 @@ function AdminDashboard() {
     try {
       const response = await axios.get(`${APIURL}/api/teacheraction/${admin_id}`);
       const data = response.data.data;
-  
+
       const formatted = data.map(item => ({
         Name: item.teacher_name,
         DueDate: item.due_date,
         Status: item.status
       }));
-  
+
       setAllActions(formatted);
     } catch (error) {
       console.error("Error fetching teacher actions:", error);
     }
   };
-  
+
   useEffect(() => {
     fetchTeacherActions();
   }, []);
-  
+
 
   // ------------------------------Toggle--------------------------------------------
 
@@ -214,7 +214,8 @@ function AdminDashboard() {
 
 
   const handleTodoViewAll = () => {
-
+    
+    fetchTodos();
     setTodoViewAll(true)
 
 
@@ -308,6 +309,25 @@ function AdminDashboard() {
   };
 
 
+  const getTimeLeft = (dateStr, timeStr) => {
+    if (!dateStr || !timeStr) return "Invalid date";
+  
+    const dueDateTime = new Date(`${dateStr}T${timeStr}:00`);
+    const now = new Date();
+  
+    const diffMs = dueDateTime - now;
+  
+    if (diffMs <= 0) return "Past due";
+  
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const diffHours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+    const diffMinutes = Math.floor((diffMs / (1000 * 60)) % 60);
+  
+    if (diffDays > 0) return `Due in ${diffDays} day(s)`;
+    if (diffHours > 0) return `Due in ${diffHours} hour(s)`;
+    return `Due in ${diffMinutes} minute(s)`;
+  };
+
   // ------------------------------Exam performance--------------------------------------------
 
   const [examViewAll, setexamViewAll] = useState(false)
@@ -357,7 +377,7 @@ function AdminDashboard() {
   // const APIURL = useSelector((state) => state.APIURL.url);
 
 
-  
+
 
 
 
@@ -1858,7 +1878,7 @@ function AdminDashboard() {
                           margin: 0,
                         }}
                       >
-                        Due at {todo.time}
+                        {getTimeLeft(todo.date, todo.time)}
                       </h1>
                     </div>
 
@@ -2231,7 +2251,7 @@ function AdminDashboard() {
 
 
 
-                <div style={{
+                <div  className="tabs" style={{
                   display: "flex",
                   gap: "16px",
                   paddingLeft: "30px",
@@ -2241,14 +2261,12 @@ function AdminDashboard() {
 
                 }}>
 
-                  <div>
-                    <h1 className="action">Pending</h1>
+                  <div onClick={() => setActiveTab("pending")}>
+                    <h1 className={`action ${activeTab === "pending" ? "active" : ""}`}>Pending</h1>
                   </div>
 
-
-
-                  <div>
-                    <h1 className="complete">Complete</h1>
+                  <div onClick={() => setActiveTab("complete")}>
+                    <h1 className={`complete ${activeTab === "complete" ? "active" : ""}`}>Complete</h1>
                   </div>
 
 
