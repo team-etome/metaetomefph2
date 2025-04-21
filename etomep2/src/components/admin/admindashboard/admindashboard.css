@@ -649,12 +649,21 @@
 
 
 
-.complete:hover,
+/* .complete:hover,
 .action:hover {
   color: #2162B2;
   border-bottom: 2px solid #2162B2;
-}
+} */
 
+
+
+.tabs .complete:hover,
+.tabs .action:hover,
+.tabs .active {
+  color: #2162B2;
+  border-bottom: 2px solid #2162B2;
+  cursor: pointer;
+}
 
 
 .name-due-status{
