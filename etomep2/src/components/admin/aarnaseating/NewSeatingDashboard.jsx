@@ -10,19 +10,35 @@ import NewSeatingDashboardView from './NewSeatingDashboardView';
 const NewSeatingDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+
+    const [selectedExamName, setSelectedExamName] = useState("");
+    const [selectedExamYear, setSelectedExamYear] = useState("");
+    const [selectedExamDate, setSelectedExamDate] = useState("");
+
+    const [selectedExamType, setSelectedExamType] = useState("");
+    const [selectedFilterYear, setSelectedFilterYear] = useState("");
+
+
+    const exampaper = useSelector((state) => state.exampaperinfo.exampaperinfo);
+
+    console.log(exampaper, 'exam paper')
+
+    const allExamEntries = Object.values(exampaper || {}).flat();
+    const examNames = Object.keys(exampaper || []); 
+
+
+    const examYears = [...new Set(allExamEntries.map(entry =>
+        new Date(entry.exam_date).getFullYear()
+    ))];
+
+    // Get unique exam dates
+    const examDates = [...new Set(allExamEntries.map(entry => entry.exam_date))];
+
     const navigate = useNavigate();
 
-    const [examTypes, setExamTypes] = useState([]);
-    const [examYears, setExamYears] = useState([]);
-    const [selectedExamType, setSelectedExamType] = useState("");
-    const [allTimetableData, setAllTimetableData] = useState([]);
-    const [filteredTimetableData, setFilteredTimetableData] = useState([]);
-    const [selectedFilterYear, setSelectedFilterYear] = useState("");
-    // Control whether our modal is open (true) or closed (false)
+
     const [showModal, setShowModal] = useState(false);
-    // Track which step in the wizard we’re currently on (1, 2, or 3)
     const [currentStep, setCurrentStep] = useState(1);
-    // Additional dynamic entries for Step 2 (Room Details)
     const [entries, setEntries] = useState([
         { className: "", division: "", subject: "" }
     ]);
@@ -31,17 +47,19 @@ const NewSeatingDashboard = () => {
 
 
 
+
+
+
     const [showView, setShowView] = useState(false);
-    // This holds the data from the clicked card.
+
     const [selectedItem, setSelectedItem] = useState(null);
 
-    // When a card is clicked, set the selected item and show the view page.
+ 
     const handleCardClick = (item) => {
         setSelectedItem(item);
         setShowView(true);
     };
 
-    // Handler to go back to the dashboard view.
     const handleBack = () => {
         setShowView(false);
         setSelectedItem(null);
@@ -146,13 +164,13 @@ const NewSeatingDashboard = () => {
                 </label>
                 <select
                     className="form-select form-select-sm seating_stepone_select_exam"
-                    value={selectedExamType}
                     id="examName"
-                    onChange={(e) => setSelectedExamType(e.target.value)}
+                    value={selectedExamName}
+                    onChange={(e) => setSelectedExamName(e.target.value)}
                 >
                     <option value="">Select Examination</option>
-                    {examTypes.map((type, i) => (
-                        <option key={i} value={type}>{type}</option>
+                    {examNames.map((name, i) => (
+                        <option key={i} value={name}>{name}</option>
                     ))}
                 </select>
 
@@ -164,8 +182,8 @@ const NewSeatingDashboard = () => {
                         <select
                             id="examYear"
                             className="form-select form-select-sm seating_stepone_select_year"
-                            value={selectedFilterYear}
-                            onChange={(e) => setSelectedFilterYear(e.target.value)}
+                            value={selectedExamYear}
+                            onChange={(e) => setSelectedExamYear(e.target.value)}
                         >
                             <option value="">Select Year</option>
                             {examYears.map((year, i) => (
@@ -178,13 +196,21 @@ const NewSeatingDashboard = () => {
                         <label className="seating-form-label" htmlFor="examDate">
                             Date of Examination <span className="seating_required">*</span>
                         </label>
-                        <input
+                        <select
                             id="examDate"
-                            type="date"
-                            className="seating_stepone_form-control"
-                            value={formData.examDate}
-                            onChange={(e) => setFormData({ ...formData, examDate: e.target.value })}
-                        />
+                            className="form-select form-select-sm seating_stepone_form-control"
+                            value={selectedExamDate}
+                            onChange={(e) => setSelectedExamDate(e.target.value)}
+                        >
+                            <option value="">Select Date</option>
+                            {examDates.map((date, i) => (
+                                <option key={i} value={date}>
+                                    {new Date(date).toLocaleDateString("en-GB", {
+                                        day: "2-digit", month: "short", year: "numeric"
+                                    })}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 </div>
             </div>
@@ -210,16 +236,16 @@ const NewSeatingDashboard = () => {
                     </div>
                     <div className="seating_step-column">
                         <label className="seating-form-label">Faculties Assigned <span className="seating_required">*</span></label>
-                        {/* For demonstration: a comma-separated list input or tags */}
-                        <input
-                            type="text"
-                            className="seating_form-control_steptwo"
-                            placeholder="Enter faculty names separated by commas"
-                            onChange={(e) => {
-                                const names = e.target.value.split(',').map((n) => n.trim());
-                                setFormData({ ...formData, facultiesAssigned: names });
-                            }}
-                        />
+                
+
+                        <select
+                            id="Faculties Assigned"
+                            className="form-select form-select-sm seating_stepone_select_year"
+                
+                        >
+                            <option value="Enter faculty names separated by commas"></option>
+                          
+                        </select>
                     </div>
                 </div>
 
@@ -227,7 +253,7 @@ const NewSeatingDashboard = () => {
                     {entries.map((entry, index) => (
                         <div key={index} className={`seating_step-row row-with-delete ${index === 0 ? 'first-row' : ''}`}>
                             <div className="seating_step-column">
-                                {/* Render label only for the first row */}
+                             
                                 {index === 0 && (
                                     <label className="seating-form-label" htmlFor={`className-${index}`}>
                                         Class Name <span className="seating_required">*</span>
@@ -283,7 +309,7 @@ const NewSeatingDashboard = () => {
                                 </select>
                             </div>
 
-                            {/* Show the delete button only if more than one row exists */}
+                      
                             {entries.length > 1 && (
                                 <button
                                     type="button"
@@ -611,73 +637,11 @@ const NewSeatingDashboard = () => {
         },
     ];
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${APIURL}/api/examtimetable`, {
-                    params: { admin_id }
-                });
-                const rawData = response.data.exam_timetables || {};
 
-                // Convert raw data (an object) to an array of [examName, classesObj] pairs
-                let examArray = Object.entries(rawData);
-                // Sort exam keys by year descending and then alphabetically.
-                examArray = examArray.sort(([nameA], [nameB]) => {
-                    const yearMatchA = nameA.match(/\d{4}$/);
-                    const yearMatchB = nameB.match(/\d{4}$/);
-                    const yearA = yearMatchA ? parseInt(yearMatchA[0]) : 0;
-                    const yearB = yearMatchB ? parseInt(yearMatchB[0]) : 0;
-                    if (yearA !== yearB) return yearB - yearA;
-                    return nameA.localeCompare(nameB);
-                });
-
-                // For each exam, convert its classes object into a sorted array of [className, entries]
-                const sortedExamTimetables = examArray.map(([examName, classesObj]) => {
-                    let classArray = Object.entries(classesObj || {});
-                    classArray = classArray.sort(([classA], [classB]) => {
-                        const numA = parseInt(classA);
-                        const numB = parseInt(classB);
-                        if (!isNaN(numA) && !isNaN(numB) && numA !== numB) {
-                            return numA - numB;
-                        }
-                        return classA.localeCompare(classB);
-                    });
-                    return [examName, classArray];
-                });
-
-                setAllTimetableData(sortedExamTimetables);
-                setFilteredTimetableData(sortedExamTimetables);
-
-                // Populate exam types and years for filter dropdowns.
-                const typesSet = new Set();
-                const yearsSet = new Set();
-                Object.keys(rawData).forEach(key => {
-                    const yearMatch = key.match(/\d{4}$/);
-                    if (yearMatch) {
-                        yearsSet.add(yearMatch[0]);
-                        const type = key.replace(/\s*\d{4}$/, "").trim();
-                        typesSet.add(type);
-                    }
-                });
-                setExamTypes([...typesSet].sort());
-                setExamYears([...yearsSet].sort((a, b) => b - a));
-            } catch (error) {
-                console.error("Error fetching exam timetable data", error);
-            }
-        };
-
-        fetchData();
-    }, [APIURL, admin_id]);
 
     // Filter data based on dropdown selection
     const handleSearch = () => {
-        if (!selectedExamType || !selectedFilterYear) {
-            setFilteredTimetableData(allTimetableData);
-            return;
-        }
-        const key = `${selectedExamType} ${selectedFilterYear}`;
-        const filtered = allTimetableData.filter(([examName]) => examName === key);
-        setFilteredTimetableData(filtered);
+
     };
     return (
         <>
@@ -696,11 +660,13 @@ const NewSeatingDashboard = () => {
                                     onChange={(e) => setSelectedExamType(e.target.value)}
                                 >
                                     <option value="">Select Examination</option>
-                                    {examTypes.map((type, i) => (
-                                        <option key={i} value={type}>{type}</option>
+                                    {examNames.map((name, i) => (
+                                        <option key={i} value={name}>{name}</option>
                                     ))}
                                 </select>
-                                {/* Exam Year Dropdown */}
+
+
+
                                 <select
                                     className="form-select form-select-sm seating_select_year"
                                     value={selectedFilterYear}
