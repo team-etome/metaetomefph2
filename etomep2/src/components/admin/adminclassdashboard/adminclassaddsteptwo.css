@@ -8,7 +8,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
+    padding: 29px 24px;
+    height: 72px;
+    border-bottom: 2px solid #DFDFDF;
+    margin-bottom: 16px;
   }
   
   .adminclassaddsteptwo-header-title {
@@ -27,7 +30,6 @@
     display: flex;
     align-items: center;
     gap: 48px;
-    margin-top: 16px;
     margin-bottom: 16px;
     padding: 0 16px;
     /* Add horizontal padding if desired */
@@ -71,6 +73,7 @@
   
   .adminclassaddsteptwo-step.active .adminclassaddsteptwo-step-label {
     color: black;
+    
   }
   
   .adminclassaddsteptwo-modal-step-content {
@@ -78,6 +81,8 @@
     display: flex;
     flex-direction: column;
     padding: 0 16px;
+    height: 300px;
+    overflow-y: auto;
   }
   
   .adminclassaddsteptwo-form-label {
@@ -152,12 +157,13 @@
     display: block;
   }
   
-  .add-next-btn-container {
-    margin-top: 15px;
+  .adminclassaddsteptwo_add-next-btn-container {
+    margin-top: 0px;
+    padding-top: 0px;
     text-align: center;
   }
   
-  .add-next-btn {
+  .adminclassaddsteptwo_add-next-btn {
     background-color: white;
     color: #2162B2;
     width: 120px;
@@ -173,6 +179,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px;
+    padding-right: 24px;
+    padding-left: 24px;
   }
   
   .adminclassaddsteptwo-footer-right button {

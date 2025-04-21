@@ -16,6 +16,7 @@ import AdminClassdashboard from "../adminclassdashboard/AdminClassdashboard";
 import FacultyDashboard from "../adminfacultydashboard/FacultyDashboard";
 import NewFacultyDashboard from "../adminfacultydashboard/NewFacultyDashboard";
 import NewAdminClassDashboard from "../adminclassdashboard/NewAdminClassDashboard";
+import AdminStudentDashboard from "../adminstudentdashboard/AdminStudentDashboard";
 
 function NewInstitutionDashboard() {
   const admininfo = useSelector((state) => state.admininfo);
@@ -115,7 +116,7 @@ const handlenavigate = () => {
               {currentTab === "Faculty" && <NewFacultyDashboard />}
               {/* {currentTab === "Class" && <AdminClassdashboard />} */}
               {currentTab === "Class" && <NewAdminClassDashboard />}
-              {currentTab === "Student" && <AdminClassdashboard />}
+              {currentTab === "Student" && <AdminStudentDashboard/>}
             </div>
       </Container>
     </div>
