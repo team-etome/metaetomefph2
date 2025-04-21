@@ -114,7 +114,7 @@ const AdminClassAddStepOne = ({ nextStep, closeModal }) => {
         </Row>
       </div>
       {/* Modal Footer */}
-      <div className="adminclassaddstepone-modal-footer">
+      <div className="adminclassaddstepone-modal-footer" >
         <Row className="w-100">
           {/* Empty Col for spacing if needed */}
           <Col md={6}></Col>

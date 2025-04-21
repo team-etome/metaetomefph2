@@ -15,11 +15,11 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
       <div className="adminclassaddsteptwo-step-indicator">
         <div className="adminclassaddsteptwo-step completed">
           <div className="adminclassaddsteptwo-step-number">1</div>
-          <div className="adminclassaddsteptwo-step-label">Exam Details</div>
+          <div className="adminclassaddsteptwo-step-label">Class Details</div>
         </div>
-        <div className="adminclassaddsteptwo-step active">
+        <div className="adminclassaddsteptwo-step completed">
           <div className="adminclassaddsteptwo-step-number">2</div>
-          <div className="adminclassaddsteptwo-step-label">Room Details</div>
+          <div className="adminclassaddsteptwo-step-label">Add Curriculum</div>
         </div>
       </div>
       {/* Content */}
@@ -36,14 +36,14 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
                     className="adminclassaddsteptwo-form-label"
                     htmlFor={`className-${index}`}
                   >
-                    Class Name <span className="adminclassaddsteptwo_required">*</span>
+                    Subject <span className="adminclassaddsteptwo_required">*</span>
                   </label>
                 )}
                 <select
                   id={`className-${index}`}
                   className="adminclassaddsteptwo_form-select"
                 >
-                  <option value="">Select Class</option>
+                  <option value="">Select Subject</option>
                   <option value="10">10</option>
                   <option value="9">9</option>
                   <option value="8">8</option>
@@ -56,14 +56,14 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
                     className="adminclassaddsteptwo-form-label"
                     htmlFor={`division-${index}`}
                   >
-                    Division <span className="adminclassaddsteptwo_required">*</span>
+                    Publisher Name <span className="adminclassaddsteptwo_required">*</span>
                   </label>
                 )}
                 <select
                   id={`division-${index}`}
                   className="adminclassaddsteptwo_form-select"
                 >
-                  <option value="">Select Division</option>
+                  <option value="">Publisher Name</option>
                   <option value="A">A</option>
                   <option value="B">B</option>
                 </select>
@@ -75,14 +75,14 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
                     className="adminclassaddsteptwo-form-label"
                     htmlFor={`subject-${index}`}
                   >
-                    Subject <span className="adminclassaddsteptwo_required">*</span>
+                    Faculty Name <span className="adminclassaddsteptwo_required">*</span>
                   </label>
                 )}
                 <select
                   id={`subject-${index}`}
                   className="adminclassaddsteptwo_form-select"
                 >
-                  <option value="">Select Subject</option>
+                  <option value="">Select Faculty</option>
                   <option value="English">English</option>
                   <option value="Math">Math</option>
                   <option value="Biology">Biology</option>
@@ -104,8 +104,8 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
             </div>
           ))}
 
-          <div className="add-next-btn-container">
-            <button type="button" className="add-next-btn" onClick={addEntry}>
+          <div className="adminclassaddsteptwo_add-next-btn-container">
+            <button type="button" className="adminclassaddsteptwo_add-next-btn" onClick={addEntry}>
               + Add Next
             </button>
           </div>

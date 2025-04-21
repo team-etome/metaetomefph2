@@ -11,6 +11,8 @@
     align-items: center;
     padding: 29px 24px;
     height: 72px;
+    border-bottom: 2px solid #DFDFDF;
+    margin-bottom: 16px;
 }
 
 .adminclassaddstepone-header-title {
@@ -119,7 +121,8 @@
 
 /* Footer */
 .adminclassaddstepone-modal-footer {
-    padding: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
     border-top: 1px solid #ccc;
 }
 
