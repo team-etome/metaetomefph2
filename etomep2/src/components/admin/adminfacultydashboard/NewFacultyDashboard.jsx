@@ -10,6 +10,7 @@ import { CiSquareChevDown } from "react-icons/ci";
 import image from "../../../assets/b763af54a51c591c7fcb7ddfbae4a92c.jpg"
 import NewFacultyAdd from './NewFacultyAdd';
 import NewFacultyView from './NewFacultyView';
+import NewFacultyAddThroughExcel from './NewFacultyAddThroughExcel';
 
 const NewFacultyDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
@@ -21,6 +22,8 @@ const NewFacultyDashboard = () => {
     const [selectedFilterYear, setSelectedFilterYear] = useState("");
     const [showPopup, setShowPopup] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
+    const [showPopupexcel, setShowPopupExcel] = useState(false);
+    const [showMenuexcel, setShowMenuExcel] = useState(false);
     const [selectedFaculty, setSelectedFaculty] = useState(null);
 
     const DummyFacultyData = [
@@ -181,9 +184,8 @@ const NewFacultyDashboard = () => {
         setShowPopup(true);
     };
     const handleUploadExcel = () => {
-        setShowMenu(false);
-        // Replace this alert with your Excel upload logic
-        alert("Excel upload clicked. (Implement your upload logic here.)");
+        setShowMenuExcel(false);
+        setShowPopupExcel(true);
     };
     // Called when a faculty card is clicked
     const handleCardClick = (faculty) => {
@@ -233,7 +235,7 @@ const NewFacultyDashboard = () => {
                                     <div className="facultydashboard_dropdown-item" onClick={handleAddFaculty}>
                                         + Add Faculty
                                     </div>
-                                    <div className="facultydashboard_dropdown-item">
+                                    <div className="facultydashboard_dropdown-item" onClick={handleUploadExcel}>
                                         Upload Through Excel
                                     </div>
                                 </div>
@@ -241,6 +243,7 @@ const NewFacultyDashboard = () => {
 
                         </div>
                         {showPopup && <NewFacultyAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
+                        {showPopupexcel && <NewFacultyAddThroughExcel isOpen={showPopupexcel} onClose={() => setShowPopupExcel(false)} />}
                     </div>
                 </div>
             </div>

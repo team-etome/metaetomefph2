@@ -188,8 +188,8 @@ const NewFacultyAdd = ({ isOpen, onClose }) => {
     };
 
     return (
-        <div className="facultyadd-backdrop" style={{border:"2px solid red"}}>
-            <div className="facultyadd-modal-content"style={{border:"2px solid yellow"}}>
+        <div className="facultyadd-backdrop">
+            <div className="facultyadd-modal-content">
                 <div className="facultyadd-modal-header">
                     <h5>Add Faculty</h5>
                     <button onClick={onClose} className="facultyadd-close-button">&times;</button>

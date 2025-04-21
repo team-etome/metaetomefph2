@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { IoArrowBack, IoClose } from "react-icons/io5";
 import { AiOutlineSearch } from "react-icons/ai";
 import "./adminclassstudentlist.css";
+import AdminClassStudentView from "./AdminClassStudentView";
 
 const AdminClassStudentList = ({ onBack, onClose }) => {
+    const [selectedStudent, setSelectedStudent] = useState(null);
+    const [search, setSearch] = useState("");
     // Dummy data to mimic your screenshot
     const allStudents = [
         { name: "Ananthu", className: "Class 1 A", rollNo: 1, avatarUrl: "https://randomuser.me/api/portraits/men/65.jpg" },
@@ -43,12 +46,17 @@ const AdminClassStudentList = ({ onBack, onClose }) => {
         { name: "Meera", className: "Class 1 A", rollNo: 11, avatarUrl: "https://randomuser.me/api/portraits/women/28.jpg" },
         { name: "Rahul", className: "Class 1 A", rollNo: 12, avatarUrl: "https://randomuser.me/api/portraits/men/73.jpg" },
     ];
-
-    const [search, setSearch] = useState("");
     const filtered = allStudents.filter(s =>
         s.name.toLowerCase().includes(search.toLowerCase())
     );
-
+    if (selectedStudent) {
+        return (
+            <AdminClassStudentView
+                student={selectedStudent}
+                onClose={() => setSelectedStudent(null)}
+            />
+        );
+    }
     // <hr className="adminclassstudentlist-divider" />
 
     return (
@@ -96,7 +104,9 @@ const AdminClassStudentList = ({ onBack, onClose }) => {
                 {/* Grid of student cards */}
                 <div className="adminclassstudentlist-grid-container">
                     {filtered.map(student => (
-                        <div key={student.rollNo} className="adminclassstudentlist-card">
+                        <div key={student.rollNo} className="adminclassstudentlist-card"
+                            onClick={() => setSelectedStudent(student)}
+                            style={{ cursor: "pointer" }}>
                             <img
                                 src={student.avatarUrl}
                                 alt={student.name}
