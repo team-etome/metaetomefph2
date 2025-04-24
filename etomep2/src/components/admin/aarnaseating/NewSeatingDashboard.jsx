@@ -25,6 +25,9 @@ const NewSeatingDashboard = () => {
 
 
 
+
+
+
     const exampaper = useSelector((state) => state.exampaperinfo.exampaperinfo);
 
     console.log(exampaper, 'exam paper')
@@ -65,9 +68,9 @@ const NewSeatingDashboard = () => {
 
 
 
-    const [showView, setShowView] = useState(false);
+    // const [showView, setShowView] = useState(false);
 
-    const [selectedItem, setSelectedItem] = useState(null);
+    // const [selectedItem, setSelectedItem] = useState(null);
 
 
     const handleCardClick = (item) => {
@@ -694,9 +697,9 @@ const NewSeatingDashboard = () => {
                                 onChange={(e) => setSelectedExamType(e.target.value)}
                             >
                                 <option value="">Select Examination</option>
-                                {examTypes.map((type, i) => (
+                                {/* {examTypes.map((type, i) => (
                                     <option key={i} value={type}>{type}</option>
-                                ))}
+                                ))} */}
                             </select>
                             {/* Exam Year Dropdown */}
                             <select
@@ -782,6 +785,8 @@ const NewSeatingDashboard = () => {
                         </div>
                     </div>
                 )}
+
+                
             </div >
 
         </>
