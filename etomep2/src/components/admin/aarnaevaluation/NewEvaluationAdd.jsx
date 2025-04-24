@@ -10,6 +10,12 @@ import { Weight } from 'lucide-react';
 
 const NewEvaluationAdd = ({ isOpen, onClose }) => {
 
+
+    const exampaper = useSelector((state) => state.exampaperinfo.exampaperinfo);
+    const teacherinfo = useSelector((state) => state.adminteacherinfo);
+
+    console.log(exampaper, 'exampaper')
+
     if (!isOpen) return null;
     const APIURL = useSelector((state) => state.APIURL.url);
     // console.log(APIURL,"apiurl dattatata")
@@ -74,6 +80,39 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
         }),
     };
 
+    const examNameOptions = Object.keys(exampaper || {}).map((examName) => ({
+        label: examName,
+        value: examName
+    }));
+
+    // Get all exams in one flat list
+    const allExamEntries = Object.values(exampaper || {}).flat();
+
+    // Year options
+    const yearOptions = [...new Set(allExamEntries.map(entry =>
+        new Date(entry.exam_date).getFullYear()
+    ))].map(year => ({ label: year.toString(), value: year.toString() }));
+
+    // Subject options
+    const subjectOptions = [...new Set(allExamEntries.map(entry => entry.subject_name))]
+        .map(subject => ({ label: subject, value: subject }));
+
+    // Class options
+    const classOptions = [...new Set(allExamEntries.map(entry => entry.class_name))]
+        .map(cls => ({ label: `Class ${cls}`, value: cls }));
+
+
+    const examDateOptions = [...new Set(allExamEntries.map(entry => entry.exam_date))]
+        .map(date => ({
+            label: new Date(date).toLocaleDateString("en-GB", {
+                day: "2-digit", month: "short", year: "numeric"
+            }),
+            value: date
+        }));
+
+    // Faculty options
+    //   const facultyOptions = [...new Set(allExamEntries.map(entry => entry.teacher_name))]
+    //     .map(teacher => ({ label: teacher, value: teacher }));
 
     return (
         <div className="evaluationadd-backdrop">
@@ -91,9 +130,13 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         Select Name of Examination <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
+
+                                        options={examNameOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
+                                    // onChange={handleExamNameChange}
+
                                     />
                                 </div>
                             </div>
@@ -104,9 +147,12 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         Select Year <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
+
+                                        options={yearOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
+
                                     />
                                 </div>
                             </div>
@@ -118,11 +164,11 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         Select Subject <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
-                                        // options={subjectOptions}
+                                        options={subjectOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                    // onChange={setSelectedSubject}
+
                                     />
                                 </div>
                             </div>
@@ -132,12 +178,11 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         Class <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
-                                        // options={textbook}
+                                        options={classOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                    // value={filteredSubjects.find(opt => opt.value === selectedSubject)}
-                                    // onChange={(selected) => setTextbook(selected?.value || null)}
+
                                     />
 
                                 </div>
@@ -149,7 +194,16 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                     <label className="evaluationadd-form-label">
                                         Date of Examination <span className="evaluationadd_required">*</span>
                                     </label>
-                                    <input
+
+                                    <Select
+                                        options={examDateOptions}
+                                        styles={customStyles}
+                                        placeholder="Select Date"
+                                        isClearable={true}
+                                    // onChange={e => setSelectedDate(e?.value)}
+                                    />
+                                    {/* <input
+
                                         type="date"
                                         min="0"
                                         className="custom-input"
@@ -164,8 +218,11 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                             boxSizing: 'border-box',
                                             outline: "none"
                                         }}
+
                                     // onChange={e => setVolume(e.target.value)}
-                                    />
+                                    /
+                             
+                                    /> */}
                                 </div>
                             </div>
                             <div>
@@ -188,10 +245,12 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         }}
                                     />
                                 </div>
+
                             </div>
                         </div>
                         <div className="evaluationadd-modal-body-row">
                             <div>
+
                                 <div className="evaluationadd-form-group">
                                     <label className="evaluationadd-form-label">
                                         Select Faculty <span className="evaluationadd_required">*</span>

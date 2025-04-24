@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import AdminQuestionAssignadd from './AdminQuestionassigningadd';
 import './AdminQuestionAssigning.css'; // Import custom CSS
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { PiArrowsDownUp } from "react-icons/pi";
+import { useSelector,useDispatch } from 'react-redux';
+import { exampaperinfo } from '../../../Redux/Actions/ExamPaperInfoAction';
+
 
 
 const AdminQuestionAssigning = () => {
@@ -17,11 +18,17 @@ const AdminQuestionAssigning = () => {
     const [selectedExam, setSelectedExam] = useState('All');
     const [selectedYear, setSelectedYear] = useState('All');
 
+
+    const dispatch = useDispatch();
+    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${APIURL}/api/questionpaper/${admin_id}`);
                 const rawData = response.data.question_papers || {};
+                dispatch(exampaperinfo(rawData));
+                
                 console.log(response.data, "responseresponseresponse");
 
                 // Process the rawData into an array of exam objects.

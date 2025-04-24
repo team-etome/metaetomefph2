@@ -17,22 +17,22 @@ function Newsidebar({ setActiveItemLabel }) {
   const teacher_token = teacher.teacherinfo?.teacher_token;
   const class_teacher_token = teacher.teacherinfo?.class_teacher_token;
   const activeRoutesMapping = {
-    "/admindashboard": ["/admindashboard","/admindashboard/overview","/admindashboard/stats"
+    "/admindashboard": ["/admindashboard", "/admindashboard/overview", "/admindashboard/stats"
     ],
-    "/institutionadding": ["/institutionadding","/facultyview","/facultyadding","/classadding","/curriculumadding","/classview"
+    "/institutionadding": ["/institutionadding", "/facultyview", "/facultyadding", "/classadding", "/curriculumadding", "/classview"
     ],
-    "/adminlokanavbar": ["/adminlokanavbar","/adminlokatextbook","/adminlokalibary"
+    "/adminlokanavbar": ["/adminlokanavbar", "/adminlokatextbook", "/adminlokalibary"
     ],
-    "/aarnanavbar": ["/aarnanavbar","/questionview","/questionadding","/seatview","/seatassigning","/evaluationview","/evaluationscheduling"
+    "/aarnanavbar": ["/aarnanavbar", "/questionview", "/questionadding", "/seatview", "/seatassigning", "/evaluationview", "/evaluationscheduling"
     ],
     "/teacherhome": ["/teacherhome"
     ],
-    "/teacherstudentdashboard": ["/teacherstudentdashboard","/teacherstudentview","/teachertimetable","/teacherstudentadd",
+    "/teacherstudentdashboard": ["/teacherstudentdashboard", "/teacherstudentview", "/teachertimetable", "/teacherstudentadd",
     ],
-    "/teachersubject": ["/teachersubject","/teacherclassview","/teacherassignment","/teacherassignmentadding","/teacherrefrencelist"
-      ,"/teacherreferenceadd","/teachertestlist","/teachertestadd","/teachermcqlist","/teachermcqadd",
+    "/teachersubject": ["/teachersubject", "/teacherclassview", "/teacherassignment", "/teacherassignmentadding", "/teacherrefrencelist"
+      , "/teacherreferenceadd", "/teachertestlist", "/teachertestadd", "/teachermcqlist", "/teachermcqadd",
     ],
-    "/teacherexamination": ["/teacherexamination","/teacherquestionview"
+    "/teacherexamination": ["/teacherexamination", "/teacherquestionview"
     ]
   };
   useEffect(() => {
@@ -102,8 +102,23 @@ function Newsidebar({ setActiveItemLabel }) {
       </div>
       <Row style={{ display: "flex", height: "60%", justifyContent: "space-between", marginTop: "100px" }} >
         {itemsToDisplay.map((item, index) => (
-          <Link key={index} to={item.path} style={{ textDecoration: "none", color: "inherit" }}>
-            {/* <Col className={`newsidebar_menu_item_col ${activeItem === item.label.toLowerCase() ? "active" : ""}`}> */}
+          // <Link key={index} to={item.path} style={{ textDecoration: "none", color: "inherit" }}></Link>
+          <Link
+            key={index}
+            to={item.path}
+            onClick={() => {
+              // Clear loka tab state when going to Loka
+              if (item.path === "/adminlokanavbar") {
+                localStorage.removeItem("currentTab");
+              }
+
+              // Clear institution tab state when going to Institution
+              if (item.path === "/institutionadding") {
+                localStorage.removeItem("currentTab");
+              }
+            }}
+            style={{ textDecoration: "none", color: "inherit" }}> 
+                 {/* <Col className={`newsidebar_menu_item_col ${activeItem === item.label.toLowerCase() ? "active" : ""}`}> */}
             <Col className={`newsidebar_menu_item_col ${activeItem.startsWith(item.path) ? "active" : ""}`}>
               <div className="newsidebar_icon_container_div">
                 {/* <span className="newsidebar_icon_img "> {item.icon}</span> */}
