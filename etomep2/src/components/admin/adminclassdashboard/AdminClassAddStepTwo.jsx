@@ -44,9 +44,9 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
                   className="adminclassaddsteptwo_form-select"
                 >
                   <option value="">Select Subject</option>
-                  <option value="10">10</option>
-                  <option value="9">9</option>
-                  <option value="8">8</option>
+                  <option value="math">math</option>
+                  <option value="science">science</option>
+                  <option value="hindi">hindi</option>
                 </select>
               </div>
 
@@ -83,9 +83,7 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
                   className="adminclassaddsteptwo_form-select"
                 >
                   <option value="">Select Faculty</option>
-                  <option value="English">English</option>
-                  <option value="Math">Math</option>
-                  <option value="Biology">Biology</option>
+                  <option value="Ankit">Ankit</option>
                 </select>
               </div>
 
@@ -123,7 +121,7 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
             Clear
           </button>
           <button type="button" className="adminclassaddsteptwo_btn-next">
-            Assign
+            Save
           </button>
         </div>
       </div>

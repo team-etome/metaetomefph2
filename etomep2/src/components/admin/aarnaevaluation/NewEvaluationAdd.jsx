@@ -5,6 +5,7 @@ import './newevaluationadd.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import { Weight } from 'lucide-react';
 
 
 const NewEvaluationAdd = ({ isOpen, onClose }) => {
@@ -18,9 +19,11 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
     const customStyles = {
         control: (base, state) => ({
             ...base,
-            minHeight: '50px',
-            height: '50px',
+            minHeight: '48px',
+            height: '48px',
+            width: '100%',
             borderColor: '#ccc',
+            borderRadius: '8px',
             boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
             '&:hover': {
                 borderColor: '#526D82',
@@ -28,12 +31,12 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
         }),
         valueContainer: (base) => ({
             ...base,
-            height: '50px',
+            height: '48px',
             padding: '0 6px'
         }),
         dropdownIndicator: (base) => ({
             ...base,
-            color: '#292D32', // Change the color of the dropdown arrow
+            color: '#292D32',
             padding: '0 8px',
             alignItems: 'center',
             svg: {
@@ -71,6 +74,7 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
         }),
     };
 
+
     return (
         <div className="evaluationadd-backdrop">
             <div className="evaluationadd-modal-content">
@@ -80,74 +84,71 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                 </div>
                 <div className="evaluationadd-modal-body">
                     <form>
-                        <Row>
-                            <Col md={6} >
-                                <div className="evaluationadd-form-group" >
-                                    <label className="evaluationadd-form-label" >
+                        <div className="evaluationadd-modal-body-row">
+                            <div>
+                                <div className="evaluationadd-form-group">
+                                    <label className="evaluationadd-form-label">
                                         Select Name of Examination <span className="evaluationadd_required">*</span>
-                                        </label>
+                                    </label>
                                     <Select
-                                        // options={classOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                        // onChange={handleClassChange}
                                     />
                                 </div>
-                            </Col>
-                            <Col md={6}>
+                            </div>
+
+                            <div >
                                 <div className="evaluationadd-form-group">
                                     <label className="evaluationadd-form-label">
                                         Select Year <span className="evaluationadd_required">*</span>
-                                        </label>
+                                    </label>
                                     <Select
-                                        // options={mediumOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                        // onChange={setSelectedMedium}
                                     />
                                 </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={6}>
+                            </div>
+                        </div>
+                        <div className="evaluationadd-modal-body-row">
+                            <div>
                                 <div className="evaluationadd-form-group">
                                     <label className="evaluationadd-form-label">
                                         Select Subject <span className="evaluationadd_required">*</span>
-                                        </label>
+                                    </label>
                                     <Select
                                         // options={subjectOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                        // onChange={setSelectedSubject}
+                                    // onChange={setSelectedSubject}
                                     />
                                 </div>
-                            </Col>
-                            <Col md={6}>
+                            </div>
+                            <div>
                                 <div className="evaluationadd-form-group">
                                     <label className="evaluationadd-form-label">
                                         Class <span className="evaluationadd_required">*</span>
-                                        </label>
+                                    </label>
                                     <Select
                                         // options={textbook}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                        // value={filteredSubjects.find(opt => opt.value === selectedSubject)}
-                                        // onChange={(selected) => setTextbook(selected?.value || null)}
+                                    // value={filteredSubjects.find(opt => opt.value === selectedSubject)}
+                                    // onChange={(selected) => setTextbook(selected?.value || null)}
                                     />
-                                    
+
                                 </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={6}>
+                            </div>
+                        </div>
+                        <div className="evaluationadd-modal-body-row">
+                            <div>
                                 <div className="evaluationadd-form-group">
                                     <label className="evaluationadd-form-label">
                                         Date of Examination <span className="evaluationadd_required">*</span>
-                                        </label>
+                                    </label>
                                     <input
                                         type="date"
                                         min="0"
@@ -155,7 +156,7 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         style={{
                                             height: '50px',
                                             border: '1px solid #ccc',
-                                            borderRadius: '4px',
+                                            borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
                                             color: '#526D82',
@@ -163,11 +164,11 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                             boxSizing: 'border-box',
                                             outline: "none"
                                         }}
-                                        // onChange={e => setVolume(e.target.value)}
+                                    // onChange={e => setVolume(e.target.value)}
                                     />
                                 </div>
-                            </Col>
-                            <Col md={6}>
+                            </div>
+                            <div>
                                 <div className="evaluationadd-form-group">
                                     <label className="evaluationadd-form-label">Deadline</label>
                                     <input
@@ -177,7 +178,7 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         style={{
                                             height: '50px',
                                             border: '1px solid #ccc',
-                                            borderRadius: '4px',
+                                            borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
                                             color: '#526D82',
@@ -185,28 +186,28 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                             boxSizing: 'border-box',
                                             outline: "none"
                                         }}
-                                        />
+                                    />
                                 </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                        <Col md={12}>
+                            </div>
+                        </div>
+                        <div className="evaluationadd-modal-body-row">
+                            <div>
                                 <div className="evaluationadd-form-group">
                                     <label className="evaluationadd-form-label">
                                         Select Faculty <span className="evaluationadd_required">*</span>
-                                        </label>
+                                    </label>
                                     <Select
                                         // options={textbook}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                        // value={filteredSubjects.find(opt => opt.value === selectedSubject)}
-                                        // onChange={(selected) => setTextbook(selected?.value || null)}
+                                    // value={filteredSubjects.find(opt => opt.value === selectedSubject)}
+                                    // onChange={(selected) => setTextbook(selected?.value || null)}
                                     />
-                                    
+
                                 </div>
-                            </Col>
-                        </Row>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div className="evaluationadd-modal-footer">

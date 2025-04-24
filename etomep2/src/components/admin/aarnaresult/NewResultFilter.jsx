@@ -1,21 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './newresultfilter.css';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
-import dayjs from 'dayjs';
-import { useNavigate } from "react-router-dom";
 
 const NewResultFilter = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
-    const navigate = useNavigate();
-
-    const [examTypes, setExamTypes] = useState([]);
-    const [examYears, setExamYears] = useState([]);
-    const [selectedExamType, setSelectedExamType] = useState("");
-    const [allTimetableData, setAllTimetableData] = useState([]);
-    const [filteredTimetableData, setFilteredTimetableData] = useState([]);
-    const [selectedFilterYear, setSelectedFilterYear] = useState("");
 
     const subjects = [
         { key: 'english', name: 'English', total: 100 },
@@ -250,74 +239,6 @@ const NewResultFilter = () => {
         },
     ];
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${APIURL}/api/examtimetable`, {
-                    params: { admin_id }
-                });
-                const rawData = response.data.exam_timetables || {};
-
-                // Convert raw data (an object) to an array of [examName, classesObj] pairs
-                let examArray = Object.entries(rawData);
-                // Sort exam keys by year descending and then alphabetically.
-                examArray = examArray.sort(([nameA], [nameB]) => {
-                    const yearMatchA = nameA.match(/\d{4}$/);
-                    const yearMatchB = nameB.match(/\d{4}$/);
-                    const yearA = yearMatchA ? parseInt(yearMatchA[0]) : 0;
-                    const yearB = yearMatchB ? parseInt(yearMatchB[0]) : 0;
-                    if (yearA !== yearB) return yearB - yearA;
-                    return nameA.localeCompare(nameB);
-                });
-
-                // For each exam, convert its classes object into a sorted array of [className, entries]
-                const sortedExamTimetables = examArray.map(([examName, classesObj]) => {
-                    let classArray = Object.entries(classesObj || {});
-                    classArray = classArray.sort(([classA], [classB]) => {
-                        const numA = parseInt(classA);
-                        const numB = parseInt(classB);
-                        if (!isNaN(numA) && !isNaN(numB) && numA !== numB) {
-                            return numA - numB;
-                        }
-                        return classA.localeCompare(classB);
-                    });
-                    return [examName, classArray];
-                });
-
-                setAllTimetableData(sortedExamTimetables);
-                setFilteredTimetableData(sortedExamTimetables);
-
-                // Populate exam types and years for filter dropdowns.
-                const typesSet = new Set();
-                const yearsSet = new Set();
-                Object.keys(rawData).forEach(key => {
-                    const yearMatch = key.match(/\d{4}$/);
-                    if (yearMatch) {
-                        yearsSet.add(yearMatch[0]);
-                        const type = key.replace(/\s*\d{4}$/, "").trim();
-                        typesSet.add(type);
-                    }
-                });
-                setExamTypes([...typesSet].sort());
-                setExamYears([...yearsSet].sort((a, b) => b - a));
-            } catch (error) {
-                console.error("Error fetching exam timetable data", error);
-            }
-        };
-
-        fetchData();
-    }, [APIURL, admin_id]);
-
-    // Filter data based on dropdown selection
-    const handleSearch = () => {
-        if (!selectedExamType || !selectedFilterYear) {
-            setFilteredTimetableData(allTimetableData);
-            return;
-        }
-        const key = `${selectedExamType} ${selectedFilterYear}`;
-        const filtered = allTimetableData.filter(([examName]) => examName === key);
-        setFilteredTimetableData(filtered);
-    };
 
     // Refs for horizontal scroll synchronization (header and body)
     const headerRef = useRef(null);
@@ -350,48 +271,30 @@ const NewResultFilter = () => {
                         {/* Exam Type Dropdown */}
                         <select
                             className="form-select form-select-sm result_select_exam"
-                            value={selectedExamType}
-                            onChange={(e) => setSelectedExamType(e.target.value)}
                         >
                             <option value="">Select Examination</option>
-                            {examTypes.map((type, i) => (
-                                <option key={i} value={type}>{type}</option>
-                            ))}
                         </select>
                         {/* Exam Year Dropdown */}
                         <select
                             className="form-select form-select-sm result_select_year"
-                            value={selectedFilterYear}
-                            onChange={(e) => setSelectedFilterYear(e.target.value)}
                         >
                             <option value="">Select Year</option>
-                            {examYears.map((year, i) => (
-                                <option key={i} value={year}>{year}</option>
-                            ))}
+                            
                         </select>
                         <select
                             className="form-select form-select-sm result_select_class"
-                            value={selectedFilterYear}
-                            onChange={(e) => setSelectedFilterYear(e.target.value)}
                         >
                             <option value="">Select Class</option>
-                            {examYears.map((year, i) => (
-                                <option key={i} value={year}>{year}</option>
-                            ))}
                         </select>
                         <select
                             className="form-select form-select-sm result_select_division"
-                            value={selectedFilterYear}
-                            onChange={(e) => setSelectedFilterYear(e.target.value)}
                         >
                             <option value="">Select Division</option>
-                            {examYears.map((year, i) => (
-                                <option key={i} value={year}>{year}</option>
-                            ))}
+                            
                         </select>
                         <button
                             className="btn-primary btn-sm search_button"
-                            onClick={handleSearch}
+                            // onClick={handleSearch}
                         >
                             Search
                         </button>

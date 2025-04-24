@@ -5,6 +5,7 @@ import './newevaluationview.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import { Weight } from 'lucide-react';
 
 
 const NewEvaluationView = ({ isOpen, onClose }) => {
@@ -15,15 +16,14 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
     const admininfo = useSelector((state) => state.admininfo);
 
-    // Define a state to toggle editing mode.
-    const [isEditing, setIsEditing] = useState(false);
-
     const customStyles = {
         control: (base, state) => ({
             ...base,
-            minHeight: '50px',
-            height: '50px',
+            minHeight: '48px',
+            height: '48px',
+            width: '100%',
             borderColor: '#ccc',
+            borderRadius: '8px',
             boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
             '&:hover': {
                 borderColor: '#526D82',
@@ -31,12 +31,12 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
         }),
         valueContainer: (base) => ({
             ...base,
-            height: '50px',
+            height: '48px',
             padding: '0 6px'
         }),
         dropdownIndicator: (base) => ({
             ...base,
-            color: '#292D32', // Change the color of the dropdown arrow
+            color: '#292D32',
             padding: '0 8px',
             alignItems: 'center',
             svg: {
@@ -73,15 +73,7 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
             }
         }),
     };
-    const handleSave = () => {
-        // Call your save logic here
-        // After saving, you might want to toggle isEditing back to false:
-        setIsEditing(false);
-    };
-    const handleClear = () => {
-        // Reset form logic goes here, then hide the Clear/Save buttons.
-        setIsEditing(false);
-    };
+
 
     return (
         <div className="evaluationview-backdrop">
@@ -92,38 +84,35 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                 </div>
                 <div className="evaluationview-modal-body">
                     <form>
-                        <Row>
-                            <Col md={6} >
-                                <div className="evaluationview-form-group" >
-                                    <label className="evaluationview-form-label" >
+                        <div className="evaluationview-modal-body-row">
+                            <div>
+                                <div className="evaluationview-form-group">
+                                    <label className="evaluationview-form-label">
                                         Select Name of Examination <span className="evaluationview_required">*</span>
                                     </label>
                                     <Select
-                                        // options={classOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                    // onChange={handleClassChange}
                                     />
                                 </div>
-                            </Col>
-                            <Col md={6}>
+                            </div>
+
+                            <div >
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
                                         Select Year <span className="evaluationview_required">*</span>
                                     </label>
                                     <Select
-                                        // options={mediumOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                    // onChange={setSelectedMedium}
                                     />
                                 </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={6}>
+                            </div>
+                        </div>
+                        <div className="evaluationview-modal-body-row">
+                            <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
                                         Select Subject <span className="evaluationview_required">*</span>
@@ -136,8 +125,8 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                                     // onChange={setSelectedSubject}
                                     />
                                 </div>
-                            </Col>
-                            <Col md={6}>
+                            </div>
+                            <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
                                         Class <span className="evaluationview_required">*</span>
@@ -152,10 +141,10 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                                     />
 
                                 </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={6}>
+                            </div>
+                        </div>
+                        <div className="evaluationview-modal-body-row">
+                            <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
                                         Date of Examination <span className="evaluationview_required">*</span>
@@ -167,7 +156,7 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                                         style={{
                                             height: '50px',
                                             border: '1px solid #ccc',
-                                            borderRadius: '4px',
+                                            borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
                                             color: '#526D82',
@@ -178,8 +167,8 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                                     // onChange={e => setVolume(e.target.value)}
                                     />
                                 </div>
-                            </Col>
-                            <Col md={6}>
+                            </div>
+                            <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">Deadline</label>
                                     <input
@@ -189,7 +178,7 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                                         style={{
                                             height: '50px',
                                             border: '1px solid #ccc',
-                                            borderRadius: '4px',
+                                            borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
                                             color: '#526D82',
@@ -199,10 +188,10 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                                         }}
                                     />
                                 </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={12}>
+                            </div>
+                        </div>
+                        <div className="evaluationview-modal-body-row">
+                            <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
                                         Select Faculty <span className="evaluationview_required">*</span>
@@ -217,39 +206,13 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                                     />
 
                                 </div>
-                            </Col>
-                        </Row>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div className="evaluationview-modal-footer">
-                    {!isEditing ? (
-                        <>
-                            <button className="evaluationview-btn evaluationview-btn-danger">
-                                Delete
-                            </button>
-                            <button
-                                className="evaluationview-btn evaluationview-btn-primary"
-                                onClick={() => setIsEditing(true)}
-                            >
-                                Edit
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <button
-                                className="evaluationview-btn evaluationview-btn-secondary"
-                                onClick={handleClear}
-                            >
-                                Clear
-                            </button>
-                            <button
-                                className="evaluationview-btn evaluationview-btn-primary"
-                                onClick={handleSave}
-                            >
-                                Save
-                            </button>
-                        </>
-                    )}
+                    <button className="evaluationview-btn evaluationview-btn-danger">Delete</button>
+                    <button className="evaluationview-btn evaluationview-btn-primary">Edit</button>
                 </div>
             </div>
         </div>

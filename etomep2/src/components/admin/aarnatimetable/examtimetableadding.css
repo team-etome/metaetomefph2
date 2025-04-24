@@ -11,11 +11,13 @@
 }
 
 .examtimetable-adding-container {
+    display: flex;
+    flex-direction: column;
     background: white;
     padding: 20px;
     border-radius: 8px;
-    width: 80%;
-    height: 80%;
+    width: 1058px;
+    height: 650px;
     /* max-width: 600px; */
 }
 
@@ -72,6 +74,11 @@ select {
     border-radius: 8px;
     border: 1px solid #757575;
 }
+.examtimetable-adding-form {
+    flex-grow: 1; /* Allow the form to grow */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    margin-bottom: 24px; /* Ensure the footer has a 24px gap */
+}
 
 .examtimetable-adding-form-table-header,
 .examtimetable-adding-form-table-row {
@@ -96,6 +103,7 @@ select {
 .examtimetable-adding-form-table-row select {
     padding: 8px;
     margin-right: 10px;
+    border-radius: 8px;
 }
 
 .examtimetable-adding-form_form-content {
@@ -120,8 +128,9 @@ select {
 .examtimetable-adding_clear_button_main {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     gap: 10px;
+    /* margin-bottom: 24px; */
 }
 
 .examtimetable-adding_addnext_button {
@@ -159,39 +168,40 @@ select {
 /* Ensure the row is positioned relative so the button can be absolutely positioned */
 
 
-.row-with-delete {
+.examtimetable-adding-form-row-with-delete {
     position: relative;
     transition: transform 0.3s ease;
 }
 
-.remove-row-btn:focus {
+.examtimetable-adding-form-remove-row-btn:focus {
     outline: none;
 }
 
-/* Style for the delete (cross) button */
-.remove-row-btn {
+.examtimetable-adding-form-remove-row-btn {
     position: absolute;
     top: 15%;
     right: 0px;
-    /* transform: translateY(-50%); */
     background: transparent;
     color: red;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    display: none;
-    height: 0px !important;
+    display: none; /* Initially hide the button */
+    height: 0px !important; /* Set height and width to 0 */
     width: 0px !important;
+    transition: all 0.3s ease;
+    margin-left: 8px;
 }
 
 /* Show the delete button when hovering the row */
-.row-with-delete:hover .remove-row-btn {
-    display: block;
-    height: 14px !important;
-    width: 14px !important;
+.examtimetable-adding-form-row-with-delete:hover .examtimetable-adding-form-remove-row-btn {
+    display: block; /* Show the button */
+    height: 16px !important; /* Set the height to 16px */
+    width: 16px !important;
+    padding-left: 16px;
 }
-.row-with-delete:hover {
-    transform: scale(0.99);
+.examtimetable-adding-form-row-with-delete:hover {
+    transform: scale(0.97);
 }
 .examtimetable-adding_required {
     font-weight: 400;

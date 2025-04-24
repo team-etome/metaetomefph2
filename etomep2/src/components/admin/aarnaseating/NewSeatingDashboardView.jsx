@@ -1,7 +1,8 @@
 import React from "react";
 import "./newseatingdashboardview.css";
+import image from "../../../assets/arrow-swap.jpg"
 
-const NewSeatingDashboardView = () => {
+const NewSeatingDashboardView = ({ selectedItem, onBack }) => {
     // Dummy data to fill the UI
     const dummyData = {
         roomNo: "202",
@@ -18,33 +19,21 @@ const NewSeatingDashboardView = () => {
             { regNo: "RVF34523", name: "Sudhakaran" },
             { regNo: "RVF54566", name: "Babblu" },
             { regNo: "RVF54677", name: "Chinkidi" },
-            { regNo: "RVF25453", name: "Jacob" },
-            { regNo: "RVF45223", name: "Tyler" },
-            { regNo: "RVF465434", name: "Mathew" },
-            { regNo: "RVF34523", name: "Sudhakaran" },
-            { regNo: "RVF54566", name: "Babblu" },
-            { regNo: "RVF54677", name: "Chinkidi" },
-            { regNo: "RVF25453", name: "Jacob" },
-            { regNo: "RVF45223", name: "Tyler" },
-            { regNo: "RVF465434", name: "Mathew" },
-            { regNo: "RVF34523", name: "Sudhakaran" },
-            { regNo: "RVF54566", name: "Babblu" },
-            { regNo: "RVF54677", name: "Chinkidi" },
         ],
     };
 
     return (
         <div className="seatingview_main_container">
             <div className="seatingview_main_container_inner">
+                <div className="seatingview_header_bar">
+                    <span>Room no: {dummyData.roomNo}</span>
+                    <button className="seating-modal-close-btn" onClick={onBack}>×</button>
+                </div >
                 <div className="seatingview_main_container_inner_header">
-                    <div className="seatingview_header_bar" >
-                        <span>Room no: {dummyData.roomNo}</span>
-                    </div >
+
                     {/* White info area with subject, date, times, faculties */}
-                    <div
-                        className="seatingview_info_area"
-                    >
-                        <div>
+                    <div className="seatingview_info_area">
+                        <div >
                             <div className="seatingview_info_row heading">
                                 <p>Subject</p>
                                 <p>Exam Date</p>
@@ -74,10 +63,10 @@ const NewSeatingDashboardView = () => {
 
                 </div>
 
-                <div >
+                <div className="seatingview_main_container_inner_header">
                     <div className="seatingview_studentlist_bar">
                         <span className="seatingview_studentlist_title">Student List</span>
-                        <select className="seatingview_class_select">
+                        <select className="seatingview_class_select" style={{ border: "1px solid black" }}>
                             <option value={dummyData.className}>{dummyData.className}</option>
                         </select>
                     </div>
@@ -85,24 +74,36 @@ const NewSeatingDashboardView = () => {
                         <table className="seatingview_table">
                             <thead>
                                 <tr>
-                                    <th>Registration no</th>
-                                    <th>
-                                        Name <span className="sort-arrow">^</span>
+                                    <th>Name <span className="sort-arrow">
+                                        <img src={image} alt="Sort Arrow" className="sort-arrow-image"/>
+                                    </span>
                                     </th>
+                                    <th>Registration No</th>
+                                    <th>Subject</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {dummyData.studentList.map((student, index) => (
                                     <tr key={index}>
-                                        <td>{student.regNo}</td>
                                         <td>{student.name}</td>
+                                        <td>{student.regNo}</td>
+                                        <td>{dummyData.subject}</td>
                                     </tr>
                                 ))}
+                                {/* Adding an additional row */}
+                                <tr>
+                                    <td>John Doe</td>
+                                    <td>RVF99999</td>
+                                    <td>{dummyData.subject}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
+                <div className="seatingview_modal-footer">
+                    <button className="seatingview_btn seatingview_btn-danger">Clear</button>
+                    <button className="seatingview_btn seatingview_btn-secondary">edit</button>
+                </div>
             </div>
         </div>
     );

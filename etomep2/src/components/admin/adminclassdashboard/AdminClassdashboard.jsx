@@ -16,8 +16,6 @@ function AdminClassdashboard() {
   const admin_id = admininfo ? admininfo.admininfo?.admin_id : null;
 
   const [selected, setSelected] = useState(null);
-  // const [isVisible, setIsVisible] = useState(false);
-  // const [inVisible, setInVisible] = useState(false);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   console.log(classDetails, "detailsssssss");

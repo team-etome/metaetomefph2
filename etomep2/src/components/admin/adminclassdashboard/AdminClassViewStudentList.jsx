@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { IoArrowBack, IoClose } from "react-icons/io5";
 import { AiOutlineSearch } from "react-icons/ai";
 import "./adminclassviewstudentlist.css";
+import avtar from "../../../assets/avatar.jpg"
 
-const AdminClassStudentList = ({ onBack, onClose }) => {
+const AdminClassViewStudentList = ({ onBack, onClose }) => {
   // Dummy data to mimic your screenshot
   const allStudents = [
     { name: "Ananthu", className: "Class 1 A", rollNo: 1, avatarUrl: "https://randomuser.me/api/portraits/men/65.jpg" },
@@ -26,27 +27,27 @@ const AdminClassStudentList = ({ onBack, onClose }) => {
   );
 
   return (
-    <div className="adminclassstudentlist-backdrop">
+    <div className="adminclassviewstudentlist-backdrop">
       {/* Header */}
-      <div className="adminclassstudentlist-header">
-        <button className="adminclassstudentlist-back-btn" onClick={onBack}>
+      <div className="adminclassviewstudentlist-header">
+        <button className="adminclassviewstudentlist-back-btn" onClick={onBack}>
           <IoArrowBack size={20} />
         </button>
-        <h2 className="adminclassstudentlist-title">
+        <h2 className="adminclassviewstudentlist-title">
           Student List
-          <span className="adminclassstudentlist-count">{filtered.length}</span>
+          <span className="adminclassviewstudentlist-count">{filtered.length}</span>
         </h2>
-        <button className="adminclassstudentlist-close-btn" onClick={onClose}>
+        <button className="adminclassviewstudentlist-close-btn" onClick={onClose}>
           <IoClose size={24} />
         </button>
       </div>
 
       {/* Search */}
-      <div className="adminclassstudentlist-search-container">
-        <AiOutlineSearch className="adminclassstudentlist-search-icon" />
+      <div className="adminclassviewstudentlist-search-container">
+        <AiOutlineSearch className="adminclassviewstudentlist-search-icon" />
         <input
           type="text"
-          className="adminclassstudentlist-search-input"
+          className="adminclassviewstudentlist-search-input"
           placeholder="Search Student"
           value={search}
           onChange={e => setSearch(e.target.value)}
@@ -54,22 +55,22 @@ const AdminClassStudentList = ({ onBack, onClose }) => {
       </div>
 
       {/* Grid of student cards */}
-      <div className="adminclassstudentlist-grid-container">
+      <div className="adminclassviewstudentlist-grid-container">
         {filtered.map(student => (
-          <div key={student.rollNo} className="adminclassstudentlist-card">
+          <div key={student.rollNo} className="adminclassviewstudentlist-card">
             <img
               src={student.avatarUrl}
-              alt={student.name}
-              className="adminclassstudentlist-avatar"
+              alt={avtar}
+              className="adminclassviewstudentlist-avatar"
             />
-            <div className="adminclassstudentlist-info">
-              <div className="adminclassstudentlist-name">
+            <div className="adminclassviewstudentlist-info">
+              <div className="adminclassviewstudentlist-name">
                 {student.name}
               </div>
-              <div className="adminclassstudentlist-class">
+              <div className="adminclassviewstudentlist-class">
                 {student.className}
               </div>
-              <div className="adminclassstudentlist-roll">
+              <div className="adminclassviewstudentlist-roll">
                 Roll no: {student.rollNo}
               </div>
             </div>
@@ -80,4 +81,4 @@ const AdminClassStudentList = ({ onBack, onClose }) => {
   );
 };
 
-export default AdminClassStudentList;
+export default AdminClassViewStudentList;

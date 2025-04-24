@@ -8,12 +8,9 @@ import {
   FormControl,
   Dropdown,
 } from "react-bootstrap";
-import { BsSearch } from "react-icons/bs";
 import "./newinstitutiondashboard.css";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import AdminClassdashboard from "../adminclassdashboard/AdminClassdashboard";
-import FacultyDashboard from "../adminfacultydashboard/FacultyDashboard";
 import NewFacultyDashboard from "../adminfacultydashboard/NewFacultyDashboard";
 import NewAdminClassDashboard from "../adminclassdashboard/NewAdminClassDashboard";
 import AdminStudentDashboard from "../adminstudentdashboard/AdminStudentDashboard";

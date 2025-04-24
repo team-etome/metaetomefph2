@@ -24,7 +24,7 @@ function AarnaNavbar() {
     const navigate = useNavigate();
     
     const [activeTab, setActiveTab] = useState(() => {
-        return localStorage.getItem("aarnaActiveTab") || "Question Paper";
+        return localStorage.getItem("aarnaActiveTab") || "Time Table";
     });
 
     useEffect(() => {

@@ -3,6 +3,7 @@ import AdminQuestionAssignadd from './AdminQuestionassigningadd';
 import './AdminQuestionAssigning.css'; // Import custom CSS
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { PiArrowsDownUp } from "react-icons/pi";
 
 
 const AdminQuestionAssigning = () => {
@@ -137,20 +138,20 @@ const AdminQuestionAssigning = () => {
             </div>
             <div className="AdminQuestionAssigning_classes">
                 {filteredExamData.map((exam, index) => (
-                    <div key={index} className="exam-group">
+                    <div key={index} className="AdminQuestionAssigning_classes-exam-group">
                         <div className="exam-group-content">
                             {/* Heading shows the full exam name */}
-                            <h3 className="exam-group-heading">{exam.fullExamName}</h3>
+                            <p className="exam-group-heading">{exam.fullExamName}</p>
                             <div className="exam-section">
-                                <table className="table table-hover AdminQuestionAssigning_main_table">
+                                <table className="AdminQuestionAssigning_main_table">
                                     <thead>
                                         <tr>
-                                            <th>Subject</th>
-                                            <th>Class</th>
-                                            <th>Teacher</th>
-                                            <th>Date</th>
-                                            <th>Time Duration</th>
-                                            <th>Status</th>
+                                            <th>Subject   <PiArrowsDownUp /></th>
+                                            <th>Class   <PiArrowsDownUp /></th>
+                                            <th>Teacher   <PiArrowsDownUp /></th>
+                                            <th>Date   <PiArrowsDownUp /></th>
+                                            <th>Time Duration   <PiArrowsDownUp /></th>
+                                            <th>Status   <PiArrowsDownUp /></th>
                                         </tr>
                                     </thead>
                                     <tbody>

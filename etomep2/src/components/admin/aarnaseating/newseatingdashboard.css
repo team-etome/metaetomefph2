@@ -12,18 +12,22 @@
 
 .seating_main_header_container {
     flex: 0 0 auto;
-    padding-top: 24px;
+    padding: 0px;
     margin-left: 24px;
+    margin-right: 24px;
+    margin-top: 24px;
 }
 
-.header-controls {
+.seating_header-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 15px;
+    padding: 0px;
+    padding-right: 0px !important;
+    margin-right: 0px;
 }
 
-.left-controls {
+.seating_left-controls {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -39,7 +43,7 @@
     transition: left 0.5s ease;
 }
 
-.result_add_button {
+.seating_result_add_button {
     width: 100px;
     height: 40px;
     color: #fff;
@@ -55,46 +59,44 @@
     width: 300px;
     height: 40px;
     font-size: 1rem;
+    border-radius: 8px;
 }
 
 .seating_select_year {
     width: 200px;
     height: 40px;
     font-size: 1rem;
+    border-radius: 8px;
 }
 
 /* Wrapper for tables */
 .seating_classes_box {
     flex: 1 1 auto;
     margin-left: 24px;
-    margin-top: 24px;
+    margin-top: 40px;
     max-height: 100%;
     overflow-y: auto;
+    margin-right: 24px;
 }
 
 
 /* Container that holds all the boxes in a grid with 3 columns */
+/* Container for the seating grid */
 .seating_container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    /* 3 boxes per row */
-    gap: 1rem;
-    /* space between boxes */
-    padding: 1rem;
-    /* optional padding around the grid */
-    box-sizing: border-box;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Flexible columns with a minimum width */
+    gap: 16px; /* Fixed 16px gap between items */
 }
 
 /* Each individual box (card) */
 .seating_classes_box_inner {
-    border-radius: 8px;
+    border-radius: 16px;
     background-color: #fff;
     border: 1px solid #B2B2B2;
-    padding: 1rem;
-    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
-    max-width: 395px;
-    width: 100%;
-    height: 166px;
+    padding: 16px;
+    /* Width will be flexible based on screen size */
+    width: 100%;  /* Ensure the cards take up the full width of their grid cell */
+    height: 147.47px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -114,7 +116,6 @@
     object-fit: cover;
     flex-shrink: 0;
 }
-
 
 .seating_exam_title {
     margin: 0;
@@ -206,6 +207,7 @@
     height: 48px;
     font-size: 1rem;
     border: 1px solid #757575;
+    border-radius: 8px;
 }
 
 .seating_stepone_select_year {
@@ -213,6 +215,7 @@
     height: 48px;
     font-size: 1rem;
     border: 1px solid #757575;
+    border-radius: 8px;
 }
 
 .seating_stepone_form-control {
@@ -220,7 +223,7 @@
     height: 48px;
     margin-bottom: 16px;
     border: 1px solid #757575;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 0 10px;
     font-size: 14px;
     color: black;
@@ -237,7 +240,7 @@
     height: 40px;
     margin-bottom: 16px;
     border: 1px solid #CCC;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 0 10px;
     font-size: 14px;
     outline: none;
@@ -253,7 +256,7 @@
     height: 48px;
     /* margin-bottom: 16px; */
     border: 1px solid #CCC;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 0 10px;
     font-size: 14px;
     outline: none;
@@ -274,7 +277,7 @@
     height: 48px;
     /* margin-bottom: 16px; */
     border: 1px solid #CCC;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 0 10px;
     font-size: 14px;
     outline: none;
@@ -287,6 +290,7 @@
     display: flex;
     gap: 1rem;
     margin-bottom: 16px;
+    gap:8px;
     /* margin-top: 24px; */
 }
 .seating_step-row_stepone{
@@ -294,6 +298,7 @@
     gap: 1rem;
     margin-bottom: 16px;
     margin-top: 8px;
+    gap:8px;
 }
 
 .seating_step-column {
@@ -555,14 +560,15 @@
     display: flex;
     gap: 1rem;
     margin-top: 8px;
+    height: 185px;
 }
 
 .layout-option {
     cursor: pointer;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 60px;
-    height: 60px;
+    border-radius: 8px;
+    width: 207px;
+    height: 185px;
     font-size: 12px;
     display: flex;
     justify-content: center;
@@ -572,4 +578,44 @@
 .layout-option.selected {
     border-color: #2162B2;
     background-color: #f4f4f4;
+    margin: 0px;
 }
+  
+  .layout-option img {
+    width: 207px;
+    height: 185px;
+    object-fit: cover;
+  }
+
+
+
+
+
+
+
+  /* The custom modal overlay & content */
+.seatingview-custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.seatingview-custom-modal-content {
+    background-color: #fff;
+    width: 1058px; /* Adjust modal width as needed */
+    height: 650px; /* Adjust height as needed */
+    border-radius: 16px;
+    padding: 0px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+  

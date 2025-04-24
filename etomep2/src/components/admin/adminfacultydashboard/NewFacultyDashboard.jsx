@@ -17,9 +17,6 @@ const NewFacultyDashboard = () => {
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
     const navigate = useNavigate();
 
-    const [examTypes, setExamTypes] = useState([]);
-    const [examYears, setExamYears] = useState([]);
-    const [selectedFilterYear, setSelectedFilterYear] = useState("");
     const [showPopup, setShowPopup] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [showPopupexcel, setShowPopupExcel] = useState(false);
@@ -114,63 +111,6 @@ const NewFacultyDashboard = () => {
     ];
 
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await axios.get(`${APIURL}/api/examtimetable`, {
-    //                 params: { admin_id }
-    //             });
-    //             const rawData = response.data.exam_timetables || {};
-
-    //             // Convert raw data (an object) to an array of [examName, classesObj] pairs
-    //             let examArray = Object.entries(rawData);
-    //             // Sort exam keys by year descending and then alphabetically.
-    //             examArray = examArray.sort(([nameA], [nameB]) => {
-    //                 const yearMatchA = nameA.match(/\d{4}$/);
-    //                 const yearMatchB = nameB.match(/\d{4}$/);
-    //                 const yearA = yearMatchA ? parseInt(yearMatchA[0]) : 0;
-    //                 const yearB = yearMatchB ? parseInt(yearMatchB[0]) : 0;
-    //                 if (yearA !== yearB) return yearB - yearA;
-    //                 return nameA.localeCompare(nameB);
-    //             });
-
-    //             // For each exam, convert its classes object into a sorted array of [className, entries]
-    //             const sortedExamTimetables = examArray.map(([examName, classesObj]) => {
-    //                 let classArray = Object.entries(classesObj || {});
-    //                 classArray = classArray.sort(([classA], [classB]) => {
-    //                     const numA = parseInt(classA);
-    //                     const numB = parseInt(classB);
-    //                     if (!isNaN(numA) && !isNaN(numB) && numA !== numB) {
-    //                         return numA - numB;
-    //                     }
-    //                     return classA.localeCompare(classB);
-    //                 });
-    //                 return [examName, classArray];
-    //             });
-
-    //             setAllTimetableData(sortedExamTimetables);
-    //             setFilteredTimetableData(sortedExamTimetables);
-
-    //             // Populate exam types and years for filter dropdowns.
-    //             const typesSet = new Set();
-    //             const yearsSet = new Set();
-    //             Object.keys(rawData).forEach(key => {
-    //                 const yearMatch = key.match(/\d{4}$/);
-    //                 if (yearMatch) {
-    //                     yearsSet.add(yearMatch[0]);
-    //                     const type = key.replace(/\s*\d{4}$/, "").trim();
-    //                     typesSet.add(type);
-    //                 }
-    //             });
-    //             setExamTypes([...typesSet].sort());
-    //             setExamYears([...yearsSet].sort((a, b) => b - a));
-    //         } catch (error) {
-    //             console.error("Error fetching exam timetable data", error);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, [APIURL, admin_id]);
 
 
     const toggleMenu = () => {
@@ -196,31 +136,23 @@ const NewFacultyDashboard = () => {
     return (
         <div className="facultydashboard_main_container">
             <div className="facultydashboard_main_header_container">
-                <div className="header-controls d-flex justify-content-between align-items-center px-3 py-2">
-                    <div className="left-controls">
+                <div className="facultydashboard_header-controls d-flex justify-content-between align-items-center">
+                    <div className="facultydashboard_left-controls">
                         {/* Exam Type Dropdown */}
                         <select
                             className="form-select form-select-sm facultydashboard_select_subject"
-                        // value={selectedExamType}
-                        // onChange={(e) => setSelectedExamType(e.target.value)}
+
                         >
                             <option value="">Select Subject</option>
-                            {examTypes.map((type, i) => (
-                                <option key={i} value={type}>{type}</option>
-                            ))}
                         </select>
                         {/* Exam Year Dropdown */}
                     </div>
-                    <div className="left-controls">
+                    <div className="facultydashboard_left-controls">
                         <select
                             className="form-select form-select-sm facultydashboard_select_faculty"
-                        // value={selectedFilterYear}
-                        // onChange={(e) => setSelectedFilterYear(e.target.value)}
                         >
                             <option value="">Select Faculty</option>
-                            {/* {examYears.map((year, i) => (
-                                        <option key={i} value={year}>{year}</option>
-                                    ))} */}
+                           
                         </select>
                         {/* This wrapper ensures the dropdown is anchored correctly */}
                         <div>
@@ -250,7 +182,7 @@ const NewFacultyDashboard = () => {
             <div className="facultydashboard_classes_box">
                 <div className="facultydashboard_container" >
                     {DummyFacultyData.map((faculty) => (
-                        <div className="faculty-card" key={faculty.id}
+                        <div className="facultydashboard_classes_box_inner" key={faculty.id}
                             onClick={() => handleCardClick(faculty)}
                         >
                             <div className="faculty-avatar-container">
