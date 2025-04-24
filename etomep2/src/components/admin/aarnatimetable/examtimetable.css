@@ -15,6 +15,7 @@
     padding-left: 0;
     padding-top: 24px;
     margin-left: 24px;
+    margin-right: 24px;
 }
 
 
@@ -22,7 +23,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 15px; /* Padding on the sides */
+    padding: 0; /* Padding on the sides */
+    padding-right: 0px !important;
 }
 
 .left-controls {
@@ -41,6 +43,8 @@
     /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); Shadow for class sections */
     /* padding-left: 10px; */
     margin-top: 10px;
+    margin-right: 24px;
+    margin-bottom: 32px;
 }
 
 .class-header {
@@ -66,7 +70,7 @@
     text-align: left;
     padding: 8px;
     padding-top: 10px;
-    border-bottom: 2px solid #e0e0e0; /* Maintains horizontal line only */
+    /* border-bottom: none; */
     border-left: none; /* Explicitly remove left borders */
     border-right: none; /* Explicitly remove right borders */
 }
@@ -76,21 +80,22 @@
     color: #8D8A95 !important;
     font-size: 14px; /* Consistent font size for headers */
     font-weight: 400;
+    background-color: #fff;
 }
 
 .examtimetable_main_table tr {
     height: 56px;
-    border-bottom: 1px solid #e0e0e0;
+    /* border-bottom: 1px solid #ECECEC; */
  }
 
-.examtimetable_main_table td:nth-child(1) { width: 10%; } /* No column */
-.examtimetable_main_table td:nth-child(2) { width: 15%; } /* Day column */
-.examtimetable_main_table td:nth-child(3) { width: 20%; } /* Date column */
-.examtimetable_main_table td:nth-child(4) { width: 25%; } /* Time column */
+/* .examtimetable_main_table td:nth-child(1) { width: 10%; }
+.examtimetable_main_table td:nth-child(2) { width: 15%; } 
+.examtimetable_main_table td:nth-child(3) { width: 20%; } 
+.examtimetable_main_table td:nth-child(4) { width: 25%; } 
 .examtimetable_main_table td:nth-child(5) { width: 30%; }
 .examtimetable_main_table tr:last-child td {
     border-bottom: none;
-}
+} */
 
 .examtimetable_search_button {
     width: 100px;
@@ -102,7 +107,7 @@
     transition: left 0.5s ease;
 }
 
-.add_button {
+.examtimetable-add_button {
     width: 100px;
     height: 40px;
     color: #fff;
@@ -112,13 +117,13 @@
     /* margin-left: 630px; */
     transition: left 0.5s ease;
 }
-.edit_button{
+.examtimetable_table_class-section-edit_button{
     width: 100px;
     height: 40px;
     color: #444444;
-    background: transparent;
+    background: #fff;
     border: 1px solid #444444;
-    border-radius: 10px;
+    border-radius: 8px;
     transition: left 0.5s ease;
 }
 /* Custom styles for examtimetable form selects */
@@ -126,12 +131,14 @@
     width: 320px; /* Adjusted width for the exam type select */
     height: 40px; /* Consistent height */
     font-size: 1rem; /* Suitable font size for readability */
+    border-radius: 8px;
 }
 
 .examtimetable_select_year {
     width: 140px; /* Adjusted width for the year select */
     height: 40px; /* Consistent height */
     font-size: 1rem; /* Suitable font size */
+    border-radius: 8px;
 }
 
 .examtimetable-label {

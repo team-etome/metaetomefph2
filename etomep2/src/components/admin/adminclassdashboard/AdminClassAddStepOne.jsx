@@ -38,7 +38,7 @@ const AdminClassAddStepOne = ({ nextStep, closeModal }) => {
               id="className"
               type="text"
               className="adminclassaddstepone_form-control"
-              placeholder="1"
+              placeholder=""
             />
           </Col>
 
@@ -54,7 +54,7 @@ const AdminClassAddStepOne = ({ nextStep, closeModal }) => {
               id="division"
               type="text"
               className="adminclassaddstepone_form-control"
-              placeholder="A"
+              placeholder=""
             />
           </Col>
 
@@ -64,11 +64,11 @@ const AdminClassAddStepOne = ({ nextStep, closeModal }) => {
               className="adminclassaddstepone-form-label"
               htmlFor="medium"
             >
-              Medium <span className="adminclassaddstepone_required">*</span>
+              Medium
             </label>
             <select
               id="medium"
-              className="form-select form-select-sm adminclassaddstepone_select_year"
+              className="form-select form-select-sm adminclassaddstepone_select_section"
             >
               <option value="">Select Medium</option>
               <option value="English">English</option>
@@ -86,12 +86,16 @@ const AdminClassAddStepOne = ({ nextStep, closeModal }) => {
             >
               Stream
             </label>
-            <input
+            <select
               id="stream"
-              type="text"
-              className="adminclassaddstepone_form-control"
-              placeholder="Science / Commerce / Arts"
-            />
+              className="form-select form-select-sm adminclassaddstepone_select_section"
+            >
+              <option value="">Select Stream</option>
+              <option value="Non-Medical">Non-Medical</option>
+              <option value="Medical">Medical</option>
+              <option value="Commerce">Commerce</option>
+              <option value="Arts">Arts</option>
+            </select>
           </Col>
 
           {/* Class Teacher */}
@@ -100,11 +104,11 @@ const AdminClassAddStepOne = ({ nextStep, closeModal }) => {
               className="adminclassaddstepone-form-label"
               htmlFor="classTeacher"
             >
-              Class Teacher
+              Class Teacher <span className="adminclassaddstepone_required">*</span>
             </label>
             <select
               id="classTeacher"
-              className="form-select form-select-sm adminclassaddstepone_select_year"
+              className="form-select form-select-sm adminclassaddstepone_select_section"
             >
               <option value="">Select Teacher</option>
               <option value="Radha Krishnan">Radha Krishnan</option>

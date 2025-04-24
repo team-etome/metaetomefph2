@@ -11,7 +11,7 @@ const NewAdminClassDashboard = () => {
     const [showModal, setShowModal] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const [entries, setEntries] = useState([
-        { className: "", division: "", subject: "" }
+        { subject: "", publishername: "", facultyname: "" }
     ]);
     const classData = [
         {
@@ -19,7 +19,11 @@ const NewAdminClassDashboard = () => {
             sections: [
                 { section: "1A", teacher: "Radha krishnan", strength: 56, subjects: 6 },
                 { section: "1B", teacher: "Kanakambaran", strength: 56, subjects: 6 },
-                { section: "1C", teacher: "Lakshmi Nakshatra", strength: 56, subjects: 6 },
+                { section: "1A", teacher: "Radha krishnan", strength: 56, subjects: 6 },
+                { section: "1B", teacher: "Kanakambaran", strength: 56, subjects: 6 },
+                { section: "1A", teacher: "Radha krishnan", strength: 56, subjects: 6 },
+                { section: "1B", teacher: "Kanakambaran", strength: 56, subjects: 6 },
+
             ],
         },
         {
@@ -67,7 +71,7 @@ const NewAdminClassDashboard = () => {
 
     // Manage dynamic row entries in Step Two
     const addEntry = () => {
-        setEntries([...entries, { className: "", division: "", subject: "" }]);
+        setEntries([...entries, { subject: "", publishername: "", facultyname: "" }]);
     };
 
     const removeEntry = (index) => {
@@ -87,16 +91,14 @@ const NewAdminClassDashboard = () => {
         <div className="newclassdashboard-container">
             <div className="newclassdashboard_main_header_container">
                 <div className="newclassdashboard_header-controls d-flex justify-content-between align-items-center">
-                    <div className="left-controls">
+                    <div className="newclassdashboard_left-controls">
                         <select
                             className="form-select form-select-sm newclassdashboard_select_subject"
-                        // value={selectedExamType}
-                        // onChange={(e) => setSelectedExamType(e.target.value)}
                         >
                             <option value="">Select Subject</option>
                         </select>
                     </div>
-                    <div className="left-controls">
+                    <div className="newclassdashboard_left-controls">
                         <div>
                             <button
                                 className="btn-primary btn-sm newclassdashboard_result_add_button"
@@ -105,7 +107,6 @@ const NewAdminClassDashboard = () => {
                                 + Add
                             </button>
                         </div>
-                        {/* {showPopup && <NewFacultyAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />} */}
                     </div>
                 </div>
             </div>
@@ -113,11 +114,11 @@ const NewAdminClassDashboard = () => {
             {/* Class Sections */}
             <div className="newclassdashboard-class-section">
                 {classData.map((classItem, idx) => (
-                    <div className="mb-4" key={idx}>
-                        <h5 className="newclassdashboard-class-heading">{classItem.className}</h5>
-                        <Row className="g-3">
+                    <div className="newclassdashboard-class-section-main mb-4" key={idx}>
+                        <p className="newclassdashboard-class-heading">{classItem.className}</p>
+                        <div className="newclassdashboard-class-section-row">
                             {classItem.sections.map((sec, index) => (
-                                <Col xs={12} sm={6} md={4} lg={3} key={index}>
+                                <div key={index} className="newclassdashboard-card-container">
                                     <div className="newclassdashboard-card"
                                         onClick={() => handleCardClick(sec)}
                                     >
@@ -141,12 +142,13 @@ const NewAdminClassDashboard = () => {
                                             </p>
                                         </div>
                                     </div>
-                                </Col>
+                                </div>
                             ))}
-                        </Row>
+                        </div>
                     </div>
                 ))}
             </div>
+
             {/* Modal Popup */}
             {showModal && (
                 <div className="newclassdashboard-custom-modal-overlay" onClick={closeModal}>

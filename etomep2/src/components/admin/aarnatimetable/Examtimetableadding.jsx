@@ -217,7 +217,7 @@ const Examtimetableadding = ({ onClose }) => {
                                 </label>
                             </div>
                             {entries.map((entry, index) => (
-                                <div key={index} className="examtimetable-adding-form-table-row row-with-delete">
+                                <div key={index} className="examtimetable-adding-form-table-row examtimetable-adding-form-row-with-delete">
                                     <select
                                         value={entry.subject}
                                         onChange={(e) => handleEntryChange(index, 'subject', e.target.value)}
@@ -232,16 +232,16 @@ const Examtimetableadding = ({ onClose }) => {
                                     <input type="date" value={entry.date} onChange={(e) => handleEntryChange(index, 'date', e.target.value)} />
                                     <input type="time" value={entry.startTime} onChange={(e) => handleEntryChange(index, 'startTime', e.target.value)} />
                                     <input type="time" value={entry.endTime} onChange={(e) => handleEntryChange(index, 'endTime', e.target.value)} />
-                                    <button
+                                    <span
                                         type="button"
-                                        className="remove-row-btn"
+                                        className="examtimetable-adding-form-remove-row-btn"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             handleRemoveRow(index);
                                         }}
                                     >
                                         &#10005;
-                                    </button>
+                                    </span>
                                 </div>
                             ))}
                             <div className="examtimetable-adding_addnext_button_main">

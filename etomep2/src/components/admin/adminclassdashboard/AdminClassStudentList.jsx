@@ -3,6 +3,7 @@ import { IoArrowBack, IoClose } from "react-icons/io5";
 import { AiOutlineSearch } from "react-icons/ai";
 import "./adminclassstudentlist.css";
 import AdminClassStudentView from "./AdminClassStudentView";
+import avtar from "../../../assets/avatar.jpg"
 
 const AdminClassStudentList = ({ onBack, onClose }) => {
     const [selectedStudent, setSelectedStudent] = useState(null);
@@ -109,18 +110,20 @@ const AdminClassStudentList = ({ onBack, onClose }) => {
                             style={{ cursor: "pointer" }}>
                             <img
                                 src={student.avatarUrl}
-                                alt={student.name}
+                                alt={avtar}
                                 className="adminclassstudentlist-avatar"
                             />
                             <div className="adminclassstudentlist-info">
                                 <div className="adminclassstudentlist-name">
                                     {student.name}
                                 </div>
-                                <div className="adminclassstudentlist-class">
-                                    {student.className}
-                                </div>
-                                <div className="adminclassstudentlist-roll">
-                                    Roll no: {student.rollNo}
+                                <div className="adminclassstudentlist-info-classrollno">
+                                    <span className="adminclassstudentlist-class">
+                                        {student.className}
+                                    </span>
+                                    <span className="adminclassstudentlist-roll">
+                                        Roll no: {student.rollNo}
+                                    </span>
                                 </div>
                             </div>
                         </div>

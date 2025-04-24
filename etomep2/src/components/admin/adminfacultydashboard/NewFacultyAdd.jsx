@@ -90,14 +90,13 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
 
 
 
-
-
     const customStyles = {
         control: (base, state) => ({
             ...base,
-            minHeight: '50px',
-            height: '50px',
-            borderColor: '#ccc',
+            minHeight: '48px',
+            height: '48px',
+            borderRadius:'8px',
+            borderColor: '#757575',
             boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
             '&:hover': {
                 borderColor: '#526D82',
@@ -105,7 +104,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         }),
         valueContainer: (base) => ({
             ...base,
-            height: '50px',
+            height: '48px',
             padding: '0 6px'
         }),
         dropdownIndicator: (base) => ({
@@ -175,9 +174,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         value={firstname}
                                         className="custom-input"
                                         style={{
-                                            height: '50px',
-                                            border: '1px solid #ccc',
-                                            borderRadius: '4px',
+                                            height: '48px',
+                                            border: '1px solid #757575',
+                                            borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
                                             color: '#526D82',
@@ -185,11 +184,13 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                             boxSizing: 'border-box',
                                             outline: "none"
                                         }}
+
                                         onChange={(e) => {
                                             const value = e.target.value;
                                             const formatted = value.charAt(0).toUpperCase() + value.slice(1);
                                             setFirstName(formatted);
                                         }}
+
                                     />
                                 </div>
                             </Col>
@@ -201,9 +202,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         value={lastname}
                                         className="custom-input"
                                         style={{
-                                            height: '50px',
-                                            border: '1px solid #ccc',
-                                            borderRadius: '4px',
+                                            height: '48px',
+                                            border: '1px solid #757575',
+                                            borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
                                             color: '#526D82',
@@ -211,11 +212,13 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                             boxSizing: 'border-box',
                                             outline: "none"
                                         }}
+
                                         onChange={(e) => {
                                             const value = e.target.value;
                                             const formatted = value.charAt(0).toUpperCase() + value.slice(1);
                                             setLastName(formatted);
                                         }}
+
                                     />
                                 </div>
                             </Col>
@@ -229,9 +232,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         min="0"
                                         className="custom-input"
                                         style={{
-                                            height: '50px',
-                                            border: '1px solid #ccc',
-                                            borderRadius: '4px',
+                                            height: '48px',
+                                            border: '1px solid #757575',
+                                            borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
                                             color: '#526D82',
@@ -239,7 +242,6 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                             boxSizing: 'border-box',
                                             outline: "none"
                                         }}
-                                        onChange={e => setEmployeeId(e.target.value)}
                                     />
                                 </div>
                             </Col>
@@ -252,6 +254,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         styles={customStyles}
                                         placeholder="Select Gender"
                                         isClearable={true}
+
                                         value={gender}
                                         onChange={(selectedOption) => setGender(selectedOption)}
                                         options={[
@@ -260,6 +263,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                             { value: "Other", label: "Other" }
                                         ]}
                                     />
+
 
                                 </div>
                             </Col>
@@ -273,9 +277,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         min="0"
                                         className="custom-input"
                                         style={{
-                                            height: '50px',
-                                            border: '1px solid #ccc',
-                                            borderRadius: '4px',
+                                            height: '48px',
+                                            border: '1px solid #757575',
+                                            borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
                                             color: '#526D82',
@@ -283,7 +287,6 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                             boxSizing: 'border-box',
                                             outline: "none"
                                         }}
-                                        onChange={e => setPhoneNo(e.target.value)}
                                     />
                                 </div>
                             </Col>
@@ -297,9 +300,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         min="0"
                                         className="custom-input"
                                         style={{
-                                            height: '50px',
-                                            border: '1px solid #ccc',
-                                            borderRadius: '4px',
+                                            height: '48px',
+                                            border: '1px solid #757575',
+                                            borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
                                             color: '#526D82',
@@ -307,7 +310,6 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                             boxSizing: 'border-box',
                                             outline: "none"
                                         }}
-                                        onChange={e => setEmail(e.target.value)}
                                     />
                                 </div>
                             </Col>
@@ -323,9 +325,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         min="0"
                                         className="custom-input"
                                         style={{
-                                            height: '50px',
-                                            border: '1px solid #ccc',
-                                            borderRadius: '4px',
+                                            height: '48px',
+                                            border: '1px solid #757575',
+                                            borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
                                             color: '#526D82',
@@ -333,7 +335,6 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                             boxSizing: 'border-box',
                                             outline: "none"
                                         }}
-                                        onChange={e => setPassword(e.target.value)}
                                     />
                                 </div>
                             </Col>

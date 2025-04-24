@@ -5,43 +5,62 @@
     height: 100%;
     width: 100%;
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: 16px;
     margin-top: 0;
     padding-left: 0;
 }
 
-.seatingview_main_container_inner {
-    margin: 24px;
+.seatingview_main_container_inner{
+    height: 100%;
+    width: 100%;
 }
-
-.seatingview_main_container_inner_header {
-    height: 223px;
-    margin-bottom: 40px;
-}
-
-/* Top blue bar with the room number */
+/* Close button and header styles */
 .seatingview_header_bar {
-    background-color: #2162B2;
-    color: #ffffff;
-    height: 56px;
-    padding-top: 16px;
-    padding-left: 12px;
+    /* background-color: #2162B2; */
+    color: #222222;
+    height: 72px;
+    padding:24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .seatingview_header_bar span {
     margin: 0;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 600;
+}
+.seatingview_modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
 }
 
 .seatingview_header_bar_bottom {
-    margin-top: 30px;
+    margin-top: 32px;
 }
+
+.seatingview_modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+.seatingview_main_container_inner_header {
+    /* height: 223px; */
+    margin: 24px;
+}
+
 
 /* White info area below the blue bar */
 .seatingview_info_area {
     background-color: #fff;
-    padding-top: 16px;
+    /* padding-top: 16px; */
     padding-bottom: 0px !important;
 }
 
@@ -95,9 +114,11 @@
 
 /* Blue bar for "Student List" and class select on the right */
 .seatingview_studentlist_bar {
-    background-color: #2162B2;
-    color: #ffffff;
-    padding: 12px 16px;
+    background-color: #E2EFFF;
+    color: #222222;
+    padding-left: 16px;
+    padding-right: 16px;
+    height: 72px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -105,20 +126,25 @@
 
 /* Title on the left side of the student list bar */
 .seatingview_studentlist_title {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
 }
 
 /* Dropdown on the right side */
 .seatingview_class_select {
-    background-color: #2162B2;
-    color: #fff;
+    background-color: #fff;
+    color: #222222;
     border: none;
-    width: 60px;
-    font-size: 20px;
+    padding-left: 16px;
+    /* padding-right: 16px; */
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
     cursor: pointer;
 }
-
+.seatingview_table_wrapper{
+    margin-top: 24px;
+}
 /* Table for the student list */
 .seatingview_table {
     width: 100%;
@@ -136,7 +162,7 @@
 /* Make tbody a scrollable block with a fixed max-height */
 .seatingview_table tbody {
     display: block;
-    max-height: calc(100vh - 605px); /* Adjust 300px as needed */
+    max-height: calc(100vh - 570px); /* Adjust 300px as needed */
     overflow-y: auto;
     width: 100%;
     table-layout: fixed;
@@ -152,7 +178,7 @@
 
 /* Body rows: only a bottom border for each row */
 .seatingview_table tbody tr {
-    border-bottom: 1px solid #ddd;
+    /* border-bottom: 1px solid #ddd; */
     color: black;
     font-size: 14px;
     font-weight: 400;
@@ -174,9 +200,46 @@
     font-size: 14px;
 }
 
+/* Add this CSS for the sort arrow image */
 .sort-arrow {
-    font-size: 12px;
-    /* smaller arrow */
-    color: #9A9A9A;
-    margin-left: 4px;
+    display: inline-block;
+    margin-left: 5px; /* Adjust spacing between text and arrow */
 }
+
+.sort-arrow-image {
+    width: 12px; /* Adjust size of the arrow */
+    height: 12px;
+    object-fit: cover;
+    vertical-align: middle; /* Align the image with the text */
+}
+
+
+
+.seatingview_modal-footer {
+    display: flex;
+      justify-content: flex-end;
+      margin-top: 0px; /* Add 24px gap above footer */
+      margin-bottom: 24px;
+      margin-right: 24px;
+      margin-left: 24px;
+      gap:8px;
+      
+  }
+.seatingview_btn-secondary {
+    background-color: #fff;
+    color: #2162B2;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    height: 40px;
+    width: 100px;
+  
+  }
+  
+  .seatingview_btn-danger {
+    background-color: #fff;
+    color: red;
+    border: 1px solid red;
+    border-radius: 8px;
+    height: 40px;
+    width: 100px;
+  }

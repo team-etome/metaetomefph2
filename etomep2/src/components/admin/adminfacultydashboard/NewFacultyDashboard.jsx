@@ -17,6 +17,7 @@ const NewFacultyDashboard = () => {
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
     const navigate = useNavigate();
 
+
     const [showPopup, setShowPopup] = useState(false); // For Add Faculty
     const [showPopupexcel, setShowPopupExcel] = useState(false); // For Excel Upload
     const [showMenu, setShowMenu] = useState(false); // Dropdown menu toggle
@@ -26,6 +27,7 @@ const NewFacultyDashboard = () => {
 
 
     const [facultySearch, setFacultySearch] = useState('');
+
 
 
 
@@ -51,6 +53,7 @@ const NewFacultyDashboard = () => {
     }, [APIURL, admin_id]);
 
     console.log(facultyList, "fac")
+
 
 
 
@@ -87,6 +90,7 @@ const NewFacultyDashboard = () => {
     return (
         <div className="facultydashboard_main_container">
             <div className="facultydashboard_main_header_container">
+
                 <div className="header-controls d-flex justify-content-between align-items-center px-3 py-2">
                     <div className="left-controls">
                         <select
@@ -100,9 +104,11 @@ const NewFacultyDashboard = () => {
                                     {subject.charAt(0).toUpperCase() + subject.slice(1)}
                                 </option>
                             ))}
+
                         </select>
 
                     </div>
+
                     <div className="left-controls">
                         <input
                             type="text"
@@ -111,6 +117,7 @@ const NewFacultyDashboard = () => {
                             value={facultySearch}
                             onChange={(e) => setFacultySearch(e.target.value)}
                         />
+
 
 
                         <div>
@@ -144,6 +151,7 @@ const NewFacultyDashboard = () => {
             </div>
             <div className="facultydashboard_classes_box">
                 <div className="facultydashboard_container" >
+
                     {facultyList
                         .filter((faculty) => {
                             const fullName = `${faculty.first_name} ${faculty.last_name}`.toLowerCase();
@@ -174,6 +182,7 @@ const NewFacultyDashboard = () => {
                                     <CiSquareChevDown className="info-icon" />
                                     <span>{faculty.email}</span>
                                 </div>
+
                             </div>
                         ))}
                     {/* {showPopupview && <NewEvaluationView isOpen={showPopupview} onClose={() => setShowPopupView(false)} />} */}

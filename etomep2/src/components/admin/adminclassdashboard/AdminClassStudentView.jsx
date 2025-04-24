@@ -1,11 +1,10 @@
 import React from "react";
 import "./adminclassstudentview.css";
-import defaultAvatar from "../../../assets/messi-ronaldo-1593920966.jpg";
+import avtar from "../../../assets/avatar.jpg"
 
 const AdminClassStudentView = ({ student, onClose }) => {
     if (!student) return null;
 
-    // Expanded student data (you could merge these into your `student` prop)
     const studentData = {
         name: student.name,
         email: "xyz@gmail.com",
@@ -22,7 +21,7 @@ const AdminClassStudentView = ({ student, onClose }) => {
             rollNo: student.rollNo,
             joiningDate: "12/04/2024",
             admissionNo: "254688",
-            academicYear: "2022–2025",
+            academicYear: "2022-2025",
         }
     };
 
@@ -33,8 +32,8 @@ const AdminClassStudentView = ({ student, onClose }) => {
                     {/* Left: avatar + name/email */}
                     <div className="adminclassstudentview-header-left">
                         <img
-                            src={student.avatarUrl || defaultAvatar}
-                            alt={studentData.name}
+                            src={student.avatarUrl}
+                            alt={avtar}
                             className="adminclassstudentview-avatar"
                         />
                         <div className="adminclassstudentview-header-text">
@@ -62,7 +61,7 @@ const AdminClassStudentView = ({ student, onClose }) => {
                 <hr className="adminclassstudentview-divider" />
 
                 {/* Personal Information */}
-                <div className="adminclassstudentview-section-title" style={{border:"2px solid black"}}>
+                <div className="adminclassstudentview-section-title">
                     Personal Information
                 </div>
                 <div className="adminclassstudentview-personal-info">

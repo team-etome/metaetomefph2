@@ -144,8 +144,8 @@ const NewEvaluationDashboard = () => {
     return (
         <div className="evaluationdashboard_main_container">
             <div className="evaluationdashboard_main_header_container">
-                <div className="header-controls d-flex justify-content-between align-items-center px-3 py-2">
-                    <div className="left-controls">
+                <div className="evaluationdashboard_header-controls d-flex justify-content-between align-items-center">
+                    <div className="evaluationdashboard_left-controls">
                         {/* Exam Type Dropdown */}
                         <select
                             className="form-select form-select-sm evaluationdashboard_select_class"
@@ -191,6 +191,7 @@ const NewEvaluationDashboard = () => {
                             className="evaluationdashboard_classes_box_inner"
                             key={item.id}
                             onClick={() => setShowPopupView(true)}
+                            
                         >
                             <div className="evaluationdashboard_top_row">
                                 <img

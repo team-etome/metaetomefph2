@@ -243,8 +243,8 @@ const NewLokaBookAdd = ({ isOpen, onClose }) => {
     };
 
     return (
-        <div className="lokatextbookadd-backdrop" style={{border:"2px solid red"}}>
-            <div className="lokatextbookadd-modal-content"style={{border:"2px solid yellow"}}>
+        <div className="lokatextbookadd-backdrop">
+            <div className="lokatextbookadd-modal-content">
                 <div className="lokatextbookadd-modal-header">
                     <h5>Add Textbook</h5>
                     <button onClick={onClose} className="lokatextbookadd-close-button">&times;</button>
