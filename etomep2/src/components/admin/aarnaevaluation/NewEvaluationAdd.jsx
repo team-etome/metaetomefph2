@@ -12,6 +12,15 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
 
     const exampaper = useSelector((state) => state.exampaperinfo.exampaperinfo);
     const teacherinfo = useSelector((state) => state.adminteacherinfo);
+    const [selectedFaculty, setSelectedFaculty] = useState(null);
+    const [formData, setFormData] = useState({
+        examName: '',
+        examYear: '',
+        examDate: '',
+        subject: '',
+        className: '',
+        facultyId: '',
+    });
 
     console.log(exampaper, 'exampaper')
 
@@ -107,9 +116,43 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
             value: date
         }));
 
-    // Faculty options
-    //   const facultyOptions = [...new Set(allExamEntries.map(entry => entry.teacher_name))]
-    //     .map(teacher => ({ label: teacher, value: teacher }));
+    // Faculty options from Redux
+    const facultyOptions = teacherinfo?.adminteacherinfo?.map((teacher) => ({
+        value: teacher.id,
+        label: `${teacher.first_name} ${teacher.last_name}`
+    })) || [];
+
+    const handleSubmit = async () => {
+        try {
+            const response = await axios.post(`${APIURL}/api/evaluationadding`, {
+                ...formData,
+                admin_id
+            });
+            
+            if (response.data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Evaluation scheduled successfully!'
+                });
+                onClose();
+            }
+        } catch (error) {
+            console.error('Error scheduling evaluation:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to schedule evaluation. Please try again.'
+            });
+        }
+    };
+
+    const handleInputChange = (field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: value
+        }));
+    };
 
     return (
         <div className="evaluationadd-backdrop">
@@ -131,7 +174,8 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                    // onChange={handleExamNameChange}
+                                        onChange={(selected) => handleInputChange('examName', selected?.value)}
+                                        value={examNameOptions.find(option => option.value === formData.examName)}
                                     />
                                 </div>
                             </Col>
@@ -145,7 +189,8 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                    // onChange={handleYearChange}
+                                        onChange={(selected) => handleInputChange('examYear', selected?.value)}
+                                        value={yearOptions.find(option => option.value === formData.examYear)}
                                     />
                                 </div>
                             </Col>
@@ -161,6 +206,8 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
+                                        onChange={(selected) => handleInputChange('subject', selected?.value)}
+                                        value={subjectOptions.find(option => option.value === formData.subject)}
                                     />
                                 </div>
                             </Col>
@@ -174,6 +221,8 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
+                                        onChange={(selected) => handleInputChange('className', selected?.value)}
+                                        value={classOptions.find(option => option.value === formData.className)}
                                     />
 
                                 </div>
@@ -190,7 +239,8 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         styles={customStyles}
                                         placeholder="Select Date"
                                         isClearable={true}
-                                    // onChange={e => setSelectedDate(e?.value)}
+                                        onChange={(selected) => handleInputChange('examDate', selected?.value)}
+                                        value={examDateOptions.find(option => option.value === formData.examDate)}
                                     />
                                     {/* <input
                                         type="date"
@@ -240,12 +290,12 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         Select Faculty <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
-                                        // options={textbook}
+                                        options={facultyOptions}
                                         styles={customStyles}
-                                        placeholder=""
+                                        placeholder="Select Faculty"
                                         isClearable={true}
-                                    // value={filteredSubjects.find(opt => opt.value === selectedSubject)}
-                                    // onChange={(selected) => setTextbook(selected?.value || null)}
+                                        onChange={(selected) => handleInputChange('facultyId', selected?.value)}
+                                        value={facultyOptions.find(option => option.value === formData.facultyId)}
                                     />
 
                                 </div>
@@ -254,8 +304,15 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                     </form>
                 </div>
                 <div className="evaluationadd-modal-footer">
-                    <button className="evaluationadd-btn evaluationadd-btn-secondary">Clear</button>
-                    <button className="evaluationadd-btn evaluationadd-btn-primary">Save</button>
+                    <button className="evaluationadd-btn evaluationadd-btn-secondary" onClick={() => setFormData({
+                        examName: '',
+                        examYear: '',
+                        examDate: '',
+                        subject: '',
+                        className: '',
+                        facultyId: '',
+                    })}>Clear</button>
+                    <button className="evaluationadd-btn evaluationadd-btn-primary" onClick={handleSubmit}>Save</button>
                 </div>
             </div>
         </div>

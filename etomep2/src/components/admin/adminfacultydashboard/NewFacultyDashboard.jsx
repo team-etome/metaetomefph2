@@ -11,166 +11,50 @@ import image from "../../../assets/b763af54a51c591c7fcb7ddfbae4a92c.jpg"
 import NewFacultyAdd from './NewFacultyAdd';
 import NewFacultyView from './NewFacultyView';
 import NewFacultyAddThroughExcel from './NewFacultyAddThroughExcel';
-
+import avatar from '../../../assets/default.jpg'
 const NewFacultyDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
     const navigate = useNavigate();
 
-    const [examTypes, setExamTypes] = useState([]);
-    const [examYears, setExamYears] = useState([]);
-    const [selectedFilterYear, setSelectedFilterYear] = useState("");
-    const [showPopup, setShowPopup] = useState(false);
-    const [showMenu, setShowMenu] = useState(false);
-    const [showPopupexcel, setShowPopupExcel] = useState(false);
-    const [showMenuexcel, setShowMenuExcel] = useState(false);
-    const [selectedFaculty, setSelectedFaculty] = useState(null);
-
-    const DummyFacultyData = [
-        {
-            id: "5658",
-            name: "Vihaan",
-            phone: "9658526458",
-            email: "abcdef@gmail.com",
-            imgUrl: image, // The same or different image path
-        },
-        {
-            id: "1234",
-            name: "Shreya",
-            phone: "9898989898",
-            email: "shreya@example.com",
-            imgUrl: image,
-        },
-        {
-            id: "7890",
-            name: "Rahul",
-            phone: "9123456789",
-            email: "rahul@example.com",
-            imgUrl: image,
-        },
-        {
-            id: "1",
-            name: "Vihaan",
-            phone: "9658526458",
-            email: "abcdef@gmail.com",
-            imgUrl: image, // The same or different image path
-        },
-        {
-            id: "2",
-            name: "Shreya",
-            phone: "9898989898",
-            email: "shreya@example.com",
-            imgUrl: image,
-        },
-        {
-            id: "3",
-            name: "Rahul",
-            phone: "9123456789",
-            email: "rahul@example.com",
-            imgUrl: image,
-        },
-        {
-            id: "4",
-            name: "Vihaan",
-            phone: "9658526458",
-            email: "abcdef@gmail.com",
-            imgUrl: image, // The same or different image path
-        },
-        {
-            id: "5",
-            name: "Shreya",
-            phone: "9898989898",
-            email: "shreya@example.com",
-            imgUrl: image,
-        },
-        {
-            id: "6",
-            name: "Rahul",
-            phone: "9123456789",
-            email: "rahul@example.com",
-            imgUrl: image,
-        },
-        {
-            id: "7",
-            name: "Vihaan",
-            phone: "9658526458",
-            email: "abcdef@gmail.com",
-            imgUrl: image, // The same or different image path
-        },
-        {
-            id: "8",
-            name: "Shreya",
-            phone: "9898989898",
-            email: "shreya@example.com",
-            imgUrl: image,
-        },
-        {
-            id: "9",
-            name: "Rahul",
-            phone: "9123456789",
-            email: "rahul@example.com",
-            imgUrl: image,
-        },
-    ];
+    const [showPopup, setShowPopup] = useState(false); // For Add Faculty
+    const [showPopupexcel, setShowPopupExcel] = useState(false); // For Excel Upload
+    const [showMenu, setShowMenu] = useState(false); // Dropdown menu toggle
+    const [showMenuexcel, setShowMenuExcel] = useState(false); // Not used visibly but safe to keep
+    const [selectedFaculty, setSelectedFaculty] = useState(null); // Selected card view
+    const [selectedSubject, setSelectedSubject] = useState('');
 
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await axios.get(`${APIURL}/api/examtimetable`, {
-    //                 params: { admin_id }
-    //             });
-    //             const rawData = response.data.exam_timetables || {};
+    const [facultySearch, setFacultySearch] = useState('');
 
-    //             // Convert raw data (an object) to an array of [examName, classesObj] pairs
-    //             let examArray = Object.entries(rawData);
-    //             // Sort exam keys by year descending and then alphabetically.
-    //             examArray = examArray.sort(([nameA], [nameB]) => {
-    //                 const yearMatchA = nameA.match(/\d{4}$/);
-    //                 const yearMatchB = nameB.match(/\d{4}$/);
-    //                 const yearA = yearMatchA ? parseInt(yearMatchA[0]) : 0;
-    //                 const yearB = yearMatchB ? parseInt(yearMatchB[0]) : 0;
-    //                 if (yearA !== yearB) return yearB - yearA;
-    //                 return nameA.localeCompare(nameB);
-    //             });
 
-    //             // For each exam, convert its classes object into a sorted array of [className, entries]
-    //             const sortedExamTimetables = examArray.map(([examName, classesObj]) => {
-    //                 let classArray = Object.entries(classesObj || {});
-    //                 classArray = classArray.sort(([classA], [classB]) => {
-    //                     const numA = parseInt(classA);
-    //                     const numB = parseInt(classB);
-    //                     if (!isNaN(numA) && !isNaN(numB) && numA !== numB) {
-    //                         return numA - numB;
-    //                     }
-    //                     return classA.localeCompare(classB);
-    //                 });
-    //                 return [examName, classArray];
-    //             });
 
-    //             setAllTimetableData(sortedExamTimetables);
-    //             setFilteredTimetableData(sortedExamTimetables);
+    const [facultyList, setFacultyList] = useState([]);
 
-    //             // Populate exam types and years for filter dropdowns.
-    //             const typesSet = new Set();
-    //             const yearsSet = new Set();
-    //             Object.keys(rawData).forEach(key => {
-    //                 const yearMatch = key.match(/\d{4}$/);
-    //                 if (yearMatch) {
-    //                     yearsSet.add(yearMatch[0]);
-    //                     const type = key.replace(/\s*\d{4}$/, "").trim();
-    //                     typesSet.add(type);
-    //                 }
-    //             });
-    //             setExamTypes([...typesSet].sort());
-    //             setExamYears([...yearsSet].sort((a, b) => b - a));
-    //         } catch (error) {
-    //             console.error("Error fetching exam timetable data", error);
-    //         }
-    //     };
+    const fetchFaculty = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/api/teacherdetails/${admin_id}`);
+            if (response.data && Array.isArray(response.data)) {
+                setFacultyList(response.data);
+            } else {
+                console.warn("Unexpected response structure", response.data);
+            }
+        } catch (error) {
+            console.error("Error fetching faculty data:", error);
+        }
+    };
 
-    //     fetchData();
-    // }, [APIURL, admin_id]);
+    useEffect(() => {
+        if (admin_id) {
+            fetchFaculty();
+        }
+    }, [APIURL, admin_id]);
+
+    console.log(facultyList, "fac")
+
+
+
+
 
 
     const toggleMenu = () => {
@@ -192,37 +76,43 @@ const NewFacultyDashboard = () => {
         setSelectedFaculty(faculty);
     };
 
+    const uniqueSubjects = Array.from(
+        new Set(
+            facultyList.flatMap(faculty =>
+                (faculty.curriculam || []).map(item => item.subject_name)
+            )
+        )
+    );
 
     return (
         <div className="facultydashboard_main_container">
             <div className="facultydashboard_main_header_container">
                 <div className="header-controls d-flex justify-content-between align-items-center px-3 py-2">
                     <div className="left-controls">
-                        {/* Exam Type Dropdown */}
                         <select
                             className="form-select form-select-sm facultydashboard_select_subject"
-                        // value={selectedExamType}
-                        // onChange={(e) => setSelectedExamType(e.target.value)}
+                            value={selectedSubject}
+                            onChange={(e) => setSelectedSubject(e.target.value)}
                         >
                             <option value="">Select Subject</option>
-                            {examTypes.map((type, i) => (
-                                <option key={i} value={type}>{type}</option>
+                            {uniqueSubjects.map((subject, index) => (
+                                <option key={index} value={subject}>
+                                    {subject.charAt(0).toUpperCase() + subject.slice(1)}
+                                </option>
                             ))}
                         </select>
-                        {/* Exam Year Dropdown */}
+
                     </div>
                     <div className="left-controls">
-                        <select
-                            className="form-select form-select-sm facultydashboard_select_faculty"
-                        // value={selectedFilterYear}
-                        // onChange={(e) => setSelectedFilterYear(e.target.value)}
-                        >
-                            <option value="">Select Faculty</option>
-                            {/* {examYears.map((year, i) => (
-                                        <option key={i} value={year}>{year}</option>
-                                    ))} */}
-                        </select>
-                        {/* This wrapper ensures the dropdown is anchored correctly */}
+                        <input
+                            type="text"
+                            className="form-control form-control-sm facultydashboard_select_faculty"
+                            placeholder="Search Faculty..."
+                            value={facultySearch}
+                            onChange={(e) => setFacultySearch(e.target.value)}
+                        />
+
+
                         <div>
                             <button
                                 className="btn-primary btn-sm facultydashboard_result_add_button"
@@ -242,38 +132,50 @@ const NewFacultyDashboard = () => {
                             )}
 
                         </div>
-                        {showPopup && <NewFacultyAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
-                        {showPopupexcel && <NewFacultyAddThroughExcel isOpen={showPopupexcel} onClose={() => setShowPopupExcel(false)} />}
+                        {showPopup && (
+                            <NewFacultyAdd
+                                isOpen={showPopup}
+                                onClose={() => setShowPopup(false)}
+                                onFacultyAdded={fetchFaculty} // ✅ passing callback
+                            />
+                        )}                        {showPopupexcel && <NewFacultyAddThroughExcel isOpen={showPopupexcel} onClose={() => setShowPopupExcel(false)} />}
                     </div>
                 </div>
             </div>
             <div className="facultydashboard_classes_box">
                 <div className="facultydashboard_container" >
-                    {DummyFacultyData.map((faculty) => (
-                        <div className="faculty-card" key={faculty.id}
-                            onClick={() => handleCardClick(faculty)}
-                        >
-                            <div className="faculty-avatar-container">
-                                <img
-                                    src={faculty.imgUrl}
-                                    alt={faculty.name}
-                                    className="faculty-avatar"
-                                />
+                    {facultyList
+                        .filter((faculty) => {
+                            const fullName = `${faculty.first_name} ${faculty.last_name}`.toLowerCase();
+                            const nameMatch = fullName.includes(facultySearch.toLowerCase());
+
+                            const subjectMatch = selectedSubject
+                                ? faculty.curriculam?.some(
+                                    (item) => item.subject_name.toLowerCase() === selectedSubject.toLowerCase()
+                                )
+                                : true;
+
+                            return nameMatch && subjectMatch;
+                        })
+                        .map((faculty) => (
+                            <div className="faculty-card" key={faculty.id} onClick={() => handleCardClick(faculty)}>
+                                <div className="faculty-avatar-container">
+                                    <img src={faculty.photo || avatar} className="faculty-avatar" />
+                                </div>
+                                <div className="faculty-name-id-container">
+                                    <p className="faculty-name">{faculty.first_name} {faculty.last_name}</p>
+                                    <p className="faculty-id">ID: {faculty.employee_id}</p>
+                                </div>
+                                <div className="faculty-info-line">
+                                    <FiPhone className="info-icon" />
+                                    <span>{faculty.phone_number}</span>
+                                </div>
+                                <div className="faculty-info-line">
+                                    <CiSquareChevDown className="info-icon" />
+                                    <span>{faculty.email}</span>
+                                </div>
                             </div>
-                            <div className="faculty-name-id-container">
-                                <p className="faculty-name">{faculty.name}</p>
-                                <p className="faculty-id">ID: {faculty.id}</p>
-                            </div>
-                            <div className="faculty-info-line">
-                                <FiPhone className="info-icon" />
-                                <span>{faculty.phone}</span>
-                            </div>
-                            <div className="faculty-info-line">
-                                <CiSquareChevDown className="info-icon" />
-                                <span>{faculty.email}</span>
-                            </div>
-                        </div>
-                    ))}
+                        ))}
                     {/* {showPopupview && <NewEvaluationView isOpen={showPopupview} onClose={() => setShowPopupView(false)} />} */}
                     {/* Conditionally render the FacultyModal when a faculty is selected */}
                     {selectedFaculty && (
