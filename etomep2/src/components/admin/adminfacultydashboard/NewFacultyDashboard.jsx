@@ -108,6 +108,13 @@ const NewFacultyDashboard = () => {
             email: "rahul@example.com",
             imgUrl: image,
         },
+        {
+            id: "10",
+            name: "Rahul",
+            phone: "9123456789",
+            email: "rahul@example.com",
+            imgUrl: image,
+        },
     ];
 
 
