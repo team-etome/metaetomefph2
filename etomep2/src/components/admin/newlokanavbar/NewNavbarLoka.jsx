@@ -19,18 +19,30 @@ import { useNavigate } from "react-router-dom";
 
 function NewNavbarLoka() {
   const admininfo = useSelector((state) => state.admininfo);
+
   const [currentTab, setCurrentTab] = useState(
     localStorage.getItem("currentTab") || "Textbook"
   );
 
   console.log(currentTab,"current tab..................")
 
+
   const [searchTerm, setSearchTerm] = useState("");
+
   const navigate = useNavigate();
-  console.log(currentTab, "activa tab");
+  // console.log(currentTab, "activa tab");
+
   useEffect(() => {
-    localStorage.setItem("currentTab", currentTab);
-  }, [currentTab]);
+    const storedTab = localStorage.getItem("currentTabloka");
+    if (storedTab) {
+      setCurrentTabLoka(storedTab);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("currentTabloka", currentTabloka);
+  }, [currentTabloka]);
+
 const handlenavigate = () => {
   navigate('/adminprofile', { state: { admininfo: admininfo.admininfo } });
 };
@@ -71,15 +83,15 @@ const handlenavigate = () => {
             <Col md={12} className="loka_header_bottom">
               <Nav
                 variant="underline"
-                activeKey={currentTab}
-                onSelect={(k) => setCurrentTab(k)}
+                activeKey={currentTabloka}
+                onSelect={(k) => setCurrentTabLoka(k)}
                 className="new_loka_dashboard_tab"
                 style={{ width: "100%"}}
               >
                 <Nav.Item>
                   <Nav.Link
                     eventKey="Textbook"
-                    className={`new_loka_mob_subhead_one ${currentTab === 'Textbook' ? 'active-tab' : 'inactive-tab'}`}
+                    className={`new_loka_mob_subhead_one ${currentTabloka === 'Textbook' ? 'active-tab' : 'inactive-tab'}`}
                     style={{
                       textDecoration: "none",
                     }}
@@ -90,7 +102,7 @@ const handlenavigate = () => {
                 <Nav.Item>
                   <Nav.Link
                     eventKey="Library"
-                    className={`new_loka_mob_subhead_one ${currentTab === 'Library' ? 'active-tab' : 'inactive-tab'}`}
+                    className={`new_loka_mob_subhead_one ${currentTabloka === 'Library' ? 'active-tab' : 'inactive-tab'}`}
                     style={{
                       textDecoration: "none",
                     }}
@@ -103,9 +115,9 @@ const handlenavigate = () => {
           </Row>
         </div>
         <div className="loka_dashboard_container">
-          {currentTab === "Textbook" && <NewLokaBookDashboard />}
+          {currentTabloka === "Textbook" && <NewLokaBookDashboard />}
           {/* {currentTab === "Library" && <LokaLibraryListing />} */}
-           {currentTab === "Library" && <NewLokaLibraryDashboard />}
+           {currentTabloka === "Library" && <NewLokaLibraryDashboard />}
         </div>
       </Container>
     </div>

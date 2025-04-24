@@ -104,12 +104,12 @@
 }
 
 .adminclassaddstepone_form-control,
-.adminclassaddstepone_select_year {
+.adminclassaddstepone_select_section {
     width: 100%;
     height: 48px;
     font-size: 1rem;
     border: 1px solid #757575;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 0 10px;
     color: black;
 }

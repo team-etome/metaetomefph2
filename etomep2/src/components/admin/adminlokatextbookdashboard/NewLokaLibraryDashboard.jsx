@@ -34,6 +34,7 @@ function NewLokaLibraryDashboard() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
+
   console.log(lokabookListData, "clgggggggggggggggggg")
 
   useEffect(() => {
@@ -102,7 +103,7 @@ function NewLokaLibraryDashboard() {
                 value={selectedCategory}
               >
                 <option value="">Select Categories</option>
-                {categories.map((cat, index) => (
+                {categories?.map((cat, index) => (
                   <option key={index} value={cat}>
                     {cat}
                   </option>

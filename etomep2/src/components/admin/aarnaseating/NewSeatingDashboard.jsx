@@ -6,6 +6,11 @@ import dayjs from 'dayjs';
 import { useNavigate } from "react-router-dom";
 import image from "../../../assets/b763af54a51c591c7fcb7ddfbae4a92c.jpg"
 import NewSeatingDashboardView from './NewSeatingDashboardView';
+import first from "../../../assets/IMG_first.png"
+import first_selected from "../../../assets/IMG_first_selected.png"
+import second from "../../../assets/IMG_second.png"
+import second_selected from "../../../assets/IMG_second_selected.png"
+import { BsFillPersonFill } from "react-icons/bs";
 
 const NewSeatingDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
@@ -17,6 +22,7 @@ const NewSeatingDashboard = () => {
 
     const [selectedExamType, setSelectedExamType] = useState("");
     const [selectedFilterYear, setSelectedFilterYear] = useState("");
+
 
 
     const exampaper = useSelector((state) => state.exampaperinfo.exampaperinfo);
@@ -42,8 +48,17 @@ const NewSeatingDashboard = () => {
     const [entries, setEntries] = useState([
         { className: "", division: "", subject: "" }
     ]);
+    const [showView, setShowView] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
 
 
+
+    const [selectedLayout, setSelectedLayout] = useState("");
+
+    // Handler for image selection
+    const handleImageSelection = (imageName) => {
+        setSelectedLayout(imageName); // Set the selected layout
+    };
 
 
 
@@ -54,11 +69,18 @@ const NewSeatingDashboard = () => {
 
     const [selectedItem, setSelectedItem] = useState(null);
 
- 
+
     const handleCardClick = (item) => {
         setSelectedItem(item);
         setShowView(true);
     };
+
+
+    const handleCloseModal = () => {
+        setShowView(false);
+        setSelectedItem(null);
+    };
+    // Handler to go back to the dashboard view.
 
     const handleBack = () => {
         setShowView(false);
@@ -93,7 +115,6 @@ const NewSeatingDashboard = () => {
     const closeModal = () => {
         setShowModal(false);
     };
-
     const nextStep = () => {
         if (currentStep < 3) {
             setCurrentStep(currentStep + 1);
@@ -174,7 +195,7 @@ const NewSeatingDashboard = () => {
                     ))}
                 </select>
 
-                <div className="seating_step-row_stepone ">
+                <div className="seating_step-row_stepone">
                     <div className="seating_step-column">
                         <label className="seating-form-label" htmlFor="examYear">
                             Year <span className="seating_required">*</span>
@@ -362,7 +383,9 @@ const NewSeatingDashboard = () => {
             <div className="seating-modal-step-content">
                 <div className="seating_step-row">
                     <div className="seating_step-column">
-                        <label className="seating-form-label" htmlFor="numberOfColumns">Number of Columns *</label>
+                        <label className="seating-form-label" htmlFor="numberOfColumns">
+                            Number of Columns <span className="seating_required">*</span>
+                        </label>
                         <input
                             id="numberOfColumns"
                             type="number"
@@ -373,7 +396,8 @@ const NewSeatingDashboard = () => {
                         />
                     </div>
                     <div className="seating_step-column">
-                        <label className="seating-form-label" htmlFor="numberOfTables">Number of Tables *</label>
+                        <label className="seating-form-label" htmlFor="numberOfTables">
+                            Number of Tables <span className="seating_required">*</span></label>
                         <input
                             id="numberOfTables"
                             type="number"
@@ -384,7 +408,8 @@ const NewSeatingDashboard = () => {
                         />
                     </div>
                     <div className="seating_step-column">
-                        <label className="seating-form-label" htmlFor="studentsPerBench">Students Per Bench</label>
+                        <label className="seating-form-label" htmlFor="studentsPerBench">
+                            Students Per Bench <span className="seating_required">*</span></label>
                         <input
                             id="studentsPerBench"
                             type="number"
@@ -418,18 +443,30 @@ const NewSeatingDashboard = () => {
                     </div>
                 </div> */}
 
-                <label className="seating-form-label">Select Layout *</label>
+                <label className="seating-form-label">
+                    Select Layout <span className="seating_required">*</span></label>
                 <div className="layout-grid">
-                    {/* Example layout options: */}
-                    {['A1 B1 C1', 'A2 B2 C2', 'A3 B3 C3'].map((layout, idx) => (
-                        <div
-                            key={layout}
-                            onClick={() => setFormData({ ...formData, layoutSelected: layout })}
-                            className={`layout-option ${formData.layoutSelected === layout ? 'selected' : ''}`}
-                        >
-                            <span>{layout}</span>
-                        </div>
-                    ))}
+                    {/* First image */}
+                    <div
+                        className={`layout-option ${selectedLayout === "first" ? "selected" : ""}`}
+                        onClick={() => handleImageSelection("first")}
+                    >
+                        <img
+                            src={selectedLayout === "first" ? first_selected : first}
+                            alt="First Layout"
+                        />
+                    </div>
+
+                    {/* Second image */}
+                    <div
+                        className={`layout-option ${selectedLayout === "second" ? "selected" : ""}`}
+                        onClick={() => handleImageSelection("second")}
+                    >
+                        <img
+                            src={selectedLayout === "second" ? second_selected : second}
+                            alt="Second Layout"
+                        />
+                    </div>
                 </div>
             </div>
         );
@@ -645,105 +682,108 @@ const NewSeatingDashboard = () => {
     };
     return (
         <>
-            {showView ? (
-                // Pass the selected item and the back handler to the view component.
-                <NewSeatingDashboardView selectedItem={selectedItem} onBack={handleBack} />
-            ) : (
-                <div className="seating_main_container">
-                    <div className="seating_main_header_container">
-                        <div className="header-controls d-flex justify-content-between align-items-center px-3 py-2">
-                            <div className="left-controls">
-                                {/* Exam Type Dropdown */}
-                                <select
-                                    className="form-select form-select-sm seating_select_exam"
-                                    value={selectedExamType}
-                                    onChange={(e) => setSelectedExamType(e.target.value)}
-                                >
-                                    <option value="">Select Examination</option>
-                                    {examNames.map((name, i) => (
-                                        <option key={i} value={name}>{name}</option>
-                                    ))}
-                                </select>
 
+            <div className="seating_main_container">
+                <div className="seating_main_header_container">
+                    <div className="seating_header-controls d-flex justify-content-between align-items-center">
+                        <div className="seating_left-controls">
+                            {/* Exam Type Dropdown */}
+                            <select
+                                className="form-select form-select-sm seating_select_exam"
+                                value={selectedExamType}
+                                onChange={(e) => setSelectedExamType(e.target.value)}
+                            >
+                                <option value="">Select Examination</option>
+                                {examTypes.map((type, i) => (
+                                    <option key={i} value={type}>{type}</option>
+                                ))}
+                            </select>
+                            {/* Exam Year Dropdown */}
+                            <select
+                                className="form-select form-select-sm seating_select_year"
+                                value={selectedFilterYear}
+                                onChange={(e) => setSelectedFilterYear(e.target.value)}
+                            >
+                                <option value="">Select Year</option>
+                                {examYears.map((year, i) => (
+                                    <option key={i} value={year}>{year}</option>
+                                ))}
+                            </select>
+                            <button
+                                className="btn-primary btn-sm seating_search_button"
+                                onClick={handleSearch}
+                            >
+                                Search
+                            </button>
+                        </div>
+                        <div className="left-controls">
+                            <button className="btn-primary btn-sm seating_result_add_button" onClick={openModal}>+ Add</button>
 
-
-                                <select
-                                    className="form-select form-select-sm seating_select_year"
-                                    value={selectedFilterYear}
-                                    onChange={(e) => setSelectedFilterYear(e.target.value)}
-                                >
-                                    <option value="">Select Year</option>
-                                    {examYears.map((year, i) => (
-                                        <option key={i} value={year}>{year}</option>
-                                    ))}
-                                </select>
-                                <button
-                                    className="btn-primary btn-sm seating_search_button"
-                                    onClick={handleSearch}
-                                >
-                                    Search
-                                </button>
-                            </div>
-                            <div className="left-controls">
-                                <button className="btn-primary btn-sm result_add_button" onClick={openModal}>+ Add</button>
-                            </div>
                         </div>
                     </div>
-                    <div className="seating_classes_box">
-                        <div className="seating_container">
-                            {DummySeatingData.map((item) => (
-                                <div
-                                    className="seating_classes_box_inner"
-                                    key={item.id}
-                                    onClick={() => handleCardClick(item)}
-                                >
-                                    <div className="seating_top_row">
-                                        <img
-                                            src={image}
-                                            alt="Exam Icon"
-                                            className="seating_box_icon"
-                                        />
-                                        <div className="seating_exam_details">
-                                            <h3 className="seating_room_no">ROOM NO: {item.roomNo}</h3>
-                                            <p className="seating_exam_title">{item.examName}</p>
-                                            <p className="seating_exam_date">Date of exam: {item.examDate}</p>
-                                        </div>
-                                    </div>
-                                    <div className="seating_bottom_row">
-                                        <p className="seating_faculties">{item.faculties} Faculties assigned</p>
-                                        <div>
-                                            <span className="seating_classes">Classes: </span>
-                                            <span className="seating_classes_input">{item.classes.join(', ')}</span>
-                                        </div>
+                </div>
+                <div className="seating_classes_box">
+                    <div className="seating_container">
+                        {DummySeatingData.map((item) => (
+                            <div
+                                className="seating_classes_box_inner"
+                                key={item.id}
+                                onClick={() => handleCardClick(item)}
+                            >
+                                <div className="seating_top_row">
+                                    <div className="seating_exam_details">
+                                        <h3 className="seating_room_no">ROOM NO: {item.roomNo}</h3>
+                                        <p className="seating_exam_title">{item.examName}</p>
+                                        <p className="seating_exam_date">Date of exam: {item.examDate}</p>
                                     </div>
                                 </div>
-                            ))}
+                                <div className="seating_bottom_row">
+                                    <p className="seating_faculties">
+
+                                        <BsFillPersonFill style={{ paddingBottom: "2px", marginRight: "0.5rem" }} />
+                                        {item.faculties} Faculties assigned</p>
+                                    <div>
+                                        <span className="seating_classes">Classes: </span>
+                                        <span className="seating_classes_input">{item.classes.join(', ')}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* === The Modal Markup === */}
+                {showModal && (
+                    <div className="seating-custom-modal-overlay" onClick={closeModal}>
+                        {/* Stop event propagation so clicking inside modal doesn't close it */}
+                        <div className="seating-custom-modal-content" onClick={(e) => e.stopPropagation()}>
+                            <div className="seating-custom-modal-content_header_main">
+                                <p className="seating-custom-modal-content_header">Add new slot</p>
+                                <button className="seating-modal-close-btn" onClick={closeModal}>×</button>
+                            </div>
+                            {/* Step indicators at the top */}
+                            {renderStepIndicator()}
+
+                            {/* Step content */}
+                            {renderStepContent()}
+
+                            {/* Footer with Back/Clear/Next or Assign */}
+                            {renderModalFooter()}
                         </div>
                     </div>
+                )
+                }
 
-                    {/* === The Modal Markup === */}
-                    {showModal && (
-                        <div className="seating-custom-modal-overlay" onClick={closeModal}>
-                            {/* Stop event propagation so clicking inside modal doesn't close it */}
-                            <div className="seating-custom-modal-content" onClick={(e) => e.stopPropagation()}>
-                                <div className="seating-custom-modal-content_header_main">
-                                    <p className="seating-custom-modal-content_header">Add new slot</p>
-                                    <button className="seating-modal-close-btn" onClick={closeModal}>×</button>
-                                </div>
-                                {/* Step indicators at the top */}
-                                {renderStepIndicator()}
-
-                                {/* Step content */}
-                                {renderStepContent()}
-
-                                {/* Footer with Back/Clear/Next or Assign */}
-                                {renderModalFooter()}
-                            </div>
+                {showView && (
+                    <div className="seatingview-custom-modal-overlay" onClick={handleCloseModal}>
+                        {/* Stop event propagation so clicking inside modal doesn't close it */}
+                        <div className="seatingview-custom-modal-content" onClick={(e) => e.stopPropagation()}>
+                            <NewSeatingDashboardView selectedItem={selectedItem} onBack={handleCloseModal} />
                         </div>
-                    )
-                    }
-                </div >
-            )}
+                    </div>
+                )}
+            </div >
+
         </>
 
     );

@@ -30,7 +30,7 @@
 }
 
 .search_button {
-    margin-left: 15px;
+    /* margin-left: 8px; */
     width: 100px;
     height: 40px;
     color: #2162B2;
@@ -45,6 +45,7 @@
     width: 300px;
     height: 40px;
     font-size: 1rem;
+    border-radius: 8px;
 }
 
 .result_select_year,
@@ -53,6 +54,7 @@
     width: 200px;
     height: 40px;
     font-size: 1rem;
+    border-radius: 8px;
 }
 
 /* Class result container */
