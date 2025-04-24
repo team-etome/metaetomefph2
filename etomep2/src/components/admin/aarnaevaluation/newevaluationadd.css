@@ -10,18 +10,22 @@
     align-items: center;
     justify-content: center;
     z-index: 1050 !important;
+    padding: 15px;
 }
 
 .evaluationadd-modal-content {
     background: white;
     border-radius: 12px;
+
     width: 700px;
     height: 650px;
+
     display: flex;
     flex-direction: column;
     padding: 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    
+    position: relative;
+    overflow: hidden;
 }
 
 .evaluationadd-modal-header {
@@ -31,6 +35,10 @@
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
 }
 
 .evaluationadd-close-button {
@@ -38,6 +46,7 @@
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
+    padding: 5px;
 }
 
 .evaluationadd-modal-body {
@@ -47,6 +56,7 @@
     overflow-y: auto;
     padding: 0px !important;
     flex-grow: 1;
+
     display: flex;
     flex-wrap: wrap; /* Allow wrapping of columns */
     gap: 8px; /* Fixed gap between columns */
@@ -64,6 +74,7 @@
     width: 652px; /* Set row width to 652px */
     justify-content: space-between;
     gap: 8px; /* 8px gap between the columns */
+
 }
 
 .evaluationadd-form-control {
@@ -78,34 +89,47 @@
 .evaluationadd-form-label {
     padding-bottom: 8px;
     font-size: 16px;
+    display: block;
 }
 
 .evaluationadd-modal-footer {
     display: flex;
     justify-content: flex-end;
+
     margin-right: 24px;
     margin-bottom: 24px;
     /* padding: 20px; */
     /* border-top: 1px solid #eee; */
     gap: 8px;
+
     flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    z-index: 1;
 }
 
 .evaluationadd-btn {
     padding: 10px 20px;
-    /* margin-left: 10px; */
+
     border-radius: 5px;
     border: none;
     cursor: pointer;
+    min-width: 100px;
+    text-align: center;
+    transition: all 0.3s ease;
 }
 
 .evaluationadd-btn-secondary {
     background-color: #fff;
     color: #2162B2;
     border: 1px solid #2162B2;
-    width: 100px;
-    height: 40px;
 
+}
+
+
+.evaluationadd-btn-secondary:hover {
+    background-color: #f8f9fa;
 }
 
 .evaluationadd-btn-danger {
@@ -116,6 +140,10 @@
     height: 40px;
 }
 
+.evaluationadd-btn-danger:hover {
+    background-color: #fff5f5;
+}
+
 .evaluationadd-btn-primary {
     background-color: #2162B2;
     color: white;
@@ -123,12 +151,125 @@
     height: 40px;
 }
 
+.evaluationadd-btn-primary:hover {
+    background-color: #1a4d8c;
+}
+
 .custom-input:focus {
     border-color: #526D82 !important;
     box-shadow: 0 0 5px rgba(82, 109, 130, 0.6);
-    /* outline: none; */
+    outline: none;
 }
 
 .evaluationadd_required {
     color: red;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .evaluationadd-modal-content {
+        height: 100vh;
+        max-height: none;
+        border-radius: 0;
+    }
+
+    .evaluationadd-modal-header {
+        padding: 15px;
+    }
+
+    .evaluationadd-modal-body {
+        padding: 15px;
+    }
+
+    .evaluationadd-modal-footer {
+        padding: 15px;
+    }
+
+    .evaluationadd-btn {
+        padding: 8px 16px;
+        min-width: 80px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .evaluationadd-backdrop {
+        padding: 0;
+    }
+
+    .evaluationadd-modal-header {
+        padding: 12px;
+    }
+
+    .evaluationadd-modal-body {
+        padding: 12px;
+    }
+
+    .evaluationadd-form-label {
+        font-size: 14px;
+    }
+
+    .evaluationadd-form-control {
+        height: 40px;
+    }
+
+    .evaluationadd-btn {
+        padding: 8px 12px;
+        min-width: 70px;
+        font-size: 14px;
+    }
+}
+
+/* Animation */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.evaluationadd-modal-content {
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+    .evaluationadd-btn {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .evaluationadd-modal-body {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Form layout improvements for different screen sizes */
+@media screen and (max-width: 576px) {
+    .evaluationadd-form-group {
+        margin-bottom: 12px;
+    }
+    
+    .evaluationadd-modal-footer {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .evaluationadd-btn {
+        width: 100%;
+    }
+}
+
+/* Landscape mode adjustments */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .evaluationadd-modal-content {
+        height: 100vh;
+        max-height: none;
+    }
+    
+    .evaluationadd-modal-body {
+        max-height: calc(100vh - 140px);
+    }
 }

@@ -120,6 +120,7 @@ function AdminDashboard() {
   // ------------------------------Teacher Action --------------------------------------------
   const [teacherActionViewAll, setTeacherActionViewAll] = useState(false);
   const [activeTab, setActiveTab] = useState("pending");
+  const [active, setActive] = useState("pending");
   const [allActions, setAllActions] = useState([]);
 
   const handleTeacherActionViewAll = () => {
@@ -214,7 +215,7 @@ function AdminDashboard() {
 
 
   const handleTodoViewAll = () => {
-    
+
     fetchTodos();
     setTodoViewAll(true)
 
@@ -311,18 +312,18 @@ function AdminDashboard() {
 
   const getTimeLeft = (dateStr, timeStr) => {
     if (!dateStr || !timeStr) return "Invalid date";
-  
+
     const dueDateTime = new Date(`${dateStr}T${timeStr}:00`);
     const now = new Date();
-  
+
     const diffMs = dueDateTime - now;
-  
+
     if (diffMs <= 0) return "Past due";
-  
+
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
     const diffHours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
     const diffMinutes = Math.floor((diffMs / (1000 * 60)) % 60);
-  
+
     if (diffDays > 0) return `Due in ${diffDays} day(s)`;
     if (diffHours > 0) return `Due in ${diffHours} hour(s)`;
     return `Due in ${diffMinutes} minute(s)`;
@@ -2149,7 +2150,7 @@ function AdminDashboard() {
             }}>
 
               <div>
-                <h1 className="text_font">Teacher Actions</h1>
+                <h1 className="text_font">Pending Teacher Tasks</h1>
               </div>
 
               <div>
@@ -2161,22 +2162,21 @@ function AdminDashboard() {
 
 
 
-            <div className="tabs" style={{
-              display: "flex",
-              gap: "16px",
-              paddingLeft: "30px",
-              height: "25px",
-              alignItems: "center",
-              marginTop: "15px"
-            }}>
+            <div className="tabs">
 
 
-              <div onClick={() => setActiveTab("pending")}>
-                <h1 className={`action ${activeTab === "pending" ? "active" : ""}`}>Pending</h1>
+              <div style={{
+                height: "37px",
+                width: "108px",
+              }} onClick={() => setActiveTab("pending")}>
+                <h1 className={`action ${activeTab === "pending" ? "active" : ""}`}>QuestionPaper</h1>
               </div>
 
-              <div onClick={() => setActiveTab("complete")}>
-                <h1 className={`complete ${activeTab === "complete" ? "active" : ""}`}>Complete</h1>
+              <div style={{
+                height: "37px",
+                width: "110px",
+              }} onClick={() => setActiveTab("complete")}>
+                <h1 className={`complete ${activeTab === "complete" ? "active" : ""}`}>Evaluation</h1>
               </div>
 
             </div>
@@ -2196,7 +2196,8 @@ function AdminDashboard() {
                 height: "52px",
               }} field="Name" header="Name"></Column>
               <Column field="DueDate" header="DueDate"></Column>
-              <Column field="Status" header="Status"></Column>
+              <Column field="Class" header="Class"></Column>
+              <Column field="Subject" header="Subject"></Column>
 
 
             </DataTable>
@@ -2214,7 +2215,8 @@ function AdminDashboard() {
                 borderRadius: "16px",
                 boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                 zIndex: 9999, // Make sure it sits above other elements
-                paddingBottom: "16px"
+                paddingBottom: "16px",
+                border: "2px solid rgb(249, 0, 0)"
               }}
               className="report_alert_view_all"
             >
@@ -2246,27 +2248,21 @@ function AdminDashboard() {
               <div style={{
                 width: "653px",
                 height: "492px",
-                marginTop: "8px"
+                marginTop: "8px",
+                
               }} >
 
 
 
-                <div  className="tabs" style={{
-                  display: "flex",
-                  gap: "16px",
-                  paddingLeft: "30px",
-                  height: "25px",
-                  alignItems: "center",
-                  marginTop: "15px"
+                <div className="tabs"
+                >
 
-                }}>
-
-                  <div onClick={() => setActiveTab("pending")}>
-                    <h1 className={`action ${activeTab === "pending" ? "active" : ""}`}>Pending</h1>
+                  <div onClick={() => setActive("pending")}>
+                    <h1 className={`action ${active === "pending" ? "active" : ""}`}>QuestionPaper</h1>
                   </div>
 
-                  <div onClick={() => setActiveTab("complete")}>
-                    <h1 className={`complete ${activeTab === "complete" ? "active" : ""}`}>Complete</h1>
+                  <div onClick={() => setActive("complete")}>
+                    <h1 className={`complete ${active === "complete" ? "active" : ""}`}>Evaluation</h1>
                   </div>
 
 
@@ -2296,6 +2292,10 @@ function AdminDashboard() {
                     field="Status"
                     header="Status"
                   />
+
+                  <Column field="Class" header="Class"></Column>
+                  <Column field="Subject" header="Subject"></Column>
+
                 </DataTable>
 
 
