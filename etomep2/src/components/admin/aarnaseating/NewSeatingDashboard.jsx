@@ -65,14 +65,6 @@ const NewSeatingDashboard = () => {
 
 
 
-
-
-
-    // const [showView, setShowView] = useState(false);
-
-    // const [selectedItem, setSelectedItem] = useState(null);
-
-
     const handleCardClick = (item) => {
         setSelectedItem(item);
         setShowView(true);
@@ -193,9 +185,9 @@ const NewSeatingDashboard = () => {
                     onChange={(e) => setSelectedExamName(e.target.value)}
                 >
                     <option value="">Select Examination</option>
-                    {examNames.map((name, i) => (
+                    {/* {examNames.map((name, i) => (
                         <option key={i} value={name}>{name}</option>
-                    ))}
+                    ))} */}
                 </select>
 
                 <div className="seating_step-row_stepone">

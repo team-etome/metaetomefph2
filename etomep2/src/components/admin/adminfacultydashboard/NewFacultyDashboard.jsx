@@ -90,9 +90,8 @@ const NewFacultyDashboard = () => {
     return (
         <div className="facultydashboard_main_container">
             <div className="facultydashboard_main_header_container">
-
-                <div className="header-controls d-flex justify-content-between align-items-center px-3 py-2">
-                    <div className="left-controls">
+                <div className="facultydashboard_header-controls d-flex justify-content-between align-items-center">
+                    <div className="facultydashboard_left-controls">
                         <select
                             className="form-select form-select-sm facultydashboard_select_subject"
                             value={selectedSubject}
@@ -109,7 +108,7 @@ const NewFacultyDashboard = () => {
 
                     </div>
 
-                    <div className="left-controls">
+                    <div className="facultydashboard_left-controls">
                         <input
                             type="text"
                             className="form-control form-control-sm facultydashboard_select_faculty"
@@ -143,7 +142,7 @@ const NewFacultyDashboard = () => {
                             <NewFacultyAdd
                                 isOpen={showPopup}
                                 onClose={() => setShowPopup(false)}
-                                onFacultyAdded={fetchFaculty} // ✅ passing callback
+                                onFacultyAdded={fetchFaculty} 
                             />
                         )}                        {showPopupexcel && <NewFacultyAddThroughExcel isOpen={showPopupexcel} onClose={() => setShowPopupExcel(false)} />}
                     </div>
@@ -166,9 +165,9 @@ const NewFacultyDashboard = () => {
                             return nameMatch && subjectMatch;
                         })
                         .map((faculty) => (
-                            <div className="faculty-card" key={faculty.id} onClick={() => handleCardClick(faculty)}>
+                            <div className="facultydashboard_classes_box_inner" key={faculty.id} onClick={() => handleCardClick(faculty)}>
                                 <div className="faculty-avatar-container">
-                                    <img src={faculty.photo || avatar} className="faculty-avatar" />
+                                    <img src={faculty.photo || image} className="faculty-avatar" />
                                 </div>
                                 <div className="faculty-name-id-container">
                                     <p className="faculty-name">{faculty.first_name} {faculty.last_name}</p>

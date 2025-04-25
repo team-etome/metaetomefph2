@@ -153,12 +153,14 @@ const AdminQuestionAssigning = () => {
                                 <table className="AdminQuestionAssigning_main_table">
                                     <thead>
                                         <tr>
-                                            <th>Subject   </th>
-                                            <th>Class   </th>
-                                            <th>Teacher   </th>
-                                            <th>Date   </th>
-                                            <th>Time Duration   </th>
-                                            <th>Status   </th>
+
+                                            <th>Subject  </th>
+                                            <th>Class  </th>
+                                            <th>Teacher  </th>
+                                            <th>Date  </th>
+                                            <th>Time Duration  </th>
+                                            <th>Status  </th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
