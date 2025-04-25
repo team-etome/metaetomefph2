@@ -25,6 +25,9 @@ const NewSeatingDashboard = () => {
 
 
 
+
+
+
     const exampaper = useSelector((state) => state.exampaperinfo.exampaperinfo);
 
     console.log(exampaper, 'exam paper')
@@ -59,6 +62,7 @@ const NewSeatingDashboard = () => {
     const handleImageSelection = (imageName) => {
         setSelectedLayout(imageName); // Set the selected layout
     };
+
 
 
     const handleCardClick = (item) => {
@@ -773,6 +777,8 @@ const NewSeatingDashboard = () => {
                         </div>
                     </div>
                 )}
+
+                
             </div >
 
         </>
