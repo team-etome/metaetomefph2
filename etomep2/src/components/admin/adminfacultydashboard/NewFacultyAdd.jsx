@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { FaTrash, FaRedo } from "react-icons/fa";
 
 
-const NewFacultyAdd = ({ isOpen, onClose }) => {
+const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
 
     if (!isOpen) return null;
     const APIURL = useSelector((state) => state.APIURL.url);
@@ -25,69 +25,68 @@ const NewFacultyAdd = ({ isOpen, onClose }) => {
 
 
     const [imageFile, setImageFile] = useState(null);
-    const [chapters, setChapters] = useState([]);
 
 
+    console.log(phoneno, "phone number")
 
 
     const handleSave = async () => {
-        if (!selectedClass || !selectedSubject || !selectedMedium || !selectedPublisher) {
-            Swal.fire({ icon: 'warning', title: 'Missing Fields', text: 'Please select all fields.' });
+        const validationErrors = [];
+
+        if (!firstname.trim()) validationErrors.push("First name is required.");
+        if (!gender?.value) validationErrors.push("Gender is required.");
+        if (!email.trim()) validationErrors.push("Email is required.");
+        if (!password.trim()) validationErrors.push("Password is required.");
+
+        // Email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (email && !emailRegex.test(email)) {
+            validationErrors.push("Please enter a valid email address.");
+        }
+
+        // Phone number format (optional field)
+        if (phoneno && phoneno.length !== 10) {
+            validationErrors.push("Phone number must be 10 digits.");
+        }
+
+        if (validationErrors.length > 0) {
+            Swal.fire("Validation Error", validationErrors[0], "warning");
             return;
         }
 
         const formData = new FormData();
-        const classNameOnly = selectedClass.label.split(' ')[0];
-        formData.append("class_name", classNameOnly);
-        formData.append("text_name", textbookname);
-        const subjectNameOnly = selectedClass.subjectList[0].subject;
-        formData.append("subject", subjectNameOnly);
-        formData.append("medium", selectedMedium.value);
-        formData.append("publisher_name", selectedPublisher.value);
-        formData.append("volume", volume);
-        formData.append("admin", admin_id);
+        formData.append("admin_id", admin_id);
+        formData.append("first_name", firstname);
+        formData.append("last_name", lastname);
+        formData.append("employee_id", employeeid);
+        formData.append("gender", gender?.value);
+        formData.append("phone_number", phoneno);
+        formData.append("email", email);
+        formData.append("password", password);
+        if (imageFile) formData.append("photo", imageFile);
 
-        if (imageFile) {
-            formData.append("textbook_front_page", imageFile);
-        }
-
-        chapters.forEach((chapter, index) => {
-            formData.append(`chapters[${index}][name]`, chapter.name);
-            if (chapter.file) {
-                formData.append(`chapters[${index}][pdfFile]`, chapter.file);
-            }
-        });
+        console.log(formData, "formdataa")
 
         try {
-            const response = await axios.post(
-                `${APIURL}/api/admin-create-textbook/${admin_id}`,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
+            const response = await axios.post(`${APIURL}/api/addteacher`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
                 }
-            );
-
-            Swal.fire({
-                icon: "success",
-                title: "Success",
-                text: "Textbook added successfully!",
-                confirmButtonText: "OK"
-            }).then(() => {
-                onClose();
             });
 
+            if (response.data.message === "Teacher added successfully") {
+                Swal.fire("Success", "Faculty added successfully", "success");
+                onFacultyAdded?.();  // ✅ refresh list in parent
+                onClose();           // ✅ close modal
+            } else {
+                Swal.fire("Error", response.data.message || "Something went wrong", "error");
+            }
         } catch (error) {
-            console.error("Error saving data:", error);
-            Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: error.response?.data?.error || "Something went wrong while saving.",
-                confirmButtonText: "OK"
-            });
+            console.error("Error while saving faculty:", error);
+            Swal.fire("Error", error.response?.data?.message || "Server error occurred", "error");
         }
     };
+
 
 
 
@@ -148,7 +147,7 @@ const NewFacultyAdd = ({ isOpen, onClose }) => {
         }),
     };
     const handleImageUpload = (e) => {
-        console.log(e.target.files[0],"e.target.files[0]e.target.files[0]")
+        console.log(e.target.files[0], "e.target.files[0]e.target.files[0]")
         setImageFile(e.target.files[0]);
     };
     const clearImageFile = () => {
@@ -169,10 +168,10 @@ const NewFacultyAdd = ({ isOpen, onClose }) => {
                                 <div className="facultyadd-form-group" >
                                     <label className="facultyadd-form-label" >
                                         First Name <span className="facultyadd_required">*</span>
-                                        </label>
+                                    </label>
                                     <input
                                         type="text"
-                                        min="0"
+                                        value={firstname}
                                         className="custom-input"
                                         style={{
                                             height: '48px',
@@ -185,6 +184,13 @@ const NewFacultyAdd = ({ isOpen, onClose }) => {
                                             boxSizing: 'border-box',
                                             outline: "none"
                                         }}
+
+                                        onChange={(e) => {
+                                            const value = e.target.value;
+                                            const formatted = value.charAt(0).toUpperCase() + value.slice(1);
+                                            setFirstName(formatted);
+                                        }}
+
                                     />
                                 </div>
                             </Col>
@@ -193,7 +199,7 @@ const NewFacultyAdd = ({ isOpen, onClose }) => {
                                     <label className="facultyadd-form-label">Last Name</label>
                                     <input
                                         type="text"
-                                        min="0"
+                                        value={lastname}
                                         className="custom-input"
                                         style={{
                                             height: '48px',
@@ -206,6 +212,13 @@ const NewFacultyAdd = ({ isOpen, onClose }) => {
                                             boxSizing: 'border-box',
                                             outline: "none"
                                         }}
+
+                                        onChange={(e) => {
+                                            const value = e.target.value;
+                                            const formatted = value.charAt(0).toUpperCase() + value.slice(1);
+                                            setLastName(formatted);
+                                        }}
+
                                     />
                                 </div>
                             </Col>
@@ -236,13 +249,22 @@ const NewFacultyAdd = ({ isOpen, onClose }) => {
                                 <div className="facultyadd-form-group">
                                     <label className="facultyadd-form-label">
                                         Gender<span className="facultyadd_required">*</span>
-                                        </label>
+                                    </label>
                                     <Select
                                         styles={customStyles}
-                                        placeholder=""
+                                        placeholder="Select Gender"
                                         isClearable={true}
+
+                                        value={gender}
+                                        onChange={(selectedOption) => setGender(selectedOption)}
+                                        options={[
+                                            { value: "Male", label: "Male" },
+                                            { value: "Female", label: "Female" },
+                                            { value: "Other", label: "Other" }
+                                        ]}
                                     />
-                                   
+
+
                                 </div>
                             </Col>
                         </Row>
@@ -272,7 +294,7 @@ const NewFacultyAdd = ({ isOpen, onClose }) => {
                                 <div className="facultyadd-form-group">
                                     <label className="facultyadd-form-label">
                                         Email ID<span className="facultyadd_required">*</span>
-                                        </label>
+                                    </label>
                                     <input
                                         type="text"
                                         min="0"
@@ -297,7 +319,7 @@ const NewFacultyAdd = ({ isOpen, onClose }) => {
                                 <div className="facultyadd-form-group">
                                     <label className="facultyadd-form-label">
                                         Password<span className="facultyadd_required">*</span>
-                                        </label>
+                                    </label>
                                     <input
                                         type="text"
                                         min="0"
@@ -380,7 +402,27 @@ const NewFacultyAdd = ({ isOpen, onClose }) => {
                     </form>
                 </div>
                 <div className="facultyadd-modal-footer">
-                    <button onClick={onClose} className="facultyadd-btn facultyadd-btn-secondary">Clear</button>
+                    <button
+                        onClick={() => {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: "All entered data will be lost!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, clear it',
+                                cancelButtonText: 'Cancel'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    onClose(); // ✅ only close if user confirms
+                                }
+                            });
+                        }}
+                        className="facultyadd-btn facultyadd-btn-secondary"
+                    >
+                        Clear
+                    </button>                    
                     <button onClick={handleSave} className="facultyadd-btn facultyadd-btn-primary">Save</button>
                 </div>
             </div>

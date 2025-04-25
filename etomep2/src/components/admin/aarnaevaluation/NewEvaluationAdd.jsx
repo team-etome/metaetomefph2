@@ -10,6 +10,21 @@ import { Weight } from 'lucide-react';
 
 const NewEvaluationAdd = ({ isOpen, onClose }) => {
 
+
+    const exampaper = useSelector((state) => state.exampaperinfo.exampaperinfo);
+    const teacherinfo = useSelector((state) => state.adminteacherinfo);
+    const [selectedFaculty, setSelectedFaculty] = useState(null);
+    const [formData, setFormData] = useState({
+        examName: '',
+        examYear: '',
+        examDate: '',
+        subject: '',
+        className: '',
+        facultyId: '',
+    });
+
+    console.log(exampaper, 'exampaper')
+
     if (!isOpen) return null;
     const APIURL = useSelector((state) => state.APIURL.url);
     // console.log(APIURL,"apiurl dattatata")
@@ -74,6 +89,73 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
         }),
     };
 
+    const examNameOptions = Object.keys(exampaper || {}).map((examName) => ({
+        label: examName,
+        value: examName
+    }));
+
+    // Get all exams in one flat list
+    const allExamEntries = Object.values(exampaper || {}).flat();
+
+    // Year options
+    const yearOptions = [...new Set(allExamEntries.map(entry =>
+        new Date(entry.exam_date).getFullYear()
+    ))].map(year => ({ label: year.toString(), value: year.toString() }));
+
+    // Subject options
+    const subjectOptions = [...new Set(allExamEntries.map(entry => entry.subject_name))]
+        .map(subject => ({ label: subject, value: subject }));
+
+    // Class options
+    const classOptions = [...new Set(allExamEntries.map(entry => entry.class_name))]
+        .map(cls => ({ label: `Class ${cls}`, value: cls }));
+
+
+    const examDateOptions = [...new Set(allExamEntries.map(entry => entry.exam_date))]
+        .map(date => ({
+            label: new Date(date).toLocaleDateString("en-GB", {
+                day: "2-digit", month: "short", year: "numeric"
+            }),
+            value: date
+        }));
+
+    // Faculty options from Redux
+    const facultyOptions = teacherinfo?.adminteacherinfo?.map((teacher) => ({
+        value: teacher.id,
+        label: `${teacher.first_name} ${teacher.last_name}`
+    })) || [];
+
+    const handleSubmit = async () => {
+        try {
+            const response = await axios.post(`${APIURL}/api/evaluationadding`, {
+                ...formData,
+                admin_id
+            });
+            
+            if (response.data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Evaluation scheduled successfully!'
+                });
+                onClose();
+            }
+        } catch (error) {
+            console.error('Error scheduling evaluation:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to schedule evaluation. Please try again.'
+            });
+        }
+    };
+
+    const handleInputChange = (field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: value
+        }));
+    };
 
     return (
         <div className="evaluationadd-backdrop">
@@ -91,9 +173,15 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         Select Name of Examination <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
+
+                                        options={examNameOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
+
+                                        onChange={(selected) => handleInputChange('examName', selected?.value)}
+                                        value={examNameOptions.find(option => option.value === formData.examName)}
+
                                     />
                                 </div>
                             </div>
@@ -104,9 +192,15 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         Select Year <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
+
+                                        options={yearOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
+
+                                        onChange={(selected) => handleInputChange('examYear', selected?.value)}
+                                        value={yearOptions.find(option => option.value === formData.examYear)}
+
                                     />
                                 </div>
                             </div>
@@ -118,11 +212,14 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         Select Subject <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
-                                        // options={subjectOptions}
+                                        options={subjectOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                    // onChange={setSelectedSubject}
+
+                                        onChange={(selected) => handleInputChange('subject', selected?.value)}
+                                        value={subjectOptions.find(option => option.value === formData.subject)}
+
                                     />
                                 </div>
                             </div>
@@ -132,12 +229,14 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         Class <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
-                                        // options={textbook}
+                                        options={classOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                    // value={filteredSubjects.find(opt => opt.value === selectedSubject)}
-                                    // onChange={(selected) => setTextbook(selected?.value || null)}
+
+                                        onChange={(selected) => handleInputChange('className', selected?.value)}
+                                        value={classOptions.find(option => option.value === formData.className)}
+
                                     />
 
                                 </div>
@@ -149,7 +248,17 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                     <label className="evaluationadd-form-label">
                                         Date of Examination <span className="evaluationadd_required">*</span>
                                     </label>
-                                    <input
+
+                                    <Select
+                                        options={examDateOptions}
+                                        styles={customStyles}
+                                        placeholder="Select Date"
+                                        isClearable={true}
+                                        onChange={(selected) => handleInputChange('examDate', selected?.value)}
+                                        value={examDateOptions.find(option => option.value === formData.examDate)}
+                                    />
+                                    {/* <input
+
                                         type="date"
                                         min="0"
                                         className="custom-input"
@@ -164,8 +273,11 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                             boxSizing: 'border-box',
                                             outline: "none"
                                         }}
+
                                     // onChange={e => setVolume(e.target.value)}
-                                    />
+                                    /
+                             
+                                    /> */}
                                 </div>
                             </div>
                             <div>
@@ -188,21 +300,23 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         }}
                                     />
                                 </div>
+
                             </div>
                         </div>
                         <div className="evaluationadd-modal-body-row">
                             <div>
+
                                 <div className="evaluationadd-form-group">
                                     <label className="evaluationadd-form-label">
                                         Select Faculty <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
-                                        // options={textbook}
+                                        options={facultyOptions}
                                         styles={customStyles}
-                                        placeholder=""
+                                        placeholder="Select Faculty"
                                         isClearable={true}
-                                    // value={filteredSubjects.find(opt => opt.value === selectedSubject)}
-                                    // onChange={(selected) => setTextbook(selected?.value || null)}
+                                        onChange={(selected) => handleInputChange('facultyId', selected?.value)}
+                                        value={facultyOptions.find(option => option.value === formData.facultyId)}
                                     />
 
                                 </div>
@@ -211,8 +325,15 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                     </form>
                 </div>
                 <div className="evaluationadd-modal-footer">
-                    <button className="evaluationadd-btn evaluationadd-btn-secondary">Clear</button>
-                    <button className="evaluationadd-btn evaluationadd-btn-primary">Save</button>
+                    <button className="evaluationadd-btn evaluationadd-btn-secondary" onClick={() => setFormData({
+                        examName: '',
+                        examYear: '',
+                        examDate: '',
+                        subject: '',
+                        className: '',
+                        facultyId: '',
+                    })}>Clear</button>
+                    <button className="evaluationadd-btn evaluationadd-btn-primary" onClick={handleSubmit}>Save</button>
                 </div>
             </div>
         </div>

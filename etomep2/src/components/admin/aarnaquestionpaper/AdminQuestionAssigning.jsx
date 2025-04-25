@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import AdminQuestionAssignadd from './AdminQuestionassigningadd';
 import './AdminQuestionAssigning.css'; // Import custom CSS
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { PiArrowsDownUp } from "react-icons/pi";
+import { useSelector,useDispatch } from 'react-redux';
+import { exampaperinfo } from '../../../Redux/Actions/ExamPaperInfoAction';
+
 
 
 const AdminQuestionAssigning = () => {
@@ -17,11 +18,17 @@ const AdminQuestionAssigning = () => {
     const [selectedExam, setSelectedExam] = useState('All');
     const [selectedYear, setSelectedYear] = useState('All');
 
+
+    const dispatch = useDispatch();
+    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${APIURL}/api/questionpaper/${admin_id}`);
                 const rawData = response.data.question_papers || {};
+                dispatch(exampaperinfo(rawData));
+                
                 console.log(response.data, "responseresponseresponse");
 
                 // Process the rawData into an array of exam objects.
@@ -146,12 +153,12 @@ const AdminQuestionAssigning = () => {
                                 <table className="AdminQuestionAssigning_main_table">
                                     <thead>
                                         <tr>
-                                            <th>Subject   <PiArrowsDownUp /></th>
-                                            <th>Class   <PiArrowsDownUp /></th>
-                                            <th>Teacher   <PiArrowsDownUp /></th>
-                                            <th>Date   <PiArrowsDownUp /></th>
-                                            <th>Time Duration   <PiArrowsDownUp /></th>
-                                            <th>Status   <PiArrowsDownUp /></th>
+                                            <th>Subject  </th>
+                                            <th>Class  </th>
+                                            <th>Teacher  </th>
+                                            <th>Date  </th>
+                                            <th>Time Duration  </th>
+                                            <th>Status  </th>
                                         </tr>
                                     </thead>
                                     <tbody>

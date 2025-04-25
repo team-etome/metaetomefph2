@@ -632,7 +632,7 @@
   font-weight: 400;
   cursor: pointer;
   transition: all 0.2s ease-in-out; /* Smooth transition */
-  width: 75px;
+  width: 78px;
   height: 49px;
 }
 
@@ -643,7 +643,7 @@
   font-weight: 400;
   cursor: pointer;
   transition: all 0.2s ease-in-out; /* Smooth transition */
-  width: 60px;
+  width: 108px;
   height: 49px;
 }
 
@@ -664,6 +664,30 @@
   border-bottom: 2px solid #2162B2;
   cursor: pointer;
 }
+
+/* Add specific styles for active tabs */
+.tabs .action.active,
+.tabs .complete.active {
+  color: #2162B2;
+  border-bottom: 2px solid #2162B2;
+  font-weight: 500;
+}
+
+/* Ensure the tab container has proper spacing */
+.tabs {
+  display: flex;
+  gap: 32px;
+  margin-left: 34px;
+  height: 37px;
+  align-items: center;
+  margin-top: 15px;
+  /* width: 108px; */
+  padding-bottom: 5px;
+  width: 213px;
+}
+
+
+
 
 
 .name-due-status{
@@ -735,8 +759,8 @@
 
 .report_alert_view_all{
  
-  width: 700px;
-  height: 607px;
+  width: 1058px;
+  height: 600px;
   background-color: #FFFFFF;
   margin-top: 80px;
 }

@@ -1,38 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { GoHome } from "react-icons/go";
 import { RxDashboard } from "react-icons/rx";
 import { PiBook } from "react-icons/pi";
 import { SlNote, SlSettings } from "react-icons/sl";
 import { TbScanEye } from "react-icons/tb";
 import "./Newsidebar.css"
-import etomelogo from "../../../assets/etomelogo.png";
+import etomelogo from "../../../assets/etomelogo.png" 
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { adminteacherinfo } from "../../../Redux/Actions/AdminTeacherInfoAction";
+
 function Newsidebar({ setActiveItemLabel }) {
   const location = useLocation();
   const [activeItem, setActiveItem] = useState("");
   const teacher = useSelector(state => state.teacherinfo);
   const teacher_token = teacher.teacherinfo?.teacher_token;
   const class_teacher_token = teacher.teacherinfo?.class_teacher_token;
+  const admininfo = useSelector(state => state.admininfo);
+  const admin_id = admininfo?.admininfo?.admin_id;
+  const APIURL = useSelector(state => state.APIURL.url);
+  const dispatch = useDispatch();
   const activeRoutesMapping = {
-    "/admindashboard": ["/admindashboard","/admindashboard/overview","/admindashboard/stats"
+    "/admindashboard": ["/admindashboard", "/admindashboard/overview", "/admindashboard/stats"
     ],
-    "/institutionadding": ["/institutionadding","/facultyview","/facultyadding","/classadding","/curriculumadding","/classview"
+    "/institutionadding": ["/institutionadding", "/facultyview", "/facultyadding", "/classadding", "/curriculumadding", "/classview"
     ],
-    "/adminlokanavbar": ["/adminlokanavbar","/adminlokatextbook","/adminlokalibary"
+    "/adminlokanavbar": ["/adminlokanavbar", "/adminlokatextbook", "/adminlokalibary"
     ],
-    "/aarnanavbar": ["/aarnanavbar","/questionview","/questionadding","/seatview","/seatassigning","/evaluationview","/evaluationscheduling"
+    "/aarnanavbar": ["/aarnanavbar", "/questionview", "/questionadding", "/seatview", "/seatassigning", "/evaluationview", "/evaluationscheduling"
     ],
     "/teacherhome": ["/teacherhome"
     ],
-    "/teacherstudentdashboard": ["/teacherstudentdashboard","/teacherstudentview","/teachertimetable","/teacherstudentadd",
+    "/teacherstudentdashboard": ["/teacherstudentdashboard", "/teacherstudentview", "/teachertimetable", "/teacherstudentadd",
     ],
-    "/teachersubject": ["/teachersubject","/teacherclassview","/teacherassignment","/teacherassignmentadding","/teacherrefrencelist"
-      ,"/teacherreferenceadd","/teachertestlist","/teachertestadd","/teachermcqlist","/teachermcqadd",
+    "/teachersubject": ["/teachersubject", "/teacherclassview", "/teacherassignment", "/teacherassignmentadding", "/teacherrefrencelist"
+      , "/teacherreferenceadd", "/teachertestlist", "/teachertestadd", "/teachermcqlist", "/teachermcqadd",
     ],
-    "/teacherexamination": ["/teacherexamination","/teacherquestionview"
+    "/teacherexamination": ["/teacherexamination", "/teacherquestionview"
     ]
   };
   useEffect(() => {
@@ -95,18 +102,50 @@ function Newsidebar({ setActiveItemLabel }) {
   } else if (teacher_token) {
     itemsToDisplay = teacherItems;
   }
+
+  // Function to fetch teacher details
+  const fetchTeacherDetails = async () => {
+    try {
+      const response = await axios.get(`${APIURL}/api/teacherdetails/${admin_id}`);
+      if (response.data && Array.isArray(response.data)) {
+        dispatch(adminteacherinfo(response.data));
+      } else {
+        console.warn("Unexpected response structure", response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching faculty data:", error);
+    }
+  };
+
   return (
     <div className="newsidenav_fstdiv">
-      <div className="newsidebar_header">
+      <div  className="newsidebar_header">
         <img src={etomelogo} alt="Logo" style={{ width: "70px", height: "28px" }} />
       </div>
-      <Row style={{ display: "flex", height: "60%", justifyContent: "space-between", marginTop: "100px" }} >
+      <Row style={{ display: "flex",  height: "60%", justifyContent: "space-between", marginTop: "50px" }} >
         {itemsToDisplay.map((item, index) => (
-          <Link key={index} to={item.path} style={{ textDecoration: "none", color: "inherit" }}>
-            {/* <Col className={`newsidebar_menu_item_col ${activeItem === item.label.toLowerCase() ? "active" : ""}`}> */}
+          <Link
+            key={index}
+            to={item.path}
+            onClick={() => {
+              // Clear loka tab state when going to Loka
+              if (item.path === "/adminlokanavbar") {
+                localStorage.removeItem("currentTab");
+              }
+
+              // Clear institution tab state when going to Institution
+              if (item.path === "/institutionadding") {
+                localStorage.removeItem("currentTab");
+              }
+              
+              // Fetch teacher details when clicking on Aarna navbar
+              if (item.path === "/aarnanavbar") {
+                fetchTeacherDetails();
+              }
+            }}
+            style={{ textDecoration: "none", color: "inherit" }}> 
             <Col className={`newsidebar_menu_item_col ${activeItem.startsWith(item.path) ? "active" : ""}`}>
               <div className="newsidebar_icon_container_div">
-                {/* <span className="newsidebar_icon_img "> {item.icon}</span> */}
                 <span className={`newsidebar_icon_img ${activeItem === item.path ? "active_icon" : ""}`}>{item.icon}</span>
                 <span className="newsidebar_icon-text">{item.label}</span>
               </div>

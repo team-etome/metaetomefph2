@@ -1,27 +1,11 @@
 import React from 'react';
 import './newfacultyview.css';
-import image from "../../../assets/messi-ronaldo-1593920966.jpg"
+import defaultImage from "../../../assets/default.jpg";
 
 const NewFacultyView = ({ faculty, onClose }) => {
     if (!faculty) return null;
 
     // Dummy faculty data to mimic the screenshot
-    const facultyData = {
-        name: 'Aarav',
-        email: 'xyz@gmail.com',
-        personalInfo: {
-            phone: '3654585666',
-            gender: 'Male',
-            employeeId: '565555',
-            password: '456',
-        },
-        subjects: {
-            English: ['1A', '1B', '2C',],
-            Mathematics: ['1A', '1B', '2C'],
-            Hindi: ['1A', '1B', '2C'],
-            physics:['1A', '1B', '2C']
-        },
-    };
 
     return (
         <div className="facultyview-backdrop">
@@ -29,7 +13,7 @@ const NewFacultyView = ({ faculty, onClose }) => {
 
                 {/* Header Section */}
                 <div className="facultyview-header">
-                    <div className="facultyview-title">{facultyData.name}</div>
+                    <div className="facultyview-title">{faculty.first_name} {faculty.last_name}</div>
                     <button className="facultyview-close-btn" onClick={onClose}>
                         &times;
                     </button>
@@ -38,13 +22,13 @@ const NewFacultyView = ({ faculty, onClose }) => {
 
                 <div className="facultyview-email-row">
                     <img
-                        src={image}
+                        src={faculty.image || defaultImage}
                         alt="Faculty Avatar"
                         className="facultyview-profile-image"
                     />
                     <div className="facultyview-text-container">
-                        <div className="facultyview-name">{facultyData.name}</div>
-                        <div className="facultyview-email">{facultyData.email}</div>
+                        <div className="facultyview-title">{faculty.first_name} {faculty.last_name}</div>
+                        <div className="facultyview-email">{faculty.email}</div>
                     </div>
                 </div>
 
@@ -56,27 +40,27 @@ const NewFacultyView = ({ faculty, onClose }) => {
                     <div className="facultyview-info-item">
                         <div className="facultyview-info-label">Phone No</div>
                         <div className="facultyview-info-value">
-                            {facultyData.personalInfo.phone}
+                            {faculty.phone_number}
                         </div>
                     </div>
                     <div className="facultyview-info-item">
                         <div className="facultyview-info-label">Gender</div>
                         <div className="facultyview-info-value">
-                            {facultyData.personalInfo.gender}
+                            {faculty.gender}
                         </div>
                     </div>
                     <div className="facultyview-info-item">
                         <div className="facultyview-info-label">Employee ID</div>
                         <div className="facultyview-info-value">
-                            {facultyData.personalInfo.employeeId}
+                            {faculty.employee_id}
                         </div>
                     </div>
-                    <div className="facultyview-info-item">
+                    {/* <div className="facultyview-info-item">
                         <div className="facultyview-info-label">Password</div>
                         <div className="facultyview-info-value">
-                            {facultyData.personalInfo.password}
+                            {faculty.password}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 <hr className="facultyview-divider" />
@@ -84,18 +68,30 @@ const NewFacultyView = ({ faculty, onClose }) => {
                 {/* Subject Fields */}
                 <div className="facultyview-section-title">Subject Fields</div>
                 <div className="facultyview-subject-fields">
-                    {Object.entries(facultyData.subjects).map(([subjectName, codes]) => (
-                        <div className="facultyview-subject-card" key={subjectName} >
-                            <div className="facultyview-subject-title">{subjectName}</div>
-                            <div className="facultyview-subject-chips">
-                                {codes.map((code, idx) => (
-                                    <span className="facultyview-chip" key={idx}>
-                                        {code}
-                                    </span>
-                                ))}
+                    {faculty?.curriculam && faculty.curriculam.length > 0 ? (
+                        Object.entries(
+                            faculty.curriculam.reduce((acc, item) => {
+                                const key = item.subject_name;
+                                const value = `${item.class_name}${item.division}`;
+                                if (!acc[key]) acc[key] = [];
+                                acc[key].push(value);
+                                return acc;
+                            }, {})
+                        ).map(([subjectName, codes]) => (
+                            <div className="facultyview-subject-card" key={subjectName}>
+                                <div className="facultyview-subject-title">{subjectName}</div>
+                                <div className="facultyview-subject-chips">
+                                    {codes.map((code, idx) => (
+                                        <span className="facultyview-chip" key={idx}>
+                                            {code}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    ) : (
+                        <p style={{ color: "#888", fontStyle: "italic" }}>No subjects assigned.</p>
+                    )}
                 </div>
 
                 {/* Footer Buttons */}
