@@ -23,7 +23,7 @@ import { setSelectedTextbook } from "../../../Redux/Actions/TextbookEditAction";
 import NewLokaBookEdit from "./NewLokaBookEdit";
 
 function NewLokaBookDashboard() {
-    
+
     const [showEditPopup, setShowEditPopup] = useState(false);
     const dispatch = useDispatch();
 
@@ -124,38 +124,23 @@ function NewLokaBookDashboard() {
                         <Col md={4} className="admin_loka_select_col">
                             <Form.Select
                                 className="admin_loka_select"
+                                value={selectedClass}
                                 onChange={(e) => setSelectedClass(e.target.value)}
                             >
                                 <option value="">Select Class</option>
-                                {[...Array(12)].map((_, i) => (
-                                    <option key={i + 1} value={i + 1}>
-                                        {i + 1}
-                                    </option>
-                                ))}
+                                {[...new Set(lokabookListData.map(item => item.textbook_details.class_name))]
+                                    .sort((a, b) => {
+                                        const numA = parseInt(a.match(/\d+/)) || 0;
+                                        const numB = parseInt(b.match(/\d+/)) || 0;
+                                        return numA - numB;
+                                    })
+                                    .map((className, index) => (
+                                        <option key={index} value={className}>
+                                            {className}
+                                        </option>
+                                    ))}
                             </Form.Select>
-                            {/* <Form.Select
-                                className="admin_loka_select"
-                                onChange={(e) => handlePublisherSelect(e.target.value)}
-                            >
-                                <option>Select Class</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                                <option>10</option>
-                                <option>11</option>
-                                <option>12</option>
-                                {(publisher_name || []).map((publisher, index) => (
-                                    <option key={index} value={publisher}>
-                                        {publisher}
-                                    </option>
-                                ))}
-                            </Form.Select> */}
+                          
                         </Col>
                         <Col md={8} className="d-flex justify-content-end align-items-center" style={{ paddingRight: "0px" }}>
                             <div className="admin_loka_select_col_right">
@@ -209,7 +194,7 @@ function NewLokaBookDashboard() {
                                         </div>
                                     </Col>
                                 ))}
-                                 {showEditPopup && <NewLokaBookEdit isOpen={showEditPopup} onClose={() => setShowEditPopup(false)} />}
+                                {showEditPopup && <NewLokaBookEdit isOpen={showEditPopup} onClose={() => setShowEditPopup(false)} />}
                             </Row>
                         </div>
                     );

@@ -188,7 +188,7 @@ const Examtimetable = () => {
                                         <h4 className="class-title">Class {className}</h4>
                                         <button
                                             className="btn-outline-secondary btn-sm examtimetable_table_class-section-edit_button"
-                                            // onClick={() => navigate("/examtimetableedit", { state: { classData: entries } })}
+                                            onClick={() => navigate("/examtimetableedit", { state: { classData: entries } })}
                                         >
                                             Edit
                                         </button>

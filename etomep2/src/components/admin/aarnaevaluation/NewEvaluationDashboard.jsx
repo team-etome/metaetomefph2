@@ -4,16 +4,20 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { BsFillPersonFill } from "react-icons/bs";
-import image from "../../../assets/b763af54a51c591c7fcb7ddfbae4a92c.jpg"
+import student from "../../../assets/student.jpg"
 import NewEvaluationAdd from './NewEvaluationAdd';
 import NewEvaluationView from './NewEvaluationView';
+import Swal from 'sweetalert2';
+import profile from '../../../assets/avatar.jpg'
 
 const NewEvaluationDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
 
+    const [showPopupView, setShowPopupView] = useState(false); 
 
-    console.log(admin_id,"admin eeee")
+
+    console.log(admin_id, "admin eeee")
     const navigate = useNavigate();
 
 
@@ -22,122 +26,70 @@ const NewEvaluationDashboard = () => {
     const [examYears, setExamYears] = useState([]);
     const [selectedFilterYear, setSelectedFilterYear] = useState("");
     const [showPopup, setShowPopup] = useState(false);
-    const [showPopupview, setShowPopupView] = useState(false);
+    const [selectedExamType, setSelectedExamType] = useState('');
+    const [evaluationData, setEvaluationData] = useState([]);
+
+    const [filteredData, setFilteredData] = useState([]);
+
+    const [selectedEvaluation, setSelectedEvaluation] = useState(null);  // ✅ Added
+
+
+    console.log(evaluationData, "evaluation")
+
+
+    const handleCardClick = (item) => {   // ✅ New function
+        setSelectedEvaluation(item);      // store the clicked item
+        setShowPopupView(true);            // open the popup
+    };
 
 
 
-    const DummySeatingData = [
-        {
-            id: 1,
-            className: "Class 7 A",
-            subject: "Physics",
-            examName: "Second Terminal Exam 2025",
-            examDeadline: "12/09/2025",
-            facultyAssigned: "Siana Catherine",
-            imgUrl: image  // or any image you prefer
-        },
-        {
-            id: 2,
-            className: "Class 9 B",
-            subject: "Mathematics",
-            examName: "Quarterly Exam 2025",
-            examDeadline: "30/10/2025",
-            facultyAssigned: "Joseph Martin",
-            imgUrl: image
-        },
-        {
-            id: 3,
-            className: "Class 10 A",
-            subject: "Biology",
-            examName: "Annual Exam 2025",
-            examDeadline: "15/11/2025",
-            facultyAssigned: "Anita Sharma",
-            imgUrl: image
-        },
-        {
-            id: 1,
-            className: "Class 7 A",
-            subject: "Physics",
-            examName: "Second Terminal Exam 2025",
-            examDeadline: "12/09/2025",
-            facultyAssigned: "Siana Catherine",
-            imgUrl: image  // or any image you prefer
-        },
-        {
-            id: 2,
-            className: "Class 9 B",
-            subject: "Mathematics",
-            examName: "Quarterly Exam 2025",
-            examDeadline: "30/10/2025",
-            facultyAssigned: "Joseph Martin",
-            imgUrl: image
-        },
-        {
-            id: 3,
-            className: "Class 10 A",
-            subject: "Biology",
-            examName: "Annual Exam 2025",
-            examDeadline: "15/11/2025",
-            facultyAssigned: "Anita Sharma",
-            imgUrl: image
-        },
-        {
-            id: 1,
-            className: "Class 7 A",
-            subject: "Physics",
-            examName: "Second Terminal Exam 2025",
-            examDeadline: "12/09/2025",
-            facultyAssigned: "Siana Catherine",
-            imgUrl: image  // or any image you prefer
-        },
-        {
-            id: 2,
-            className: "Class 9 B",
-            subject: "Mathematics",
-            examName: "Quarterly Exam 2025",
-            examDeadline: "30/10/2025",
-            facultyAssigned: "Joseph Martin",
-            imgUrl: image
-        },
-        {
-            id: 3,
-            className: "Class 10 A",
-            subject: "Biology",
-            examName: "Annual Exam 2025",
-            examDeadline: "15/11/2025",
-            facultyAssigned: "Anita Sharma",
-            imgUrl: image
-        },
-        {
-            id: 1,
-            className: "Class 7 A",
-            subject: "Physics",
-            examName: "Second Terminal Exam 2025",
-            examDeadline: "12/09/2025",
-            facultyAssigned: "Siana Catherine",
-            imgUrl: image  // or any image you prefer
-        },
-        {
-            id: 2,
-            className: "Class 9 B",
-            subject: "Mathematics",
-            examName: "Quarterly Exam 2025",
-            examDeadline: "30/10/2025",
-            facultyAssigned: "Joseph Martin",
-            imgUrl: image
-        },
-        {
-            id: 3,
-            className: "Class 10 A",
-            subject: "Biology",
-            examName: "Annual Exam 2025",
-            examDeadline: "15/11/2025",
-            facultyAssigned: "Anita Sharma",
-            imgUrl: image
-        },
-    ];
+    useEffect(() => {
+        const fetchEvaluationData = async () => {
+            try {
+                const response = await axios.get(`${APIURL}/api/evaluationadding/${admin_id}`);
+                console.log(response.data, "Fetched Evaluation Data");
+
+                if (response.data && Array.isArray(response.data)) {
+                    setEvaluationData(response.data);     // ✅ All fetched data
+                    setFilteredData(response.data);        // ✅ Initially show all
+                    setExamTypes([...new Set(response.data.map(item => `${item.class_name} ${item.division}`))]);
+                    setExamYears(
+                        Array.from(
+                            new Set(response.data.map(item => new Date(item.start_date).getFullYear().toString()))
+                        ).sort((a, b) => b - a)
+                    );
+                } else {
+                    setEvaluationData([]);
+                    setFilteredData([]);
+                }
+            } catch (error) {
+                console.error("Error fetching evaluation data:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to load evaluation data. Please try again later.'
+                });
+            }
+        };
+
+        if (admin_id) {
+            fetchEvaluationData();
+        }
+    }, [admin_id, APIURL]);
 
 
+
+
+
+    const handleSearch = () => {
+        const filtered = evaluationData.filter(item => {
+            const classMatch = selectedExamType === "" || `${item.class_name} ${item.division}` === selectedExamType;
+            const yearMatch = selectedFilterYear === "" || new Date(item.start_date).getFullYear().toString() === selectedFilterYear;
+            return classMatch && yearMatch;
+        });
+        setFilteredData(filtered);   // ✅ Update to show only filtered ones
+    };
 
     // Filter data based on dropdown selection
 
@@ -149,8 +101,8 @@ const NewEvaluationDashboard = () => {
                         {/* Exam Type Dropdown */}
                         <select
                             className="form-select form-select-sm evaluationdashboard_select_class"
-                        // value={selectedExamType}
-                        // onChange={(e) => setSelectedExamType(e.target.value)}
+                            value={selectedExamType}
+                            onChange={(e) => setSelectedExamType(e.target.value)}
                         >
                             <option value="">Select Class</option>
                             {examTypes.map((type, i) => (
@@ -160,17 +112,17 @@ const NewEvaluationDashboard = () => {
                         {/* Exam Year Dropdown */}
                         <select
                             className="form-select form-select-sm evaluationdashboard_select_year"
-                        // value={selectedFilterYear}
-                        // onChange={(e) => setSelectedFilterYear(e.target.value)}
+                            value={selectedFilterYear}
+                            onChange={(e) => setSelectedFilterYear(e.target.value)}
                         >
                             <option value="">Select Year</option>
-                            {/* {examYears.map((year, i) => (
-                                        <option key={i} value={year}>{year}</option>
-                                    ))} */}
+                            {examYears.map((year, i) => (
+                                <option key={i} value={year}>{year}</option>
+                            ))}
                         </select>
                         <button
                             className="btn-primary btn-sm evaluationdashboard_search_button"
-                           
+                            onClick={handleSearch}   // ✅ add this
                         >
                             Search
                         </button>
@@ -186,37 +138,45 @@ const NewEvaluationDashboard = () => {
             </div>
             <div className="evaluationdashboard_classes_box">
                 <div className="evaluationdashboard_container">
-                    {DummySeatingData.map((item) => (
-                        <div
+                    {filteredData.map((item, index) => (
+                        <div style={{
+                            cursor:"pointer"
+                        }} 
                             className="evaluationdashboard_classes_box_inner"
                             key={item.id}
-                            onClick={() => setShowPopupView(true)}
-                            
+                            onClick={() => handleCardClick(item)}
                         >
                             <div className="evaluationdashboard_top_row">
                                 <img
-                                    src={item.imgUrl}
-                                    alt="Class Icon"
+                                    src={item?.teacher_profile || profile}
+
                                     className="evaluationdashboard_box_icon"
                                 />
                                 <div className="evaluationdashboard_exam_details">
-                                    <p className="evaluationdashboard_class_name">{item.className}</p>
-                                    <p className="evaluationdashboard_subject">{item.subject}</p>
-                                    <p className="evaluationdashboard_exam_title">{item.examName}</p>
+                                    <p className="evaluationdashboard_class_name">{item.class_name} {item.division}</p>
+                                    <p className="evaluationdashboard_subject">{item.subject_name}</p>
+                                    <p className="evaluationdashboard_exam_title">{item.exam_name} {item.year}</p>
                                     <p className="evaluationdashboard_deadline">
-                                        Deadline: {item.examDeadline}
+                                        Deadline: {item.end_date}
                                     </p>
                                 </div>
                             </div>
                             <div className="evaluationdashboard_bottom_row">
                                 <p className="evaluationdashboard_faculty">
                                     <BsFillPersonFill style={{ paddingBottom: "2px", marginRight: "0.5rem" }} />
-                                    Faculty Assigned: {item.facultyAssigned}
+                                    Faculty Assigned: {item.teacher_name}
                                 </p>
                             </div>
-                        </div>    
+                        </div>
                     ))}
-                    {showPopupview && <NewEvaluationView isOpen={showPopupview} onClose={() => setShowPopupView(false)} />}
+                    {showPopupView && selectedEvaluation && (
+                        <NewEvaluationView
+                            isOpen={showPopupView}
+                            onClose={() => setShowPopupView(false)}
+                            selectedEvaluation={selectedEvaluation}  // ✅ Pass selectedEvaluation
+                        />
+                    )}
+
                 </div>
             </div>
         </div >
