@@ -35,7 +35,13 @@ function NewNavbarLoka() {
   useEffect(() => {
     const storedTab = localStorage.getItem("currentTab");
     if (storedTab) {
+<<<<<<< HEAD
       setCurrentTab(storedTab);
+=======
+
+      setcurrentTab(storedTab);
+
+>>>>>>> c1a42f5569e6f733ed8a1b02362cc5db55f8d76b
     }
   }, []);
 
@@ -84,14 +90,22 @@ const handlenavigate = () => {
               <Nav
                 variant="underline"
                 activeKey={currentTab}
+<<<<<<< HEAD
                 onSelect={(k) => setCurrentTab(k)}
+=======
+
+                onSelect={(k) => setcurrentTab(k)}
+
+>>>>>>> c1a42f5569e6f733ed8a1b02362cc5db55f8d76b
                 className="new_loka_dashboard_tab"
                 style={{ width: "100%"}}
               >
                 <Nav.Item>
                   <Nav.Link
                     eventKey="Textbook"
+
                     className={`new_loka_mob_subhead_one ${currentTab === 'Textbook' ? 'active-tab' : 'inactive-tab'}`}
+
                     style={{
                       textDecoration: "none",
                     }}
