@@ -218,6 +218,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
             color: '#292D32', // Change the color of the dropdown arrow
             padding: '0 8px',
             alignItems: 'center',
+            // fontWeight: '200',
             svg: {
                 width: '24px',
                 height: '24px'
@@ -257,7 +258,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
     return (
         <div className="AdminQuestionAssigning-backdrop">
             <div className="AdminQuestionAssigning-modal-content">
-                <div className="AdminQuestionAssigning-modal-header">
+                <div className="AdminQuestionAssigning-modal-header" >
                     <p className="AdminQuestionAssigning-modal-header-heading">Assign Teacher</p>
                     <button onClick={onClose} className="AdminQuestionAssigning-close-button">&times;</button>
                 </div>
@@ -266,7 +267,9 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                         <Row>
                             <Col className="AdminQuestionAssigning-form-group-col" md={6}>
                                 <div className="AdminQuestionAssigning-form-group">
-                                    <label className="AdminQuestionAssigning-form-label">Select Name of Examination</label>
+                                    <label className="AdminQuestionAssigning-form-label">
+                                        Select Name of Examination <span className="AdminQuestionAssigning-adding_required">*</span>
+                                        </label>
                                     <Select
                                         options={examinations}
                                         styles={customStyles}
@@ -280,7 +283,9 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                             </Col>
                             <Col md={6} className="AdminQuestionAssigning-form-group-col">
                                 <div className="AdminQuestionAssigning-form-group">
-                                    <label className="AdminQuestionAssigning-form-label">Select Year</label>
+                                    <label className="AdminQuestionAssigning-form-label">
+                                        Select Year <span className="AdminQuestionAssigning-adding_required">*</span>
+                                        </label>
                                     <Select
                                         options={filteredYears}
                                         styles={customStyles}
@@ -295,7 +300,9 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                         <Row>
                             <Col md={6} className="AdminQuestionAssigning-form-group-col">
                                 <div className="AdminQuestionAssigning-form-group">
-                                    <label className="AdminQuestionAssigning-form-label">Select Class</label>
+                                    <label className="AdminQuestionAssigning-form-label">
+                                        Select Class <span className="AdminQuestionAssigning-adding_required">*</span>
+                                        </label>
                                     <Select
                                         options={filteredClasses}
                                         styles={customStyles}
@@ -308,7 +315,9 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                             </Col>
                             <Col md={6} className="AdminQuestionAssigning-form-group-col">
                                 <div className="AdminQuestionAssigning-form-group">
-                                    <label className="AdminQuestionAssigning-form-label">Select Subject</label>
+                                    <label className="AdminQuestionAssigning-form-label">
+                                        Select Subject <span className="AdminQuestionAssigning-adding_required">*</span> 
+                                        </label>
                                     <Select
                                         options={filteredSubjects}
                                         styles={customStyles}
@@ -323,7 +332,9 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                         <Row>
                             <Col md={6} className="AdminQuestionAssigning-form-group-col">
                                 <div className="AdminQuestionAssigning-form-group">
-                                    <label className="AdminQuestionAssigning-form-label">Total Marks</label>
+                                    <label className="AdminQuestionAssigning-form-label">
+                                        Total Marks <span className="AdminQuestionAssigning-adding_required">*</span>
+                                        </label>
                                     <input
                                         type="text"
                                         min="0"
@@ -345,7 +356,9 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                             </Col>
                             <Col md={6} className="AdminQuestionAssigning-form-group-col">
                                 <div className="AdminQuestionAssigning-form-group">
-                                    <label className="AdminQuestionAssigning-form-label">Assign Teacher</label>
+                                    <label className="AdminQuestionAssigning-form-label">
+                                        Assign Teacher <span className="AdminQuestionAssigning-adding_required">*</span>
+                                        </label>
                                     <Select
                                         options={teachers}
                                         styles={customStyles}

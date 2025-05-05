@@ -1,0 +1,157 @@
+.teacherranklist-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.teacherranklist-popup {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+    width: 1058px;
+    padding: 0;
+    position: relative;
+    height: 600px;
+}
+
+.teacherranklist-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #DFDFDF;
+    padding: 16px 24px;
+}
+
+.teacherranklist-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #222;
+}
+
+.teacherranklist-close-btn {
+    font-size: 2rem;
+    cursor: pointer;
+    color: #222222;
+    line-height: 1;
+}
+
+.teacherranklist-table-container {
+    padding: 0;
+    overflow-y: auto;
+    height: calc(100% - 69px);
+}
+
+.teacherranklist-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 1.1rem;
+}
+
+.teacherranklist-table tr {
+    border-bottom: 1px solid #DFDFDF;
+}
+
+.teacherranklist-table tr:last-child {
+    border-bottom: none;
+}
+
+.teacherranklist-table td {
+    padding: 12px 24px;
+    vertical-align: middle;
+    border-left: none;
+    border-right: none;
+}
+
+.teacherranklist-table td:first-child {
+    width: 60%;
+}
+
+.teacherranklist-table td:nth-child(2) {
+    width: 35%;
+    padding-right: 0;
+}
+
+.teacherranklist-table td:last-child {
+    width: 5%;
+    padding-left: 0;
+}
+
+.teacherranklist-student {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.teacherranklist-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: block;
+}
+
+.teacherranklist-name {
+    font-size: 16px;
+    color: #222;
+    font-weight: 500;
+}
+
+.teacherranklist-rank-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-left: none;
+    border-right: none;
+    padding: 0;
+    min-width: 200px;
+}
+
+.teacherranklist-medal {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+}
+
+.teacherranklist-medal.rank1 {
+    background: #FFD700;
+}
+
+.teacherranklist-medal.rank2 {
+    background: #C0C0C0;
+}
+
+.teacherranklist-medal.rank3 {
+    background: #CD7F32;
+}
+
+.teacherranklist-text-rank {
+    color: #2563eb;
+    font-weight: 500;
+    font-style: italic;
+    white-space: nowrap;
+    text-align: right;
+    width: 100%;
+}
+
+.teacherranklist-arrow {
+    display: flex;
+    justify-content: center;
+    color: #666;
+    font-size: 20px;
+    padding-right: 8px;
+    width: 100%;
+}

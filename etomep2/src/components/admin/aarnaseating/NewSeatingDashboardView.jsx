@@ -24,23 +24,20 @@ const NewSeatingDashboardView = ({ selectedItem, onBack }) => {
 
     return (
         <div className="seatingview_main_container">
-            <div className="seatingview_main_container_inner">
+            <div className="seatingview_main_container_inner" >
                 <div className="seatingview_header_bar">
                     <span>Room no: {dummyData.roomNo}</span>
                     <button className="seating-modal-close-btn" onClick={onBack}>×</button>
                 </div >
                 <div className="seatingview_main_container_inner_header">
-
-                    {/* White info area with subject, date, times, faculties */}
                     <div className="seatingview_info_area">
-                        <div >
+                        <div>
                             <div className="seatingview_info_row heading">
                                 <p>Subject</p>
                                 <p>Exam Date</p>
                                 <p>Start Time</p>
                                 <p>End Time</p>
                             </div>
-
                             <div className="seatingview_info_row data">
                                 <p>{dummyData.subject}</p>
                                 <p>{dummyData.examDate}</p>
@@ -58,15 +55,12 @@ const NewSeatingDashboardView = ({ selectedItem, onBack }) => {
                                 <p>{dummyData.faculties.join(", ")}</p>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-
-                <div className="seatingview_main_container_inner_header">
+                <div className="seatingview_main_container_inner_table">
                     <div className="seatingview_studentlist_bar">
                         <span className="seatingview_studentlist_title">Student List</span>
-                        <select className="seatingview_class_select" style={{ border: "1px solid black" }}>
+                        <select className=" form-select form-select-sm seatingview_class_select" style={{ border: "1px solid black" }}>
                             <option value={dummyData.className}>{dummyData.className}</option>
                         </select>
                     </div>
@@ -75,7 +69,7 @@ const NewSeatingDashboardView = ({ selectedItem, onBack }) => {
                             <thead>
                                 <tr>
                                     <th>Name <span className="sort-arrow">
-                                        <img src={image} alt="Sort Arrow" className="sort-arrow-image"/>
+                                        <img src={image} alt="Sort Arrow" className="sort-arrow-image" />
                                     </span>
                                     </th>
                                     <th>Registration No</th>
@@ -101,7 +95,7 @@ const NewSeatingDashboardView = ({ selectedItem, onBack }) => {
                     </div>
                 </div>
                 <div className="seatingview_modal-footer">
-                    <button className="seatingview_btn seatingview_btn-danger">Clear</button>
+                    <button className="seatingview_btn seatingview_btn-danger">Delete</button>
                     <button className="seatingview_btn seatingview_btn-secondary">edit</button>
                 </div>
             </div>

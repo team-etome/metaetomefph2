@@ -9,6 +9,7 @@ import { Weight } from 'lucide-react';
 
 
 const NewEvaluationView = ({ isOpen, onClose }) => {
+    const [isEditMode, setIsEditMode] = useState(false);
 
     if (!isOpen) return null;
     const APIURL = useSelector((state) => state.APIURL.url);
@@ -27,14 +28,16 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
             boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
             '&:hover': {
                 borderColor: '#526D82',
-            }
+            },
+            backgroundColor: '#fff',
+            cursor: isEditMode ? 'pointer' : 'not-allowed'
         }),
         valueContainer: (base) => ({
             ...base,
             height: '48px',
             padding: '0 6px'
         }),
-        dropdownIndicator: (base) => ({
+        dropdownIndicator: (base, state) => ({
             ...base,
             color: '#292D32',
             padding: '0 8px',
@@ -42,10 +45,11 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
             svg: {
                 width: '24px',
                 height: '24px'
-            }
+            },
+            display: isEditMode ? 'flex' : 'none'
         }),
         indicatorSeparator: () => ({
-            display: 'none' // This removes the line (separator) before the dropdown arrow
+            display: 'none'
         }),
         placeholder: (base) => ({
             ...base,
@@ -88,25 +92,27 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                             <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
-                                        Select Name of Examination <span className="evaluationview_required">*</span>
+                                        Select Name of Examination {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
+                                        isDisabled={!isEditMode}
                                     />
                                 </div>
                             </div>
 
-                            <div >
+                            <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
-                                        Select Year <span className="evaluationview_required">*</span>
+                                        Select Year {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
+                                        isDisabled={!isEditMode}
                                     />
                                 </div>
                             </div>
@@ -115,31 +121,27 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                             <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
-                                        Select Subject <span className="evaluationview_required">*</span>
+                                        Select Subject {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
-                                        // options={subjectOptions}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                    // onChange={setSelectedSubject}
+                                        isDisabled={!isEditMode}
                                     />
                                 </div>
                             </div>
                             <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
-                                        Class <span className="evaluationview_required">*</span>
+                                        Class {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
-                                        // options={textbook}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                    // value={filteredSubjects.find(opt => opt.value === selectedSubject)}
-                                    // onChange={(selected) => setTextbook(selected?.value || null)}
+                                        isDisabled={!isEditMode}
                                     />
-
                                 </div>
                             </div>
                         </div>
@@ -147,7 +149,7 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                             <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
-                                        Date of Examination <span className="evaluationview_required">*</span>
+                                        Date of Examination {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <input
                                         type="date"
@@ -162,9 +164,11 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                                             color: '#526D82',
                                             width: '100%',
                                             boxSizing: 'border-box',
-                                            outline: "none"
+                                            outline: "none",
+                                            backgroundColor: '#fff',
+                                            cursor: isEditMode ? 'pointer' : 'not-allowed'
                                         }}
-                                    // onChange={e => setVolume(e.target.value)}
+                                        disabled={!isEditMode}
                                     />
                                 </div>
                             </div>
@@ -184,8 +188,11 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                                             color: '#526D82',
                                             width: '100%',
                                             boxSizing: 'border-box',
-                                            outline: "none"
+                                            outline: "none",
+                                            backgroundColor: '#fff',
+                                            cursor: isEditMode ? 'pointer' : 'not-allowed'
                                         }}
+                                        disabled={!isEditMode}
                                     />
                                 </div>
                             </div>
@@ -194,17 +201,14 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                             <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
-                                        Select Faculty <span className="evaluationview_required">*</span>
+                                        Select Faculty {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
-                                        // options={textbook}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
-                                    // value={filteredSubjects.find(opt => opt.value === selectedSubject)}
-                                    // onChange={(selected) => setTextbook(selected?.value || null)}
+                                        isDisabled={!isEditMode}
                                     />
-
                                 </div>
                             </div>
                         </div>
@@ -212,7 +216,12 @@ const NewEvaluationView = ({ isOpen, onClose }) => {
                 </div>
                 <div className="evaluationview-modal-footer">
                     <button className="evaluationview-btn evaluationview-btn-danger">Delete</button>
-                    <button className="evaluationview-btn evaluationview-btn-primary">Edit</button>
+                    <button 
+                        className="evaluationview-btn evaluationview-btn-primary"
+                        onClick={() => setIsEditMode(!isEditMode)}
+                    >
+                        {isEditMode ? 'Save' : 'Edit'}
+                    </button>
                 </div>
             </div>
         </div>

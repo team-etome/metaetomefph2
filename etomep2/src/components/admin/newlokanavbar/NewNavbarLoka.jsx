@@ -35,7 +35,7 @@ function NewNavbarLoka() {
   useEffect(() => {
     const storedTab = localStorage.getItem("currentTab");
     if (storedTab) {
-      setcurrentTab(storedTab);
+      setCurrentTab(storedTab);
     }
   }, []);
 
@@ -84,7 +84,7 @@ const handlenavigate = () => {
               <Nav
                 variant="underline"
                 activeKey={currentTab}
-                onSelect={(k) => setcurrentTab(k)}
+                onSelect={(k) => setCurrentTab(k)}
                 className="new_loka_dashboard_tab"
                 style={{ width: "100%"}}
               >

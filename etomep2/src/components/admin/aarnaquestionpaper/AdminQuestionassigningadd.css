@@ -21,16 +21,19 @@
   width: 700px;
   height: 650px;
   padding: 0px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .AdminQuestionAssigning-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  padding: 24px;
+  margin-bottom: 16px;
+  height: 72px;
+  padding-left: 24px;
+  padding-right: 24px;
   padding-bottom: 0px;
+  border-bottom: 1px solid #DFDFDF;
 }
 
 .AdminQuestionAssigning-modal-header-heading {
@@ -139,4 +142,9 @@
   border-color: #526D82 !important;
   box-shadow: 0 0 5px rgba(82, 109, 130, 0.6);
   /* outline: none; */
+}
+
+.AdminQuestionAssigning-adding_required {
+  font-weight: 400;
+  color: red;
 }

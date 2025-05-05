@@ -101,7 +101,7 @@
 
 /* BOTTOM ROW: No. of Subjects */
 .adminclassview-info-container-bottom {
-    margin-top: 16px;
+    margin-top: 40px;
 }
 
 /* A single piece of info, e.g. "Class Teacher": "Sethu Lakshmi" */
@@ -205,6 +205,7 @@
     display: table;
     width: 100%;
     table-layout: fixed;
+    height: 56px;
   }
   
   /* Cells: remove vertical borders, keep only the bottom line */
@@ -219,7 +220,7 @@
     background: white;         /* ensure header & body backgrounds */
   }
   
-  /* Optional: keep header background white so it doesn’t scroll */
+  /* Optional: keep header background white so it doesn't scroll */
   .adminclassview-table thead th {
     background: #fff;
     position: sticky;
@@ -237,12 +238,18 @@
     color: #333;
 }
 
+.adminclassview-table th {
+    color: #8D8A95;
+    font-size: 14px;
+    font-weight: 400;
+}
+
 /************************
     Footer
   *************************/
 .adminclassview-modal-footer {
     display: flex;
-    gap: 12px;
+    gap: 8px;
     justify-content: flex-end;
     padding: 16px 24px;
     border-top: 1px solid #eee;

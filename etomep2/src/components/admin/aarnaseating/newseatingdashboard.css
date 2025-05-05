@@ -60,6 +60,7 @@
     height: 40px;
     font-size: 1rem;
     border-radius: 8px;
+    border: 1px solid #4A4A4A;
 }
 
 .seating_select_year {
@@ -67,6 +68,7 @@
     height: 40px;
     font-size: 1rem;
     border-radius: 8px;
+    border: 1px solid #4A4A4A;
 }
 
 /* Wrapper for tables */
@@ -84,8 +86,10 @@
 /* Container for the seating grid */
 .seating_container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Flexible columns with a minimum width */
-    gap: 16px; /* Fixed 16px gap between items */
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    /* Flexible columns with a minimum width */
+    gap: 16px;
+    /* Fixed 16px gap between items */
 }
 
 /* Each individual box (card) */
@@ -95,7 +99,8 @@
     border: 1px solid #B2B2B2;
     padding: 16px;
     /* Width will be flexible based on screen size */
-    width: 100%;  /* Ensure the cards take up the full width of their grid cell */
+    width: 100%;
+    /* Ensure the cards take up the full width of their grid cell */
     height: 147.47px;
     display: flex;
     flex-direction: column;
@@ -190,7 +195,7 @@
 
 /* step 1*/
 .seating-form-label {
-    margin-top: 16px;
+    /* margin-top: 16px; */
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 6px;
@@ -211,10 +216,10 @@
 }
 
 .seating_stepone_select_year {
-    width: 501px;
+    width: 100% !important;
     height: 48px;
     font-size: 1rem;
-    border: 1px solid #757575;
+    border: 1px solid #757575 !important;
     border-radius: 8px;
 }
 
@@ -230,16 +235,23 @@
     outline: none;
 }
 
-/* .seating_stepone_form-control:focus {
-    border: 1px solid #2162B2;
-} */
+
+.seating_steptwo_faculties-assigned {
+    width: 100% !important;
+    height: 48px;
+    font-size: 1rem;
+    border: 1px solid #757575;
+    border-radius: 8px;
+    padding: 0 12px;
+    background-color: white;
+}
 
 
 .seating_form-control {
     width: 100%;
-    height: 40px;
+    height: 48px;
     margin-bottom: 16px;
-    border: 1px solid #CCC;
+    border: 1px solid #757575;
     border-radius: 8px;
     padding: 0 10px;
     font-size: 14px;
@@ -255,7 +267,7 @@
     width: 100%;
     height: 48px;
     /* margin-bottom: 16px; */
-    border: 1px solid #CCC;
+    border: 1px solid #757575;
     border-radius: 8px;
     padding: 0 10px;
     font-size: 14px;
@@ -276,39 +288,90 @@
     width: 100%;
     height: 48px;
     /* margin-bottom: 16px; */
-    border: 1px solid #CCC;
+    border: 1px solid #757575;
     border-radius: 8px;
     padding: 0 10px;
     font-size: 14px;
     outline: none;
 }
 
-  
+
 
 /* Step row/column layout for multiple fields side by side */
 .seating_step-row {
+    position: relative;
     display: flex;
     gap: 1rem;
     margin-bottom: 16px;
-    gap:8px;
-    /* margin-top: 24px; */
+    gap: 8px;
 }
-.seating_step-row_stepone{
+
+.seating_row-with-delete {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.seating_row-with-delete:not(.seating_first-row):hover {
+    transform: scale(0.96);
+}
+
+.seating_delete-row-btn {
+    position: absolute;
+    top: 40%;
+    right: -20px;
+    transform: translateY(-50%);
+    background: transparent;
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: none;
+    height: 0px !important;
+    width: 0px !important;
+    transition: all 0.3s ease;
+}
+
+.seating_row-with-delete:not(.seating_first-row):hover .seating_delete-row-btn {
+    display: block;
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.seating_first-row {
+    pointer-events: none;
+}
+
+.seating_first-row .seating_step-column {
+    pointer-events: auto;
+}
+
+.seating_step-row_stepone {
     display: flex;
     gap: 1rem;
     margin-bottom: 16px;
-    margin-top: 8px;
-    gap:8px;
+    margin-top: 40px;
+    gap: 8px;
 }
 
 .seating_step-column {
     flex: 1;
 }
 
+.seating_step-column_Faculties-assigned {
+    position: relative;
+    width: 100%;
+    min-width: 300px;
+    /* margin-left: 16px; */
+}
+
+.seating_step-column_Faculties-assigned select {
+    width: 100% !important;
+}
+
 .seating_step-column_steptwo {
     box-sizing: border-box;
     height: 75px;
-    width: 242px;
+    width: 242px !important;
 }
 
 /* + Add Next button example */
@@ -350,16 +413,19 @@
 .row-with-delete:hover .remove-row-btn {
     display: block;
 }
+
 /* For rows except the first, position at 50% */
 .row-with-delete:not(.first-row) .remove-row-btn {
     top: 40%;
     transform: translateY(-50%);
-  }
-  .row-with-delete.first-row .remove-row-btn {
-    top: 60%; /* Adjust this value until the cross aligns with the input */
+}
+
+.row-with-delete.first-row .remove-row-btn {
+    top: 60%;
+    /* Adjust this value until the cross aligns with the input */
     transform: translateY(-60%);
-  }
-  
+}
+
 
 .add-next-btn-container {
     margin-top: 15px;
@@ -478,8 +544,16 @@
 
 /* Completed step highlight (optional style) */
 .seating-step.completed .seating-step-number {
-    background-color: #28a745;
+    background-color: #2162B2;
     /* green or any color indicating "done" */
+}
+
+.seating-step-label.completed-label {
+    color: black;
+}
+
+.seating-step-label.active-label {
+    color: #007bff;
 }
 
 /* Step content area inside the modal */
@@ -487,12 +561,14 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    margin-top: 24px;
 }
-.seating-modal-step-content_steptwo_entrytable{
+
+.seating-modal-step-content_steptwo_entrytable {
     flex: 1;
     display: flex;
     flex-direction: column;
-    /* margin-top: 24px; */
+    margin-top: 24px;
     max-height: 300px;
     overflow-y: auto;
 }
@@ -565,7 +641,7 @@
 
 .layout-option {
     cursor: pointer;
-    border: 1px solid #ccc;
+    border: 1px solid #E4E4E4;
     border-radius: 8px;
     width: 207px;
     height: 185px;
@@ -580,12 +656,12 @@
     background-color: #f4f4f4;
     margin: 0px;
 }
-  
-  .layout-option img {
+
+.layout-option img {
     width: 207px;
     height: 185px;
     object-fit: cover;
-  }
+}
 
 
 
@@ -593,7 +669,7 @@
 
 
 
-  /* The custom modal overlay & content */
+/* The custom modal overlay & content */
 .seatingview-custom-modal-overlay {
     position: fixed;
     top: 0;
@@ -609,8 +685,10 @@
 
 .seatingview-custom-modal-content {
     background-color: #fff;
-    width: 1058px; /* Adjust modal width as needed */
-    height: 650px; /* Adjust height as needed */
+    width: 1058px;
+    /* Adjust modal width as needed */
+    height: 650px;
+    /* Adjust height as needed */
     border-radius: 16px;
     padding: 0px;
     position: relative;
@@ -618,4 +696,103 @@
     flex-direction: column;
     box-sizing: border-box;
 }
-  
+
+
+.seating_faculty-tags {
+    display: inline-flex;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #DEE2E6;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 16px;
+    color: #212529;
+    cursor: default;
+    height: 40px;
+}
+
+.seating_faculty-remove-icon {
+    margin-left: 12px;
+    cursor: pointer;
+    font-weight: normal;
+    color: black;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid black;
+    font-size: 18px;
+    transition: all 0.2s ease;
+    padding: 0;
+    background: none;
+}
+
+/* .faculty-remove-icon:hover {
+    background-color: #f8f9fa;
+    color: #dc3545;
+} */
+
+/* Container styling */
+.seating_step-column_Faculties-assigned {
+    flex: 1;
+    min-width: 300px;
+}
+
+.faculty-selected-display {
+    padding: 0 !important;
+    height: auto !important;
+    min-height: 32px;
+}
+
+
+
+
+
+
+
+
+.seating_faculty-tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-height: 48px;
+    padding: 4px;
+    border: 1px solid #757575;
+    border-radius: 8px;
+}
+
+.seating_dropdown-icon {
+    position: absolute;
+    top: 70%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.seating_options-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 4px;
+    padding: 8px 0;
+    list-style: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.seating_options-list li {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.seating_options-list li:hover {
+    background: #f0f0f0;
+}

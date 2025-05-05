@@ -18,6 +18,7 @@ import { FadeLoader } from "react-spinners";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import NewLokaLibraryAdd from "./NewLokaLibraryAdd";
+import NewLokaLibraryEdit from "./NewLokaLibraryEdit";
 import chemistry from "../../../assets/chemistry.png";
 
 function NewLokaLibraryDashboard() {
@@ -29,6 +30,8 @@ function NewLokaLibraryDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -91,12 +94,16 @@ function NewLokaLibraryDashboard() {
     return acc;
   }, {});
 
+  const handleBookClick = (book) => {
+    setSelectedBook(book);
+    setShowEditPopup(true);
+  };
+
   return (
-    <Container fluid className="admin_loka_library_container p-0">
+    <div className="admin_loka_library_container">
       <div className="admin_loka_library_fixed_header">
-        <div className="admin_loka_librarynav_header mb-4">
-          <Row className="admin_loka_library_header_row">
-            <Col md={4} className="admin_loka_library_select_col">
+          <div className="admin_loka_library_header_row">
+            <div className="admin_loka_library_select_col">
               <Form.Select
                 className="admin_loka_library_select"
                 onChange={(e) => setSelectedCategory(e.target.value)}
@@ -109,38 +116,40 @@ function NewLokaLibraryDashboard() {
                   </option>
                 ))}
               </Form.Select>
-            </Col>
-            <Col md={8} className="d-flex justify-content-end align-items-center" style={{ paddingRight: "0px" }}>
-              <div className="admin_loka_library_select_col_right">
-                <InputGroup className="admin_loka_library_search">
-                  <FormControl
-                    className="admin_loka_library_search_search_input"
-                    placeholder="Search Books"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </InputGroup>
-                <button
-                  className="btn-primary btn-sm admin_loka_library_add_button"
-                  onClick={() => setShowPopup(true)}
-                >
-                  + Add
-                </button>
-                {showPopup && <NewLokaLibraryAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
-              </div>
-            </Col>
-          </Row>
-        </div>
+            </div>
+            <div className="admin_loka_library_select_col_right">
+              <InputGroup className="admin_loka_library_search">
+                <Form.Control
+                  className="admin_loka_library_search_search_input"
+                  placeholder="Search Books"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </InputGroup>
+              <button
+                className="btn-primary btn-sm admin_loka_library_add_button"
+                onClick={() => setShowPopup(true)}
+              >
+                + Add
+              </button>
+              {showPopup && <NewLokaLibraryAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
+            </div>
+          </div>
       </div>
 
-      <div className="admin_loka_library_scroll_container" >
+      <div className="admin_loka_library_scroll_container">
         {Object.keys(groupedBooks).length > 0 ? (
           Object.keys(groupedBooks).map((cat) => (
-            <div key={cat}>
-              <h5 className="admin_loka_library_class_heading">{cat}</h5>
-              <Row className="admin_loka_library_book_grid">
+            <div key={cat} className="admin_loka_library_class_section mb-4">
+              <p className="admin_loka_library_class_heading">{cat}</p>
+              <div className="admin_loka_library_book_grid">
                 {groupedBooks[cat].map((item, index) => (
-                  <Col key={index} md={3} className="admin_loka_library_book_col">
+                  <div 
+                    key={index} 
+                    className="admin_loka_library_book_col"
+                    onClick={() => handleBookClick(item)}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <div className="admin_loka_library_book_card">
                       <div className="admin_loka_library_book_img">
                         <img
@@ -157,9 +166,9 @@ function NewLokaLibraryDashboard() {
                         <div className="admin_loka_library_publisher_name">{item.publisher_name}</div>
                       </div>
                     </div>
-                  </Col>
+                  </div>
                 ))}
-              </Row>
+              </div>
             </div>
           ))
         ) : (
@@ -168,7 +177,16 @@ function NewLokaLibraryDashboard() {
           </div>
         )}
       </div>
-    </Container>
+
+      {showEditPopup && selectedBook && (
+        <NewLokaLibraryEdit 
+          isOpen={showEditPopup} 
+          onClose={() => setShowEditPopup(false)} 
+          bookData={selectedBook}
+        />
+      )}
+    </div>
   );
 }
+
 export default NewLokaLibraryDashboard;

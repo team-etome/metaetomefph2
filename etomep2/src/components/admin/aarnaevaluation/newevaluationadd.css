@@ -9,36 +9,36 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1050 !important;
-    padding: 15px;
+    z-index: 1050;
 }
 
 .evaluationadd-modal-content {
-    background: white;
-    border-radius: 12px;
-
-    width: 700px;
-    height: 650px;
-
     display: flex;
     flex-direction: column;
-    padding: 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
+    /* Flexbox layout */
+    background: white;
+    border-radius: 12px;
+    width: 700px;
+    height: 650px;
+    padding: 0px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .evaluationadd-modal-header {
-    padding: 20px;
-    border-bottom: 1px solid #DFDFDF;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0;
-    position: sticky;
-    top: 0;
-    background: white;
-    z-index: 1;
+    height: 72px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 0px;
+    border-bottom: 1px solid #DFDFDF;
+}
+
+.evaluationadd-modal-header-heading {
+    font-size: 20px;
+    font-weight: 600;
+    color: #222222;
 }
 
 .evaluationadd-close-button {
@@ -56,10 +56,11 @@
     overflow-y: auto;
     padding: 0px !important;
     flex-grow: 1;
-
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping of columns */
-    gap: 8px; /* Fixed gap between columns */
+    flex-wrap: wrap;
+    /* Allow wrapping of columns */
+    gap: 8px;
+    /* Fixed gap between columns */
 }
 
 .evaluationadd-form-group {
@@ -69,11 +70,14 @@
     margin-left: 0px !important;
     margin-right: 0px !important;
 }
+
 .evaluationadd-modal-body-row {
     display: flex;
-    width: 652px; /* Set row width to 652px */
+    width: 652px;
+    /* Set row width to 652px */
     justify-content: space-between;
-    gap: 8px; /* 8px gap between the columns */
+    gap: 8px;
+    /* 8px gap between the columns */
 
 }
 
@@ -112,7 +116,7 @@
 .evaluationadd-btn {
     padding: 10px 20px;
 
-    border-radius: 5px;
+    border-radius:8px;
     border: none;
     cursor: pointer;
     min-width: 100px;
@@ -225,6 +229,7 @@
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -251,12 +256,12 @@
     .evaluationadd-form-group {
         margin-bottom: 12px;
     }
-    
+
     .evaluationadd-modal-footer {
         flex-direction: column;
         gap: 8px;
     }
-    
+
     .evaluationadd-btn {
         width: 100%;
     }
@@ -268,7 +273,7 @@
         height: 100vh;
         max-height: none;
     }
-    
+
     .evaluationadd-modal-body {
         max-height: calc(100vh - 140px);
     }

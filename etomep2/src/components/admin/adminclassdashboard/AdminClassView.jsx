@@ -60,7 +60,7 @@ const AdminClassView = ({ onClose }) => {
                     {/* Info items */}
                     <div className="adminclassview-info-container">
                         {/* Top row */}
-                        <div className="adminclassview-info-container-top">
+                        <div className="adminclassview-info-container-top" >
                             <div className="adminclassview-info-item">
                                 <p className="adminclassview-label">Class Teacher</p>
                                 <p className="adminclassview-value">{data.classTeacher}</p>

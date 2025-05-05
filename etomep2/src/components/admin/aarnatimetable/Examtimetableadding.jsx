@@ -148,7 +148,7 @@ const Examtimetableadding = ({ onClose }) => {
 
     return (
         <div className="examtimetable-adding-backdrop">
-            <div className="examtimetable-adding-container" >
+            <div className="examtimetable-adding-container">
                 <div className="examtimetable-adding-header">
                     <h3>Add Time Table</h3>
                     <button onClick={onClose} className="btn-close" aria-label="Close"></button>

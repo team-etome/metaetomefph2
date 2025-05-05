@@ -244,12 +244,16 @@ const NewResultFilter = () => {
     const headerRef = useRef(null);
     const bodyRef = useRef(null);
     const isSyncingRef = useRef(false);
+    const scrollbarRef = useRef(null);
 
     const handleHeaderScroll = (e) => {
         if (isSyncingRef.current) return;
         isSyncingRef.current = true;
         if (bodyRef.current) {
             bodyRef.current.scrollLeft = e.target.scrollLeft;
+        }
+        if (scrollbarRef.current) {
+            scrollbarRef.current.scrollLeft = e.target.scrollLeft;
         }
         window.requestAnimationFrame(() => { isSyncingRef.current = false; });
     };
@@ -260,14 +264,25 @@ const NewResultFilter = () => {
         if (headerRef.current) {
             headerRef.current.scrollLeft = e.target.scrollLeft;
         }
+        if (scrollbarRef.current) {
+            scrollbarRef.current.scrollLeft = e.target.scrollLeft;
+        }
+        window.requestAnimationFrame(() => { isSyncingRef.current = false; });
+    };
+
+    const handleScrollbarScroll = (e) => {
+        if (isSyncingRef.current) return;
+        isSyncingRef.current = true;
+        if (headerRef.current) headerRef.current.scrollLeft = e.target.scrollLeft;
+        if (bodyRef.current) bodyRef.current.scrollLeft = e.target.scrollLeft;
         window.requestAnimationFrame(() => { isSyncingRef.current = false; });
     };
 
     return (
         <div className="result_main_container">
             <div className="result_main_header_container">
-                <div className="header-controls d-flex justify-content-between align-items-center px-3 py-2">
-                    <div className="left-controls">
+                <div className="result_main-header-controls d-flex justify-content-between align-items-center">
+                    <div className="result_main-left-controls">
                         {/* Exam Type Dropdown */}
                         <select
                             className="form-select form-select-sm result_select_exam"
@@ -369,6 +384,14 @@ const NewResultFilter = () => {
                         </table>
                     </div>
                 </div>
+            </div>
+
+            <div
+                className="result-table-scrollbar-container"
+                ref={scrollbarRef}
+                onScroll={handleScrollbarScroll}
+            >
+                <div style={{ width: headerRef.current ? headerRef.current.firstChild.scrollWidth : 0, height: 1 }} />
             </div>
         </div>
     );

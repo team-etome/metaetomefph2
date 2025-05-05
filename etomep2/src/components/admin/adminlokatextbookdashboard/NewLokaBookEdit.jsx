@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
-import './newlokalibraryedit.css';
+import './newlokabookedit.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -374,15 +374,16 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
         <div className="lokatextbookedit-backdrop">
             <div className="lokatextbookedit-modal-content">
                 <div className="lokatextbookedit-modal-header">
-                    <h5>Edit Textbook</h5>
+                    <p className="lokatextbookadd-modal-header-heading">Edit Textbook</p>
                     <button onClick={onClose} className="lokatextbookedit-close-button">&times;</button>
                 </div>
                 <div className="lokatextbookedit-modal-body">
                     <form>
-                        <Row>
-                            <Col md={6} >
+                    <div className="lokatextbookedit-form-grid">
                                 <div className="lokatextbookedit-form-group" >
-                                    <label className="lokatextbookedit-form-label" >Select Class</label>
+                                    <label className="lokatextbookedit-form-label" >
+                                        Select Class <span className="lokatextbookadd_required">*</span>
+                                        </label>
                                     <Select
                                         options={classOptions}
                                         styles={customStyles}
@@ -392,8 +393,7 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                         onChange={handleClassChange}
                                     />
                                 </div>
-                            </Col>
-                            <Col md={6}>
+                
                                 <div className="lokatextbookedit-form-group">
                                     <label className="lokatextbookedit-form-label">Select Medium</label>
                                     <Select
@@ -405,12 +405,10 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                         onChange={setSelectedMedium}
                                     />
                                 </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={6}>
+                           
                                 <div className="lokatextbookedit-form-group">
-                                    <label className="lokatextbookedit-form-label">Select Subject</label>
+                                    <label className="lokatextbookedit-form-label">
+                                        Select Subject  <span className="lokatextbookedit_required">*</span></label>
                                     <Select
                                         options={subjectOptions}
                                         styles={customStyles}
@@ -420,18 +418,10 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                         onChange={setSelectedSubject}
                                     />
                                 </div>
-                            </Col>
-                            <Col md={6}>
+                          
                                 <div className="lokatextbookedit-form-group">
                                     <label className="lokatextbookedit-form-label">Textbook Name</label>
-                                    {/* <Select
-                                        options={textbook}
-                                        styles={customStyles}
-                                        placeholder=""
-                                        isClearable={true}
-                                        value={filteredSubjects.find(opt => opt.value === selectedSubject)}
-                                        onChange={(selected) => setTextbook(selected?.value || null)}
-                                    /> */}
+                                    
                                     <input
                                         type="text"
                                         min="0"
@@ -439,7 +429,7 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                         style={{
                                             height: '50px',
                                             border: '1px solid #ccc',
-                                            borderRadius: '4px',
+                                            borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
                                             color: '#526D82',
@@ -451,10 +441,7 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                         onChange={e => setTextBookName(e.target.value)}
                                     />
                                 </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={6}>
+                        
                                 <div className="lokatextbookedit-form-group">
                                     <label className="lokatextbookedit-form-label">Volume</label>
                                     <input
@@ -476,8 +463,7 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                         onChange={e => setVolume(e.target.value)}
                                     />
                                 </div>
-                            </Col>
-                            <Col md={6}>
+                           
                                 <div className="lokatextbookedit-form-group">
                                     <label className="lokatextbookedit-form-label">Publisher Name</label>
                                     <Select
@@ -489,11 +475,8 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                         onChange={setSelectedPublisher}
                                     />
                                 </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={12}>
-                                <div className="lokatextbookedit-form-group">
+                           
+                                <div className="lokatextbookedit-form-group lokatextbookedit-form-group--full">
                                     <label className="lokatextbookedit-form-label">Add cover Photo</label>
                                     <div>
                                         <label htmlFor="photo" style={{}}></label>
@@ -538,11 +521,8 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                         </div>
                                     </div>
                                 </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={12}>
-                                <div className="lokatextbookedit-form-group">
+                           
+                                <div className="lokatextbookedit-form-group lokatextbookedit-form-group--full">
                                     <div className="lokatextbookedit_chapter-upload-wrapper">
                                         <label className="lokatextbookedit_chapter-upload-label">Number of Chapters</label>
                                         <input
@@ -620,12 +600,11 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                         </div>
                                     </div>
                                 </div>
-                            </Col>
-                        </Row>
+                           </div>
                     </form>
                 </div>
                 <div className="lokatextbookedit-modal-footer">
-                    <button onClick={handleDeleteTextbook} className="lokatextbookedit-btn lokatextbookedit-btn-secondary_delete">Delete</button>
+                    <button onClick={handleDeleteTextbook} className="lokatextbookedit-btn lokatextbookedit-btn-danger">Delete</button>
                     <button onClick={onClose} className="lokatextbookedit-btn lokatextbookedit-btn-secondary">Clear</button>
                     <button onClick={handleSave} className="lokatextbookedit-btn lokatextbookedit-btn-primary">Save</button>
                 </div>

@@ -1,11 +1,11 @@
 import React from 'react';
 import './newfacultyview.css';
 import defaultImage from "../../../assets/default.jpg";
+import image from "../../../assets/messi-ronaldo-1593920966.jpg"
 
 const NewFacultyView = ({ faculty, onClose }) => {
     if (!faculty) return null;
 
-    // Dummy faculty data to mimic the screenshot
 
     return (
         <div className="facultyview-backdrop">
@@ -13,25 +13,23 @@ const NewFacultyView = ({ faculty, onClose }) => {
 
                 {/* Header Section */}
                 <div className="facultyview-header">
-                    <div className="facultyview-title">{faculty.first_name} {faculty.last_name}</div>
-                    <button className="facultyview-close-btn" onClick={onClose}>
-                        &times;
-                    </button>
-                </div>
-                <hr className="facultyview-divider" />
-
-                <div className="facultyview-email-row">
-                    <img
-                        src={faculty.image || defaultImage}
-                        alt="Faculty Avatar"
-                        className="facultyview-profile-image"
-                    />
-                    <div className="facultyview-text-container">
-                        <div className="facultyview-title">{faculty.first_name} {faculty.last_name}</div>
-                        <div className="facultyview-email">{faculty.email}</div>
+                    <div className="facultyview-email-row" >
+                        <img
+                            src={faculty.image || image}
+                            alt="Faculty Avatar"
+                            className="facultyview-profile-image"
+                        />
+                        <div className="facultyview-text-container">
+                            <div className="facultyview-title">{faculty.first_name} {faculty.last_name}</div>
+                            <div className="facultyview-email">{faculty.email}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <button className="facultyview-close-btn" onClick={onClose}>
+                            &times;
+                        </button>
                     </div>
                 </div>
-
                 <hr className="facultyview-divider" />
 
                 {/* Personal Information */}

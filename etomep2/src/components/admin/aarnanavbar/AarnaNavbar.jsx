@@ -15,6 +15,7 @@ import NewResultFilter from "../aarnaresult/NewResultFilter";
 import NewSeatingDashboard from "../aarnaseating/NewSeatingDashboard";
 import NewSeatingDashboardView from "../aarnaseating/NewSeatingDashboardView";
 import NewEvaluationDashboard from "../aarnaevaluation/NewEvaluationDashboard";
+import Students from "../../admin/aarnaresult/StudentTable"
 
 function AarnaNavbar() {
     const admininfo = useSelector((state) => state.admininfo);
@@ -148,6 +149,7 @@ function AarnaNavbar() {
                     {activeTab === "Evaluation" && <NewEvaluationDashboard />}
                     {/* {activeTab === "Result" && <ResultFilter />} */}
                     {activeTab === "Result" && <NewResultFilter/>}
+                    {/* {activeTab === "Result" && <Students/>} */}
                 </div>
 
             </Container>

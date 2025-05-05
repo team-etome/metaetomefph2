@@ -15,8 +15,8 @@
     background: #fff;
     width: 1058px;
     /* Adjust based on preference */
-    max-width: 90vw;
-    border-radius: 8px;
+    /* max-width: 90vw; */
+    border-radius: 16px;
     overflow: hidden;
     /* So the corners are rounded nicely */
     display: flex;

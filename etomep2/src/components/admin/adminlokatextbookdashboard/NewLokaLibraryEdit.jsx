@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
-import './newlokalibraryadd.css';
+import './newlokalibraryedit.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -9,7 +9,7 @@ import { FaTrash, FaRedo } from "react-icons/fa";
 import CreatableSelect from 'react-select/creatable';
 import { BiBorderRadius } from 'react-icons/bi';
 
-const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
+const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
@@ -17,13 +17,9 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
 
     const [apicomingcatogory, setApiComingCatogory] = useState([]);
     const [category, setCategory] = useState(null); // only dropdown
-    const [title, setTitle] = useState('');
-    const [authorName, setAuthorName] = useState('');
-    const [publisherName, setPublisherName] = useState('');
     const [categoryValue, setCategoryValue] = useState(null);
     const [inputValue, setInputValue] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+
 
     // Use one state for the cover image
     const [coverPhoto, setCoverPhoto] = useState(null);
@@ -39,68 +35,6 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
         setDocumentFile(null);
     };
 
-    useEffect(() => {
-        const fetchCategory = async () => {
-            try {
-                const response = await axios.get(`${APIURL}/api/category/${admin_id}`);
-                const catOptions = response.data.categories.map((cat) =>
-                    typeof cat === 'string'
-                      ? { value: cat, label: cat }
-                      : { value: cat.id, label: cat.name }
-                  );
-                  setApiComingCatogory(catOptions);
-            } catch (err) {
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchCategory();
-    }, [APIURL, admin_id]);
-
-    const handleSave = async () => {
-        if (!category || !title || !authorName || !publisherName || !coverPhoto || !documentFile) {
-            Swal.fire({
-                icon: "warning",
-                title: "Missing Fields",
-                text: "Please select all fields before submitting.",
-                confirmButtonText: "OK",
-            });
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('admin_id', admin_id);
-        formData.append('category', category);
-        formData.append('text_name', title);
-        formData.append('author_name', authorName);
-        formData.append('publisher_name', publisherName);
-        formData.append('textbook_front_page', coverPhoto);
-        formData.append('textbook_pdf', documentFile);
-
-        try {
-            const response = await axios.post(`${APIURL}/api/create-textbook/`, formData);
-
-            Swal.fire({
-                icon: "success",
-                title: "Success",
-                text: "Textbook created successfully!",
-                confirmButtonText: "OK"
-            }).then(() => {
-                onClose(); // close modal after OK
-            });
-
-        } catch (error) {
-            console.error("Error saving data:", error);
-            Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: error.response?.data?.error || "Something went wrong while saving.",
-                confirmButtonText: "OK"
-            });
-        }
-    };
 
     const customStyles = {
         control: (base, state) => ({
@@ -174,7 +108,7 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
                                     Add Category <span className="lokalibraryadd_required">*</span>
                                 </label>
                                 <CreatableSelect
-                                    value={categoryValue}
+                                    // value={categoryValue}
                                     inputValue={inputValue}
                                     options={apicomingcatogory}
                                     styles={customStyles}
@@ -212,8 +146,6 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
                                 <input
                                     type="text"
                                     className="custom-input"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
                                 />
                             </div>
                             <div className="lokalibraryadd-form-group">
@@ -223,8 +155,6 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
                                 <input
                                     type="text"
                                     className="custom-input"
-                                    value={authorName}
-                                    onChange={(e) => setAuthorName(e.target.value)}
                                 />
                             </div>
                             <div className="lokalibraryadd-form-group">
@@ -234,8 +164,6 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
                                 <input
                                     type="text"
                                     className="custom-input"
-                                    value={publisherName}
-                                    onChange={(e) => setPublisherName(e.target.value)}
                                 />
                             </div>
                             <div className="lokalibraryadd-form-group lokalibraryadd-form-group--full">
@@ -258,7 +186,7 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
                                                         }}
                                                     />
                                                     <button
-                                                        onClick={clearCoverPhoto}
+                                                        
                                                         style={{
                                                             border: "none",
                                                             background: "none",
@@ -287,7 +215,6 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
                                                         type="file"
                                                         accept="image/*"
                                                         className="admin_library_upload_input"
-                                                        onChange={(e) => setCoverPhoto(e.target.files[0])}
                                                     />
                                                 </>
                                             )}
@@ -304,7 +231,7 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
                                         {documentFile ? (
                                             <>
                                                 <span>{documentFile.name}</span>
-                                                <button onClick={clearDocumentFile} style={{ marginLeft: "8px" }}>
+                                                <button style={{ marginLeft: "8px" }}>
                                                     Change File
                                                 </button>
                                             </>
@@ -317,7 +244,6 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
                                                     id="file-upload"
                                                     type="file"
                                                     className="lokalibraryadd_hidden-file"
-                                                    onChange={(e) => setDocumentFile(e.target.files[0])}
                                                 />
                                             </>
                                         )}
@@ -328,12 +254,12 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
                     </form>
                 </div>
                 <div className="lokalibraryadd-modal-footer">
-                    <button onClick={onClose} className="lokalibraryadd-btn lokalibraryadd-btn-secondary">Clear</button>
-                    <button onClick={handleSave} className="lokalibraryadd-btn lokalibraryadd-btn-primary">Save</button>
+                    <button onClick={onClose} className="lokalibraryadd-btn lokalibraryadd_chapter-upload-delete">Delete</button>
+                    <button className="lokalibraryadd-btn lokalibraryadd-btn-primary">Edit</button>
                 </div>
             </div>
         </div>
     );
 };
 
-export default NewLokaLibraryAdd;
+export default NewLokaLibraryEdit;

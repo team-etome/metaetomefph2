@@ -88,7 +88,7 @@ const NewFacultyDashboard = () => {
     );
 
     return (
-        <div className="facultydashboard_main_container">
+        <div className="facultydashboard_main_container" >
             <div className="facultydashboard_main_header_container">
                 <div className="facultydashboard_header-controls d-flex justify-content-between align-items-center">
                     <div className="facultydashboard_left-controls">

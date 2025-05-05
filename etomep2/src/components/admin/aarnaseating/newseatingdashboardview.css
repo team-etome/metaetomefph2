@@ -10,19 +10,23 @@
     padding-left: 0;
 }
 
-.seatingview_main_container_inner{
-    height: 100%;
-    width: 100%;
+.seatingview_main_container_inner {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    overflow: hidden;
 }
+
 /* Close button and header styles */
 .seatingview_header_bar {
     /* background-color: #2162B2; */
     color: #222222;
     height: 72px;
-    padding:24px;
+    padding: 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #DFDFDF;
 }
 
 .seatingview_header_bar span {
@@ -30,6 +34,7 @@
     font-size: 20px;
     font-weight: 600;
 }
+
 .seatingview_modal-close-btn {
     background: none;
     border: none;
@@ -42,18 +47,14 @@
     margin-top: 32px;
 }
 
-.seatingview_modal-close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: #fff;
-    cursor: pointer;
-}
-
 
 .seatingview_main_container_inner_header {
     /* height: 223px; */
     margin: 24px;
+}
+.seatingview_main_container_inner_table{
+    margin-left: 24px;
+    margin-right: 24px;
 }
 
 
@@ -93,14 +94,7 @@
     /* or any color you prefer for data */
 }
 
-.seatingview_info_row.facultiesLabel p {
-    margin: 0;
-    font-weight: 400;
-    color: #9A9A9A;
-    font-size: 14px;
-    flex-basis: 100%;
-    text-align: left;
-}
+
 
 /* Faculties data row */
 .seatingview_info_row.facultiesData p {
@@ -142,9 +136,14 @@
     font-size: 16px;
     cursor: pointer;
 }
-.seatingview_table_wrapper{
+
+.seatingview_table_wrapper {
+    flex: 1 1 auto;
+    /* Allow table to take remaining space */
     margin-top: 24px;
+    overflow-y: auto;
 }
+
 /* Table for the student list */
 .seatingview_table {
     width: 100%;
@@ -162,7 +161,8 @@
 /* Make tbody a scrollable block with a fixed max-height */
 .seatingview_table tbody {
     display: block;
-    max-height: calc(100vh - 570px); /* Adjust 300px as needed */
+    max-height: calc(100vh - 580px);
+    /* Adjust 300px as needed */
     overflow-y: auto;
     width: 100%;
     table-layout: fixed;
@@ -203,28 +203,32 @@
 /* Add this CSS for the sort arrow image */
 .sort-arrow {
     display: inline-block;
-    margin-left: 5px; /* Adjust spacing between text and arrow */
+    margin-left: 5px;
+    /* Adjust spacing between text and arrow */
 }
 
 .sort-arrow-image {
-    width: 12px; /* Adjust size of the arrow */
+    width: 12px;
+    /* Adjust size of the arrow */
     height: 12px;
     object-fit: cover;
-    vertical-align: middle; /* Align the image with the text */
+    vertical-align: middle;
+    /* Align the image with the text */
 }
 
 
 
 .seatingview_modal-footer {
     display: flex;
-      justify-content: flex-end;
-      margin-top: 0px; /* Add 24px gap above footer */
-      margin-bottom: 24px;
-      margin-right: 24px;
-      margin-left: 24px;
-      gap:8px;
-      
-  }
+    justify-content: flex-end;
+    margin-top: auto;
+    margin-bottom: 24px;
+    margin-right: 24px;
+    margin-left: 24px;
+    gap: 8px;
+
+}
+
 .seatingview_btn-secondary {
     background-color: #fff;
     color: #2162B2;
@@ -232,14 +236,14 @@
     border-radius: 8px;
     height: 40px;
     width: 100px;
-  
-  }
-  
-  .seatingview_btn-danger {
+
+}
+
+.seatingview_btn-danger {
     background-color: #fff;
     color: red;
     border: 1px solid red;
     border-radius: 8px;
     height: 40px;
     width: 100px;
-  }
+}

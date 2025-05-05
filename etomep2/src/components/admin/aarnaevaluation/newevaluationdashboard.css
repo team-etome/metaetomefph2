@@ -54,17 +54,21 @@
 
 /* Form select styling */
 .evaluationdashboard_select_class {
-    width: 190px;
+    width: 300px;
     height: 40px;
     font-size: 1rem;
     border-radius: 8px;
+    
+    border: 1px solid #4A4A4A;
 }
 
 .evaluationdashboard_select_year {
-    width: 190px;
+    width: 200px;
     height: 40px;
     font-size: 1rem;
     border-radius: 8px;
+    
+    border: 1px solid #4A4A4A;
 }
 
 /* Wrapper for tables */
