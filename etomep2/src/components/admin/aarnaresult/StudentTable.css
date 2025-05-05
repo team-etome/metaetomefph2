@@ -1,0 +1,155 @@
+.table-wrapper {
+  display: flex;
+  border: 1px solid #ddd;
+  font-family: sans-serif;
+  margin: 20px 0;
+}
+
+.fixed-cols {
+  min-width: 220px;
+  background: #fafafa;
+  border-right: 1px solid #ddd;
+  display: grid;
+  grid-template-columns: 60px 80px 40px 40px;
+  align-items: center;
+}
+
+.scroll-cols {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.subjects-row {
+  display: flex;
+}
+
+.header {
+  font-weight: bold;
+  background: #f0f0f0;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+.fixed-cols > div, .subjects-row > div {
+  padding: 8px;
+  min-width: 100px;
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #eee;
+}
+
+.table-outer-wrapper {
+  overflow-x: auto;
+  background: #fff;
+  padding: 16px;
+}
+
+.student-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 1200px;
+  width: 100%;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  position: relative;
+}
+
+.student-table th,
+.student-table td {
+  border: 1px solid #e0e0e0;
+  padding: 8px 12px;
+  text-align: center;
+  background: #fff;
+  white-space: nowrap;
+  height: 48px;
+}
+
+.student-table th {
+  background: #f7f7f7;
+  font-weight: bold;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.subjects-group {
+  text-align: center;
+  background: #f7f7f7;
+  font-size: 1.1em;
+}
+
+.subject-header {
+  font-size: 1em;
+  font-weight: 500;
+  background: #f9f9f9;
+  min-width: 120px;
+  max-width: 120px;
+  width: 120px;
+  text-align: center;
+  position: sticky;
+  left: 411px !important;
+  z-index: 2;
+}
+
+.student-table td.subject-col {
+  min-width: 120px;
+  max-width: 120px;
+  width: 120px;
+  text-align: center;
+  position: sticky;
+  left: 411px !important;
+  z-index: 1;
+}
+
+.subject-total {
+  font-size: 0.85em;
+  color: #888;
+  font-weight: normal;
+}
+
+.sticky-col {
+  position: sticky;
+  left: 0;
+  background: #fafafa;
+  z-index: 2;
+}
+
+.col-roll { left: 0; min-width: 75px; max-width: 75px; width: 75px; }
+.col-name { left: 75px; min-width: 226px; max-width: 226px; width: 226px; }
+.col-obtained { left: 301px; min-width: 110px; max-width: 110px; width: 110px; }
+
+/* Sticky right for percentage */
+.col-percentage {
+  position: sticky;
+  right: 0;
+  min-width: 110px;
+  max-width: 110px;
+  width: 110px;
+  background: #fafafa;
+  z-index: 2;
+}
+
+.student-table th.sticky-col,
+.student-table td.sticky-col {
+  background: #fafafa;
+  z-index: 3;
+}
+
+.even-row {
+  background: #f9f9f9;
+}
+
+.low-mark {
+  color: #e53935;
+  font-weight: bold;
+}
+
+/* Fixed height and vertical scroll for tbody */
+.student-table tbody {
+  display: block;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.student-table thead, .student-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+} 

@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-    Col,
-    Container,
-    Row,
     InputGroup,
     FormControl,
     Dropdown,
@@ -117,11 +114,10 @@ function NewLokaBookDashboard() {
     };
 
     return (
-        <Container fluid className="admin_loka_container p-0" >
+        <div className="admin_loka_container">
             <div className="admin_loka_fixed_header">
-                <div className="admin_lokanav_header mb-4">
-                    <Row className="admin_loka_header_row">
-                        <Col md={4} className="admin_loka_select_col">
+                    <div className="admin_loka_header_row">
+                        <div className="admin_loka_select_col">
                             <Form.Select
                                 className="admin_loka_select"
                                 value={selectedClass}
@@ -140,30 +136,28 @@ function NewLokaBookDashboard() {
                                         </option>
                                     ))}
                             </Form.Select>
-                          
-                        </Col>
-                        <Col md={8} className="d-flex justify-content-end align-items-center" style={{ paddingRight: "0px" }}>
-                            <div className="admin_loka_select_col_right">
-                                <InputGroup className="admin_loka_search">
-                                    <Form.Control
-                                        className="admin_loka_search_search_input"
-                                        placeholder="Search Books"
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                    />
-                                </InputGroup>
 
-                                <button
-                                    className="btn-primary btn-sm admin_loka_add_button "
-                                    onClick={() => setShowPopup(true)}
-                                >
-                                    + Add
-                                </button>
-                                {showPopup && <NewLokaBookAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
+                        </div>
+                        <div className="admin_loka_select_col_right">
+                            <InputGroup className="admin_loka_search">
+                                <Form.Control
+                                    className="admin_loka_search_search_input"
+                                    placeholder="Search Books"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                            </InputGroup>
+
+                            <button
+                                className="btn-primary btn-sm admin_loka_add_button"
+                                onClick={() => setShowPopup(true)}
+                            >
+                                + Add
+                            </button>
+                            {showPopup && <NewLokaBookAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
+                        </div>
+                    </div>
+
             </div>
             <div className="admin_loka_scroll_container">
                 {(selectedClass ? [selectedClass] : [...Array(12).keys()].map(i => (i + 1).toString())).map((classNum) => {
@@ -176,11 +170,11 @@ function NewLokaBookDashboard() {
                     if (booksForClass.length === 0) return null;
 
                     return (
-                        <div key={classNum} className="admin_loka_class_section mb-4">
-                            <h5 className="admin_loka_class_heading">Class {classNum}</h5>
-                            <Row className="admin_loka_book_grid" >
+                        <div key={classNum} className="admin_loka_class_section">
+                            <p className="admin_loka_class_heading">Class {classNum}</p>
+                            <div className="admin_loka_book_grid">
                                 {booksForClass.map((item, index) => (
-                                    <Col key={index} md={3} className="admin_loka_book_col" onClick={() => handleEditTextbook(item)} >
+                                    <div key={index} className="admin_loka_book_col" onClick={() => handleEditTextbook(item)}>
                                         <div className="admin_loka_book_card">
                                             <div className="admin_loka_book_img">
                                                 <img src={item.textbook_image} alt="Textbook" />
@@ -192,10 +186,12 @@ function NewLokaBookDashboard() {
                                                 <div className="admin_loka_class_name">{item.textbook_details.class_name}</div>
                                             </div>
                                         </div>
-                                    </Col>
+                                    </div>
                                 ))}
                                 {showEditPopup && <NewLokaBookEdit isOpen={showEditPopup} onClose={() => setShowEditPopup(false)} />}
-                            </Row>
+
+                            </div>
+
                         </div>
                     );
                 })}
@@ -208,12 +204,12 @@ function NewLokaBookDashboard() {
                     (book) =>
                         book.textbook_details.subject.toLowerCase().includes(searchTerm.toLowerCase())
                 ) && (
-                        <div className="no-books-message text-center mt-4">
-                            <h4>No books found for "{searchTerm}".</h4>
-                        </div>
-                    )}
+                    <div className="no-books-message text-center mt-4">
+                        <h4>No books found for "{searchTerm}".</h4>
+                    </div>
+                )}
             </div>
-        </Container>
+        </div>
     )
 }
 export default NewLokaBookDashboard;

@@ -114,6 +114,8 @@
 }
 
 .facultyaddthroughexcel-footer-text {
+    margin-left: 52px;
+    width: 250px;
     font-size: 14px;
     color: #666;
 }
@@ -126,5 +128,6 @@
     border: 1px solid #2162B2;
     border-radius: 8px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 16px;
+    width: 352px;
 }

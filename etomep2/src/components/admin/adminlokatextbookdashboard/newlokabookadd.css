@@ -14,23 +14,28 @@
 
 .lokatextbookadd-modal-content {
     background: white;
-    border-radius: 12px;
+    border-radius: 16px;
     width: 700px;
-    height: 70%;
+    height: 650px;
     display: flex;
     flex-direction: column;
-    padding: 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    
+    max-width: 700px;
 }
 
 .lokatextbookadd-modal-header {
-    padding: 20px;
+    padding: 24px;
     border-bottom: 1px solid #eee;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
+    margin-bottom: 1px solid #DFDFDF;
+}
+.lokatextbookadd-modal-header-heading{
+    font-size: 20px;
+    font-weight: 600;
+    color: #222222;
 }
 
 .lokatextbookadd-close-button {
@@ -41,13 +46,38 @@
 }
 
 .lokatextbookadd-modal-body {
-    padding: 20px;
+    margin-top: 16px;
+    padding: 24px;
+    padding-top: 0px;
     overflow-y: auto;
     flex-grow: 1;
 }
 
+.lokatextbookadd-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 8px;
+    row-gap: 24px;
+    margin-bottom: 24px;
+}
+
 .lokatextbookadd-form-group {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    /* gap: 16px; */
+    margin: 0;
+}
+
+.lokatextbookadd-form-group--full {
+    grid-column: span 2;
+}
+
+.lokatextbookadd-form-group input,
+.lokatextbookadd-form-group select,
+.lokatextbookadd-form-group .react-select__control {
+    height: 50px;
+    border-radius: 8px !important;
+    font-size: 16px;
 }
 
 .lokatextbookadd-form-control {
@@ -66,19 +96,16 @@
 .lokatextbookadd-modal-footer {
     display: flex;
     justify-content: flex-end;
-    margin-right: 10px;
-    padding: 20px;
-    border-top: 1px solid #eee;
-    gap: 10px;
-    flex-shrink: 0;
+    gap: 8px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    margin-right: 24px;
 }
 
 .lokatextbookadd-btn {
-    padding: 10px 20px;
-    margin-left: 10px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    border-radius: 8px;
 }
 
 .lokatextbookadd-btn-secondary {
@@ -162,26 +189,26 @@
     border: 1px solid #767676;
     margin-bottom: 20px;
     display: block;
+    height: 40px;
+    box-sizing: border-box;
 }
 
 .lokatextbookadd_chapter-upload-scroll-area {
     border-radius: 10px;
-    /* background: #fff; */
     padding: 10px;
-    /* box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1); */
     border: none !important;
 }
+
 .lokatextbookadd_chapter-upload-row:not(:last-child) {
     border-bottom: 2px solid #e0e0e0;
-  }
-  
+}
 
 .lokatextbookadd_chapter-upload-row {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
 }
 
 .lokatextbookadd_chapter-upload-text {
@@ -190,16 +217,7 @@
     border: 1px solid #aaa;
     border-radius: 8px;
     width: 300px;
-    /* min-width: 300px; */
-    /* max-width: 400px; */
-}
-
-.lokatextbookadd_chapter-upload-file {
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #2162B2;
-    color: #2162B2;
-    border-radius: 8px;
+    height: 40px !important;
 }
 
 .lokatextbookadd_chapter-upload-delete {
@@ -239,4 +257,7 @@
     text-overflow: ellipsis;
     color: #555;
     font-size: 14px;
+}
+.lokatextbookadd_required {
+    color: red;
 }

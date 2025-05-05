@@ -36,9 +36,9 @@ const NewFacultyAddThroughExcel = ({ isOpen, onClose }) => {
                                 className="facultyaddthroughexcel-file-input"
                                 onChange={handleFileUpload}
                             />
-                            <label htmlFor="file-upload" className="facultyaddthroughexcel-upload-label">
+                            {/* <label htmlFor="file-upload" className="facultyaddthroughexcel-upload-label">
                                 {file ? file.name : 'Drag or Click to Upload'}
-                            </label>
+                            </label> */}
                             <div>
                                 <button
                                     className="facultyaddthroughexcel-upload-btn"

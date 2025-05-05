@@ -104,8 +104,8 @@ const Examtimetable = () => {
     return (
         <div className="examtimetable_main_container">
             <div className="examtimetable_main_header_container">
-                <div className="header-controls d-flex justify-content-between align-items-center px-3 py-2">
-                    <div className="left-controls">
+                <div className="examtimetable_header-controls d-flex justify-content-between align-items-center">
+                    <div className="examtimetable_left-controls">
                         {/* Exam Type Dropdown */}
                         <select
                             className="form-select form-select-sm examtimetable_select_exam"
@@ -135,7 +135,7 @@ const Examtimetable = () => {
                             Search
                         </button>
                     </div>
-                    <div className="right-controls">
+                    <div className="examtimetable_right-controls">
                         <button className="btn-primary btn-sm examtimetable-add_button" onClick={() => setShowPopup(true)}>+ Add</button>
                         {showPopup && <Examtimetableadding onClose={() => setShowPopup(false)} />}
                     </div>
@@ -180,15 +180,21 @@ const Examtimetable = () => {
                 ))} */}
                 {filteredTimetableData && filteredTimetableData.length > 0 ? (
                     filteredTimetableData.map(([examName, classArray], index) => (
-                        <div key={index} className="exam-section">
-                            <h3 className="exam-title">{examName}</h3>
+                        <div key={index} className="examtimetable_exam-section">
+                            <p className="examtimetable-heading">{examName}</p>
                             {classArray.map(([className, entries]) => (
                                 <div key={className} className="examtimetable_table_class-section">
-                                    <div className="class-header d-flex justify-content-between align-items-center">
-                                        <h4 className="class-title">Class {className}</h4>
+                                    <div className="examtimetable_class-header d-flex justify-content-between align-items-center">
+                                        <p className="examtimetable_class-title">Class {className}</p>
                                         <button
                                             className="btn-outline-secondary btn-sm examtimetable_table_class-section-edit_button"
-                                            onClick={() => navigate("/examtimetableedit", { state: { classData: entries } })}
+
+                                            onClick={() => {
+                                                setSelectedClassEntries(entries);
+                                                setSelectedClassId(className);
+                                                setEditPopupVisible(true);
+                                            }}
+
                                         >
                                             Edit
                                         </button>

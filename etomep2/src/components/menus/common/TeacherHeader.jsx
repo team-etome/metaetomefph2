@@ -9,7 +9,7 @@ const TeacherHeader = () => {
   return (
     <div>
       
-    <TeacherH/>
+    {/* <TeacherH/> */}
       <Sidebar />
       <MobileSidebar />
     </div>

@@ -1,9 +1,7 @@
 .admin_loka_container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border-radius: 8px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 .admin_loka_fixed_header {
@@ -15,7 +13,8 @@
 .admin_loka_scroll_container {
     flex: 1 1 auto;
     overflow-y: auto;
-    padding: 1rem 2rem;
+    padding: 24px;
+    padding-top: 16px;
 }
 
 .admin_lokanav_header {
@@ -24,38 +23,54 @@
 }
 
 .admin_loka_select {
-    width: 217px;
+    width: 300px;
     height: 40px;
     border: 1px solid #4A4A4A;
+    border-radius: 8px;
+}
+
+.admin_loka_search {
+    width: 300px;
+    height: 40px;
 }
 
 .admin_loka_search_search_input {
     border: 1px solid #4A4A4A;
-}
-
-.admin_loka_search {
-    width: 318px;
-    height: 40px;
+    width: 100%;
+    border-radius: 8px;
 }
 
 .admin_loka_search input {
-    border-radius: 0.25rem;
+    border-radius: 8px;
     padding: 0.5rem;
+    width: 100%;
 }
 
 .admin_loka_class_heading {
-    font-size: 1.5rem;
+    font-size: 24px;
     font-weight: 600;
+    color: #222222;
     /* margin-bottom: 1.5rem; */
 }
 
 .admin_loka_book_grid {
-    gap: 76px;
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    width: 100%;
+}
+
+.admin_loka_book_col {
+    width: 192px;
+    height: 398px;
+    padding: 16px;
 }
 
 .admin_loka_book_card {
+    width: 176px;
+    height: 382px;
     border: none;
-    height: 366px;
     overflow: hidden;
 }
 
@@ -63,16 +78,21 @@
     transform: scale(1.03);
 } */
 
+.admin_loka_select_col {
+    width: 33.33%;
+}
+
 .admin_loka_select_col_right {
+    width: 66.67%;
     display: flex;
+    justify-content: flex-end;
     align-items: center;
-    gap: 1.5rem;
+    gap: 8px;
 }
 
 .admin_loka_book_img {
     height: 252px;
     width: 160px;
-    /* object-fit: cover; */
 }
 
 .admin_loka_book_img img {
@@ -86,7 +106,6 @@
     height: 98px;
     width: 160px;
     margin-top: 16px;
-    /* background-color: blue; */
 }
 
 .admin_loka_book_body div {
@@ -120,48 +139,16 @@
     height: 40px;
     color: #fff;
     background: #2162B2;
-    /* border: 1px solid #2162B2; */
-    border-radius: 10px;
-    /* margin-left: 630px; */
+    border-radius: 8px;
     transition: left 0.5s ease;
 }
 
-.admin_loka_select_col {
-    display: flex;
-    align-items: center;
-    padding: 0px;
-}
-
-.admin_loka_add_button {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.25rem;
-}
-
 .admin_loka_header_row {
-    width: 100%;
-    margin-left: 0px !important;
-    padding: 0px !important;
-}
-
-.admin_loka_book_col {
-    height: 398px;
-    width: 192px;
-    padding: 16px;
-    margin-left: 8px;
-}
-
-.no-books-message {
     display: flex;
-    justify-content: center;
-    text-align: center;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
-
-.no-books-message h3 {
-    color: #526D82;
-}
-
-
 
 .admin_loka_book_col:hover {
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);

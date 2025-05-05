@@ -63,13 +63,13 @@ const AdminStudentDashboard = () => {
         <div className="adminstudentdashboard_main_container">
             <div className="adminstudentdashboard_main_header_container">
                 <div>
-                    <h2 className="adminstudentdashboard-title">
+                    <p className="adminstudentdashboard-title">
                         Total Student
                         <span className="adminstudentdashboard-count">{filteredStudents.length}</span>
-                    </h2>
+                    </p>
                 </div>
-                <div className="header-controls d-flex justify-content-between align-items-center px-3 py-2">
-                    <div className="left-controls" >
+                <div className="adminstudentdashboard-header-controls d-flex justify-content-between align-items-center">
+                    <div className="adminstudentdashboard-left-controls" >
                         <select
                             className="form-select form-select-sm adminstudentdashboard_select_class"
                             value={selectedClass}
@@ -98,7 +98,7 @@ const AdminStudentDashboard = () => {
                     </div>
                 </div>
             </div>
-            <div className="adminstudentdashboard_classes_box">
+            <div className="adminstudentdashboard_classes_box" >
                 <div className="adminstudentdashboard_container" >
                     <div className="adminstudentdashboard-grid-container">
                         {filteredStudents.map(student => (

@@ -164,111 +164,103 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         <div className="facultyadd-backdrop">
             <div className="facultyadd-modal-content">
                 <div className="facultyadd-modal-header">
-                    <h5>Add Faculty</h5>
+                    <p className="lokatextbookadd-modal-header-heading">Add Faculty</p>
                     <button onClick={onClose} className="facultyadd-close-button">&times;</button>
                 </div>
                 <div className="facultyadd-modal-body">
                     <form>
-                        <Row>
-                            <Col md={6} >
-                                <div className="facultyadd-form-group" >
-                                    <label className="facultyadd-form-label" >
-                                        First Name <span className="facultyadd_required">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={firstname}
-                                        className="custom-input"
-                                        style={{
-                                            height: '48px',
-                                            border: '1px solid #757575',
-                                            borderRadius: '8px',
-                                            padding: '0 10px',
-                                            fontSize: '16px',
-                                            color: '#526D82',
-                                            width: '100%',
-                                            boxSizing: 'border-box',
-                                            outline: "none"
-                                        }}
+                        <div className="lokatextbookadd-form-grid">
+                            <div className="facultyadd-form-group" >
+                                <label className="facultyadd-form-label" >
+                                    First Name <span className="facultyadd_required">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    value={firstname}
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
 
-                                        onChange={(e) => {
-                                            const value = e.target.value;
-                                            const formatted = value.charAt(0).toUpperCase() + value.slice(1);
-                                            setFirstName(formatted);
-                                        }}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        const formatted = value.charAt(0).toUpperCase() + value.slice(1);
+                                        setFirstName(formatted);
+                                    }}
 
-                                    />
-                                </div>
-                            </Col>
-                            <Col md={6}>
-                                <div className="facultyadd-form-group">
-                                    <label className="facultyadd-form-label">Last Name</label>
-                                    <input
-                                        type="text"
-                                        value={lastname}
-                                        className="custom-input"
-                                        style={{
-                                            height: '48px',
-                                            border: '1px solid #757575',
-                                            borderRadius: '8px',
-                                            padding: '0 10px',
-                                            fontSize: '16px',
-                                            color: '#526D82',
-                                            width: '100%',
-                                            boxSizing: 'border-box',
-                                            outline: "none"
-                                        }}
+                                />
+                            </div>
+                            <div className="facultyadd-form-group">
+                                <label className="facultyadd-form-label">Last Name</label>
+                                <input
+                                    type="text"
+                                    value={lastname}
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
 
-                                        onChange={(e) => {
-                                            const value = e.target.value;
-                                            const formatted = value.charAt(0).toUpperCase() + value.slice(1);
-                                            setLastName(formatted);
-                                        }}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        const formatted = value.charAt(0).toUpperCase() + value.slice(1);
+                                        setLastName(formatted);
+                                    }}
 
-                                    />
-                                </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={6}>
-                                <div className="facultyadd-form-group">
-                                    <label className="facultyadd-form-label">Employee ID</label>
-                                    <input
-                                        type="text"
-                                        min="0"
-                                        className="custom-input"
-                                        style={{
-                                            height: '48px',
-                                            border: '1px solid #757575',
-                                            borderRadius: '8px',
-                                            padding: '0 10px',
-                                            fontSize: '16px',
-                                            color: '#526D82',
-                                            width: '100%',
-                                            boxSizing: 'border-box',
-                                            outline: "none"
-                                        }}
-                                    />
-                                </div>
-                            </Col>
-                            <Col md={6}>
-                                <div className="facultyadd-form-group">
-                                    <label className="facultyadd-form-label">
-                                        Gender<span className="facultyadd_required">*</span>
-                                    </label>
-                                    <Select
-                                        styles={customStyles}
-                                        placeholder="Select Gender"
-                                        isClearable={true}
+                                />
+                            </div>
+                            <div className="facultyadd-form-group">
+                                <label className="facultyadd-form-label">Employee ID</label>
+                                <input
+                                    type="text"
+                                    min="0"
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
+                                />
+                            </div>
+                            <div className="facultyadd-form-group">
+                                <label className="facultyadd-form-label">
+                                    Gender <span className="facultyadd_required">*</span>
+                                </label>
+                                <Select
+                                    styles={customStyles}
+                                    placeholder="Select Gender"
+                                    isClearable={true}
 
-                                        value={gender}
-                                        onChange={(selectedOption) => setGender(selectedOption)}
-                                        options={[
-                                            { value: "Male", label: "Male" },
-                                            { value: "Female", label: "Female" },
-                                            { value: "Other", label: "Other" }
-                                        ]}
-                                    />
+                                    value={gender}
+                                    onChange={(selectedOption) => setGender(selectedOption)}
+                                    options={[
+                                        { value: "Male", label: "Male" },
+                                        { value: "Female", label: "Female" },
+                                        { value: "Other", label: "Other" }
+                                    ]}
+                                />
+
 
 
                                 </div>
@@ -364,50 +356,36 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                                             src={URL.createObjectURL(imageFile)}
                                                             alt="Uploaded Image"
                                                             className="uploaded_image"
+
                                                             style={{
-                                                                width: "100%",
-                                                                height: "200px",
-                                                                marginLeft: "30px",
+                                                                color: "blue",
+                                                                fontSize: "20px",
                                                             }}
+                                                            title="Change Image"
                                                         />
-                                                        <button
-                                                            onClick={clearImageFile}
-                                                            style={{
-                                                                border: "none",
-                                                                background: "none",
-                                                                cursor: "pointer",
-                                                            }}
-                                                        >
-                                                            <FaRedo
-                                                                style={{
-                                                                    color: "blue",
-                                                                    fontSize: "20px",
-                                                                }}
-                                                                title="Change Image"
-                                                            />
-                                                        </button>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <label
-                                                            htmlFor="image-upload"
-                                                            className="admin_faculty_upload_label"
-                                                        >
-                                                            Upload Image
-                                                        </label>
-                                                        <input
-                                                            id="image-upload"
-                                                            type="file"
-                                                            accept="image/*"
-                                                            className="admin_faculty_upload_input"
-                                                            onChange={handleImageUpload}
-                                                        />
-                                                    </>
-                                                )}
-                                            </div>
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <label
+                                                        htmlFor="image-upload"
+                                                        className="admin_faculty_upload_label"
+                                                    >
+                                                        Upload Image
+                                                    </label>
+                                                    <input
+                                                        id="image-upload"
+                                                        type="file"
+                                                        accept="image/*"
+                                                        className="admin_faculty_upload_input"
+                                                        onChange={handleImageUpload}
+                                                    />
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
+
                             </Col>
                         </Row>
                     </form>
@@ -436,8 +414,10 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                     </button>
                     <button onClick={handleSave} className="facultyadd-btn facultyadd-btn-primary">Save</button>
                 </div>
+
             </div>
         </div>
+        </div >
     );
 };
 

@@ -119,6 +119,7 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
       </div>
       {/* Content Area */}
       <div className="adminclassaddstepone-modal-step-content">
+
         <Row>
           {/* Class Name */}
           <Col md={4}>
@@ -247,6 +248,7 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
             )}
           </Col>
         </Row>
+
       </div>
       {/* Modal Footer */}
       <div className="adminclassaddstepone-modal-footer">
@@ -257,8 +259,10 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
           <Col md={6} className="d-flex justify-content-end">
             <button
               type="button"
+
               className="adminclassaddstepone_btn-clear me-2"
               onClick={handleClear}
+
             >
               Clear
             </button>

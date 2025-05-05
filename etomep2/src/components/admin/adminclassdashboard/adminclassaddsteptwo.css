@@ -4,7 +4,9 @@
     height: 100%;
     width: 100%;
     position: relative;
+
     z-index: 1000;
+
 }
 .adminclassaddsteptwo-header {
     display: flex;
@@ -19,6 +21,7 @@
   .adminclassaddsteptwo-header-title {
     font-size: 18px;
     font-weight: 600;
+    color: #222222;
   }
   
   .adminclassaddsteptwo-close-btn {
@@ -70,7 +73,7 @@
   .adminclassaddsteptwo-step-label {
     font-weight: 600;
     font-size: 16px;
-    color: #BABABA;
+    color: #222222;
   }
   
   .adminclassaddsteptwo-step.active .adminclassaddsteptwo-step-label {
@@ -82,13 +85,13 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 0 16px;
-    height: 300px;
+    margin: 24px;
     overflow-y: auto;
+    margin-bottom: 80px; /* Space for footer */
   }
   
   .adminclassaddsteptwo-form-label {
-    margin-top: 16px;
+    /* margin-top: 16px; */
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 6px;
@@ -122,42 +125,55 @@
   }
   
   .adminclassaddsteptwo_step-row {
+    position: relative;
     display: flex;
     gap: 1rem;
     margin-bottom: 16px;
-  }
-  
-  .adminclassaddsteptwo_step-column_input {
-    flex: 1;
+    gap: 8px;
   }
   
   .adminclassaddsteptwo_step-column {
     flex: 1;
   }
   
-  .row-with-delete {
+  .adminclassaddsteptwo_row-with-delete {
     position: relative;
-    display: flex;
-    align-items: center;
-    padding-right: 40px;
-    margin-bottom: 10px;
+    transition: all 0.3s ease;
   }
+  .adminclassaddsteptwo_row-with-delete:not(.adminclassaddsteptwo_first-row):hover .adminclassaddsteptwo_delete-row-btn {
+    display: block;
+    height: 16px !important;
+    width: 16px !important;
+}
+.adminclassaddsteptwo_row-with-delete:not(.adminclassaddsteptwo_first-row):hover {
+  transform: scale(0.96);
+}
   
-  .remove-row-btn {
+.adminclassaddsteptwo_first-row {
+  pointer-events: none;
+}
+
+.adminclassaddsteptwo_first-row .adminclassaddsteptwo_step-column {
+  pointer-events: auto;
+}
+  
+  .adminclassaddsteptwo_delete-row-btn {
     position: absolute;
-    right: 10px;
-    top: 50%;
+    top: 30%;
+    right: -20px;
     transform: translateY(-50%);
     background: transparent;
-    border: none;
+    color: red;
     font-size: 18px;
+    font-weight: bold;
     cursor: pointer;
     display: none;
+    height: 0px !important;
+    width: 0px !important;
+    transition: all 0.3s ease;
   }
   
-  .row-with-delete:hover .remove-row-btn {
-    display: block;
-  }
+  
   
   .adminclassaddsteptwo_add-next-btn-container {
     margin-top: 0px;
@@ -177,12 +193,16 @@
   }
   
   .adminclassaddsteptwo-modal-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
-    padding-right: 24px;
-    padding-left: 24px;
+    padding: 16px 24px;
+    background-color: white;
+    /* border-top: 1px solid #DFDFDF; */
   }
   
   .adminclassaddsteptwo-footer-right button {

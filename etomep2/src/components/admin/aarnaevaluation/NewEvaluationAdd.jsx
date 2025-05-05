@@ -201,7 +201,7 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
         <div className="evaluationadd-backdrop">
             <div className="evaluationadd-modal-content">
                 <div className="evaluationadd-modal-header">
-                    <h5>Evaluation Scheduling</h5>
+                    <p className="evaluationadd-modal-header-heading">Evaluation Scheduling</p>
                     <button onClick={onClose} className="evaluationadd-close-button">&times;</button>
                 </div>
                 <div className="evaluationadd-modal-body">

@@ -39,6 +39,16 @@
     font-size: 1.5rem;
     cursor: pointer;
 }
+.facultyadd-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 8px;
+    row-gap: 24px;
+    margin-bottom: 24px;
+}
+.facultyadd-form-group--full {
+    grid-column: span 2;
+}
 
 .facultyadd-modal-body {
     padding: 20px;
@@ -66,16 +76,16 @@
 .facultyadd-modal-footer {
     display: flex;
     justify-content: flex-end;
-    margin-right: 10px;
-    padding: 20px;
+    margin: 24px;
+    /* padding: 20px; */
     border-top: 1px solid #eee;
-    gap: 10px;
+    gap: 8px;
     flex-shrink: 0;
 }
 
 .facultyadd-btn {
     padding: 10px 20px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     border-radius: 8px;
     border: none;
     cursor: pointer;

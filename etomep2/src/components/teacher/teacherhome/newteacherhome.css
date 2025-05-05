@@ -1,0 +1,484 @@
+.newteacherhome-root {
+  font-family: 'Inter', sans-serif;
+  background: #f9f9f9;
+  padding-top: 23px;
+  padding-left: 24px;
+  padding-right: 24px;
+  margin-left: 110px;
+  height: 100%;
+}
+
+.newteacherhome-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  /* box-shadow: 0 2px 8px rgba(0,0,0,0.03); */
+}
+
+.newteacherhome-welcome {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+  color: #222222;
+}
+
+.newteacherhome-userinfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.newteacherhome-email {
+  font-size: 1rem;
+  color: #222;
+}
+
+.newteacherhome-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: url('https://randomuser.me/api/portraits/men/32.jpg') center/cover no-repeat;
+  border: 2px solid #eee;
+}
+
+.newteacherhome-main {
+  display: flex;
+  gap: 24px;
+}
+
+.newteacherhome-left {
+  flex: 1.3 !important;
+  display: flex;
+  flex-direction: column;
+  /* gap: 24px; */
+}
+
+.newteacherhome-right {
+  flex: 1.7 !important;
+  min-width: 320px;
+  margin-bottom: 12px;
+}
+
+.newteacherhome-exam-section {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+  margin-bottom: 0;
+  /* box-shadow: 0 2px 8px rgba(0,0,0,0.03); */
+}
+
+.newteacherhome-exam-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 13px;
+}
+
+.newteacherhome-exam-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #222222;
+}
+
+.newteacherhome-exam-viewall {
+  color: #2162B2;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 23px;
+}
+
+.newteacherhome-exam-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.newteacherhome-filter-btn-class {
+  background: #fff;
+  border: 1px solid #D9D9D9;
+  border-radius: 6px;
+  /* padding: 6px 18px; */
+  font-size: 14px;
+  width: 95px;
+  height: 32px;
+  color: #222;
+  cursor: pointer;
+}
+.newteacherhome-filter-btn-division {
+  background: #fff;
+  border: 1px solid #D9D9D9;
+  border-radius: 6px;
+  /* padding: 6px 18px; */
+  font-size: 14px;
+  width: 110px;
+  height: 32px;
+  color: #222;
+  cursor: pointer;
+}
+.newteacherhome-filter-btn-subject {
+  background: #fff;
+  border: 1px solid #D9D9D9;
+  border-radius: 6px;
+  /* padding: 6px 18px; */
+  font-size: 14px;
+  width: 109px;
+  height: 32px;
+  color: #222;
+  cursor: pointer;
+}
+
+.newteacherhome-exam-content {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  gap: 32px;
+}
+
+.newteacherhome-pie-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.newteacherhome-piechart {
+  margin-right: 10px;
+  width: 140px;
+  height: 140px;
+}
+
+.newteacherhome-pie-legend {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  height: 24px;
+  margin-top: 30px;
+}
+
+.newteacherhome-pie-legend span {
+  display: flex;
+  align-items: center;
+  height: 16px;
+}
+
+.newteacherhome-dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% ;
+  display: inline-block;
+  margin-right: 8px;
+}
+.newteacherhome-dot.blue {
+  background: #60a5fa;
+}
+.newteacherhome-dot.red {
+  background: #f87171;
+}
+.newteacherhome-exam-left {
+  width: 390px;
+}
+.newteacherhome-exam-row{
+  width: 833px;
+}
+.newteacherhome-ranklist-box {
+  /* background: #f8fafc; */
+  border: 1px solid #DEDEDE;
+  border-radius: 8px;
+  /* padding: 16px 18px; */
+  margin-left: 24px;
+  /* min-width: 220px; */
+  flex: 1;
+  width: 406px;
+  height: 156px; /* 3 rows of 44px + padding/margin */
+  overflow: hidden;
+}
+
+.newteacherhome-ranklist-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #222;
+  margin: 16px;
+}
+
+.newteacherhome-ranklist-ul {
+  list-style: none;
+  margin: 16px;
+  padding: 0px;
+}
+
+.newteacherhome-rankitem {
+  display: flex;
+  align-items: center;
+  /* gap: 10px; */
+  height: 52px;
+  border-bottom: 2px solid #DFDFDF;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  /* padding: 10px 18px; */
+  background: #fff;
+}
+
+.newteacherhome-rankitem:last-child {
+  border-bottom: none;
+}
+
+.newteacherhome-rank-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: url('https://randomuser.me/api/portraits/women/44.jpg') center/cover no-repeat;
+  border: 2px solid #e5e7eb;
+}
+
+.newteacherhome-rank-name {
+  flex: 1;
+  font-size: 1rem;
+}
+
+.newteacherhome-rank-badge {
+  display: inline-block;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fbbf24;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  line-height: 28px;
+  font-size: 1rem;
+  margin-left: 8px;
+}
+.newteacherhome-rank-badge.rank2 {
+  background: #60a5fa;
+}
+.newteacherhome-rank-badge.rank3 {
+  background: #a78bfa;
+}
+
+.newteacherhome-tasks-section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+.newteacherhome-tasks-section-main{
+  margin: 24px;
+  margin-bottom: 0px;
+  margin-top: 16px;
+}
+
+.newteacherhome-tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+.newteacherhome-tasks-header-heading{
+  font-size: 20px;
+  font-weight: 600;
+  color: #222222;
+}
+
+.newteacherhome-tasks-viewall {
+  color: #2162B2;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.newteacherhome-tasks-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  margin-top: 16px;
+}
+
+.newteacherhome-tasks-table th {
+  color: #959595;
+  font-weight: 400;
+  font-size: 14px;
+  background: #fff;
+  border: none;
+  text-align: left;
+  padding: 10px 8px;
+  vertical-align: middle;
+}
+
+.newteacherhome-tasks-table tr {
+  border-bottom: 2px solid #DFDFDF;
+  border-radius: 0;
+}
+
+.newteacherhome-tasks-table tr:last-child {
+  border-bottom: none;
+}
+
+.newteacherhome-tasks-table td {
+  background: #fff;
+  border: none;
+  /* padding: 10px 8px; */
+  font-size: 14px;
+  font-weight: 400;
+  /* height: 24px !important; */
+  /* height: 58px !; */
+  color: #222222;
+}
+
+.newteacherhome-status {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.newteacherhome-status.completed {
+  background: #e0fce0;
+  color: #22c55e;
+  border: 1px solid #b6e7b6;
+}
+
+.newteacherhome-status.pending {
+  background: #fee2e2;
+  color: #ef4444;
+  border: 1px solid #fca5a5;
+}
+
+.newteacherhome-notification-section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  padding-top: 16px;
+  height: 100%;
+}
+
+.newteacherhome-notification-title {
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 16px;
+  margin-left: 24px;
+  margin-right: 24px;
+  color: #222222;
+}
+
+.newteacherhome-notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  height: 500px;
+  overflow-y: auto;
+  margin-left: 24px;
+  margin-right: 8px;
+}
+
+.newteacherhome-notification-item {
+  display: flex;
+  align-items: center;
+  background: #F4F4F4;
+  border-radius: 10px;
+  padding: 10px 12px;
+  gap: 12px;
+  height: 69px !important;
+  width: 410px;
+}
+
+.newteacherhome-notif-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: url('https://randomuser.me/api/portraits/women/65.jpg') center/cover no-repeat;
+  border: 2px solid #e5e7eb;
+}
+
+.newteacherhome-notif-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.newteacherhome-notif-name {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.newteacherhome-notif-action {
+  font-weight: 400;
+  color: #222;
+}
+
+.newteacherhome-notif-time {
+  font-size: 0.92rem;
+  color: #888;
+}
+
+.newteacherhome-notif-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3b82f6;
+  margin-left: 8px;
+}
+
+.newteacherhome-notification-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.newteacherhome-notification-list::-webkit-scrollbar-thumb {
+  background-color: #A8BFD1;
+  border-radius: 8px;
+  height: 40px;
+}
+
+.newteacherhome-notification-list::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.newteacherhome-notification-list {
+  scrollbar-color: #A8BFD1 transparent;
+  scrollbar-width: 8px;
+}
+
+
+@media (max-width: 1100px) {
+  .newteacherhome-main {
+    flex-direction: column;
+  }
+  .newteacherhome-right {
+    min-width: unset;
+    margin-top: 18px;
+  }
+}
+
+@media (max-width: 700px) {
+  .newteacherhome-header-row {
+    flex-direction: column;
+    gap: 12px;
+    padding: 18px 10px 10px 10px;
+  }
+  .newteacherhome-main {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .newteacherhome-left, .newteacherhome-right {
+    width: 100%;
+    min-width: unset;
+  }
+  .newteacherhome-exam-content {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .newteacherhome-ranklist-box {
+    margin-left: 0;
+    min-width: unset;
+  }
+}

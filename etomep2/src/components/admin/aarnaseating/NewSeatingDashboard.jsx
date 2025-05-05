@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './newseatingdashboard.css';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -10,7 +10,9 @@ import first_selected from "../../../assets/IMG_first_selected.png"
 import second from "../../../assets/IMG_second.png"
 import second_selected from "../../../assets/IMG_second_selected.png"
 import { BsFillPersonFill } from "react-icons/bs";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { exampaperinfo } from '../../../Redux/Actions/ExamPaperInfoAction';
+
 
 const NewSeatingDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
@@ -23,6 +25,22 @@ const NewSeatingDashboard = () => {
     const [selectedExamType, setSelectedExamType] = useState("");
     const [selectedFilterYear, setSelectedFilterYear] = useState("");
 
+    const facultyDropdownRef = useRef(null);
+    const [facultyDropdownOpen, setFacultyDropdownOpen] = useState(false);
+
+
+    useEffect(() => {
+        const onClickOutside = e => {
+            if (
+                facultyDropdownRef.current &&
+                !facultyDropdownRef.current.contains(e.target)
+            ) {
+                setFacultyDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', onClickOutside);
+        return () => document.removeEventListener('mousedown', onClickOutside);
+    }, []);
 
     const [teachers, setTeachers] = useState("");
 
@@ -53,6 +71,7 @@ const NewSeatingDashboard = () => {
     const [filteredExamData, setFilteredExamData] = useState([]);
 
     console.log(examData, "examaaaaaa")
+
 
 
 
@@ -98,7 +117,7 @@ const NewSeatingDashboard = () => {
     const [showModal, setShowModal] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const [entries, setEntries] = useState([
-        { className: "", division: "", subject: "" }
+        { className: "", division: "", student_left: "" }
     ]);
     const [showView, setShowView] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -135,9 +154,6 @@ const NewSeatingDashboard = () => {
     };
 
 
-
-
-
     // Form state for each step
     const [formData, setFormData] = useState({
         examName: '',
@@ -147,7 +163,7 @@ const NewSeatingDashboard = () => {
         facultiesAssigned: [],
         className: '',
         division: '',
-        subject: '',
+        student_left: '',
         numberOfColumns: 5,
         numberOfTables: 4,
         studentsPerBench: 2,
@@ -155,6 +171,47 @@ const NewSeatingDashboard = () => {
         endTime: '12:00 PM',
         layoutSelected: '',
     });
+
+    const [facultyOptions] = useState([
+        { id: '1', name: 'Rajesh Chandrasekhar' },
+        { id: '2', name: 'Ramya K P' },
+        { id: '3', name: 'Lijo Jose' },
+        { id: '4', name: 'Ankit Kumar' },
+        { id: '5', name: 'Amal Jose' },
+        { id: '6', name: 'Deepak Singh' }
+    ]);
+
+    // Handle faculty selection
+    // const handleFacultySelect = (e) => {
+    //     const selectedFaculty = facultyOptions.find(faculty => faculty.id === e.target.value);
+    //     if (selectedFaculty && !formData.facultiesAssigned.find(f => f.id === selectedFaculty.id)) {
+    //         setFormData({
+    //             ...formData,
+    //             facultiesAssigned: [...formData.facultiesAssigned, selectedFaculty]
+    //         });
+    //     }
+    // };
+
+
+    const handleFacultySelect = (facultyId) => {
+        const selectedFaculty = facultyOptions.find(f => f.id === facultyId);
+        if (!selectedFaculty) return;
+        setFormData(prev => ({
+            ...prev,
+            facultiesAssigned: prev.facultiesAssigned.some(f => f.id === facultyId)
+                ? prev.facultiesAssigned
+                : [...prev.facultiesAssigned, selectedFaculty]
+        }));
+    };
+
+    // Handle removing a faculty
+    const handleRemoveFaculty = (facultyId) => {
+        setFormData({
+            ...formData,
+            facultiesAssigned: formData.facultiesAssigned.filter(f => f.id !== facultyId)
+        });
+    };
+
     // === WIZARD & MODAL LOGIC ===
     const openModal = () => {
         setShowModal(true);
@@ -185,7 +242,7 @@ const NewSeatingDashboard = () => {
             facultiesAssigned: [],
             className: '',
             division: '',
-            subject: '',
+            student_left: '',
             numberOfColumns: 5,
             numberOfTables: 4,
             studentsPerBench: 2,
@@ -273,12 +330,18 @@ const NewSeatingDashboard = () => {
             <div className="seating-step-indicator">
                 {steps.map((item) => {
                     let stepClass = 'seating-step';
-                    if (currentStep === item.stepNumber) stepClass += ' active';
-                    else if (currentStep > item.stepNumber) stepClass += ' completed';
+                    let labelClass = 'seating-step-label';
+                    if (currentStep === item.stepNumber) {
+                        stepClass += ' active';
+                        labelClass += ' active-label';
+                    } else if (currentStep > item.stepNumber) {
+                        stepClass += ' completed';
+                        labelClass += ' completed-label';
+                    }
                     return (
                         <div key={item.stepNumber} className={stepClass}>
                             <div className="seating-step-number">{item.stepNumber}</div>
-                            <div className="seating-step-label">{item.label}</div>
+                            <div className={labelClass}>{item.label}</div>
                         </div>
                     );
                 })}
@@ -394,8 +457,8 @@ const NewSeatingDashboard = () => {
     const renderStepTwo = () => {
         return (
             <div className="seating-modal-step-content">
-                <div className="seating_step-row">
-                    <div className="seating_step-column_steptwo">
+                <div className="seating_step-row" style={{ display: 'flex', gap: 'px' }} >
+                    <div className="seating_step-column_steptwo" style={{ width: '242px' }}>
                         <label className="seating-form-label" htmlFor="roomNumber">
                             Room Number <span className="seating_required">*</span></label>
                         <input
@@ -407,6 +470,7 @@ const NewSeatingDashboard = () => {
                             onChange={(e) => setFormData({ ...formData, roomNumber: e.target.value })}
                         />
                     </div>
+
                     <div className="seating_step-column">
                         <label className="seating-form-label">Faculties Assigned <span className="seating_required">*</span></label>
 
@@ -429,11 +493,14 @@ const NewSeatingDashboard = () => {
                                 </option>
                             ))}
                         </select>
+
                     </div>
+
                 </div>
 
                 <div className="seating-modal-step-content_steptwo_entrytable">
                     {entries.map((entry, index) => (
+
                         <div key={index} className={`seating_step-row row-with-delete ${index === 0 ? 'first-row' : ''}`}>
                             <div className="seating_step-column">
 
@@ -474,13 +541,19 @@ const NewSeatingDashboard = () => {
                                 </select>
                             </div>
 
-                            <div className="seating_step-column">
-                                {index === 0 && (
-                                    <label className="seating-form-label" htmlFor={`subject-${index}`}>
-                                        Subject <span className="seating_required">*</span>
-                                    </label>
+
+                                {entries.length > 1 && index !== 0 && (
+                                    <span
+                                        className="seating_delete-row-btn"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            removeEntry(index);
+                                        }}
+                                    >
+                                        &#10005;
+                                    </span>
                                 )}
-                                <select
+                    <select
                                     id={`subject-${index}`}
                                     className="seating_form-select"
                                     value={entry.subject}
@@ -505,6 +578,7 @@ const NewSeatingDashboard = () => {
                                     &#10005;
                                 </button>
                             )}
+
                         </div>
                     ))}
 
@@ -529,7 +603,7 @@ const NewSeatingDashboard = () => {
 
     // Add a new entry row.
     const addEntry = () => {
-        setEntries([...entries, { className: "", division: "", subject: "" }]);
+        setEntries([...entries, { className: "", division: "", student_left: "" }]);
     };
 
     // Remove a row (optionally, prevent removal if only one remains).
@@ -583,28 +657,6 @@ const NewSeatingDashboard = () => {
                     </div>
                 </div>
 
-                {/* <div className="seating_step-row">
-                    <div className="seating_step-column">
-                        <label className="seating-form-label" htmlFor="startTime">Start Time *</label>
-                        <input
-                            id="startTime"
-                            type="time"
-                            className="seating_form-control"
-                            // For simple handling, store 'HH:MM' in state
-                            onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
-                        />
-                    </div>
-                    <div className="seating_step-column">
-                        <label className="seating-form-label" htmlFor="endTime">End Time *</label>
-                        <input
-                            id="endTime"
-                            type="time"
-                            className="seating_form-control"
-                            onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
-                        />
-                    </div>
-                </div> */}
-
                 <label className="seating-form-label">
                     Select Layout <span className="seating_required">*</span></label>
                 <div className="layout-grid">
@@ -626,7 +678,7 @@ const NewSeatingDashboard = () => {
         );
     };
 
-    // Conditionally render the step’s UI
+    // Conditionally render the step's UI
     const renderStepContent = () => {
         if (currentStep === 1) return renderStepOne();
         if (currentStep === 2) return renderStepTwo();
@@ -840,12 +892,13 @@ const NewSeatingDashboard = () => {
             <div className="seating_main_container">
                 <div className="seating_main_header_container">
                     <div className="seating_header-controls d-flex justify-content-between align-items-center">
-                        <div className="seating_left-controls">
+                        <div className="seating_left-controls" >
                             {/* Exam Type Dropdown */}
                             <select
                                 className="form-select form-select-sm seating_select_exam"
                                 value={selectedExamType}
                                 onChange={(e) => setSelectedExamType(e.target.value)}
+
                             >
                                 <option value="">Select Examination</option>
                                 {/* {examTypes.map((type, i) => (

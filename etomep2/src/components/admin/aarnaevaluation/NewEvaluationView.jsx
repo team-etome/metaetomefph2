@@ -8,12 +8,14 @@ import Swal from 'sweetalert2';
 import { Weight } from 'lucide-react';
 
 
+
 const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
     const [isEditMode, setIsEditMode] = useState(false);
 
 
 
     console.log(selectedEvaluation, "selected evaluation")
+
 
 
     if (!isOpen) return null;
@@ -97,11 +99,13 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                             <div >
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
+
                                         Name of Examination {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
                                         styles={customStyles}
                                         value={{ label: selectedEvaluation.exam_name, value: selectedEvaluation.exam_name }}
+
                                         isDisabled={!isEditMode}
                                     />
                                 </div>
@@ -110,11 +114,13 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                             <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
+
                                         Year {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
                                         styles={customStyles}
                                         value={{ label: selectedEvaluation.year, value: selectedEvaluation.year }}
+
                                         isDisabled={!isEditMode}
                                     />
                                 </div>
@@ -124,11 +130,13 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                             <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
+
                                         Subject {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
                                         styles={customStyles}
                                         value={selectedEvaluation ? { label: selectedEvaluation.subject_name, value: selectedEvaluation.subject_name } : null}
+
                                         isDisabled={!isEditMode}
                                     />
                                 </div>
@@ -140,10 +148,12 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                     </label>
                                     <Select
                                         styles={customStyles}
+
                                         value={{
                                             label: `Class ${selectedEvaluation.class_name} - ${selectedEvaluation.division}`,
                                             value: `${selectedEvaluation.class_name}${selectedEvaluation.division}`
                                         }}
+
                                         isDisabled={!isEditMode}
                                     />
                                 </div>
@@ -168,9 +178,14 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                             fontSize: '16px',
                                             color: '#526D82',
                                             width: '100%',
+
+                                            boxSizing: 'border-box',
+                                            outline: "none",
                                             backgroundColor: '#fff',
                                             cursor: isEditMode ? 'pointer' : 'not-allowed'
                                         }}
+                                        disabled={!isEditMode}
+
                                     />
                                 </div>
                             </div>
@@ -197,6 +212,8 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                             cursor: isEditMode ? 'pointer' : 'not-allowed'
                                         }}
 
+                                        disabled={!isEditMode}
+
                                     />
                                 </div>
                             </div>
@@ -205,10 +222,12 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                             <div>
                                 <div className="evaluationview-form-group">
                                     <label className="evaluationview-form-label">
+
                                         Faculty {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
                                         value={selectedEvaluation ? { label: selectedEvaluation.teacher_name, value: selectedEvaluation.teacher_name } : null}
+
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}
@@ -221,7 +240,9 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                 </div>
                 <div className="evaluationview-modal-footer">
                     <button className="evaluationview-btn evaluationview-btn-danger">Delete</button>
+
                     <button
+
                         className="evaluationview-btn evaluationview-btn-primary"
                         onClick={() => setIsEditMode(!isEditMode)}
                     >
