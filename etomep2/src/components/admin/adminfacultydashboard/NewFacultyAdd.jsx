@@ -20,23 +20,29 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
     const [employeeid, setEmployeeId] = useState("");
     const [gender, setGender] = useState(null);
     const [phoneno, setPhoneNo] = useState("");
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
 
     const [imageFile, setImageFile] = useState(null);
 
 
-    console.log(phoneno, "phone number")
+    console.log(imageFile, "imageFile")
 
 
     const handleSave = async () => {
         const validationErrors = [];
 
-        if (!firstname.trim()) validationErrors.push("First name is required.");
+
+        console.log('firstname:', firstname, typeof firstname);
+        console.log('email:', email, typeof email);
+        console.log('password:', password, typeof password);
+        console.log('gender:', gender);
+
+        if (!firstname) validationErrors.push("First name is required.");
         if (!gender?.value) validationErrors.push("Gender is required.");
-        if (!email.trim()) validationErrors.push("Email is required.");
-        if (!password.trim()) validationErrors.push("Password is required.");
+        if (!email) validationErrors.push("Email is required.");
+        if (!password) validationErrors.push("Password is required.");
 
         // Email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -63,7 +69,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         formData.append("phone_number", phoneno);
         formData.append("email", email);
         formData.append("password", password);
-        if (imageFile) formData.append("photo", imageFile);
+        if (imageFile) formData.append("profile_photo", imageFile);
 
         console.log(formData, "formdataa")
 
@@ -95,7 +101,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
             ...base,
             minHeight: '48px',
             height: '48px',
-            borderRadius:'8px',
+            borderRadius: '8px',
             borderColor: '#757575',
             boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
             '&:hover': {
@@ -273,6 +279,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                 <div className="facultyadd-form-group">
                                     <label className="facultyadd-form-label">Phone Number</label>
                                     <input
+                                        onChange={(e) => setPhoneNo(e.target.value)}
                                         type="text"
                                         min="0"
                                         className="custom-input"
@@ -297,6 +304,8 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                     </label>
                                     <input
                                         type="text"
+                                        value={email}  // Add this
+                                        onChange={(e) => setEmail(e.target.value)}  // Add this
                                         min="0"
                                         className="custom-input"
                                         style={{
@@ -321,7 +330,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         Password<span className="facultyadd_required">*</span>
                                     </label>
                                     <input
-                                        type="text"
+                                        type="password"  // Changed from "text" for security
+                                        value={password}  // Add this
+                                        onChange={(e) => setPassword(e.target.value)}  // Add this
                                         min="0"
                                         className="custom-input"
                                         style={{
@@ -422,7 +433,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                         className="facultyadd-btn facultyadd-btn-secondary"
                     >
                         Clear
-                    </button>                    
+                    </button>
                     <button onClick={handleSave} className="facultyadd-btn facultyadd-btn-primary">Save</button>
                 </div>
             </div>

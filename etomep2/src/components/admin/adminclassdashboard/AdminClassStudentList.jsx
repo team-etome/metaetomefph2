@@ -3,53 +3,18 @@ import { IoArrowBack, IoClose } from "react-icons/io5";
 import { AiOutlineSearch } from "react-icons/ai";
 import "./adminclassstudentlist.css";
 import AdminClassStudentView from "./AdminClassStudentView";
-import avtar from "../../../assets/avatar.jpg"
+import studentDefault from "../../../assets/student.jpg"
 
-const AdminClassStudentList = ({ onBack, onClose }) => {
+const AdminClassStudentList = ({ onBack, onClose, students }) => {
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [search, setSearch] = useState("");
+    const allStudents = students || [];
     // Dummy data to mimic your screenshot
-    const allStudents = [
-        { name: "Ananthu", className: "Class 1 A", rollNo: 1, avatarUrl: "https://randomuser.me/api/portraits/men/65.jpg" },
-        { name: "Arjun", className: "Class 1 A", rollNo: 2, avatarUrl: "https://randomuser.me/api/portraits/men/32.jpg" },
-        { name: "Priya", className: "Class 1 A", rollNo: 3, avatarUrl: "https://randomuser.me/api/portraits/women/44.jpg" },
-        { name: "Vikram", className: "Class 1 A", rollNo: 4, avatarUrl: "https://randomuser.me/api/portraits/men/12.jpg" },
-        { name: "Sneha", className: "Class 1 A", rollNo: 5, avatarUrl: "https://randomuser.me/api/portraits/women/68.jpg" },
-        { name: "Ravi", className: "Class 1 A", rollNo: 6, avatarUrl: "https://randomuser.me/api/portraits/men/24.jpg" },
-        { name: "Neha", className: "Class 1 A", rollNo: 7, avatarUrl: "https://randomuser.me/api/portraits/women/50.jpg" },
-        { name: "Karan", className: "Class 1 A", rollNo: 8, avatarUrl: "https://randomuser.me/api/portraits/men/77.jpg" },
-        { name: "Aditi", className: "Class 1 A", rollNo: 9, avatarUrl: "https://randomuser.me/api/portraits/men/16.jpg" },
-        { name: "Siddharth", className: "Class 1 A", rollNo: 10, avatarUrl: "https://randomuser.me/api/portraits/men/58.jpg" },
-        { name: "Meera", className: "Class 1 A", rollNo: 11, avatarUrl: "https://randomuser.me/api/portraits/women/28.jpg" },
-        { name: "Rahul", className: "Class 1 A", rollNo: 12, avatarUrl: "https://randomuser.me/api/portraits/men/73.jpg" },
-        { name: "Ananthu", className: "Class 1 A", rollNo: 1, avatarUrl: "https://randomuser.me/api/portraits/men/65.jpg" },
-        { name: "Arjun", className: "Class 1 A", rollNo: 2, avatarUrl: "https://randomuser.me/api/portraits/men/32.jpg" },
-        { name: "Priya", className: "Class 1 A", rollNo: 3, avatarUrl: "https://randomuser.me/api/portraits/women/44.jpg" },
-        { name: "Vikram", className: "Class 1 A", rollNo: 4, avatarUrl: "https://randomuser.me/api/portraits/men/12.jpg" },
-        { name: "Sneha", className: "Class 1 A", rollNo: 5, avatarUrl: "https://randomuser.me/api/portraits/women/68.jpg" },
-        { name: "Ravi", className: "Class 1 A", rollNo: 6, avatarUrl: "https://randomuser.me/api/portraits/men/24.jpg" },
-        { name: "Neha", className: "Class 1 A", rollNo: 7, avatarUrl: "https://randomuser.me/api/portraits/women/50.jpg" },
-        { name: "Karan", className: "Class 1 A", rollNo: 8, avatarUrl: "https://randomuser.me/api/portraits/men/77.jpg" },
-        { name: "Aditi", className: "Class 1 A", rollNo: 9, avatarUrl: "https://randomuser.me/api/portraits/men/16.jpg" },
-        { name: "Siddharth", className: "Class 1 A", rollNo: 10, avatarUrl: "https://randomuser.me/api/portraits/men/58.jpg" },
-        { name: "Meera", className: "Class 1 A", rollNo: 11, avatarUrl: "https://randomuser.me/api/portraits/women/28.jpg" },
-        { name: "Rahul", className: "Class 1 A", rollNo: 12, avatarUrl: "https://randomuser.me/api/portraits/men/73.jpg" },
-        { name: "Ananthu", className: "Class 1 A", rollNo: 1, avatarUrl: "https://randomuser.me/api/portraits/men/65.jpg" },
-        { name: "Arjun", className: "Class 1 A", rollNo: 2, avatarUrl: "https://randomuser.me/api/portraits/men/32.jpg" },
-        { name: "Priya", className: "Class 1 A", rollNo: 3, avatarUrl: "https://randomuser.me/api/portraits/women/44.jpg" },
-        { name: "Vikram", className: "Class 1 A", rollNo: 4, avatarUrl: "https://randomuser.me/api/portraits/men/12.jpg" },
-        { name: "Sneha", className: "Class 1 A", rollNo: 5, avatarUrl: "https://randomuser.me/api/portraits/women/68.jpg" },
-        { name: "Ravi", className: "Class 1 A", rollNo: 6, avatarUrl: "https://randomuser.me/api/portraits/men/24.jpg" },
-        { name: "Neha", className: "Class 1 A", rollNo: 7, avatarUrl: "https://randomuser.me/api/portraits/women/50.jpg" },
-        { name: "Karan", className: "Class 1 A", rollNo: 8, avatarUrl: "https://randomuser.me/api/portraits/men/77.jpg" },
-        { name: "Aditi", className: "Class 1 A", rollNo: 9, avatarUrl: "https://randomuser.me/api/portraits/men/16.jpg" },
-        { name: "Siddharth", className: "Class 1 A", rollNo: 10, avatarUrl: "https://randomuser.me/api/portraits/men/58.jpg" },
-        { name: "Meera", className: "Class 1 A", rollNo: 11, avatarUrl: "https://randomuser.me/api/portraits/women/28.jpg" },
-        { name: "Rahul", className: "Class 1 A", rollNo: 12, avatarUrl: "https://randomuser.me/api/portraits/men/73.jpg" },
-    ];
+
     const filtered = allStudents.filter(s =>
-        s.name.toLowerCase().includes(search.toLowerCase())
+        s.student_name?.toLowerCase().includes(search.toLowerCase())
     );
+
     if (selectedStudent) {
         return (
             <AdminClassStudentView
@@ -59,6 +24,8 @@ const AdminClassStudentList = ({ onBack, onClose }) => {
         );
     }
     // <hr className="adminclassstudentlist-divider" />
+
+
 
     return (
         <div className="adminclassstudentlist-backdrop">
@@ -97,20 +64,21 @@ const AdminClassStudentList = ({ onBack, onClose }) => {
                     <input
                         type="text"
                         className="adminclassstudentlist-search-input"
-                        placeholder="Search Student"
+                        placeholder="Search by Student Name"
                         value={search}
-                        onChange={e => setSearch(e.target.value)}
+                        onChange={(e) => setSearch(e.target.value)}
+                        autoComplete="off"
                     />
                 </div>
                 {/* Grid of student cards */}
                 <div className="adminclassstudentlist-grid-container">
                     {filtered.map(student => (
-                        <div key={student.rollNo} className="adminclassstudentlist-card"
+                        <div key={student.roll_no} className="adminclassstudentlist-card"
                             onClick={() => setSelectedStudent(student)}
                             style={{ cursor: "pointer" }}>
                             <img
-                                src={student.avatarUrl}
-                                alt={avtar}
+                                src={student.image_url ? student.image_url : studentDefault}
+                                alt={student.student_name}
                                 className="adminclassstudentlist-avatar"
                             />
                             <div className="adminclassstudentlist-info">
@@ -119,10 +87,10 @@ const AdminClassStudentList = ({ onBack, onClose }) => {
                                 </div>
                                 <div className="adminclassstudentlist-info-classrollno">
                                     <span className="adminclassstudentlist-class">
-                                        {student.className}
+                                        {student.student_name}
                                     </span>
                                     <span className="adminclassstudentlist-roll">
-                                        Roll no: {student.rollNo}
+                                        Roll no: {student.roll_no}
                                     </span>
                                 </div>
                             </div>

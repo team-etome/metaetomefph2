@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+ import React, { useState, useEffect } from 'react';
 import AdminQuestionAssignadd from './AdminQuestionassigningadd';
 import './AdminQuestionAssigning.css'; // Import custom CSS
 import axios from 'axios';
@@ -27,6 +27,7 @@ const AdminQuestionAssigning = () => {
             try {
                 const response = await axios.get(`${APIURL}/api/questionpaper/${admin_id}`);
                 const rawData = response.data.question_papers || {};
+                
                 dispatch(exampaperinfo(rawData));
 
                 console.log(response.data, "responseresponseresponse");

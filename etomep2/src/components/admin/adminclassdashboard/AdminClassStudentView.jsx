@@ -1,29 +1,11 @@
 import React from "react";
 import "./adminclassstudentview.css";
-import avtar from "../../../assets/avatar.jpg"
+import studentDefault from "../../../assets/student.jpg"
 
 const AdminClassStudentView = ({ student, onClose }) => {
     if (!student) return null;
 
-    const studentData = {
-        name: student.name,
-        email: "xyz@gmail.com",
-        dob: "10/03/2000",
-        gender: "Male",
-        fatherName: "Suresh Kumar",
-        motherName: "Renuka",
-        guardianName: "Kumar",
-        phone: "9686547555",
-        address: "Sagar Vihar, 45 K Munshi Marg, Nr Nuookad Hotel, Chowpatty",
-        school: {
-            class: "7",
-            division: "A",
-            rollNo: student.rollNo,
-            joiningDate: "12/04/2024",
-            admissionNo: "254688",
-            academicYear: "2022-2025",
-        }
-    };
+
 
     return (
         <div className="adminclassstudentview-backdrop">
@@ -32,16 +14,16 @@ const AdminClassStudentView = ({ student, onClose }) => {
                     {/* Left: avatar + name/email */}
                     <div className="adminclassstudentview-header-left">
                         <img
-                            src={student.avatarUrl}
-                            alt={avtar}
+                            src={student.image_url || studentDefault}
+                            alt="student-avatar"
                             className="adminclassstudentview-avatar"
                         />
                         <div className="adminclassstudentview-header-text">
                             <div className="adminclassstudentview-name">
-                                {studentData.name}
+                            {student.student_name}
                             </div>
                             <div className="adminclassstudentview-email">
-                                {studentData.email}
+                            {student.email || "No email"}
                             </div>
                         </div>
                     </div>
@@ -66,13 +48,15 @@ const AdminClassStudentView = ({ student, onClose }) => {
                 </div>
                 <div className="adminclassstudentview-personal-info">
                     {[
-                        ["DOB", studentData.dob],
-                        ["Gender", studentData.gender],
-                        ["Father Name", studentData.fatherName],
-                        ["Mother Name", studentData.motherName],
-                        ["Guardian Name", studentData.guardianName],
-                        ["Phone No", studentData.phone],
-                        ["Address", studentData.address],
+                         ["DOB", student.dob || "N/A"],
+                         ["Gender", student.gender || "N/A"],
+                         ["Father Name", student.fathers_name || "N/A"],
+                         ["Mother Name", student.mothers_name || "N/A"],
+                         ["Guardian Name", student.guardian || "N/A"],
+                         ["Phone No", student.number || "N/A"],
+                         ["Address", student.address || "N/A"],
+
+
                     ].map(([label, value]) => (
                         <div className="adminclassstudentview-info-item" key={label}>
                             <div className="adminclassstudentview-info-label">{label}</div>
@@ -89,12 +73,12 @@ const AdminClassStudentView = ({ student, onClose }) => {
                 </div>
                 <div className="adminclassstudentview-school-info">
                     {[
-                        ["Class", studentData.school.class],
-                        ["Division", studentData.school.division],
-                        ["Roll No", studentData.school.rollNo],
-                        ["Joining Date", studentData.school.joiningDate],
-                        ["Admission No", studentData.school.admissionNo],
-                        ["Academic Year", studentData.school.academicYear],
+                         ["Class", student.class_name || "N/A"],
+                         ["Division", student.division || "N/A"], // If available, otherwise skip
+                         ["Roll No", student.roll_no || "N/A"],
+                         ["Joining Date", student.start_date || "N/A"],
+                         ["Admission No", student.admission_no || "N/A"],
+                         ["Academic Year", student.academic_year || "N/A"],
                     ].map(([label, value]) => (
                         <div className="adminclassstudentview-info-item" key={label}>
                             <div className="adminclassstudentview-info-label">{label}</div>
