@@ -4,6 +4,9 @@
     height: 100%;
     width: 100%;
     position: relative;
+
+    z-index: 1000;
+
 }
 .adminclassaddsteptwo-header {
     display: flex;
@@ -234,4 +237,31 @@
     width: 100px;
     height: 40px;
     cursor: pointer;
+  }
+  
+  /* SweetAlert styles to ensure it appears above the modal */
+  .swal2-container {
+    z-index: 99999 !important;
+  }
+  
+  .swal2-popup {
+    z-index: 99999 !important;
+  }
+  
+  .swal2-backdrop-show {
+    z-index: 99998 !important;
+  }
+  
+  /* Override any other z-index that might be affecting SweetAlert */
+  .swal2-container.swal2-center {
+    z-index: 99999 !important;
+  }
+  
+  /* Ensure the modal doesn't have a higher z-index */
+  .newadminclassdashboard-modal {
+    z-index: 1000;
+  }
+  
+  .newadminclassdashboard-modal-content {
+    z-index: 1001;
   }  

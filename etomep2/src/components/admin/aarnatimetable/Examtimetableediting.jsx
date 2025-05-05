@@ -21,6 +21,7 @@ const Examtimetableediting = ({ onClose, defaultClassId, defaultEntries }) => {
     const [classOptions, setClassOptions] = useState([]);
     const [selectedClass, setSelectedClass] = useState(null);
     const [subjectOptions, setSubjectOptions] = useState([]);
+    const [term, setTerm] = useState([]);
 
     const [entries, setEntries] = useState([
         { subject: 'English', date: '', startTime: '', endTime: '' }

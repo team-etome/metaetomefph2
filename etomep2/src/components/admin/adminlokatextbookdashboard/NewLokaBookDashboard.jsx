@@ -20,7 +20,7 @@ import { setSelectedTextbook } from "../../../Redux/Actions/TextbookEditAction";
 import NewLokaBookEdit from "./NewLokaBookEdit";
 
 function NewLokaBookDashboard() {
-    
+
     const [showEditPopup, setShowEditPopup] = useState(false);
     const dispatch = useDispatch();
 
@@ -120,15 +120,23 @@ function NewLokaBookDashboard() {
                         <div className="admin_loka_select_col">
                             <Form.Select
                                 className="admin_loka_select"
+                                value={selectedClass}
                                 onChange={(e) => setSelectedClass(e.target.value)}
                             >
                                 <option value="">Select Class</option>
-                                {[...Array(12)].map((_, i) => (
-                                    <option key={i + 1} value={i + 1}>
-                                        {i + 1}
-                                    </option>
-                                ))}
+                                {[...new Set(lokabookListData.map(item => item.textbook_details.class_name))]
+                                    .sort((a, b) => {
+                                        const numA = parseInt(a.match(/\d+/)) || 0;
+                                        const numB = parseInt(b.match(/\d+/)) || 0;
+                                        return numA - numB;
+                                    })
+                                    .map((className, index) => (
+                                        <option key={index} value={className}>
+                                            {className}
+                                        </option>
+                                    ))}
                             </Form.Select>
+
                         </div>
                         <div className="admin_loka_select_col_right">
                             <InputGroup className="admin_loka_search">
@@ -149,6 +157,7 @@ function NewLokaBookDashboard() {
                             {showPopup && <NewLokaBookAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
                         </div>
                     </div>
+
             </div>
             <div className="admin_loka_scroll_container">
                 {(selectedClass ? [selectedClass] : [...Array(12).keys()].map(i => (i + 1).toString())).map((classNum) => {
@@ -180,7 +189,9 @@ function NewLokaBookDashboard() {
                                     </div>
                                 ))}
                                 {showEditPopup && <NewLokaBookEdit isOpen={showEditPopup} onClose={() => setShowEditPopup(false)} />}
+
                             </div>
+
                         </div>
                     );
                 })}

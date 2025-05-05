@@ -1,59 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import "./adminclassview.css";
-import { useState } from "react";
 import AdminClassStudentList from "./AdminClassStudentList";
-import { useEffect } from "react";
 
-const AdminClassView = ({ onClose }) => {
+const AdminClassView = ({ onClose, faculty }) => {
     const [showStudents, setShowStudents] = useState(false);
-    const data = {
-        className: "Class 12 A",
-        circleTitle: "12 A",
-        classTeacher: "Sethu Lakshmi",
-        medium: "English",
-        stream: "Biology Science",
-        noOfSubjects: 6,
-        subjectList: [
-            { subjectName: "Biology", publisherName: "NCERT", facultyName: "Ramesh" },
-            { subjectName: "Mathematics", publisherName: "NCERT", facultyName: "Sumesh" },
-            { subjectName: "Chemistry", publisherName: "NCERT", facultyName: "Hari Narayanan" },
-            { subjectName: "Biology", publisherName: "NCERT", facultyName: "Ramesh" },
-            { subjectName: "Mathematics", publisherName: "NCERT", facultyName: "Sumesh" },
-            { subjectName: "Chemistry", publisherName: "NCERT", facultyName: "Hari Narayanan" },
-            { subjectName: "Biology", publisherName: "NCERT", facultyName: "Ramesh" },
-            { subjectName: "Mathematics", publisherName: "NCERT", facultyName: "Sumesh" },
-            { subjectName: "Chemistry", publisherName: "NCERT", facultyName: "Hari Narayanan" },
 
-        ],
-    };
+    console.log(faculty, "faculty"); // check real data
 
     if (showStudents) {
         return (
-          <AdminClassStudentList
-            onBack={() => setShowStudents(false)}  // go back to Class View
-            onClose={onClose}                     // close both
-          />
+            <AdminClassStudentList
+                onBack={() => setShowStudents(false)}
+                onClose={onClose}
+                students={faculty.students.map(student => ({
+                    ...student,
+                    class_name: faculty.class_name,     // 👈 Add class name
+                    division: faculty.section           // 👈 Add division (section)
+                }))}
+            />
         );
-      }
+    }
 
     return (
         <div className="adminclassview-backdrop">
             {/* Header */}
             <div className="adminclassview-header">
-                <p className="adminclassview-header-title">{data.className}</p>
-                <button className="adminclassview-close-btn" onClick={onClose}>
-                    ×
-                </button>
+                <p className="adminclassview-header-title">{faculty.className}</p>
+                <button className="adminclassview-close-btn" onClick={onClose}>×</button>
             </div>
 
             <hr className="adminclassview-divider" />
 
-            {/* Wrapper containing everything */}
+            {/* Wrapper */}
             <div className="adminclassview-wrapper">
                 <div className="adminclassview-top-row">
                     <div className="adminclassview-circle-container">
                         <div className="adminclassview-circle">
-                            {data.circleTitle /* e.g. "12 A" */}
+                        {faculty.class_name} {faculty.section}
                         </div>
                     </div>
 
@@ -63,17 +46,17 @@ const AdminClassView = ({ onClose }) => {
                         <div className="adminclassview-info-container-top" >
                             <div className="adminclassview-info-item">
                                 <p className="adminclassview-label">Class Teacher</p>
-                                <p className="adminclassview-value">{data.classTeacher}</p>
+                                <p className="adminclassview-value">{faculty.teacher || "N/A"}</p>
                             </div>
 
                             <div className="adminclassview-info-item">
                                 <p className="adminclassview-label">Medium</p>
-                                <p className="adminclassview-value">{data.medium}</p>
+                                <p className="adminclassview-value">{faculty.medium || "N/A"}</p>
                             </div>
 
                             <div className="adminclassview-info-item">
                                 <p className="adminclassview-label">Stream</p>
-                                <p className="adminclassview-value">{data.stream}</p>
+                                <p className="adminclassview-value">{faculty.stream || "N/A"}</p>
                             </div>
                         </div>
 
@@ -81,13 +64,14 @@ const AdminClassView = ({ onClose }) => {
                         <div className="adminclassview-info-container-bottom">
                             <div className="adminclassview-info-item">
                                 <p className="adminclassview-label">No of Subjects</p>
-                                <p className="adminclassview-value">{data.noOfSubjects}</p>
+                                <p className="adminclassview-value">{faculty.subjects || 0}</p>
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <div className="adminclassview-button-row"
+
+                <div
+                    className="adminclassview-button-row"
                     onClick={() => setShowStudents(true)}
                     style={{ cursor: "pointer" }}
                 >
@@ -102,18 +86,22 @@ const AdminClassView = ({ onClose }) => {
                 <p className="adminclassview-subject-list-title">Subject List</p>
                 <table className="adminclassview-table">
                     <thead>
+
+                        
                         <tr>
                             <th>Subject Name</th>
                             <th>Publisher Name</th>
                             <th>Faculty Name</th>
                         </tr>
+
+
                     </thead>
                     <tbody>
-                        {data.subjectList.map((item, index) => (
+                        {faculty.curriculum?.map((item, index) => (
                             <tr key={index}>
-                                <td>{item.subjectName}</td>
-                                <td>{item.publisherName}</td>
-                                <td>{item.facultyName}</td>
+                                <td>{item.subject}</td>
+                                <td>{item.publisher_name}</td>
+                                <td>{item.teacher}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -125,14 +113,7 @@ const AdminClassView = ({ onClose }) => {
                 <button className="adminclassview-btn adminclassview-btn-delete">Delete</button>
                 <button className="adminclassview-btn adminclassview-btn-edit">Edit</button>
             </div>
-
-             {/* ===== Conditionally show the StudentList component ===== */}
-             {showStudents && (
-                    <AdminClassStudentList
-                        onClose={() => setShowStudents(false)}
-                    />
-                )}
-        </div >
+        </div>
     );
 };
 

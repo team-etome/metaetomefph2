@@ -20,23 +20,29 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
     const [employeeid, setEmployeeId] = useState("");
     const [gender, setGender] = useState(null);
     const [phoneno, setPhoneNo] = useState("");
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
 
     const [imageFile, setImageFile] = useState(null);
 
 
-    console.log(phoneno, "phone number")
+    console.log(imageFile, "imageFile")
 
 
     const handleSave = async () => {
         const validationErrors = [];
 
-        if (!firstname.trim()) validationErrors.push("First name is required.");
+
+        console.log('firstname:', firstname, typeof firstname);
+        console.log('email:', email, typeof email);
+        console.log('password:', password, typeof password);
+        console.log('gender:', gender);
+
+        if (!firstname) validationErrors.push("First name is required.");
         if (!gender?.value) validationErrors.push("Gender is required.");
-        if (!email.trim()) validationErrors.push("Email is required.");
-        if (!password.trim()) validationErrors.push("Password is required.");
+        if (!email) validationErrors.push("Email is required.");
+        if (!password) validationErrors.push("Password is required.");
 
         // Email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -63,7 +69,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         formData.append("phone_number", phoneno);
         formData.append("email", email);
         formData.append("password", password);
-        if (imageFile) formData.append("photo", imageFile);
+        if (imageFile) formData.append("profile_photo", imageFile);
 
         console.log(formData, "formdataa")
 
@@ -256,95 +262,101 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                 />
 
 
-                            </div>
-                            <div className="facultyadd-form-group">
-                                <label className="facultyadd-form-label">Phone Number</label>
-                                <input
-                                    type="text"
-                                    min="0"
-                                    className="custom-input"
-                                    style={{
-                                        height: '48px',
-                                        border: '1px solid #757575',
-                                        borderRadius: '8px',
-                                        padding: '0 10px',
-                                        fontSize: '16px',
-                                        color: '#526D82',
-                                        width: '100%',
-                                        boxSizing: 'border-box',
-                                        outline: "none"
-                                    }}
-                                />
-                            </div>
-                            <div className="facultyadd-form-group">
-                                <label className="facultyadd-form-label">
-                                    Email ID <span className="facultyadd_required">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    min="0"
-                                    className="custom-input"
-                                    style={{
-                                        height: '48px',
-                                        border: '1px solid #757575',
-                                        borderRadius: '8px',
-                                        padding: '0 10px',
-                                        fontSize: '16px',
-                                        color: '#526D82',
-                                        width: '100%',
-                                        boxSizing: 'border-box',
-                                        outline: "none"
-                                    }}
-                                />
-                            </div>
-                            <div className="facultyadd-form-group facultyadd-form-group--full">
-                                <label className="facultyadd-form-label">
-                                    Password <span className="facultyadd_required">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    min="0"
-                                    className="custom-input"
-                                    style={{
-                                        height: '48px',
-                                        border: '1px solid #757575',
-                                        borderRadius: '8px',
-                                        padding: '0 10px',
-                                        fontSize: '16px',
-                                        color: '#526D82',
-                                        width: '100%',
-                                        boxSizing: 'border-box',
-                                        outline: "none"
-                                    }}
-                                />
-                            </div>
-                            <div className="facultyadd-form-group facultyadd-form-group--full">
-                                <label className="facultyadd-form-label">Add cover Photo</label>
-                                <div>
-                                    <label htmlFor="photo" style={{}}></label>
-                                    <div className="admin_faculty_image_upload_container">
-                                        <div className="admin_faculty_upload_placeholder">
-                                            {imageFile ? (
-                                                <>
-                                                    <img
-                                                        src={URL.createObjectURL(imageFile)}
-                                                        alt="Uploaded Image"
-                                                        className="uploaded_image"
-                                                        style={{
-                                                            width: "100%",
-                                                            height: "200px",
-                                                            marginLeft: "30px",
-                                                        }}
-                                                    />
-                                                    <button
-                                                        onClick={clearImageFile}
-                                                        style={{
-                                                            border: "none",
-                                                            background: "none",
-                                                            cursor: "pointer",
-                                                        }}
-                                                    >
-                                                        <FaRedo
+
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={6}>
+                                <div className="facultyadd-form-group">
+                                    <label className="facultyadd-form-label">Phone Number</label>
+                                    <input
+                                        onChange={(e) => setPhoneNo(e.target.value)}
+                                        type="text"
+                                        min="0"
+                                        className="custom-input"
+                                        style={{
+                                            height: '48px',
+                                            border: '1px solid #757575',
+                                            borderRadius: '8px',
+                                            padding: '0 10px',
+                                            fontSize: '16px',
+                                            color: '#526D82',
+                                            width: '100%',
+                                            boxSizing: 'border-box',
+                                            outline: "none"
+                                        }}
+                                    />
+                                </div>
+                            </Col>
+                            <Col md={6}>
+                                <div className="facultyadd-form-group">
+                                    <label className="facultyadd-form-label">
+                                        Email ID<span className="facultyadd_required">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={email}  // Add this
+                                        onChange={(e) => setEmail(e.target.value)}  // Add this
+                                        min="0"
+                                        className="custom-input"
+                                        style={{
+                                            height: '48px',
+                                            border: '1px solid #757575',
+                                            borderRadius: '8px',
+                                            padding: '0 10px',
+                                            fontSize: '16px',
+                                            color: '#526D82',
+                                            width: '100%',
+                                            boxSizing: 'border-box',
+                                            outline: "none"
+                                        }}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={12}>
+                                <div className="facultyadd-form-group">
+                                    <label className="facultyadd-form-label">
+                                        Password<span className="facultyadd_required">*</span>
+                                    </label>
+                                    <input
+                                        type="password"  // Changed from "text" for security
+                                        value={password}  // Add this
+                                        onChange={(e) => setPassword(e.target.value)}  // Add this
+                                        min="0"
+                                        className="custom-input"
+                                        style={{
+                                            height: '48px',
+                                            border: '1px solid #757575',
+                                            borderRadius: '8px',
+                                            padding: '0 10px',
+                                            fontSize: '16px',
+                                            color: '#526D82',
+                                            width: '100%',
+                                            boxSizing: 'border-box',
+                                            outline: "none"
+                                        }}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={12}>
+                                <div className="facultyadd-form-group">
+                                    <label className="facultyadd-form-label">Add cover Photo</label>
+                                    <div>
+                                        <label htmlFor="photo" style={{}}></label>
+                                        <div className="admin_faculty_image_upload_container">
+                                            <div className="admin_faculty_upload_placeholder">
+                                                {imageFile ? (
+                                                    <>
+                                                        <img
+                                                            src={URL.createObjectURL(imageFile)}
+                                                            alt="Uploaded Image"
+                                                            className="uploaded_image"
+
                                                             style={{
                                                                 color: "blue",
                                                                 fontSize: "20px",
@@ -373,33 +385,36 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            </div>
-                </form>
-            </div>
-            <div className="facultyadd-modal-footer" style={{border:"2px solid red"}}>
-                <button
-                    onClick={() => {
-                        Swal.fire({
-                            title: 'Are you sure?',
-                            text: "All entered data will be lost!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, clear it',
-                            cancelButtonText: 'Cancel'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                onClose(); // ✅ only close if user confirms
-                            }
-                        });
-                    }}
-                    className="facultyadd-btn facultyadd-btn-secondary"
-                >
-                    Clear
-                </button>
-                <button onClick={handleSave} className="facultyadd-btn facultyadd-btn-primary">Save</button>
+
+                            </Col>
+                        </Row>
+                    </form>
+                </div>
+                <div className="facultyadd-modal-footer">
+                    <button
+                        onClick={() => {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: "All entered data will be lost!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, clear it',
+                                cancelButtonText: 'Cancel'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    onClose(); // ✅ only close if user confirms
+                                }
+                            });
+                        }}
+                        className="facultyadd-btn facultyadd-btn-secondary"
+                    >
+                        Clear
+                    </button>
+                    <button onClick={handleSave} className="facultyadd-btn facultyadd-btn-primary">Save</button>
+                </div>
+
             </div>
         </div>
         </div >

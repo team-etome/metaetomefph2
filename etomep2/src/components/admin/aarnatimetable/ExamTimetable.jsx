@@ -188,11 +188,13 @@ const Examtimetable = () => {
                                         <p className="examtimetable_class-title">Class {className}</p>
                                         <button
                                             className="btn-outline-secondary btn-sm examtimetable_table_class-section-edit_button"
+
                                             onClick={() => {
                                                 setSelectedClassEntries(entries);
                                                 setSelectedClassId(className);
                                                 setEditPopupVisible(true);
                                             }}
+
                                         >
                                             Edit
                                         </button>
