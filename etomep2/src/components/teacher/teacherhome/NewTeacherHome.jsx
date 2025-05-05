@@ -3,6 +3,8 @@ import './newteacherhome.css';
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import NewTeacherAssignTask from './NewTeacherAssignTask';
 import NewTeacherRankList from './NewTeacherRankList';
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const dummyRankList = [
   { name: 'Neha Katherine Jose', avatar: '', rank: 1 },
@@ -29,10 +31,16 @@ const PieChart = () => (
     <path d="M16 16 L16 0 A16 16 0 1 1 4.6 27.4 Z" fill="#60a5fa" />
   </svg>
 );
+const handlenavigate = () => {
+  navigate("/teacherprofile",);
+};
 
 export default function NewTeacherHome() {
   const [showAssignTaskPopup, setShowAssignTaskPopup] = useState(false);
   const [showRankListPopup, setShowRankListPopup] = useState(false);
+  const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
+  console.log(teacherInfo,"dataaaa")
+  const navigate = useNavigate();
 
   return (
     <div className="newteacherhome-root">
@@ -40,7 +48,20 @@ export default function NewTeacherHome() {
         <p className="newteacherhome-welcome">Welcome!</p>
         <div className="newteacherhome-userinfo">
           <span className="newteacherhome-email">h@gmail.com</span>
-          <span className="newteacherhome-avatar" />
+          <span className="newteacherhome-avatar">
+          <img
+              onClick={handlenavigate}
+              src={teacherInfo?.image || " "}
+              alt="Profile"
+              style={{
+                width: "52px",
+                height: "52px",
+                borderRadius: "50%",
+                marginRight: "30px",
+                cursor: "pointer",
+              }}
+            />
+          </span>
         </div>
       </div>
       <div className="newteacherhome-main">

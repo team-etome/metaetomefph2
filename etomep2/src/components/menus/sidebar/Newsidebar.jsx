@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { GoHome } from "react-icons/go";
-import { RxDashboard } from "react-icons/rx";
-import { PiBook } from "react-icons/pi";
-import { SlNote, SlSettings } from "react-icons/sl";
-import { TbScanEye } from "react-icons/tb";
+import { MdOutlinePentagon } from "react-icons/md";
+import { FaRegSquareFull } from "react-icons/fa6";
+import { FaRegCircle } from "react-icons/fa";
+import { RiTriangleLine } from "react-icons/ri";
 import "./Newsidebar.css"
 import etomelogo from "../../../assets/etomelogo.png" 
 import { NavLink } from "react-router-dom";
@@ -73,25 +72,25 @@ function Newsidebar({ setActiveItemLabel }) {
   }, [setActiveItemLabel]);
   // Items for class teachers specifically
   const classTeacherItems = [
-    { path: "/teacherhome", icon: <GoHome />, label: "Home" },
-    { path: "/teacherstudentdashboard", icon: <RxDashboard />, label: "My Class" },
-    { path: "/teachersubject", icon: <PiBook />, label: "Subjects" },
-    { path: "/teacherexamination", icon: <SlNote />, label: "Aarna" },
+    { path: "/teacherhome", icon: <MdOutlinePentagon />, label: "Home" },
+    { path: "/teacherstudentdashboard", icon: <FaRegSquareFull />, label: "My Class" },
+    { path: "/teachersubject", icon: <FaRegCircle />, label: "Subjects" },
+    { path: "/teacherexamination", icon: <RiTriangleLine />, label: "Aarna" },
     // { path: "/settings", icon: <SlSettings />, label: "Settings" }
   ];
   // Items for general teachers
   const teacherItems = [
-    { path: "/teacherhome", icon: <GoHome />, label: "Home" },
-    { path: "/teachersubject", icon: <PiBook />, label: "Subjects" },
-    { path: "/teacherexamination", icon: <SlNote />, label: "Aarna" },
+    { path: "/teacherhome", icon: <MdOutlinePentagon />, label: "Home" },
+    { path: "/teachersubject", icon: <FaRegCircle />, label: "Subjects" },
+    { path: "/teacherexamination", icon: <RiTriangleLine />, label: "Aarna" },
     // { path: "/settings", icon: <SlSettings />, label: "Settings" }
   ];
   // Items for other roles (admins and others)
   const otherItems = [
-    { path: "/admindashboard", icon: <GoHome />, label: "Home" },
-    { path: "/institutionadding", icon: <RxDashboard />, label: "Institution" },
-    { path: "/adminlokanavbar", icon: <PiBook />, label: "Loka" },
-    { path: "/aarnanavbar", icon: <SlNote />, label: "Aarna" },
+    { path: "/admindashboard", icon: <MdOutlinePentagon />, label: "Home" },
+    { path: "/institutionadding", icon: <FaRegSquareFull />, label: "Institution" },
+    { path: "/adminlokanavbar", icon: <FaRegCircle />, label: "Loka" },
+    { path: "/aarnanavbar", icon: <RiTriangleLine />, label: "Aarna" },
     // { path: "/eyora", icon: <TbScanEye />, label: "Eyora" },
     // { path: "/settings", icon: <SlSettings />, label: "Settings" }
   ];
