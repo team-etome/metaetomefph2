@@ -4,37 +4,40 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-
 const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeEntry, teachers, admininfo, stepOneData, onSave }) => {
-  useEffect(() => {
-    console.log("AdminClassAddStepTwo - admininfo3",);
-    console.log("Subjects:", admininfo?.admininfo?.subjects);
-    console.log("Publisher Names:", admininfo?.admininfo?.publisher_name);
-  }, [admininfo]);
-
-
-  console.log("Step 1 Data Received:", stepOneData);
   const APIURL = useSelector((state) => state.APIURL.url);
   const admin = useSelector((state) => state.admininfo);
+  const [localEntries, setLocalEntries] = useState(entries || []);
 
-  console.log(admin.admininfo.admin_id, "admin2");
-
-  const [localEntries, setLocalEntries] = useState(entries);
-
+  useEffect(() => {
+    if (entries) {
+      setLocalEntries(entries);
+    }
+  }, [entries]);
 
   const handleSave = async () => {
     try {
       if (!stepOneData) {
-        console.error("Step 1 data missing!");
+        Swal.fire({
+          title: 'Error',
+          text: 'Step 1 data is missing!',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
         return;
       }
 
       if (!localEntries || localEntries.length === 0) {
-        console.error("No curriculum entries!");
+        Swal.fire({
+          title: 'Error',
+          text: 'Please add at least one curriculum entry!',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
         return;
       }
 
-      // Validate here properly
+      // Validate entries
       const incompleteEntries = localEntries.filter(entry =>
         !entry.subject || !entry.publishername || !entry.facultyname
       );
@@ -55,12 +58,9 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
         entries: localEntries.map(entry => ({
           subject: entry.subject,
           publisher_name: entry.publishername,
-          faculty_name: entry.facultyname,
-         
+          faculty_name: entry.facultyname
         }))
       };
-
-      console.log("Final Payload:", finalPayload);
 
       const response = await axios.post(`${APIURL}/api/addClassname`, finalPayload);
 
@@ -72,15 +72,7 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
           confirmButtonText: 'OK'
         });
         closeModal();
-      } else {
-        Swal.fire({
-          title: 'Error',
-          text: 'Failed to add class. Please try again.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
       }
-
     } catch (error) {
       console.error("Error during API call:", error);
       Swal.fire({
@@ -92,19 +84,22 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
     }
   };
 
-
-
+  const handleEntryChange = (index, field, value) => {
+    const updated = [...localEntries];
+    updated[index] = {
+      ...updated[index],
+      [field]: value
+    };
+    setLocalEntries(updated);
+  };
 
   return (
-    <div className="adminclassaddsteptwo-main">
-      {/* Modal Header */}
-      <div className="adminclassaddsteptwo-header">
+    <div className="adminclassaddsteptwo-main" >
+      <div className="adminclassaddsteptwo-header" >
         <p className="adminclassaddsteptwo-header-title">Add Class</p>
-        <button className="adminclassaddsteptwo-close-btn" onClick={closeModal}>
-          ×
-        </button>
+        <button className="adminclassaddsteptwo-close-btn" onClick={closeModal}>×</button>
       </div>
-      {/* Step Indicator */}
+
       <div className="adminclassaddsteptwo-step-indicator">
         <div className="adminclassaddsteptwo-step completed">
           <div className="adminclassaddsteptwo-step-number">1</div>
@@ -115,114 +110,77 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
           <div className="adminclassaddsteptwo-step-label">Add Curriculum</div>
         </div>
       </div>
-      {/* Content */}
-      <div className="adminclassaddsteptwo-modal-step-content">
 
+      <div className="adminclassaddsteptwo-modal-step-content">
         <div className="adminclassaddsteptwo_entry-table">
           {localEntries.map((entry, index) => (
-
             <div
               key={index}
               className={`adminclassaddsteptwo_row-with-delete ${index === 0 ? "adminclassaddsteptwo_first-row" : ""}`}
-              
             >
               <div className="adminclassaddsteptwo_step-row">
                 <div className="adminclassaddsteptwo_step-column">
                   {index === 0 && (
-                    <label
-                      className="adminclassaddsteptwo-form-label"
-                      htmlFor={`className-${index}`}
-                    >
+                    <label className="adminclassaddsteptwo-form-label" htmlFor={`subject-${index}`}>
                       Subject <span className="adminclassaddsteptwo_required">*</span>
                     </label>
                   )}
                   <select
-                    id={`className-${index}`}
-                    className="adminclassaddsteptwo_form-select"
+                    id={`subject-${index}`}
+                    className="form-select form-select-sm adminclassaddsteptwo_form-select"
+                    value={entry.subject || ""}
+                    onChange={(e) => handleEntryChange(index, 'subject', e.target.value)}
                   >
-
-                    Subject <span className="adminclassaddsteptwo_required">*</span>
-                  </label>
-                )}
-                <select
-                  id={`className-${index}`}
-                  className="adminclassaddsteptwo_form-select"
-                  value={localEntries[index]?.subject || ""}
-                  onChange={(e) => {
-                    const updated = [...localEntries];
-                    updated[index].subject = e.target.value;
-                    setLocalEntries(updated);  // 🔥 only update local, don't save to backend yet
-                  }}
-                >
-                  <option value="">Select Subject</option>
-                  {admininfo?.admininfo?.subjects?.map((subject, idx) => (
-                    <option key={idx} value={subject.subject}>
-                      {subject.subject.charAt(0).toUpperCase() + subject.subject.slice(1)}
-                    </option>
-                  ))}
-                </select>
-
-
-              </div>
-
+                    <option value="">Select Subject</option>
+                    {admininfo?.admininfo?.subjects?.map((subject, idx) => (
+                      <option key={idx} value={subject.subject}>
+                        {subject.subject.charAt(0).toUpperCase() + subject.subject.slice(1)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
                 <div className="adminclassaddsteptwo_step-column">
                   {index === 0 && (
-                    <label
-                      className="adminclassaddsteptwo-form-label"
-                      htmlFor={`division-${index}`}
-                    >
+                    <label className="adminclassaddsteptwo-form-label" htmlFor={`publisher-${index}`}>
                       Publisher Name <span className="adminclassaddsteptwo_required">*</span>
                     </label>
                   )}
                   <select
-                    id={`division-${index}`}
-                    className="adminclassaddsteptwo_form-select"
+                    id={`publisher-${index}`}
+                    className="form-select form-select-sm adminclassaddsteptwo_form-select"
+                    value={entry.publishername || ""}
+                    onChange={(e) => handleEntryChange(index, 'publishername', e.target.value)}
                   >
-
-                    Publisher Name <span className="adminclassaddsteptwo_required">*</span>
-                  </label>
-                )}
-                <select
-                  id={`division-${index}`}
-                  className="adminclassaddsteptwo_form-select"
-                  value={localEntries[index]?.publishername || ""}
-                  onChange={(e) => {
-                    const updated = [...localEntries];
-                    updated[index].publishername = e.target.value;
-                    setLocalEntries(updated);  // only update local
-                  }}
-                >
-                  <option value="">Publisher Name</option>
-                  {admininfo?.admininfo?.publisher_name?.map((publisher, idx) => (
-                    <option key={idx} value={publisher}>
-                      {publisher}
-                    </option>
-                  ))}
-                </select>
-
-              </div>
-
+                    <option value="">Select Publisher</option>
+                    {admininfo?.admininfo?.publisher_name?.map((publisher, idx) => (
+                      <option key={idx} value={publisher}>{publisher}</option>
+                    ))}
+                  </select>
+                </div>
 
                 <div className="adminclassaddsteptwo_step-column">
                   {index === 0 && (
-                    <label
-                      className="adminclassaddsteptwo-form-label"
-                      htmlFor={`subject-${index}`}
-                    >
+                    <label className="adminclassaddsteptwo-form-label" htmlFor={`faculty-${index}`}>
                       Faculty Name <span className="adminclassaddsteptwo_required">*</span>
                     </label>
                   )}
                   <select
-                    id={`subject-${index}`}
-                    className="adminclassaddsteptwo_form-select"
+                    id={`faculty-${index}`}
+                    className="form-select form-select-sm adminclassaddsteptwo_form-select"
+                    value={entry.facultyname || ""}
+                    onChange={(e) => handleEntryChange(index, 'facultyname', e.target.value)}
                   >
                     <option value="">Select Faculty</option>
-                    <option value="Ankit">Ankit</option>
+                    {Array.isArray(teachers) && teachers.map((teacher, idx) => (
+                      <option key={idx} value={teacher.id}>
+                        {teacher.first_name} {teacher.last_name}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
-                {entries.length > 1 && (
+                {localEntries.length > 1 && (
                   <span
                     className="adminclassaddsteptwo_delete-row-btn"
                     onClick={(e) => {
@@ -233,25 +191,6 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
                     &#10005;
                   </span>
                 )}
-
-                <select
-                  id={`subject-${index}`}
-                  className="adminclassaddsteptwo_form-select"
-                  value={localEntries[index]?.facultyname || ""}
-                  onChange={(e) => {
-                    const updated = [...localEntries];
-                    updated[index].facultyname = e.target.value;  // value will be ID now
-                    setLocalEntries(updated);
-                  }}
-                >
-                  <option value="">Select Faculty</option>
-                  {Array.isArray(teachers) && teachers.map((teacher, idx) => (
-                    <option key={idx} value={teacher.id}>
-                      {teacher.first_name} {teacher.last_name}
-                    </option>
-                  ))}
-                </select>
-
               </div>
             </div>
           ))}
@@ -267,9 +206,9 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
               + Add Next
             </button>
           </div>
+        </div>
       </div>
-      
-      {/* Modal Footer */}
+
       <div className="adminclassaddsteptwo-modal-footer">
         <div className="adminclassaddsteptwo-footer-left">
           <button type="button" className="adminclassaddsteptwo_btn-back" onClick={prevStep}>
@@ -277,7 +216,11 @@ const AdminClassAddStepTwo = ({ prevStep, closeModal, entries, addEntry, removeE
           </button>
         </div>
         <div className="adminclassaddsteptwo-footer-right">
-          <button type="button" className="adminclassaddsteptwo_btn-clear">
+          <button 
+            type="button" 
+            className="adminclassaddsteptwo_btn-clear"
+            onClick={() => setLocalEntries([{ subject: "", publishername: "", facultyname: "" }])}
+          >
             Clear
           </button>
           <button

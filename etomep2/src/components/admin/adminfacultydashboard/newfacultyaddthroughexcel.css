@@ -19,7 +19,7 @@
     padding-top: 24px;
     border-radius: 16px;
     width: 400px;
-    height: 350px;
+    /* height: 350px; */
     position: relative;
 }
 
@@ -111,6 +111,8 @@
 .facultyaddthroughexcel-footer {
     text-align: center;
     margin-top: 20px;
+    /* margin-bottom: 24px; */
+    /* border: 2px solid red; */
 }
 
 .facultyaddthroughexcel-footer-text {

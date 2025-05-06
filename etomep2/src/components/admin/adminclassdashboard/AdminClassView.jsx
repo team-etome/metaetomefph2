@@ -28,9 +28,6 @@ const AdminClassView = ({ onClose, faculty }) => {
                 <p className="adminclassview-header-title">{faculty.className}</p>
                 <button className="adminclassview-close-btn" onClick={onClose}>×</button>
             </div>
-
-            <hr className="adminclassview-divider" />
-
             {/* Wrapper */}
             <div className="adminclassview-wrapper">
                 <div className="adminclassview-top-row">

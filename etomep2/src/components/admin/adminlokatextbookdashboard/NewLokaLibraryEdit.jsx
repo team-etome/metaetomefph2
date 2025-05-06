@@ -94,18 +94,18 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
     };
 
     return (
-        <div className="lokalibraryadd-backdrop">
-            <div className="lokalibraryadd-modal-content">
-                <div className="lokalibraryadd-modal-header">
-                    <p className="lokalibraryadd-modal-header-heading">Add Books</p>
-                    <button onClick={onClose} className="lokalibraryadd-close-button">&times;</button>
+        <div className="lokalibraryedit-backdrop">
+            <div className="lokalibraryedit-modal-content">
+                <div className="lokalibraryedit-modal-header">
+                    <p className="lokalibraryedit-modal-header-heading">Add Books</p>
+                    <button onClick={onClose} className="lokalibraryedit-close-button">&times;</button>
                 </div>
-                <div className="lokalibraryadd-modal-body">
+                <div className="lokalibraryedit-modal-body">
                     <form>
-                        <div className="lokalibraryadd-form-grid" >
-                            <div className="lokalibraryadd-form-group">
-                                <label className="lokalibraryadd-form-label">
-                                    Add Category <span className="lokalibraryadd_required">*</span>
+                        <div className="lokalibraryedit-form-grid" >
+                            <div className="lokalibraryedit-form-group">
+                                <label className="lokalibraryedit-form-label">
+                                    Add Category <span className="lokalibraryedit_required">*</span>
                                 </label>
                                 <CreatableSelect
                                     // value={categoryValue}
@@ -139,8 +139,8 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                     }}
                                 />
                             </div>
-                            <div className="lokalibraryadd-form-group">
-                                <label className="lokalibraryadd-form-label">
+                            <div className="lokalibraryedit-form-group">
+                                <label className="lokalibraryedit-form-label">
                                     Title 
                                 </label>
                                 <input
@@ -148,8 +148,8 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                     className="custom-input"
                                 />
                             </div>
-                            <div className="lokalibraryadd-form-group">
-                                <label className="lokalibraryadd-form-label">
+                            <div className="lokalibraryedit-form-group">
+                                <label className="lokalibraryedit-form-label">
                                     Author Name 
                                 </label>
                                 <input
@@ -157,8 +157,8 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                     className="custom-input"
                                 />
                             </div>
-                            <div className="lokalibraryadd-form-group">
-                                <label className="lokalibraryadd-form-label">
+                            <div className="lokalibraryedit-form-group">
+                                <label className="lokalibraryedit-form-label">
                                     Publisher Name
                                 </label>
                                 <input
@@ -166,8 +166,8 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                     className="custom-input"
                                 />
                             </div>
-                            <div className="lokalibraryadd-form-group lokalibraryadd-form-group--full">
-                                <label className="lokalibraryadd-form-label">
+                            <div className="lokalibraryedit-form-group lokalibraryedit-form-group--full">
+                                <label className="lokalibraryedit-form-label">
                                     Add cover Photo
                                 </label>
                                 <div className="admin_library_image_upload_container_div">
@@ -222,12 +222,12 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="lokalibraryadd-form-group lokalibraryadd-form-group--full">
-                                <div className="lokalibraryadd_chapter-upload-wrapper">
-                                    <label className="lokalibraryadd_chapter-upload-label">
+                            <div className="lokalibraryedit-form-group lokalibraryedit-form-group--full">
+                                <div className="lokalibraryedit_chapter-upload-wrapper">
+                                    <label className="lokalibraryedit_chapter-upload-label">
                                         Uploaded Document
                                     </label>
-                                    <div className="lokalibraryadd_custom-file-upload">
+                                    <div className="lokalibraryedit_custom-file-upload">
                                         {documentFile ? (
                                             <>
                                                 <span>{documentFile.name}</span>
@@ -237,13 +237,13 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                             </>
                                         ) : (
                                             <>
-                                                <label htmlFor="file-upload" className="lokabook_upload-btn">
+                                                <label htmlFor="file-upload" className="lokabookedit_upload-btn">
                                                     Choose File
                                                 </label>
                                                 <input
                                                     id="file-upload"
                                                     type="file"
-                                                    className="lokalibraryadd_hidden-file"
+                                                    className="lokalibraryedit_hidden-file"
                                                 />
                                             </>
                                         )}
@@ -253,9 +253,9 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                         </div>
                     </form>
                 </div>
-                <div className="lokalibraryadd-modal-footer">
-                    <button onClick={onClose} className="lokalibraryadd-btn lokalibraryadd_chapter-upload-delete">Delete</button>
-                    <button className="lokalibraryadd-btn lokalibraryadd-btn-primary">Edit</button>
+                <div className="lokalibraryedit-modal-footer">
+                    <button onClick={onClose} className="lokalibraryedit-btn lokalibraryedit_chapter-upload-delete">Delete</button>
+                    <button className="lokalibraryedit-btn lokalibraryedit-btn-primary">Edit</button>
                 </div>
             </div>
         </div>

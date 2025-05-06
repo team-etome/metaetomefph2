@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
 import "./adminclassaddstepone.css";
 
 const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
@@ -12,7 +11,13 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
     classTeacherId: ""
   });
 
+  const [isStreamEnabled, setIsStreamEnabled] = useState(false);
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    const classNameNum = parseInt(formData.className);
+    setIsStreamEnabled(!isNaN(classNameNum) && classNameNum > 10);
+  }, [formData.className]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -119,10 +124,9 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
       </div>
       {/* Content Area */}
       <div className="adminclassaddstepone-modal-step-content">
-
-        <Row>
+        <div className="adminclassaddstepone-form-grid">
           {/* Class Name */}
-          <Col md={4}>
+          <div className="adminclassaddstepone-form-field">
             <label
               className="adminclassaddstepone-form-label"
               htmlFor="className"
@@ -140,10 +144,10 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
             {errors.className && (
               <div className="invalid-feedback">{errors.className}</div>
             )}
-          </Col>
+          </div>
 
           {/* Division */}
-          <Col md={4}>
+          <div className="adminclassaddstepone-form-field">
             <label
               className="adminclassaddstepone-form-label"
               htmlFor="division"
@@ -161,10 +165,10 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
             {errors.division && (
               <div className="invalid-feedback">{errors.division}</div>
             )}
-          </Col>
+          </div>
 
           {/* Medium */}
-          <Col md={4}>
+          <div className="adminclassaddstepone-form-field">
             <label
               className="adminclassaddstepone-form-label"
               htmlFor="medium"
@@ -181,12 +185,13 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
               <option value="English">English</option>
               <option value="Hindi">Hindi</option>
             </select>
-          </Col>
-        </Row>
+          </div>
+        </div>
 
-        <Row className="mt-3">
+        {/* Bottom Row - Stream and Class Teacher */}
+        <div className="adminclassaddstepone-bottom-row">
           {/* Stream */}
-          <Col md={6}>
+          <div className="adminclassaddstepone-form-field">
             <label
               className="adminclassaddstepone-form-label"
               htmlFor="stream"
@@ -195,20 +200,31 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
             </label>
             <select
               id="stream"
-              className="form-select form-select-sm adminclassaddstepone_select_section"
+              className={`form-select form-select-sm adminclassaddstepone_select_section ${!isStreamEnabled ? 'adminclassaddstepone-disabled' : ''}`}
               value={formData.stream}
               onChange={handleInputChange}
+              disabled={!isStreamEnabled}
+              style={{ 
+                backgroundColor: !isStreamEnabled ? '#757575' : 'white',
+                color: !isStreamEnabled ? '#757575' : 'black'
+              }}
             >
-              <option value="">Select Stream</option>
-              <option value="Non-Medical">Non-Medical</option>
-              <option value="Medical">Medical</option>
-              <option value="Commerce">Commerce</option>
-              <option value="Arts">Arts</option>
+              {isStreamEnabled ? (
+                <>
+                  <option value="">Select Stream</option>
+                  <option value="Non-Medical">Non-Medical</option>
+                  <option value="Medical">Medical</option>
+                  <option value="Commerce">Commerce</option>
+                  <option value="Arts">Arts</option>
+                </>
+              ) : (
+                <option value="">Stream not available</option>
+              )}
             </select>
-          </Col>
+          </div>
 
           {/* Class Teacher */}
-          <Col md={6}>
+          <div className="adminclassaddstepone-form-field">
             <label
               className="adminclassaddstepone-form-label"
               htmlFor="classTeacher"
@@ -228,7 +244,6 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
                   classTeacherId: selectedId
                 }));
 
-                // Clear error if already selected
                 if (errors.classTeacher) {
                   const newErrors = { ...errors };
                   delete newErrors.classTeacher;
@@ -246,23 +261,18 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
             {errors.classTeacher && (
               <div className="invalid-feedback">{errors.classTeacher}</div>
             )}
-          </Col>
-        </Row>
-
+          </div>
+        </div>
       </div>
       {/* Modal Footer */}
       <div className="adminclassaddstepone-modal-footer">
-        <Row className="w-100">
-          {/* Empty Col for spacing if needed */}
-          <Col md={6}></Col>
-          {/* Buttons on the right */}
-          <Col md={6} className="d-flex justify-content-end">
+        <div className="adminclassaddstepone-footer-content">
+          <div className="spacer"></div>
+          <div className="adminclassaddstepone-button-group">
             <button
               type="button"
-
-              className="adminclassaddstepone_btn-clear me-2"
+              className="adminclassaddstepone_btn-clear"
               onClick={handleClear}
-
             >
               Clear
             </button>
@@ -273,8 +283,8 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
             >
               Next
             </button>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     </div>
   );

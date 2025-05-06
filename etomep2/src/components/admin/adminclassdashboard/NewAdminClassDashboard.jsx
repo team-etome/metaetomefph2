@@ -193,7 +193,7 @@ const NewAdminClassDashboard = () => {
                 {classData.map((classItem, idx) => (
                     <div className="newclassdashboard-class-section-main mb-4" key={idx}>
                         <p className="newclassdashboard-class-heading">Class {classItem.className}</p>
-                        <div className="newclassdashboard-class-section-row">
+                        <div className="newclassdashboard-class-section-row" >
                             {classItem.sections.map((sec, index) => (
                                 <div key={index} className="newclassdashboard-card-container">
                                     <div className="newclassdashboard-card"

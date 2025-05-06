@@ -184,7 +184,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                             backgroundColor: '#fff',
                                             cursor: isEditMode ? 'pointer' : 'not-allowed'
                                         }}
-                                        disabled={!isEditMode}
+                                        // disabled={!isEditMode}
 
                                     />
                                 </div>
@@ -212,7 +212,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                             cursor: isEditMode ? 'pointer' : 'not-allowed'
                                         }}
 
-                                        disabled={!isEditMode}
+                                        // disabled={!isEditMode}
 
                                     />
                                 </div>

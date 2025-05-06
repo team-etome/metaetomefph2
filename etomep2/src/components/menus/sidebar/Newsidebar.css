@@ -19,7 +19,7 @@
     cursor: pointer;
 }
 .newsidebar_icon_container_div {
-    width: 48px;
+    width: 78px;
     height: auto;
     display: flex;
     justify-content: center;
@@ -28,7 +28,7 @@
     transition: all 0.5s ease-in-out;
 }
 .newsidebar_icon_img {
-    font-size: 22px;
+    font-size: 18px;
     margin-bottom: 4px;
 }
 /* On hover: icon and text change color */
@@ -42,15 +42,11 @@
 }
 .newsidebar_icon-text {
     display: block;
-    /* Ensure the text is always displayed */
     opacity: 1;
-    /* Make sure text is visible */
     font-size: 12px;
-    /* Adjust font size as needed */
-    color: #676767;
+    color: #939393;
     /* Text color */
     transition: none;
-    /* Remove transition effects */
 }
 .newsidebar_header {
     display: flex;

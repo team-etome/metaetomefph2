@@ -202,7 +202,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
             minHeight: '48px',
             height: '48px',
             borderRadius:'8px',
-            borderColor: '#ccc',
+            borderColor: '#757575',
             boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
             '&:hover': {
                 borderColor: '#526D82',
@@ -341,7 +341,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                                         className="custom-input"
                                         style={{
                                             height: '50px',
-                                            border: '1px solid #ccc',
+                                            border: '1px solid #757575',
                                             borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
