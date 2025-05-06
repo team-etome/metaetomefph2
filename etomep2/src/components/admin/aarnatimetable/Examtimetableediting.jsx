@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './examtimetableediting.css';
+import './Examtimetableediting.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -16,7 +16,6 @@ const Examtimetableediting = ({ onClose, defaultClassId, defaultEntries }) => {
     console.log(classData, "classDatakdjfghuldhfiguh")
 
     const [examName, setExamName] = useState("Annual Examination");
-    const [term, setTerm] = useState();
     const [year, setYear] = useState("2025");
     const [classOptions, setClassOptions] = useState([]);
     const [selectedClass, setSelectedClass] = useState(null);

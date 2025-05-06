@@ -7,14 +7,13 @@ import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { FaTrash, FaRedo } from "react-icons/fa";
 
-
 const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
 
     if (!isOpen) return null;
+
     const APIURL = useSelector((state) => state.APIURL.url);
-    // console.log(APIURL,"apiurl dattatata")
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
-    const admininfo = useSelector((state) => state.admininfo);
+
     const [firstname, setFirstName] = useState("");
     const [lastname, setLastName] = useState("");
     const [employeeid, setEmployeeId] = useState("");
@@ -22,35 +21,21 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
     const [phoneno, setPhoneNo] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-
     const [imageFile, setImageFile] = useState(null);
-
-
-    console.log(imageFile, "imageFile")
-
 
     const handleSave = async () => {
         const validationErrors = [];
-
-
-        console.log('firstname:', firstname, typeof firstname);
-        console.log('email:', email, typeof email);
-        console.log('password:', password, typeof password);
-        console.log('gender:', gender);
 
         if (!firstname) validationErrors.push("First name is required.");
         if (!gender?.value) validationErrors.push("Gender is required.");
         if (!email) validationErrors.push("Email is required.");
         if (!password) validationErrors.push("Password is required.");
 
-        // Email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (email && !emailRegex.test(email)) {
             validationErrors.push("Please enter a valid email address.");
         }
 
-        // Phone number format (optional field)
         if (phoneno && phoneno.length !== 10) {
             validationErrors.push("Phone number must be 10 digits.");
         }
@@ -71,30 +56,22 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         formData.append("password", password);
         if (imageFile) formData.append("profile_photo", imageFile);
 
-        console.log(formData, "formdataa")
-
         try {
             const response = await axios.post(`${APIURL}/api/addteacher`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
 
             if (response.data.message === "Teacher added successfully") {
                 Swal.fire("Success", "Faculty added successfully", "success");
-                onFacultyAdded?.();  // ✅ refresh list in parent
-                onClose();           // ✅ close modal
+                onFacultyAdded?.();
+                onClose();
             } else {
                 Swal.fire("Error", response.data.message || "Something went wrong", "error");
             }
         } catch (error) {
-            console.error("Error while saving faculty:", error);
             Swal.fire("Error", error.response?.data?.message || "Server error occurred", "error");
         }
     };
-
-
-
 
     const customStyles = {
         control: (base, state) => ({
@@ -104,61 +81,13 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
             borderRadius: '8px',
             borderColor: '#757575',
             boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
-            '&:hover': {
-                borderColor: '#526D82',
-            }
+            '&:hover': { borderColor: '#526D82' }
         }),
-        valueContainer: (base) => ({
-            ...base,
-            height: '48px',
-            padding: '0 6px'
-        }),
-        dropdownIndicator: (base) => ({
-            ...base,
-            color: '#292D32', // Change the color of the dropdown arrow
-            padding: '0 8px',
-            alignItems: 'center',
-            svg: {
-                width: '24px',
-                height: '24px'
-            }
-        }),
-        indicatorSeparator: () => ({
-            display: 'none' // This removes the line (separator) before the dropdown arrow
-        }),
-        placeholder: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px'
-        }),
-        singleValue: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px'
-        }),
-        menu: (base) => ({
-            ...base,
-            zIndex: 1000,
-            maxHeight: '150px',
-            overflowY: 'auto',
-            fontSize: '14px',
-        }),
-        option: (base, state) => ({
-            ...base,
-            backgroundColor: state.isFocused ? '#f0f0f0' : '#fff',
-            color: '#526D82',
-            '&:active': {
-                backgroundColor: '#e6e6e6',
-            }
-        }),
+        indicatorSeparator: () => ({ display: 'none' }),
     };
-    const handleImageUpload = (e) => {
-        console.log(e.target.files[0], "e.target.files[0]e.target.files[0]")
-        setImageFile(e.target.files[0]);
-    };
-    const clearImageFile = () => {
-        setImageFile(null);
-    };
+
+    const handleImageUpload = (e) => setImageFile(e.target.files[0]);
+    const clearImageFile = () => setImageFile(null);
 
     return (
         <div className="facultyadd-backdrop">
@@ -167,257 +96,102 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                     <p className="lokatextbookadd-modal-header-heading">Add Faculty</p>
                     <button onClick={onClose} className="facultyadd-close-button">&times;</button>
                 </div>
+
                 <div className="facultyadd-modal-body">
                     <form>
-                        <div className="lokatextbookadd-form-grid">
-                            <div className="facultyadd-form-group" >
-                                <label className="facultyadd-form-label" >
-                                    First Name <span className="facultyadd_required">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    value={firstname}
-                                    className="custom-input"
-                                    style={{
-                                        height: '48px',
-                                        border: '1px solid #757575',
-                                        borderRadius: '8px',
-                                        padding: '0 10px',
-                                        fontSize: '16px',
-                                        color: '#526D82',
-                                        width: '100%',
-                                        boxSizing: 'border-box',
-                                        outline: "none"
-                                    }}
-
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        const formatted = value.charAt(0).toUpperCase() + value.slice(1);
-                                        setFirstName(formatted);
-                                    }}
-
-                                />
-                            </div>
-                            <div className="facultyadd-form-group">
-                                <label className="facultyadd-form-label">Last Name</label>
-                                <input
-                                    type="text"
-                                    value={lastname}
-                                    className="custom-input"
-                                    style={{
-                                        height: '48px',
-                                        border: '1px solid #757575',
-                                        borderRadius: '8px',
-                                        padding: '0 10px',
-                                        fontSize: '16px',
-                                        color: '#526D82',
-                                        width: '100%',
-                                        boxSizing: 'border-box',
-                                        outline: "none"
-                                    }}
-
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        const formatted = value.charAt(0).toUpperCase() + value.slice(1);
-                                        setLastName(formatted);
-                                    }}
-
-                                />
-                            </div>
-                            <div className="facultyadd-form-group">
-                                <label className="facultyadd-form-label">Employee ID</label>
-                                <input
-                                    type="text"
-                                    min="0"
-                                    className="custom-input"
-                                    style={{
-                                        height: '48px',
-                                        border: '1px solid #757575',
-                                        borderRadius: '8px',
-                                        padding: '0 10px',
-                                        fontSize: '16px',
-                                        color: '#526D82',
-                                        width: '100%',
-                                        boxSizing: 'border-box',
-                                        outline: "none"
-                                    }}
-                                />
-                            </div>
-                            <div className="facultyadd-form-group">
-                                <label className="facultyadd-form-label">
-                                    Gender <span className="facultyadd_required">*</span>
-                                </label>
-                                <Select
-                                    styles={customStyles}
-                                    placeholder="Select Gender"
-                                    isClearable={true}
-
-                                    value={gender}
-                                    onChange={(selectedOption) => setGender(selectedOption)}
-                                    options={[
-                                        { value: "Male", label: "Male" },
-                                        { value: "Female", label: "Female" },
-                                        { value: "Other", label: "Other" }
-                                    ]}
-                                />
-
-
-
+                        <Row>
+                            <Col md={6}>
+                                <div className="facultyadd-form-group">
+                                    <label className="facultyadd-form-label">First Name <span className="facultyadd_required">*</span></label>
+                                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)} className="custom-input" />
+                                </div>
+                            </Col>
+                            <Col md={6}>
+                                <div className="facultyadd-form-group">
+                                    <label className="facultyadd-form-label">Last Name</label>
+                                    <input type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} className="custom-input" />
                                 </div>
                             </Col>
                         </Row>
+
+                        <Row>
+                            <Col md={6}>
+                                <div className="facultyadd-form-group">
+                                    <label className="facultyadd-form-label">Employee ID</label>
+                                    <input type="text" value={employeeid} onChange={(e) => setEmployeeId(e.target.value)} className="custom-input" />
+                                </div>
+                            </Col>
+                            <Col md={6}>
+                                <div className="facultyadd-form-group">
+                                    <label className="facultyadd-form-label">Gender <span className="facultyadd_required">*</span></label>
+                                    <Select
+                                        styles={customStyles}
+                                        placeholder="Select Gender"
+                                        isClearable
+                                        value={gender}
+                                        onChange={setGender}
+                                        options={[
+                                            { value: "Male", label: "Male" },
+                                            { value: "Female", label: "Female" },
+                                            { value: "Other", label: "Other" }
+                                        ]}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+
                         <Row>
                             <Col md={6}>
                                 <div className="facultyadd-form-group">
                                     <label className="facultyadd-form-label">Phone Number</label>
-                                    <input
-                                        onChange={(e) => setPhoneNo(e.target.value)}
-                                        type="text"
-                                        min="0"
-                                        className="custom-input"
-                                        style={{
-                                            height: '48px',
-                                            border: '1px solid #757575',
-                                            borderRadius: '8px',
-                                            padding: '0 10px',
-                                            fontSize: '16px',
-                                            color: '#526D82',
-                                            width: '100%',
-                                            boxSizing: 'border-box',
-                                            outline: "none"
-                                        }}
-                                    />
+                                    <input type="text" value={phoneno} onChange={(e) => setPhoneNo(e.target.value)} className="custom-input" />
                                 </div>
                             </Col>
                             <Col md={6}>
                                 <div className="facultyadd-form-group">
-                                    <label className="facultyadd-form-label">
-                                        Email ID<span className="facultyadd_required">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={email}  // Add this
-                                        onChange={(e) => setEmail(e.target.value)}  // Add this
-                                        min="0"
-                                        className="custom-input"
-                                        style={{
-                                            height: '48px',
-                                            border: '1px solid #757575',
-                                            borderRadius: '8px',
-                                            padding: '0 10px',
-                                            fontSize: '16px',
-                                            color: '#526D82',
-                                            width: '100%',
-                                            boxSizing: 'border-box',
-                                            outline: "none"
-                                        }}
-                                    />
+                                    <label className="facultyadd-form-label">Email ID<span className="facultyadd_required">*</span></label>
+                                    <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="custom-input" />
                                 </div>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col md={12}>
-                                <div className="facultyadd-form-group">
-                                    <label className="facultyadd-form-label">
-                                        Password<span className="facultyadd_required">*</span>
-                                    </label>
-                                    <input
-                                        type="password"  // Changed from "text" for security
-                                        value={password}  // Add this
-                                        onChange={(e) => setPassword(e.target.value)}  // Add this
-                                        min="0"
-                                        className="custom-input"
-                                        style={{
-                                            height: '48px',
-                                            border: '1px solid #757575',
-                                            borderRadius: '8px',
-                                            padding: '0 10px',
-                                            fontSize: '16px',
-                                            color: '#526D82',
-                                            width: '100%',
-                                            boxSizing: 'border-box',
-                                            outline: "none"
-                                        }}
-                                    />
-                                </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={12}>
-                                <div className="facultyadd-form-group">
-                                    <label className="facultyadd-form-label">Add cover Photo</label>
-                                    <div>
-                                        <label htmlFor="photo" style={{}}></label>
-                                        <div className="admin_faculty_image_upload_container">
-                                            <div className="admin_faculty_upload_placeholder">
-                                                {imageFile ? (
-                                                    <>
-                                                        <img
-                                                            src={URL.createObjectURL(imageFile)}
-                                                            alt="Uploaded Image"
-                                                            className="uploaded_image"
 
-                                                            style={{
-                                                                color: "blue",
-                                                                fontSize: "20px",
-                                                            }}
-                                                            title="Change Image"
-                                                        />
-                                                    </button>
-                                                </>
+                        <Row>
+                            <Col md={12}>
+                                <div className="facultyadd-form-group">
+                                    <label className="facultyadd-form-label">Password<span className="facultyadd_required">*</span></label>
+                                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="custom-input" />
+                                </div>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col md={12}>
+                                <div className="facultyadd-form-group">
+                                    <label className="facultyadd-form-label">Add Cover Photo</label>
+                                    <div className="admin_faculty_image_upload_container">
+                                        <div className="admin_faculty_upload_placeholder">
+                                            {imageFile ? (
+                                                <img src={URL.createObjectURL(imageFile)} alt="Uploaded" className="uploaded_image" />
                                             ) : (
                                                 <>
-                                                    <label
-                                                        htmlFor="image-upload"
-                                                        className="admin_faculty_upload_label"
-                                                    >
-                                                        Upload Image
-                                                    </label>
-                                                    <input
-                                                        id="image-upload"
-                                                        type="file"
-                                                        accept="image/*"
-                                                        className="admin_faculty_upload_input"
-                                                        onChange={handleImageUpload}
-                                                    />
+                                                    <label htmlFor="image-upload" className="admin_faculty_upload_label">Upload Image</label>
+                                                    <input id="image-upload" type="file" accept="image/*" onChange={handleImageUpload} className="admin_faculty_upload_input" />
                                                 </>
                                             )}
                                         </div>
                                     </div>
                                 </div>
-
                             </Col>
                         </Row>
                     </form>
                 </div>
+
                 <div className="facultyadd-modal-footer">
-                    <button
-                        onClick={() => {
-                            Swal.fire({
-                                title: 'Are you sure?',
-                                text: "All entered data will be lost!",
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33',
-                                confirmButtonText: 'Yes, clear it',
-                                cancelButtonText: 'Cancel'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    onClose(); // ✅ only close if user confirms
-                                }
-                            });
-                        }}
-                        className="facultyadd-btn facultyadd-btn-secondary"
-                    >
-                        Clear
-                    </button>
+                    <button onClick={onClose} className="facultyadd-btn facultyadd-btn-secondary">Clear</button>
                     <button onClick={handleSave} className="facultyadd-btn facultyadd-btn-primary">Save</button>
                 </div>
-
             </div>
         </div>
-        </div >
     );
 };
 

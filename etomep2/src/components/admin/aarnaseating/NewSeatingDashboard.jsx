@@ -541,28 +541,20 @@ const NewSeatingDashboard = () => {
                                 </select>
                             </div>
 
-
-                                {entries.length > 1 && index !== 0 && (
-                                    <span
-                                        className="seating_delete-row-btn"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            removeEntry(index);
-                                        }}
-                                    >
-                                        &#10005;
-                                    </span>
+                            <div className="seating_step-column">
+                                {index === 0 && (
+                                    <label className="seating-form-label" htmlFor={`subject-${index}`}>
+                                        Subject <span className="seating_required">*</span>
+                                    </label>
                                 )}
-                    <select
+                                <select
                                     id={`subject-${index}`}
                                     className="seating_form-select"
                                     value={entry.subject}
                                     onChange={(e) => updateEntry(index, 'subject', e.target.value)}
                                 >
                                     <option value="">Select Subject</option>
-                                 
-                                        <option> </option>
-                                  
+                                    <option> </option>
                                 </select>
                             </div>
 
