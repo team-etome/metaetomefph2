@@ -7,7 +7,7 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { BsFillTelephoneFill, BsEnvelopeFill } from "react-icons/bs";
 import { FiPhone } from "react-icons/fi";
 import { CiSquareChevDown } from "react-icons/ci";
-import image from "../../../assets/b763af54a51c591c7fcb7ddfbae4a92c.jpg"
+import image from "../../../assets/student.jpg"
 import NewFacultyAdd from './NewFacultyAdd';
 import NewFacultyView from './NewFacultyView';
 import NewFacultyAddThroughExcel from './NewFacultyAddThroughExcel';
@@ -117,8 +117,6 @@ const NewFacultyDashboard = () => {
                             onChange={(e) => setFacultySearch(e.target.value)}
                         />
 
-
-
                         <div>
                             <button
                                 className="btn-primary btn-sm facultydashboard_result_add_button"
@@ -142,7 +140,7 @@ const NewFacultyDashboard = () => {
                             <NewFacultyAdd
                                 isOpen={showPopup}
                                 onClose={() => setShowPopup(false)}
-                                onFacultyAdded={fetchFaculty} 
+                                onFacultyAdded={fetchFaculty}
                             />
                         )}                        {showPopupexcel && <NewFacultyAddThroughExcel isOpen={showPopupexcel} onClose={() => setShowPopupExcel(false)} />}
                     </div>
@@ -167,7 +165,7 @@ const NewFacultyDashboard = () => {
                         .map((faculty) => (
                             <div className="facultydashboard_classes_box_inner" key={faculty.id} onClick={() => handleCardClick(faculty)}>
                                 <div className="faculty-avatar-container">
-                                    <img src={faculty.photo || image} className="faculty-avatar" />
+                                    <img src={faculty?.image || image} className="faculty-avatar" />
                                 </div>
                                 <div className="faculty-name-id-container">
                                     <p className="faculty-name">{faculty.first_name} {faculty.last_name}</p>
@@ -190,6 +188,8 @@ const NewFacultyDashboard = () => {
                         <NewFacultyView
                             faculty={selectedFaculty}
                             onClose={() => setSelectedFaculty(null)}
+                            setSelectedFaculty={setSelectedFaculty}
+                            fetchFaculty={fetchFaculty}
                         />
                     )}
                 </div>

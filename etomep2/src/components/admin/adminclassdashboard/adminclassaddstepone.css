@@ -144,5 +144,65 @@
     width: 100px;
     height: 40px;
     cursor: pointer;
-    margin-left: 8px;
+    /* margin-left: 8px; */
+}
+
+.adminclassaddstepone-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 330px);
+  gap: 8px;
+  /* padding: 16px; */
+}
+
+.adminclassaddstepone-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.adminclassaddstepone-form-field input,
+.adminclassaddstepone-form-field select {
+  height: 48px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+}
+
+.adminclassaddstepone-wide-field {
+  /* grid-column: span 2; */
+  width: 500px;
+  /* gap:8px */
+}
+
+/* New styles for the bottom row */
+.adminclassaddstepone-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.adminclassaddstepone-bottom-row .adminclassaddstepone-form-field {
+  width: 100%;
+}
+
+.adminclassaddstepone-bottom-row .adminclassaddstepone-form-field select {
+  width: 100%;
+}
+
+.adminclassaddstepone-footer-content {
+  display: flex;
+  justify-content: space-between;
+  /* padding: 16px; */
+  width: 100%;
+  /* margin-right: 24px; */
+  /* padding-right: 24px; */
+}
+
+.adminclassaddstepone-button-group {
+  display: flex;
+  gap: 8px;
+  margin-right: 24px;
 }

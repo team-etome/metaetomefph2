@@ -3,9 +3,13 @@ import { Col, Row } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { MdOutlinePentagon } from "react-icons/md";
+import { TbPentagonFilled } from "react-icons/tb";
 import { FaRegSquareFull } from "react-icons/fa6";
+import { FaSquareFull } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa";
+import { FaCircle } from "react-icons/fa";
 import { RiTriangleLine } from "react-icons/ri";
+import { BsFillTriangleFill } from "react-icons/bs";
 import "./Newsidebar.css"
 import etomelogo from "../../../assets/etomelogo.png" 
 import { NavLink } from "react-router-dom";
@@ -72,25 +76,25 @@ function Newsidebar({ setActiveItemLabel }) {
   }, [setActiveItemLabel]);
   // Items for class teachers specifically
   const classTeacherItems = [
-    { path: "/teacherhome", icon: <MdOutlinePentagon />, label: "Home" },
-    { path: "/teacherstudentdashboard", icon: <FaRegSquareFull />, label: "My Class" },
-    { path: "/teachersubject", icon: <FaRegCircle />, label: "Subjects" },
-    { path: "/teacherexamination", icon: <RiTriangleLine />, label: "Aarna" },
+    { path: "/teacherhome", icon: <MdOutlinePentagon />, activeIcon: <TbPentagonFilled />, label: "Home" },
+    { path: "/teacherstudentdashboard", icon: <FaRegSquareFull />, activeIcon: <FaSquareFull />, label: "My Class" },
+    { path: "/teachersubject", icon: <FaRegCircle />, activeIcon: <FaCircle />, label: "Subjects" },
+    { path: "/teacherexamination", icon: <RiTriangleLine />, activeIcon: <BsFillTriangleFill />, label: "Aarna" },
     // { path: "/settings", icon: <SlSettings />, label: "Settings" }
   ];
   // Items for general teachers
   const teacherItems = [
-    { path: "/teacherhome", icon: <MdOutlinePentagon />, label: "Home" },
-    { path: "/teachersubject", icon: <FaRegCircle />, label: "Subjects" },
-    { path: "/teacherexamination", icon: <RiTriangleLine />, label: "Aarna" },
+    { path: "/teacherhome", icon: <MdOutlinePentagon />, activeIcon: <TbPentagonFilled />, label: "Home" },
+    { path: "/teachersubject", icon: <FaRegCircle />, activeIcon: <FaCircle />, label: "Subjects" },
+    { path: "/teacherexamination", icon: <RiTriangleLine />, activeIcon: <BsFillTriangleFill />, label: "Aarna" },
     // { path: "/settings", icon: <SlSettings />, label: "Settings" }
   ];
   // Items for other roles (admins and others)
   const otherItems = [
-    { path: "/admindashboard", icon: <MdOutlinePentagon />, label: "Home" },
-    { path: "/institutionadding", icon: <FaRegSquareFull />, label: "Institution" },
-    { path: "/adminlokanavbar", icon: <FaRegCircle />, label: "Loka" },
-    { path: "/aarnanavbar", icon: <RiTriangleLine />, label: "Aarna" },
+    { path: "/admindashboard", icon: <MdOutlinePentagon />, activeIcon: <TbPentagonFilled />, label: "Home" },
+    { path: "/institutionadding", icon: <FaRegSquareFull />, activeIcon: <FaSquareFull />, label: "Institution" },
+    { path: "/adminlokanavbar", icon: <FaRegCircle />, activeIcon: <FaCircle />, label: "Loka" },
+    { path: "/aarnanavbar", icon: <RiTriangleLine />, activeIcon: <BsFillTriangleFill />, label: "Aarna" },
     // { path: "/eyora", icon: <TbScanEye />, label: "Eyora" },
     // { path: "/settings", icon: <SlSettings />, label: "Settings" }
   ];
@@ -145,7 +149,9 @@ function Newsidebar({ setActiveItemLabel }) {
             style={{ textDecoration: "none", color: "inherit" }}> 
             <Col className={`newsidebar_menu_item_col ${activeItem.startsWith(item.path) ? "active" : ""}`}>
               <div className="newsidebar_icon_container_div">
-                <span className={`newsidebar_icon_img ${activeItem === item.path ? "active_icon" : ""}`}>{item.icon}</span>
+                <span className={`newsidebar_icon_img ${activeItem === item.path ? "active_icon" : ""}`}>
+                  {activeItem === item.path && item.activeIcon ? item.activeIcon : item.icon}
+                </span>
                 <span className="newsidebar_icon-text">{item.label}</span>
               </div>
             </Col>

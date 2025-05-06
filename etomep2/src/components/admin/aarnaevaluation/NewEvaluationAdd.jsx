@@ -3,12 +3,37 @@ import { Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
 import './newevaluationadd.css';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-import { Weight } from 'lucide-react';
+import { CloudCog, Weight } from 'lucide-react';
+import { exampaperinfo } from '../../../Redux/Actions/ExamPaperInfoAction';
 
 
 const NewEvaluationAdd = ({ isOpen, onClose }) => {
+
+    const dispatch = useDispatch()
+
+    const APIURL = useSelector((state) => state.APIURL.url);
+    const admininfo = useSelector((state) => state.admininfo);
+    const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+    
+    
+
+
+    useEffect(() => {
+        const fetchQuestionPapers = async () => {
+            try {
+                const response = await axios.get(`${APIURL}/api/questionpaper/${admin_id}`);
+                const rawData = response.data.question_papers || {};
+                dispatch(exampaperinfo(rawData)); // 🛑 This line saves into redux
+                console.log(rawData, "Fetched and stored in Redux ✅");
+            } catch (error) {
+                console.error("Error fetching question papers ❌", error);
+            }
+        };
+    
+        fetchQuestionPapers();
+    }, [APIURL, admin_id, dispatch]);
 
 
     const exampaper = useSelector((state) => state.exampaperinfo.exampaperinfo);
@@ -21,15 +46,16 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
         subject: '',
         className: '',
         facultyId: '',
+        deadline: '',
     });
+
+    console.log(formData, 'form dataaa')
 
     console.log(exampaper, 'exampaper')
 
     if (!isOpen) return null;
-    const APIURL = useSelector((state) => state.APIURL.url);
-    // console.log(APIURL,"apiurl dattatata")
-    const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
-    const admininfo = useSelector((state) => state.admininfo);
+
+  
 
     const customStyles = {
         control: (base, state) => ({
@@ -107,8 +133,10 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
         .map(subject => ({ label: subject, value: subject }));
 
     // Class options
-    const classOptions = [...new Set(allExamEntries.map(entry => entry.class_name))]
-        .map(cls => ({ label: `Class ${cls}`, value: cls }));
+    const classOptions = allExamEntries.map(entry => ({
+        label: `Class ${entry.class_name} - ${entry.division}`,
+        value: `${entry.class_name}|${entry.division}`
+    }))
 
 
     const examDateOptions = [...new Set(allExamEntries.map(entry => entry.exam_date))]
@@ -126,12 +154,23 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
     })) || [];
 
     const handleSubmit = async () => {
+
         try {
-            const response = await axios.post(`${APIURL}/api/evaluationadding`, {
-                ...formData,
-                admin_id
-            });
-            
+            const data = {
+                admin: admin_id,
+                class_name: formData.className,
+                division: formData.division,
+                subject: formData.subject,
+                teacher: formData.facultyId,
+                exam_date: formData.examDate,
+                end_date: formData.deadline
+
+            };
+
+
+
+            const response = await axios.post(`${APIURL}/api/evaluationadding`, data);
+
             if (response.data) {
                 Swal.fire({
                     icon: 'success',
@@ -141,7 +180,7 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                 onClose();
             }
         } catch (error) {
-            console.error('Error scheduling evaluation:', error);
+
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -149,6 +188,7 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
             });
         }
     };
+
 
     const handleInputChange = (field, value) => {
         setFormData(prev => ({
@@ -170,18 +210,15 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                             <div>
                                 <div className="evaluationadd-form-group">
                                     <label className="evaluationadd-form-label">
-                                        Select Name of Examination <span className="evaluationadd_required">*</span>
+                                        Name of Examination <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
-
                                         options={examNameOptions}
                                         styles={customStyles}
-                                        placeholder=""
                                         isClearable={true}
-
+                                        placeholder=""      // ✅ Added to remove "Select..." text
                                         onChange={(selected) => handleInputChange('examName', selected?.value)}
                                         value={examNameOptions.find(option => option.value === formData.examName)}
-
                                     />
                                 </div>
                             </div>
@@ -189,18 +226,15 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                             <div >
                                 <div className="evaluationadd-form-group">
                                     <label className="evaluationadd-form-label">
-                                        Select Year <span className="evaluationadd_required">*</span>
+                                        Year <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
-
                                         options={yearOptions}
                                         styles={customStyles}
-                                        placeholder=""
                                         isClearable={true}
-
+                                        placeholder=""
                                         onChange={(selected) => handleInputChange('examYear', selected?.value)}
                                         value={yearOptions.find(option => option.value === formData.examYear)}
-
                                     />
                                 </div>
                             </div>
@@ -209,17 +243,15 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                             <div>
                                 <div className="evaluationadd-form-group">
                                     <label className="evaluationadd-form-label">
-                                        Select Subject <span className="evaluationadd_required">*</span>
+                                        Subject <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
                                         options={subjectOptions}
                                         styles={customStyles}
-                                        placeholder=""
                                         isClearable={true}
-
+                                        placeholder=""
                                         onChange={(selected) => handleInputChange('subject', selected?.value)}
                                         value={subjectOptions.find(option => option.value === formData.subject)}
-
                                     />
                                 </div>
                             </div>
@@ -231,12 +263,28 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                     <Select
                                         options={classOptions}
                                         styles={customStyles}
-                                        placeholder=""
                                         isClearable={true}
-
-                                        onChange={(selected) => handleInputChange('className', selected?.value)}
-                                        value={classOptions.find(option => option.value === formData.className)}
-
+                                        placeholder=""     // ✅ Add this line to remove "Select..." placeholder
+                                        onChange={(selected) => {
+                                            if (selected?.value) {
+                                                const [cls, div] = selected.value.split('|');
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    className: cls,
+                                                    division: div
+                                                }));
+                                            } else {
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    className: '',
+                                                    division: ''
+                                                }));
+                                            }
+                                        }}
+                                        value={classOptions.find(option => {
+                                            const [cls, div] = option.value.split('|');
+                                            return cls === formData.className && div === formData.division;
+                                        })}
                                     />
 
                                 </div>
@@ -252,8 +300,8 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                     <Select
                                         options={examDateOptions}
                                         styles={customStyles}
-                                        placeholder="Select Date"
                                         isClearable={true}
+                                        placeholder=""
                                         onChange={(selected) => handleInputChange('examDate', selected?.value)}
                                         value={examDateOptions.find(option => option.value === formData.examDate)}
                                     />
@@ -286,6 +334,8 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                     <input
                                         type="date"
                                         min="0"
+                                        value={formData.deadline}    // ✅ bind the value
+                                        onChange={(e) => handleInputChange('deadline', e.target.value)}  // ✅ correct way for input field
                                         className="custom-input"
                                         style={{
                                             height: '50px',
@@ -313,7 +363,7 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                     <Select
                                         options={facultyOptions}
                                         styles={customStyles}
-                                        placeholder="Select Faculty"
+                                        placeholder=""
                                         isClearable={true}
                                         onChange={(selected) => handleInputChange('facultyId', selected?.value)}
                                         value={facultyOptions.find(option => option.value === formData.facultyId)}

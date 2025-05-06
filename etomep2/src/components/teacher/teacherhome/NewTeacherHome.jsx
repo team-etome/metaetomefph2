@@ -31,9 +31,7 @@ const PieChart = () => (
     <path d="M16 16 L16 0 A16 16 0 1 1 4.6 27.4 Z" fill="#60a5fa" />
   </svg>
 );
-const handlenavigate = () => {
-  navigate("/teacherprofile",);
-};
+
 
 export default function NewTeacherHome() {
   const [showAssignTaskPopup, setShowAssignTaskPopup] = useState(false);
@@ -41,6 +39,9 @@ export default function NewTeacherHome() {
   const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
   console.log(teacherInfo,"dataaaa")
   const navigate = useNavigate();
+  const handlenavigate = () => {
+    navigate("/teacherprofile",);
+  };
 
   return (
     <div className="newteacherhome-root">
@@ -54,8 +55,6 @@ export default function NewTeacherHome() {
               src={teacherInfo?.image || " "}
               alt="Profile"
               style={{
-                width: "52px",
-                height: "52px",
                 borderRadius: "50%",
                 marginRight: "30px",
                 cursor: "pointer",

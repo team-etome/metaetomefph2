@@ -16,11 +16,11 @@ const Examtimetableediting = ({ onClose, defaultClassId, defaultEntries }) => {
     console.log(classData, "classDatakdjfghuldhfiguh")
 
     const [examName, setExamName] = useState("Annual Examination");
-    const [term, setTerm] = useState();
     const [year, setYear] = useState("2025");
     const [classOptions, setClassOptions] = useState([]);
     const [selectedClass, setSelectedClass] = useState(null);
     const [subjectOptions, setSubjectOptions] = useState([]);
+    const [term, setTerm] = useState([]);
 
     const [entries, setEntries] = useState([
         { subject: 'English', date: '', startTime: '', endTime: '' }
@@ -167,7 +167,7 @@ const Examtimetableediting = ({ onClose, defaultClassId, defaultEntries }) => {
         <div className="examtimetable-edit-backdrop">
             <div className="examtimetable-edit-container">
                 <div className="examtimetable-edit-header">
-                    <h3>Edit Time Table</h3>
+                <p className="examtimetable-edit-header-heading">Edit Time Table</p>
                     <button onClick={onClose} className="btn-close" aria-label="Close"></button>
                 </div>
                 <form className="examtimetable-edit-form" onSubmit={(e) => e.preventDefault()}>
@@ -180,21 +180,21 @@ const Examtimetableediting = ({ onClose, defaultClassId, defaultEntries }) => {
                                 Year <span className="examtimetable-edit_required">*</span>
                             </label>
                             <label className="examtimetable-edit_form-label">
-                                term
+                            Select Term
                             </label>
                             <label className="examtimetable-edit_form-label">
-                                Select Classes <span className="examtimetable-edit_required">*</span>
+                                Select Class <span className="examtimetable-edit_required">*</span>
                             </label>
                         </div>
                         <div className="examtimetable-edit_form-input-group">
                             <input type="text" value={examName} onChange={(e) => setExamName(e.target.value)} className="examtimetable-edit_form-input" />
                             <input type="text" value={year} onChange={(e) => setYear(e.target.value)} className="examtimetable-edit_form-input" />
                             <select
-                                className="examtimetable-edit_form-select"
+                                className="form-select form-select-sm examtimetable-edit_form-select"
                                 value={term}
                                 onChange={(e) => setTerm(e.target.value)}
                             >
-                                <option value="">Select Class</option>
+                                <option value="">Select term</option>
                                 <option value="Term 1">Term 1</option>
                                 <option value="Term 2">Term 2</option>
                                 <option value="Term 3">Term 3</option>
@@ -203,7 +203,7 @@ const Examtimetableediting = ({ onClose, defaultClassId, defaultEntries }) => {
                                 <option value="Term 6">Term 6</option>
                             </select>
                             <select
-                                className="examtimetable-edit_form-select"
+                                className="form-select form-select-sm examtimetable-edit_form-select"
                                 value={selectedClass?.value || ''}
                                 onChange={handleClassChange}
                             >
@@ -216,12 +216,11 @@ const Examtimetableediting = ({ onClose, defaultClassId, defaultEntries }) => {
                             </select>
                         </div>
                     </div>
-                    <hr />
                     <div className="examtimetable-edit-form_form-content">
                         <div className="examtimetable-edit-form-table">
-                            <div className="examtimetable-edit-form-table-header">
+                            <div className="examtimetable-edit-form-table-header" >
                                 <label>
-                                    Subject <span className="examtimetable-edit_required">*</span>
+                                    Select Subject <span className="examtimetable-edit_required">*</span>
                                 </label>
                                 <label>
                                     Date <span className="examtimetable-edit_required">*</span>
@@ -234,10 +233,11 @@ const Examtimetableediting = ({ onClose, defaultClassId, defaultEntries }) => {
                                 </label>
                             </div>
                             {entries.map((entry, index) => (
-                                <div key={index} className="examtimetable-edit-form-table-row examtimetable-edit-form-row-with-delete">
+                                <div key={index} className="examtimetable-edit-form-table-row examtimetable-edit-form-row-with-delete" >
                                     <select
                                         value={entry.subject}
                                         onChange={(e) => handleEntryChange(index, 'subject', e.target.value)}
+                                        className="form-select form-select-sm examtimetable-edit_form-select"
                                     >
                                         <option value="">Select Subject</option>
                                         {subjectOptions.map((subj) => (
@@ -249,16 +249,17 @@ const Examtimetableediting = ({ onClose, defaultClassId, defaultEntries }) => {
                                     <input type="date" value={entry.date} onChange={(e) => handleEntryChange(index, 'date', e.target.value)} />
                                     <input type="time" value={entry.startTime} onChange={(e) => handleEntryChange(index, 'startTime', e.target.value)} />
                                     <input type="time" value={entry.endTime} onChange={(e) => handleEntryChange(index, 'endTime', e.target.value)} />
-                                    <span
-                                        type="button"
-                                        className="examtimetable-edit-form-remove-row-btn"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleRemoveRow(index);
-                                        }}
-                                    >
-                                        &#10005;
-                                    </span>
+                                    {entries.length > 1 && (
+                                        <span
+                                            className="examtimetable-edit-form-remove-row-btn"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleRemoveRow(index);
+                                            }}
+                                        >
+                                            &#10005;
+                                        </span>
+                                    )}
                                 </div>
                             ))}
                             <div className="examtimetable-edit_addnext_button_main">
@@ -267,9 +268,9 @@ const Examtimetableediting = ({ onClose, defaultClassId, defaultEntries }) => {
                         </div>
                     </div>
                 </form>
-                <div className="examtimetable-edit_clear_button_main">
-                    <button type="button" className="btn-secondary examtimetable-edit_clear_button">Clear</button>
-                    <button type="submit" className="btn-success examtimetable-edit_save_button" onClick={handleSave}>Save</button>
+                <div className="examtimetable-adding_clear_button_main">
+                    <button type="button" className="btn-secondary examtimetable-adding_clear_button">Clear</button>
+                    <button type="submit" className="btn-success examtimetable-adding_save_button" onClick={handleSave}>Save</button>
                 </div>
             </div>
         </div>

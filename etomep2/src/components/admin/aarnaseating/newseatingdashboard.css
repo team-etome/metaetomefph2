@@ -198,7 +198,7 @@
     /* margin-top: 16px; */
     font-size: 16px;
     font-weight: 500;
-    margin-bottom: 6px;
+    /* margin-bottom: 6px; */
     display: inline-block;
     color: #767676;
 }
@@ -571,6 +571,7 @@
     margin-top: 24px;
     max-height: 300px;
     overflow-y: auto;
+    /* border-bottom: 2px solid white !important; */
 }
 
 /* Modal footer (Back, Clear, Next, Assign) */
@@ -702,13 +703,15 @@
     display: inline-flex;
     align-items: center;
     background-color: white;
-    border: 1px solid #DEE2E6;
+    border: 2px solid #E9E9E9;
     border-radius: 8px;
-    padding: 8px 16px;
-    font-size: 16px;
+    padding-left: 8px;
+    padding-right: 8px;
+    /* padding-top: 5px; */
+    font-size: 14px;
     color: #212529;
     cursor: default;
-    height: 40px;
+    height: 28px;
 }
 
 .seating_faculty-remove-icon {
@@ -719,11 +722,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     border: 1px solid black;
-    font-size: 18px;
+    font-size: 16px;
     transition: all 0.2s ease;
     padding: 0;
     background: none;
@@ -756,16 +759,16 @@
 .seating_faculty-tags-wrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 10px;
     min-height: 48px;
-    padding: 4px;
+    padding: 10px;
     border: 1px solid #757575;
     border-radius: 8px;
 }
 
 .seating_dropdown-icon {
     position: absolute;
-    top: 70%;
+    top: 65%;
     right: 10px;
     transform: translateY(-50%);
     cursor: pointer;
@@ -796,3 +799,5 @@
 .seating_options-list li:hover {
     background: #f0f0f0;
 }
+
+

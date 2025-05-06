@@ -7,45 +7,65 @@ import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { FaTrash, FaRedo } from "react-icons/fa";
 
-
 const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
-
     if (!isOpen) return null;
+
     const APIURL = useSelector((state) => state.APIURL.url);
-    // console.log(APIURL,"apiurl dattatata")
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
     const admininfo = useSelector((state) => state.admininfo);
-    const [firstname, setFirstName] = useState("");
-    const [lastname, setLastName] = useState("");
-    const [employeeid, setEmployeeId] = useState("");
-    const [gender, setGender] = useState(null);
-    const [phoneno, setPhoneNo] = useState("");
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
 
+    const [formData, setFormData] = useState({
+        firstname: "",
+        lastname: "",
+        employeeid: "",
+        gender: null,
+        phoneno: "",
+        email: "",
+        password: "",
+        imageFile: null
+    });
 
-    const [imageFile, setImageFile] = useState(null);
+    const [phoneCode, setPhoneCode] = useState("+91");
 
+    const resetForm = () => {
+        setFormData({
+            firstname: "",
+            lastname: "",
+            employeeid: "",
+            gender: null,
+            phoneno: "",
+            email: "",
+            password: "",
+            imageFile: null
+        });
+    };
 
-    console.log(phoneno, "phone number")
-
+    const handleInputChange = (field, value) => {
+        if (field === 'firstname' || field === 'lastname') {
+            value = value.charAt(0).toUpperCase() + value.slice(1);
+        }
+        setFormData(prev => ({
+            ...prev,
+            [field]: value
+        }));
+    };
 
     const handleSave = async () => {
         const validationErrors = [];
 
-        if (!firstname.trim()) validationErrors.push("First name is required.");
-        if (!gender?.value) validationErrors.push("Gender is required.");
-        if (!email.trim()) validationErrors.push("Email is required.");
-        if (!password.trim()) validationErrors.push("Password is required.");
+        if (!formData.firstname) validationErrors.push("First name is required.");
+        if (!formData.gender?.value) validationErrors.push("Gender is required.");
+        if (!formData.email) validationErrors.push("Email is required.");
+        if (!formData.password) validationErrors.push("Password is required.");
 
         // Email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (email && !emailRegex.test(email)) {
+        if (formData.email && !emailRegex.test(formData.email)) {
             validationErrors.push("Please enter a valid email address.");
         }
 
         // Phone number format (optional field)
-        if (phoneno && phoneno.length !== 10) {
+        if (formData.phoneno && formData.phoneno.length !== 10) {
             validationErrors.push("Phone number must be 10 digits.");
         }
 
@@ -54,21 +74,19 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
             return;
         }
 
-        const formData = new FormData();
-        formData.append("admin_id", admin_id);
-        formData.append("first_name", firstname);
-        formData.append("last_name", lastname);
-        formData.append("employee_id", employeeid);
-        formData.append("gender", gender?.value);
-        formData.append("phone_number", phoneno);
-        formData.append("email", email);
-        formData.append("password", password);
-        if (imageFile) formData.append("photo", imageFile);
-
-        console.log(formData, "formdataa")
+        const formDataToSend = new FormData();
+        formDataToSend.append("admin_id", admin_id);
+        formDataToSend.append("first_name", formData.firstname);
+        formDataToSend.append("last_name", formData.lastname);
+        formDataToSend.append("employee_id", formData.employeeid);
+        formDataToSend.append("gender", formData.gender?.value);
+        formDataToSend.append("phone_number", formData.phoneno);
+        formDataToSend.append("email", formData.email);
+        formDataToSend.append("password", formData.password);
+        if (formData.imageFile) formDataToSend.append("profile_photo", formData.imageFile);
 
         try {
-            const response = await axios.post(`${APIURL}/api/addteacher`, formData, {
+            const response = await axios.post(`${APIURL}/api/addteacher`, formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -76,8 +94,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
 
             if (response.data.message === "Teacher added successfully") {
                 Swal.fire("Success", "Faculty added successfully", "success");
-                onFacultyAdded?.();  // ✅ refresh list in parent
-                onClose();           // ✅ close modal
+                resetForm();
+                onFacultyAdded?.();
+                onClose();
             } else {
                 Swal.fire("Error", response.data.message || "Something went wrong", "error");
             }
@@ -87,8 +106,26 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         }
     };
 
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                Swal.fire("Error", "Image size should be less than 5MB", "error");
+                return;
+            }
+            setFormData(prev => ({
+                ...prev,
+                imageFile: file
+            }));
+        }
+    };
 
-
+    const clearImageFile = () => {
+        setFormData(prev => ({
+            ...prev,
+            imageFile: null
+        }));
+    };
 
     const customStyles = {
         control: (base, state) => ({
@@ -109,7 +146,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         }),
         dropdownIndicator: (base) => ({
             ...base,
-            color: '#292D32', // Change the color of the dropdown arrow
+            color: '#292D32',
             padding: '0 8px',
             alignItems: 'center',
             svg: {
@@ -118,7 +155,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
             }
         }),
         indicatorSeparator: () => ({
-            display: 'none' // This removes the line (separator) before the dropdown arrow
+            display: 'none'
         }),
         placeholder: (base) => ({
             ...base,
@@ -146,13 +183,6 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
             }
         }),
     };
-    const handleImageUpload = (e) => {
-        console.log(e.target.files[0], "e.target.files[0]e.target.files[0]")
-        setImageFile(e.target.files[0]);
-    };
-    const clearImageFile = () => {
-        setImageFile(null);
-    };
 
     return (
         <div className="facultyadd-backdrop">
@@ -162,15 +192,15 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                     <button onClick={onClose} className="facultyadd-close-button">&times;</button>
                 </div>
                 <div className="facultyadd-modal-body">
-                    <form>
+                    <form onSubmit={(e) => e.preventDefault()}>
                         <div className="lokatextbookadd-form-grid">
-                            <div className="facultyadd-form-group" >
-                                <label className="facultyadd-form-label" >
+                            <div className="facultyadd-form-group">
+                                <label className="facultyadd-form-label">
                                     First Name <span className="facultyadd_required">*</span>
                                 </label>
                                 <input
                                     type="text"
-                                    value={firstname}
+                                    value={formData.firstname}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -183,20 +213,14 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
-
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        const formatted = value.charAt(0).toUpperCase() + value.slice(1);
-                                        setFirstName(formatted);
-                                    }}
-
+                                    onChange={(e) => handleInputChange('firstname', e.target.value)}
                                 />
                             </div>
                             <div className="facultyadd-form-group">
                                 <label className="facultyadd-form-label">Last Name</label>
                                 <input
                                     type="text"
-                                    value={lastname}
+                                    value={formData.lastname}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -209,20 +233,14 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
-
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        const formatted = value.charAt(0).toUpperCase() + value.slice(1);
-                                        setLastName(formatted);
-                                    }}
-
+                                    onChange={(e) => handleInputChange('lastname', e.target.value)}
                                 />
                             </div>
                             <div className="facultyadd-form-group">
                                 <label className="facultyadd-form-label">Employee ID</label>
                                 <input
                                     type="text"
-                                    min="0"
+                                    value={formData.employeeid}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -235,6 +253,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
+                                    onChange={(e) => handleInputChange('employeeid', e.target.value)}
                                 />
                             </div>
                             <div className="facultyadd-form-group">
@@ -245,44 +264,45 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                     styles={customStyles}
                                     placeholder="Select Gender"
                                     isClearable={true}
-
-                                    value={gender}
-                                    onChange={(selectedOption) => setGender(selectedOption)}
+                                    value={formData.gender}
+                                    onChange={(selectedOption) => handleInputChange('gender', selectedOption)}
                                     options={[
                                         { value: "Male", label: "Male" },
                                         { value: "Female", label: "Female" },
                                         { value: "Other", label: "Other" }
                                     ]}
                                 />
-
-
                             </div>
                             <div className="facultyadd-form-group">
                                 <label className="facultyadd-form-label">Phone Number</label>
-                                <input
-                                    type="text"
-                                    min="0"
-                                    className="custom-input"
-                                    style={{
-                                        height: '48px',
-                                        border: '1px solid #757575',
-                                        borderRadius: '8px',
-                                        padding: '0 10px',
-                                        fontSize: '16px',
-                                        color: '#526D82',
-                                        width: '100%',
-                                        boxSizing: 'border-box',
-                                        outline: "none"
-                                    }}
-                                />
+                                <div className="facultyadd-phone-container">
+                                    <select
+                                        className="facultyadd-phone-select"
+                                        value={phoneCode}
+                                        onChange={(e) => setPhoneCode(e.target.value)}
+                                    >
+                                        <option value="+91">+91</option>
+                                        <option value="+1">+1</option>
+                                        <option value="+44">+44</option>
+                                        {/* Add more country codes as needed */}
+                                    </select>
+                                    <input
+                                        type="text"
+                                        value={formData.phoneno}
+                                        className="facultyadd-phone-input"
+                                        onChange={(e) => handleInputChange('phoneno', e.target.value)}
+                                        maxLength={10}
+                                        style={{ borderLeft: 'none' }}
+                                    />
+                                </div>
                             </div>
                             <div className="facultyadd-form-group">
                                 <label className="facultyadd-form-label">
                                     Email ID <span className="facultyadd_required">*</span>
                                 </label>
                                 <input
-                                    type="text"
-                                    min="0"
+                                    type="email"
+                                    value={formData.email}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -295,114 +315,116 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
+                                    onChange={(e) => handleInputChange('email', e.target.value)}
                                 />
                             </div>
-                            <div className="facultyadd-form-group facultyadd-form-group--full">
-                                <label className="facultyadd-form-label">
-                                    Password <span className="facultyadd_required">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    min="0"
-                                    className="custom-input"
-                                    style={{
-                                        height: '48px',
-                                        border: '1px solid #757575',
-                                        borderRadius: '8px',
-                                        padding: '0 10px',
-                                        fontSize: '16px',
-                                        color: '#526D82',
-                                        width: '100%',
-                                        boxSizing: 'border-box',
-                                        outline: "none"
-                                    }}
-                                />
-                            </div>
-                            <div className="facultyadd-form-group facultyadd-form-group--full">
-                                <label className="facultyadd-form-label">Add cover Photo</label>
-                                <div>
-                                    <label htmlFor="photo" style={{}}></label>
-                                    <div className="admin_faculty_image_upload_container">
-                                        <div className="admin_faculty_upload_placeholder">
-                                            {imageFile ? (
-                                                <>
-                                                    <img
-                                                        src={URL.createObjectURL(imageFile)}
-                                                        alt="Uploaded Image"
-                                                        className="uploaded_image"
-                                                        style={{
-                                                            width: "100%",
-                                                            height: "200px",
-                                                            marginLeft: "30px",
-                                                        }}
-                                                    />
-                                                    <button
-                                                        onClick={clearImageFile}
-                                                        style={{
-                                                            border: "none",
-                                                            background: "none",
-                                                            cursor: "pointer",
-                                                        }}
-                                                    >
-                                                        <FaRedo
+                        </div>
+
+                        <Row>
+                            <Col md={12}>
+                                <div className="facultyadd-form-group">
+                                    <label className="facultyadd-form-label">
+                                        Password <span className="facultyadd_required">*</span>
+                                    </label>
+                                    <input
+                                        type="password"
+                                        value={formData.password}
+                                        className="custom-input"
+                                        style={{
+                                            height: '48px',
+                                            border: '1px solid #757575',
+                                            borderRadius: '8px',
+                                            padding: '0 10px',
+                                            fontSize: '16px',
+                                            color: '#526D82',
+                                            width: '100%',
+                                            boxSizing: 'border-box',
+                                            outline: "none"
+                                        }}
+                                        onChange={(e) => handleInputChange('password', e.target.value)}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={12}>
+                                <div className="facultyadd-form-group">
+                                    <label className="facultyadd-form-label">Add cover Photo</label>
+                                    <div>
+                                        <div className="admin_faculty_image_upload_container">
+                                            <div className="admin_faculty_upload_placeholder">
+                                                {formData.imageFile ? (
+                                                    <div className="image-preview-container">
+                                                        <img
+                                                            src={URL.createObjectURL(formData.imageFile)}
+                                                            alt="Uploaded Image"
+                                                            className="uploaded_image"
                                                             style={{
-                                                                color: "blue",
-                                                                fontSize: "20px",
+                                                                maxWidth: '100%',
+                                                                maxHeight: '200px',
+                                                                objectFit: 'contain'
                                                             }}
-                                                            title="Change Image"
                                                         />
-                                                    </button>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <label
-                                                        htmlFor="image-upload"
-                                                        className="admin_faculty_upload_label"
-                                                    >
-                                                        Upload Image
-                                                    </label>
-                                                    <input
-                                                        id="image-upload"
-                                                        type="file"
-                                                        accept="image/*"
-                                                        className="admin_faculty_upload_input"
-                                                        onChange={handleImageUpload}
-                                                    />
-                                                </>
-                                            )}
+                                                        <button
+                                                            className="clear-image-btn"
+                                                            onClick={clearImageFile}
+                                                            title="Remove Image"
+                                                        >
+                                                            <FaTrash />
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    <>
+                                                        <label
+                                                            htmlFor="image-upload"
+                                                            className="admin_faculty_upload_label"
+                                                        >
+                                                            Upload Image
+                                                        </label>
+                                                        <input
+                                                            id="image-upload"
+                                                            type="file"
+                                                            accept="image/*"
+                                                            className="admin_faculty_upload_input"
+                                                            onChange={handleImageUpload}
+                                                        />
+                                                    </>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            </div>
-                </form>
-            </div>
-            <div className="facultyadd-modal-footer" style={{border:"2px solid red"}}>
-                <button
-                    onClick={() => {
-                        Swal.fire({
-                            title: 'Are you sure?',
-                            text: "All entered data will be lost!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, clear it',
-                            cancelButtonText: 'Cancel'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                onClose(); // ✅ only close if user confirms
-                            }
-                        });
-                    }}
-                    className="facultyadd-btn facultyadd-btn-secondary"
-                >
-                    Clear
-                </button>
-                <button onClick={handleSave} className="facultyadd-btn facultyadd-btn-primary">Save</button>
+                            </Col>
+                        </Row>
+                    </form>
+                </div>
+                <div className="facultyadd-modal-footer">
+                    <button
+                        onClick={() => {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: "All entered data will be lost!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, clear it',
+                                cancelButtonText: 'Cancel'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    resetForm();
+                                    onClose();
+                                }
+                            });
+                        }}
+                        className="facultyadd-btn facultyadd-btn-secondary"
+                    >
+                        Clear
+                    </button>
+                    <button onClick={handleSave} className="facultyadd-btn facultyadd-btn-primary">Save</button>
+                </div>
             </div>
         </div>
-        </div >
     );
 };
 

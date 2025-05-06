@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { IoIosAdd } from "react-icons/io";
 import "./newadminclassdashboard.css";
-import { useState } from "react";
+import { useSelector } from "react-redux";
 import AdminClassAddStepOne from "./AdminClassAddStepOne";
 import AdminClassAddStepTwo from "./AdminClassAddStepTwo";
 import AdminClassView from "./AdminClassView";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const NewAdminClassDashboard = () => {
     const [showModal, setShowModal] = useState(false);
@@ -13,37 +15,86 @@ const NewAdminClassDashboard = () => {
     const [entries, setEntries] = useState([
         { subject: "", publishername: "", facultyname: "" }
     ]);
-    const classData = [
-        {
-            className: "Class 1",
-            sections: [
-                { section: "1A", teacher: "Radha krishnan", strength: 56, subjects: 6 },
-                { section: "1B", teacher: "Kanakambaran", strength: 56, subjects: 6 },
-                { section: "1A", teacher: "Radha krishnan", strength: 56, subjects: 6 },
-                { section: "1B", teacher: "Kanakambaran", strength: 56, subjects: 6 },
-                { section: "1A", teacher: "Radha krishnan", strength: 56, subjects: 6 },
-                { section: "1B", teacher: "Kanakambaran", strength: 56, subjects: 6 },
 
-            ],
-        },
-        {
-            className: "Class 2",
-            sections: [
-                { section: "2A", teacher: "Radha krishnan", strength: 56, subjects: 6 },
-                { section: "2B", teacher: "Kanakambaran", strength: 56, subjects: 6 },
-                { section: "2C", teacher: "Lakshmi Nakshatra", strength: 56, subjects: 6 },
-            ],
-        },
-        {
-            className: "Class 3",
-            sections: [
-                { section: "3A", teacher: "Radha krishnan", strength: 56, subjects: 6 },
-                { section: "3B", teacher: "Kanakambaran", strength: 56, subjects: 6 },
-                { section: "3C", teacher: "Radha krishnan", strength: 56, subjects: 6 },
-                { section: "3D", teacher: "Kanakambaran", strength: 56, subjects: 6 },
-            ],
-        },
-    ];
+    // Get teacher info and admin info from Redux store
+    const teacherinfo = useSelector((state) => state.adminteacherinfo);
+    const admininfo = useSelector((state) => state.admininfo);
+    console.log(teacherinfo, "teacher info");
+    console.log(admininfo, "admin info2");
+
+
+    const APIURL = useSelector((state) => state.APIURL.url);
+
+    console.log(admininfo?.admininfo.admin_id, "admininfo.admin_id ")
+
+    const admin_id = admininfo?.admininfo.admin_id
+
+
+    const [classData, setClassData] = useState([]);
+
+
+    console.log(classData, 'class dataaaaaa')
+
+
+
+    const fetchClassData = async () => {
+        console.log("entersddddddd");
+        try {
+            const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`);
+            console.log(response.data, "Fetched class data");
+
+            const formattedData = response.data.map(item => ({
+                className: item.class_name,
+                sections: item.classes.map(cls => ({
+                    section: cls.division,
+                    teacher: cls.class_teacher,
+                    strength: cls.students.length,
+                    subjects: cls.curriculum.length,
+                    students: cls.students,
+                    classId: cls.class_id,
+                    class_name: cls.class_name,
+                    medium: cls.medium,
+                    stream: cls.stream,
+                    curriculum: cls.curriculum,
+                }))
+            }));
+
+            const sortedData = formattedData.sort((a, b) => {
+                const numA = parseInt(a.className.match(/\d+/)); // extract number
+                const numB = parseInt(b.className.match(/\d+/));
+                return numA - numB;
+            });
+
+            setClassData(sortedData);
+        } catch (error) {
+            console.error("Error fetching class data:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (admin_id) {
+            console.log("admininfo available, fetching class data...");
+            fetchClassData();
+        }
+    }, [admininfo.admin_id]);
+
+
+
+    // State for step 1 data
+    const [stepOneData, setStepOneData] = useState({
+        class_name: "",
+        division: "",
+        medium: "",
+        stream: "",
+        level: "",
+        class_teacher: null
+    });
+
+    // State for step 2 data
+    const [stepTwoData, setStepTwoData] = useState([]);
+
+
+
     const [showAdminClassView, setShowAdminClassView] = useState(false);
     const [selectedSection, setSelectedSection] = useState(null);
 
@@ -51,14 +102,28 @@ const NewAdminClassDashboard = () => {
     const openModal = () => {
         setShowModal(true);
         setCurrentStep(1);
+        // Reset entries when opening modal
+        setEntries([{ subject: "", publishername: "", facultyname: "" }]);
     };
 
     const closeModal = () => {
         setShowModal(false);
+        // Reset states when closing modal
+        setStepOneData({
+            class_name: "",
+            division: "",
+            medium: "",
+            stream: "",
+            level: "",
+            class_teacher: null
+        });
+        setStepTwoData([]);
+        setEntries([{ subject: "", publishername: "", facultyname: "" }]);
     };
 
-    const nextStep = () => {
+    const nextStep = (data) => {
         if (currentStep < 2) {
+            setStepOneData(data);
             setCurrentStep(currentStep + 1);
         }
     };
@@ -71,18 +136,25 @@ const NewAdminClassDashboard = () => {
 
     // Manage dynamic row entries in Step Two
     const addEntry = () => {
-        setEntries([...entries, { subject: "", publishername: "", facultyname: "" }]);
+        setEntries(prevEntries => [...prevEntries, { subject: "", publishername: "", facultyname: "" }]);
     };
 
     const removeEntry = (index) => {
-        const newEntries = [...entries];
-        newEntries.splice(index, 1);
-        setEntries(newEntries);
+        console.log("Removing entry at index:", index);
+        setEntries(prevEntries => {
+            const newEntries = [...prevEntries];
+            newEntries.splice(index, 1);
+            console.log("Updated entries after removal:", newEntries);
+            return newEntries;
+        });
     };
 
-    // Function to handle clicking a card.
-    // It sets the selected section info and displays the AdminClassView modal.
+
+
+
+    // Function to handle clicking a card
     const handleCardClick = (item) => {
+        console.log(item, "Item on click"); // debug to confirm
         setSelectedSection(item);
         setShowAdminClassView(true);
     };
@@ -95,7 +167,12 @@ const NewAdminClassDashboard = () => {
                         <select
                             className="form-select form-select-sm newclassdashboard_select_subject"
                         >
-                            <option value="">Select Subject</option>
+                            <option value="">Select Class</option>
+                            {classData.map((classItem, idx) => (
+                                <option key={idx} value={classItem.className}>
+                                    Class {classItem.className}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <div className="newclassdashboard_left-controls">
@@ -115,22 +192,20 @@ const NewAdminClassDashboard = () => {
             <div className="newclassdashboard-class-section">
                 {classData.map((classItem, idx) => (
                     <div className="newclassdashboard-class-section-main mb-4" key={idx}>
-                        <p className="newclassdashboard-class-heading">{classItem.className}</p>
-                        <div className="newclassdashboard-class-section-row">
+                        <p className="newclassdashboard-class-heading">Class {classItem.className}</p>
+                        <div className="newclassdashboard-class-section-row" >
                             {classItem.sections.map((sec, index) => (
                                 <div key={index} className="newclassdashboard-card-container">
                                     <div className="newclassdashboard-card"
                                         onClick={() => handleCardClick(sec)}
                                     >
-                                        {/* Top section: Circle + Class Teacher */}
                                         <div className="newclassdashboard-card-top">
-                                            <div className="newclassdashboard-circle">{sec.section}</div>
+                                            <div className="newclassdashboard-circle">{sec.class_name} {sec.section}</div>
                                             <div className="newclassdashboard-teacher-container">
                                                 <p className="newclassdashboard-info-title">Class Teacher:</p>
                                                 <p className="newclassdashboard-teacher-name">{sec.teacher}</p>
                                             </div>
                                         </div>
-                                        {/* Bottom section: Strength + Subjects side by side */}
                                         <div className="newclassdashboard-card-bottom">
                                             <p className="newclassdashboard-info-title">
                                                 Strength:
@@ -152,10 +227,13 @@ const NewAdminClassDashboard = () => {
             {/* Modal Popup */}
             {showModal && (
                 <div className="newclassdashboard-custom-modal-overlay" onClick={closeModal}>
-                    {/* Stop propagation so clicks inside the modal don’t close it */}
                     <div className="newclassdashboard-custom-modal-content" onClick={(e) => e.stopPropagation()}>
                         {currentStep === 1 ? (
-                            <AdminClassAddStepOne nextStep={nextStep} closeModal={closeModal} />
+                            <AdminClassAddStepOne
+                                nextStep={nextStep}
+                                closeModal={closeModal}
+                                teachers={teacherinfo.adminteacherinfo}
+                            />
                         ) : (
                             <AdminClassAddStepTwo
                                 prevStep={prevStep}
@@ -163,18 +241,24 @@ const NewAdminClassDashboard = () => {
                                 entries={entries}
                                 addEntry={addEntry}
                                 removeEntry={removeEntry}
+                                teachers={teacherinfo.adminteacherinfo}
+                                admininfo={admininfo}
+                                stepOneData={stepOneData}
+                            // onSave={handleSave}
                             />
                         )}
                     </div>
                 </div>
             )}
 
-            {/* Modal Popup for AdminClassView when a card is clicked */}
+            {/* Modal Popup for AdminClassView */}
             {showAdminClassView && (
                 <div className="newclassdashboard-custom-modal-overlay" onClick={() => setShowAdminClassView(false)}>
                     <div className="newclassdashboard-custom-modal-content" onClick={(e) => e.stopPropagation()}>
-                        {/* Pass the selected section (dummy data) as a prop to AdminClassView */}
-                        <AdminClassView faculty={selectedSection} onClose={() => setShowAdminClassView(false)} />
+                        <AdminClassView
+                            faculty={selectedSection}
+                            onClose={() => setShowAdminClassView(false)}
+                        />
                     </div>
                 </div>
             )}

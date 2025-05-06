@@ -2,10 +2,71 @@ import React from 'react';
 import './newfacultyview.css';
 import defaultImage from "../../../assets/default.jpg";
 import image from "../../../assets/messi-ronaldo-1593920966.jpg"
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
-const NewFacultyView = ({ faculty, onClose }) => {
+
+const NewFacultyView = ({ faculty, onClose, setSelectedFaculty, fetchFaculty }) => {
     if (!faculty) return null;
 
+
+    const APIURL = useSelector((state) => state.APIURL.url);
+
+    const handleBlockUnblock = async () => {
+        try {
+            const currentFaculty = faculty;
+            const isBlocked = faculty.status; // true means blocked
+            
+            // Close the faculty view modal
+            setSelectedFaculty(null);
+            onClose();
+
+            // Show the confirmation dialog with appropriate text
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: isBlocked ? "Do you want to unblock this faculty?" : "Do you want to block this faculty?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: isBlocked ? 'Yes, unblock' : 'Yes, block',
+                cancelButtonText: 'Cancel'
+            });
+
+            if (result.isConfirmed) {
+                // Make API call with appropriate action
+                const response = await axios.put(`${APIURL}/api/teacherdetails/${faculty.id}`, {
+                    is_block: isBlocked ? 'unblock' : 'block'
+                });
+
+                if (response.data.message === "Teacher blocked successfully" || 
+                    response.data.message === "Teacher unblocked successfully") {
+                    // Refresh the faculty list
+                    await fetchFaculty();
+                    
+                    await Swal.fire({
+                        title: isBlocked ? 'Unblocked!' : 'Blocked!',
+                        text: isBlocked ? 'Faculty has been unblocked.' : 'Faculty has been blocked.',
+                        icon: 'success',
+                        timer: 1500
+                    });
+                }
+            } else {
+                // If user clicks Cancel, reopen the faculty view modal
+                setSelectedFaculty(currentFaculty);
+            }
+        } catch (error) {
+            console.error("Error updating faculty status:", error);
+            // If there's an error, reopen the faculty view modal
+            setSelectedFaculty(faculty);
+            Swal.fire(
+                'Error',
+                error.response?.data?.message || 'Failed to update faculty status',
+                'error'
+            );
+        }
+    };
 
     return (
         <div className="facultyview-backdrop">
@@ -94,7 +155,12 @@ const NewFacultyView = ({ faculty, onClose }) => {
 
                 {/* Footer Buttons */}
                 <div className="facultyview-modal-footer">
-                    <button className="facultyview-btn facultyview-btn-danger">Delete</button>
+                    <button 
+                        className="facultyview-btn facultyview-btn-danger"
+                        onClick={handleBlockUnblock}
+                    >
+                        {faculty.status ? 'Unblock' : 'Block'}
+                    </button>
                     <button className="facultyview-btn facultyview-btn-primary">Edit</button>
                 </div>
             </div>

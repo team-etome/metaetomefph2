@@ -36,6 +36,7 @@ function NewNavbarLoka() {
     const storedTab = localStorage.getItem("currentTab");
     if (storedTab) {
       setCurrentTab(storedTab);
+
     }
   }, []);
 

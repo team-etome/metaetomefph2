@@ -35,6 +35,7 @@ const AdminQuestionAssigning = () => {
             try {
                 const response = await axios.get(`${APIURL}/api/questionpaper/${admin_id}`);
                 const rawData = response.data.question_papers || {};
+                
                 dispatch(exampaperinfo(rawData));
 
                 console.log(response.data, "responseresponseresponse");
@@ -122,10 +123,10 @@ const AdminQuestionAssigning = () => {
 
     const handleSortClick = (column, event) => {
         event.stopPropagation();
-        setSortDropdown({
-            isOpen: !sortDropdown.isOpen || sortDropdown.column !== column,
+        setSortDropdown(prevState => ({
+            isOpen: prevState.column === column ? !prevState.isOpen : true,
             column: column
-        });
+        }));
     };
 
     const handleSort = (column, direction) => {
@@ -137,7 +138,7 @@ const AdminQuestionAssigning = () => {
         if (!sortDropdown.isOpen || sortDropdown.column !== column) return null;
 
         return (
-            <div className="AdminQuestionAssigning_sort-dropdown">
+            <div className="AdminQuestionAssigning_sort-dropdown" onClick={(e) => e.stopPropagation()}>
                 <div className="AdminQuestionAssigning_sort-option" onClick={() => handleSort(column, 'asc')}>
                     Sort A to Z
                 </div>
