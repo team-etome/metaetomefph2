@@ -12,6 +12,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
 
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+
     const admininfo = useSelector((state) => state.admininfo);
 
     const [formData, setFormData] = useState({
@@ -50,22 +51,26 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         }));
     };
 
+
     const handleSave = async () => {
         const validationErrors = [];
+
 
         if (!formData.firstname) validationErrors.push("First name is required.");
         if (!formData.gender?.value) validationErrors.push("Gender is required.");
         if (!formData.email) validationErrors.push("Email is required.");
         if (!formData.password) validationErrors.push("Password is required.");
 
-        // Email format
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (formData.email && !emailRegex.test(formData.email)) {
             validationErrors.push("Please enter a valid email address.");
         }
 
+
         // Phone number format (optional field)
         if (formData.phoneno && formData.phoneno.length !== 10) {
+
             validationErrors.push("Phone number must be 10 digits.");
         }
 
@@ -73,6 +78,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
             Swal.fire("Validation Error", validationErrors[0], "warning");
             return;
         }
+
 
         const formDataToSend = new FormData();
         formDataToSend.append("admin_id", admin_id);
@@ -90,18 +96,20 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
+
             });
 
             if (response.data.message === "Teacher added successfully") {
                 Swal.fire("Success", "Faculty added successfully", "success");
+
                 resetForm();
+
                 onFacultyAdded?.();
                 onClose();
             } else {
                 Swal.fire("Error", response.data.message || "Something went wrong", "error");
             }
         } catch (error) {
-            console.error("Error while saving faculty:", error);
             Swal.fire("Error", error.response?.data?.message || "Server error occurred", "error");
         }
     };
@@ -127,6 +135,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         }));
     };
 
+
     const customStyles = {
         control: (base, state) => ({
             ...base,
@@ -135,15 +144,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
             borderRadius: '8px',
             borderColor: '#757575',
             boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
-            '&:hover': {
-                borderColor: '#526D82',
-            }
+            '&:hover': { borderColor: '#526D82' }
         }),
-        valueContainer: (base) => ({
-            ...base,
-            height: '48px',
-            padding: '0 6px'
-        }),
+
         dropdownIndicator: (base) => ({
             ...base,
             color: '#292D32',
@@ -182,7 +185,11 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                 backgroundColor: '#e6e6e6',
             }
         }),
+
     };
+
+    const handleImageUpload = (e) => setImageFile(e.target.files[0]);
+    const clearImageFile = () => setImageFile(null);
 
     return (
         <div className="facultyadd-backdrop">
@@ -191,7 +198,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                     <p className="lokatextbookadd-modal-header-heading">Add Faculty</p>
                     <button onClick={onClose} className="facultyadd-close-button">&times;</button>
                 </div>
+
                 <div className="facultyadd-modal-body">
+
                     <form onSubmit={(e) => e.preventDefault()}>
                         <div className="lokatextbookadd-form-grid">
                             <div className="facultyadd-form-group">
@@ -320,9 +329,11 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                             </div>
                         </div>
 
+
                         <Row>
                             <Col md={12}>
                                 <div className="facultyadd-form-group">
+
                                     <label className="facultyadd-form-label">
                                         Password <span className="facultyadd_required">*</span>
                                     </label>
@@ -343,12 +354,15 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                         }}
                                         onChange={(e) => handleInputChange('password', e.target.value)}
                                     />
+
                                 </div>
                             </Col>
                         </Row>
+
                         <Row>
                             <Col md={12}>
                                 <div className="facultyadd-form-group">
+
                                     <label className="facultyadd-form-label">Add cover Photo</label>
                                     <div>
                                         <div className="admin_faculty_image_upload_container">
@@ -391,6 +405,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                                     </>
                                                 )}
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -398,7 +413,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                         </Row>
                     </form>
                 </div>
+
                 <div className="facultyadd-modal-footer">
+
                     <button
                         onClick={() => {
                             Swal.fire({
@@ -421,6 +438,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                     >
                         Clear
                     </button>
+
                     <button onClick={handleSave} className="facultyadd-btn facultyadd-btn-primary">Save</button>
                 </div>
             </div>

@@ -667,6 +667,7 @@ const NewSeatingDashboard = () => {
                                     </select>
                                 </div>
 
+
                                 <div className="seating_step-column">
                                     <select
                                         id={`division-${index}`}
@@ -699,6 +700,7 @@ const NewSeatingDashboard = () => {
                                         &#10005;
                                     </span>
                                 )}
+
                             </div>
                         </div>
                     ))}
