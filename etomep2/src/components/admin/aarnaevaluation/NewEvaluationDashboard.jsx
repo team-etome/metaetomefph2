@@ -127,7 +127,11 @@ const NewEvaluationDashboard = () => {
                             Search
                         </button>
                     </div>
-                    <div className="left-controls">
+                    <div className="evaluationdashboard_left-controls">
+                    {/* <button className="btn-primary btn-sm evaluationdashboard_filter_button"
+                            onClick={() => setShowPopup(true)} >
+                            Filter
+                        </button> */}
                         <button className="btn-primary btn-sm evaluationdashboard_result_add_button"
                             onClick={() => setShowPopup(true)} >
                             + Add

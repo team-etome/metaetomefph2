@@ -117,8 +117,6 @@ const NewFacultyDashboard = () => {
                             onChange={(e) => setFacultySearch(e.target.value)}
                         />
 
-
-
                         <div>
                             <button
                                 className="btn-primary btn-sm facultydashboard_result_add_button"

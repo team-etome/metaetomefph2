@@ -14,8 +14,8 @@
     display: flex;
     flex-direction: column;
     background: white;
-    padding: 20px;
-    border-radius: 8px;
+    /* padding: 20px; */
+    border-radius: 16px;
     width: 1058px;
     height: 650px;
     /* max-width: 600px; */
@@ -25,14 +25,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 24px;
+    border-bottom: 1px solid #DFDFDF;
+}
+.examtimetable-edit-header-heading{
+    font-size: 20px;
+    font-weight:bold;
+    color: #000;
 }
 
 .examtimetable-edit_form-section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
     margin-top: 20px;
+    border-bottom: 1px solid #E3E3E3;
 }
 
 .examtimetable-edit_form-header {
@@ -40,6 +49,21 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
+
+/* Add specific styles for examination name label and input */
+.examtimetable-edit_form-header .examtimetable-edit_form-label:first-child,
+.examtimetable-edit_form-input-group .examtimetable-edit_form-input:first-child {
+    width: 370px;
+    flex: none;
+}
+
+/* Set width for other labels and inputs */
+.examtimetable-edit_form-header .examtimetable-edit_form-label:not(:first-child),
+.examtimetable-edit_form-input-group .examtimetable-edit_form-input:not(:first-child),
+.examtimetable-edit_form-input-group .examtimetable-edit_form-select {
+    width: 203px;
+    flex: none;
 }
 
 .examtimetable-edit_form-input-group {
@@ -61,6 +85,7 @@
     padding: 8px;
     /* box-sizing: border-box; */
     border-radius: 8px;
+    border-color: #757575;
 }
 
 
@@ -78,6 +103,8 @@ select {
     flex-grow: 1; /* Allow the form to grow */
     overflow-y: auto; /* Allow scrolling if content overflows */
     margin-bottom: 24px; /* Ensure the footer has a 24px gap */
+    margin-left: 24px;
+    margin-right: 24px;
 }
 
 .examtimetable-edit-form-table-header,
@@ -86,12 +113,18 @@ select {
     justify-content: space-between;
     margin-bottom: 10px;
 }
+.examtimetable-edit-form-table-row {
+   gap: 8px ;
+}
+.examtimetable-edit-form-table-header {
+    gap:8px;
+}
 
 .examtimetable-edit-form-table-header label,
 .examtimetable-edit-form-table-row input,
 .examtimetable-edit-form-table-row select {
     flex: 1;
-    margin-right: 10px;
+    /* margin-right: 10px; */
 }
 
 .examtimetable-edit-form-table-header label {
@@ -101,8 +134,9 @@ select {
 
 .examtimetable-edit-form-table-row input,
 .examtimetable-edit-form-table-row select {
-    padding: 8px;
-    margin-right: 10px;
+    padding: 12px;
+    padding-left: 10px;
+    margin-right: 0px;
     border-radius: 8px;
 }
 
@@ -170,7 +204,7 @@ select {
 
 .examtimetable-edit-form-row-with-delete {
     position: relative;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
 }
 
 .examtimetable-edit-form-remove-row-btn:focus {
@@ -180,7 +214,7 @@ select {
 .examtimetable-edit-form-remove-row-btn {
     position: absolute;
     top: 15%;
-    right: 0px;
+    right: -5px;
     background: transparent;
     color: red;
     font-size: 18px;
@@ -198,10 +232,10 @@ select {
     display: block; /* Show the button */
     height: 16px !important; /* Set the height to 16px */
     width: 16px !important;
-    padding-left: 16px;
+    padding-left: 24px;
 }
 .examtimetable-edit-form-row-with-delete:hover {
-    transform: scale(0.97);
+    transform: scale(0.96);
 }
 .examtimetable-edit_required {
     font-weight: 400;

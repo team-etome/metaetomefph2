@@ -150,7 +150,7 @@ const Examtimetableadding = ({ onClose }) => {
         <div className="examtimetable-adding-backdrop">
             <div className="examtimetable-adding-container">
                 <div className="examtimetable-adding-header">
-                    <h3>Add Time Table</h3>
+                    <p className="examtimetable-adding-header-heading">Add Time Table</p>
                     <button onClick={onClose} className="btn-close" aria-label="Close"></button>
                 </div>
                 <form className="examtimetable-adding-form" onSubmit={(e) => e.preventDefault()}>
@@ -163,21 +163,21 @@ const Examtimetableadding = ({ onClose }) => {
                                 Year <span className="examtimetable-adding_required">*</span>
                             </label>
                             <label className="examtimetable-adding_form-label">
-                                term
+                                Select Term
                             </label>
                             <label className="examtimetable-adding_form-label">
-                                Select Classes <span className="examtimetable-adding_required">*</span>
+                                Select Class <span className="examtimetable-adding_required">*</span>
                             </label>
                         </div>
                         <div className="examtimetable-adding_form-input-group">
                             <input type="text" value={examName} onChange={(e) => setExamName(e.target.value)} className="examtimetable-adding_form-input" />
                             <input type="text" value={year} onChange={(e) => setYear(e.target.value)} className="examtimetable-adding_form-input" />
                             <select
-                                className="examtimetable-adding_form-select"
+                                className="form-select form-select-sm examtimetable-adding_form-select"
                                 value={term}
                                 onChange={(e) => setTerm(e.target.value)}
                             >
-                                <option value="">Select Class</option>
+                                <option value="">Select term</option>
                                 <option value="Term 1">Term 1</option>
                                 <option value="Term 2">Term 2</option>
                                 <option value="Term 3">Term 3</option>
@@ -186,7 +186,7 @@ const Examtimetableadding = ({ onClose }) => {
                                 <option value="Term 6">Term 6</option>
                             </select>
                             <select
-                                className="examtimetable-adding_form-select"
+                                className="form-select form-select-sm examtimetable-adding_form-select"
                                 value={selectedClass?.value || ''}
                                 onChange={handleClassChange}
                             >
@@ -199,12 +199,11 @@ const Examtimetableadding = ({ onClose }) => {
                             </select>
                         </div>
                     </div>
-                    <hr />
                     <div className="examtimetable-adding-form_form-content">
                         <div className="examtimetable-adding-form-table">
-                            <div className="examtimetable-adding-form-table-header"> 
+                            <div className="examtimetable-adding-form-table-header">
                                 <label>
-                                    Subject <span className="examtimetable-adding_required">*</span>
+                                    Select Subject <span className="examtimetable-adding_required">*</span>
                                 </label>
                                 <label>
                                     Date <span className="examtimetable-adding_required">*</span>
@@ -221,6 +220,7 @@ const Examtimetableadding = ({ onClose }) => {
                                     <select
                                         value={entry.subject}
                                         onChange={(e) => handleEntryChange(index, 'subject', e.target.value)}
+                                        className="form-select form-select-sm examtimetable-adding_form-select"
                                     >
                                         <option value="">Select Subject</option>
                                         {subjectOptions.map((subj) => (
@@ -232,16 +232,17 @@ const Examtimetableadding = ({ onClose }) => {
                                     <input type="date" value={entry.date} onChange={(e) => handleEntryChange(index, 'date', e.target.value)} />
                                     <input type="time" value={entry.startTime} onChange={(e) => handleEntryChange(index, 'startTime', e.target.value)} />
                                     <input type="time" value={entry.endTime} onChange={(e) => handleEntryChange(index, 'endTime', e.target.value)} />
-                                    <span
-                                        type="button"
-                                        className="examtimetable-adding-form-remove-row-btn"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleRemoveRow(index);
-                                        }}
-                                    >
-                                        &#10005;
-                                    </span>
+                                    {entries.length > 1 && (
+                                        <span
+                                            className="examtimetable-adding-form-remove-row-btn"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleRemoveRow(index);
+                                            }}
+                                        >
+                                            &#10005;
+                                        </span>
+                                    )}
                                 </div>
                             ))}
                             <div className="examtimetable-adding_addnext_button_main">

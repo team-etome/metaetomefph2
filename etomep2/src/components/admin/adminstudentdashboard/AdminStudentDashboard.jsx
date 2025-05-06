@@ -98,8 +98,8 @@ const AdminStudentDashboard = () => {
                     </div>
                 </div>
             </div>
-            <div className="adminstudentdashboard_classes_box" >
-                <div className="adminstudentdashboard_container" >
+            <div className="adminstudentdashboard_classes_box">
+                <div className="adminstudentdashboard_container">
                     <div className="adminstudentdashboard-grid-container">
                         {filteredStudents.map(student => (
                             <div key={student.rollNo} className="adminstudentdashboard-card"

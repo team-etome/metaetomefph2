@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoArrowBack, IoClose } from "react-icons/io5";
-import { AiOutlineSearch } from "react-icons/ai";
+import { LuSearch } from "react-icons/lu";
 import "./adminclassstudentlist.css";
 import AdminClassStudentView from "./AdminClassStudentView";
 import studentDefault from "../../../assets/student.jpg"
@@ -9,7 +9,6 @@ const AdminClassStudentList = ({ onBack, onClose, students }) => {
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [search, setSearch] = useState("");
     const allStudents = students || [];
-    // Dummy data to mimic your screenshot
 
     const filtered = allStudents.filter(s =>
         s.student_name?.toLowerCase().includes(search.toLowerCase())
@@ -46,7 +45,7 @@ const AdminClassStudentList = ({ onBack, onClose, students }) => {
                 </div>
 
                 {/* right side: close button */}
-                <div className="adminclassstudentlist-header-right">
+                <div className="adminclassstudentlist-header-right" >
                     <button
                         className="adminclassstudentlist-close-btn"
                         onClick={onClose}
@@ -60,7 +59,7 @@ const AdminClassStudentList = ({ onBack, onClose, students }) => {
             <div className="adminclassstudentlist-body">
                 {/* Search */}
                 <div className="adminclassstudentlist-search-container">
-                    <AiOutlineSearch className="adminclassstudentlist-search-icon" />
+                    <LuSearch className="adminclassstudentlist-search-icon" />
                     <input
                         type="text"
                         className="adminclassstudentlist-search-input"

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { useNavigate } from "react-router-dom";
-//   import NewSeatingDashboardView from './NewSeatingDashboardView';
+import NewSeatingDashboardView from './NewSeatingDashboardView';
 import first from "../../../assets/IMG_first.png"
 import first_selected from "../../../assets/IMG_first_selected.png"
 import second from "../../../assets/IMG_second.png"
@@ -42,7 +42,7 @@ const NewSeatingDashboard = () => {
         return () => document.removeEventListener('mousedown', onClickOutside);
     }, []);
 
-    const [teachers, setTeachers] = useState("");
+    const [teachers, setTeachers] = useState([]);
 
 
     const dispatch = useDispatch()
@@ -182,23 +182,13 @@ const NewSeatingDashboard = () => {
     ]);
 
     // Handle faculty selection
-    // const handleFacultySelect = (e) => {
-    //     const selectedFaculty = facultyOptions.find(faculty => faculty.id === e.target.value);
-    //     if (selectedFaculty && !formData.facultiesAssigned.find(f => f.id === selectedFaculty.id)) {
-    //         setFormData({
-    //             ...formData,
-    //             facultiesAssigned: [...formData.facultiesAssigned, selectedFaculty]
-    //         });
-    //     }
-    // };
-
-
     const handleFacultySelect = (facultyId) => {
-        const selectedFaculty = facultyOptions.find(f => f.id === facultyId);
+        const selectedFaculty = teachers.find(t => t.value === facultyId);
         if (!selectedFaculty) return;
+        
         setFormData(prev => ({
             ...prev,
-            facultiesAssigned: prev.facultiesAssigned.some(f => f.id === facultyId)
+            facultiesAssigned: prev.facultiesAssigned.some(f => f.value === facultyId)
                 ? prev.facultiesAssigned
                 : [...prev.facultiesAssigned, selectedFaculty]
         }));
@@ -206,10 +196,10 @@ const NewSeatingDashboard = () => {
 
     // Handle removing a faculty
     const handleRemoveFaculty = (facultyId) => {
-        setFormData({
-            ...formData,
-            facultiesAssigned: formData.facultiesAssigned.filter(f => f.id !== facultyId)
-        });
+        setFormData(prev => ({
+            ...prev,
+            facultiesAssigned: prev.facultiesAssigned.filter(f => f.value !== facultyId)
+        }));
     };
 
     // === WIZARD & MODAL LOGIC ===
@@ -354,7 +344,7 @@ const NewSeatingDashboard = () => {
         return (
             <div className="seating-modal-step-content">
                 <label className="seating-form-label" htmlFor="examName">
-                    Exam Name <span className="seating_required">*</span>
+                    Select Exam Name <span className="seating_required">*</span>
                 </label>
                 <select
                     className="form-select form-select-sm seating_stepone_select_exam"
@@ -375,7 +365,7 @@ const NewSeatingDashboard = () => {
                 <div className="seating_step-row_stepone">
                     <div className="seating_step-column">
                         <label className="seating-form-label" htmlFor="examYear">
-                            Year <span className="seating_required">*</span>
+                            Select Year <span className="seating_required">*</span>
                         </label>
                         <select
                             id="examYear"
@@ -453,6 +443,136 @@ const NewSeatingDashboard = () => {
         );
     };
 
+
+    // UI for step 2: Room Details
+    // const renderStepTwo = () => {
+    //     return (
+    //         <div className="seating-modal-step-content">
+    //             <div className="seating_step-row" style={{ display: 'flex', gap: 'px' }} >
+    //                 <div className="seating_step-column_steptwo" style={{ width: '242px' }}>
+    //                     <label className="seating-form-label" htmlFor="roomNumber">
+    //                         Room Number <span className="seating_required">*</span></label>
+    //                     <input
+    //                         id="roomNumber"
+    //                         type="text"
+    //                         className="seating_form-control_steptwo"
+    //                         placeholder="202"
+    //                         value={formData.roomNumber}
+    //                         onChange={(e) => setFormData({ ...formData, roomNumber: e.target.value })}
+    //                     />
+    //                 </div>
+
+    //                 <div className="seating_step-column">
+    //                     <label className="seating-form-label">Faculties Assigned <span className="seating_required">*</span></label>
+
+
+    //                     <select
+    //                         id="FacultiesAssigned"
+    //                         className="form-select form-select-sm seating_stepone_select_year"
+    //                         onChange={(e) => handleFacultySelect(e.target.value)}
+    //                         value={formData.facultiesAssigned[0]?.value || ''}
+    //                     >
+    //                         <option value="">Select Faculty</option>
+    //                         {teachers.map((teacher) => (
+    //                             <option key={teacher.value} value={teacher.value}>
+    //                                 {teacher.label}
+    //                             </option>
+    //                         ))}
+    //                     </select>
+
+    //                 </div>
+
+    //             </div>
+
+    //             <div className="seating-modal-step-content_steptwo_entrytable">
+    //                 {entries.map((entry, index) => (
+
+    //                     <div key={index} className={`seating_step-row row-with-delete ${index === 0 ? 'first-row' : ''}`}>
+    //                         <div className="seating_step-column">
+
+    //                             {index === 0 && (
+    //                                 <label className="seating-form-label" htmlFor={`className-${index}`}>
+    //                                     Class Name <span className="seating_required">*</span>
+    //                                 </label>
+    //                             )}
+    //                             <select
+    //                                 id={`className-${index}`}
+    //                                 className="seating_form-select"
+    //                                 value={entry.className}
+    //                                 onChange={(e) => updateEntry(index, 'className', e.target.value)}
+    //                             >
+    //                                 <option value="">Select Class</option>
+    //                                 {classNames.map((cls, i) => (
+    //                                     <option key={i} value={cls}>{cls}</option>
+    //                                 ))}
+    //                             </select>
+    //                         </div>
+
+    //                         <div className="seating_step-column">
+    //                             {index === 0 && (
+    //                                 <label className="seating-form-label" htmlFor={`division-${index}`}>
+    //                                     Division <span className="seating_required">*</span>
+    //                                 </label>
+    //                             )}
+    //                             <select
+    //                                 id={`division-${index}`}
+    //                                 className="seating_form-select"
+    //                                 value={entry.division}
+    //                                 onChange={(e) => updateEntry(index, 'division', e.target.value)}
+    //                             >
+    //                                 <option value="">Select Division</option>
+    //                                 {divisions.map((div, i) => (
+    //                                     <option key={i} value={div}>{div}</option>
+    //                                 ))}
+    //                             </select>
+    //                         </div>
+
+    //                         <div className="seating_step-column">
+    //                             {index === 0 && (
+    //                                 <label className="seating-form-label" htmlFor={`subject-${index}`}>
+    //                                     Subject <span className="seating_required">*</span>
+    //                                 </label>
+    //                             )}
+    //                             <select
+    //                                 id={`subject-${index}`}
+    //                                 className="seating_form-select"
+    //                                 value={entry.subject}
+    //                                 onChange={(e) => updateEntry(index, 'subject', e.target.value)}
+    //                             >
+    //                                 <option value="">Select Subject</option>
+    //                                 <option value="Mathematics">Mathematics</option>
+    //                                 <option value="Science">Science</option>
+    //                                 <option value="English">English</option>
+    //                             </select>
+    //                         </div>
+
+    //                         {entries.length > 1 && (
+    //                             <button
+    //                                 type="button"
+    //                                 className="remove-row-btn"
+    //                                 onClick={(e) => {
+    //                                     e.stopPropagation();
+    //                                     removeEntry(index);
+    //                                 }}
+    //                             >
+    //                                 &#10005;
+    //                             </button>
+    //                         )}
+
+    //                     </div>
+    //                 ))}
+
+    //                 <div className="add-next-btn-container">
+    //                     <button type="button" className="add-next-btn" onClick={addEntry}>
+    //                         + Add Next
+    //                     </button>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     );
+    // };
+
+
     // UI for step 2: Room Details
     const renderStepTwo = () => {
         return (
@@ -460,121 +580,131 @@ const NewSeatingDashboard = () => {
                 <div className="seating_step-row" style={{ display: 'flex', gap: 'px' }} >
                     <div className="seating_step-column_steptwo" style={{ width: '242px' }}>
                         <label className="seating-form-label" htmlFor="roomNumber">
-                            Room Number <span className="seating_required">*</span></label>
+                            Room Number <span className="seating_required">*</span>
+                        </label>
                         <input
                             id="roomNumber"
                             type="text"
                             className="seating_form-control_steptwo"
-                            placeholder="202"
+                            placeholder=""
                             value={formData.roomNumber}
                             onChange={(e) => setFormData({ ...formData, roomNumber: e.target.value })}
                         />
                     </div>
-
-                    <div className="seating_step-column">
-                        <label className="seating-form-label">Faculties Assigned <span className="seating_required">*</span></label>
-
-
-                        <select
-                            id="FacultiesAssigned"
-                            className="form-select form-select-sm seating_stepone_select_year"
-                            onChange={(e) =>
-                                setFormData({
-                                    ...formData,
-                                    facultiesAssigned: [e.target.value]
-                                })
-                            }
-                            value={formData.facultiesAssigned[0] || ''}
-                        >
-                            <option value="">Select Faculty</option>
-                            {teachers.map((teacher) => (
-                                <option key={teacher.value} value={teacher.label}>
-                                    {teacher.label}
-                                </option>
+                    <div
+                        className="seating_step-column_Faculties-assigned"
+                        ref={facultyDropdownRef}
+                    >
+                        <label className="seating-form-label">
+                            Faculties Assigned <span className="seating_required">*</span>
+                        </label>
+                        <div className="seating_faculty-tags-wrapper">
+                            {formData.facultiesAssigned.map(f => (
+                                <div key={f.value} className="seating_faculty-tags">
+                                    {f.label}
+                                    <span
+                                        className="seating_faculty-remove-icon"
+                                        onClick={() => handleRemoveFaculty(f.value)}
+                                    >×</span>
+                                </div>
                             ))}
-                        </select>
+                        </div>
+                        <div
+                            className="seating_dropdown-icon"
+                            onClick={() => setFacultyDropdownOpen(o => !o)}
+                        ><MdOutlineKeyboardArrowDown fontSize={22}/></div>
 
+                        {facultyDropdownOpen && (
+                            <ul className="seating_options-list">
+                                {teachers
+                                    .filter(o => !formData.facultiesAssigned.some(f => f.value === o.value))
+                                    .map(o => (
+                                        <li
+                                            key={o.value}
+                                            onClick={() => {
+                                                handleFacultySelect(o.value);
+                                                setFacultyDropdownOpen(false);
+                                            }}
+                                        >{o.label}</li>
+                                    ))}
+                            </ul>
+                        )}
                     </div>
-
                 </div>
 
                 <div className="seating-modal-step-content_steptwo_entrytable">
+                    <div className="seating_step-row">
+                        <div className="seating_step-column">
+                            <label className="seating-form-label">
+                                Class Name <span className="seating_required">*</span>
+                            </label>
+                        </div>
+                        <div className="seating_step-column">
+                            <label className="seating-form-label">
+                                Division <span className="seating_required">*</span>
+                            </label>
+                        </div>
+                        <div className="seating_step-column">
+                            <label className="seating-form-label">
+                                Students left
+                            </label>
+                        </div>
+                    </div>
                     {entries.map((entry, index) => (
+                        <div key={index} className={`seating_row-with-delete`}>
+                            <div className="seating_step-row">
+                                <div className="seating_step-column">
+                                    <select
+                                        id={`className-${index}`}
+                                        className="form-select form-select-sm seating_form-select"
+                                        value={entry.className}
+                                        onChange={(e) => updateEntry(index, 'className', e.target.value)}
+                                    >
+                                        <option value="">Select Class</option>
+                                        <option value="10">10</option>
+                                        <option value="9">9</option>
+                                        <option value="8">8</option>
+                                    </select>
+                                </div>
 
-                        <div key={index} className={`seating_step-row row-with-delete ${index === 0 ? 'first-row' : ''}`}>
-                            <div className="seating_step-column">
 
-                                {index === 0 && (
-                                    <label className="seating-form-label" htmlFor={`className-${index}`}>
-                                        Class Name <span className="seating_required">*</span>
-                                    </label>
+                                <div className="seating_step-column">
+                                    <select
+                                        id={`division-${index}`}
+                                        className="form-select form-select-sm seating_form-select"
+                                        value={entry.division}
+                                        onChange={(e) => updateEntry(index, 'division', e.target.value)}
+                                    >
+                                        <option value="">Select Division</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                    </select>
+                                </div>
+
+                                <div className="seating_step-column">
+                                    <input
+                                        id={`student_left-${index}`}
+                                        type="number"
+                                        className="seating_form-control_steptwo"
+                                        placeholder=""
+                                    />
+                                </div>
+                                {entries.length > 1 && (
+                                    <span
+                                        className="seating_delete-row-btn"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            removeEntry(index);
+                                        }}
+                                    >
+                                        &#10005;
+                                    </span>
                                 )}
-                                <select
-                                    id={`className-${index}`}
-                                    className="seating_form-select"
-                                    value={entry.className}
-                                    onChange={(e) => updateEntry(index, 'className', e.target.value)}
-                                >
-                                    <option value="">Select Class</option>
-                                    {classNames.map((cls, i) => (
-                                        <option key={i} value={cls}>{cls}</option>
-                                    ))}
-                                </select>
+
                             </div>
-
-                            <div className="seating_step-column">
-                                {index === 0 && (
-                                    <label className="seating-form-label" htmlFor={`division-${index}`}>
-                                        Division <span className="seating_required">*</span>
-                                    </label>
-                                )}
-                                <select
-                                    id={`division-${index}`}
-                                    className="seating_form-select"
-                                    value={entry.division}
-                                    onChange={(e) => updateEntry(index, 'division', e.target.value)}
-                                >
-                                    <option value="">Select Division</option>
-                                    {divisions.map((div, i) => (
-                                        <option key={i} value={div}>{div}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className="seating_step-column">
-                                {index === 0 && (
-                                    <label className="seating-form-label" htmlFor={`subject-${index}`}>
-                                        Subject <span className="seating_required">*</span>
-                                    </label>
-                                )}
-                                <select
-                                    id={`subject-${index}`}
-                                    className="seating_form-select"
-                                    value={entry.subject}
-                                    onChange={(e) => updateEntry(index, 'subject', e.target.value)}
-                                >
-                                    <option value="">Select Subject</option>
-                                    <option> </option>
-                                </select>
-                            </div>
-
-                            {entries.length > 1 && (
-                                <button
-                                    type="button"
-                                    className="remove-row-btn"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        removeEntry(index);
-                                    }}
-                                >
-                                    &#10005;
-                                </button>
-                            )}
-
                         </div>
                     ))}
 
-                    {/* + Add Next Button */}
                     <div className="add-next-btn-container">
                         <button type="button" className="add-next-btn" onClick={addEntry}>
                             + Add Next
@@ -921,13 +1051,14 @@ const NewSeatingDashboard = () => {
                         </div>
                     </div>
                 </div>
-                <div className="seating_classes_box">
-                    <div className="seating_container">
+                <div className="seating_classes_box" >
+                    <div className="seating_container" >
                         {DummySeatingData.map((item) => (
                             <div
                                 className="seating_classes_box_inner"
                                 key={item.id}
                                 onClick={() => handleCardClick(item)}
+                                
                             >
                                 <div className="seating_top_row">
                                     <div className="seating_exam_details">

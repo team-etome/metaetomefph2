@@ -310,7 +310,7 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
                                             </>
                                         ) : (
                                             <>
-                                                <label htmlFor="file-upload" className="lokabook_upload-btn">
+                                                <label htmlFor="file-upload" className="lokabookadd_upload-btn">
                                                     Choose File
                                                 </label>
                                                 <input

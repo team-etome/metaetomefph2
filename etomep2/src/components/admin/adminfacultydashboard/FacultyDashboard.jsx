@@ -173,7 +173,7 @@ function FacultyDashboard() {
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "104.5%" }}>
       <div className="search-bar-wrapper">
-        <Row className="search_filter_main_header">
+        <Row className="search_filter_main_header" >
           <Col md={6}></Col>
           <Col md={6} className="fac_search_col">
             <div className="search_filter_main">
@@ -197,7 +197,7 @@ function FacultyDashboard() {
           </Col>
         </Row>
       </div>
-      <Container fluid className="faculty_container_scroll">
+      <Container fluid className="faculty_container_scroll" >
         {/* <Row className="search_filter_main_header">
           <Col md={6} ></Col>
           <Col md={6} className='fac_search_col'>
@@ -218,7 +218,7 @@ function FacultyDashboard() {
             </div>
           </Col>
         </Row> */}
-        <Row>
+        <Row >
           {filteredFacultyList.map((item, index) => (
             <Col lg={3} md={4} sm={6} xs={6} key={index} className="fac_list">
               <div

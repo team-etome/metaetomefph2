@@ -39,9 +39,6 @@ function NewNavbarLoka() {
       setCurrentTab(storedTab);
 
 
-     
-
-
     }
   }, []);
 
@@ -93,7 +90,6 @@ const handlenavigate = () => {
 
                 onSelect={(k) => setCurrentTab(k)}
 
-  
                 className="new_loka_dashboard_tab"
                 style={{ width: "100%"}}
               >
