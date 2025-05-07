@@ -73,7 +73,27 @@ const NewSeatingDashboard = () => {
     console.log(examData, "examaaaaaa")
 
 
+    const [seatingDetails , setSeatingDetails] = useState([])
 
+    useEffect(() => {
+        const fetchSeatingData = async () => {
+            try {
+                const response = await axios.get(`${APIURL}/api/seating/${admin_id}`);
+                console.log("Seating Data", response.data);
+
+                // Store the fetched data in state
+                setSeatingDetails(response.data);
+            } catch (error) {
+                console.error("Error fetching seating data", error);
+            }
+        };
+
+        fetchSeatingData();
+    }, [APIURL, admin_id]);
+
+
+
+    console.log(seatingDetails,'seating detailssss')
 
 
 
@@ -81,6 +101,16 @@ const NewSeatingDashboard = () => {
 
     const exampaper = useSelector((state) => state.exampaperinfo.exampaperinfo);
     const teacherinfo = useSelector((state) => state.adminteacherinfo);
+
+
+    const allPapers = Object.values(exampaper || {}).flat();
+
+
+    const availableClasses = [...new Set(allPapers.map(paper => paper.class_name).filter(Boolean))];
+
+
+    const availableDivisions = [...new Set(allPapers.map(paper => paper.division).filter(Boolean))];
+
 
 
 
@@ -185,7 +215,7 @@ const NewSeatingDashboard = () => {
     const handleFacultySelect = (facultyId) => {
         const selectedFaculty = teachers.find(t => t.value === facultyId);
         if (!selectedFaculty) return;
-        
+
         setFormData(prev => ({
             ...prev,
             facultiesAssigned: prev.facultiesAssigned.some(f => f.value === facultyId)
@@ -612,7 +642,7 @@ const NewSeatingDashboard = () => {
                         <div
                             className="seating_dropdown-icon"
                             onClick={() => setFacultyDropdownOpen(o => !o)}
-                        ><MdOutlineKeyboardArrowDown fontSize={22}/></div>
+                        ><MdOutlineKeyboardArrowDown fontSize={22} /></div>
 
                         {facultyDropdownOpen && (
                             <ul className="seating_options-list">
@@ -654,6 +684,7 @@ const NewSeatingDashboard = () => {
                         <div key={index} className={`seating_row-with-delete`}>
                             <div className="seating_step-row">
                                 <div className="seating_step-column">
+
                                     <select
                                         id={`className-${index}`}
                                         className="form-select form-select-sm seating_form-select"
@@ -661,14 +692,18 @@ const NewSeatingDashboard = () => {
                                         onChange={(e) => updateEntry(index, 'className', e.target.value)}
                                     >
                                         <option value="">Select Class</option>
-                                        <option value="10">10</option>
-                                        <option value="9">9</option>
-                                        <option value="8">8</option>
+                                        {availableClasses.map((cls, i) => (
+                                            <option key={i} value={cls}>{cls}</option>
+                                        ))}
                                     </select>
+
+
                                 </div>
 
 
                                 <div className="seating_step-column">
+
+
                                     <select
                                         id={`division-${index}`}
                                         className="form-select form-select-sm seating_form-select"
@@ -676,9 +711,13 @@ const NewSeatingDashboard = () => {
                                         onChange={(e) => updateEntry(index, 'division', e.target.value)}
                                     >
                                         <option value="">Select Division</option>
-                                        <option value="A">A</option>
-                                        <option value="B">B</option>
+                                        {availableDivisions.map((div, i) => (
+                                            <option key={i} value={div}>{div}</option>
+                                        ))}
                                     </select>
+
+
+
                                 </div>
 
                                 <div className="seating_step-column">
@@ -1058,7 +1097,7 @@ const NewSeatingDashboard = () => {
                                 className="seating_classes_box_inner"
                                 key={item.id}
                                 onClick={() => handleCardClick(item)}
-                                
+
                             >
                                 <div className="seating_top_row">
                                     <div className="seating_exam_details">
