@@ -188,8 +188,8 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
 
     };
 
-    const handleImageUpload = (e) => setImageFile(e.target.files[0]);
-    const clearImageFile = () => setImageFile(null);
+    // const handleImageUpload = (e) => setImageFile(e.target.files[0]);
+    // const clearImageFile = () => setImageFile(null);
 
     return (
         <div className="facultyadd-backdrop">

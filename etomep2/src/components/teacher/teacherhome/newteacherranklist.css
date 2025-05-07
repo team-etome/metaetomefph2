@@ -45,7 +45,9 @@
 .teacherranklist-table-container {
     padding: 0;
     overflow-y: auto;
-    height: calc(100% - 69px);
+    height: calc(100% - 69px); 
+    margin-left: 24px;
+    margin-right: 24px;    
 }
 
 .teacherranklist-table {
@@ -107,43 +109,29 @@
 .teacherranklist-rank-container {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
     border-left: none;
     border-right: none;
     padding: 0;
     min-width: 200px;
+    flex-direction: row-reverse;
 }
 
 .teacherranklist-medal {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+    width: 50px;
+    height: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
-    font-size: 14px;
-    color: white;
-}
-
-.teacherranklist-medal.rank1 {
-    background: #FFD700;
-}
-
-.teacherranklist-medal.rank2 {
-    background: #C0C0C0;
-}
-
-.teacherranklist-medal.rank3 {
-    background: #CD7F32;
+   
 }
 
 .teacherranklist-text-rank {
     color: #2563eb;
-    font-weight: 500;
+    font-weight: 800;
     font-style: italic;
     white-space: nowrap;
-    text-align: right;
+    text-align: right; /* Align text to the right */
     width: 100%;
 }
 
@@ -152,6 +140,8 @@
     justify-content: center;
     color: #666;
     font-size: 20px;
-    padding-right: 8px;
-    width: 100%;
+    margin-left: 8px;
+    /* padding-right: 8px; */
+    /* width: 100%; */
+    
 }

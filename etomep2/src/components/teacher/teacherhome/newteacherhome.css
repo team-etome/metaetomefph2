@@ -37,11 +37,14 @@
   color: #222;
 }
 
-.newteacherhome-avatar {
+.newteacherhome-avatar img{
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  border: 2px solid #eee;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
 }
 
 .newteacherhome-main {
@@ -235,7 +238,18 @@
   height: 32px;
   border-radius: 50%;
   background: url('https://randomuser.me/api/portraits/women/44.jpg') center/cover no-repeat;
+  margin-right: 16px;
   border: 2px solid #e5e7eb;
+}
+
+
+.newteacherhome-medal {
+  width: 50px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ margin-right:10px ;
 }
 
 .newteacherhome-rank-name {

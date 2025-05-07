@@ -55,17 +55,15 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
 
     if (!isOpen) return null;
 
-  
-
     const customStyles = {
         control: (base, state) => ({
             ...base,
             minHeight: '48px',
             height: '48px',
             width: '100%',
-            borderColor: '#ccc',
             borderRadius: '8px',
-            boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
+            borderColor: state.isFocused ? '#526D82' : '#757575',
+            boxShadow: 'none',
             '&:hover': {
                 borderColor: '#526D82',
             }
@@ -86,14 +84,9 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
             }
         }),
         indicatorSeparator: () => ({
-            display: 'none' // This removes the line (separator) before the dropdown arrow
+            display: 'none'
         }),
         placeholder: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px'
-        }),
-        singleValue: (base) => ({
             ...base,
             color: '#526D82',
             fontSize: '16px'
@@ -104,11 +97,22 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
             maxHeight: '150px',
             overflowY: 'auto',
             fontSize: '14px',
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            marginTop: '4px'
+        }),
+        menuList: (base) => ({
+            ...base,
+            maxHeight: '200px',
+            padding: '4px 0'
         }),
         option: (base, state) => ({
             ...base,
             backgroundColor: state.isFocused ? '#f0f0f0' : '#fff',
             color: '#526D82',
+            padding: '8px 12px',
+            cursor: 'pointer',
             '&:active': {
                 backgroundColor: '#e6e6e6',
             }
@@ -339,7 +343,7 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         className="custom-input"
                                         style={{
                                             height: '50px',
-                                            border: '1px solid #ccc',
+                                            border: '1px solid #757575',
                                             borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
@@ -353,10 +357,9 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
 
                             </div>
                         </div>
-                        <div className="evaluationadd-modal-body-row">
+                        <div className="evaluationadd-modal-body-row" >
                             <div>
-
-                                <div className="evaluationadd-form-group">
+                                <div className="evaluationadd-form-group-select-faculty">
                                     <label className="evaluationadd-form-label">
                                         Select Faculty <span className="evaluationadd_required">*</span>
                                     </label>

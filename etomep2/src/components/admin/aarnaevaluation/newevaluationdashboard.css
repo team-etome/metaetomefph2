@@ -51,7 +51,8 @@
     /* margin-left: 630px; */
     transition: left 0.5s ease;
 }
-.evaluationdashboard_filter_button{
+
+.evaluationdashboard_filter_button {
     width: 100px;
     height: 40px;
     color: black;
@@ -67,7 +68,7 @@
     height: 40px;
     font-size: 1rem;
     border-radius: 8px;
-    
+
     border: 1px solid #4A4A4A;
 }
 
@@ -76,7 +77,7 @@
     height: 40px;
     font-size: 1rem;
     border-radius: 8px;
-    
+
     border: 1px solid #4A4A4A;
 }
 
@@ -94,8 +95,10 @@
 /* Container that holds all the boxes in a grid with 3 columns */
 .evaluationdashboard_container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));  /* Flexible columns with minimum width of 300px */
-    gap: 24px; /* Fixed 24px gap between items */
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    /* Flexible columns with minimum width of 300px */
+    gap: 24px;
+    /* Fixed 24px gap between items */
     box-sizing: border-box;
 }
 
@@ -105,8 +108,10 @@
     background-color: #fff;
     border: 1px solid #B2B2B2;
     padding: 1rem;
-    width: 100%;  /* Ensure it fills the container width */
-    height: 160px; /* Fixed height */
+    width: 100%;
+    /* Ensure it fills the container width */
+    height: 160px;
+    /* Fixed height */
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -186,9 +191,129 @@
 .evaluationdashboard_exam_title,
 .evaluationdashboard_deadline,
 .evaluationdashboard_faculty {
-  font-size: 14px;
-  font-weight: 400;
-  color: #000;
-  margin: 0;
-  /* add margin-bottom if you want more spacing between lines */
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    margin: 0;
+    /* add margin-bottom if you want more spacing between lines */
+}
+
+.evaluationdashboard_filter-popup {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background: #fff;
+    border-radius: 16px;
+    
+    color: #000;
+    z-index: 100;
+    width: 191px;
+    height: 248px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+}
+
+.evaluationdashboard_filter-popup-inner {
+    color: #000;
+    margin: 16px;
+    /* gap:8px; */
+}
+
+.evaluationdashboard_filter-option {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    transition: background 0.2s;
+    border-radius: 14px;
+    width: 159px;
+    height: 40px;
+    padding-left: 20px;
+    /* padding: 0px !important; */
+}
+
+.evaluationdashboard_filter-option.active,
+.evaluationdashboard_filter-option:hover {
+    border: 2px solid #2162B2;
+}
+
+.evaluationdashboard_filter-list-popup {
+    left: auto !important;
+    right: 105px !important;
+    position: absolute;
+    top: 40;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+    color: #000;
+    z-index: 101;
+    width: 180px;
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+}
+
+.evaluationdashboard_filter-list-popup-inner {
+    color: #000;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.evaluationdashboard_search_container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.evaluationdashboard_filter-search {
+    width: 100%;
+    padding: 8px 8px 8px 24px;
+    border-radius: 8px;
+    border: 1px solid #BCBCBC;
+    flex-shrink: 0;
+}
+
+.evaluationdashboard_search-icon.hidden {
+    display: none;
+}
+
+.evaluationdashboard_filter-list {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 16px;
+}
+
+.evaluationdashboard_filter-list-item {
+    padding:12px;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 2px solid transparent;
+}
+
+.evaluationdashboard_filter-list-item.select {
+    border: 2px solid #2162B2;
+}
+
+.evaluationdashboard_filter-list-item:hover {
+    border: 2px solid #2162B2;
+}
+
+.evaluationdashboard_apply-btn {
+    padding: 8px 0;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.evaluationdashboard_apply-btn:disabled {
+    background: #BCBCBC;
+    cursor: not-allowed;
 }

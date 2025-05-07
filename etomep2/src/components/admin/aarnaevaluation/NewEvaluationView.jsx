@@ -30,21 +30,19 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
             minHeight: '48px',
             height: '48px',
             width: '100%',
-            borderColor: '#ccc',
             borderRadius: '8px',
-            boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
+            borderColor: state.isFocused ? '#526D82' : '#757575',
+            boxShadow: 'none',
             '&:hover': {
                 borderColor: '#526D82',
-            },
-            backgroundColor: '#fff',
-            cursor: isEditMode ? 'pointer' : 'not-allowed'
+            }
         }),
         valueContainer: (base) => ({
             ...base,
             height: '48px',
             padding: '0 6px'
         }),
-        dropdownIndicator: (base, state) => ({
+        dropdownIndicator: (base) => ({
             ...base,
             color: '#292D32',
             padding: '0 8px',
@@ -52,18 +50,12 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
             svg: {
                 width: '24px',
                 height: '24px'
-            },
-            display: isEditMode ? 'flex' : 'none'
+            }
         }),
         indicatorSeparator: () => ({
             display: 'none'
         }),
         placeholder: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px'
-        }),
-        singleValue: (base) => ({
             ...base,
             color: '#526D82',
             fontSize: '16px'
@@ -74,11 +66,22 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
             maxHeight: '150px',
             overflowY: 'auto',
             fontSize: '14px',
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            marginTop: '4px'
+        }),
+        menuList: (base) => ({
+            ...base,
+            maxHeight: '200px',
+            padding: '4px 0'
         }),
         option: (base, state) => ({
             ...base,
             backgroundColor: state.isFocused ? '#f0f0f0' : '#fff',
             color: '#526D82',
+            padding: '8px 12px',
+            cursor: 'pointer',
             '&:active': {
                 backgroundColor: '#e6e6e6',
             }
@@ -172,13 +175,12 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                         className="custom-input"
                                         style={{
                                             height: '50px',
-                                            border: '1px solid #ccc',
+                                            border: '1px solid #757575',
                                             borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
                                             color: '#526D82',
                                             width: '100%',
-
                                             boxSizing: 'border-box',
                                             outline: "none",
                                             backgroundColor: '#fff',
@@ -220,7 +222,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                         </div>
                         <div className="evaluationview-modal-body-row">
                             <div>
-                                <div className="evaluationview-form-group">
+                                <div className="evaluationview-form-group-select-faculty">
                                     <label className="evaluationview-form-label">
 
                                         Faculty {isEditMode && <span className="evaluationview_required">*</span>}

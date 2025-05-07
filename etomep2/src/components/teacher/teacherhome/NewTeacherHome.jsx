@@ -5,6 +5,9 @@ import NewTeacherAssignTask from './NewTeacherAssignTask';
 import NewTeacherRankList from './NewTeacherRankList';
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import medal1 from "../../../assets/Award1.png";
+import medal2 from "../../../assets/Award2.png";
+import medal3 from "../../../assets/Award3.png";
 
 const dummyRankList = [
   { name: 'Neha Katherine Jose', avatar: '', rank: 1 },
@@ -37,7 +40,7 @@ export default function NewTeacherHome() {
   const [showAssignTaskPopup, setShowAssignTaskPopup] = useState(false);
   const [showRankListPopup, setShowRankListPopup] = useState(false);
   const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
-  console.log(teacherInfo,"dataaaa")
+  console.log(teacherInfo, "dataaaa")
   const navigate = useNavigate();
   const handlenavigate = () => {
     navigate("/teacherprofile",);
@@ -50,15 +53,11 @@ export default function NewTeacherHome() {
         <div className="newteacherhome-userinfo">
           <span className="newteacherhome-email">h@gmail.com</span>
           <span className="newteacherhome-avatar">
-          <img
+            <img
               onClick={handlenavigate}
               src={teacherInfo?.image || " "}
               alt="Profile"
-              style={{
-                borderRadius: "50%",
-                marginRight: "30px",
-                cursor: "pointer",
-              }}
+
             />
           </span>
         </div>
@@ -81,9 +80,9 @@ export default function NewTeacherHome() {
                     <PieChart />
                   </div>
                   <div className="newteacherhome-pie-legend">
-                      <span ><span className="newteacherhome-dot blue" /> Students Passed (20)</span>
-                      <span><span className="newteacherhome-dot red" /> Students Failed (12)</span>
-                    </div>
+                    <span ><span className="newteacherhome-dot blue" /> Students Passed (20)</span>
+                    <span><span className="newteacherhome-dot red" /> Students Failed (12)</span>
+                  </div>
                 </div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flex: 1 }}>
@@ -95,7 +94,11 @@ export default function NewTeacherHome() {
                       <li key={idx} className="newteacherhome-rankitem">
                         <span className="newteacherhome-rank-avatar" />
                         <span className="newteacherhome-rank-name">{item.name}</span>
-                        <span className={`newteacherhome-rank-badge rank${item.rank}`}>{item.rank}</span>
+                        <img
+                          src={idx === 0 ? medal1 : idx === 1 ? medal2 : medal3}
+                          alt={`Rank ${idx + 1}`}
+                          className={`newteacherhome-medal rank${idx + 1}`}
+                        />
                       </li>
                     ))}
                   </ul>

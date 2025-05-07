@@ -59,6 +59,13 @@
     margin-left: 0px !important;
     margin-right: 0px !important;
 }
+.evaluationview-form-group-select-faculty{
+    margin-bottom: 32px;
+    width: 652px;
+    padding: 0px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
 .evaluationview-modal-body-row {
     display: flex;
     width: 652px; /* Set row width to 652px */
