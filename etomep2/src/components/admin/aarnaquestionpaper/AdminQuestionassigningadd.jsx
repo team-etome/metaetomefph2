@@ -203,7 +203,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
             height: '48px',
             borderRadius:'8px',
             borderColor: '#757575',
-            boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
+            boxShadow: state.isFocused ? 0: 0,
             '&:hover': {
                 borderColor: '#526D82',
             }

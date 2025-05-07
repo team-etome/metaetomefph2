@@ -1,5 +1,9 @@
 import React from 'react';
 import './newteacherranklist.css';
+import medal1 from "../../../assets/Award1.png";
+import medal2 from "../../../assets/Award2.png";
+import medal3 from "../../../assets/Award3.png";
+
 
 const dummyRankList = [
     { name: 'Liam', avatar: '', rank: '1st Rank in class 10' },
@@ -37,14 +41,20 @@ export default function NewTeacherRankList({ onClose }) {
                                         <div className="teacherranklist-rank-container">
                                             {idx < 3 ? (
                                                 <>
-                                                    <span className={`teacherranklist-medal rank${idx + 1}`}>{idx + 1}</span>
-                                                    <span className="teacherranklist-arrow">&gt;</span>
+                                                    <span className="teacherranklist-arrow" >&gt;</span>
+                                                    <img
+                                                        src={idx === 0 ? medal1 : idx === 1 ? medal2 : medal3}
+                                                        alt={`Rank ${idx + 1}`}
+                                                        className={`teacherranklist-medal rank${idx + 1}`}
+                                                    />
+
                                                 </>
 
                                             ) : (
                                                 <>
-                                                    <span className="teacherranklist-text-rank">{student.rank}</span>
                                                     <span className="teacherranklist-arrow">&gt;</span>
+                                                    <span className="teacherranklist-text-rank">{student.rank}</span>
+
                                                 </>
 
                                             )}

@@ -4,17 +4,23 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { BsFillPersonFill } from "react-icons/bs";
+import { BiFilterAlt } from "react-icons/bi";
+import { RiSearchLine } from "react-icons/ri";
 import student from "../../../assets/student.jpg"
 import NewEvaluationAdd from './NewEvaluationAdd';
 import NewEvaluationView from './NewEvaluationView';
 import Swal from 'sweetalert2';
 import profile from '../../../assets/avatar.jpg'
+import classIcon from '../../../assets/class.jpg';
+import subjectIcon from '../../../assets/subject.jpg';
+import facultyIcon from '../../../assets/faculty.jpg';
+import deadlineIcon from '../../../assets/deadline.jpg';
 
 const NewEvaluationDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
 
-    const [showPopupView, setShowPopupView] = useState(false); 
+    const [showPopupView, setShowPopupView] = useState(false);
 
 
     console.log(admin_id, "admin eeee")
@@ -33,9 +39,18 @@ const NewEvaluationDashboard = () => {
 
     const [selectedEvaluation, setSelectedEvaluation] = useState(null);  // ✅ Added
 
+    const [showFilterPopup, setShowFilterPopup] = useState(false);
+    const [activeFilter, setActiveFilter] = useState(null);
+    const [showFilterList, setShowFilterList] = useState(false);
+    const [selectedFilterValue, setSelectedFilterValue] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
 
-    console.log(evaluationData, "evaluation")
-
+    const filterOptions = {
+        Class: ['7A', '7B', '7C', '7D'],
+        Subject: ['Chemistry', 'Physics', 'Mathematics', 'Biology'],
+        Faculty: ['Lonappan', 'Bindu Panicker', 'Sasikuttan', 'Damodar', 'Ubaid'],
+        Deadline: ['12/09/2025', '22/09/2025', '07/09/2025'],
+    };
 
     const handleCardClick = (item) => {   // ✅ New function
         setSelectedEvaluation(item);      // store the clicked item
@@ -128,10 +143,103 @@ const NewEvaluationDashboard = () => {
                         </button>
                     </div>
                     <div className="evaluationdashboard_left-controls">
-                    {/* <button className="btn-primary btn-sm evaluationdashboard_filter_button"
-                            onClick={() => setShowPopup(true)} >
-                            Filter
-                        </button> */}
+                        {/* Filter Button and Popup */}
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                            <button
+                                className="btn-primary btn-sm evaluationdashboard_filter_button"
+                                onClick={() => {
+                                    setShowFilterPopup(!showFilterPopup);
+                                    setShowFilterList(false);
+                                    setActiveFilter(null);
+                                }}
+                            >
+                                Filter <BiFilterAlt style={{ fontSize: "20px" }} />
+                            </button>
+                            {showFilterPopup && (
+                                <div className="evaluationdashboard_filter-popup">
+                                    {['Class', 'Subject', 'Faculty', 'Deadline'].map((type) => {
+                                        let icon;
+                                        if (type === 'Class') icon = classIcon;
+                                        else if (type === 'Subject') icon = subjectIcon;
+                                        else if (type === 'Faculty') icon = facultyIcon;
+                                        else if (type === 'Deadline') icon = deadlineIcon;
+                                        return (
+                                            <>
+                                                <div className="evaluationdashboard_filter-popup-inner">
+                                                    <div
+                                                        key={type}
+                                                        className={`evaluationdashboard_filter-option${activeFilter === type ? ' active' : ''}`}
+                                                        onClick={() => {
+                                                            setActiveFilter(type);
+                                                            setShowFilterList(true);
+                                                            setSearchTerm('');
+                                                            setSelectedFilterValue('');
+                                                        }}
+
+                                                    >
+                                                        <img src={icon} alt={type} style={{ width: 24, height: 24, marginRight: 12, borderRadius: 4 }} />
+                                                        {type}
+                                                    </div>
+                                                </div>
+                                            </>
+
+                                        );
+                                    })}
+                                </div>
+                            )}
+                            {showFilterPopup && showFilterList && activeFilter && (
+                                <div className="evaluationdashboard_filter-list-popup" >
+                                    <div className="evaluationdashboard_filter-list-popup-inner">
+                                        <div className="evaluationdashboard_search_container">
+                                            <RiSearchLine
+                                                className={`evaluationdashboard_search-icon ${searchTerm ? 'hidden' : ''}`}
+                                                style={{
+                                                    position: 'absolute',
+                                                    left: '8px',
+                                                    top: '50%',
+                                                    transform: 'translateY(-50%)',
+                                                    fontSize: '14px',
+                                                    color: '#BCBCBC'
+                                                }}
+                                            />
+                                            <input
+                                                type="text"
+                                                placeholder="Search"
+                                                value={searchTerm}
+                                                onChange={e => setSearchTerm(e.target.value)}
+                                                className="evaluationdashboard_filter-search"
+                                            />
+                                        </div>
+                                        <div className="evaluationdashboard_filter-list" >
+                                            {filterOptions[activeFilter]
+                                                .filter(item => item.toLowerCase().includes(searchTerm.toLowerCase()))
+                                                .map(item => (
+                                                    <div
+                                                        key={item}
+                                                        className={`evaluationdashboard_filter-list-item${selectedFilterValue === item ? ' select' : ''}`}
+                                                        onClick={() => setSelectedFilterValue(item)}
+
+                                                    >
+                                                        {item}
+                                                    </div>
+                                                ))}
+                                        </div>
+                                        <button
+                                            className="evaluationdashboard_apply-btn"
+                                            disabled={!selectedFilterValue}
+                                            onClick={() => {
+                                                // You can handle filter logic here if needed
+                                                setShowFilterPopup(false);
+                                                setShowFilterList(false);
+                                            }}
+                                        >
+                                            Apply
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        {/* End Filter Button and Popup */}
                         <button className="btn-primary btn-sm evaluationdashboard_result_add_button"
                             onClick={() => setShowPopup(true)} >
                             + Add
@@ -144,8 +252,8 @@ const NewEvaluationDashboard = () => {
                 <div className="evaluationdashboard_container">
                     {filteredData.map((item, index) => (
                         <div style={{
-                            cursor:"pointer"
-                        }} 
+                            cursor: "pointer"
+                        }}
                             className="evaluationdashboard_classes_box_inner"
                             key={item.id}
                             onClick={() => handleCardClick(item)}

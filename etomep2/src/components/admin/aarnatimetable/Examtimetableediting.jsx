@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Examtimetableediting.css';
+import './examtimetableediting.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
