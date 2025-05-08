@@ -8,10 +8,12 @@ import AdminClassAddStepTwo from "./AdminClassAddStepTwo";
 import AdminClassView from "./AdminClassView";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Select from 'react-select';
 
 const NewAdminClassDashboard = () => {
     const [showModal, setShowModal] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
+    const [selectedClass, setSelectedClass] = useState('');
     const [entries, setEntries] = useState([
         { subject: "", publishername: "", facultyname: "" }
     ]);
@@ -158,13 +160,70 @@ const NewAdminClassDashboard = () => {
         setSelectedSection(item);
         setShowAdminClassView(true);
     };
+    const dashboardcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            width: '300px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+        }),
 
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px',
+            }
+        }),
+
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',  // Limit the height of the dropdown list
+            overflowY: 'auto',   // Enable scrolling when the options exceed the height
+            fontSize: '14px',
+        }),
+
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+    };
+
+    const handleClassChange = (selectedOption) => {
+        setSelectedClass(selectedOption ? selectedOption.value : '');
+    };
     return (
         <div className="newclassdashboard-container">
             <div className="newclassdashboard_main_header_container">
                 <div className="newclassdashboard_header-controls d-flex justify-content-between align-items-center">
                     <div className="newclassdashboard_left-controls">
-                        <select
+                        {/* <select
                             className="form-select form-select-sm newclassdashboard_select_subject"
                         >
                             <option value="">Select Class</option>
@@ -173,7 +232,14 @@ const NewAdminClassDashboard = () => {
                                     Class {classItem.className}
                                 </option>
                             ))}
-                        </select>
+                        </select> */}
+                        <Select
+                            value={classData.find((classItem) => classItem.className === selectedClass) ? { label: `Class ${selectedClass}`, value: selectedClass } : null}
+                            onChange={handleClassChange}
+                            options={classData.map((classItem) => ({ label: `Class ${classItem.className}`, value: classItem.className }))}
+                            styles={dashboardcustomStyles}
+                            placeholder="Select Class"
+                        />
                     </div>
                     <div className="newclassdashboard_left-controls">
                         <div>

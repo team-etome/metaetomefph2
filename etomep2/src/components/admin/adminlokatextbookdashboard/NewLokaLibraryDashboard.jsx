@@ -17,9 +17,11 @@ import "./newlokalibrarydashboard.css";
 import { FadeLoader } from "react-spinners";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
+import Select from 'react-select';
 import NewLokaLibraryAdd from "./NewLokaLibraryAdd";
 import NewLokaLibraryEdit from "./NewLokaLibraryEdit";
 import chemistry from "../../../assets/chemistry.png";
+import { RiSearchLine } from "react-icons/ri";
 
 function NewLokaLibraryDashboard() {
   const [lokabookListData, setLokaBookListData] = useState([]);
@@ -98,43 +100,96 @@ function NewLokaLibraryDashboard() {
     setSelectedBook(book);
     setShowEditPopup(true);
   };
+  const dashboardcustomStyles = {
+    control: (base, state) => ({
+      ...base,
+      // minHeight: '48px',
+      width: '300px',
+      height: '40px',
+      borderRadius: '8px',
+      borderColor: state.isFocused ? '#86b7fe' : '#757575',
+      boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+      // '&:hover': { borderColor: '#86b7fe' }
+    }),
+
+    dropdownIndicator: (base) => ({
+      ...base,
+      color: '#292D32',
+      padding: '0 8px',
+      alignItems: 'center',
+      svg: {
+        width: '24px',
+        height: '24px'
+      }
+    }),
+    indicatorSeparator: () => ({
+      display: 'none'
+    }),
+    placeholder: (base) => ({
+      ...base,
+      color: '#526D82',
+      fontSize: '16px'
+    }),
+    singleValue: (base) => ({
+      ...base,
+      color: '#526D82',
+      fontSize: '16px'
+    }),
+    menu: (base) => ({
+      ...base,
+      zIndex: 1000,
+      maxHeight: '200px',
+      overflowY: 'auto',
+      fontSize: '14px',
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+      color: state.isFocused ? '#fff' : '#222222',
+      '&:active': {
+        backgroundColor: '#e6e6e6',
+      }
+    }),
+
+  };
+
+  const handleCategoryChange = (selectedOption) => {
+    setSelectedCategory(selectedOption ? selectedOption.value : '');
+  };
 
   return (
     <div className="admin_loka_library_container">
       <div className="admin_loka_library_fixed_header">
-          <div className="admin_loka_library_header_row">
-            <div className="admin_loka_library_select_col">
-              <Form.Select
-                className="admin_loka_library_select"
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                value={selectedCategory}
-              >
-                <option value="">Select Categories</option>
-                {categories?.map((cat, index) => (
-                  <option key={index} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </Form.Select>
-            </div>
-            <div className="admin_loka_library_select_col_right">
-              <InputGroup className="admin_loka_library_search">
-                <Form.Control
-                  className="admin_loka_library_search_search_input"
-                  placeholder="Search Books"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </InputGroup>
-              <button
-                className="btn-primary btn-sm admin_loka_library_add_button"
-                onClick={() => setShowPopup(true)}
-              >
-                + Add
-              </button>
-              {showPopup && <NewLokaLibraryAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
-            </div>
+        <div className="admin_loka_library_header_row">
+          <div className="admin_loka_library_select_col">
+            <Select
+              value={categories.find((cat) => cat === selectedCategory) ? { label: selectedCategory, value: selectedCategory } : null}
+              onChange={handleCategoryChange}
+              options={categories.map((cat) => ({ label: cat, value: cat }))}
+              styles={dashboardcustomStyles}
+              placeholder="Select Categories"
+            />
           </div>
+          <div className="admin_loka_library_select_col_right">
+            <div className="admin_loka_library_search-input-container">
+              <RiSearchLine className={`admin_loka_search-icon ${searchTerm ? 'hidden' : ''}`} />
+              <input
+                type="text"
+                className="form-control form-control-sm admin_loka_library_select_faculty"
+                placeholder="     Search Faculty"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <button
+              className="btn-primary btn-sm admin_loka_library_add_button"
+              onClick={() => setShowPopup(true)}
+            >
+              + Add
+            </button>
+            {showPopup && <NewLokaLibraryAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
+          </div>
+        </div>
       </div>
 
       <div className="admin_loka_library_scroll_container">
@@ -144,8 +199,8 @@ function NewLokaLibraryDashboard() {
               <p className="admin_loka_library_class_heading">{cat}</p>
               <div className="admin_loka_library_book_grid">
                 {groupedBooks[cat].map((item, index) => (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className="admin_loka_library_book_col"
                     onClick={() => handleBookClick(item)}
                     style={{ cursor: 'pointer' }}
@@ -179,9 +234,9 @@ function NewLokaLibraryDashboard() {
       </div>
 
       {showEditPopup && selectedBook && (
-        <NewLokaLibraryEdit 
-          isOpen={showEditPopup} 
-          onClose={() => setShowEditPopup(false)} 
+        <NewLokaLibraryEdit
+          isOpen={showEditPopup}
+          onClose={() => setShowEditPopup(false)}
           bookData={selectedBook}
         />
       )}

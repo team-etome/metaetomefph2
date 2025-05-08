@@ -10,6 +10,7 @@ import student from "../../../assets/student.jpg"
 import NewEvaluationAdd from './NewEvaluationAdd';
 import NewEvaluationView from './NewEvaluationView';
 import Swal from 'sweetalert2';
+import Select from 'react-select';
 import profile from '../../../assets/avatar.jpg'
 import classIcon from '../../../assets/class.jpg';
 import subjectIcon from '../../../assets/subject.jpg';
@@ -19,6 +20,7 @@ import deadlineIcon from '../../../assets/deadline.jpg';
 const NewEvaluationDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+
 
     const [showPopupView, setShowPopupView] = useState(false);
 
@@ -108,13 +110,128 @@ const NewEvaluationDashboard = () => {
 
     // Filter data based on dropdown selection
 
+    const dashboardcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            width: '300px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px',
+            }
+        }),
+
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',  // Limit the height of the dropdown list
+            overflowY: 'auto',   // Enable scrolling when the options exceed the height
+            fontSize: '14px',
+        }),
+
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+    };
+    const dashboardsmallcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            width: '200px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px',
+            }
+        }),
+
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',  // Limit the height of the dropdown list
+            overflowY: 'auto',   // Enable scrolling when the options exceed the height
+            fontSize: '14px',
+        }),
+
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+    };
+    const handleExamTypeChange = (selectedOption) => {
+        setSelectedExamType(selectedOption ? selectedOption.value : '');
+    };
+
+    const handleYearChange = (selectedOption) => {
+        setSelectedFilterYear(selectedOption ? selectedOption.value : '');
+    };
     return (
         <div className="evaluationdashboard_main_container">
             <div className="evaluationdashboard_main_header_container">
                 <div className="evaluationdashboard_header-controls d-flex justify-content-between align-items-center">
                     <div className="evaluationdashboard_left-controls">
                         {/* Exam Type Dropdown */}
-                        <select
+                        {/* <select
                             className="form-select form-select-sm evaluationdashboard_select_class"
                             value={selectedExamType}
                             onChange={(e) => setSelectedExamType(e.target.value)}
@@ -124,7 +241,7 @@ const NewEvaluationDashboard = () => {
                                 <option key={i} value={type}>{type}</option>
                             ))}
                         </select>
-                        {/* Exam Year Dropdown */}
+                        
                         <select
                             className="form-select form-select-sm evaluationdashboard_select_year"
                             value={selectedFilterYear}
@@ -134,7 +251,23 @@ const NewEvaluationDashboard = () => {
                             {examYears.map((year, i) => (
                                 <option key={i} value={year}>{year}</option>
                             ))}
-                        </select>
+                        </select> */}
+                        <Select
+                            value={examTypes.find((type) => type === selectedExamType) ? { label: selectedExamType, value: selectedExamType } : null}
+                            onChange={handleExamTypeChange}
+                            options={examTypes.map((type) => ({ label: type, value: type }))}
+                            styles={dashboardcustomStyles}  // Set width to 300px for Exam Type dropdown
+                            placeholder="Select Class"
+                        />
+
+                        {/* Exam Year Dropdown */}
+                        <Select
+                            value={examYears.find((year) => year === selectedFilterYear) ? { label: selectedFilterYear, value: selectedFilterYear } : null}
+                            onChange={handleYearChange}
+                            options={examYears.map((year) => ({ label: year, value: year }))}
+                            styles={dashboardsmallcustomStyles}  // Set width to 200px for Year dropdown
+                            placeholder="Select Year"
+                        />
                         <button
                             className="btn-primary btn-sm evaluationdashboard_search_button"
                             onClick={handleSearch}   // ✅ add this

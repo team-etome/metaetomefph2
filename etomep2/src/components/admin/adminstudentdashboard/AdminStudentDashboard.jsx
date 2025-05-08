@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import AdminStudentDashboardView from "./AdminStudentDashboardView";
 import { RiSearchLine } from "react-icons/ri";
 import studentDefault from '../../../assets/student.jpg'
+import Select from 'react-select';
 
 
 const AdminStudentDashboard = () => {
@@ -58,6 +59,64 @@ const AdminStudentDashboard = () => {
         const matchClass = selectedClass ? `${student.class_name} ${student.division}` === selectedClass : true;
         return matchName && matchClass;
     });
+    const dashboardcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            width: '300px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px',
+            }
+        }),
+
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',
+            overflowY: 'auto',
+            fontSize: '14px',
+        }),
+
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+    };
+
+    const handleChange = (selectedOption) => {
+        setSelectedClass(selectedOption ? selectedOption.value : '');
+    };
 
     return (
         <div className="adminstudentdashboard_main_container">
@@ -70,28 +129,24 @@ const AdminStudentDashboard = () => {
                 </div>
                 <div className="adminstudentdashboard-header-controls d-flex justify-content-between align-items-center">
                     <div className="adminstudentdashboard-left-controls" >
-                        <select
-                            className="form-select form-select-sm adminstudentdashboard_select_class"
-                            value={selectedClass}
-                            onChange={(e) => setSelectedClass(e.target.value)}
-                        >
-                            <option value="">Select Class</option>
-                            {classList.map((className, index) => (
-                                <option key={index} value={className}>
-                                    {className}
-                                </option>
-                            ))}
-                        </select>
+                        <Select
+                            value={classList.find((className) => className === selectedClass) ? { label: selectedClass, value: selectedClass } : null}
+                            onChange={handleChange}
+                            options={classList.map((className) => ({ label: className, value: className }))}
+                            styles={dashboardcustomStyles}
+                            placeholder="Select Class"
+                        />
                     </div>
                     <div className="adminstudentdashboard-right-controls" >
                         {/* Search Student */}
-                        <div className="adminstudentdashboard_search-input-container">
+                        <div className="adminstudentdashboard_search-input-container" >
                             <RiSearchLine className={`adminstudentdashboard_search-icon ${search ? 'hidden' : ''}`} />
                             <input
                                 type="text"
-                                className="adminstudentdashboard_search-input"
+                                className="form-control form-control-sm adminstudentdashboard_search-input"
                                 placeholder="      Search Student"
                                 value={search}
+
                                 onChange={(e) => setSearch(e.target.value)}
                             />
                         </div>

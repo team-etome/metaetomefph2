@@ -1,10 +1,18 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './newresultfilter.css';
 import { useSelector } from 'react-redux';
+import Select from 'react-select';
 
 const NewResultFilter = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+
+
+
+    const [selectedExam, setSelectedExam] = useState('');
+    const [selectedYear, setSelectedYear] = useState('');
+    const [selectedClass, setSelectedClass] = useState('');
+    const [selectedDivision, setSelectedDivision] = useState('');
 
     const subjects = [
         { key: 'english', name: 'English', total: 100 },
@@ -278,38 +286,175 @@ const NewResultFilter = () => {
         window.requestAnimationFrame(() => { isSyncingRef.current = false; });
     };
 
+    const dashboardcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            width: '300px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px',
+            }
+        }),
+
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',  // Limit the height of the dropdown list
+            overflowY: 'auto',   // Enable scrolling when the options exceed the height
+            fontSize: '14px',
+        }),
+
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+    };
+    const dashboardsmallcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            width: '200px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px',
+            }
+        }),
+
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',  // Limit the height of the dropdown list
+            overflowY: 'auto',   // Enable scrolling when the options exceed the height
+            fontSize: '14px',
+        }),
+
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+    };
+
+    const handleExamChange = (selectedOption) => {
+        setSelectedExam(selectedOption ? selectedOption.value : '');
+    };
+
+    const handleYearChange = (selectedOption) => {
+        setSelectedYear(selectedOption ? selectedOption.value : '');
+    };
+
+    const handleClassChange = (selectedOption) => {
+        setSelectedClass(selectedOption ? selectedOption.value : '');
+    };
+
+    const handleDivisionChange = (selectedOption) => {
+        setSelectedDivision(selectedOption ? selectedOption.value : '');
+    };
+
+
     return (
         <div className="result_main_container">
             <div className="result_main_header_container">
                 <div className="result_main-header-controls d-flex justify-content-between align-items-center">
                     <div className="result_main-left-controls">
                         {/* Exam Type Dropdown */}
-                        <select
-                            className="form-select form-select-sm result_select_exam"
-                        >
-                            <option value="">Select Examination</option>
-                        </select>
-                        {/* Exam Year Dropdown */}
-                        <select
-                            className="form-select form-select-sm result_select_year"
-                        >
-                            <option value="">Select Year</option>
-                            
-                        </select>
-                        <select
-                            className="form-select form-select-sm result_select_class"
-                        >
-                            <option value="">Select Class</option>
-                        </select>
-                        <select
-                            className="form-select form-select-sm result_select_division"
-                        >
-                            <option value="">Select Division</option>
-                            
-                        </select>
+                        <Select
+                            // value={examOptions.find((option) => option === selectedExam) ? { label: selectedExam, value: selectedExam } : null}
+                            onChange={handleExamChange}
+                            // options={examOptions.map((option) => ({ label: option, value: option }))}
+                            styles={dashboardcustomStyles}
+                            placeholder="Select Examination"
+                        />
+
+                        {/* Year Dropdown */}
+                        <Select
+                            // value={yearOptions.find((year) => year === selectedYear) ? { label: selectedYear, value: selectedYear } : null}
+                            onChange={handleYearChange}
+                            // options={yearOptions.map((year) => ({ label: year, value: year }))}
+                            styles={dashboardsmallcustomStyles }
+                            placeholder="Select Year"
+                        />
+
+                        {/* Class Dropdown */}
+                        <Select
+                            // value={classOptions.find((cls) => cls === selectedClass) ? { label: selectedClass, value: selectedClass } : null}
+                            onChange={handleClassChange}
+                            // options={classOptions.map((cls) => ({ label: cls, value: cls }))}
+                            styles={dashboardsmallcustomStyles }
+                            placeholder="Select Class"
+                        />
+
+                        {/* Division Dropdown */}
+                        <Select
+                            // value={divisionOptions.find((div) => div === selectedDivision) ? { label: selectedDivision, value: selectedDivision } : null}
+                            onChange={handleDivisionChange}
+                            // options={divisionOptions.map((div) => ({ label: div, value: div }))}
+                            styles={dashboardsmallcustomStyles}
+                            placeholder="Select Division"
+                        />
                         <button
                             className="btn-primary btn-sm search_button"
-                            // onClick={handleSearch}
+                        // onClick={handleSearch}
                         >
                             Search
                         </button>
@@ -322,7 +467,7 @@ const NewResultFilter = () => {
             </div>
 
             {/* Wrapper for both the header table and body table */}
-            <div className="result_classes_table" style={{border:"1px solid #CECECE"}}>
+            <div className="result_classes_table" style={{ border: "1px solid #CECECE" }}>
                 <div className="result_table_wrapper">
                     {/* Header Table: only thead */}
                     <div

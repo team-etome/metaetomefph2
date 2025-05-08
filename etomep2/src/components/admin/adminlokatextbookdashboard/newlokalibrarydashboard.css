@@ -138,16 +138,39 @@
     width: 100%;
 }
 
-.admin_loka_library_select_col {
+/* .admin_loka_library_select_col {
     width: 33.33%;
-}
+} */
 
 .admin_loka_library_select_col_right {
-    width: 66.67%;
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+    width: 408px;
     gap: 8px;
+}
+.admin_loka_library_search-input-container {
+    position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+  }
+  .admin_loka_library_search-icon {
+    position: absolute;
+    left: 10px;
+    font-size: 18px;
+    color: #aaa;
+  }
+  
+  .admin_loka_library_search-icon.hidden {
+    display: none;
+  }
+  .admin_loka_library_select_faculty {
+    height: 40px;
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #4A4A4A;
 }
 
 .admin_loka_library_book_col:hover {
