@@ -79,7 +79,7 @@ function AarnaNavbar() {
                             </div>
                         </Col>
                     </Row>
-                    <Row className="aarna_row">
+                    <Row className="aarna_row" style={{border:"2px solid red"}}>
                         <Col md={12}>
                             {/* Change: Use flex-wrap to allow wrapping on smaller screens */}
                             <div className="d-flex justify-content-between align-items-center flex-wrap">

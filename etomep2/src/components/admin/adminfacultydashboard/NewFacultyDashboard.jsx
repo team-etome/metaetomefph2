@@ -12,12 +12,15 @@ import NewFacultyAdd from './NewFacultyAdd';
 import NewFacultyView from './NewFacultyView';
 import NewFacultyAddThroughExcel from './NewFacultyAddThroughExcel';
 import avatar from '../../../assets/default.jpg'
+import { RiSearchLine } from "react-icons/ri";
+import Select from 'react-select';
+
+
+
 const NewFacultyDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
     const navigate = useNavigate();
-
-
     const [showPopup, setShowPopup] = useState(false); // For Add Faculty
     const [showPopupexcel, setShowPopupExcel] = useState(false); // For Excel Upload
     const [showMenu, setShowMenu] = useState(false); // Dropdown menu toggle
@@ -87,35 +90,88 @@ const NewFacultyDashboard = () => {
         )
     );
 
+    const dashboardcustomStyles = {
+            control: (base, state) => ({
+                ...base,
+                // minHeight: '48px',
+                width:'300px',
+                height: '40px',
+                borderRadius: '8px',
+                borderColor: state.isFocused ? '#86b7fe' :'#757575',
+                boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+                // '&:hover': { borderColor: '#86b7fe' }
+            }),
+    
+            dropdownIndicator: (base) => ({
+                ...base,
+                color: '#292D32',
+                padding: '0 8px',
+                alignItems: 'center',
+                svg: {
+                    width: '24px',
+                    height: '24px'
+                }
+            }),
+            indicatorSeparator: () => ({
+                display: 'none'
+            }),
+            placeholder: (base) => ({
+                ...base,
+                color: '#526D82',
+                fontSize: '16px'
+            }),
+            singleValue: (base) => ({
+                ...base,
+                color: '#526D82',
+                fontSize: '16px'
+            }),
+            menu: (base) => ({
+                ...base,
+                zIndex: 1000,
+                maxHeight: '200px',
+                overflowY: 'auto',
+                fontSize: '14px',
+            }),
+            option: (base, state) => ({
+                ...base,
+                backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+                color: state.isFocused ? '#fff' : '#222222',
+                '&:active': {
+                    backgroundColor: '#e6e6e6',
+                }
+            }),
+    
+        };
+
+    const handleChange = (selectedOption) => {
+        setSelectedSubject(selectedOption ? selectedOption.value : '');
+    };
     return (
         <div className="facultydashboard_main_container" >
             <div className="facultydashboard_main_header_container">
                 <div className="facultydashboard_header-controls d-flex justify-content-between align-items-center">
                     <div className="facultydashboard_left-controls">
-                        <select
-                            className="form-select form-select-sm facultydashboard_select_subject"
-                            value={selectedSubject}
-                            onChange={(e) => setSelectedSubject(e.target.value)}
-                        >
-                            <option value="">Select Subject</option>
-                            {uniqueSubjects.map((subject, index) => (
-                                <option key={index} value={subject}>
-                                    {subject.charAt(0).toUpperCase() + subject.slice(1)}
-                                </option>
-                            ))}
-
-                        </select>
+                    <Select
+                            value={uniqueSubjects.find((subject) => subject === selectedSubject) ? { label: selectedSubject, value: selectedSubject } : null}
+                            onChange={handleChange}
+                            options={uniqueSubjects.map((subject) => ({ label: subject, value: subject }))}
+                            styles={dashboardcustomStyles}
+                            placeholder="Select Subject"
+                        />
 
                     </div>
 
-                    <div className="facultydashboard_left-controls">
-                        <input
-                            type="text"
-                            className="form-control form-control-sm facultydashboard_select_faculty"
-                            placeholder="Search Faculty..."
-                            value={facultySearch}
-                            onChange={(e) => setFacultySearch(e.target.value)}
-                        />
+                    <div className="facultydashboard_right-controls">
+                        <div className="facultydashboard_search-input-container">
+                            <RiSearchLine className={`facultydashboard_search-icon ${facultySearch ? 'hidden' : ''}`} />
+                            <input
+                                type="text"
+                                className="form-control form-control-sm facultydashboard_select_faculty"
+                                placeholder="     Search Faculty"
+                                value={facultySearch}
+                                onChange={(e) => setFacultySearch(e.target.value)}
+                            />
+                        </div>
 
                         <div>
                             <button

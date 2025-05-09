@@ -31,7 +31,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
             height: '48px',
             width: '100%',
             borderRadius: '8px',
-            borderColor: state.isFocused ? '#526D82' : '#757575',
+            borderColor: state.isFocused ? '#526D82' : '#ccc',
             boxShadow: 'none',
             '&:hover': {
                 borderColor: '#526D82',
@@ -50,7 +50,8 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
             svg: {
                 width: '24px',
                 height: '24px'
-            }
+            },
+            display: isEditMode ? 'flex' : 'none'
         }),
         indicatorSeparator: () => ({
             display: 'none'

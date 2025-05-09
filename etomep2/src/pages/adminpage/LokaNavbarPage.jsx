@@ -10,6 +10,7 @@ function LokaNavbarPage() {
         <MainHeader />
         {/* <NavbarLoka/> */}
         <NewNavbarLoka/>
+        
     </div>
   )
 }

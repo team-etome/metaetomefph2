@@ -3,6 +3,7 @@ import './newseatingdashboard.css';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import { BiFilterAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import NewSeatingDashboardView from './NewSeatingDashboardView';
 import first from "../../../assets/IMG_first.png"
@@ -10,8 +11,14 @@ import first_selected from "../../../assets/IMG_first_selected.png"
 import second from "../../../assets/IMG_second.png"
 import second_selected from "../../../assets/IMG_second_selected.png"
 import { BsFillPersonFill } from "react-icons/bs";
+import { RiSearchLine } from "react-icons/ri";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { exampaperinfo } from '../../../Redux/Actions/ExamPaperInfoAction';
+import Select from 'react-select';
+import classIcon from '../../../assets/class.jpg';
+import subjectIcon from '../../../assets/subject.jpg';
+import facultyIcon from '../../../assets/faculty.jpg';
+import deadlineIcon from '../../../assets/deadline.jpg';
 
 
 const NewSeatingDashboard = () => {
@@ -27,6 +34,13 @@ const NewSeatingDashboard = () => {
 
     const facultyDropdownRef = useRef(null);
     const [facultyDropdownOpen, setFacultyDropdownOpen] = useState(false);
+
+
+    const [showFilterPopup, setShowFilterPopup] = useState(false);
+    const [activeFilter, setActiveFilter] = useState(null);
+    const [showFilterList, setShowFilterList] = useState(false);
+    const [selectedFilterValue, setSelectedFilterValue] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
 
 
     useEffect(() => {
@@ -73,7 +87,7 @@ const NewSeatingDashboard = () => {
     console.log(examData, "examaaaaaa")
 
 
-    const [seatingDetails , setSeatingDetails] = useState([])
+    const [seatingDetails, setSeatingDetails] = useState([])
 
     useEffect(() => {
         const fetchSeatingData = async () => {
@@ -93,7 +107,7 @@ const NewSeatingDashboard = () => {
 
 
 
-    console.log(seatingDetails,'seating detailssss')
+    console.log(seatingDetails, 'seating detailssss')
 
 
 
@@ -1041,11 +1055,133 @@ const NewSeatingDashboard = () => {
         },
     ];
 
-
+    const filterOptions = {
+        Class: ['7A', '7B', '7C', '7D'],
+        Subject: ['Chemistry', 'Physics', 'Mathematics', 'Biology'],
+        Faculty: ['Lonappan', 'Bindu Panicker', 'Sasikuttan', 'Damodar', 'Ubaid'],
+        Deadline: ['12/09/2025', '22/09/2025', '07/09/2025'],
+    };
 
     // Filter data based on dropdown selection
     const handleSearch = () => {
 
+    };
+
+
+    const dashboardcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            width: '300px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px',
+            }
+        }),
+
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',  // Limit the height of the dropdown list
+            overflowY: 'auto',   // Enable scrolling when the options exceed the height
+            fontSize: '14px',
+        }),
+
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+    };
+    const dashboardsmallcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            width: '200px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px',
+            }
+        }),
+
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',  // Limit the height of the dropdown list
+            overflowY: 'auto',   // Enable scrolling when the options exceed the height
+            fontSize: '14px',
+        }),
+
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+    };
+    const handleExamTypeChange = (selectedOption) => {
+        setSelectedExamType(selectedOption ? selectedOption.value : '');
+    };
+
+    const handleYearChange = (selectedOption) => {
+        setSelectedFilterYear(selectedOption ? selectedOption.value : '');
     };
     return (
         <>
@@ -1055,19 +1191,15 @@ const NewSeatingDashboard = () => {
                     <div className="seating_header-controls d-flex justify-content-between align-items-center">
                         <div className="seating_left-controls" >
                             {/* Exam Type Dropdown */}
-                            <select
-                                className="form-select form-select-sm seating_select_exam"
-                                value={selectedExamType}
-                                onChange={(e) => setSelectedExamType(e.target.value)}
-
-                            >
-                                <option value="">Select Examination</option>
-                                {/* {examTypes.map((type, i) => (
-                                    <option key={i} value={type}>{type}</option>
-                                ))} */}
-                            </select>
+                            <Select
+                                // value={examTypes.find((option) => option === selectedExamType) ? { label: selectedExamType, value: selectedExamType } : null}
+                                onChange={handleExamTypeChange}
+                                // options={examTypes.map((option) => ({ label: option, value: option }))}
+                                styles={dashboardcustomStyles}  // Using custom style for Exam Type
+                                placeholder="Select Examination"
+                            />
                             {/* Exam Year Dropdown */}
-                            <select
+                            {/* <select
                                 className="form-select form-select-sm seating_select_year"
                                 value={selectedFilterYear}
                                 onChange={(e) => setSelectedFilterYear(e.target.value)}
@@ -1076,7 +1208,14 @@ const NewSeatingDashboard = () => {
                                 {examYears.map((year, i) => (
                                     <option key={i} value={year}>{year}</option>
                                 ))}
-                            </select>
+                            </select> */}
+                            <Select
+                                value={examYears.find((year) => year === selectedFilterYear) ? { label: selectedFilterYear, value: selectedFilterYear } : null}
+                                onChange={handleYearChange}
+                                options={examYears.map((year) => ({ label: year, value: year }))}
+                                styles={dashboardsmallcustomStyles}  // Using custom style for Year
+                                placeholder="Select Year"
+                            />
                             <button
                                 className="btn-primary btn-sm seating_search_button"
                                 onClick={handleSearch}
@@ -1084,7 +1223,102 @@ const NewSeatingDashboard = () => {
                                 Search
                             </button>
                         </div>
-                        <div className="left-controls">
+                        <div className="seating_left-controls">
+                            <div style={{ position: 'relative', display: 'inline-block' }}>
+                                <button
+                                    className="btn-primary btn-sm seating_filter_button"
+                                    onClick={() => {
+                                        setShowFilterPopup(!showFilterPopup);
+                                        setShowFilterList(false);
+                                        setActiveFilter(null);
+                                    }}
+                                >
+                                    Filter <BiFilterAlt style={{ fontSize: "20px" }} />
+                                </button>
+                                {showFilterPopup && (
+                                    <div className="seating_filter-popup">
+                                        {['Class', 'Subject', 'Faculty', 'Deadline'].map((type) => {
+                                            let icon;
+                                            if (type === 'Class') icon = classIcon;
+                                            else if (type === 'Subject') icon = subjectIcon;
+                                            else if (type === 'Faculty') icon = facultyIcon;
+                                            else if (type === 'Deadline') icon = deadlineIcon;
+                                            return (
+                                                <>
+                                                    <div className="seating_filter-popup-inner">
+                                                        <div
+                                                            key={type}
+                                                            className={`seating_filter-option${activeFilter === type ? ' active' : ''}`}
+                                                            onClick={() => {
+                                                                setActiveFilter(type);
+                                                                setShowFilterList(true);
+                                                                setSearchTerm('');
+                                                                setSelectedFilterValue('');
+                                                            }}
+
+                                                        >
+                                                            <img src={icon} alt={type} style={{ width: 24, height: 24, marginRight: 12, borderRadius: 4 }} />
+                                                            {type}
+                                                        </div>
+                                                    </div>
+                                                </>
+
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                                {showFilterPopup && showFilterList && activeFilter && (
+                                    <div className="seating_filter-list-popup" >
+                                        <div className="seating_filter-list-popup-inner">
+                                            <div className="seating_search_container">
+                                                <RiSearchLine
+                                                    className={`seating_search-icon ${searchTerm ? 'hidden' : ''}`}
+                                                    style={{
+                                                        position: 'absolute',
+                                                        left: '8px',
+                                                        top: '50%',
+                                                        transform: 'translateY(-50%)',
+                                                        fontSize: '14px',
+                                                        color: '#BCBCBC'
+                                                    }}
+                                                />
+                                                <input
+                                                    type="text"
+                                                    placeholder="Search"
+                                                    value={searchTerm}
+                                                    onChange={e => setSearchTerm(e.target.value)}
+                                                    className="seating_filter-search"
+                                                />
+                                            </div>
+                                            <div className="seating_filter-list" >
+                                                {filterOptions[activeFilter]
+                                                    .filter(item => item.toLowerCase().includes(searchTerm.toLowerCase()))
+                                                    .map(item => (
+                                                        <div
+                                                            key={item}
+                                                            className={`seating_filter-list-item${selectedFilterValue === item ? ' select' : ''}`}
+                                                            onClick={() => setSelectedFilterValue(item)}
+
+                                                        >
+                                                            {item}
+                                                        </div>
+                                                    ))}
+                                            </div>
+                                            <button
+                                                className="seating_apply-btn"
+                                                disabled={!selectedFilterValue}
+                                                onClick={() => {
+                                                    // You can handle filter logic here if needed
+                                                    setShowFilterPopup(false);
+                                                    setShowFilterList(false);
+                                                }}
+                                            >
+                                                Apply
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                             <button className="btn-primary btn-sm seating_result_add_button" onClick={openModal}>+ Add</button>
 
                         </div>

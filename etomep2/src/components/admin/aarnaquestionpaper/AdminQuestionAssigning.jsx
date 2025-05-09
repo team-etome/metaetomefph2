@@ -6,12 +6,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { exampaperinfo } from '../../../Redux/Actions/ExamPaperInfoAction';
 import AdminQuestionAssigningView from './AdminQuestionassigningview';
 import image from "../../../assets/arrow-swap.jpg"
+import Select from 'react-select';
 
 
 
 const AdminQuestionAssigning = () => {
 
-    
+
     const [showPopup, setShowPopup] = useState(false);
     const [showPopupview, setShowPopupView] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -37,7 +38,7 @@ const AdminQuestionAssigning = () => {
             try {
                 const response = await axios.get(`${APIURL}/api/questionpaper/${admin_id}`);
                 const rawData = response.data.question_papers || {};
-                
+
                 dispatch(exampaperinfo(rawData));
 
                 console.log(response.data, "responseresponseresponse");
@@ -139,6 +140,8 @@ const AdminQuestionAssigning = () => {
     const renderSortDropdown = (column) => {
         if (!sortDropdown.isOpen || sortDropdown.column !== column) return null;
 
+
+
         return (
             <div className="AdminQuestionAssigning_sort-dropdown" onClick={(e) => e.stopPropagation()}>
                 <div className="AdminQuestionAssigning_sort-option" onClick={() => handleSort(column, 'asc')}>
@@ -163,33 +166,142 @@ const AdminQuestionAssigning = () => {
         );
     };
 
+
+    const dashboardcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            width: '300px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px',
+            }
+        }),
+
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',  // Limit the height of the dropdown list
+            overflowY: 'auto',   // Enable scrolling when the options exceed the height
+            fontSize: '14px',
+        }),
+
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+    };
+    const dashboardsmallcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            width: '200px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px',
+            }
+        }),
+
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',  // Limit the height of the dropdown list
+            overflowY: 'auto',   // Enable scrolling when the options exceed the height
+            fontSize: '14px',
+        }),
+
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+    };
+
+    const handleExamChange = (selectedOption) => {
+        setSelectedExam(selectedOption ? selectedOption.value : '');
+    };
+    const handleYearChange = (selectedOption) => {
+        setSelectedYear(selectedOption ? selectedOption.value : '');
+    };
+
     return (
         <div className="AdminQuestionAssigning_main_container">
             <div className="AdminQuestionAssigning_main_header_container">
                 <div className="AdminQuestionAssigning_header-controls d-flex justify-content-between align-items-center">
                     <div className="AdminQuestionAssigning_left-controls">
-                        <select
-                            className="form-select form-select-sm AdminQuestionAssigning_select_exam"
-                            value={selectedExam}
-                            onChange={(e) => setSelectedExam(e.target.value)}
-                        >
-                            {examOptions.map((option, index) => (
-                                <option key={index} value={option}>
-                                    {option}
-                                </option>
-                            ))}
-                        </select>
-                        <select
-                            className="form-select form-select-sm AdminQuestionAssigning_select_year"
-                            value={selectedYear}
-                            onChange={(e) => setSelectedYear(e.target.value)}
-                        >
-                            {yearOptions.map((option, index) => (
-                                <option key={index} value={option}>
-                                    {option}
-                                </option>
-                            ))}
-                        </select>
+                        <Select
+                            value={examOptions.find((option) => option === selectedExam) ? { label: selectedExam, value: selectedExam } : null}
+                            onChange={handleExamChange}
+                            options={examOptions.map((option) => ({ label: option, value: option }))}
+                            styles={dashboardcustomStyles} // Custom width for Exam dropdown
+                            placeholder="Select Exam"
+                        />
+                        <Select
+                            value={yearOptions.find((year) => year === selectedYear) ? { label: selectedYear, value: selectedYear } : null}
+                            onChange={handleYearChange}
+                            options={yearOptions.map((year) => ({ label: year, value: year }))}
+                            styles={dashboardsmallcustomStyles}
+                            placeholder="Select Year"
+                        />
                         <button className="btn-primary btn-sm AdminQuestionAssigning_search_button" onClick={handleSearch}>Search</button>
 
                     </div>
@@ -211,7 +323,7 @@ const AdminQuestionAssigning = () => {
                                         <tr>
                                             <th>
                                                 Subject
-                                                <span 
+                                                <span
                                                     className="AdminQuestionAssigning_sort-arrow"
                                                     onClick={(e) => handleSortClick('subject', e)}
                                                 >
@@ -221,7 +333,7 @@ const AdminQuestionAssigning = () => {
                                             </th>
                                             <th>
                                                 Class
-                                                <span 
+                                                <span
                                                     className="AdminQuestionAssigning_sort-arrow"
                                                     onClick={(e) => handleSortClick('class', e)}
                                                 >
@@ -231,7 +343,7 @@ const AdminQuestionAssigning = () => {
                                             </th>
                                             <th>
                                                 Teacher
-                                                <span 
+                                                <span
                                                     className="AdminQuestionAssigning_sort-arrow"
                                                     onClick={(e) => handleSortClick('teacher', e)}
                                                 >
@@ -241,7 +353,7 @@ const AdminQuestionAssigning = () => {
                                             </th>
                                             <th>
                                                 Date
-                                                <span 
+                                                <span
                                                     className="AdminQuestionAssigning_sort-arrow"
                                                     onClick={(e) => handleSortClick('date', e)}
                                                 >
@@ -251,7 +363,7 @@ const AdminQuestionAssigning = () => {
                                             </th>
                                             <th>
                                                 Time Duration
-                                                <span 
+                                                <span
                                                     className="AdminQuestionAssigning_sort-arrow"
                                                     onClick={(e) => handleSortClick('duration', e)}
                                                 >
@@ -261,7 +373,7 @@ const AdminQuestionAssigning = () => {
                                             </th>
                                             <th>
                                                 Status
-                                                <span 
+                                                <span
                                                     className="AdminQuestionAssigning_sort-arrow"
                                                     onClick={(e) => handleSortClick('status', e)}
                                                 >

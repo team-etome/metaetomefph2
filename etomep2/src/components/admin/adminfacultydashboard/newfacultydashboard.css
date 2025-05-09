@@ -31,6 +31,30 @@
     align-items: center;
     gap: 8px;
 }
+.facultydashboard_right-controls{
+  display: flex;
+    align-items: center;
+    width: 408px;
+    gap: 8px;
+}
+
+
+.facultydashboard_search-input-container {
+  position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.facultydashboard_search-icon {
+  position: absolute;
+  left: 10px;
+  font-size: 18px;
+  color: #aaa;
+}
+
+.facultydashboard_search-icon.hidden {
+  display: none;
+}
 
 .facultydashboard_search_button {
     width: 100px;
@@ -63,8 +87,9 @@
 }
 
 .facultydashboard_select_faculty {
-    width: 318px;
     height: 40px;
+    width: 100%;
+    padding: 8px;
     font-size: 1rem;
     border-radius: 8px;
     border: 1px solid #4A4A4A;

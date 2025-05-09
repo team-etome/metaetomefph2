@@ -37,6 +37,12 @@
     font-size: 1rem;
     border-radius: 8px;
     border: 1px solid #4A4A4A;
+    max-height: 150px; /* Set the max height for the dropdown */
+    overflow-y: auto;
+    
+}
+.newclassdashboard_select_subject option {
+    padding: 8px 12px; /* Adjust padding for options */
 }
 
 .newclassdashboard_result_add_button {
