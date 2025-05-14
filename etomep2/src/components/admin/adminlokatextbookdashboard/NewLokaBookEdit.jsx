@@ -21,7 +21,9 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
     const [mediumOptions, setMediumOptions] = useState([]);
     const [classOptions, setClassOptions] = useState([]);
     const [subjectOptions, setSubjectOptions] = useState([]);
-    const [id,setId] = useState("");
+    const [id, setId] = useState("");
+    
+    const [isEditMode, setIsEditMode] = useState(false);
 
     const [selectedPublisher, setSelectedPublisher] = useState(null);
     const [selectedMedium, setSelectedMedium] = useState(null);
@@ -156,17 +158,17 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
 
         chapters.forEach((chapter, index) => {
             formData.append(`chapters[${index}][name]`, chapter.name);
-            
+
             if (chapter.file) {
-              formData.append(`chapters[${index}][pdfFile]`, chapter.file);
+                formData.append(`chapters[${index}][pdfFile]`, chapter.file);
             } else if (chapter.previewUrl) {
-              const fileName = decodeURIComponent(
-                chapter.previewUrl.split("/").pop().split("?")[0]
-              );
-              formData.append(`chapters[${index}][pdfFile]`, fileName);
+                const fileName = decodeURIComponent(
+                    chapter.previewUrl.split("/").pop().split("?")[0]
+                );
+                formData.append(`chapters[${index}][pdfFile]`, fileName);
             }
-          });
-          
+        });
+
 
         try {
             const response = await axios.put(
@@ -318,7 +320,7 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
     const clearImageFile = () => {
         setImageData({ file: null, preview: null });
     };
-    
+
 
     const handleDeleteTextbook = async () => {
         if (!selectedTextbook?.textbook_details.id) {
@@ -379,234 +381,269 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                 </div>
                 <div className="lokatextbookedit-modal-body">
                     <form>
-                    <div className="lokatextbookedit-form-grid">
-                                <div className="lokatextbookedit-form-group" >
-                                    <label className="lokatextbookedit-form-label" >
-                                        Select Class <span className="lokatextbookadd_required">*</span>
-                                        </label>
-                                    <Select
-                                        options={classOptions}
-                                        styles={customStyles}
-                                        placeholder=""
-                                        isClearable={true}
-                                        value={selectedClass}
-                                        onChange={handleClassChange}
-                                    />
-                                </div>
-                
-                                <div className="lokatextbookedit-form-group">
-                                    <label className="lokatextbookedit-form-label">Select Medium</label>
-                                    <Select
-                                        options={mediumOptions}
-                                        styles={customStyles}
-                                        placeholder=""
-                                        isClearable={true}
-                                        value={selectedMedium}
-                                        onChange={setSelectedMedium}
-                                    />
-                                </div>
-                           
-                                <div className="lokatextbookedit-form-group">
-                                    <label className="lokatextbookedit-form-label">
-                                        Select Subject  <span className="lokatextbookedit_required">*</span></label>
-                                    <Select
-                                        options={subjectOptions}
-                                        styles={customStyles}
-                                        placeholder=""
-                                        isClearable={true}
-                                        value={selectedSubject}
-                                        onChange={setSelectedSubject}
-                                    />
-                                </div>
-                          
-                                <div className="lokatextbookedit-form-group">
-                                    <label className="lokatextbookedit-form-label">Textbook Name</label>
-                                    
-                                    <input
-                                        type="text"
-                                        min="0"
-                                        className="custom-input"
-                                        style={{
-                                            height: '50px',
-                                            border: '1px solid #ccc',
-                                            borderRadius: '8px',
-                                            padding: '0 10px',
-                                            fontSize: '16px',
-                                            color: '#526D82',
-                                            width: '100%',
-                                            boxSizing: 'border-box',
-                                            outline: "none"
-                                        }}
-                                        value={textbookname}
-                                        onChange={e => setTextBookName(e.target.value)}
-                                    />
-                                </div>
-                        
-                                <div className="lokatextbookedit-form-group">
-                                    <label className="lokatextbookedit-form-label">Volume</label>
-                                    <input
-                                        type="text"
-                                        min="0"
-                                        className="custom-input"
-                                        style={{
-                                            height: '50px',
-                                            border: '1px solid #ccc',
-                                            borderRadius: '4px',
-                                            padding: '0 10px',
-                                            fontSize: '16px',
-                                            color: '#526D82',
-                                            width: '100%',
-                                            boxSizing: 'border-box',
-                                            outline: "none"
-                                        }}
-                                        value={volume}
-                                        onChange={e => setVolume(e.target.value)}
-                                    />
-                                </div>
-                           
-                                <div className="lokatextbookedit-form-group">
-                                    <label className="lokatextbookedit-form-label">Publisher Name</label>
-                                    <Select
-                                        options={publisherOptions}
-                                        styles={customStyles}
-                                        placeholder=""
-                                        value={selectedPublisher}
-                                        isClearable={true}
-                                        onChange={setSelectedPublisher}
-                                    />
-                                </div>
-                           
-                                <div className="lokatextbookedit-form-group lokatextbookedit-form-group--full">
-                                    <label className="lokatextbookedit-form-label">Add cover Photo</label>
-                                    <div>
-                                        <label htmlFor="photo" style={{}}></label>
-                                        <div className="admin_textbook_image_upload_container">
-                                            <div className="admin_textbook_upload_placeholder">
-                                                {imageData.preview ? (
-                                                    <>
-                                                        <img
-                                                            src={imageData.preview}
-                                                            alt="Uploaded Image"
-                                                            className="uploaded_image"
-                                                            style={{ width: "100%", height: "200px", marginLeft: "30px", objectFit: "cover" }}
-                                                        />
-                                                        <button
-                                                            type="button"
-                                                            style={{ border: "none", background: "none", cursor: "pointer" }}
-                                                            onClick={clearImageFile}
-                                                        >
-                                                            <label htmlFor="image-upload" style={{ cursor: "pointer" }}>
-                                                                <FaRedo
-                                                                    style={{ color: "blue", fontSize: "20px" }}
-                                                                    title="Change Image"
-                                                                />
-                                                            </label>
-                                                        </button>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <label htmlFor="image-upload" className="admin_textbook_upload_label">
-                                                            Upload Image
-                                                        </label>
-                                                        <input
-                                                            id="image-upload"
-                                                            type="file"
-                                                            accept="image/*"
-                                                            className="admin_textbook_upload_input"
-                                                            onChange={handleImageUpload}
-                                                        />
-                                                    </>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                           
-                                <div className="lokatextbookedit-form-group lokatextbookedit-form-group--full">
-                                    <div className="lokatextbookedit_chapter-upload-wrapper">
-                                        <label className="lokatextbookedit_chapter-upload-label">Number of Chapters</label>
-                                        <input
-                                            type="number"
-                                            value={chapterCount}
-                                            onChange={handleChapterCountChange}
-                                            className="lokatextbookedit_chapter-upload-input"
-                                        />
+                        <div className="lokatextbookedit-form-grid">
+                            <div className="lokatextbookedit-form-group" >
+                                <label className="lokatextbookedit-form-label" >
+                                    Select Class <span className="lokatextbookadd_required">*</span>
+                                </label>
+                                <Select
+                                    options={classOptions}
+                                    styles={customStyles}
+                                    placeholder=""
+                                    isClearable={true}
+                                    value={selectedClass}
+                                    onChange={handleClassChange}
+                                />
+                            </div>
 
-                                        <div
-                                            className="lokatextbookedit_chapter-upload-scroll-area"
-                                            style={{
-                                                maxHeight: chapterCount > 5 ? "300px" : "auto",
-                                                overflowY: chapterCount > 5 ? "auto" : "visible",
-                                                border: "2px solid black"
-                                            }}
+                            <div className="lokatextbookedit-form-group">
+                                <label className="lokatextbookedit-form-label">Select Medium</label>
+                                <Select
+                                    options={mediumOptions}
+                                    styles={customStyles}
+                                    placeholder=""
+                                    isClearable={true}
+                                    value={selectedMedium}
+                                    onChange={setSelectedMedium}
+                                />
+                            </div>
 
-                                        >
-                                            {chapters.map((chapter, index) => (
-                                                <div className="lokatextbookedit_chapter-upload-row" key={index} >
-                                                    <input
-                                                        type="text"
-                                                        className="lokatextbookedit_chapter-upload-text"
-                                                        placeholder="Enter Chapter Name"
-                                                        value={chapter.name}
-                                                        onChange={(e) => handleChapterChange(index, "name", e.target.value)}
+                            <div className="lokatextbookedit-form-group">
+                                <label className="lokatextbookedit-form-label">
+                                    Select Subject  <span className="lokatextbookedit_required">*</span></label>
+                                <Select
+                                    options={subjectOptions}
+                                    styles={customStyles}
+                                    placeholder=""
+                                    isClearable={true}
+                                    value={selectedSubject}
+                                    onChange={setSelectedSubject}
+                                />
+                            </div>
+
+                            <div className="lokatextbookedit-form-group">
+                                <label className="lokatextbookedit-form-label">Textbook Name</label>
+
+                                <input
+                                    type="text"
+                                    min="0"
+                                    className="custom-input"
+                                    style={{
+                                        height: '50px',
+                                        border: '1px solid #ccc',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
+                                    value={textbookname}
+                                    onChange={e => setTextBookName(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="lokatextbookedit-form-group">
+                                <label className="lokatextbookedit-form-label">Volume</label>
+                                <input
+                                    type="text"
+                                    min="0"
+                                    className="custom-input"
+                                    style={{
+                                        height: '50px',
+                                        border: '1px solid #ccc',
+                                        borderRadius: '4px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
+                                    value={volume}
+                                    onChange={e => setVolume(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="lokatextbookedit-form-group">
+                                <label className="lokatextbookedit-form-label">Publisher Name</label>
+                                <Select
+                                    options={publisherOptions}
+                                    styles={customStyles}
+                                    placeholder=""
+                                    value={selectedPublisher}
+                                    isClearable={true}
+                                    onChange={setSelectedPublisher}
+                                />
+                            </div>
+
+                            <div className="lokatextbookedit-form-group lokatextbookedit-form-group--full">
+                                <label className="lokatextbookedit-form-label">Add cover Photo</label>
+                                <div>
+                                    <label htmlFor="photo" style={{}}></label>
+                                    <div className="admin_textbook_image_upload_container">
+                                        <div className="admin_textbook_upload_placeholder">
+                                            {imageData.preview ? (
+                                                <>
+                                                    <img
+                                                        src={imageData.preview}
+                                                        alt="Uploaded Image"
+                                                        className="uploaded_image"
+                                                        style={{ width: "100%", height: "200px", marginLeft: "30px", objectFit: "cover" }}
                                                     />
-                                                    <div className="lokatextbookedit_custom-file-upload">
-                                                        <label htmlFor={`file-upload-${index}`} className="lokatextbookedit_upload-btn">
-                                                            "Choose File"
-                                                        </label>
-                                                        <input
-                                                            id={`file-upload-${index}`}
-                                                            type="file"
-                                                            className="lokatextbookedit_hidden-file"
-                                                            onChange={(e) => {
-                                                                const file = e.target.files[0];
-                                                                const updated = [...chapters];
-                                                                updated[index].file = file;
-                                                                setChapters(updated);
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div className="lokatextbookedit_file-name-display">
-                                                        {chapter.file ? (
-                                                            chapter.file.name
-                                                        ) : chapter.previewUrl ? (
-                                                            <>
-                                                                <a href={chapter.previewUrl} target="_blank" rel="noopener noreferrer">
-                                                                    {decodeURIComponent(chapter.previewUrl.split("/").pop().split("?")[0])}
-                                                                </a>
-                                                                <FaRedo
-                                                                    style={{ color: "blue", marginLeft: "8px", cursor: "pointer" }}
-                                                                    title="Replace PDF"
-                                                                    onClick={() => {
-                                                                        const updated = [...chapters];
-                                                                        updated[index].previewUrl = "";
-                                                                        setChapters(updated);
-                                                                    }}
-                                                                />
-                                                            </>
-                                                        ) : (
-                                                            <span>&nbsp;</span>
-                                                        )}
-                                                    </div>
                                                     <button
-                                                        className="lokatextbookedit_chapter-upload-delete"
-                                                        onClick={() => handleDelete(index)}
+                                                        type="button"
+                                                        style={{ border: "none", background: "none", cursor: "pointer" }}
+                                                        onClick={clearImageFile}
                                                     >
-                                                        <FaTrash />
+                                                        <label htmlFor="image-upload" style={{ cursor: "pointer" }}>
+                                                            <FaRedo
+                                                                style={{ color: "blue", fontSize: "20px" }}
+                                                                title="Change Image"
+                                                            />
+                                                        </label>
                                                     </button>
-                                                </div>
-
-                                            ))}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <label htmlFor="image-upload" className="admin_textbook_upload_label">
+                                                        Upload Image
+                                                    </label>
+                                                    <input
+                                                        id="image-upload"
+                                                        type="file"
+                                                        accept="image/*"
+                                                        className="admin_textbook_upload_input"
+                                                        onChange={handleImageUpload}
+                                                    />
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
-                           </div>
+                            </div>
+
+                            <div className="lokatextbookedit-form-group lokatextbookedit-form-group--full">
+                                <div className="lokatextbookedit_chapter-upload-wrapper">
+                                    <label className="lokatextbookedit_chapter-upload-label">Number of Chapters</label>
+                                    <input
+                                        type="number"
+                                        value={chapterCount}
+                                        onChange={handleChapterCountChange}
+                                        className="lokatextbookedit_chapter-upload-input"
+                                    />
+
+                                    <div
+                                        className="lokatextbookedit_chapter-upload-scroll-area"
+                                        style={{
+                                            maxHeight: chapterCount > 5 ? "300px" : "auto",
+                                            overflowY: chapterCount > 5 ? "auto" : "visible",
+                                            border: "2px solid black"
+                                        }}
+
+                                    >
+                                        {chapters.map((chapter, index) => (
+                                            <div className="lokatextbookedit_chapter-upload-row" key={index} >
+                                                <input
+                                                    type="text"
+                                                    className="lokatextbookedit_chapter-upload-text"
+                                                    placeholder="Enter Chapter Name"
+                                                    value={chapter.name}
+                                                    onChange={(e) => handleChapterChange(index, "name", e.target.value)}
+                                                />
+                                                <div className="lokatextbookedit_custom-file-upload">
+                                                    <label htmlFor={`file-upload-${index}`} className="lokatextbookedit_upload-btn">
+                                                        "Choose File"
+                                                    </label>
+                                                    <input
+                                                        id={`file-upload-${index}`}
+                                                        type="file"
+                                                        className="lokatextbookedit_hidden-file"
+                                                        onChange={(e) => {
+                                                            const file = e.target.files[0];
+                                                            const updated = [...chapters];
+                                                            updated[index].file = file;
+                                                            setChapters(updated);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="lokatextbookedit_file-name-display">
+                                                    {chapter.file ? (
+                                                        chapter.file.name
+                                                    ) : chapter.previewUrl ? (
+                                                        <>
+                                                            <a href={chapter.previewUrl} target="_blank" rel="noopener noreferrer">
+                                                                {decodeURIComponent(chapter.previewUrl.split("/").pop().split("?")[0])}
+                                                            </a>
+                                                            <FaRedo
+                                                                style={{ color: "blue", marginLeft: "8px", cursor: "pointer" }}
+                                                                title="Replace PDF"
+                                                                onClick={() => {
+                                                                    const updated = [...chapters];
+                                                                    updated[index].previewUrl = "";
+                                                                    setChapters(updated);
+                                                                }}
+                                                            />
+                                                        </>
+                                                    ) : (
+                                                        <span>&nbsp;</span>
+                                                    )}
+                                                </div>
+                                                <button
+                                                    className="lokatextbookedit_chapter-upload-delete"
+                                                    onClick={() => handleDelete(index)}
+                                                >
+                                                    <FaTrash />
+                                                </button>
+                                            </div>
+
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
-                <div className="lokatextbookedit-modal-footer">
+                {/* <div className="lokatextbookedit-modal-footer">
                     <button onClick={handleDeleteTextbook} className="lokatextbookedit-btn lokatextbookedit-btn-danger">Delete</button>
                     <button onClick={onClose} className="lokatextbookedit-btn lokatextbookedit-btn-secondary">Clear</button>
                     <button onClick={handleSave} className="lokatextbookedit-btn lokatextbookedit-btn-primary">Save</button>
+                </div> */}
+                <div className="lokatextbookedit-modal-footer">
+                    <button
+                        type="button"
+                        className="lokatextbookedit-btn lokatextbookedit-btn-danger"
+                        onClick={() => {
+                            if (isEditMode) {
+                                // resetForm();
+                                setIsEditMode(false);
+                            } else {
+                                handleDeleteTextbook();
+                            }
+                        }}
+                        style={{
+                            color: !isEditMode ? 'red' : '#2162B2',
+                            borderColor: !isEditMode ? 'red' : '#2162B2',
+                        }}
+                    >
+                        {isEditMode ? 'Clear' : 'Delete'}
+                    </button>
+
+                    <button
+                        type="button"
+                        className="lokatextbookedit-btn lokatextbookedit-btn-primary"
+                        onClick={() => {
+                            if (isEditMode) {
+                                handleSave();
+                            } else {
+                                setIsEditMode(true);
+                            }
+                        }}
+                    >
+                        {isEditMode ? 'Save' : 'Edit'}
+                    </button>
+
                 </div>
             </div>
         </div >

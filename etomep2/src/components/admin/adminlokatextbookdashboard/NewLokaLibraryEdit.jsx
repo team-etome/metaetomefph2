@@ -5,30 +5,160 @@ import './newlokalibraryedit.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { FaTrash, FaRedo } from "react-icons/fa";
+import { FaTrash, FaRedo, FaTimes } from "react-icons/fa";
 import CreatableSelect from 'react-select/creatable';
 import { BiBorderRadius } from 'react-icons/bi';
 
-const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
+const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
     if (!isOpen) return null;
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+    // console.log(APIURL,"APIURLAPIURLAPIURLAPIURLAPIURL")
     console.log(admin_id, "admin_id dattatata");
+    const selected = useSelector((state) => state.SelectedLibrary.selectedLibrary);
+    const apicomingcatogory = useSelector(
+        (state) => state.AdminLibraryCategories.list
+    );
+    //  console.log(apicomingcatogory,"apicomingcatogoryapicomingcatogoryapicomingcatogory")
 
-    const [apicomingcatogory, setApiComingCatogory] = useState([]);
+    console.log(selected, "sljhfuhsbgfuvohsdfguhvbeyufdgveyfdgubeudshbfeurbg")
+
+    // const [apicomingcatogory, setApiComingCatogory] = useState([]);
     const [category, setCategory] = useState(null); // only dropdown
     const [categoryValue, setCategoryValue] = useState(null);
     const [inputValue, setInputValue] = useState("");
-
-
-    // Use one state for the cover image
     const [coverPhoto, setCoverPhoto] = useState(null);
-    // Use one state for the PDF document
     const [documentFile, setDocumentFile] = useState(null);
+    const [title, setTitle] = useState('');
+    const [author, setAuthor] = useState('');
+    const [publisher, setPublisher] = useState('');
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [coverFile, setCoverFile] = useState(null); // for FormData for feont page 
+
+
+
+    useEffect(() => {
+        if (selected) {
+            setTitle(selected.text_name || '');
+            setAuthor(selected.author_name || '');
+            setPublisher(selected.publisher_name || '');
+            setCoverFile(selected.textbook_image || '');
+            setDocumentFile(selected.textbook_pdf || '');
+            // For your CreatableSelect, categoryValue needs the shape { label, value }:
+            setCategoryValue(
+                selected.category
+                    ? { label: selected.category, value: selected.category }
+                    : null
+            );
+        }
+    }, [selected]);
+
+    const resetForm = () => {
+        if (!selected) return;
+        setTitle(selected.text_name || '');
+        setAuthor(selected.author_name || '');
+        setPublisher(selected.publisher_name || '');
+        setCoverFile(selected.textbook_image || '');
+        setDocumentFile(selected.textbook_pdf || '');
+        setCategoryValue(
+            selected.category
+                ? { label: selected.category, value: selected.category }
+                : null
+        );
+    };
+    useEffect(resetForm, [selected]);
+
+
+
+    const handleEditSubmit = async () => {
+        // 1) Validate all required fields
+        // if (
+        //     !categoryValue?.value ||
+        //     !title ||
+        //     !author ||
+        //     !publisher ||
+        //     !coverFile ||
+        //     !documentFile
+        // ) {
+        //     Swal.fire({
+        //         icon: 'warning',
+        //         title: 'Missing Fields',
+        //         text: 'Please fill out all fields and select both files.',
+        //     });
+        //     return;
+        // }
+
+        // 2) Build FormData
+        const formData = new FormData();
+        formData.append('admin_id', admin_id);
+        formData.append('id', selected.id);
+        formData.append('category', categoryValue.value);
+        formData.append('text_name', title);
+        formData.append('author_name', author);
+        formData.append('publisher_name', publisher);
+        formData.append('textbook_front_page', coverFile);
+        formData.append('textbook_pdf', documentFile);
+
+        try {
+            // 3) Send multipart/form-d
+            await axios.put(
+                `${APIURL}/api/create-textbook/${selected.id}`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
+
+            await Swal.fire({
+                icon: 'success',
+                title: 'Updated!',
+                text: 'Book details have been saved.',
+            });
+
+            // onClose();
+            onUpdated();
+        } catch (err) {
+            console.error(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: err.response?.data?.error || 'Failed to update the book.',
+            });
+        }
+    };
+
+
+    // at top of NewLokaLibraryEdit
+const handleDelete = async () => {
+    const result = await Swal.fire({
+      icon: 'warning',
+      title: 'Are you sure?',
+      text: 'This will permanently delete the book.',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it',
+      cancelButtonText: 'Cancel',
+    });
+    if (!result.isConfirmed) return;
+  
+    try {
+      await axios.delete(`${APIURL}/api/create-textbook/${selected.id}`);
+      await Swal.fire('Deleted!', 'The book has been removed.', 'success');
+    //   onClose();
+    onUpdated();
+    } catch (err) {
+      console.error(err);
+      Swal.fire('Error', 'Could not delete the book.', 'error');
+    }
+  };
+  
+
+
 
     // Clear functions to reset the file states
     const clearCoverPhoto = () => {
-        setCoverPhoto(null);
+        setCoverFile(null);
     };
 
     const clearDocumentFile = () => {
@@ -42,7 +172,7 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
             minHeight: '50px',
             height: '50px',
             borderColor: '#ccc',
-            borderRadius:'8px',
+            borderRadius: '8px',
             boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
             '&:hover': {
                 borderColor: '#526D82',
@@ -61,7 +191,8 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
             svg: {
                 width: '24px',
                 height: '24px'
-            }
+            },
+            display: isEditMode ? 'flex' : 'none',
         }),
         indicatorSeparator: () => ({
             display: 'none'
@@ -93,11 +224,25 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
         }),
     };
 
+
+    const getFileNameFromUrl = (input) => {
+        if (!input) return '';
+        if (typeof input === 'string') {
+            const [path] = input.split('?');
+            return path.split('/').pop();
+        }
+        if (input instanceof File) {
+            return input.name;
+        }
+        return '';
+    };
+
+
     return (
         <div className="lokalibraryedit-backdrop">
             <div className="lokalibraryedit-modal-content">
                 <div className="lokalibraryedit-modal-header">
-                    <p className="lokalibraryedit-modal-header-heading">Add Books</p>
+                    <p className="lokalibraryedit-modal-header-heading">Edit Books</p>
                     <button onClick={onClose} className="lokalibraryedit-close-button">&times;</button>
                 </div>
                 <div className="lokalibraryedit-modal-body">
@@ -108,12 +253,13 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                     Add Category <span className="lokalibraryedit_required">*</span>
                                 </label>
                                 <CreatableSelect
-                                    // value={categoryValue}
+                                    value={categoryValue}
                                     inputValue={inputValue}
-                                    options={apicomingcatogory}
+                                    options={apicomingcatogory.map((c) => ({ label: c, value: c }))}
                                     styles={customStyles}
                                     placeholder=""
-                                    isClearable={true}
+                                    isDisabled={!isEditMode}
+                                    isClearable
                                     onInputChange={(newInputValue, actionMeta) => {
                                         setInputValue(newInputValue);
                                         return newInputValue;
@@ -141,20 +287,27 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                             </div>
                             <div className="lokalibraryedit-form-group">
                                 <label className="lokalibraryedit-form-label">
-                                    Title 
+                                    Title
                                 </label>
                                 <input
                                     type="text"
                                     className="custom-input"
+                                    disabled={!isEditMode}
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    required
                                 />
                             </div>
                             <div className="lokalibraryedit-form-group">
                                 <label className="lokalibraryedit-form-label">
-                                    Author Name 
+                                    Author Name
                                 </label>
                                 <input
                                     type="text"
                                     className="custom-input"
+                                    value={author}
+                                    disabled={!isEditMode}
+                                    onChange={(e) => setAuthor(e.target.value)}
                                 />
                             </div>
                             <div className="lokalibraryedit-form-group">
@@ -164,6 +317,9 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                 <input
                                     type="text"
                                     className="custom-input"
+                                    value={publisher}
+                                    disabled={!isEditMode}
+                                    onChange={(e) => setPublisher(e.target.value)}
                                 />
                             </div>
                             <div className="lokalibraryedit-form-group lokalibraryedit-form-group--full">
@@ -173,10 +329,14 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                 <div className="admin_library_image_upload_container_div">
                                     <div className="admin_library_image_upload_container" >
                                         <div className="admin_library_upload_placeholder">
-                                            {coverPhoto ? (
+                                            {coverFile ? (
                                                 <>
                                                     <img
-                                                        src={URL.createObjectURL(coverPhoto)}
+                                                        src={
+                                                            coverFile instanceof File
+                                                                ? URL.createObjectURL(coverFile) // only for File
+                                                                : coverFile                     // raw URL string
+                                                        }
                                                         alt="Uploaded Image"
                                                         className="uploaded_image"
                                                         style={{
@@ -186,7 +346,8 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                                         }}
                                                     />
                                                     <button
-                                                        
+                                                        onClick={clearCoverPhoto}
+                                                        disabled={!isEditMode}
                                                         style={{
                                                             border: "none",
                                                             background: "none",
@@ -214,7 +375,9 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                                         id="image-upload"
                                                         type="file"
                                                         accept="image/*"
+                                                        disabled={!isEditMode}
                                                         className="admin_library_upload_input"
+                                                        onChange={(e) => setCoverFile(e.target.files[0])}
                                                     />
                                                 </>
                                             )}
@@ -230,10 +393,26 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                     <div className="lokalibraryedit_custom-file-upload">
                                         {documentFile ? (
                                             <>
-                                                <span>{documentFile.name}</span>
-                                                <button style={{ marginLeft: "8px" }}>
-                                                    Change File
-                                                </button>
+                                                <div >
+                                                    <img src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/pdf.svg" alt="PDF" style={{ width: 16, height: 20, marginRight: 12 }} />
+                                                    <span>{getFileNameFromUrl(documentFile)}</span>
+                                                    <button
+                                                        onClick={() => setDocumentFile('')}
+                                                        disabled={!isEditMode}
+                                                        style={{
+                                                            marginLeft: 8,
+                                                            color: "black",
+                                                            width: 24,
+                                                            height: 24,
+                                                            padding: 0,
+                                                            background: 'transparent',
+                                                            cursor: 'pointer'
+                                                        }}
+                                                    >
+                                                        <FaTimes size={12} />
+                                                    </button>
+                                                </div>
+
                                             </>
                                         ) : (
                                             <>
@@ -243,7 +422,9 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                                                 <input
                                                     id="file-upload"
                                                     type="file"
+                                                    disabled={!isEditMode}
                                                     className="lokalibraryedit_hidden-file"
+                                                    onChange={(e) => setDocumentFile(e.target.files[0])}
                                                 />
                                             </>
                                         )}
@@ -254,8 +435,39 @@ const NewLokaLibraryEdit = ({ isOpen, onClose }) => {
                     </form>
                 </div>
                 <div className="lokalibraryedit-modal-footer">
-                    <button onClick={onClose} className="lokalibraryedit-btn lokalibraryedit_chapter-upload-delete">Delete</button>
-                    <button className="lokalibraryedit-btn lokalibraryedit-btn-primary">Edit</button>
+                    <button
+                        type="button"
+                        className="lokalibraryedit-btn lokalibraryedit_chapter-upload-delete"
+                        onClick={() => {
+                            if (isEditMode) {
+                                resetForm();
+                                setIsEditMode(false);
+                            } else {
+                                handleDelete();
+                            }
+                        }}
+                        style={{
+                            color: !isEditMode ? 'red' : '#2162B2',
+                            borderColor: !isEditMode ? 'red' : '#2162B2',
+                        }}
+                    >
+                        {isEditMode ? 'Clear' : 'Delete'}
+                    </button>
+
+                    <button
+                        type="button"
+                        className="lokalibraryedit-btn lokalibraryedit-btn-primary"
+                        onClick={() => {
+                            if (isEditMode) {
+                                handleEditSubmit();
+                            } else {
+                                setIsEditMode(true);
+                            }
+                        }}
+                    >
+                        {isEditMode ? 'Save' : 'Edit'}
+                    </button>
+
                 </div>
             </div>
         </div>

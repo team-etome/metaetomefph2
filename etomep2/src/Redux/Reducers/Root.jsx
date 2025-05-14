@@ -8,6 +8,11 @@ import ExamPaperInfoReducer from './ExamPaperInfoReducer';
 import TeacherSubjectInfoReducer from './TeacherSubjectInfoReducer';
 import AdminallclassInfoReducer from './AdminAllClassInfoReducer';
 import SelectedTextbookReducer from './SelectedTextbookReducer';
+import SelectedLibraryReducer from './SelectedLibraryReducer'
+import AdminLibraryCategoryReducer    from './AdminLibraryCategoryReducer';
+import ExamClassesReducer from './AdminClassListReducer';
+import TimetableDataQuestionPaperReducer from './AdminTimetableDataQuestionPaperReducer';
+
 
 
 
@@ -24,8 +29,10 @@ const rootReducer = combineReducers({
   teachersubjectinfo  : TeacherSubjectInfoReducer,
   adminallclassinfo   : AdminallclassInfoReducer,
   selectedTextbook    : SelectedTextbookReducer,
-
-
+  SelectedLibrary     : SelectedLibraryReducer,
+  AdminLibraryCategories   : AdminLibraryCategoryReducer,
+  examClasses          : ExamClassesReducer,
+  timetabledataquestionpaper: TimetableDataQuestionPaperReducer,
 }); 
 
 export default rootReducer;

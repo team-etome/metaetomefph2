@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
-import './newfacultyadd.css';
+import './newfacultyedit.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { FaTrash, FaRedo } from "react-icons/fa";
 
-const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
+const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
     if (!isOpen) return null;
 
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
 
     const admininfo = useSelector((state) => state.admininfo);
+
+    const [previewUrl, setPreviewUrl] = useState(null);
+
+    console.log(faculty, "facultyfacultyfaculty")
 
     const [formData, setFormData] = useState({
         firstname: "",
@@ -54,14 +58,10 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
 
     const handleSave = async () => {
         const validationErrors = [];
-
-
         if (!formData.firstname) validationErrors.push("First name is required.");
         if (!formData.gender?.value) validationErrors.push("Gender is required.");
         if (!formData.email) validationErrors.push("Email is required.");
         if (!formData.password) validationErrors.push("Password is required.");
-
-
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (formData.email && !emailRegex.test(formData.email)) {
             validationErrors.push("Please enter a valid email address.");
@@ -92,12 +92,12 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         if (formData.imageFile) formDataToSend.append("profile_photo", formData.imageFile);
 
         try {
-            const response = await axios.post(`${APIURL}/api/addteacher`, formDataToSend, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+            const response = await axios.put(
+                `${APIURL}/api/teacherdetails/${faculty.id}`,
+                formDataToSend,
+                { headers: { 'Content-Type': 'multipart/form-data' } }
+            );
 
-            });
 
             if (response.data.message === "Teacher added successfully") {
                 Swal.fire("Success", "Faculty added successfully", "success");
@@ -191,21 +191,38 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
     // const handleImageUpload = (e) => setImageFile(e.target.files[0]);
     // const clearImageFile = () => setImageFile(null);
 
+    useEffect(() => {
+        if (faculty) {
+            setFormData({
+                firstname: faculty.first_name || "",
+                lastname: faculty.last_name || "",
+                employeeid: faculty.employee_id || "",
+                gender: faculty.gender
+                    ? { value: faculty.gender, label: faculty.gender }
+                    : null,
+                phoneno: faculty.phone_number || "",
+                email: faculty.email || "",
+                password: faculty.password || "",
+                imageFile: faculty.image
+            });
+        }
+    }, [faculty]);
+
     return (
-        <div className="facultyadd-backdrop">
-            <div className="facultyadd-modal-content">
-                <div className="facultyadd-modal-header">
-                    <p className="facultyadd-modal-header-heading">Add Faculty</p>
-                    <button onClick={onClose} className="facultyadd-close-button">&times;</button>
+        <div className="facultyedit-backdrop">
+            <div className="facultyedit-modal-content">
+                <div className="facultyedit-modal-header">
+                    <p className="facultyedit-modal-header-heading">Edit Faculty</p>
+                    <button onClick={onClose} className="facultyedit-close-button">&times;</button>
                 </div>
 
-                <div className="facultyadd-modal-body">
+                <div className="facultyedit-modal-body">
 
                     <form onSubmit={(e) => e.preventDefault()}>
-                        <div className="facultyadd-form-grid">
-                            <div className="facultyadd-form-group">
-                                <label className="facultyadd-form-label">
-                                    First Name <span className="facultyadd_required">*</span>
+                        <div className="facultyedit-form-grid">
+                            <div className="facultyedit-form-group">
+                                <label className="facultyedit-form-label">
+                                    First Name <span className="facultyedit_required">*</span>
                                 </label>
                                 <input
                                     type="text"
@@ -225,8 +242,8 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                     onChange={(e) => handleInputChange('firstname', e.target.value)}
                                 />
                             </div>
-                            <div className="facultyadd-form-group">
-                                <label className="facultyadd-form-label">Last Name</label>
+                            <div className="facultyedit-form-group">
+                                <label className="facultyedit-form-label">Last Name</label>
                                 <input
                                     type="text"
                                     value={formData.lastname}
@@ -245,8 +262,8 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                     onChange={(e) => handleInputChange('lastname', e.target.value)}
                                 />
                             </div>
-                            <div className="facultyadd-form-group">
-                                <label className="facultyadd-form-label">Employee ID</label>
+                            <div className="facultyedit-form-group">
+                                <label className="facultyedit-form-label">Employee ID</label>
                                 <input
                                     type="text"
                                     value={formData.employeeid}
@@ -265,9 +282,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                     onChange={(e) => handleInputChange('employeeid', e.target.value)}
                                 />
                             </div>
-                            <div className="facultyadd-form-group">
-                                <label className="facultyadd-form-label">
-                                    Gender <span className="facultyadd_required">*</span>
+                            <div className="facultyedit-form-group">
+                                <label className="facultyedit-form-label">
+                                    Gender <span className="facultyedit_required">*</span>
                                 </label>
                                 <Select
                                     styles={customStyles}
@@ -282,11 +299,11 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                     ]}
                                 />
                             </div>
-                            <div className="facultyadd-form-group">
-                                <label className="facultyadd-form-label">Phone Number</label>
-                                <div className="facultyadd-phone-container">
+                            <div className="facultyedit-form-group">
+                                <label className="facultyedit-form-label">Phone Number</label>
+                                <div className="facultyedit-phone-container">
                                     <select
-                                        className="facultyadd-phone-select"
+                                        className="facultyedit-phone-select"
                                         value={phoneCode}
                                         onChange={(e) => setPhoneCode(e.target.value)}
                                     >
@@ -298,16 +315,16 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                     <input
                                         type="text"
                                         value={formData.phoneno}
-                                        className="facultyadd-phone-input"
+                                        className="facultyedit-phone-input"
                                         onChange={(e) => handleInputChange('phoneno', e.target.value)}
                                         maxLength={10}
                                         style={{ borderLeft: 'none' }}
                                     />
                                 </div>
                             </div>
-                            <div className="facultyadd-form-group">
-                                <label className="facultyadd-form-label">
-                                    Email ID <span className="facultyadd_required">*</span>
+                            <div className="facultyedit-form-group">
+                                <label className="facultyedit-form-label">
+                                    Email ID <span className="facultyedit_required">*</span>
                                 </label>
                                 <input
                                     type="email"
@@ -332,10 +349,10 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
 
                         <Row>
                             <Col md={12}>
-                                <div className="facultyadd-form-group">
+                                <div className="facultyedit-form-group">
 
-                                    <label className="facultyadd-form-label">
-                                        Password <span className="facultyadd_required">*</span>
+                                    <label className="facultyedit-form-label">
+                                        Password <span className="facultyedit_required">*</span>
                                     </label>
                                     <input
                                         type="password"
@@ -361,16 +378,18 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
 
                         <Row>
                             <Col md={12}>
-                                <div className="facultyadd-form-group">
+                                <div className="facultyedit-form-group">
 
-                                    <label className="facultyadd-form-label">Add cover Photo</label>
+                                    <label className="facultyedit-form-label">Add cover Photo</label>
                                     <div>
                                         <div className="admin_faculty_image_upload_container">
                                             <div className="admin_faculty_upload_placeholder">
                                                 {formData.imageFile ? (
                                                     <div className="image-preview-container">
                                                         <img
-                                                            src={URL.createObjectURL(formData.imageFile)}
+                                                            src={formData.imageFile instanceof File
+                                                                ? URL.createObjectURL(formData.imageFile)
+                                                                : formData.imageFile }
                                                             alt="Uploaded Image"
                                                             className="uploaded_image"
                                                             style={{
@@ -414,7 +433,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                     </form>
                 </div>
 
-                <div className="facultyadd-modal-footer">
+                <div className="facultyedit-modal-footer">
 
                     <button
                         onClick={() => {
@@ -434,16 +453,16 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                 }
                             });
                         }}
-                        className="facultyadd-btn facultyadd-btn-secondary"
+                        className="facultyedit-btn facultyedit-btn-secondary"
                     >
                         Clear
                     </button>
 
-                    <button onClick={handleSave} className="facultyadd-btn facultyadd-btn-primary">Save</button>
+                    <button onClick={handleSave} className="facultyedit-btn facultyedit-btn-primary">Save</button>
                 </div>
             </div>
         </div>
     );
 };
 
-export default NewFacultyAdd;
+export default NewFacultyEdit;

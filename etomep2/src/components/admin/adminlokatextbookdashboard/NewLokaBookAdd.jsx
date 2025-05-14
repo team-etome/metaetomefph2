@@ -12,9 +12,10 @@ const NewLokaBookAdd = ({ isOpen, onClose }) => {
 
     if (!isOpen) return null;
     const APIURL = useSelector((state) => state.APIURL.url);
-    // console.log(APIURL,"apiurl dattatata")
+    // console.log(APIURL,"apiurl dattatata","jkdvnjfdbivjfnov")
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
     const admininfo = useSelector((state) => state.admininfo);
+    // console.log(admininfo,"admininfoadmininfoadmininfoadmininfo")
     const [volume, setVolume] = useState('');
     const [textbookname, setTextBookName] = useState('');
     const [publisherOptions, setPublisherOptions] = useState([]);
@@ -26,7 +27,6 @@ const NewLokaBookAdd = ({ isOpen, onClose }) => {
     const [selectedMedium, setSelectedMedium] = useState(null);
     const [selectedClass, setSelectedClass] = useState(null);
     const [selectedSubject, setSelectedSubject] = useState(null);
-
     const [imageFile, setImageFile] = useState(null);
     const [chapterCount, setChapterCount] = useState(0);
     const [chapters, setChapters] = useState([]);
@@ -158,11 +158,13 @@ const NewLokaBookAdd = ({ isOpen, onClose }) => {
         };
         fetchClassData();
     }, [APIURL, admin_id]);
+    // console.log(setSelectedClass,"setSubjectOptionssetSubjectOptionssetSubjectOptionssetSubjectOptions")
 
-    const handleClassChange = selected => {
+    const handleClassChange = (selected) => {
         setSelectedClass(selected);
         if (selected?.subjectList) {
             setSubjectOptions(selected.subjectList.map(s => ({ value: s.subject_id, label: s.subject })));
+            // console.log(setSubjectOptions,"setSubjectOptionssetSubjectOptionssetSubjectOptionssetSubjectOptions")
         } else {
             setSubjectOptions([]);
         }
@@ -277,7 +279,8 @@ const NewLokaBookAdd = ({ isOpen, onClose }) => {
                             </div>
                             <div className="lokatextbookadd-form-group">
                                 <label className="lokatextbookadd-form-label">
-                                    Select Subject <span className="lokatextbookadd_required">*</span></label>
+                                    Select Subject 
+                                    <span className="lokatextbookadd_required">*</span></label>
                                 <Select
                                     options={subjectOptions}
                                     styles={customStyles}

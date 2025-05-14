@@ -17,7 +17,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
     const [years, setYears] = useState([]);
     const [subjects, setSubjects] = useState([]);
     const [classes, setClasses] = useState([]);
-    const [teachers, setTeachers] = useState([]);
+    // const [teachers, setTeachers] = useState([]);
     const [totalMarks, setTotalMarks] = useState('');
     const [selectedData, setSelectedData] = useState(null);
     const [selectedTeacher, setSelectedTeacher] = useState(null);
@@ -25,11 +25,44 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
     const [selectedExam, setSelectedExam] = useState(null);
     const [selectedSubject, setSelectedSubject] = useState(null);
     const [selectedYear, setSelectedYear] = useState(null);
-    const [timetableData, setTimetableData] = useState([]);
+    // const [timetableData, setTimetableData] = useState([]);
     const [filteredYears, setFilteredYears] = useState([]);
     const [filteredClasses, setFilteredClasses] = useState([]);
     const [filteredSubjects, setFilteredSubjects] = useState([]);
 
+
+    const teacherinfo = useSelector(state => state.adminteacherinfo);
+
+    // extract the array (or default to empty)
+    const teachers = teacherinfo?.adminteacherinfo || [];
+
+
+    const timetableData = useSelector(s => s.timetabledataquestionpaper.list ?? []);
+    console.log(timetableData, "timetableDatatimetableData")
+    useEffect(() => {
+        if (timetableData.length === 0) return;
+
+        // unique exam names
+        const examOpts = Array.from(new Set(timetableData.map(i => i.exam_name)))
+            .map(v => ({ value: v, label: v }));
+        // unique years (filter out any null/undefined)
+        const yearOpts = Array.from(new Set(
+            timetableData.map(i => i.year).filter(y => y)
+        )).map(v => ({ value: v, label: String(v) }));
+        // unique classes
+        const classOpts = Array.from(new Set(timetableData.map(i => i.class)))
+            .map(v => ({ value: v, label: String(v) }));
+        // unique subjects
+        const subjOpts = Array.from(new Set(timetableData.map(i => i.subject)))
+            .map(v => ({ value: v, label: v }));
+
+        setExaminations(examOpts);
+        setYears(yearOpts);
+        setClasses(classOpts);
+        setSubjects(subjOpts);
+
+        // run this once when timetableData changes
+    }, [timetableData]);
 
     useEffect(() => {
         if (selectedClass && selectedExam && selectedSubject && selectedYear) {
@@ -65,16 +98,16 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
             });
             return;
         }
-    
+
         const formData = {
             timetable: selectedData,
             teacher: selectedTeacher,
             total_marks: totalMarks
         };
-    
+
         try {
             const response = await axios.post(`${APIURL}/api/questionpaper`, formData);
-    
+
             Swal.fire({
                 icon: "success",
                 title: "Success",
@@ -83,7 +116,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
             }).then(() => {
                 onClose(); // close modal after OK
             });
-    
+
         } catch (error) {
             console.error("Error saving data:", error);
             Swal.fire({
@@ -94,35 +127,49 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
             });
         }
     };
-    
 
 
-    useEffect(() => {
-        const fetchTimetableData = async () => {
-            try {
-                const response = await axios.get(`${APIURL}/api/gettimetable/${admin_id}`);
-                const examsData = response.data.exams;
 
-                console.log(examsData, "fetchTimetableData examsData");
+    // useEffect(() => {
+    //     if (selectedClass && selectedExam && selectedSubject && selectedYear) {
+    //         const match = timetableData.find(item =>
+    //             item.class.toString() === selectedClass.toString() &&
+    //             item.exam_name === selectedExam &&
+    //             item.subject === selectedSubject &&
+    //             item.year === selectedYear
+    //         );
+    //         // …
+    //     }
+    // }, [selectedClass, selectedExam, selectedSubject, selectedYear, timetableData]);
 
-                const examNames = [...new Set(examsData.map(item => item.exam_name))].map(e => ({ value: e, label: e }));
-                const yearOptions = [...new Set(examsData.map(item => item.year).filter(Boolean))].map(y => ({ value: y, label: y }));
-                const subjectOptions = [...new Set(examsData.map(item => item.subject))].map(s => ({ value: s, label: s }));
-                const classOptions = [...new Set(examsData.map(item => item.class))].map(c => ({ value: c, label: c }));
 
-                setExaminations(examNames);
-                setYears(yearOptions);
-                setSubjects(subjectOptions);
-                setClasses(classOptions);
-                setTimetableData(examsData); 
 
-            } catch (error) {
-                console.error("Error fetching timetable data:", error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchTimetableData = async () => {
+    //         try {
+    //             const response = await axios.get(`${APIURL}/api/gettimetable/${admin_id}`);
+    //             const examsData = response.data.exams;
 
-        fetchTimetableData();
-    }, [APIURL, admin_id]);
+    //             console.log(examsData, "fetchTimetableData examsData");
+
+    //             const examNames = [...new Set(examsData.map(item => item.exam_name))].map(e => ({ value: e, label: e }));
+    //             const yearOptions = [...new Set(examsData.map(item => item.year).filter(Boolean))].map(y => ({ value: y, label: y }));
+    //             const subjectOptions = [...new Set(examsData.map(item => item.subject))].map(s => ({ value: s, label: s }));
+    //             const classOptions = [...new Set(examsData.map(item => item.class))].map(c => ({ value: c, label: c }));
+
+    //             setExaminations(examNames);
+    //             setYears(yearOptions);
+    //             setSubjects(subjectOptions);
+    //             setClasses(classOptions);
+    //             setTimetableData(examsData); 
+
+    //         } catch (error) {
+    //             console.error("Error fetching timetable data:", error);
+    //         }
+    //     };
+
+    //     fetchTimetableData();
+    // }, [APIURL, admin_id]);
 
     useEffect(() => {
         if (selectedExam) {
@@ -169,24 +216,24 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
     }, [selectedClass, selectedExam, selectedYear, timetableData]);
 
 
-    useEffect(() => {
-        const fetchTeacherData = async () => {
-            try {
-                const response = await axios.get(`${APIURL}/api/teacherdetails/${admin_id}`);
-                const teacherData = response.data;
-                console.log(teacherData, "teacherData list ")
-                const teacherOptions = teacherData.map((teacher) => ({
-                    value: teacher.id,
-                    label: `${teacher.first_name} ${teacher.last_name}`
-                }));
+    // useEffect(() => {
+    //     const fetchTeacherData = async () => {
+    //         try {
+    //             const response = await axios.get(`${APIURL}/api/teacherdetails/${admin_id}`);
+    //             const teacherData = response.data;
+    //             console.log(teacherData, "teacherData list ")
+    //             const teacherOptions = teacherData.map((teacher) => ({
+    //                 value: teacher.id,
+    //                 label: `${teacher.first_name} ${teacher.last_name}`
+    //             }));
 
-                setTeachers(teacherOptions);
-            } catch (error) {
-                console.error("Error fetching teacher data:", error);
-            }
-        };
-        fetchTeacherData();
-    }, [APIURL, admin_id]);
+    //             setTeachers(teacherOptions);
+    //         } catch (error) {
+    //             console.error("Error fetching teacher data:", error);
+    //         }
+    //     };
+    //     fetchTeacherData();
+    // }, [APIURL, admin_id]);
 
 
     const handleNumberInput = (e) => {
@@ -201,9 +248,9 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
             ...base,
             minHeight: '48px',
             height: '48px',
-            borderRadius:'8px',
+            borderRadius: '8px',
             borderColor: '#757575',
-            boxShadow: state.isFocused ? 0: 0,
+            boxShadow: state.isFocused ? 0 : 0,
             '&:hover': {
                 borderColor: '#526D82',
             }
@@ -269,7 +316,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                                 <div className="AdminQuestionAssigning-form-group">
                                     <label className="AdminQuestionAssigning-form-label">
                                         Select Name of Examination <span className="AdminQuestionAssigning-adding_required">*</span>
-                                        </label>
+                                    </label>
                                     <Select
                                         options={examinations}
                                         styles={customStyles}
@@ -285,7 +332,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                                 <div className="AdminQuestionAssigning-form-group">
                                     <label className="AdminQuestionAssigning-form-label">
                                         Select Year <span className="AdminQuestionAssigning-adding_required">*</span>
-                                        </label>
+                                    </label>
                                     <Select
                                         options={filteredYears}
                                         styles={customStyles}
@@ -302,7 +349,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                                 <div className="AdminQuestionAssigning-form-group">
                                     <label className="AdminQuestionAssigning-form-label">
                                         Select Class <span className="AdminQuestionAssigning-adding_required">*</span>
-                                        </label>
+                                    </label>
                                     <Select
                                         options={filteredClasses}
                                         styles={customStyles}
@@ -316,8 +363,8 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                             <Col md={6} className="AdminQuestionAssigning-form-group-col">
                                 <div className="AdminQuestionAssigning-form-group">
                                     <label className="AdminQuestionAssigning-form-label">
-                                        Select Subject <span className="AdminQuestionAssigning-adding_required">*</span> 
-                                        </label>
+                                        Select Subject <span className="AdminQuestionAssigning-adding_required">*</span>
+                                    </label>
                                     <Select
                                         options={filteredSubjects}
                                         styles={customStyles}
@@ -334,7 +381,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                                 <div className="AdminQuestionAssigning-form-group">
                                     <label className="AdminQuestionAssigning-form-label">
                                         Total Marks <span className="AdminQuestionAssigning-adding_required">*</span>
-                                        </label>
+                                    </label>
                                     <input
                                         type="text"
                                         min="0"
@@ -358,9 +405,12 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                                 <div className="AdminQuestionAssigning-form-group">
                                     <label className="AdminQuestionAssigning-form-label">
                                         Assign Teacher <span className="AdminQuestionAssigning-adding_required">*</span>
-                                        </label>
+                                    </label>
                                     <Select
-                                        options={teachers}
+                                        options={teachers.map(t => ({
+                                            value: t.id,
+                                            label: `${t.first_name} ${t.last_name}`
+                                        }))}
                                         styles={customStyles}
                                         placeholder=""
                                         isClearable={true}

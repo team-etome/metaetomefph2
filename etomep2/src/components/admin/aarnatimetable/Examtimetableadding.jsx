@@ -3,6 +3,7 @@ import './examtimetableadding.css'; // Ensure the CSS is appropriate
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import Select from 'react-select';
 
 const Examtimetableadding = ({ onClose }) => {
     const APIURL = useSelector((state) => state.APIURL.url);
@@ -10,7 +11,6 @@ const Examtimetableadding = ({ onClose }) => {
 
     const [examName, setExamName] = useState("");
     const [year, setYear] = useState("");
-    const [classOptions, setClassOptions] = useState([]);
     const [selectedClass, setSelectedClass] = useState(null);
     const [subjectOptions, setSubjectOptions] = useState([]);
     const [term, setTerm] = useState("")
@@ -39,47 +39,51 @@ const Examtimetableadding = ({ onClose }) => {
         setEntries(updatedEntries);
     };
 
-    useEffect(() => {
-        const fetchClass = async () => {
-            try {
-                const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`);
-                const formatted = response.data.map((cls) => ({
-                    value: cls.class,
-                    label: `${cls.class_name} ${cls.division}`,
-                    subjectList: cls.curriculum,
-                }));
-                setClassOptions(formatted);
-            } catch (error) {
-                console.error("Failed to fetch class data");
-                Swal.fire({
-                    icon: "error",
-                    title: "Error!",
-                    text: "Unable to load class list.",
-                });
-            }
-        };
 
-        fetchClass();
-    }, [APIURL, admin_id]);
 
-    const handleClassChange = (e) => {
-        const selectedValue = parseInt(e.target.value);
-        const selected = classOptions.find((c) => c.value === selectedValue);
-        if (!selected) return;
+    const classOptions = useSelector(state => state.examClasses.list);
 
-        setSelectedClass(selected);
+    // useEffect(() => {
+    //     const fetchClass = async () => {
+    //         try {
+    //             const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`);
+    //             const formatted = response.data.map((cls) => ({
+    //                 value: cls.class,
+    //                 label: `${cls.class_name} ${cls.division}`,
+    //                 subjectList: cls.curriculum,
+    //             }));
+    //             setClassOptions(formatted);
+    //         } catch (error) {
+    //             console.error("Failed to fetch class data");
+    //             Swal.fire({
+    //                 icon: "error",
+    //                 title: "Error!",
+    //                 text: "Unable to load class list.",
+    //             });
+    //         }
+    //     };
 
-        const formattedSubjects = selected.subjectList.map((subj) => ({
-            value: subj.subject_id,
-            label: subj.subject,
-        }));
+    //     fetchClass();
+    // }, [APIURL, admin_id]);
 
-        setSubjectOptions(formattedSubjects);
+    // const handleClassChange = (e) => {
+    //     const selectedValue = parseInt(e.target.value);
+    //     const selected = classOptions.find((c) => c.value === selectedValue);
+    //     if (!selected) return;
 
-        setEntries((prev) =>
-            prev.map((entry) => ({ ...entry, subject: '' }))
-        );
-    };
+    //     setSelectedClass(selected);
+
+    //     const formattedSubjects = selected.subjectList.map((subj) => ({
+    //         value: subj.subject_id,
+    //         label: subj.subject,
+    //     }));
+
+    //     setSubjectOptions(formattedSubjects);
+
+    //     setEntries((prev) =>
+    //         prev.map((entry) => ({ ...entry, subject: '' }))
+    //     );
+    // };
 
 
     const handleSave = async () => {
@@ -146,6 +150,80 @@ const Examtimetableadding = ({ onClose }) => {
     };
 
 
+    const dashboardsmallcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            width: '200px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px',
+            }
+        }),
+
+        indicatorSeparator: () => ({ display: 'none' }),
+
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',
+            overflowY: 'auto',
+            fontSize: '14px',
+        }),
+
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': { backgroundColor: '#e6e6e6' },
+        }),
+    };
+
+    const classSelectOptions = classOptions.map(cls => ({
+        label: cls.label,
+        value: cls.value,
+        subjectList: cls.subjectList,    // carry over the subjects
+      }));
+      
+      // 2) new handler signature
+      const handleClassChange = option => {
+        setSelectedClass(option);
+      
+        // rebuild subject dropdown from the selected class
+        const formattedSubjects = option.subjectList.map(subj => ({
+          label: subj.subject,
+          value: subj.subject_id,
+        }));
+        setSubjectOptions(formattedSubjects);
+      
+        // clear any old subject selections
+        setEntries(prev => prev.map(r => ({ ...r, subject: '' })));
+      };
+
+
+
     return (
         <div className="examtimetable-adding-backdrop">
             <div className="examtimetable-adding-container">
@@ -185,7 +263,7 @@ const Examtimetableadding = ({ onClose }) => {
                                 <option value="Term 5">Term 5</option>
                                 <option value="Term 6">Term 6</option>
                             </select>
-                            <select
+                            {/* <select
                                 className="form-select form-select-sm examtimetable-adding_form-select"
                                 value={selectedClass?.value || ''}
                                 onChange={handleClassChange}
@@ -196,7 +274,15 @@ const Examtimetableadding = ({ onClose }) => {
                                         {cls.label}
                                     </option>
                                 ))}
-                            </select>
+                            </select> */}
+                            <Select
+                                styles={dashboardsmallcustomStyles}
+                                options={classSelectOptions}
+                                value={selectedClass}
+                                onChange={handleClassChange}
+                                placeholder="Select Class"
+                                isClearable
+                            />
                         </div>
                     </div>
                     <div className="examtimetable-adding-form_form-content">

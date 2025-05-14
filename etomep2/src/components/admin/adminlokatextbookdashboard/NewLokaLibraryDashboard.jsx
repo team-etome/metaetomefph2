@@ -22,6 +22,9 @@ import NewLokaLibraryAdd from "./NewLokaLibraryAdd";
 import NewLokaLibraryEdit from "./NewLokaLibraryEdit";
 import chemistry from "../../../assets/chemistry.png";
 import { RiSearchLine } from "react-icons/ri";
+import { useDispatch } from 'react-redux';
+import { setSelectedBook } from '../../../Redux/Actions/LibraryEditAction';
+import { setAdminCategories } from '../../../Redux/Actions/AdminLibraryCategoryActions';
 
 function NewLokaLibraryDashboard() {
   const [lokabookListData, setLokaBookListData] = useState([]);
@@ -33,16 +36,20 @@ function NewLokaLibraryDashboard() {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
   const [showEditPopup, setShowEditPopup] = useState(false);
-  const [selectedBook, setSelectedBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const dispatch = useDispatch();
+
+  const handleBookClick = (book) => {
+    dispatch(setSelectedBook(book));
+    setShowEditPopup(true);
+  };
 
 
   console.log(lokabookListData, "clgggggggggggggggggg")
 
-  useEffect(() => {
     const fetchTextbooks = async () => {
       try {
         const response = await axios.get(`${APIURL}/api/create-textbook/${admin_id}`);
@@ -53,11 +60,13 @@ function NewLokaLibraryDashboard() {
       } catch (error) {
         console.error("Error fetching textbooks:", error);
       }
-    };
 
-    if (admin_id) {
-      fetchTextbooks();
-    }
+    // if (admin_id) {
+    //   fetchTextbooks();
+    // }
+  };
+  useEffect(() => {
+    if (admin_id) fetchTextbooks();
   }, [APIURL, admin_id]);
 
   useEffect(() => {
@@ -65,6 +74,7 @@ function NewLokaLibraryDashboard() {
       try {
         const response = await axios.get(`${APIURL}/api/category/${admin_id}`);
         setCategories(response.data.categories);
+        dispatch(setAdminCategories(response.data.categories));
         // console.log(response.data, "response.data catogoaryyyyyyy")
       } catch (err) {
         setError(err);
@@ -96,10 +106,7 @@ function NewLokaLibraryDashboard() {
     return acc;
   }, {});
 
-  const handleBookClick = (book) => {
-    setSelectedBook(book);
-    setShowEditPopup(true);
-  };
+
   const dashboardcustomStyles = {
     control: (base, state) => ({
       ...base,
@@ -176,7 +183,7 @@ function NewLokaLibraryDashboard() {
               <input
                 type="text"
                 className="form-control form-control-sm admin_loka_library_select_faculty"
-                placeholder="     Search Faculty"
+                placeholder="     Search Books"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -233,12 +240,15 @@ function NewLokaLibraryDashboard() {
         )}
       </div>
 
-      {showEditPopup && selectedBook && (
+      {showEditPopup && (
         <NewLokaLibraryEdit
-          isOpen={showEditPopup}
-          onClose={() => setShowEditPopup(false)}
-          bookData={selectedBook}
-        />
+                   isOpen={showEditPopup}
+                   onClose={()    => setShowEditPopup(false)}
+                   onUpdated={() => {
+                     fetchTextbooks();
+                     setShowEditPopup(false);
+                   }}
+                 />
       )}
     </div>
   );

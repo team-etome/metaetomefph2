@@ -242,6 +242,7 @@
     height: 40px;
     line-height: 20px;
     box-sizing: border-box;
+    background: transparent;
 }
 
 .lokalibraryedit_custom-file-upload {

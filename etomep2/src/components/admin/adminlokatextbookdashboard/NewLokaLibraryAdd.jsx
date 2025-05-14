@@ -9,7 +9,7 @@ import { FaTrash, FaRedo } from "react-icons/fa";
 import CreatableSelect from 'react-select/creatable';
 import { BiBorderRadius } from 'react-icons/bi';
 
-const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
+const NewLokaLibraryAdd = ({ isOpen, onClose, onUpdated  }) => {
     if (!isOpen) return null;
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
@@ -88,7 +88,8 @@ const NewLokaLibraryAdd = ({ isOpen, onClose }) => {
                 text: "Textbook created successfully!",
                 confirmButtonText: "OK"
             }).then(() => {
-                onClose(); // close modal after OK
+                // onClose(); // close modal after OK
+                onUpdated();
             });
 
         } catch (error) {

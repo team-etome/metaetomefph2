@@ -96,9 +96,6 @@ const NewEvaluationDashboard = () => {
     }, [admin_id, APIURL]);
 
 
-
-
-
     const handleSearch = () => {
         const filtered = evaluationData.filter(item => {
             const classMatch = selectedExamType === "" || `${item.class_name} ${item.division}` === selectedExamType;

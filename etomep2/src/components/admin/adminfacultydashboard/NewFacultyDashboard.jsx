@@ -44,6 +44,7 @@ const NewFacultyDashboard = () => {
             } else {
                 console.warn("Unexpected response structure", response.data);
             }
+            // console.log(response.data,"response.dataresponse.dataresponse.data")
         } catch (error) {
             console.error("Error fetching faculty data:", error);
         }
