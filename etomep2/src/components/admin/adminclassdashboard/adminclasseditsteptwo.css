@@ -1,0 +1,266 @@
+.adminclasseditsteptwo-main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 1000;
+    border-radius: 16px;
+
+}
+.adminclasseditsteptwo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 29px 24px;
+    height: 72px;
+    border-bottom: 2px solid #DFDFDF;
+    margin-bottom: 16px;
+  }
+  
+  .adminclasseditsteptwo-header-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222222;
+  }
+  
+  .adminclasseditsteptwo-close-btn {
+    font-size: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .adminclasseditsteptwo-step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    margin-bottom: 16px;
+    padding: 0 16px;
+    /* Add horizontal padding if desired */
+    padding-left: 24px;
+  }
+  
+  .adminclasseditsteptwo-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+  }
+  
+  .adminclasseditsteptwo-step:not(:last-child)::after {
+    content: ">";
+    color: #A1A1A1;
+    margin-left: 24px;
+    font-size: 24px;
+  }
+  
+  .adminclasseditsteptwo-step-number {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .adminclasseditsteptwo-step.completed .adminclasseditsteptwo-step-number {
+    background-color: #2162B2;
+  }
+  
+  .adminclasseditsteptwo-step-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: #222222;
+  }
+  
+  .adminclasseditsteptwo-step.active .adminclasseditsteptwo-step-label {
+    color: black;
+    
+  }
+  
+  .adminclasseditsteptwo-modal-step-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 24px;
+    overflow-y: auto;
+    margin-bottom: 80px; /* Space for footer */
+ 
+  }
+  .adminclasseditsteptwo-table-header {
+    display: grid;
+  /* 3 equal columns + 1 “auto” for the delete button */
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  background: white;
+  padding: 0 8px;
+  font-weight: 600;
+  /* border-bottom: 1px solid #DFDFDF; */
+  position: sticky;
+  top: 0;
+  /* z-index: 10; */
+  }
+  .adminclasseditsteptwo-table-body {
+    overflow-y: auto;
+    flex: 1;         /* fill remaining space */
+    padding-top: 8px; 
+  }
+  
+  .adminclasseditsteptwo-form-label {
+    /* margin-top: 16px; */
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    color: #767676;
+  }
+  
+  .adminclasseditsteptwo_required {
+    color: red;
+  }
+  
+  .adminclasseditsteptwo_form-control {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #CCC;
+    border-radius: 8px;
+    padding: 0 10px;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 16px;
+  }
+  
+  .adminclasseditsteptwo_form-select {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #CCC;
+    border-radius: 8px;
+    padding: 0 10px;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 16px;
+  }
+  
+  .adminclasseditsteptwo_step-row {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 16px;
+    gap: 8px;
+  }
+  
+  .adminclasseditsteptwo_step-column {
+    flex: 1;
+  }
+  
+  .adminclasseditsteptwo_row-with-delete {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .adminclasseditsteptwo_row-with-delete:not(.adminclasseditsteptwo_first-row):hover .adminclasseditsteptwo_delete-row-btn {
+    display: block;
+    height: 16px !important;
+    width: 16px !important;
+}
+.adminclasseditsteptwo_row-with-delete:not(.adminclasseditsteptwo_first-row):hover {
+  transform: scale(0.96);
+}
+  
+.adminclasseditsteptwo_first-row {
+  pointer-events: none;
+}
+
+.adminclasseditsteptwo_first-row .adminclasseditsteptwo_step-column {
+  pointer-events: auto;
+}
+  
+  .adminclasseditsteptwo_delete-row-btn {
+    position: absolute;
+    top: 30%;
+    right: -20px;
+    transform: translateY(-50%);
+    background: transparent;
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: none;
+    height: 0px !important;
+    width: 0px !important;
+    transition: all 0.3s ease;
+  }
+  
+  
+  
+  .adminclasseditsteptwo_add-next-btn-container {
+    margin-top: 0px;
+    padding-top: 0px;
+    text-align: center;
+  }
+  
+  .adminclasseditsteptwo_add-next-btn {
+    background-color: white;
+    color: #2162B2;
+    width: 120px;
+    height: 40px;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  
+  .adminclasseditsteptwo-modal-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background-color: white;
+    border-radius: 16px;
+    
+    /* border-top: 1px solid #DFDFDF; */
+  }
+  
+  .adminclasseditsteptwo-footer-right button {
+    margin-left: 8px;
+  }
+  
+  .adminclasseditsteptwo_btn-back {
+    background-color: white;
+    color: #444444;
+    border: 1px solid #444444;
+    border-radius: 8px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+  }
+  
+  .adminclasseditsteptwo_btn-clear {
+    background-color: white;
+    color: #2162B2;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+  }
+  
+  .adminclasseditsteptwo_btn-next {
+    background-color: #2162B2;
+    color: white;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+  }  
+
+  .adminclasseditsteptwo_required {
+    color: red;
+  }
+  

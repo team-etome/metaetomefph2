@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import "./adminclassview.css";
 import AdminClassStudentList from "./AdminClassStudentList";
+import AdminClassEditStepOne from "./AdminClassEditStepOne";
+import AdminClassEditStepTwo from "./AdminClassEditStepTwo";
+import { useSelector } from "react-redux";
 
-const AdminClassView = ({ onClose, faculty }) => {
+const AdminClassView = ({ onClose, faculty, onUpdateClass }) => {
     const [showStudents, setShowStudents] = useState(false);
+    // console.log(faculty, "faculty"); // check real data
 
-    console.log(faculty, "faculty"); // check real data
+
+    const [editStep, setEditStep] = useState(0);
+    const [stepOneData, setStepOneData] = useState(null);
+    const teacherinfo = useSelector((state) => state.adminteacherinfo);
+    const teachers = teacherinfo?.adminteacherinfo || [];
 
     if (showStudents) {
         return (
@@ -20,6 +28,64 @@ const AdminClassView = ({ onClose, faculty }) => {
             />
         );
     }
+    // } else if (showEdit) {
+    //     return (
+    //         <AdminClassEditStepOne
+    //             teachers={teachers}
+    //             closeModal={() => setShowEdit(false)}
+    //             nextStep={(updated) => {
+    //                 onUpdateClass(updated);   // push the update back up
+    //                 setShowEdit(false);
+    //             }}
+    //             faculty={faculty}
+    //         />
+    //     );
+    // }
+
+    // console.log(teachers,"teachersteachersteachersteachersteachers")
+
+    if (editStep === 1) {
+        return (
+            <AdminClassEditStepOne
+                faculty={faculty}
+                teachers={teachers}
+                closeModal={() => setEditStep(0)}            // back to view
+                // nextStep={(data) => {                       
+                //     setStepOneData(data);
+                //     setEditStep(2);
+                // }}
+                nextStep={(stepOnePayload) => {
+                    setStepOneData({
+                        ...stepOnePayload,
+                        classId: faculty.classId   // or whatever the ID field is called
+                    });
+                    setEditStep(2);
+                }}
+            />
+        );
+    }
+
+    // 3) Edit Step Two
+    if (editStep === 2) {
+        return (
+            <AdminClassEditStepTwo
+                stepOneData={stepOneData}                   // carry over the step-one payload
+                initialEntries={faculty.curriculum || []}
+                teachers={teachers}
+                prevStep={() => setEditStep(1)}             // back to step one
+                closeModal={() => setEditStep(0)}           // abort edit, back to view
+                finishStep={(curriculumEntries) => {
+                    // merge and fire update
+                    onUpdateClass({
+                        ...stepOneData,
+                        entries: curriculumEntries
+                    });
+                    setEditStep(0);
+                }}
+            />
+        );
+    }
+
 
     return (
         <div className="adminclassview-backdrop">
@@ -29,11 +95,11 @@ const AdminClassView = ({ onClose, faculty }) => {
                 <button className="adminclassview-close-btn" onClick={onClose}>×</button>
             </div>
             {/* Wrapper */}
-            <div className="adminclassview-wrapper">
+            <div className="adminclassview-wrapper" >
                 <div className="adminclassview-top-row">
                     <div className="adminclassview-circle-container">
                         <div className="adminclassview-circle">
-                        {faculty.class_name} {faculty.section}
+                            {faculty.class_name} {faculty.section}
                         </div>
                     </div>
 
@@ -77,14 +143,13 @@ const AdminClassView = ({ onClose, faculty }) => {
                     </div>
                 </div>
             </div>
-
             {/* Subject List Table */}
             <div className="adminclassview-subject-list-container">
                 <p className="adminclassview-subject-list-title">Subject List</p>
                 <table className="adminclassview-table">
                     <thead>
 
-                        
+
                         <tr>
                             <th>Subject Name</th>
                             <th>Publisher Name</th>
@@ -108,7 +173,10 @@ const AdminClassView = ({ onClose, faculty }) => {
             {/* Footer Buttons */}
             <div className="adminclassview-modal-footer">
                 <button className="adminclassview-btn adminclassview-btn-delete">Delete</button>
-                <button className="adminclassview-btn adminclassview-btn-edit">Edit</button>
+                <button
+                    className="adminclassview-btn adminclassview-btn-edit"
+                    onClick={() => setEditStep(1)}
+                >Edit</button>
             </div>
         </div>
     );

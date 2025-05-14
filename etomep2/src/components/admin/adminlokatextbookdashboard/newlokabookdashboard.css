@@ -64,9 +64,10 @@
 .admin_loka_book_grid {
     margin-top: 24px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 24px;
     width: 100%;
+    margin-bottom: 24px ;
 }
 
 .admin_loka_book_col {
@@ -100,7 +101,7 @@
     position: relative;
       display: flex;
       align-items: center;
-      width: 100%;
+      width: 300px;
   }
   .admin_loka_search-icon {
     position: absolute;

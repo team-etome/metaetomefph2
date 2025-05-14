@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Examtimetableadding from './Examtimetableadding';
-import './examtimetable.css'; // Import custom CSS
-import { useSelector } from 'react-redux';
+import './examtimetable.css';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import Examtimetableediting from './Examtimetableediting';
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
+import { loadExamClasses } from '../../../Redux/Actions/AdminClassListAction';
 
 
 const Examtimetable = () => {
@@ -23,9 +24,45 @@ const Examtimetable = () => {
     const [selectedExamType, setSelectedExamType] = useState("");
     const [allTimetableData, setAllTimetableData] = useState([]);
     const [filteredTimetableData, setFilteredTimetableData] = useState([]);
-
-
     const [selectedFilterYear, setSelectedFilterYear] = useState("");
+    const [selectedTerm, setSelectedTerm] = useState("");
+
+
+    const [selectedClassOption, setSelectedClassOption] = useState(null);
+    const [selectedExamKey, setSelectedExamKey] = useState("");
+
+
+
+
+    const classOptions = useSelector(state => state.examClasses.list);
+    // console.log(classOptions,"classOptionsclassOptionsclassOptionsclassOptions")
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (classOptions.length === 0) {
+            const fetchClasses = async () => {
+                try {
+                    const { data } = await axios.get(`${APIURL}/api/addClassname/${admin_id}`);
+                    // console.log(data, "datacoming for classlist")
+                    const formatted = data.flatMap(group =>
+                        group.classes.map(cls => ({
+                            value: cls.class_id,
+                            label: `${group.class_name}${cls.division}`.toUpperCase(),  // → "9A" instead of "9a"
+                            subjectList: cls.curriculum,
+                        }))
+                    );
+                    // console.log(formatted, "datacoming for classlist")
+                    dispatch(loadExamClasses(formatted));
+                } catch (error) {
+                    console.error("Failed to fetch class list", error);
+                }
+            };
+            fetchClasses();
+        }
+    });
+
+
+
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,6 +71,7 @@ const Examtimetable = () => {
                     params: { admin_id }
                 });
                 const rawData = response.data.exam_timetables || {};
+                console.log(response.data,"resomjbjfkfjfsgjvdfijn")
 
                 // Convert raw data (an object) to an array of [examName, classesObj] pairs
                 let examArray = Object.entries(rawData);
@@ -221,6 +259,7 @@ const Examtimetable = () => {
         setSelectedFilterYear(selectedOption ? selectedOption.value : '');
     };
 
+
     return (
         <div className="examtimetable_main_container">
             <div className="examtimetable_main_header_container">
@@ -316,47 +355,55 @@ const Examtimetable = () => {
                     filteredTimetableData.map(([examName, classArray], index) => (
                         <div key={index} className="examtimetable_exam-section">
                             <p className="examtimetable-heading">{examName}</p>
-                            {classArray.map(([className, entries]) => (
-                                <div key={className} className="examtimetable_table_class-section">
-                                    <div className="examtimetable_class-header d-flex justify-content-between align-items-center">
-                                        <p className="examtimetable_class-title">Class {className}</p>
-                                        <button
-                                            className="btn-outline-secondary btn-sm examtimetable_table_class-section-edit_button"
+                            {classArray.map(([className, entries]) => {
+                                const clsOption = classOptions.find(o =>
+                                    o.label === className
+                                );
+                                return (
+                                    <div key={className} className="examtimetable_table_class-section">
+                                        <div className="examtimetable_class-header d-flex justify-content-between align-items-center">
+                                            <p className="examtimetable_class-title">Class {className}</p>
+                                            <button
+                                                className="btn-outline-secondary btn-sm examtimetable_table_class-section-edit_button"
 
-                                            onClick={() => {
-                                                setSelectedClassEntries(entries);
-                                                setSelectedClassId(className);
-                                                setEditPopupVisible(true);
-                                            }}
+                                                onClick={() => {
+                                                    setSelectedClassEntries(entries);
+                                                    setSelectedClassOption(clsOption);
+                                                    setSelectedExamKey(examName);
+                                                    setSelectedTerm(entries[0]?.term || "");            // ← grab the term here
+                                                    setEditPopupVisible(true);
+                                                }}
 
-                                        >
-                                            Edit
-                                        </button>
-                                    </div>
-                                    <table className="examtimetable_main_table">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Day</th>
-                                                <th>Date</th>
-                                                <th>Time</th>
-                                                <th>Subject</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {entries.map((entry, i) => (
-                                                <tr key={i}>
-                                                    <td>{i + 1}</td>
-                                                    <td>{getDayFromDate(entry.exam_date)}</td>
-                                                    <td>{dayjs(entry.exam_date).format('DD/MM/YYYY')}</td>
-                                                    <td>{entry.start_time} - {entry.end_time}</td>
-                                                    <td>{entry.subject}</td>
+                                            >
+                                                Edit
+                                            </button>
+                                        </div>
+                                        <table className="examtimetable_main_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Day</th>
+                                                    <th>Date</th>
+                                                    <th>Time</th>
+                                                    <th>Subject</th>
                                                 </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            ))}
+                                            </thead>
+                                            <tbody>
+                                                {entries.map((entry, i) => (
+                                                    <tr key={i}>
+                                                        <td>{i + 1}</td>
+                                                        <td>{getDayFromDate(entry.exam_date)}</td>
+                                                        <td>{dayjs(entry.exam_date).format('DD/MM/YYYY')}</td>
+                                                        <td>{entry.start_time} - {entry.end_time}</td>
+                                                        <td>{entry.subject}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )
+                            }
+                            )}
                         </div>
                     ))
                 ) : (
@@ -368,8 +415,10 @@ const Examtimetable = () => {
                 {editPopupVisible && (
                     <Examtimetableediting
                         onClose={() => setEditPopupVisible(false)}
-                        defaultClassId={selectedClassId}
+                        defaultClassOption={selectedClassOption}
                         defaultEntries={selectedClassEntries}
+                        defaultExamKey={selectedExamKey}
+                        defaultTerm={selectedTerm}        // ← pass defaultTerm
                     />
                 )}
 

@@ -96,7 +96,7 @@ const NewSeatingDashboardView = ({ selectedItem, onBack }) => {
                 </div>
                 <div className="seatingview_modal-footer">
                     <button className="seatingview_btn seatingview_btn-danger">Delete</button>
-                    <button className="seatingview_btn seatingview_btn-secondary">edit</button>
+                    {/* <button className="seatingview_btn seatingview_btn-secondary">edit</button> */}
                 </div>
             </div>
         </div>

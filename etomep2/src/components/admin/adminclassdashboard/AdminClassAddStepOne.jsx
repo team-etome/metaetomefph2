@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Select from "react-select";
 import "./adminclassaddstepone.css";
 
 const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
@@ -102,6 +103,75 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
     }
   };
 
+  const steponeaddcustomStyles = {
+          control: (base, state) => ({
+              ...base,
+              // width: '501px',
+              height: '48px',
+              borderRadius: '8px',
+              borderColor: state.isFocused ? '#86b7fe' : '#757575',
+              boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+              display: 'flex',
+              alignItems: 'center',
+              paddingLeft: 8,
+              paddingRight: 8,
+              Grid: 0,
+              padding: 0,
+              marginTop: '4px',
+          }),
+  
+          dropdownIndicator: (base) => ({
+              ...base,
+              color: '#292D32',
+              padding: '0 8px',
+              alignItems: 'center',
+              svg: {
+                  width: '24px',
+                  height: '24px',
+              }
+          }),
+  
+          indicatorSeparator: () => ({
+              display: 'none'
+          }),
+  
+          placeholder: (base) => ({
+              ...base,
+              color: '#526D82',
+              fontSize: '16px',
+              margin: 0,           // remove any extra top/bottom margins
+              lineHeight: '48px',
+          }),
+  
+  
+          singleValue: (base) => ({
+              ...base,
+              color: '#526D82',
+              fontSize: '16px'
+          }),
+  
+          menu: (base) => ({
+              ...base,
+              zIndex: 1000,
+              maxHeight: '200px',  // Limit the height of the dropdown list
+              overflowY: 'auto',   // Enable scrolling when the options exceed the height
+              fontSize: '14px',
+          }),
+  
+          option: (base, state) => ({
+              ...base,
+              backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+              color: state.isFocused ? '#fff' : '#222222',
+              '&:active': {
+                  backgroundColor: '#e6e6e6',
+              }
+          }),
+      };
+      const teacherOptions = teachers.map(t => ({
+          value: t.id.toString(),
+          label: `${t.first_name} ${t.last_name}`
+      }));
+
   return (
     <div className="adminclassaddstepone-main">
       {/* Modal Header */}
@@ -204,7 +274,7 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
               value={formData.stream}
               onChange={handleInputChange}
               disabled={!isStreamEnabled}
-              style={{ 
+              style={{
                 backgroundColor: !isStreamEnabled ? '#757575' : 'white',
                 color: !isStreamEnabled ? '#757575' : 'black'
               }}
@@ -224,14 +294,14 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
           </div>
 
           {/* Class Teacher */}
-          <div className="adminclassaddstepone-form-field">
+          <div className="adminclassaddstepone-form-field_classteacher">
             <label
               className="adminclassaddstepone-form-label"
               htmlFor="classTeacher"
             >
               Class Teacher <span className="adminclassaddstepone_required">*</span>
             </label>
-            <select
+            {/* <select
               id="classTeacher"
               className={`form-select form-select-sm adminclassaddstepone_select_section ${errors.classTeacher ? 'is-invalid' : ''}`}
               value={formData.classTeacherId || ""}
@@ -257,7 +327,27 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
                   {teacher.first_name} {teacher.last_name}
                 </option>
               ))}
-            </select>
+            </select> */}
+            <Select
+              id="classTeacher"
+              styles={steponeaddcustomStyles}
+              options={teacherOptions}
+              value={teacherOptions.find(o => o.value === formData.classTeacherId) || null}
+              onChange={(opt) => {
+                setFormData(prev => ({
+                  ...prev,
+                  classTeacherId: opt?.value || "",
+                  classTeacher: opt?.label || ""
+                }));
+                if (errors.classTeacher) {
+                  const newErrors = { ...errors };
+                  delete newErrors.classTeacher;
+                  setErrors(newErrors);
+                }
+              }}
+              placeholder="Select Teacher"
+              isClearable
+            />
             {errors.classTeacher && (
               <div className="invalid-feedback">{errors.classTeacher}</div>
             )}

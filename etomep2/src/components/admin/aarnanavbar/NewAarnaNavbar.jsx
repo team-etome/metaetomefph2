@@ -21,32 +21,24 @@ import NewEvaluationDashboard from "../aarnaevaluation/NewEvaluationDashboard";
 
 function NewAarnaNavbar() {
     const admininfo = useSelector((state) => state.admininfo);
-
-    const [activeTab, setActiveTab] = useState(
-        localStorage.getItem("activeTab") || "Textbook"
-    );
-
-    console.log(activeTab, "current tab..................")
-
-
-    const [searchTerm, setSearchTerm] = useState("");
-
-    const navigate = useNavigate();
-    // console.log(activeTab, "activa tab");
-
-    useEffect(() => {
-        const storedTab = localStorage.getItem("activeTab");
-        if (storedTab) {
-
-            setActiveTab(storedTab);
-
-
-        }
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem("activeTab", activeTab);
-    }, [activeTab]);
+        console.log(admininfo, "admin info");
+    
+    
+        const navigate = useNavigate();
+   const [activeTab, setActiveTab] = useState(() => {
+           return localStorage.getItem("aarnaActiveTab") || "Time Table";
+       });
+   
+       useEffect(() => {
+           localStorage.setItem("aarnaActiveTab", activeTab);
+       }, [activeTab]);
+   
+       console.log(activeTab, "active tabbbbb");
+   
+   
+       useEffect(() => {
+           localStorage.setItem("activeTab", activeTab);
+       }, [activeTab]);
 
     const handlenavigate = () => {
         navigate('/adminprofile', { state: { admininfo: admininfo.admininfo } });
@@ -59,7 +51,7 @@ function NewAarnaNavbar() {
                     <Row className="newlokanav_row_header">
                         <Col md={6} className="newlokanav_header_left_heading">
                             <div className="newlokanav_title">
-                                <p>Loka</p>
+                                <p>Aarna</p>
                             </div>
                         </Col>
                         <Col md={6} className="newlokanav_header_right_profilepic">

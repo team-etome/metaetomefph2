@@ -211,7 +211,7 @@ const NewLokaBookDashboard = () => {
                             <input
                                 type="text"
                                 className="form-control form-control-sm admin_loka_select_faculty"
-                                placeholder="     Search Faculty"
+                                placeholder="     Search Books"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />

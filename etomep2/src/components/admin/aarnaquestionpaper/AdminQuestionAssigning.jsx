@@ -7,6 +7,7 @@ import { exampaperinfo } from '../../../Redux/Actions/ExamPaperInfoAction';
 import AdminQuestionAssigningView from './AdminQuestionassigningview';
 import image from "../../../assets/arrow-swap.jpg"
 import Select from 'react-select';
+import { loadTimetableDataQuestionPaper } from '../../../Redux/Actions/AdminTimetableDataQuestionPaperActions';
 
 
 
@@ -26,11 +27,26 @@ const AdminQuestionAssigning = () => {
     const [selectedYear, setSelectedYear] = useState('All');
     const [sortDropdown, setSortDropdown] = useState({
         isOpen: false,
-        column: null
-    });
+        column: null,
+        groupIndex: null
+    })
 
 
     const dispatch = useDispatch();
+    // grab timetable from Redux
+    const timetableData = useSelector(s => s.timetabledataquestionpaper.list ?? []);
+    // ─── new: fetch & store timetable
+    useEffect(() => {
+        if (timetableData.length === 0) {
+            axios.get(`${APIURL}/api/gettimetable/${admin_id}`)
+                .then(resp => {
+                    const examsData = resp.data.exams;
+                    console.log('fetched examsData', examsData);
+                    dispatch(loadTimetableDataQuestionPaper(examsData));
+                })
+                .catch(err => console.error('gettimetable failed', err));
+        }
+    }, [APIURL, admin_id, dispatch, timetableData.length]);
 
 
     useEffect(() => {
@@ -119,16 +135,23 @@ const AdminQuestionAssigning = () => {
     //     return items;
     // };
 
-    const handleRowClick = (item) => {
-        setSelectedItem(item); // Pass the clicked row data to the modal
+    const handleRowClick = (item, fullExamName) => {
+        setSelectedItem({
+            ...item,
+            exam_name: fullExamName,
+        });
         setShowPopupView(true); // Open the modal
     };
 
-    const handleSortClick = (column, event) => {
+    const handleSortClick = (column, groupIndex, event) => {
         event.stopPropagation();
-        setSortDropdown(prevState => ({
-            isOpen: prevState.column === column ? !prevState.isOpen : true,
-            column: column
+        setSortDropdown(prev => ({
+            isOpen:
+                prev.column === column && prev.groupIndex === groupIndex
+                    ? !prev.isOpen
+                    : true,
+            column,
+            groupIndex
         }));
     };
 
@@ -137,8 +160,13 @@ const AdminQuestionAssigning = () => {
         setSortDropdown({ isOpen: false, column: null });
     };
 
-    const renderSortDropdown = (column) => {
-        if (!sortDropdown.isOpen || sortDropdown.column !== column) return null;
+    const renderSortDropdown = (column, groupIndex) => {
+        if (
+            !sortDropdown.isOpen ||
+            sortDropdown.column !== column ||
+            sortDropdown.groupIndex !== groupIndex
+        )
+            return null;
 
 
 
@@ -312,98 +340,105 @@ const AdminQuestionAssigning = () => {
                 </div>
             </div>
             <div className="AdminQuestionAssigning_classes">
-                {filteredExamData.map((exam, index) => (
-                    <div key={index} className="AdminQuestionAssigning_classes-exam-group">
-                        <div className="AdminQuestionAssigning_exam-group-content">
-                            {/* Heading shows the full exam name */}
-                            <p className="AdminQuestionAssigning_exam-group-heading">{exam.fullExamName}</p>
-                            <div className="AdminQuestionAssigning_exam-section">
-                                <table className="AdminQuestionAssigning_main_table">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Subject
-                                                <span
-                                                    className="AdminQuestionAssigning_sort-arrow"
-                                                    onClick={(e) => handleSortClick('subject', e)}
-                                                >
-                                                    <img src={image} alt="Sort Arrow" className="AdminQuestionAssigning_sort-arrow-image" />
-                                                    {renderSortDropdown('subject')}
-                                                </span>
-                                            </th>
-                                            <th>
-                                                Class
-                                                <span
-                                                    className="AdminQuestionAssigning_sort-arrow"
-                                                    onClick={(e) => handleSortClick('class', e)}
-                                                >
-                                                    <img src={image} alt="Sort Arrow" className="AdminQuestionAssigning_sort-arrow-image" />
-                                                    {renderSortDropdown('class')}
-                                                </span>
-                                            </th>
-                                            <th>
-                                                Teacher
-                                                <span
-                                                    className="AdminQuestionAssigning_sort-arrow"
-                                                    onClick={(e) => handleSortClick('teacher', e)}
-                                                >
-                                                    <img src={image} alt="Sort Arrow" className="AdminQuestionAssigning_sort-arrow-image" />
-                                                    {renderSortDropdown('teacher')}
-                                                </span>
-                                            </th>
-                                            <th>
-                                                Date
-                                                <span
-                                                    className="AdminQuestionAssigning_sort-arrow"
-                                                    onClick={(e) => handleSortClick('date', e)}
-                                                >
-                                                    <img src={image} alt="Sort Arrow" className="AdminQuestionAssigning_sort-arrow-image" />
-                                                    {renderSortDropdown('date')}
-                                                </span>
-                                            </th>
-                                            <th>
-                                                Time Duration
-                                                <span
-                                                    className="AdminQuestionAssigning_sort-arrow"
-                                                    onClick={(e) => handleSortClick('duration', e)}
-                                                >
-                                                    <img src={image} alt="Sort Arrow" className="AdminQuestionAssigning_sort-arrow-image" />
-                                                    {renderSortDropdown('duration')}
-                                                </span>
-                                            </th>
-                                            <th>
-                                                Status
-                                                <span
-                                                    className="AdminQuestionAssigning_sort-arrow"
-                                                    onClick={(e) => handleSortClick('status', e)}
-                                                >
-                                                    <img src={image} alt="Sort Arrow" className="AdminQuestionAssigning_sort-arrow-image" />
-                                                    {renderSortDropdown('status')}
-                                                </span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {exam.papers.map((item, i) => (
-                                            <tr key={i} onClick={() => handleRowClick(item)}>
-                                                <td>{item.subject_name}</td>
-                                                <td>{item.class_name} {item.division}</td>
-                                                <td>{item.teacher_name}</td>
-                                                <td>{item.exam_date}</td>
-                                                <td>{item.start_time} - {item.end_time}</td>
-                                                <td>
-                                                    <span className={`status-badge ${item.status === 'completed' ? 'Completed' : 'Pending'}`}>
-                                                        {item.status}
+                {filteredExamData.length === 0 ? (
+                    <div className="AdminQuestionAssigning_no-data">
+                        <h3>
+                            No QuestionPaper data found for the selected filters.
+                        </h3>
+                    </div>
+                ) : (
+                    filteredExamData.map((exam, examIndex) => (
+                        <div key={examIndex} className="AdminQuestionAssigning_classes-exam-group">
+                            <div className="AdminQuestionAssigning_exam-group-content">
+                                {/* Heading shows the full exam name */}
+                                <p className="AdminQuestionAssigning_exam-group-heading">{exam.fullExamName}</p>
+                                <div className="AdminQuestionAssigning_exam-section">
+                                    <table className="AdminQuestionAssigning_main_table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Subject
+                                                    <span
+                                                        className="AdminQuestionAssigning_sort-arrow"
+                                                        onClick={(e) => handleSortClick('subject', examIndex, e)}
+                                                    >
+                                                        <img src={image} alt="Sort Arrow" className="AdminQuestionAssigning_sort-arrow-image" />
+                                                        {renderSortDropdown('subject', examIndex)}
                                                     </span>
-                                                </td>
+                                                </th>
+                                                <th>
+                                                    Class
+                                                    <span
+                                                        className="AdminQuestionAssigning_sort-arrow"
+                                                        onClick={(e) => handleSortClick('class', examIndex, e)}
+                                                    >
+                                                        <img src={image} alt="Sort Arrow" className="AdminQuestionAssigning_sort-arrow-image" />
+                                                        {renderSortDropdown('class', examIndex)}
+                                                    </span>
+                                                </th>
+                                                <th>
+                                                    Teacher
+                                                    <span
+                                                        className="AdminQuestionAssigning_sort-arrow"
+                                                        onClick={(e) => handleSortClick('teacher', examIndex, e)}
+                                                    >
+                                                        <img src={image} alt="Sort Arrow" className="AdminQuestionAssigning_sort-arrow-image" />
+                                                        {renderSortDropdown('teacher', examIndex)}
+                                                    </span>
+                                                </th>
+                                                <th>
+                                                    Date
+                                                    <span
+                                                        className="AdminQuestionAssigning_sort-arrow"
+                                                        onClick={(e) => handleSortClick('date', examIndex, e)}
+                                                    >
+                                                        <img src={image} alt="Sort Arrow" className="AdminQuestionAssigning_sort-arrow-image" />
+                                                        {renderSortDropdown('date', examIndex)}
+                                                    </span>
+                                                </th>
+                                                <th>
+                                                    Time Duration
+                                                    <span
+                                                        className="AdminQuestionAssigning_sort-arrow"
+                                                        onClick={(e) => handleSortClick('duration', examIndex, e)}
+                                                    >
+                                                        <img src={image} alt="Sort Arrow" className="AdminQuestionAssigning_sort-arrow-image" />
+                                                        {renderSortDropdown('duration', examIndex)}
+                                                    </span>
+                                                </th>
+                                                <th>
+                                                    Status
+                                                    <span
+                                                        className="AdminQuestionAssigning_sort-arrow"
+                                                        onClick={(e) => handleSortClick('status', examIndex, e)}
+                                                    >
+                                                        <img src={image} alt="Sort Arrow" className="AdminQuestionAssigning_sort-arrow-image" />
+                                                        {renderSortDropdown('status', examIndex)}
+                                                    </span>
+                                                </th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            {exam.papers.map((item, i) => (
+                                                <tr key={i} onClick={() => handleRowClick(item, exam.fullExamName)}>
+                                                    <td>{item.subject_name}</td>
+                                                    <td>{item.class_name} {item.division}</td>
+                                                    <td>{item.teacher_name}</td>
+                                                    <td>{item.exam_date}</td>
+                                                    <td>{item.start_time} - {item.end_time}</td>
+                                                    <td>
+                                                        <span className={`status-badge ${item.status === 'completed' ? 'Completed' : 'Pending'}`}>
+                                                            {item.status}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    )))}
 
             </div>
             {/* <div className="pagination">
@@ -431,7 +466,15 @@ const AdminQuestionAssigning = () => {
                 <AdminQuestionAssigningView
                     isOpen={showPopupview}
                     onClose={() => setShowPopupView(false)}
-                    selectedItem={selectedItem} // Pass the selected item as a prop to the view page
+                    selectedItem={selectedItem}
+                    onDeleted={(deletedId) => {
+                        setFilteredExamData((groups) =>
+                            groups.map((g) => ({
+                                ...g,
+                                papers: g.papers.filter((p) => p.id !== deletedId),
+                            }))
+                        );
+                    }}
                 />
             )}
         </div>

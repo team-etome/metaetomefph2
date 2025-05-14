@@ -56,7 +56,7 @@ const NewAdminClassDashboard = () => {
                     classId: cls.class_id,
                     class_name: cls.class_name,
                     medium: cls.medium,
-                    stream: cls.stream,
+                    stream: cls.category,
                     curriculum: cls.curriculum,
                 }))
             }));
@@ -256,38 +256,42 @@ const NewAdminClassDashboard = () => {
 
             {/* Class Sections */}
             <div className="newclassdashboard-class-section">
-                {classData.map((classItem, idx) => (
-                    <div className="newclassdashboard-class-section-main mb-4" key={idx}>
-                        <p className="newclassdashboard-class-heading">Class {classItem.className}</p>
-                        <div className="newclassdashboard-class-section-row" >
-                            {classItem.sections.map((sec, index) => (
-                                <div key={index} className="newclassdashboard-card-container">
-                                    <div className="newclassdashboard-card"
-                                        onClick={() => handleCardClick(sec)}
-                                    >
-                                        <div className="newclassdashboard-card-top">
-                                            <div className="newclassdashboard-circle">{sec.class_name} {sec.section}</div>
-                                            <div className="newclassdashboard-teacher-container">
-                                                <p className="newclassdashboard-info-title">Class Teacher:</p>
-                                                <p className="newclassdashboard-teacher-name">{sec.teacher}</p>
+                {classData
+                    .filter(item =>
+                        !selectedClass || item.className === selectedClass
+                    )
+                    .map((classItem, idx) => (
+                        <div className="newclassdashboard-class-section-main mb-4" key={idx}>
+                            <p className="newclassdashboard-class-heading">Class {classItem.className}</p>
+                            <div className="newclassdashboard-class-section-row" >
+                                {classItem.sections.map((sec, index) => (
+                                    <div key={index} className="newclassdashboard-card-container">
+                                        <div className="newclassdashboard-card"
+                                            onClick={() => handleCardClick(sec)}
+                                        >
+                                            <div className="newclassdashboard-card-top">
+                                                <div className="newclassdashboard-circle">{sec.class_name} {sec.section}</div>
+                                                <div className="newclassdashboard-teacher-container">
+                                                    <p className="newclassdashboard-info-title">Class Teacher:</p>
+                                                    <p className="newclassdashboard-teacher-name">{sec.teacher}</p>
+                                                </div>
+                                            </div>
+                                            <div className="newclassdashboard-card-bottom">
+                                                <p className="newclassdashboard-info-title">
+                                                    Strength:
+                                                    <span className="newclassdashboard-info-text"> {sec.strength}</span>
+                                                </p>
+                                                <p className="newclassdashboard-info-title">
+                                                    Subjects:
+                                                    <span className="newclassdashboard-info-text"> {sec.subjects}</span>
+                                                </p>
                                             </div>
                                         </div>
-                                        <div className="newclassdashboard-card-bottom">
-                                            <p className="newclassdashboard-info-title">
-                                                Strength:
-                                                <span className="newclassdashboard-info-text"> {sec.strength}</span>
-                                            </p>
-                                            <p className="newclassdashboard-info-title">
-                                                Subjects:
-                                                <span className="newclassdashboard-info-text"> {sec.subjects}</span>
-                                            </p>
-                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
             </div>
 
             {/* Modal Popup */}
@@ -324,6 +328,7 @@ const NewAdminClassDashboard = () => {
                         <AdminClassView
                             faculty={selectedSection}
                             onClose={() => setShowAdminClassView(false)}
+
                         />
                     </div>
                 </div>

@@ -1,23 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './newfacultyview.css';
 import defaultImage from "../../../assets/default.jpg";
 import image from "../../../assets/messi-ronaldo-1593920966.jpg"
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import NewFacultyEdit from './NewFacultyEdit';
 
 
 const NewFacultyView = ({ faculty, onClose, setSelectedFaculty, fetchFaculty }) => {
     if (!faculty) return null;
 
 
+    // console.log(faculty,"faculty, onClose, setSelectedFaculty, fetchFacultyfaculty, onClose, setSelectedFaculty, fetchFaculty")
+
+
     const APIURL = useSelector((state) => state.APIURL.url);
+
+    const [showEdit, setShowEdit] = useState(false);
+
+    const openEdit = () => {
+        setShowEdit(true);
+        // onClose();   // close the view popup
+    };
 
     const handleBlockUnblock = async () => {
         try {
             const currentFaculty = faculty;
             const isBlocked = faculty.status; // true means blocked
-            
+
             // Close the faculty view modal
             setSelectedFaculty(null);
             onClose();
@@ -40,11 +51,11 @@ const NewFacultyView = ({ faculty, onClose, setSelectedFaculty, fetchFaculty }) 
                     is_block: isBlocked ? 'unblock' : 'block'
                 });
 
-                if (response.data.message === "Teacher blocked successfully" || 
+                if (response.data.message === "Teacher blocked successfully" ||
                     response.data.message === "Teacher unblocked successfully") {
                     // Refresh the faculty list
                     await fetchFaculty();
-                    
+
                     await Swal.fire({
                         title: isBlocked ? 'Unblocked!' : 'Blocked!',
                         text: isBlocked ? 'Faculty has been unblocked.' : 'Faculty has been blocked.',
@@ -66,6 +77,15 @@ const NewFacultyView = ({ faculty, onClose, setSelectedFaculty, fetchFaculty }) 
                 'error'
             );
         }
+    };
+
+    const handleEditClose = () => {
+        setShowEdit(false);
+    };
+
+    const handleAfterUpdate = () => {
+        setShowEdit(false);
+        fetchFaculty();    // refresh list
     };
 
     return (
@@ -155,16 +175,30 @@ const NewFacultyView = ({ faculty, onClose, setSelectedFaculty, fetchFaculty }) 
 
                 {/* Footer Buttons */}
                 <div className="facultyview-modal-footer">
-                    <button 
+                    <button
                         className="facultyview-btn facultyview-btn-danger"
                         onClick={handleBlockUnblock}
                     >
                         {faculty.status ? 'Unblock' : 'Block'}
                     </button>
-                    <button className="facultyview-btn facultyview-btn-primary">Edit</button>
+                    <button
+                        className="facultyview-btn facultyview-btn-primary"
+                        onClick={openEdit}
+                    >
+                        Edit
+                    </button>
                 </div>
             </div>
+            {showEdit && (
+                <NewFacultyEdit
+                    isOpen={true}
+                    faculty={faculty}           // ← prefill data from the view
+                    onClose={handleEditClose}   // ← when user cancels edit
+                    onFacultyUpdated={handleAfterUpdate}
+                />
+            )}
         </div>
+
     );
 };
 

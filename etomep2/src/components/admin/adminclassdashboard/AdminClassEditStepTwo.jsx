@@ -1,41 +1,42 @@
 import React, { useEffect, useState } from "react";
-import "./adminclassaddsteptwo.css";
+import "./adminclasseditsteptwo.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Select from "react-select";
 
 
-const AdminClassAddStepTwo = ({
-  prevStep,
-  closeModal,
-  entries,
-  addEntry,
-  // removeEntry,
-  teachers,
-  admininfo,
-  stepOneData,
-  onSave,
-}) => {
-  useEffect(() => {
-    console.log("AdminClassAddStepTwo - admininfo3");
-    console.log("Subjects:", admininfo?.admininfo?.subjects);
-    console.log("Publisher Names:", admininfo?.admininfo?.publisher_name);
-  }, [admininfo]);
+
+const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep, closeModal, finishStep }) => {
+
 
 
   const APIURL = useSelector((state) => state.APIURL.url);
   const admin = useSelector((state) => state.admininfo);
-  const [localEntries, setLocalEntries] = useState(entries || []);
-
-
+  const [localEntries, setLocalEntries] = useState(initialEntries);
+  const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+  const teacherinfo = useSelector((state) => state.adminteacherinfo);
+  const admininfo = useSelector((state) => state.admininfo);
+  
 
 
   useEffect(() => {
-    if (entries) {
-      setLocalEntries(entries);
-    }
-  }, [entries]);
+    if (!initialEntries) return;
+    const mapped = initialEntries.map(e => {
+      const pub = e.publisher_name || "";
+      const matchTeacher = teachers.find(
+        t => `${t.first_name} ${t.last_name}` === e.teacher
+      );
+      const facIdString = matchTeacher ? matchTeacher.id.toString() : "";
+
+      return {
+        subject: e.subject,
+        publishername: pub,
+        facultyname: facIdString
+      };
+    });
+    setLocalEntries(mapped);
+  }, [initialEntries, teachers]);
 
   const handleSave = async () => {
     try {
@@ -58,8 +59,6 @@ const AdminClassAddStepTwo = ({
         });
         return;
       }
-
-      // Validate entries
       const incompleteEntries = localEntries.filter(entry =>
         !entry.subject || !entry.publishername || !entry.facultyname
 
@@ -86,6 +85,8 @@ const AdminClassAddStepTwo = ({
         }))
 
       };
+
+      const classId = stepOneData.classId;
 
       const response = await axios.post(`${APIURL}/api/addClassname`, finalPayload);
 
@@ -118,9 +119,13 @@ const AdminClassAddStepTwo = ({
     }
   };
 
+
+
+
   const removeEntry = (idxToRemove) => {
     setLocalEntries(prev => prev.filter((_, i) => i !== idxToRemove));
   };
+
 
   const handleEntryChange = (index, field, value) => {
     const updated = [...localEntries];
@@ -130,7 +135,6 @@ const AdminClassAddStepTwo = ({
     };
     setLocalEntries(updated);
   };
-
   const steponeeditcustomStyles = {
     control: (base, state) => ({
       ...base,
@@ -192,171 +196,60 @@ const AdminClassAddStepTwo = ({
       // zIndex: 9999,
     }),
   };
-  const subjectOptions = admininfo?.admininfo?.subjects?.map(s => ({
+  const subjectOptions = admininfo?.admininfo?.subjects?.map((s) => ({
     value: s.subject,
-    label: s.subject.charAt(0).toUpperCase()
-      + s.subject.slice(1),
+    label: s.subject.charAt(0).toUpperCase() + s.subject.slice(1),
   })) || [];
   const publisherOptions = admininfo?.admininfo?.publisher_name?.map(p => ({
     value: p,
     label: p
   })) || [];
+
   const facultyOptions = teachers.map(t => ({
     value: t.id.toString(),
     label: `${t.first_name} ${t.last_name}`
   }));
 
-
   return (
-    <div className="adminclassaddsteptwo-main" >
-      <div className="adminclassaddsteptwo-header" >
+    <div className="adminclasseditsteptwo-main" >
+      <div className="adminclasseditsteptwo-header" >
 
-        <p className="adminclassaddsteptwo-header-title">Add Class</p>
-        <button className="adminclassaddsteptwo-close-btn" onClick={closeModal}>×</button>
+        <p className="adminclasseditsteptwo-header-title">Add Class</p>
+        <button className="adminclasseditsteptwo-close-btn" onClick={closeModal}>×</button>
+      </div>
+      <div className="adminclasseditsteptwo-step-indicator">
+        <div className="adminclasseditsteptwo-step completed">
+          <div className="adminclasseditsteptwo-step-number">1</div>
+          <div className="adminclasseditsteptwo-step-label">Class Details</div>
+        </div>
+        <div className="adminclasseditsteptwo-step completed">
+          <div className="adminclasseditsteptwo-step-number">2</div>
+          <div className="adminclasseditsteptwo-step-label">Add Curriculum</div>
+        </div>
       </div>
 
-      <div className="adminclassaddsteptwo-step-indicator">
-        <div className="adminclassaddsteptwo-step completed">
-          <div className="adminclassaddsteptwo-step-number">1</div>
-          <div className="adminclassaddsteptwo-step-label">Class Details</div>
+      <div className="adminclasseditsteptwo-modal-step-content">
+        <div className="adminclasseditsteptwo-table-header">
+          <div className="adminclasseditsteptwo-form-label">
+            Subject <span className="adminclasseditsteptwo_required">*</span>
+          </div>
+          <div className="adminclasseditsteptwo-form-label">
+            Publisher Name <span className="adminclasseditsteptwo_required">*</span>
+          </div>
+          <div className="adminclasseditsteptwo-form-label">
+            Faculty Name <span className="adminclasseditsteptwo_required">*</span>
+          </div>
+          {/* you can add an empty column for the delete‐button space if you like */}
+          {/* <div className="adminclasseditsteptwo-step-column adminclasseditsteptwo-header-spacer"></div> */}
         </div>
-        <div className="adminclassaddsteptwo-step completed">
-          <div className="adminclassaddsteptwo-step-number">2</div>
-          <div className="adminclassaddsteptwo-step-label">Add Curriculum</div>
-        </div>
-      </div>
-
-      <div className="adminclassaddsteptwo-modal-step-content">
-        {/* <div className="adminclassaddsteptwo_entry-table">
+        <div className="adminclasseditsteptwo-table-body">
           {localEntries.map((entry, index) => (
             <div
               key={index}
-
-              className={`adminclassaddsteptwo_row-with-delete ${index === 0 ? "adminclassaddsteptwo_first-row" : ""}`}
-
+              className={`adminclasseditsteptwo_row-with-delete ${index === 0 ? "adminclasseditsteptwo_first-row" : ""}`}
             >
-              <div className="adminclassaddsteptwo_step-row">
-
-                
-                <div className="adminclassaddsteptwo_step-column">
-                  {index === 0 && (
-                    <label className="adminclassaddsteptwo-form-label" htmlFor={`subject-${index}`}>
-                      Subject <span className="adminclassaddsteptwo_required">*</span>
-                    </label>
-                  )}
-                  <select
-
-                    id={`subject-${index}`}
-                    className="form-select form-select-sm adminclassaddsteptwo_form-select"
-                    value={entry.subject || ""}
-                    onChange={(e) => handleEntryChange(index, 'subject', e.target.value)}
-
-                  >
-                    <option value="">Select Subject</option>
-                    {admininfo?.admininfo?.subjects?.map((subject, idx) => (
-                      <option key={idx} value={subject.subject}>
-                        {subject.subject.charAt(0).toUpperCase() + subject.subject.slice(1)}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-
-                <div className="adminclassaddsteptwo_step-column">
-                  {index === 0 && (
-                    <label className="adminclassaddsteptwo-form-label" htmlFor={`publisher-${index}`}>
-                      Publisher Name <span className="adminclassaddsteptwo_required">*</span>
-                    </label>
-                  )}
-                  <select
-
-                    id={`publisher-${index}`}
-                    className="form-select form-select-sm adminclassaddsteptwo_form-select"
-                    value={entry.publishername || ""}
-                    onChange={(e) => handleEntryChange(index, 'publishername', e.target.value)}
-                  >
-                    <option value="">Select Publisher</option>
-                    {admininfo?.admininfo?.publisher_name?.map((publisher, idx) => (
-                      <option key={idx} value={publisher}>{publisher}</option>
-
-                    ))}
-                  </select>
-                </div>
-
-
-                <div className="adminclassaddsteptwo_step-column">
-                  {index === 0 && (
-                    <label className="adminclassaddsteptwo-form-label" htmlFor={`faculty-${index}`}>
-                      Faculty Name <span className="adminclassaddsteptwo_required">*</span>
-                    </label>
-                  )}
-                  <select
-
-                    id={`faculty-${index}`}
-                    className="form-select form-select-sm adminclassaddsteptwo_form-select"
-                    value={entry.facultyname || ""}
-                    onChange={(e) => handleEntryChange(index, 'facultyname', e.target.value)}
-                  >
-                    <option value="">Select Faculty</option>
-                    {Array.isArray(teachers) && teachers.map((teacher, idx) => (
-                      <option key={idx} value={teacher.id}>
-                        {teacher.first_name} {teacher.last_name}
-                      </option>
-                    ))}
-
-                  </select>
-                </div>
-
-                {localEntries.length > 1 && (
-                  <span
-                    className="adminclassaddsteptwo_delete-row-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      removeEntry(index);
-                    }}
-                  >
-                    &#10005;
-                  </span>
-                )}
-              </div>
-            </div>
-          ))}
-
-          <div className="adminclassaddsteptwo_add-next-btn-container">
-            <button
-              type="button"
-              className="adminclassaddsteptwo_add-next-btn"
-              onClick={() => {
-                setLocalEntries((prev) => [
-                  ...prev,
-                  { subject: "", publishername: "", facultyname: "" },
-                ]);
-              }}
-            >
-              + Add Next
-            </button>
-          </div>
-
-        </div> */}
-        <div className="adminclassaddsteptwo-table-header">
-          <div className="adminclassaddsteptwo-form-label">
-            Subject <span className="adminclassaddsteptwo_required">*</span>
-          </div>
-          <div className="adminclassaddsteptwo-form-label">
-            Publisher Name <span className="adminclassaddsteptwo_required">*</span>
-          </div>
-          <div className="adminclassaddsteptwo-form-label">
-            Faculty Name <span className="adminclassaddsteptwo_required">*</span>
-          </div>
-        </div>
-        <div className="adminclassaddsteptwo-table-body">
-          {localEntries.map((entry, index) => (
-            <div
-              key={index}
-              className={`adminclassaddsteptwo_row-with-delete ${index === 0 ? "adminclassaddsteptwo_first-row" : ""}`}
-            >
-              <div className="adminclassaddsteptwo_step-row">
-                <div className="adminclassaddsteptwo_step-column">
+              <div className="adminclasseditsteptwo_step-row">
+                <div className="adminclasseditsteptwo_step-column">
                   <Select
                     id={`subject-${index}`}
                     options={subjectOptions}
@@ -378,7 +271,7 @@ const AdminClassAddStepTwo = ({
                 </div>
 
 
-                <div className="adminclassaddsteptwo_step-column">
+                <div className="adminclasseditsteptwo_step-column">
                   <Select
                     id={`publisher-${index}`}
                     options={publisherOptions}
@@ -396,7 +289,7 @@ const AdminClassAddStepTwo = ({
                 </div>
 
 
-                <div className="adminclassaddsteptwo_step-column">
+                <div className="adminclasseditsteptwo_step-column">
                   <Select
                     id={`faculty-${index}`}
                     options={facultyOptions}
@@ -415,7 +308,7 @@ const AdminClassAddStepTwo = ({
 
                 {localEntries.length > 1 && (
                   <span
-                    className="adminclassaddsteptwo_delete-row-btn"
+                    className="adminclasseditsteptwo_delete-row-btn"
                     onClick={(e) => {
                       e.stopPropagation();
                       removeEntry(index);
@@ -431,10 +324,29 @@ const AdminClassAddStepTwo = ({
         </div>
 
 
-        <div className="adminclassaddsteptwo_add-next-btn-container">
+
+
+
+
+
+
+
+        {/* <div className="adminclasseditsteptwo_entry-table">
+          {localEntries.map((entry, index) => (
+            <div
+              key={index}
+
+              className={`adminclasseditsteptwo_row-with-delete ${index === 0 ? "adminclasseditsteptwo_first-row" : ""}`}
+
+            >
+              
+            </div>
+          ))} */}
+
+        <div className="adminclasseditsteptwo_add-next-btn-container">
           <button
             type="button"
-            className="adminclassaddsteptwo_add-next-btn"
+            className="adminclasseditsteptwo_add-next-btn"
             onClick={() => {
               setLocalEntries((prev) => [
                 ...prev,
@@ -445,25 +357,27 @@ const AdminClassAddStepTwo = ({
             + Add Next
           </button>
         </div>
+
+        {/* </div> */}
       </div>
 
-      <div className="adminclassaddsteptwo-modal-footer">
-        <div className="adminclassaddsteptwo-footer-left">
-          <button type="button" className="adminclassaddsteptwo_btn-back" onClick={prevStep}>
+      <div className="adminclasseditsteptwo-modal-footer">
+        <div className="adminclasseditsteptwo-footer-left">
+          <button type="button" className="adminclasseditsteptwo_btn-back" onClick={prevStep}>
             Back
           </button>
         </div>
-        <div className="adminclassaddsteptwo-footer-right">
+        <div className="adminclasseditsteptwo-footer-right">
           <button
             type="button"
-            className="adminclassaddsteptwo_btn-clear"
+            className="adminclasseditsteptwo_btn-clear"
             onClick={() => setLocalEntries([{ subject: "", publishername: "", facultyname: "" }])}
           >
             Clear
           </button>
           <button
             type="button"
-            className="adminclassaddsteptwo_btn-next"
+            className="adminclasseditsteptwo_btn-next"
             onClick={handleSave}
           >
             Save
@@ -475,4 +389,4 @@ const AdminClassAddStepTwo = ({
   );
 };
 
-export default AdminClassAddStepTwo;
+export default AdminClassEditStepTwo;

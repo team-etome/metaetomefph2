@@ -1,0 +1,222 @@
+.adminclasseditstepone-main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.adminclasseditstepone-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 29px 24px;
+    height: 72px;
+    border-bottom: 2px solid #DFDFDF;
+    margin-bottom: 16px;
+}
+
+.adminclasseditstepone-header-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0px;
+    padding: 0px;
+    color: #222222;
+}
+
+.adminclasseditstepone-close-btn {
+    font-size: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* Step Indicator */
+.adminclasseditstepone-step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    /* margin-top: 16px; */
+    margin-bottom: 16px;
+    padding: 0 16px;
+    /* Add horizontal padding if desired */
+    padding-left: 24px;
+}
+
+.adminclasseditstepone-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.adminclasseditstepone-step:not(:last-child)::after {
+    content: ">";
+    color: #A1A1A1;
+    margin-left: 24px;
+    font-size: 24px;
+}
+
+.adminclasseditstepone-step-number {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}
+
+.adminclasseditstepone-step-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: #BABABA;
+}
+
+.adminclasseditstepone-step.active .adminclasseditstepone-step-number {
+    background-color: #2162B2;
+}
+
+.adminclasseditstepone-step.active .adminclasseditstepone-step-label {
+    color: black;
+}
+
+/* Modal Step Content */
+.adminclasseditstepone-modal-step-content {
+    flex: 1;
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+/* Form Labels and Inputs */
+.adminclasseditstepone-form-label {
+    margin-top: 16px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #767676;
+    display: inline-block;
+}
+
+.adminclasseditstepone_required {
+    color: red;
+}
+
+.adminclasseditstepone_form-control,
+.adminclasseditstepone_select_section {
+    width: 100%;
+    height: 48px;
+    font-size: 1rem;
+    border: 1px solid #757575;
+    border-radius: 8px;
+    padding: 0 10px;
+    color: black;
+}
+.adminclasseditstepone_form-control:focus {
+    border-color: #86b7fe;  
+    box-shadow: 0 0 0 .25rem rgb(194, 218, 255);
+    outline: none;
+  }
+  
+.adminclasseditstepone_select_section option {
+    /* width: 100%; */
+    height: 150px;
+    z-index: 9999;
+}
+
+.adminclasseditstepone_form-control {
+    margin-bottom: 0;
+    /* We'll use row spacing instead */
+}
+
+/* Footer */
+.adminclasseditstepone-modal-footer {
+    padding-top: 24x;
+    padding-bottom: 24px;
+    /* border-top: 1px solid #ccc; */
+}
+
+/* Buttons */
+.adminclasseditstepone_btn-clear {
+    background-color: white;
+    color: #2162B2;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.adminclasseditstepone_btn-next {
+    background-color: #2162B2;
+    color: white;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+    /* margin-left: 8px; */
+}
+
+.adminclasseditstepone-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 330px);
+  gap: 8px;
+  /* padding: 16px; */
+}
+
+.adminclasseditstepone-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.adminclasseditstepone-form-field input,
+
+.adminclasseditstepone-form-field select {
+  height: 48px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+}
+
+
+
+.adminclasseditstepone-wide-field {
+  /* grid-column: span 2; */
+  width: 500px;
+  /* gap:8px */
+}
+
+/* New styles for the bottom row */
+.adminclasseditstepone-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.adminclasseditstepone-bottom-row .adminclasseditstepone-form-field {
+  width: 100%;
+}
+
+.adminclasseditstepone-bottom-row .adminclasseditstepone-form-field select {
+  width: 100%;
+}
+
+.adminclasseditstepone-footer-content {
+  display: flex;
+  justify-content: space-between;
+  /* padding: 16px; */
+  width: 100%;
+  /* margin-right: 24px; */
+  /* padding-right: 24px; */
+}
+
+.adminclasseditstepone-button-group {
+  display: flex;
+  gap: 8px;
+  margin-right: 24px;
+}

@@ -9,7 +9,7 @@
     padding-left: 0;
 }
 
-.AdminQuestionAssigning_main_header_container{
+.AdminQuestionAssigning_main_header_container {
     flex: 0 0 auto;
     padding-left: 0;
     /* padding-top: 24px; */
@@ -23,15 +23,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0; /* Padding on the sides */
+    padding: 0;
+    /* Padding on the sides */
     padding-right: 0px !important;
-    
+
 }
 
 .AdminQuestionAssigning_left-controls {
     display: flex;
     align-items: center;
-    gap:8px;
+    gap: 8px;
 }
 
 /* Custom styles for examtimetable form selects */
@@ -44,6 +45,17 @@
     border-radius: 8px;
     border: 1px solid #4A4A4A;
 }
+
+.AdminQuestionAssigning_no-data {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.AdminQuestionAssigning_no-data h3 {
+    color: #526D82;
+}
+
 
 .content {
     padding-top: 150px;
@@ -78,9 +90,11 @@
     padding: 8px;
     /* padding-top: 15px !important; */
     border-bottom: 1px solid #ECECEC;
-    border-left: none; /* Explicitly remove left borders */
-    border-right: none; /* Explicitly remove right borders */
-    border-top: none; 
+    border-left: none;
+    /* Explicitly remove left borders */
+    border-right: none;
+    /* Explicitly remove right borders */
+    border-top: none;
 }
 
 .AdminQuestionAssigning_main_table th {
@@ -90,7 +104,8 @@
     font-weight: 400;
     background-color: #fff;
     position: relative;
-    padding-right: 24px; /* Make space for the sort arrow */
+    padding-right: 24px;
+    /* Make space for the sort arrow */
 }
 
 .AdminQuestionAssigning_main_table tr {
@@ -247,8 +262,10 @@
     white-space: nowrap;
     max-height: 200px;
     overflow-y: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
