@@ -92,70 +92,84 @@ const NewFacultyDashboard = () => {
     );
 
     const dashboardcustomStyles = {
-            control: (base, state) => ({
-                ...base,
-                // minHeight: '48px',
-                width:'300px',
-                height: '40px',
-                borderRadius: '8px',
-                borderColor: state.isFocused ? '#86b7fe' :'#757575',
-                boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
-                // '&:hover': { borderColor: '#86b7fe' }
-            }),
-    
-            dropdownIndicator: (base) => ({
-                ...base,
-                color: '#292D32',
-                padding: '0 8px',
-                alignItems: 'center',
-                svg: {
-                    width: '24px',
-                    height: '24px'
-                }
-            }),
-            indicatorSeparator: () => ({
-                display: 'none'
-            }),
-            placeholder: (base) => ({
-                ...base,
-                color: '#526D82',
-                fontSize: '16px'
-            }),
-            singleValue: (base) => ({
-                ...base,
-                color: '#526D82',
-                fontSize: '16px'
-            }),
-            menu: (base) => ({
-                ...base,
-                zIndex: 1000,
-                maxHeight: '200px',
-                overflowY: 'auto',
-                fontSize: '14px',
-            }),
-            option: (base, state) => ({
-                ...base,
-                backgroundColor: state.isFocused ? '#2162B2' : '#fff',
-                color: state.isFocused ? '#fff' : '#222222',
-                '&:active': {
-                    backgroundColor: '#e6e6e6',
-                }
-            }),
-    
-        };
+        control: (base, state) => ({
+            ...base,
+            // minHeight: '48px',
+            width: '300px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+            // '&:hover': { borderColor: '#86b7fe' }
+        }),
 
-    const handleChange = (selectedOption) => {
-        setSelectedSubject(selectedOption ? selectedOption.value : '');
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px'
+            }
+        }),
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',
+            overflowY: 'auto',
+            fontSize: '14px',
+        }),
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+
     };
+
+    const handleChange = (option) => {
+        if (!option) {
+            setSelectedSubject('');
+            return;
+        }
+        if (option.value === selectedSubject) {
+            setSelectedSubject('');
+        } else {
+            setSelectedSubject(option.value);
+        }
+    };
+
     return (
         <div className="facultydashboard_main_container" >
             <div className="facultydashboard_main_header_container">
                 <div className="facultydashboard_header-controls d-flex justify-content-between align-items-center">
                     <div className="facultydashboard_left-controls">
-                    <Select
-                            value={uniqueSubjects.find((subject) => subject === selectedSubject) ? { label: selectedSubject, value: selectedSubject } : null}
+                        <Select
+                            isClearable
+                            value={
+                                selectedSubject
+                                    ? { label: selectedSubject, value: selectedSubject }
+                                    : null
+                            }
                             onChange={handleChange}
-                            options={uniqueSubjects.map((subject) => ({ label: subject, value: subject }))}
+                            options={uniqueSubjects.map(subj => ({ label: subj, value: subj }))}
                             styles={dashboardcustomStyles}
                             placeholder="Select Subject"
                         />
@@ -199,7 +213,8 @@ const NewFacultyDashboard = () => {
                                 onClose={() => setShowPopup(false)}
                                 onFacultyAdded={fetchFaculty}
                             />
-                        )}                        {showPopupexcel && <NewFacultyAddThroughExcel isOpen={showPopupexcel} onClose={() => setShowPopupExcel(false)} />}
+                        )}                       
+                         {showPopupexcel && <NewFacultyAddThroughExcel isOpen={showPopupexcel} onClose={() => setShowPopupExcel(false)} />}
                     </div>
                 </div>
             </div>

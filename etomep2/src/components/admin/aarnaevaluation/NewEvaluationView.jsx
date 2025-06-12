@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
 import './newevaluationview.css';
@@ -10,19 +10,184 @@ import { Weight } from 'lucide-react';
 
 
 const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
+    if (!isOpen) return null;
+    const APIURL = useSelector(s => s.APIURL.url);
+    const admin_id = useSelector(s => s.admininfo.admininfo?.admin_id);
+    const exampaper = useSelector(s => s.exampaperinfo.exampaperinfo || {});
+    const teacherinfo = useSelector(s => s.adminteacherinfo.adminteacherinfo || []);
+    console.log(teacherinfo, "teacherinfoteacherinfoteacherinfo")
+
+    console.log(selectedEvaluation, "selectedEvaluationselectedEvaluationselectedEvaluation")
+
+    // 1. One formValues object
+    const [formValues, setFormValues] = useState({
+        exam: '',
+        year: '',
+        subject: '',
+        class: '',
+        division: '',
+        teacher: ''
+    });
     const [isEditMode, setIsEditMode] = useState(false);
 
+    // 2. Initialize from selectedEvaluation when opening or toggling edit
+    useEffect(() => {
+        if (!selectedEvaluation) return;
+        const { exam_name, year, subject_name, class_name, division, teacher_name } = selectedEvaluation;
+      
+        // ← find the matching teacher record by name
+        const match = teacherinfo.find(
+          t => `${t.first_name} ${t.last_name}` === teacher_name
+        );
+      
+        setFormValues({
+          exam: exam_name,
+          year: String(year),
+          subject: subject_name,
+          class: class_name,
+          division,
+          teacher: match ? String(match.id) : ''
+        });
+      }, [selectedEvaluation, teacherinfo, isEditMode]);
+
+    // 3. Flatten exampaper into an array like [{ exam, year, subject_name, class_name, division, … }, …]
+    const normalized = useMemo(() => {
+        return Object.entries(exampaper).flatMap(([key, arr]) => {
+            // key is "ExamName YYYY"
+            const m = key.match(/^(.*)\s+(\d{4})$/);
+            const exam = m ? m[1] : key;
+            const year = m ? m[2] : '';
+            return (arr || []).map(item => ({
+                ...item,
+                exam,
+                year: String(year),
+                class_name: item.class_name,
+                division: item.division,
+                subject_name: item.subject_name,
+            }));
+        });
+    }, [exampaper]);
+
+    // 4. Derive option lists with useMemo
+    const examOptions = useMemo(
+        () => Array.from(new Set(normalized.map(i => i.exam)))
+            .map(ex => ({ value: ex, label: ex })),
+        [normalized]
+    );
+
+    const yearOptions = useMemo(() => {
+        if (!formValues.exam) return [];
+        return Array.from(
+            new Set(normalized.filter(i => i.exam === formValues.exam).map(i => i.year))
+        ).map(y => ({ value: y, label: y }));
+    }, [normalized, formValues.exam]);
+
+    const subjectOptions = useMemo(() => {
+        if (!formValues.exam || !formValues.year) return [];
+        return Array.from(
+            new Set(
+                normalized
+                    .filter(i => i.exam === formValues.exam && i.year === formValues.year)
+                    .map(i => i.subject_name)
+            )
+        ).map(s => ({ value: s, label: s }));
+    }, [normalized, formValues.exam, formValues.year]);
+
+    const classOptions = useMemo(() => {
+        if (!formValues.exam || !formValues.year || !formValues.subject) return [];
+        return Array.from(
+            new Set(
+                normalized
+                    .filter(
+                        i =>
+                            i.exam === formValues.exam &&
+                            i.year === formValues.year &&
+                            i.subject_name === formValues.subject
+                    )
+                    .map(i => `${i.class_name}|${i.division}`)
+            )
+        ).map(cd => {
+            const [c, d] = cd.split('|');
+            return { value: cd, label: `Class ${c} - ${d}` };
+        });
+    }, [normalized, formValues.exam, formValues.year, formValues.subject]);
+
+    const facultyOptions = teacherinfo.map(t => ({
+        value: String(t.id),
+        label: `${t.first_name} ${t.last_name}`
+    }));
+
+    // 5. Handlers that clear downstream fields
+    const handleExamChange = o =>
+        setFormValues(f => ({
+            ...f,
+            exam: o?.value || '',
+            year: '',
+            subject: '',
+            class: ''
+        }));
+
+    const handleYearChange = o =>
+        setFormValues(f => ({
+            ...f,
+            year: o?.value || '',
+            subject: '',
+            class: ''
+        }));
+
+    const handleSubjectChange = o =>
+        setFormValues(f => ({
+            ...f,
+            subject: o?.value || '',
+            class: ''
+        }));
+
+    const handleClassChange = o => setFormValues(f => ({ ...f, class: o?.value || '' }));
+
+    const handleTeacherChange = o => setFormValues(f => ({ ...f, teacher: o?.value || '' }));
+
+    const handleSave = async () => {
+        // make sure everything is selected
+        const { exam, year, subject, class: cls, division, teacher } = formValues;
+        if (!exam || !year || !subject || !cls || !teacher) {
+            return Swal.fire({ icon: 'warning', title: 'Incomplete', text: '…' });
+        }
+        const payload = {
+            exam_name: exam,
+            year,
+            subject_name: subject,
+            class_name: cls,
+            division,
+            teacher_id: teacher,
+            admin_id
+        };
+
+        try {
+            const response = await axios.put(
+                `${APIURL}/api/evaluationadding/${selectedEvaluation.id}`,
+                payload
+            );
+            // success
+            Swal.fire({
+                icon: 'success',
+                title: 'Saved',
+                text: 'Evaluation updated successfully.'
+            });
+            setIsEditMode(false);
+        } catch (err) {
+            console.error(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Save failed',
+                text: err.response?.data?.message || err.message
+            });
+        }
+    };
 
 
-    console.log(selectedEvaluation, "selected evaluation")
 
 
 
-    if (!isOpen) return null;
-    const APIURL = useSelector((state) => state.APIURL.url);
-    // console.log(APIURL,"apiurl dattatata")
-    const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
-    const admininfo = useSelector((state) => state.admininfo);
 
     const customStyles = {
         control: (base, state) => ({
@@ -35,7 +200,9 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
             boxShadow: 'none',
             '&:hover': {
                 borderColor: '#526D82',
-            }
+
+            },
+            backgroundColor: '#fff',
         }),
         valueContainer: (base) => ({
             ...base,
@@ -90,6 +257,8 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
     };
 
 
+
+
     return (
         <div className="evaluationview-backdrop">
             <div className="evaluationview-modal-content">
@@ -107,10 +276,12 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                         Name of Examination {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
+                                        options={examOptions}
+                                        value={examOptions.find(o => o.value === formValues.exam) || null}
+                                        onChange={handleExamChange}
                                         styles={customStyles}
-                                        value={{ label: selectedEvaluation.exam_name, value: selectedEvaluation.exam_name }}
-
                                         isDisabled={!isEditMode}
+                                        placeholder="Select exam..."
                                     />
                                 </div>
                             </div>
@@ -122,10 +293,12 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                         Year {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
+                                        options={yearOptions}
+                                        value={yearOptions.find(o => o.value === formValues.year) || null}
+                                        onChange={handleYearChange}
                                         styles={customStyles}
-                                        value={{ label: selectedEvaluation.year, value: selectedEvaluation.year }}
-
                                         isDisabled={!isEditMode}
+                                        placeholder="Select year..."
                                     />
                                 </div>
                             </div>
@@ -138,10 +311,12 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                         Subject {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
+                                        options={subjectOptions}
+                                        value={subjectOptions.find(o => o.value === formValues.subject) || null}
+                                        onChange={handleSubjectChange}
                                         styles={customStyles}
-                                        value={selectedEvaluation ? { label: selectedEvaluation.subject_name, value: selectedEvaluation.subject_name } : null}
-
                                         isDisabled={!isEditMode}
+                                        placeholder="Select subject..."
                                     />
                                 </div>
                             </div>
@@ -151,14 +326,20 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                         Class {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
+                                        options={classOptions}
+                                        value={
+                                            classOptions.find(
+                                              o => o.value === `${formValues.class}|${formValues.division}`
+                                            ) || null
+                                          }
+                                          onChange={o => {
+                                            const [cls, div] = (o?.value || '').split('|');
+                                            setFormValues(f => ({ ...f, class: cls, division: div }));
+                                          }}
+                                        
                                         styles={customStyles}
-
-                                        value={{
-                                            label: `Class ${selectedEvaluation.class_name} - ${selectedEvaluation.division}`,
-                                            value: `${selectedEvaluation.class_name}${selectedEvaluation.division}`
-                                        }}
-
                                         isDisabled={!isEditMode}
+                                        placeholder="Select class..."
                                     />
                                 </div>
                             </div>
@@ -171,7 +352,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                     </label>
                                     <input
                                         type="date"
-                                        value={selectedEvaluation.start_date || ''}
+                                        value={selectedEvaluation?.start_date || ''}
                                         disabled={!isEditMode}
                                         className="custom-input"
                                         style={{
@@ -187,7 +368,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                             backgroundColor: '#fff',
                                             cursor: isEditMode ? 'pointer' : 'not-allowed'
                                         }}
-                                        // disabled={!isEditMode}
+                                    // disabled={!isEditMode}
 
                                     />
                                 </div>
@@ -198,7 +379,8 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                     <input
                                         type="date"
                                         min="0"
-                                        value={selectedEvaluation?.start_date || ''}
+                                        value={formValues.endDate || selectedEvaluation.end_date}
+                                        onChange={e => setFormValues(f => ({ ...f, endDate: e.target.value }))}
                                         disabled={!isEditMode}
                                         className="custom-input"
                                         style={{
@@ -215,7 +397,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                             cursor: isEditMode ? 'pointer' : 'not-allowed'
                                         }}
 
-                                        // disabled={!isEditMode}
+                                    // disabled={!isEditMode}
 
                                     />
                                 </div>
@@ -229,13 +411,14 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                         Faculty {isEditMode && <span className="evaluationview_required">*</span>}
                                     </label>
                                     <Select
-                                        value={selectedEvaluation ? { label: selectedEvaluation.teacher_name, value: selectedEvaluation.teacher_name } : null}
-
+                                        options={facultyOptions}
+                                        value={facultyOptions.find(o => o.value === formValues.teacher) || null}
+                                        onChange={handleTeacherChange}
                                         styles={customStyles}
-                                        placeholder=""
-                                        isClearable={true}
                                         isDisabled={!isEditMode}
+                                        placeholder="Select faculty..."
                                     />
+
                                 </div>
                             </div>
                         </div>
@@ -247,7 +430,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                     <button
 
                         className="evaluationview-btn evaluationview-btn-primary"
-                        onClick={() => setIsEditMode(!isEditMode)}
+                        onClick={isEditMode ? handleSave : () => setIsEditMode(true)}
                     >
                         {isEditMode ? 'Save' : 'Edit'}
                     </button>

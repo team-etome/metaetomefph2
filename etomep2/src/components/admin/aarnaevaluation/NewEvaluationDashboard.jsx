@@ -68,8 +68,8 @@ const NewEvaluationDashboard = () => {
                 console.log(response.data, "Fetched Evaluation Data");
 
                 if (response.data && Array.isArray(response.data)) {
-                    setEvaluationData(response.data);     // ✅ All fetched data
-                    setFilteredData(response.data);        // ✅ Initially show all
+                    setEvaluationData(response.data);    
+                    setFilteredData(response.data);       
                     setExamTypes([...new Set(response.data.map(item => `${item.class_name} ${item.division}`))]);
                     setExamYears(
                         Array.from(
@@ -215,13 +215,35 @@ const NewEvaluationDashboard = () => {
             }
         }),
     };
+    // const handleExamTypeChange = (selectedOption) => {
+    //     setSelectedExamType(selectedOption ? selectedOption.value : '');
+    // };
+
+
     const handleExamTypeChange = (selectedOption) => {
-        setSelectedExamType(selectedOption ? selectedOption.value : '');
+        const classVal = selectedOption ? selectedOption.value : '';
+        setSelectedExamType(classVal);
+        setFilteredData(evaluationData.filter(item => {
+            const classMatch = !classVal || `${item.class_name} ${item.division}` === classVal;
+            const yearMatch = !selectedFilterYear || new Date(item.start_date).getFullYear().toString() === selectedFilterYear;
+            return classMatch && yearMatch;
+        }));
     };
 
+    // const handleYearChange = (selectedOption) => {
+    //     setSelectedFilterYear(selectedOption ? selectedOption.value : '');
+    // };
     const handleYearChange = (selectedOption) => {
-        setSelectedFilterYear(selectedOption ? selectedOption.value : '');
+        const yearVal = selectedOption ? selectedOption.value : '';
+        setSelectedFilterYear(yearVal);
+        setFilteredData(evaluationData.filter(item => {
+            const classMatch = !selectedExamType || `${item.class_name} ${item.division}` === selectedExamType;
+            const yearMatch = !yearVal || new Date(item.start_date).getFullYear().toString() === yearVal;
+            return classMatch && yearMatch;
+        }));
     };
+
+
     return (
         <div className="evaluationdashboard_main_container">
             <div className="evaluationdashboard_main_header_container">
@@ -250,6 +272,7 @@ const NewEvaluationDashboard = () => {
                             ))}
                         </select> */}
                         <Select
+                            isClearable
                             value={examTypes.find((type) => type === selectedExamType) ? { label: selectedExamType, value: selectedExamType } : null}
                             onChange={handleExamTypeChange}
                             options={examTypes.map((type) => ({ label: type, value: type }))}
@@ -259,18 +282,19 @@ const NewEvaluationDashboard = () => {
 
                         {/* Exam Year Dropdown */}
                         <Select
+                            isClearable
                             value={examYears.find((year) => year === selectedFilterYear) ? { label: selectedFilterYear, value: selectedFilterYear } : null}
                             onChange={handleYearChange}
                             options={examYears.map((year) => ({ label: year, value: year }))}
                             styles={dashboardsmallcustomStyles}  // Set width to 200px for Year dropdown
                             placeholder="Select Year"
                         />
-                        <button
+                        {/* <button
                             className="btn-primary btn-sm evaluationdashboard_search_button"
-                            onClick={handleSearch}   // ✅ add this
+                            onClick={handleSearch}
                         >
                             Search
-                        </button>
+                        </button> */}
                     </div>
                     <div className="evaluationdashboard_left-controls">
                         {/* Filter Button and Popup */}

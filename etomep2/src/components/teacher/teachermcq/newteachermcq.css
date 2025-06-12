@@ -1,0 +1,156 @@
+/* Main container and header styling */
+.newteachermcq_main_container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.newteachermcq_main_header_container {
+    flex: 0 0 auto;
+    padding: 0px;
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-top: 24px;
+}
+
+.newteachermcq_header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 0 15px; */
+}
+
+.newteachermcq_left-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+.newteachermcq_result_add_button {
+    width: 100px;
+    height: 40px;
+    color: #fff;
+    background: #2162B2;
+    /* border: 1px solid #2162B2; */
+    border-radius: 8px;
+    /* margin-left: 630px; */
+    transition: left 0.5s ease;
+}
+
+
+/* Wrapper for tables */
+.newteachermcq_classes_box {
+    flex: 1 1 auto;
+    margin: 24px;
+    /* margin-top: 40px;
+    margin-right: 24px; */
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+
+/* *** New table styles prefixed with newteachermcq- *** */
+.newteachermcq_table_wrapper {
+    width: 100%;
+    overflow-y: auto;
+}
+
+/* full-width table */
+.newteachermcq_table {
+    width: 100%;
+    /* border-collapse: collapse; */
+    background-color: transparent;
+    table-layout: fixed;
+    /* honor your colgroup widths */
+    border-collapse: collapse;
+}
+
+.newteachermcq_table th {
+    text-align: left;
+    font-weight: 500;
+    padding: 0 16px;
+    height: 48px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* HEADERS */
+.newteachermcq_table thead th {
+    background-color: transparent !important;
+    color: #8D8A95;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0 16px;
+    height: 48px;
+    border-bottom: 1px solid #ECECEC;
+}
+
+.newteachermcq_actions_col_head {
+    text-align: left;
+    padding-left: 16px;
+    /* same as icon wrapper’s padding */
+}
+
+
+/* body rows height 56px, light bottom border */
+.newteachermcq_table td {
+    padding: 0 16px;
+    height: 56px;
+    border-bottom: 1px solid #ECECEC;
+    vertical-align: middle;
+    color: #222;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.newteachermcq_table tbody td {
+    background-color: transparent !important;
+    color: #222222;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* remove any left/right borders */
+.newteachermcq_table,
+.newteachermcq_table th,
+.newteachermcq_table td {
+    border-left: none;
+    border-right: none;
+}
+
+.newteachermcq_table th {
+    border-top: none;
+
+}
+
+
+
+/* edit / delete icons */
+.newteachermcq_icon {
+    margin-left: 0;
+    cursor: pointer;
+}
+
+/* Actions column container (so it still participates in normal table layout) */
+.newteachermcq_actions_col {
+    /* nothing here so it stays narrow at whatever your colgroup assigned */
+    padding: 0;
+  }
+  
+  /* the flex wrapper for icons */
+  .newteachermcq_actions_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 24px;     /* perfect 24px spacing between icons */
+    width: 100%;   /* stretch to fill the cell */
+  }
+  
+  /* left-align icons under the “Actions” header */
+  .newteachermcq_actions_wrapper.start {
+    justify-content: flex-start;
+  }

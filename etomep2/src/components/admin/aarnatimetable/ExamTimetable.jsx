@@ -26,6 +26,7 @@ const Examtimetable = () => {
     const [filteredTimetableData, setFilteredTimetableData] = useState([]);
     const [selectedFilterYear, setSelectedFilterYear] = useState("");
     const [selectedTerm, setSelectedTerm] = useState("");
+    const [allExamKeys, setAllExamKeys] = useState([]);
 
 
     const [selectedClassOption, setSelectedClassOption] = useState(null);
@@ -64,79 +65,123 @@ const Examtimetable = () => {
 
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${APIURL}/api/examtimetable`, {
-                    params: { admin_id }
-                });
-                const rawData = response.data.exam_timetables || {};
-                console.log(response.data,"resomjbjfkfjfsgjvdfijn")
+    const fetchTimetable = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/api/examtimetable`, {
+                params: { admin_id }
+            });
+            const rawData = response.data.exam_timetables || {};
+            console.log(response.data, "resomjbjfkfjfsgjvdfijn")
 
-                // Convert raw data (an object) to an array of [examName, classesObj] pairs
-                let examArray = Object.entries(rawData);
-                // Sort exam keys by year descending and then alphabetically.
-                examArray = examArray.sort(([nameA], [nameB]) => {
-                    const yearMatchA = nameA.match(/\d{4}$/);
-                    const yearMatchB = nameB.match(/\d{4}$/);
-                    const yearA = yearMatchA ? parseInt(yearMatchA[0]) : 0;
-                    const yearB = yearMatchB ? parseInt(yearMatchB[0]) : 0;
-                    if (yearA !== yearB) return yearB - yearA;
-                    return nameA.localeCompare(nameB);
-                });
+            // Convert raw data (an object) to an array of [examName, classesObj] pairs
+            let examArray = Object.entries(rawData);
+            // Sort exam keys by year descending and then alphabetically.
+            examArray = examArray.sort(([nameA], [nameB]) => {
+                const yearMatchA = nameA.match(/\d{4}$/);
+                const yearMatchB = nameB.match(/\d{4}$/);
+                const yearA = yearMatchA ? parseInt(yearMatchA[0]) : 0;
+                const yearB = yearMatchB ? parseInt(yearMatchB[0]) : 0;
+                if (yearA !== yearB) return yearB - yearA;
+                return nameA.localeCompare(nameB);
+            });
 
-                // For each exam, convert its classes object into a sorted array of [className, entries]
-                const sortedExamTimetables = examArray.map(([examName, classesObj]) => {
-                    let classArray = Object.entries(classesObj || {});
-                    classArray = classArray.sort(([classA], [classB]) => {
-                        // Try numeric sorting first
-                        const numA = parseInt(classA);
-                        const numB = parseInt(classB);
-                        if (!isNaN(numA) && !isNaN(numB) && numA !== numB) {
-                            return numA - numB;
-                        }
-                        return classA.localeCompare(classB);
-                    });
-                    return [examName, classArray];
-                });
-
-                setAllTimetableData(sortedExamTimetables);
-                setFilteredTimetableData(sortedExamTimetables);
-
-                // Populate exam types and years for filter dropdowns.
-                const typesSet = new Set();
-                const yearsSet = new Set();
-                Object.keys(rawData).forEach(key => {
-                    const yearMatch = key.match(/\d{4}$/);
-                    if (yearMatch) {
-                        yearsSet.add(yearMatch[0]);
-                        const type = key.replace(/\s*\d{4}$/, "").trim();
-                        typesSet.add(type);
+            // For each exam, convert its classes object into a sorted array of [className, entries]
+            const sortedExamTimetables = examArray.map(([examName, classesObj]) => {
+                let classArray = Object.entries(classesObj || {});
+                classArray = classArray.sort(([classA], [classB]) => {
+                    // Try numeric sorting first
+                    const numA = parseInt(classA);
+                    const numB = parseInt(classB);
+                    if (!isNaN(numA) && !isNaN(numB) && numA !== numB) {
+                        return numA - numB;
                     }
+                    return classA.localeCompare(classB);
                 });
-                setExamTypes([...typesSet].sort());
-                // Sort years in descending order
-                setExamYears([...yearsSet].sort((a, b) => b - a));
-            } catch (error) {
-                console.error("Error fetching exam timetable data", error);
-            }
-        };
+                return [examName, classArray];
+            });
 
-        fetchData();
+            setAllTimetableData(sortedExamTimetables);
+            setFilteredTimetableData(sortedExamTimetables);
+            setAllExamKeys(sortedExamTimetables.map(([examName]) => examName));
+
+            // Populate exam types and years for filter dropdowns.
+            const typesSet = new Set();
+            const yearsSet = new Set();
+            Object.keys(rawData).forEach(key => {
+                const yearMatch = key.match(/\d{4}$/);
+                if (yearMatch) {
+                    yearsSet.add(yearMatch[0]);
+                    const type = key.replace(/\s*\d{4}$/, "").trim();
+                    typesSet.add(type);
+                }
+            });
+            setExamTypes([...typesSet].sort());
+            // Sort years in descending order
+            setExamYears([...yearsSet].sort((a, b) => b - a));
+        } catch (error) {
+            console.error("Error fetching exam timetable data", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchTimetable();
     }, [APIURL, admin_id]);
 
     // Filter data based on dropdown selection
-    const handleSearch = () => {
-        // If filter not selected, show all data.
-        if (!selectedExamType || !selectedFilterYear) {
-            setFilteredTimetableData(allTimetableData);
-            return;
+    // const handleSearch = () => {
+    //     // If filter not selected, show all data.
+    //     if (!selectedExamType || !selectedFilterYear) {
+    //         setFilteredTimetableData(allTimetableData);
+    //         return;
+    //     }
+    //     const key = `${selectedExamType} ${selectedFilterYear}`;
+    //     // Filter the timetable data array for the exam name matching the key.
+    //     const filtered = allTimetableData.filter(([examName]) => examName === key);
+    //     setFilteredTimetableData(filtered);
+    // };
+
+    // useEffect(() => {
+    //     if (!selectedExamType) {
+    //         const allYears = allExamKeys
+    //             .map(key => key.match(/\d{4}$/)?.[0])
+    //             .filter(Boolean);
+    //         setExamYears(
+    //             [...new Set(allYears)].sort((a, b) => b - a)
+    //         );
+    //         setSelectedFilterYear("");
+    //         return;
+    //     }
+    //     const yearsForThisExam = allExamKeys
+    //         .filter(key => key.startsWith(selectedExamType + " "))
+    //         .map(key => key.match(/\d{4}$/)[0]);
+
+    //     setExamYears(
+    //         [...new Set(yearsForThisExam)].sort((a, b) => b - a)
+    //     );
+    //     setSelectedFilterYear("");
+
+    // }, [selectedExamType, allExamKeys]);
+
+    useEffect(() => {
+        let filtered = allTimetableData;
+
+        // If an exam type is chosen, keep only those entries whose name starts with it
+        if (selectedExamType) {
+            filtered = filtered.filter(([examName]) =>
+                examName.startsWith(selectedExamType + " ")
+            );
         }
-        const key = `${selectedExamType} ${selectedFilterYear}`;
-        // Filter the timetable data array for the exam name matching the key.
-        const filtered = allTimetableData.filter(([examName]) => examName === key);
+
+        // If a year is chosen, keep only those whose name ends with it
+        if (selectedFilterYear) {
+            filtered = filtered.filter(([examName]) =>
+                examName.endsWith(" " + selectedFilterYear)
+            );
+        }
+
         setFilteredTimetableData(filtered);
-    };
+    }, [selectedExamType, selectedFilterYear, allTimetableData]);
+
 
     // Helper to format day from date
     const getDayFromDate = (dateString) => dayjs(dateString).format('dddd');
@@ -251,13 +296,22 @@ const Examtimetable = () => {
         }),
     };
 
-    const handleExamTypeChange = (selectedOption) => {
-        setSelectedExamType(selectedOption ? selectedOption.value : '');
+    const handleExamTypeChange = (option) => {
+        if (!option || option.value === selectedExamType) {
+            setSelectedExamType("");
+        } else {
+            setSelectedExamType(option.value);
+        }
     };
 
-    const handleYearChange = (selectedOption) => {
-        setSelectedFilterYear(selectedOption ? selectedOption.value : '');
+    const handleYearChange = (option) => {
+        if (!option || option.value === selectedFilterYear) {
+            setSelectedFilterYear("");
+        } else {
+            setSelectedFilterYear(option.value);
+        }
     };
+
 
 
     return (
@@ -277,9 +331,14 @@ const Examtimetable = () => {
                             ))}
                         </select> */}
                         <Select
-                            value={examTypes.find((type) => type === selectedExamType) ? { label: selectedExamType, value: selectedExamType } : null}
+                            isClearable
+                            value={
+                                examTypes.includes(selectedExamType)
+                                    ? { label: selectedExamType, value: selectedExamType }
+                                    : null
+                            }
                             onChange={handleExamTypeChange}
-                            options={examTypes.map((type) => ({ label: type, value: type }))}
+                            options={examTypes.map(type => ({ label: type, value: type }))}
                             styles={dashboardcustomStyles}
                             placeholder="Select Exam Type"
                         />
@@ -295,22 +354,27 @@ const Examtimetable = () => {
                             ))}
                         </select> */}
                         <Select
-                            value={examYears.find((year) => year === selectedFilterYear) ? { label: selectedFilterYear, value: selectedFilterYear } : null}
+                            isClearable
+                            value={
+                                examYears.includes(selectedFilterYear)
+                                    ? { label: selectedFilterYear, value: selectedFilterYear }
+                                    : null
+                            }
                             onChange={handleYearChange}
-                            options={examYears.map((year) => ({ label: year, value: year }))}
-                            styles={dashboardsmallcustomStyles} // Custom width for Year dropdown
+                            options={examYears.map(year => ({ label: year, value: year }))}
+                            styles={dashboardsmallcustomStyles}
                             placeholder="Select Year"
                         />
-                        <button
+                        {/* <button
                             className="btn-primary btn-sm examtimetable_search_button"
                             onClick={handleSearch}
                         >
                             Search
-                        </button>
+                        </button> */}
                     </div>
                     <div className="examtimetable_right-controls">
                         <button className="btn-primary btn-sm examtimetable-add_button" onClick={() => setShowPopup(true)}>+ Add</button>
-                        {showPopup && <Examtimetableadding onClose={() => setShowPopup(false)} />}
+                        {showPopup && <Examtimetableadding onClose={() => setShowPopup(false)} onSuccess={fetchTimetable} />}
                     </div>
                 </div>
                 {/* <h3 className="examtimetable-heading">Annual Examination 2025</h3> */}
@@ -415,6 +479,7 @@ const Examtimetable = () => {
                 {editPopupVisible && (
                     <Examtimetableediting
                         onClose={() => setEditPopupVisible(false)}
+                        onSuccess={fetchTimetable}
                         defaultClassOption={selectedClassOption}
                         defaultEntries={selectedClassEntries}
                         defaultExamKey={selectedExamKey}

@@ -134,7 +134,9 @@ export default function NewTeacherHome() {
       <div className="newteacherhome-header-row">
         <p className="newteacherhome-welcome">Welcome!</p>
         <div className="newteacherhome-userinfo">
-          <span className="newteacherhome-email">{teacherInfo?.first_name} {teacherInfo?.last_name}</span>
+
+          <span className="newteacherhome-email">{teacherInfo?.email || " "}</span>
+
           <span className="newteacherhome-avatar">
             <img
               onClick={handlenavigate}

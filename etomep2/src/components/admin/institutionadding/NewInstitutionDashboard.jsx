@@ -33,7 +33,7 @@ const handlenavigate = () => {
   return (
     <div className="Institution_dashboard">
       <Container className="Institution_main_container"> 
-        <div className="Institution_row_main">
+        <div className="Institution_row_main" >
           <Row className="Institution_row_header">
             <Col md={6}  className="Institution_header_left_heading">
               <div className="Institution_title">

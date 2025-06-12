@@ -1,0 +1,154 @@
+/* Container fills screen and is a column flexbox */
+.newtestlistingadd_container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;            /* so footer can stick to bottom */
+    padding: 24px;
+    background: #fff;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+  
+  /* Header & stepper */
+  .newtestlistingadd_header {
+    display: flex;
+    align-items: center;
+    gap: 8px;                 /* 8px between icon and steps */
+    margin-bottom: 40px;      /* 40px gap between header and form */
+  }
+  
+  .newtestlistingadd_back {
+    cursor: pointer;
+    color: #000;
+  }
+  
+  .newtestlistingadd_steps {
+    display: flex;
+    align-items: center;
+    gap: 8px;                 /* 8px between steps & divider */
+  }
+
+  .step-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ccc;     /* grey by default */
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .step-circle.active {
+    background: #2162B2;  /* blue for active */
+  }
+
+  .step-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #BABABA;       /* grey text */
+  }
+  .step-text.active {
+    color: #222;
+  }
+  
+  /* Divider */
+  .step-divider {
+    margin-left: 32px;
+    margin-right: 32px;
+    font-size: 24px;
+    color: #A1A1A1;
+  }
+  
+  .newtestlistingadd_step {
+    font-size: 14px;
+    font-weight: 500;
+    color: #8d8a95;
+  }
+  
+  .newtestlistingadd_step.active {
+    color: #222;
+  }
+  
+  .newtestlistingadd_divider {
+    color: #ccc;
+  }
+  
+  /* The scrolling form area grows to fill available space */
+  .newtestlistingadd_form {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 38px;            /* 38px vertical gap between rows */
+  }
+  
+  /* Each row of inputs */
+  .newtestlistingadd_row {
+    display: flex;
+    gap: 8px;                 /* 8px between columns */
+  }
+  
+  /* Each field is a column flexbox */
+  .newtestlistingadd_field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .newtestlistingadd_field label{
+    font-size: 16px;
+    font-weight: 400;
+    color: #767676;
+  }
+  
+  .newtestlistingadd_input {
+    height: 48px;
+    border-radius: 8px;
+    border: 1px solid #757575;
+    padding: 0 8px;
+    font-size: 14px;
+    margin-top: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Required-star */
+  .required {
+    color: #d00;
+    margin-left: 2px;
+  }
+  
+  /* Sticky footer */
+  .newtestlistingadd_footer {
+    position: sticky;
+    bottom: 0;
+    background: #fff;         /* cover form content behind */
+    padding-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;                 /* 8px between buttons */
+  }
+  
+  .newtestlistingadd_clear,
+  .newtestlistingadd_next {
+    width: 100px;
+    height: 40px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .newtestlistingadd_clear {
+    background: #fff;
+    border: 1px solid #2162B2;
+    color: #2162B2;
+  }
+  
+  .newtestlistingadd_next {
+    background: #2162B2;
+    color: #fff;
+  }
+  

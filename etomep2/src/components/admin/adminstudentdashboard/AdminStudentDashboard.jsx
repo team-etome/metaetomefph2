@@ -115,8 +115,12 @@ const AdminStudentDashboard = () => {
     };
 
     const handleChange = (selectedOption) => {
-        setSelectedClass(selectedOption ? selectedOption.value : '');
-    };
+        if (!selectedOption || selectedOption.value === selectedClass) {
+          setSelectedClass('');
+        } else {
+          setSelectedClass(selectedOption.value);
+        }
+      };
 
     return (
         <div className="adminstudentdashboard_main_container">
@@ -130,9 +134,14 @@ const AdminStudentDashboard = () => {
                 <div className="adminstudentdashboard-header-controls d-flex justify-content-between align-items-center">
                     <div className="adminstudentdashboard-left-controls" >
                         <Select
-                            value={classList.find((className) => className === selectedClass) ? { label: selectedClass, value: selectedClass } : null}
+                            isClearable
+                            value={
+                                classList.find(c => c === selectedClass)
+                                    ? { label: selectedClass, value: selectedClass }
+                                    : null
+                            }
                             onChange={handleChange}
-                            options={classList.map((className) => ({ label: className, value: className }))}
+                            options={classList.map(c => ({ label: c, value: c }))}
                             styles={dashboardcustomStyles}
                             placeholder="Select Class"
                         />

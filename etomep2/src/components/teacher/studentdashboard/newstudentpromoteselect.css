@@ -1,0 +1,138 @@
+
+/* Actions row */
+.newstudentpromoteselect-actions {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.newstudentpromoteselect-actions-para {
+    font-size: 18px;
+    font-weight: 400;
+    color: #222;
+}
+
+.newstudentpromoteselect-actions label {
+    font-size: 1rem;
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+    /* gap:"12px"; */
+}
+
+.newstudentpromoteselect-actions input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.newstudentpromoteselect-promote-btn {
+    background-color: #C3C3C3;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: auto;
+    opacity: 0.6;
+    height: 40px;
+    width: 100px;
+}
+
+
+.newstudentpromoteselect-promote-btn:enabled {
+    opacity: 1;
+}
+
+.newstudentpromoteselect-promote-btn {
+    background: #C3C3C3;
+    opacity: 0.6;
+}
+
+.newstudentpromoteselect-promote-btn:enabled {
+    background: #2162B2;
+    opacity: 1;
+}
+
+
+.newstudentpromoteselect-search-wrapper {
+    position: relative;
+    width: 318px;
+    height: 40px;
+}
+
+.newstudentpromoteselect-search-wrapper .icon {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.newstudentpromoteselect-search-wrapper input {
+    width: 100%;
+    padding: 8px 8px 8px 32px;
+    border: 1px solid #BCBCBC;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* Grid of student cards */
+.newstudentpromoteselect-grid {
+    /* flex: 1 1 auto; */
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    /* padding-right: 8px; */
+}
+
+.newstudentpromoteselect-grid-card {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    height: 102px;
+    width: 325px;
+    border: 1px solid #e6e6e6;
+    border-radius: 16px;
+    padding: 12px;
+    margin: 0px;
+}
+
+.newstudentpromoteselect-grid-card.selected {
+    background: #E6F0FF;
+    margin: 0px;
+}
+
+
+/* .newstudentpromoteselect-grid-card label {
+  margin-right: 12px;
+} */
+
+.newstudentpromoteselect-grid-card img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+}
+
+.newstudentpromoteselect-grid-card .info {
+    flex: 1;
+}
+
+.newstudentpromoteselect-grid-card .info h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.newstudentpromoteselect-grid-card .info p {
+    margin: 4px 0 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.newstudentpromoteselect-grid-card .roll {
+    margin-left: 12px;
+    font-size: 0.9rem;
+    color: #333;
+}

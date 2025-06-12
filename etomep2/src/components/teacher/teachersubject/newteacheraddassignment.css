@@ -1,0 +1,340 @@
+/* src/components/newteacheraddassignment.css */
+.newteacheraddassignment-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.newteacheraddassignment-modal {
+    width: 1056px;
+    height: 650px;
+    background: #fff;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* fixed header */
+.newteacheraddassignment-header {
+    /* flex: 0 0 60px; */
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #DFDFDF;
+}
+
+.newteacheraddassignment-title {
+    margin: 0px;
+    padding: 0px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #222222;
+}
+
+.newteacheraddassignment-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* scrollable body */
+.newteacheraddassignment-body {
+    flex: 1 1 auto;
+    margin: 16px 24px;
+    overflow-y: auto;
+}
+
+
+.newteacheraddassignment-info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+}
+
+.newteacheraddassignment-field label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #222;
+}
+
+.newteacheraddassignment-input {
+    width: 100%;
+    height: 48px;
+    padding: 8px 12px;
+    border: 1px solid #757575;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.newteacheraddassignment-datepicker {
+    position: relative;
+}
+
+.newteacheraddassignment-datepicker .calendar-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #757575;
+    pointer-events: none;
+}
+
+.newteacheraddassignment-add-question-row {
+    margin-top: 40px;
+}
+
+.newteacheraddassignment-add-question-heading {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #222;
+}
+
+.newteacheraddassignment-btn-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 40px;
+}
+
+.newteacheraddassignment-upload-btn-primary {
+    background-color: #2162B2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0 24px;
+    font-size: 14px;
+    height: 40px;
+    cursor: pointer;
+    width: 192px;
+}
+
+.newteacheraddassignment-manual-btn {
+    background: #fff;
+    color: #767676;
+    border: 1px solid #767676;
+    border-radius: 8px;
+    padding: 0 24px;
+    font-size: 14px;
+    height: 40px;
+    width: 192px;
+    cursor: pointer;
+}
+
+/* upload area */
+.newteacheraddassignment-upload {
+    margin-top: 40px;
+}
+
+.newteacheraddassignment-dropzone {
+    height: 224px;
+    width: 476px;
+    border: 2px dashed #757575;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* gap: 8px; */
+    cursor: pointer;
+}
+
+.newteacheraddassignment-dropzone-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.newteacheraddassignment-dropzone_clickp {
+    font-size: 16px;
+    font-weight: 400;
+    color: #222222;
+}
+
+.newteacheraddassignment-dropzone_maxp {
+    font-size: 16px;
+    font-weight: 400;
+    color: #757575;
+}
+
+.newteacheraddassignment-upload-btn {
+    background-color: #2162B2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 24px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.newteacheraddassignment-file-info {
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    width: 476px;
+    height: 40px;
+    /* match dropzone width */
+    background: #fff;
+    border: 1px solid #BFBFBF;
+    border-radius: 30px;
+    padding: 8px 12px;
+    gap: 8px;
+}
+
+.newteacheraddassignment-file-icon {
+    width: 24px;
+    height: 24px;
+    color: red;
+}
+
+.newteacheraddassignment-file-name {
+    flex: 1;
+    font-size: 16px;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.newteacheraddassignment-file-remove {
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    color: #000;
+    padding: 0 4px;
+}
+
+/* on hover, make the ✕ a bit more obvious */
+/* .newteacheraddassignment-file-remove:hover {
+    color: #000;
+} */
+
+/* fixed footer */
+.newteacheraddassignment-footer {
+    flex: 0 0 60px;
+    padding: 24px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.newteacheraddassignment_required {
+    color: red;
+}
+
+
+
+
+
+
+
+.newaddassignmentmanually-body {
+    flex: 1 1 auto;
+    padding: 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.newaddassignmentmanually-textarea {
+    flex: 1;
+    min-height: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    resize: none;
+}
+
+.newaddassignmentmanually-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 16px;
+  }
+  
+  /* toolbar buttons */
+  .newaddassignmentmanually-toolbar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #484848;
+    font-size: 20px;
+    line-height: 1;
+    padding: 4px;
+  }
+  .newaddassignmentmanually-toolbar button:hover {
+    color: #222222;
+  }
+
+/* Container spans full width, splits space between back and actions */
+.newaddassignmentmanually-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px 24px;
+    /* same padding as your other footers */
+    flex: 0 0 60px;
+    /* fix footer height to 60px */
+}
+
+/* Back button—icon + text */
+.newaddassignmentmanually-back-btn {
+    gap: 8px;
+    background: none;
+    height: 40px;
+    width: 100px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid #444444;
+    color: #444444;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+/* Group the right‐side buttons */
+.newaddassignmentmanually-footer-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Clear button styling */
+.newaddassignmentmanually-clear-btn {
+    background: #fff;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    color: #2162B2;
+    padding: 8px 24px;
+    cursor: pointer;
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+    font-weight: 400;
+   
+}
+
+/* Submit button styling */
+.newaddassignmentmanually-submit-btn {
+    background: #2162B2;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    padding: 8px 24px;
+    cursor: pointer;
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+    font-weight: 400;
+}

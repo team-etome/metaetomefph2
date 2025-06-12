@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AdminQuestionAssignadd from './AdminQuestionassigningadd';
-import './AdminQuestionAssigning.css'; // Import custom CSS
+import './AdminQuestionAssigning.css';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { exampaperinfo } from '../../../Redux/Actions/ExamPaperInfoAction';
@@ -49,37 +49,37 @@ const AdminQuestionAssigning = () => {
     }, [APIURL, admin_id, dispatch, timetableData.length]);
 
 
+    const fetchQuestionPapers = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/api/questionpaper/${admin_id}`);
+            const rawData = response.data.question_papers || {};
+
+            dispatch(exampaperinfo(rawData));
+
+            console.log(response.data, "responseresponseresponse");
+
+            // Process the rawData into an array of exam objects.
+            // Each key (e.g., "Annual Examination 2025") is split into examName and examYear.
+            const exams = Object.entries(rawData)
+                .map(([key, papers]) => {
+                    const match = key.match(/^(.*)\s+(\d{4})$/);
+                    if (match) {
+                        const examName = match[1].trim();
+                        const examYear = match[2];
+                        return { fullExamName: key, examName, examYear, papers };
+                    }
+                    return null;
+                })
+                .filter(item => item !== null);
+
+            setExamData(exams);
+        } catch (error) {
+            console.error("Error fetching question papers", error);
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${APIURL}/api/questionpaper/${admin_id}`);
-                const rawData = response.data.question_papers || {};
-
-                dispatch(exampaperinfo(rawData));
-
-                console.log(response.data, "responseresponseresponse");
-
-                // Process the rawData into an array of exam objects.
-                // Each key (e.g., "Annual Examination 2025") is split into examName and examYear.
-                const exams = Object.entries(rawData)
-                    .map(([key, papers]) => {
-                        const match = key.match(/^(.*)\s+(\d{4})$/);
-                        if (match) {
-                            const examName = match[1].trim();
-                            const examYear = match[2];
-                            return { fullExamName: key, examName, examYear, papers };
-                        }
-                        return null;
-                    })
-                    .filter(item => item !== null);
-
-                setExamData(exams);
-            } catch (error) {
-                console.error("Error fetching question papers", error);
-            }
-        };
-
-        fetchData();
+        fetchQuestionPapers();
     }, [APIURL, admin_id]);
 
     // Initialize filtered data to show all exams
@@ -304,11 +304,31 @@ const AdminQuestionAssigning = () => {
         }),
     };
 
+    // const handleExamChange = (selectedOption) => {
+    //     setSelectedExam(selectedOption ? selectedOption.value : '');
+    // };
+
     const handleExamChange = (selectedOption) => {
-        setSelectedExam(selectedOption ? selectedOption.value : '');
+        const examVal = selectedOption ? selectedOption.value : 'All';
+        setSelectedExam(examVal);
+        setFilteredExamData(examData.filter(item => {
+            const examMatch = examVal === 'All' || item.examName === examVal;
+            const yearMatch = selectedYear === 'All' || item.examYear === selectedYear;
+            return examMatch && yearMatch;
+        }));
     };
+    // const handleYearChange = (selectedOption) => {
+    //     setSelectedYear(selectedOption ? selectedOption.value : '');
+    // };
+
     const handleYearChange = (selectedOption) => {
-        setSelectedYear(selectedOption ? selectedOption.value : '');
+        const yearVal = selectedOption ? selectedOption.value : 'All';
+        setSelectedYear(yearVal);
+        setFilteredExamData(examData.filter(item => {
+            const examMatch = selectedExam === 'All' || item.examName === selectedExam;
+            const yearMatch = yearVal === 'All' || item.examYear === yearVal;
+            return examMatch && yearMatch;
+        }));
     };
 
     return (
@@ -317,6 +337,7 @@ const AdminQuestionAssigning = () => {
                 <div className="AdminQuestionAssigning_header-controls d-flex justify-content-between align-items-center">
                     <div className="AdminQuestionAssigning_left-controls">
                         <Select
+                            isClearable
                             value={examOptions.find((option) => option === selectedExam) ? { label: selectedExam, value: selectedExam } : null}
                             onChange={handleExamChange}
                             options={examOptions.map((option) => ({ label: option, value: option }))}
@@ -324,18 +345,19 @@ const AdminQuestionAssigning = () => {
                             placeholder="Select Exam"
                         />
                         <Select
+                            isClearable
                             value={yearOptions.find((year) => year === selectedYear) ? { label: selectedYear, value: selectedYear } : null}
                             onChange={handleYearChange}
                             options={yearOptions.map((year) => ({ label: year, value: year }))}
                             styles={dashboardsmallcustomStyles}
                             placeholder="Select Year"
                         />
-                        <button className="btn-primary btn-sm AdminQuestionAssigning_search_button" onClick={handleSearch}>Search</button>
+                        {/* <button className="btn-primary btn-sm AdminQuestionAssigning_search_button" onClick={handleSearch}>Search</button> */}
 
                     </div>
                     <div className="AdminQuestionAssigning_right-controls">
                         <button className="btn-primary btn-sm AdminQuestionAssigning_add_button" onClick={() => setShowPopup(true)}>+ Add</button>
-                        {showPopup && <AdminQuestionAssignadd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
+                        {showPopup && <AdminQuestionAssignadd isOpen={showPopup} onClose={() => setShowPopup(false)} onSuccess={fetchQuestionPapers} />}
                     </div>
                 </div>
             </div>
@@ -467,6 +489,7 @@ const AdminQuestionAssigning = () => {
                     isOpen={showPopupview}
                     onClose={() => setShowPopupView(false)}
                     selectedItem={selectedItem}
+                    onSuccess={fetchQuestionPapers}
                     onDeleted={(deletedId) => {
                         setFilteredExamData((groups) =>
                             groups.map((g) => ({

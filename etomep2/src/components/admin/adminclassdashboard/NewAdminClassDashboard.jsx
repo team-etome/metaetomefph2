@@ -215,9 +215,13 @@ const NewAdminClassDashboard = () => {
         }),
     };
 
-    const handleClassChange = (selectedOption) => {
-        setSelectedClass(selectedOption ? selectedOption.value : '');
-    };
+    const handleClassChange = (option) => {
+        if (!option || option.value === selectedClass) {
+          setSelectedClass('');
+        } else {
+          setSelectedClass(option.value);
+        }
+      };
     return (
         <div className="newclassdashboard-container">
             <div className="newclassdashboard_main_header_container">
@@ -234,9 +238,17 @@ const NewAdminClassDashboard = () => {
                             ))}
                         </select> */}
                         <Select
-                            value={classData.find((classItem) => classItem.className === selectedClass) ? { label: `Class ${selectedClass}`, value: selectedClass } : null}
+                            isClearable
+                            value={
+                                classData.find(c => c.className === selectedClass)
+                                    ? { label: `Class ${selectedClass}`, value: selectedClass }
+                                    : null
+                            }
                             onChange={handleClassChange}
-                            options={classData.map((classItem) => ({ label: `Class ${classItem.className}`, value: classItem.className }))}
+                            options={classData.map(c => ({
+                                label: `Class ${c.className}`,
+                                value: c.className
+                            }))}
                             styles={dashboardcustomStyles}
                             placeholder="Select Class"
                         />
