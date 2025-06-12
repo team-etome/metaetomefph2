@@ -131,28 +131,28 @@ const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
 
 
     // at top of NewLokaLibraryEdit
-const handleDelete = async () => {
-    const result = await Swal.fire({
-      icon: 'warning',
-      title: 'Are you sure?',
-      text: 'This will permanently delete the book.',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it',
-      cancelButtonText: 'Cancel',
-    });
-    if (!result.isConfirmed) return;
-  
-    try {
-      await axios.delete(`${APIURL}/api/create-textbook/${selected.id}`);
-      await Swal.fire('Deleted!', 'The book has been removed.', 'success');
-    //   onClose();
-    onUpdated();
-    } catch (err) {
-      console.error(err);
-      Swal.fire('Error', 'Could not delete the book.', 'error');
-    }
-  };
-  
+    const handleDelete = async () => {
+        const result = await Swal.fire({
+            icon: 'warning',
+            title: 'Are you sure?',
+            text: 'This will permanently delete the book.',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it',
+            cancelButtonText: 'Cancel',
+        });
+        if (!result.isConfirmed) return;
+
+        try {
+            await axios.delete(`${APIURL}/api/create-textbook/${selected.id}`);
+            await Swal.fire('Deleted!', 'The book has been removed.', 'success');
+            //   onClose();
+            onUpdated();
+        } catch (err) {
+            console.error(err);
+            Swal.fire('Error', 'Could not delete the book.', 'error');
+        }
+    };
+
 
 
 
@@ -173,6 +173,9 @@ const handleDelete = async () => {
             height: '50px',
             borderColor: '#ccc',
             borderRadius: '8px',
+            pointerEvents: isEditMode 
+                ? "auto"
+                : "none",
             boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
             '&:hover': {
                 borderColor: '#526D82',
@@ -217,7 +220,7 @@ const handleDelete = async () => {
         option: (base, state) => ({
             ...base,
             backgroundColor: state.isFocused ? '#f0f0f0' : '#fff',
-            color: '#000',
+            color: '#526D82',
             '&:active': {
                 backgroundColor: '#e6e6e6',
             }
@@ -250,7 +253,12 @@ const handleDelete = async () => {
                         <div className="lokalibraryedit-form-grid" >
                             <div className="lokalibraryedit-form-group">
                                 <label className="lokalibraryedit-form-label">
-                                    Add Category <span className="lokalibraryedit_required">*</span>
+                                    Add Category <span
+                                        className="lokalibraryedit_required"
+                                        style={{ display: isEditMode ? "inline" : "none" }}
+                                    >
+                                        *
+                                    </span>
                                 </label>
                                 <CreatableSelect
                                     value={categoryValue}
@@ -258,7 +266,7 @@ const handleDelete = async () => {
                                     options={apicomingcatogory.map((c) => ({ label: c, value: c }))}
                                     styles={customStyles}
                                     placeholder=""
-                                    isDisabled={!isEditMode}
+                                    readOnly={!isEditMode}
                                     isClearable
                                     onInputChange={(newInputValue, actionMeta) => {
                                         setInputValue(newInputValue);
@@ -292,7 +300,7 @@ const handleDelete = async () => {
                                 <input
                                     type="text"
                                     className="custom-input"
-                                    disabled={!isEditMode}
+                                    readOnly={!isEditMode}
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     required
@@ -306,7 +314,7 @@ const handleDelete = async () => {
                                     type="text"
                                     className="custom-input"
                                     value={author}
-                                    disabled={!isEditMode}
+                                    readOnly={!isEditMode}
                                     onChange={(e) => setAuthor(e.target.value)}
                                 />
                             </div>
@@ -318,7 +326,7 @@ const handleDelete = async () => {
                                     type="text"
                                     className="custom-input"
                                     value={publisher}
-                                    disabled={!isEditMode}
+                                    readOnly={!isEditMode}
                                     onChange={(e) => setPublisher(e.target.value)}
                                 />
                             </div>
@@ -347,7 +355,7 @@ const handleDelete = async () => {
                                                     />
                                                     <button
                                                         onClick={clearCoverPhoto}
-                                                        disabled={!isEditMode}
+                                                        readOnly={!isEditMode}
                                                         style={{
                                                             border: "none",
                                                             background: "none",
@@ -375,7 +383,7 @@ const handleDelete = async () => {
                                                         id="image-upload"
                                                         type="file"
                                                         accept="image/*"
-                                                        disabled={!isEditMode}
+                                                        readOnly={!isEditMode}
                                                         className="admin_library_upload_input"
                                                         onChange={(e) => setCoverFile(e.target.files[0])}
                                                     />
@@ -398,7 +406,7 @@ const handleDelete = async () => {
                                                     <span>{getFileNameFromUrl(documentFile)}</span>
                                                     <button
                                                         onClick={() => setDocumentFile('')}
-                                                        disabled={!isEditMode}
+                                                        readOnly={!isEditMode}
                                                         style={{
                                                             marginLeft: 8,
                                                             color: "black",
@@ -422,7 +430,7 @@ const handleDelete = async () => {
                                                 <input
                                                     id="file-upload"
                                                     type="file"
-                                                    disabled={!isEditMode}
+                                                    readOnly={!isEditMode}
                                                     className="lokalibraryedit_hidden-file"
                                                     onChange={(e) => setDocumentFile(e.target.files[0])}
                                                 />

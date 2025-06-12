@@ -169,7 +169,11 @@ const NewLokaBookDashboard = () => {
     };
 
     const handleClassChange = (selectedOption) => {
-        setSelectedClass(selectedOption ? selectedOption.value : '');
+        if (!selectedOption || selectedOption.value === selectedClass) {
+            setSelectedClass('');
+        } else {
+            setSelectedClass(selectedOption.value);
+        }
     };
 
     // Get unique class names from `lokabookListData`
@@ -188,10 +192,11 @@ const NewLokaBookDashboard = () => {
                 <div className="admin_loka_header_row">
                     <div className="admin_loka_select_col">
                         <Select
-                            value={classOptions.find((option) => option.value === selectedClass) || null}
+                            isClearable
+                            value={classOptions.find(o => o.value === selectedClass) || null}
                             onChange={handleClassChange}
                             options={classOptions}
-                            styles={dashboardcustomStyles}  // Custom styles for the dropdown
+                            styles={dashboardcustomStyles}
                             placeholder="Select Class"
                         />
 
@@ -223,7 +228,13 @@ const NewLokaBookDashboard = () => {
                         >
                             + Add
                         </button>
-                        {showPopup && <NewLokaBookAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
+                        {showPopup &&
+                            <NewLokaBookAdd
+                                isOpen={showPopup}
+                                onClose={() => setShowPopup(false)}
+                                onSuccess={fetchTextbookData}
+                            />
+                        }
                     </div>
                 </div>
 
@@ -257,8 +268,13 @@ const NewLokaBookDashboard = () => {
                                         </div>
                                     </div>
                                 ))}
-                                {showEditPopup && <NewLokaBookEdit isOpen={showEditPopup} onClose={() => setShowEditPopup(false)} />}
-
+                                {showEditPopup &&
+                                    <NewLokaBookEdit
+                                        isOpen={showEditPopup}
+                                        onClose={() => setShowEditPopup(false)}
+                                        onSuccess={fetchTextbookData}
+                                    />
+                                }
                             </div>
 
                         </div>

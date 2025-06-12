@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
-const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
+const AdminQuestionAssigningadd = ({ isOpen, onClose, onSuccess }) => {
 
     if (!isOpen) return null;
     const APIURL = useSelector((state) => state.APIURL.url);
@@ -29,6 +29,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
     const [filteredYears, setFilteredYears] = useState([]);
     const [filteredClasses, setFilteredClasses] = useState([]);
     const [filteredSubjects, setFilteredSubjects] = useState([]);
+    const [passMarks, setPassMarks] = useState('');
 
 
     const teacherinfo = useSelector(state => state.adminteacherinfo);
@@ -102,8 +103,10 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
         const formData = {
             timetable: selectedData,
             teacher: selectedTeacher,
-            total_marks: totalMarks
+            total_marks: totalMarks,
+            pass_marks: passMarks,
         };
+        
 
         try {
             const response = await axios.post(`${APIURL}/api/questionpaper`, formData);
@@ -114,7 +117,8 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                 text: "Question paper assigned successfully!",
                 confirmButtonText: "OK"
             }).then(() => {
-                onClose(); // close modal after OK
+                onClose();
+                onSuccess();
             });
 
         } catch (error) {
@@ -243,14 +247,22 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
         }
     };
 
+    const handlePassMarksChange = (e) => {
+        const value = e.target.value;
+        if (/^\d*$/.test(value)) {
+            setPassMarks(value);
+        }
+    };
+
     const customStyles = {
         control: (base, state) => ({
             ...base,
             minHeight: '48px',
             height: '48px',
+            width: '100%',
             borderRadius: '8px',
-            borderColor: '#757575',
-            boxShadow: state.isFocused ? 0 : 0,
+            borderColor: state.isFocused ? '#526D82' : '#757575',
+            boxShadow: 'none',
             '&:hover': {
                 borderColor: '#526D82',
             }
@@ -262,24 +274,18 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
         }),
         dropdownIndicator: (base) => ({
             ...base,
-            color: '#292D32', // Change the color of the dropdown arrow
+            color: '#292D32',
             padding: '0 8px',
             alignItems: 'center',
-            // fontWeight: '200',
             svg: {
                 width: '24px',
                 height: '24px'
             }
         }),
         indicatorSeparator: () => ({
-            display: 'none' // This removes the line (separator) before the dropdown arrow
+            display: 'none'
         }),
         placeholder: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px'
-        }),
-        singleValue: (base) => ({
             ...base,
             color: '#526D82',
             fontSize: '16px'
@@ -290,11 +296,22 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
             maxHeight: '150px',
             overflowY: 'auto',
             fontSize: '14px',
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            marginTop: '4px'
+        }),
+        menuList: (base) => ({
+            ...base,
+            maxHeight: '200px',
+            padding: '4px 0'
         }),
         option: (base, state) => ({
             ...base,
             backgroundColor: state.isFocused ? '#f0f0f0' : '#fff',
             color: '#526D82',
+            padding: '8px 12px',
+            cursor: 'pointer',
             '&:active': {
                 backgroundColor: '#e6e6e6',
             }
@@ -319,11 +336,17 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                                     </label>
                                     <Select
                                         options={examinations}
+                                        value={examinations.find(o => o.value === selectedExam) ?? null}
                                         styles={customStyles}
                                         placeholder=""
-                                        isClearable={true}
-                                        onChange={(selected) => {
-                                            setSelectedExam(selected?.value || null);
+                                        isClearable
+                                        onChange={(sel) => {
+                                            const val = sel?.value ?? null;
+                                            setSelectedExam(val);
+                                            // clear downstream
+                                            setSelectedYear(null);
+                                            setSelectedClass(null);
+                                            setSelectedSubject(null);
                                         }}
                                     />
                                 </div>
@@ -335,11 +358,17 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                                     </label>
                                     <Select
                                         options={filteredYears}
+                                        value={filteredYears.find(o => o.value === selectedYear) ?? null}
                                         styles={customStyles}
                                         placeholder=""
-                                        isClearable={true}
-                                        value={filteredYears.find(opt => opt.value === selectedYear)}
-                                        onChange={(selected) => setSelectedYear(selected?.value || null)}
+                                        isClearable
+                                        onChange={(sel) => {
+                                            const val = sel?.value ?? null;
+                                            setSelectedYear(val);
+                                            // clear downstream
+                                            setSelectedClass(null);
+                                            setSelectedSubject(null);
+                                        }}
                                     />
                                 </div>
                             </Col>
@@ -352,11 +381,16 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                                     </label>
                                     <Select
                                         options={filteredClasses}
+                                        value={filteredClasses.find(o => o.value === selectedClass) ?? null}
                                         styles={customStyles}
                                         placeholder=""
-                                        isClearable={true}
-                                        value={filteredClasses.find(opt => opt.value === selectedClass)}
-                                        onChange={(selected) => setSelectedClass(selected?.value || null)}
+                                        isClearable
+                                        onChange={(sel) => {
+                                            const val = sel?.value ?? null;
+                                            setSelectedClass(val);
+                                            // clear subject
+                                            setSelectedSubject(null);
+                                        }}
                                     />
                                 </div>
                             </Col>
@@ -367,11 +401,11 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                                     </label>
                                     <Select
                                         options={filteredSubjects}
+                                        value={filteredSubjects.find(o => o.value === selectedSubject) ?? null}
                                         styles={customStyles}
                                         placeholder=""
-                                        isClearable={true}
-                                        value={filteredSubjects.find(opt => opt.value === selectedSubject)}
-                                        onChange={(selected) => setSelectedSubject(selected?.value || null)}
+                                        isClearable
+                                        onChange={(sel) => setSelectedSubject(sel?.value ?? null)}
                                     />
                                 </div>
                             </Col>
@@ -403,6 +437,33 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose }) => {
                             </Col>
                             <Col md={6} className="AdminQuestionAssigning-form-group-col">
                                 <div className="AdminQuestionAssigning-form-group">
+                                    <label className="AdminQuestionAssigning-form-label">
+                                        Pass Marks <span className="AdminQuestionAssigning-adding_required">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        min="0"
+                                        className="custom-input"
+                                        style={{
+                                            height: '50px',
+                                            border: '1px solid #757575',
+                                            borderRadius: '8px',
+                                            padding: '0 10px',
+                                            fontSize: '16px',
+                                            color: '#526D82',
+                                            width: '100%',
+                                            boxSizing: 'border-box',
+                                            outline: "none"
+                                        }}
+                                        value={passMarks}
+                                        onChange={handlePassMarksChange}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={12} className="AdminQuestionAssigning-form-group-col-Teacher">
+                                <div className="AdminQuestionAssigning-form-group-Teacher">
                                     <label className="AdminQuestionAssigning-form-label">
                                         Assign Teacher <span className="AdminQuestionAssigning-adding_required">*</span>
                                     </label>

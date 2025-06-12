@@ -89,21 +89,22 @@ const NewSeatingDashboard = () => {
 
     const [seatingDetails, setSeatingDetails] = useState([])
 
+
+    const fetchSeatingData = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/api/seating/${admin_id}`);
+            console.log("Seating Data", response.data);
+
+            // Store the fetched data in state
+            setSeatingDetails(response.data);
+        } catch (error) {
+            console.error("Error fetching seating data", error);
+        }
+    };
     useEffect(() => {
-        const fetchSeatingData = async () => {
-            try {
-                const response = await axios.get(`${APIURL}/api/seating/${admin_id}`);
-                console.log("Seating Data", response.data);
-
-                // Store the fetched data in state
-                setSeatingDetails(response.data);
-            } catch (error) {
-                console.error("Error fetching seating data", error);
-            }
-        };
-
         fetchSeatingData();
     }, [APIURL, admin_id]);
+    console.log(seatingDetails, "seatingDetailsseatingDetailsseatingDetailsseatingDetails")
 
 
 
@@ -1326,7 +1327,7 @@ const NewSeatingDashboard = () => {
                 </div>
                 <div className="seating_classes_box" >
                     <div className="seating_container" >
-                        {DummySeatingData.map((item) => (
+                    {seatingDetails.map((item) => (
                             <div
                                 className="seating_classes_box_inner"
                                 key={item.id}
@@ -1335,16 +1336,18 @@ const NewSeatingDashboard = () => {
                             >
                                 <div className="seating_top_row">
                                     <div className="seating_exam_details">
-                                        <h3 className="seating_room_no">ROOM NO: {item.roomNo}</h3>
+                                        <h3 className="seating_room_no">ROOM NO: {item.hall_name}</h3>
                                         <p className="seating_exam_title">{item.examName}</p>
-                                        <p className="seating_exam_date">Date of exam: {item.examDate}</p>
+                                        <p className="seating_exam_date">Date of exam: {new Date(item.exam_date).toLocaleDateString('en-GB', {
+                  day: '2-digit', month: 'short', year: 'numeric'
+                })}</p>
                                     </div>
                                 </div>
                                 <div className="seating_bottom_row">
                                     <p className="seating_faculties">
 
                                         <BsFillPersonFill style={{ paddingBottom: "2px", marginRight: "0.5rem" }} />
-                                        {item.faculties} Faculties assigned</p>
+                                        {item.teacher_count} Faculties assigned</p>
                                     <div>
                                         <span className="seating_classes">Classes: </span>
                                         <span className="seating_classes_input">{item.classes.join(', ')}</span>

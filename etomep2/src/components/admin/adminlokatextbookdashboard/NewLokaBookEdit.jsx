@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { FaTrash, FaRedo } from "react-icons/fa";
 
 
-const NewLokaBookEdit = ({ isOpen, onClose }) => {
+const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
 
     if (!isOpen) return null;
     const APIURL = useSelector((state) => state.APIURL.url);
@@ -22,7 +22,7 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
     const [classOptions, setClassOptions] = useState([]);
     const [subjectOptions, setSubjectOptions] = useState([]);
     const [id, setId] = useState("");
-    
+
     const [isEditMode, setIsEditMode] = useState(false);
 
     const [selectedPublisher, setSelectedPublisher] = useState(null);
@@ -188,6 +188,7 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                 confirmButtonText: "OK"
             }).then(() => {
                 onClose();
+                onSuccess();
             });
 
         } catch (error) {
@@ -358,7 +359,8 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                 text: "The textbook has been deleted.",
                 confirmButtonText: "OK"
             }).then(() => {
-                onClose(); // Close modal
+                onClose();
+                onSuccess();
             });
 
         } catch (error) {
@@ -384,13 +386,16 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                         <div className="lokatextbookedit-form-grid">
                             <div className="lokatextbookedit-form-group" >
                                 <label className="lokatextbookedit-form-label" >
-                                    Select Class <span className="lokatextbookadd_required">*</span>
+                                    Select Class {isEditMode && (
+                                        <span className="lokatextbookadd_required">*</span>
+                                    )}
                                 </label>
                                 <Select
                                     options={classOptions}
                                     styles={customStyles}
                                     placeholder=""
                                     isClearable={true}
+                                    readOnly={!isEditMode}  
                                     value={selectedClass}
                                     onChange={handleClassChange}
                                 />
@@ -403,6 +408,7 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                     styles={customStyles}
                                     placeholder=""
                                     isClearable={true}
+                                    readOnly={!isEditMode}  
                                     value={selectedMedium}
                                     onChange={setSelectedMedium}
                                 />
@@ -410,12 +416,15 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
 
                             <div className="lokatextbookedit-form-group">
                                 <label className="lokatextbookedit-form-label">
-                                    Select Subject  <span className="lokatextbookedit_required">*</span></label>
+                                    Select Subject  {isEditMode && (
+                                        <span className="lokatextbookadd_required">*</span>
+                                    )}</label>
                                 <Select
                                     options={subjectOptions}
                                     styles={customStyles}
                                     placeholder=""
                                     isClearable={true}
+                                    readOnly={!isEditMode}  
                                     value={selectedSubject}
                                     onChange={setSelectedSubject}
                                 />
@@ -440,6 +449,7 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                         outline: "none"
                                     }}
                                     value={textbookname}
+                                    readOnly={!isEditMode}  
                                     onChange={e => setTextBookName(e.target.value)}
                                 />
                             </div>
@@ -462,6 +472,7 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                         outline: "none"
                                     }}
                                     value={volume}
+                                    readOnly={!isEditMode}  
                                     onChange={e => setVolume(e.target.value)}
                                 />
                             </div>
@@ -473,6 +484,7 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                     styles={customStyles}
                                     placeholder=""
                                     value={selectedPublisher}
+                                    readOnly={!isEditMode}  
                                     isClearable={true}
                                     onChange={setSelectedPublisher}
                                 />
@@ -492,18 +504,27 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                                         className="uploaded_image"
                                                         style={{ width: "100%", height: "200px", marginLeft: "30px", objectFit: "cover" }}
                                                     />
-                                                    <button
-                                                        type="button"
-                                                        style={{ border: "none", background: "none", cursor: "pointer" }}
-                                                        onClick={clearImageFile}
-                                                    >
-                                                        <label htmlFor="image-upload" style={{ cursor: "pointer" }}>
-                                                            <FaRedo
-                                                                style={{ color: "blue", fontSize: "20px" }}
-                                                                title="Change Image"
-                                                            />
-                                                        </label>
-                                                    </button>
+                                                    
+                                                        <button
+                                                            type="button"
+                                                            onClick={clearImageFile}
+                                                            readOnly={!isEditMode}
+                                                            style={{
+                                                                border: "none",
+                                                                background: "none",
+                                                                cursor: "pointer",
+                                                                marginLeft: "8px"
+                                                            }}
+                                                            title="Change Image"
+                                                        >
+                                                            <label htmlFor="image-upload" style={{ cursor: "pointer" }}>
+                                                                <FaRedo
+                                                                    style={{ color: "blue", fontSize: "20px" }}
+                                                                    title="Change Image"
+                                                                />
+                                                            </label>
+                                                        </button>
+                                            
                                                 </>
                                             ) : (
                                                 <>
@@ -530,6 +551,7 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                     <input
                                         type="number"
                                         value={chapterCount}
+                                        readOnly={!isEditMode}  
                                         onChange={handleChapterCountChange}
                                         className="lokatextbookedit_chapter-upload-input"
                                     />
@@ -550,16 +572,18 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                                     className="lokatextbookedit_chapter-upload-text"
                                                     placeholder="Enter Chapter Name"
                                                     value={chapter.name}
+                                                    readOnly={!isEditMode}  
                                                     onChange={(e) => handleChapterChange(index, "name", e.target.value)}
                                                 />
                                                 <div className="lokatextbookedit_custom-file-upload">
                                                     <label htmlFor={`file-upload-${index}`} className="lokatextbookedit_upload-btn">
-                                                        "Choose File"
+                                                        Choose File
                                                     </label>
                                                     <input
                                                         id={`file-upload-${index}`}
                                                         type="file"
                                                         className="lokatextbookedit_hidden-file"
+                                                        readOnly={!isEditMode}  
                                                         onChange={(e) => {
                                                             const file = e.target.files[0];
                                                             const updated = [...chapters];
@@ -573,18 +597,40 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                                         chapter.file.name
                                                     ) : chapter.previewUrl ? (
                                                         <>
-                                                            <a href={chapter.previewUrl} target="_blank" rel="noopener noreferrer">
-                                                                {decodeURIComponent(chapter.previewUrl.split("/").pop().split("?")[0])}
+                                                            <a
+                                                                href={chapter.previewUrl}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                            >
+                                                                {decodeURIComponent(
+                                                                    chapter.previewUrl
+                                                                        .split("/")
+                                                                        .pop()
+                                                                        .split("?")[0]
+                                                                )}
                                                             </a>
-                                                            <FaRedo
-                                                                style={{ color: "blue", marginLeft: "8px", cursor: "pointer" }}
-                                                                title="Replace PDF"
-                                                                onClick={() => {
-                                                                    const updated = [...chapters];
-                                                                    updated[index].previewUrl = "";
-                                                                    setChapters(updated);
-                                                                }}
-                                                            />
+                                                            {isEditMode && (
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        const updated = [...chapters];
+                                                                        updated[index].previewUrl = "";
+                                                                        setChapters(updated);
+                                                                    }}
+                                                                    readOnly={!isEditMode}  
+                                                                    style={{
+                                                                        background: "none",
+                                                                        border: "none",
+                                                                        padding: 0,
+                                                                        marginLeft: 8,
+                                                                        cursor: isEditMode ? "pointer" : "not-allowed",
+                                                                        opacity: isEditMode ? 1 : 0.5,
+                                                                    }}
+                                                                    title="Replace PDF"
+                                                                >
+                                                                    <FaRedo color="blue" />
+                                                                </button>
+                                                            )}
                                                         </>
                                                     ) : (
                                                         <span>&nbsp;</span>
@@ -592,10 +638,12 @@ const NewLokaBookEdit = ({ isOpen, onClose }) => {
                                                 </div>
                                                 <button
                                                     className="lokatextbookedit_chapter-upload-delete"
+                                                    readOnly={!isEditMode}  
                                                     onClick={() => handleDelete(index)}
                                                 >
                                                     <FaTrash />
                                                 </button>
+
                                             </div>
 
                                         ))}

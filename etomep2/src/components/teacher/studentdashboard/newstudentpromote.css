@@ -1,0 +1,71 @@
+.newstudentpromote-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.newstudentpromote-modal {
+    width: 1054px;
+    /* max-width: 960px; */
+    height: 650px;
+    background: #fff;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+/* Tabs */
+.newstudentpromote-tabs {
+    display: flex;
+    /* border-bottom: 2px solid #e6e6e6; */
+    margin-bottom: 40px;
+}
+
+.newstudentpromote-tabs button {
+    flex: 0 0 auto;
+    margin-right: 24px;
+    padding: 8px 0;
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: #8D8A95;
+    cursor: pointer;
+    position: relative;
+}
+
+.newstudentpromote-tabs button.active {
+    color: #2162b2;
+}
+
+.newstudentpromote-tabs button.active::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #2162b2;
+}
+
+/* Close icon in top‐right corner */
+.newstudentpromote-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+}

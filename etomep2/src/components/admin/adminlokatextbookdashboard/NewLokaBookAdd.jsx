@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { FaTrash, FaRedo } from "react-icons/fa";
 
 
-const NewLokaBookAdd = ({ isOpen, onClose }) => {
+const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
 
     if (!isOpen) return null;
     const APIURL = useSelector((state) => state.APIURL.url);
@@ -120,6 +120,7 @@ const NewLokaBookAdd = ({ isOpen, onClose }) => {
                 confirmButtonText: "OK"
             }).then(() => {
                 onClose();
+                onSuccess();
             });
 
         } catch (error) {

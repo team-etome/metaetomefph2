@@ -389,7 +389,7 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
                                                         <img
                                                             src={formData.imageFile instanceof File
                                                                 ? URL.createObjectURL(formData.imageFile)
-                                                                : formData.imageFile }
+                                                                : formData.imageFile}
                                                             alt="Uploaded Image"
                                                             className="uploaded_image"
                                                             style={{
@@ -399,11 +399,17 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
                                                             }}
                                                         />
                                                         <button
-                                                            className="clear-image-btn"
+                                                            className="facultyedit_clear-image-btn"
                                                             onClick={clearImageFile}
                                                             title="Remove Image"
                                                         >
-                                                            <FaTrash />
+                                                            <FaRedo
+                                                                style={{
+                                                                    color: "blue",
+                                                                    fontSize: "20px",
+                                                                }}
+                                                                title="Change Image"
+                                                            />
                                                         </button>
                                                     </div>
                                                 ) : (

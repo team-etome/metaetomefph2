@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Examtimetable from './ExamTimetable';
 import Select from 'react-select';
 
-const Examtimetableediting = ({ onClose, defaultClassOption, defaultEntries, defaultExamKey, defaultTerm }) => {
+const Examtimetableediting = ({ onClose, onSuccess,defaultClassOption, defaultEntries, defaultExamKey, defaultTerm }) => {
     const navigate = useNavigate();
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
@@ -222,6 +222,7 @@ const Examtimetableediting = ({ onClose, defaultClassOption, defaultEntries, def
                 confirmButtonText: "OK",
             }).then(() => {
                 onClose();
+                onSuccess(); 
             });
         } catch (error) {
             console.error("Error saving timetable:", error.response?.data || error.message);

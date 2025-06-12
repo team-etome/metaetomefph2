@@ -2,10 +2,23 @@ import React, { useEffect, useState, useRef } from 'react';
 import './newresultfilter.css';
 import { useSelector } from 'react-redux';
 import Select from 'react-select';
+import axios from 'axios';
 
 const NewResultFilter = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+
+    const rawData = useSelector(state => state.exampaperinfo.exampaperinfo);
+
+    console.log(rawData, "rawDatarawDatarawData")
+
+
+    const [parsedKeys, setParsedKeys] = useState([])        // [{ full, exam, year }, …]
+    const [examOptions, setExamOptions] = useState([])        // [ "Annual Examination", … ]
+    const [yearOptions, setYearOptions] = useState([])        // [ "2024", "2025", … ]
+    const [classOptions, setClassOptions] = useState([])        // [ "9", "10", … ]
+    const [divisionOptions, setDivisionOptions] = useState([])  // [ "A", "B", … ]
+
 
 
 
@@ -13,6 +26,79 @@ const NewResultFilter = () => {
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedClass, setSelectedClass] = useState('');
     const [selectedDivision, setSelectedDivision] = useState('');
+
+
+    useEffect(() => {
+        if (!rawData || Object.keys(rawData).length === 0) return;
+
+        // Parse each key into { name, year }
+        const parsed = Object.keys(rawData)
+            .map(fullKey => {
+                const m = fullKey.match(/^(.*)\s+(\d{4})$/);
+                return m ? { name: m[1].trim(), year: m[2] } : null;
+            })
+            .filter(Boolean);
+
+
+        console.log(parsed, "parsedparsedparsedparsedparsed")
+
+        setParsedKeys(parsed);
+        setExamOptions(Array.from(new Set(parsed.map(p => p.name))));
+        setYearOptions(Array.from(new Set(parsed.map(p => p.year))));
+    }, [rawData]);
+
+    useEffect(() => {
+        if (!selectedExam) return;
+        const years = parsedKeys
+            .filter(e => e.name === selectedExam)
+            .map(e => e.year);
+        setYearOptions(Array.from(new Set(years)));
+
+        // wipe
+        setSelectedYear('');
+        setClassOptions([]);
+        setSelectedClass('');
+        setDivisionOptions([]);
+        setSelectedDivision('');
+    }, [selectedExam, parsedKeys]);
+
+    useEffect(() => {
+        if (!selectedExam || !selectedYear) {
+            setClassOptions([]);
+            return;
+        }
+        const fullKey = `${selectedExam} ${selectedYear}`;
+        const papers = rawData[fullKey] || [];
+
+        const classes = papers.map(p => p.class_name);
+        setClassOptions(Array.from(new Set(classes)));
+
+        // wipe
+        setSelectedClass('');
+        setDivisionOptions([]);
+        setSelectedDivision('');
+    }, [selectedExam, selectedYear, rawData]);
+
+
+    useEffect(() => {
+        if (!selectedExam || !selectedYear || !selectedClass) {
+            setDivisionOptions([]);
+            return;
+        }
+        const fullKey = `${selectedExam} ${selectedYear}`;
+        const papers = rawData[fullKey] || [];
+
+        const divisions = papers
+            .filter(p => p.class_name === selectedClass)
+            .map(p => p.division);
+        setDivisionOptions(Array.from(new Set(divisions)));
+
+        // wipe
+        setSelectedDivision('');
+    }, [selectedExam, selectedYear, selectedClass, rawData]);
+
+
+
 
     const subjects = [
         { key: 'english', name: 'English', total: 100 },
@@ -26,6 +112,9 @@ const NewResultFilter = () => {
         { key: 'math', name: 'Math', total: 100 },
         { key: 'bio', name: 'Bio', total: 100 },
     ];
+
+
+
 
     // Dummy student data for demonstration
     const dummyStudents = [
@@ -286,6 +375,40 @@ const NewResultFilter = () => {
         window.requestAnimationFrame(() => { isSyncingRef.current = false; });
     };
 
+
+    const handleSearch = async () => {
+        if (!selectedExam || !selectedYear || !selectedClass || !selectedDivision) {
+            return window.alert('Please select Exam, Year, Class and Division before searching.');
+        }
+
+        try {
+            const payload = {
+                admin_id,
+                exam: selectedExam,
+                year: selectedYear,
+                class: selectedClass,
+                division: selectedDivision,
+            };
+
+            console.log(selectedExam,selectedYear,"selectedYearselectedYearselectedYearselectedYear")
+
+            const resp = await axios.post(
+                `${APIURL}/api/resultarna`,
+                payload,
+                {
+                    headers: { 'Content-Type': 'application/json' }
+                }
+            );
+
+            console.log('API returned:', resp.data);
+
+        } catch (err) {
+            console.error('Search error:', err);
+            window.alert('Search failed. See console for details.');
+        }
+    };
+
+
     const dashboardcustomStyles = {
         control: (base, state) => ({
             ...base,
@@ -419,42 +542,44 @@ const NewResultFilter = () => {
                     <div className="result_main-left-controls">
                         {/* Exam Type Dropdown */}
                         <Select
-                            // value={examOptions.find((option) => option === selectedExam) ? { label: selectedExam, value: selectedExam } : null}
-                            onChange={handleExamChange}
-                            // options={examOptions.map((option) => ({ label: option, value: option }))}
-                            styles={dashboardcustomStyles}
+                            value={selectedExam ? { label: selectedExam, value: selectedExam } : null}
+                            onChange={opt => setSelectedExam(opt.value)}
+                            options={examOptions.map(name => ({ label: name, value: name }))}
                             placeholder="Select Examination"
+                            styles={dashboardcustomStyles}
+
                         />
 
                         {/* Year Dropdown */}
                         <Select
-                            // value={yearOptions.find((year) => year === selectedYear) ? { label: selectedYear, value: selectedYear } : null}
-                            onChange={handleYearChange}
-                            // options={yearOptions.map((year) => ({ label: year, value: year }))}
-                            styles={dashboardsmallcustomStyles }
+                            value={selectedYear ? { label: selectedYear, value: selectedYear } : null}
+                            onChange={opt => setSelectedYear(opt.value)}
+                            options={yearOptions.map(year => ({ label: year, value: year }))}
+                            styles={dashboardsmallcustomStyles}
                             placeholder="Select Year"
                         />
 
+
                         {/* Class Dropdown */}
                         <Select
-                            // value={classOptions.find((cls) => cls === selectedClass) ? { label: selectedClass, value: selectedClass } : null}
-                            onChange={handleClassChange}
-                            // options={classOptions.map((cls) => ({ label: cls, value: cls }))}
-                            styles={dashboardsmallcustomStyles }
+                            value={selectedClass ? { label: selectedClass, value: selectedClass } : null}
+                            onChange={opt => setSelectedClass(opt?.value || '')}
+                            options={classOptions.map(c => ({ label: c, value: c }))}
+                            styles={dashboardsmallcustomStyles}
                             placeholder="Select Class"
                         />
 
                         {/* Division Dropdown */}
                         <Select
-                            // value={divisionOptions.find((div) => div === selectedDivision) ? { label: selectedDivision, value: selectedDivision } : null}
-                            onChange={handleDivisionChange}
-                            // options={divisionOptions.map((div) => ({ label: div, value: div }))}
+                            value={selectedDivision ? { label: selectedDivision, value: selectedDivision } : null}
+                            onChange={opt => setSelectedDivision(opt?.value || '')}
+                            options={divisionOptions.map(d => ({ label: d, value: d }))}
                             styles={dashboardsmallcustomStyles}
                             placeholder="Select Division"
                         />
                         <button
                             className="btn-primary btn-sm search_button"
-                        // onClick={handleSearch}
+                            onClick={handleSearch}
                         >
                             Search
                         </button>
@@ -467,7 +592,7 @@ const NewResultFilter = () => {
             </div>
 
             {/* Wrapper for both the header table and body table */}
-            <div className="result_classes_table" style={{ border: "1px solid #CECECE" }}>
+            <div className="result_classes_table" style={{ border: "1px solid #CECECE" }} >
                 <div className="result_table_wrapper">
                     {/* Header Table: only thead */}
                     <div
@@ -530,7 +655,6 @@ const NewResultFilter = () => {
                     </div>
                 </div>
             </div>
-
             <div
                 className="result-table-scrollbar-container"
                 ref={scrollbarRef}

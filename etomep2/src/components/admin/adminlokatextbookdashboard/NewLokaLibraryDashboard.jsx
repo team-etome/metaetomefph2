@@ -50,16 +50,16 @@ function NewLokaLibraryDashboard() {
 
   console.log(lokabookListData, "clgggggggggggggggggg")
 
-    const fetchTextbooks = async () => {
-      try {
-        const response = await axios.get(`${APIURL}/api/create-textbook/${admin_id}`);
-        if (response.data && response.data.data) {
-          setLokaBookListData(response.data.data);
-        }
-        // console.log(response.data, "responsedatat coming ")
-      } catch (error) {
-        console.error("Error fetching textbooks:", error);
+  const fetchTextbooks = async () => {
+    try {
+      const response = await axios.get(`${APIURL}/api/create-textbook/${admin_id}`);
+      if (response.data && response.data.data) {
+        setLokaBookListData(response.data.data);
       }
+      // console.log(response.data, "responsedatat coming ")
+    } catch (error) {
+      console.error("Error fetching textbooks:", error);
+    }
 
     // if (admin_id) {
     //   fetchTextbooks();
@@ -161,7 +161,11 @@ function NewLokaLibraryDashboard() {
   };
 
   const handleCategoryChange = (selectedOption) => {
-    setSelectedCategory(selectedOption ? selectedOption.value : '');
+    if (!selectedOption || selectedOption.value === selectedCategory) {
+      setSelectedCategory("");
+    } else {
+      setSelectedCategory(selectedOption.value);
+    }
   };
 
   return (
@@ -170,9 +174,14 @@ function NewLokaLibraryDashboard() {
         <div className="admin_loka_library_header_row">
           <div className="admin_loka_library_select_col">
             <Select
-              value={categories.find((cat) => cat === selectedCategory) ? { label: selectedCategory, value: selectedCategory } : null}
+              isClearable
+              value={
+                categories.find(cat => cat === selectedCategory)
+                  ? { label: selectedCategory, value: selectedCategory }
+                  : null
+              }
               onChange={handleCategoryChange}
-              options={categories.map((cat) => ({ label: cat, value: cat }))}
+              options={categories.map(cat => ({ label: cat, value: cat }))}
               styles={dashboardcustomStyles}
               placeholder="Select Categories"
             />
@@ -242,13 +251,13 @@ function NewLokaLibraryDashboard() {
 
       {showEditPopup && (
         <NewLokaLibraryEdit
-                   isOpen={showEditPopup}
-                   onClose={()    => setShowEditPopup(false)}
-                   onUpdated={() => {
-                     fetchTextbooks();
-                     setShowEditPopup(false);
-                   }}
-                 />
+          isOpen={showEditPopup}
+          onClose={() => setShowEditPopup(false)}
+          onUpdated={() => {
+            fetchTextbooks();
+            setShowEditPopup(false);
+          }}
+        />
       )}
     </div>
   );

@@ -29,7 +29,7 @@
     height: 162px !important;
     padding: 24px;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 16px;
     background-color: #fff;
     overflow: hidden;
     padding-right: 0px;
@@ -86,7 +86,7 @@
     flex: 1 1 auto;
     overflow-y: auto;
     margin-top: 24px;
-    border-radius: 8px;
+    border-radius: 16px;
     background-color: white;
   }
   

@@ -14,6 +14,7 @@
 .adminstudentdashboardview-modal-container {
     background: #fff;
     width: 1058px;
+    height: 650px;
     /* Adjust based on preference */
     /* max-width: 90vw; */
     border-radius: 16px;
@@ -21,7 +22,7 @@
     /* So the corners are rounded nicely */
     display: flex;
     flex-direction: column;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 .adminstudentdashboardview-backdrop {
     display: flex;

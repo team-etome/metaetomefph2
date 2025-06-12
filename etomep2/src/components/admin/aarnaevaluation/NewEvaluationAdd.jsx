@@ -338,7 +338,7 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                     <input
                                         type="date"
                                         min="0"
-                                        value={formData.deadline}    // ✅ bind the value
+                                        value={formData.deadline}   
                                         onChange={(e) => handleInputChange('deadline', e.target.value)}  // ✅ correct way for input field
                                         className="custom-input"
                                         style={{

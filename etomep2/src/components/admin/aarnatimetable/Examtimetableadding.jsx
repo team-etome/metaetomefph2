@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
 
-const Examtimetableadding = ({ onClose }) => {
+const Examtimetableadding = ({ onClose, onSuccess }) => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
 
@@ -133,6 +133,7 @@ const Examtimetableadding = ({ onClose }) => {
                 confirmButtonText: "OK",
             }).then(() => {
                 onClose();
+                onSuccess(); 
             });
         } catch (error) {
             console.error("Error saving timetable:", error.response?.data || error.message);

@@ -1,0 +1,344 @@
+/* Main container and header styling */
+
+.newteacherresult_main_container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-top: 0;
+  padding-left: 0;
+
+}
+
+.newteacherresult_main_header_container {
+  flex: 0 0 auto;
+  padding: 0px;
+  margin-left: 24px;
+  margin-right: 24px;
+  margin-top: 24px;
+}
+
+.newteacherresult_header-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: 0 15px; */
+}
+
+.newteacherresult_left-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.newteacherresult_right-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+
+/* Wrapper for tables */
+.newteacherresult_classes_box {
+  flex: 1 1 auto;
+  margin: 24px;
+  margin-top: 40px;
+  margin-bottom: 0px;
+  max-height: 100%;
+  overflow-y: visible;
+}
+
+
+.newteacherresult_content {
+  padding-top: 0px;
+}
+
+/* Title above table */
+.newteacherresult_title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #222;
+}
+
+
+/* ensure header cells stay white */
+.newteacherresult_table thead th {
+  background-color: #fff !important;
+}
+
+/* top header row: 56px height, light bottom border */
+.newteacherresult_table_headrow1 th {
+  height: 56px;
+  padding: 0 16px;
+  font-weight: 400;
+}
+
+/* bottom header row: 30px height, light bottom border */
+.newteacherresult_table_headrow2 th {
+  height: 30px;
+  padding: 0 16px;
+  font-weight: 400;
+  color: #8D8A95;
+  font-size: 14px;
+}
+
+
+
+/* header row */
+.newteacherresult_table thead th {
+  background: transparent;
+  /* color: #8D8A95; */
+  font-size: 14px;
+  font-weight: 400;
+  text-align: left;
+  padding: 0 16px;
+  /* height: 48px; */
+  border-bottom: 1px solid #ECECEC;
+}
+
+/* body cells */
+.newteacherresult_table td {
+  padding: 0 16px;
+  height: 56px;
+  vertical-align: middle;
+  border-bottom: 1px solid #ECECEC;
+  color: #222;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+
+
+
+
+
+
+/* File: src/components/newteacherresult.css */
+
+/* ─────────── MAIN CONTAINER & HEADER STYLING ─────────── */
+
+
+/* ─────────── TABLE WRAPPER ─────────── */
+.newteacherresult_table_wrapper {
+  position: relative;
+  border: 1px solid #CECECE;
+  border-radius: 4px;
+  height: calc(100% - 40px);
+  /* leave room for the fake scrollbar at the bottom */
+  display: flex;
+  flex-direction: column;
+}
+.newteacherresult_table_wrapper-examresult{
+  position: relative;
+  border: 1px solid #CECECE;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─────────── HEADER CONTAINER (only THEAD, horizontal scroll) ─────────── */
+.newteacherresult-table-header-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* hide native scrollbar for header */
+}
+
+.newteacherresult-table-header-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─────────── BODY CONTAINER (only TBODY, vertical+horizontal scroll) ─────────── */
+.newteacherresult-table-body-container {
+  flex: 1 1 auto;
+  overflow-x: auto;
+  overflow-y: auto;
+  /* ← This ensures the body (<tbody>) scrolls vertically */
+  height: 40vh;
+  /* or whatever height you need */
+  max-height: 100% !important;
+}
+
+/* hide the native scrollbars for both header & body, except the fake one we create below */
+.newteacherresult-table-body-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─────────── FAKE SCROLLBAR ─────────── */
+.newteacherresult-table-scrollbar-container {
+  height: 12px;
+  /* a thin horizontal bar for the fake scrollbar */
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-top: 0;
+}
+
+.newteacherresult-table-scrollbar-container::-webkit-scrollbar {
+  height: 12px;
+}
+
+.newteacherresult-table-scrollbar-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.newteacherresult-table-scrollbar-container::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* ─────────── COMMON TABLE STYLING ─────────── */
+.newteacherresult_table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.newteacherresult_table th,
+.newteacherresult_table td {
+  border: 1px solid #ddd;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* ─────────── STICKY COLUMNS ─────────── */
+/* Roll No (first column) */
+.sticky-left {
+  position: sticky;
+  left: 0;
+  background: #fff;
+  z-index: 10;
+  width: 120px;
+  /* exactly 120px */
+  min-width: 120px;
+  max-width: 120px;
+  height: 56px;
+  /* this will apply to the BODY cells; header uses custom heights below */
+}
+
+/* Name (second column) */
+.sticky-left-2 {
+  position: sticky;
+  left: 120px;
+  /* push it right by the width of the first column */
+  background: #fff;
+  z-index: 10;
+  width: 190px;
+  /* exactly 190px */
+  min-width: 190px;
+  max-width: 190px;
+  height: 56px;
+  /* body row height */
+}
+
+/* ─────────── HEADER ROWS FOR ASSIGNMENT COLUMNS ─────────── */
+/* Row 1: Assignment name (part of the three‐row header) */
+.assignment-header-row1 {
+  width: 190px;
+  min-width: 190px;
+  max-width: 280px;
+  height: 35px;
+  /* part of the 115px total header height */
+  background-color: #fff;
+  color: #8D8A95;
+  font-weight: 400;
+}
+
+/* Row 2: “Posted On: …” */
+.assignment-header-row2 {
+  width: 190px;
+  min-width: 190px;
+  max-width: 280px;
+  height: 40px;
+  /* part of the 115px total header height */
+  background-color: #fff;
+  color: #222222 !important;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* Row 3: “Total: …” */
+.assignment-header-row3 {
+  width: 190px;
+  min-width: 190px;
+  max-width: 280px;
+  height: 40px;
+  /* 40 + 40 + 35 = 115px total header height */
+  background-color: #fff;
+  color: #222222 !important;
+  font-size: 14px;
+  font-weight: 400;
+  border-bottom: 1px solid #ECECEC;
+  /* keep a bottom border on the last header row */
+}
+
+/* Merge the border styling on header cells */
+.newteacherresult_table thead th {
+  border: 1px solid #ECECEC;
+}
+
+/* ─────────── BODY ROWS & CELLS ─────────── */
+.newteacherresult_tr td {
+  height: 56px;
+  /* EXACTLY 56px for each body row */
+}
+
+.assignment-body-cell {
+  width: 190px;
+  min-width: 190px;
+  max-width: 280px;
+  height: 56px;
+  background-color: #fff;
+  color: #000;
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid #ECECEC;
+}
+
+/* Roll no & Name cells in the BODY must also have specific heights */
+.newteacherresult_tr .sticky-left,
+.newteacherresult_tr .sticky-left-2 {
+  height: 56px;
+}
+
+/* ensure the header’s sticky columns have the correct height as well */
+.newteacherresult_th.sticky-left,
+.newteacherresult_th.sticky-left-2 {
+  height: 115px;
+  /* they span all three header rows */
+  vertical-align: middle;
+  border: 1px solid #ECECEC;
+  background-color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  color: #8D8A95;
+}
+
+/* Because Roll No & Name “<th>” cells cover all three header rows, we center‐align them vertically */
+.newteacherresult_th.sticky-left div,
+.newteacherresult_th.sticky-left-2 div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+
+
+
+.newteacherresult_table_wrapper-examresult {
+  /* Choose whatever max-height makes sense for your layout */
+  max-height: 48vh;
+  overflow-y: auto;        /* allow vertical scrolling */
+  border: 1px solid #CECECE;
+  border-radius: 4px;
+}
+
+/* Make the thead row stick to the top of that scrolling container */
+.newteacherresult_table_wrapper-examresult thead th {
+  position: sticky;
+  top: 0;
+  background-color: #fff;  /* match your table background */
+  z-index: 2;              /* sit above the body rows */
+}

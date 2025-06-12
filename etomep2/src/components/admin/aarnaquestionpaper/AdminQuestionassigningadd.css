@@ -79,6 +79,18 @@
   flex: 1;
 }
 
+.AdminQuestionAssigning-form-group-Teacher {
+  margin-bottom: 16px;
+  width: 648px;
+}
+
+.AdminQuestionAssigning-form-group-col-Teacher {
+  padding: 0px;
+  padding-left: 4px;
+  padding-right: 4px;
+  flex: 1;
+}
+
 
 .AdminQuestionAssigning-form-control {
   width: 100%;

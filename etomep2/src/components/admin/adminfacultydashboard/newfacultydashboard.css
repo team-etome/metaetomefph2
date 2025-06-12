@@ -257,7 +257,7 @@
     transition: background-color 0.2s ease;
   }
   /* Dropdown menu items */
-  .facultydashboard_dropdown-item {
+  /* .facultydashboard_dropdown-item {
     margin: 16px;
     cursor: pointer;
     padding: 0.5rem;
@@ -266,4 +266,4 @@
     color: #222222;
     border-radius: 4px;
     transition: background-color 0.2s ease;
-  }
+  } */

@@ -1,0 +1,142 @@
+/* Container */
+.newteachermcqadd_container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;            /* so footer can stick */
+    padding: 24px;
+    background: #fff;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+  
+  /* Header & stepper */
+  .newteachermcqadd_header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 40px;      /* 40px under header */
+  }
+  .newteachermcqadd_back {
+    cursor: pointer;
+    color: #000;
+  }
+  .newteachermcqadd_steps {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  /* Step circles & text */
+  .step-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ccc;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .step-circle.active {
+    background: #2162b2;
+  }
+  
+  .step-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #bababa;
+  }
+  .step-text.active {
+    color: #222;
+  }
+  
+  .step-divider {
+    margin: 0 32px;
+    font-size: 24px;
+    color: #a1a1a1;
+  }
+  
+  /* Form area */
+  .newteachermcqadd_form {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 38px;            /* 38px between rows */
+  }
+  
+  /* Row of fields */
+  .newteachermcqadd_row {
+    display: flex;
+    gap: 8px;                 /* 8px between columns */
+  }
+  
+  /* Field container */
+  .newteachermcqadd_field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Full-width in row 1 */
+  .newteachermcqadd_field.full {
+    flex: 1 1 100%;
+  }
+  
+  /* Labels */
+  .newteachermcqadd_field label {
+    font-size: 16px;
+    font-weight: 400;
+    color: #767676;
+  }
+  
+  /* Inputs/selects */
+  .newteachermcqadd_input {
+    height: 48px;
+    border-radius: 8px;
+    border: 1px solid #757575;
+    padding: 0 8px;
+    font-size: 14px;
+    margin-top: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Required asterisk */
+  .required {
+    color: #d00;
+    margin-left: 2px;
+  }
+  
+  /* Sticky footer */
+  .newteachermcqadd_footer {
+    position: sticky;
+    bottom: 0;
+    background: #fff;         /* cover content behind */
+    padding-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  .newteachermcqadd_clear,
+  .newteachermcqadd_next {
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .newteachermcqadd_clear {
+    background: #fff;
+    border: 1px solid #2162b2;
+    color: #2162b2;
+  }
+  
+  .newteachermcqadd_next {
+    background: #2162b2;
+    color: #fff;
+  }  

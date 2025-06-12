@@ -295,5 +295,8 @@
   box-sizing: border-box;
   outline: none;
 }
+.facultyedit_clear-image-btn{
+    background: transparent;
+}
 
 
