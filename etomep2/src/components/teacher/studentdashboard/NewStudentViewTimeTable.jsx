@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./newstudentviewtimetable.css";
 import NewStudentSetTime from "./NewStudentSetTime";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function NewStudentViewTimeTable({ isOpen, onClose }) {
+    const APIURL = useSelector((state) => state.APIURL.url);
+    const teacher = useSelector((state) => state.teacherinfo);
+    const teacher_id = teacher.teacherinfo?.teacher_id;
+    
     const [days, setDays] = useState("");
     const [periods, setPeriods] = useState("");
     const [timeModal, setTimeModal] = useState(false);
+    const [timetableData, setTimetableData] = useState({});
+    const [loading, setLoading] = useState(false);
 
     if (!isOpen) return null;
 
@@ -22,6 +30,54 @@ export default function NewStudentViewTimeTable({ isOpen, onClose }) {
         "#DFFCFF",
     ];
 
+    // Fetch timetable data when component opens
+    useEffect(() => {
+        if (isOpen && teacher_id) {
+            fetchTimetableData();
+        }
+    }, [isOpen, teacher_id]);
+
+    const fetchTimetableData = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`${APIURL}/api/timetable`, {
+                params: { teacher_id: teacher_id }
+            });
+            
+            console.log("Timetable data:", response.data);
+            setTimetableData(response.data.timetable || {});
+            
+            // Auto-set days and periods based on data
+            const maxDays = Object.keys(response.data.timetable || {}).length;
+            const maxPeriods = Math.max(...Object.values(response.data.timetable || {}).map(day => day.length), 0);
+            
+            if (maxDays > 0) setDays(maxDays.toString());
+            if (maxPeriods > 0) setPeriods(maxPeriods.toString());
+            
+        } catch (error) {
+            console.error("Error fetching timetable:", error);
+            // If no data exists, don't show error - just show empty timetable
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Helper function to get cell data
+    const getCellData = (dayIndex, periodIndex) => {
+        const dayName = dayNames[dayIndex];
+        const dayData = timetableData[dayName];
+        
+        if (dayData && dayData[periodIndex]) {
+            const entry = dayData[periodIndex];
+            return {
+                subject: entry.subject,
+                startTime: entry.start_time,
+                endTime: entry.end_time
+            };
+        }
+        return null;
+    };
+
     return (
         <div className="newstudentviewtimetable-overlay">
             <div
@@ -30,74 +86,87 @@ export default function NewStudentViewTimeTable({ isOpen, onClose }) {
             >
                 {/* Header */}
                 <div className="nsttview-header">
-                    <h3>Add Time Table</h3>
+                    <h3>View Time Table</h3>
                     <button className="nsttview-close" onClick={onClose}>×</button>
                 </div>
 
-                {/* Inputs */}
-                <div className="nsttview-inputs">
-                    <input
-                        type="number" min="1" max="7"
-                        placeholder="Number of Days"
-                        value={days}
-                        onChange={e => setDays(e.target.value)}
-                    />
-                    <input
-                        type="number" min="1"
-                        placeholder="Number of Periods"
-                        value={periods}
-                        onChange={e => setPeriods(e.target.value)}
-                    />
-                </div>
-                {D > 0  && (
+                {loading ? (
+                    <div className="nsttview-loading">Loading timetable...</div>
+                ) : (
                     <>
-                        <div className="nsttview-grid-header">
-                            <div className="nsttview-cell nsttview-cell-header nsttview-col-periods" >Periods</div>
-                            {dayNames.slice(0, D).map((day, i) => (
-                                <div
-                                    key={day}
-                                    className="nsttview-cell nsttview-cell-header"
-                                    style={{ background: colors[i] }}
-                                >
-                                    {day}
-                                </div>
-                            ))}
+                        {/* Inputs */}
+                        <div className="nsttview-inputs">
+                            <input
+                                type="number" min="1" max="7"
+                                placeholder="Number of Days"
+                                value={days}
+                                onChange={e => setDays(e.target.value)}
+                            />
+                            <input
+                                type="number" min="1"
+                                placeholder="Number of Periods"
+                                value={periods}
+                                onChange={e => setPeriods(e.target.value)}
+                            />
                         </div>
-
-                        {/* ── Scrollable body ── */}
-                        <div className="nsttview-body">
-                            {Array.from({ length: P }).map((_, pi) => (
-                                <React.Fragment key={pi}>
-                                    <div className="nsttview-cell nsttview-row-header">{pi + 1}</div>
-                                    {Array.from({ length: D }).map((_, di) => (
+                        
+                        {D > 0 && (
+                            <>
+                                <div className="nsttview-grid-header">
+                                    <div className="nsttview-cell nsttview-cell-header nsttview-col-periods" >Periods</div>
+                                    {dayNames.slice(0, D).map((day, i) => (
                                         <div
-                                            key={di}
-                                            className="nsttview-cell"
-                                            style={{ background: colors[di] }}
+                                            key={day}
+                                            className="nsttview-cell nsttview-cell-header"
+                                            style={{ background: colors[i] }}
                                         >
-                                            <button className="nsttview-btn" onClick={() => setTimeModal(true)}>Set Time</button>
-                                            <button className="nsttview-btn">Select Subject</button>
+                                            {day}
                                         </div>
                                     ))}
-                                </React.Fragment>
-                            ))}
-                            {timeModal && (
-                                <NewStudentSetTime
-                                    isOpen={timeModal}
-                                    onClose={() => setTimeModal(false)}
-                                    onSave={({ start, end }) => {
-                                        console.log("Saved times:", start, end);
-                                        setTimeModal(false);
-                                    }}
-                                />
-                            )}
-                        </div>
-                    </>)}
+                                </div>
+
+                                {/* ── Scrollable body ── */}
+                                <div className="nsttview-body">
+                                    {Array.from({ length: P }).map((_, pi) => (
+                                        <React.Fragment key={pi}>
+                                            <div className="nsttview-cell nsttview-row-header">{pi + 1}</div>
+                                            {Array.from({ length: D }).map((_, di) => {
+                                                const cellData = getCellData(di, pi);
+                                                return (
+                                                    <div
+                                                        key={di}
+                                                        className="nsttview-cell"
+                                                        style={{ background: colors[di] }}
+                                                    >
+                                                        {cellData ? (
+                                                            <>
+                                                                <div className="nsttview-time">
+                                                                    {cellData.startTime} - {cellData.endTime}
+                                                                </div>
+                                                                <div className="nsttview-subject">
+                                                                    {cellData.subject}
+                                                                </div>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <div className="nsttview-empty">No data</div>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
+                                        </React.Fragment>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </>
+                )}
 
                 {/* Footer */}
                 <div className="nsttview-footer">
                     <button className="nsttview-delete" onClick={() => { setDays(""); setPeriods(""); }}>
-                        Delete
+                        Clear
                     </button>
                     <button className="nsttview-edit" disabled={!(D && P)}>
                         Edit

@@ -21,7 +21,7 @@ import NewTestListing from "../teachertestlist/NewTestListing";
 import NewTeacherMcq from "../teachermcq/NewTeacherMcq";
 
 
-function NewTeacherSubjectSelect({ subject, onClose }) {
+function NewTeacherSubjectSelect({ subject,onBack }) {
     // const [activeTab, setActiveTab] = useState("Assignments");
     const admininfo = useSelector((state) => state.admininfo);
     // const [activeSubject, setActiveSubject] = useState(null);
@@ -92,7 +92,7 @@ function NewTeacherSubjectSelect({ subject, onClose }) {
                     <Row className="newteachersubjectselect_row_header">
                         <Col md={6} className="newteachersubjectselect_header_left_heading">
                             <div className="newteachersubjectselect_title">
-                                <button className="newteachersubjectselect_back-btn" onClick={onClose}>
+                                <button className="newteachersubjectselect_back-btn" onClick={onBack}>
                                     <IoArrowBack size={24} />
                                 </button>
                                 <p>science</p>

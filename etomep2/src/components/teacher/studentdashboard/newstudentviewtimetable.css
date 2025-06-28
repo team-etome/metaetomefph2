@@ -142,9 +142,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  padding: 8px;
+  min-height: 80px;
   gap: 10px;
   border-radius: 8px;
-  /* padding: 0 8px; */
 }
 .nsttview-btn {
   margin-left: 16px;
@@ -184,3 +186,37 @@
   width: 100px;
 }
 .nsttview-edit:enabled { opacity:1; }
+
+/* Add these styles to your existing CSS file */
+
+.nsttview-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 16px;
+    color: #666;
+}
+
+.nsttview-time {
+    font-size: 12px;
+    font-weight: 500;
+    color: #2563eb;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.nsttview-subject {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+    text-align: center;
+    word-break: break-word;
+}
+
+.nsttview-empty {
+    font-size: 12px;
+    color: #9ca3af;
+    text-align: center;
+    font-style: italic;
+}
