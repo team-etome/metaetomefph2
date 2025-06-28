@@ -15,7 +15,7 @@ const NewMyClassStudentView = ({ student, onClose }) => {
                         {/* Left: avatar + name/email */}
                         <div className="newmyclassstudentview-header-left">
                             <img
-                                src={student.image_url ? studentDefault : student.image_url}
+                                 src={student.image ? student.image : studentDefault}
                            
                                 className="newmyclassstudentview-avatar"
                             />

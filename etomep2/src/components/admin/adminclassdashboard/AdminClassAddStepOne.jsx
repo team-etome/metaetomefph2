@@ -167,7 +167,7 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
               }
           }),
       };
-      const teacherOptions = teachers.map(t => ({
+      const teacherOptions = teachers?.map(t => ({
           value: t.id.toString(),
           label: `${t.first_name} ${t.last_name}`
       }));
@@ -332,7 +332,7 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers }) => {
               id="classTeacher"
               styles={steponeaddcustomStyles}
               options={teacherOptions}
-              value={teacherOptions.find(o => o.value === formData.classTeacherId) || null}
+              value={teacherOptions?.find(o => o.value === formData.classTeacherId) || null}
               onChange={(opt) => {
                 setFormData(prev => ({
                   ...prev,

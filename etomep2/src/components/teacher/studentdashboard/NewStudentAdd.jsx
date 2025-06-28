@@ -6,28 +6,32 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { FaTrash, FaRedo } from "react-icons/fa";
+import { useDispatch } from 'react-redux';
 
 // onStudentAdded
 
-const NewStudentAdd = ({ isOpen, onClose, }) => {
+const NewStudentAdd = ({ isOpen, onClose, onStudentAdded }) => {
     if (!isOpen) return null;
 
     const APIURL = useSelector((state) => state.APIURL.url);
-    const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+    const teacher = useSelector((state) => state.teacherinfo);
+    console.log(teacher, "teacher")
+    const teacher_id = teacher.teacherinfo?.teacher_id;
+    console.log(teacher_id, "teacher_idteacher_idteacher_idteacher_id")
 
-    const admininfo = useSelector((state) => state.admininfo);
+
 
     const [formData, setFormData] = useState({
         studentname: "",
         rollno: "",
         employeeid: "",
-        dateofbirth:"",
-        joiningdate:"",
-        admissionno:"",
-        fathername:"",
-        mothername:"",
-        guardian:"",
-        address:"",
+        dateofbirth: "",
+        joiningdate: "",
+        admissionno: "",
+        fathername: "",
+        mothername: "",
+        guardian: "",
+        address: "",
         gender: null,
         phoneno: "",
         email: "",
@@ -37,18 +41,25 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
 
     const [phoneCode, setPhoneCode] = useState("+91");
 
-    // const resetForm = () => {
-    //     setFormData({
-    //         firstname: "",
-    //         lastname: "",
-    //         employeeid: "",
-    //         gender: null,
-    //         phoneno: "",
-    //         email: "",
-    //         password: "",
-    //         imageFile: null
-    //     });
-    // };
+    const resetForm = () => {
+        setFormData({
+            studentname: "",
+            rollno: "",
+            employeeid: "",
+            dateofbirth: "",
+            joiningdate: "",
+            admissionno: "",
+            fathername: "",
+            mothername: "",
+            guardian: "",
+            address: "",
+            gender: null,
+            phoneno: "",
+            email: "",
+            password: "",
+            imageFile: null
+        });
+    };
 
     // const handleInputChange = (field, value) => {
     //     if (field === 'firstname' || field === 'lastname') {
@@ -61,88 +72,100 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
     // };
 
 
-    // const handleSave = async () => {
-    //     const validationErrors = [];
+    const handleSave = async () => {
+        const validationErrors = [];
+
+        if (!formData.studentname) validationErrors.push("Student name is required.");
+        if (!formData.rollno) validationErrors.push("Roll number is required.");
+        if (!formData.phoneno) validationErrors.push("Phone number is required.");
+        if (!formData.email) validationErrors.push("Email is required.");
+        if (!formData.gender?.value) validationErrors.push("Gender is required.");
+        if (!formData.dateofbirth) validationErrors.push("Date of birth is required.");
+        if (!formData.joiningdate) validationErrors.push("Joining date is required.");
+        if (!formData.admissionno) validationErrors.push("Admission number is required.");
+        if (!formData.fathername) validationErrors.push("Father's name is required.");
+        if (!formData.mothername) validationErrors.push("Mother's name is required.");
+        if (!formData.guardian) validationErrors.push("Guardian name is required.");
+        if (!formData.address) validationErrors.push("Address is required.");
+
+        // Email format validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (formData.email && !emailRegex.test(formData.email)) {
+            validationErrors.push("Please enter a valid email address.");
+        }
+
+        // Phone number length
+        if (formData.phoneno && formData.phoneno.length !== 10) {
+            validationErrors.push("Phone number must be 10 digits.");
+        }
+
+        if (validationErrors.length > 0) {
+            Swal.fire("Validation Error", validationErrors[0], "warning");
+            return;
+        }
+
+        // Submit form
+        const formDataToSend = new FormData();
+        formDataToSend.append("teacher", teacher_id);
+        formDataToSend.append("student_name", formData.studentname);
+        formDataToSend.append("roll_no", formData.rollno);
+        formDataToSend.append("number", formData.phoneno);
+        formDataToSend.append("email", formData.email);
+        formDataToSend.append("gender", formData.gender?.value);
+        formDataToSend.append("dob", formData.dateofbirth);
+        formDataToSend.append("start_date", formData.joiningdate);
+        formDataToSend.append("admission_no", formData.admissionno);
+        formDataToSend.append("fathers_name", formData.fathername);
+        formDataToSend.append("mothers_name", formData.mothername);
+        formDataToSend.append("guardian", formData.guardian);
+        formDataToSend.append("address", formData.address);
+        if (formData.imageFile) {
+            formDataToSend.append("image", formData.imageFile);
+        }
+
+        try {
+            const response = await axios.post(`${APIURL}/api/addstudent`, formDataToSend, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            if (response.data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registration Successful',
+                    text: 'Student has been added successfully!'
+                });
+                onClose();
+                if (onStudentAdded) {
+                    onStudentAdded();
+                }
+            }
+        } catch (error) {
+            Swal.fire("Error", error.response?.data?.message || "Server error occurred", "error");
+        }
+    };
 
 
-    //     if (!formData.firstname) validationErrors.push("First name is required.");
-    //     if (!formData.gender?.value) validationErrors.push("Gender is required.");
-    //     if (!formData.email) validationErrors.push("Email is required.");
-    //     if (!formData.password) validationErrors.push("Password is required.");
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                Swal.fire("Error", "Image size should be less than 5MB", "error");
+                return;
+            }
+            setFormData(prev => ({
+                ...prev,
+                imageFile: file
+            }));
+        }
+    };
 
-
-    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    //     if (formData.email && !emailRegex.test(formData.email)) {
-    //         validationErrors.push("Please enter a valid email address.");
-    //     }
-
-
-    //     // Phone number format (optional field)
-    //     if (formData.phoneno && formData.phoneno.length !== 10) {
-
-    //         validationErrors.push("Phone number must be 10 digits.");
-    //     }
-
-    //     if (validationErrors.length > 0) {
-    //         Swal.fire("Validation Error", validationErrors[0], "warning");
-    //         return;
-    //     }
-
-
-    //     const formDataToSend = new FormData();
-    //     formDataToSend.append("admin_id", admin_id);
-    //     formDataToSend.append("first_name", formData.firstname);
-    //     formDataToSend.append("last_name", formData.lastname);
-    //     formDataToSend.append("employee_id", formData.employeeid);
-    //     formDataToSend.append("gender", formData.gender?.value);
-    //     formDataToSend.append("phone_number", formData.phoneno);
-    //     formDataToSend.append("email", formData.email);
-    //     formDataToSend.append("password", formData.password);
-    //     if (formData.imageFile) formDataToSend.append("profile_photo", formData.imageFile);
-
-    //     try {
-    //         const response = await axios.post(`${APIURL}/api/addteacher`, formDataToSend, {
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data'
-    //             }
-
-    //         });
-
-    //         if (response.data.message === "Teacher added successfully") {
-    //             Swal.fire("Success", "student added successfully", "success");
-
-    //             resetForm();
-
-    //             onStudentAdded?.();
-    //             onClose();
-    //         } else {
-    //             Swal.fire("Error", response.data.message || "Something went wrong", "error");
-    //         }
-    //     } catch (error) {
-    //         Swal.fire("Error", error.response?.data?.message || "Server error occurred", "error");
-    //     }
-    // };
-
-    // const handleImageUpload = (e) => {
-    //     const file = e.target.files[0];
-    //     if (file) {
-    //         if (file.size > 5 * 1024 * 1024) { // 5MB limit
-    //             Swal.fire("Error", "Image size should be less than 5MB", "error");
-    //             return;
-    //         }
-    //         setFormData(prev => ({
-    //             ...prev,
-    //             imageFile: file
-    //         }));
-    //     }
-    // };
-
-    // const clearImageFile = () => {
-    //     setFormData(prev => ({
-    //         ...prev,
-    //         imageFile: null
-    //     }));
-    // };
+    const clearImageFile = () => {
+        setFormData(prev => ({
+            ...prev,
+            imageFile: null
+        }));
+    };
 
 
     const customStyles = {
@@ -218,7 +241,7 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                 </label>
                                 <input
                                     type="text"
-                                    // value={formData.firstname}
+                                    value={formData.studentname}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -231,7 +254,7 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
-                                // onChange={(e) => handleInputChange('firstname', e.target.value)}
+                                    onChange={(e) => setFormData({ ...formData, studentname: e.target.value })}
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
@@ -239,7 +262,6 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                     Roll No <span className="newstudentadd_required">*</span></label>
                                 <input
                                     type="Number"
-                                    // value={formData.lastname}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -252,18 +274,19 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
-                                // onChange={(e) => handleInputChange('lastname', e.target.value)}
+                                    value={formData.rollno}
+                                    onChange={(e) => setFormData({ ...formData, rollno: e.target.value })}
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
                                 <label className="newstudentadd-form-label">
                                     Phone Number <span className="newstudentadd_required">*</span>
-                                    </label>
+                                </label>
                                 <div className="newstudentadd-phone-container">
                                     <select
                                         className="newstudentadd-phone-select"
-                                    // value={phoneCode}
-                                    // onChange={(e) => setPhoneCode(e.target.value)}
+                                        value={phoneCode}
+                                        onChange={(e) => setPhoneCode(e.target.value)}
                                     >
                                         <option value="+91">+91</option>
                                         <option value="+1">+1</option>
@@ -272,9 +295,9 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                     </select>
                                     <input
                                         type="text"
-                                        // value={formData.phoneno}
                                         className="newstudentadd-phone-input"
-                                        // onChange={(e) => handleInputChange('phoneno', e.target.value)}
+                                        value={formData.phoneno}
+                                        onChange={(e) => setFormData({ ...formData, phoneno: e.target.value })}
                                         maxLength={10}
                                         style={{ borderLeft: 'none' }}
                                     />
@@ -286,7 +309,6 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                 </label>
                                 <input
                                     type="email"
-                                    // value={formData.email}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -298,8 +320,8 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                         width: '100%',
                                         boxSizing: 'border-box',
                                         outline: "none"
-                                    }}
-                                // onChange={(e) => handleInputChange('email', e.target.value)}
+                                    }} value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
@@ -310,20 +332,19 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                     styles={customStyles}
                                     placeholder="Select Gender"
                                     isClearable={true}
-                                // value={formData.gender}
-                                // onChange={(selectedOption) => handleInputChange('gender', selectedOption)}
-                                // options={[
-                                //     { value: "Male", label: "Male" },
-                                //     { value: "Female", label: "Female" },
-                                //     { value: "Other", label: "Other" }
-                                // ]}
+                                    value={formData.gender}
+                                    onChange={(option) => setFormData({ ...formData, gender: option })}
+                                    options={[
+                                        { value: "Male", label: "Male" },
+                                        { value: "Female", label: "Female" },
+                                        { value: "Other", label: "Other" }
+                                    ]}
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
                                 <label className="newstudentadd-form-label">Date of Birth</label>
                                 <input
                                     type="date"
-                                    // value={formData.employeeid}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -336,14 +357,14 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
-                                // onChange={(e) => handleInputChange('employeeid', e.target.value)}
+                                    value={formData.dateofbirth}
+                                    onChange={(e) => setFormData({ ...formData, dateofbirth: e.target.value })}
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
                                 <label className="newstudentadd-form-label">Joining Date</label>
                                 <input
                                     type="date"
-                                    // value={formData.employeeid}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -356,7 +377,8 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
-                                // onChange={(e) => handleInputChange('employeeid', e.target.value)}
+                                    value={formData.joiningdate}
+                                    onChange={(e) => setFormData({ ...formData, joiningdate: e.target.value })}
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
@@ -365,7 +387,6 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                 </label>
                                 <input
                                     type="text"
-                                    // value={formData.firstname}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -378,7 +399,8 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
-                                // onChange={(e) => handleInputChange('firstname', e.target.value)}
+                                    value={formData.admissionno}
+                                    onChange={(e) => setFormData({ ...formData, admissionno: e.target.value })}
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
@@ -387,7 +409,6 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                 </label>
                                 <input
                                     type="text"
-                                    // value={formData.firstname}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -400,16 +421,16 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
-                                // onChange={(e) => handleInputChange('firstname', e.target.value)}
+                                    value={formData.fathername}
+                                    onChange={(e) => setFormData({ ...formData, fathername: e.target.value })}
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
                                 <label className="newstudentadd-form-label">
-                                    Mother's Name 
+                                    Mother's Name
                                 </label>
                                 <input
                                     type="text"
-                                    // value={formData.firstname}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -422,16 +443,16 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
-                                // onChange={(e) => handleInputChange('firstname', e.target.value)}
+                                    value={formData.mothername}
+                                    onChange={(e) => setFormData({ ...formData, mothername: e.target.value })}
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
                                 <label className="newstudentadd-form-label">
-                                    Gaurdian Name 
+                                    Gaurdian Name
                                 </label>
                                 <input
                                     type="text"
-                                    // value={formData.firstname}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -444,7 +465,8 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
-                                // onChange={(e) => handleInputChange('firstname', e.target.value)}
+                                    value={formData.guardian}
+                                    onChange={(e) => setFormData({ ...formData, guardian: e.target.value })}
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
@@ -453,7 +475,6 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                 </label>
                                 <input
                                     type="text"
-                                    // value={formData.firstname}
                                     className="custom-input"
                                     style={{
                                         height: '48px',
@@ -466,63 +487,64 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                                         boxSizing: 'border-box',
                                         outline: "none"
                                     }}
-                                // onChange={(e) => handleInputChange('firstname', e.target.value)}
+                                    value={formData.address}
+                                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                                 />
                             </div>
-                            
+
                         </div>
                         <Row>
-                                <Col md={12}>
-                                    <div className="facultyadd-form-group">
+                            <Col md={12}>
+                                <div className="facultyadd-form-group">
 
-                                        <label className="facultyadd-form-label">Add cover Photo</label>
-                                        <div>
-                                            <div className="admin_faculty_image_upload_container">
-                                                <div className="admin_faculty_upload_placeholder">
-                                                    {formData.imageFile ? (
-                                                        <div className="image-preview-container">
-                                                            <img
-                                                                src={URL.createObjectURL(formData.imageFile)}
-                                                                alt="Uploaded Image"
-                                                                className="uploaded_image"
-                                                                style={{
-                                                                    maxWidth: '100%',
-                                                                    maxHeight: '200px',
-                                                                    objectFit: 'contain'
-                                                                }}
-                                                            />
-                                                            <button
-                                                                className="clear-image-btn"
-                                                                // onClick={clearImageFile}
-                                                                title="Remove Image"
-                                                            >
-                                                                <FaTrash />
-                                                            </button>
-                                                        </div>
-                                                    ) : (
-                                                        <>
-                                                            <label
-                                                                htmlFor="image-upload"
-                                                                className="admin_faculty_upload_label"
-                                                            >
-                                                                Upload Image
-                                                            </label>
-                                                            <input
-                                                                id="image-upload"
-                                                                type="file"
-                                                                accept="image/*"
-                                                                className="admin_faculty_upload_input"
-                                                            // onChange={handleImageUpload}
-                                                            />
-                                                        </>
-                                                    )}
-                                                </div>
-
+                                    <label className="facultyadd-form-label">Add cover Photo</label>
+                                    <div>
+                                        <div className="admin_faculty_image_upload_container">
+                                            <div className="admin_faculty_upload_placeholder">
+                                                {formData.imageFile ? (
+                                                    <div className="image-preview-container">
+                                                        <img
+                                                            src={URL.createObjectURL(formData.imageFile)}
+                                                            alt="Uploaded Image"
+                                                            className="uploaded_image"
+                                                            style={{
+                                                                maxWidth: '100%',
+                                                                maxHeight: '200px',
+                                                                objectFit: 'contain'
+                                                            }}
+                                                        />
+                                                        <button
+                                                            className="clear-image-btn"
+                                                            onClick={clearImageFile}
+                                                            title="Remove Image"
+                                                        >
+                                                            <FaTrash />
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    <>
+                                                        <label
+                                                            htmlFor="image-upload"
+                                                            className="admin_faculty_upload_label"
+                                                        >
+                                                            Upload Image
+                                                        </label>
+                                                        <input
+                                                            id="image-upload"
+                                                            type="file"
+                                                            accept="image/*"
+                                                            className="admin_faculty_upload_input"
+                                                            onChange={handleImageUpload}
+                                                        />
+                                                    </>
+                                                )}
                                             </div>
+
                                         </div>
                                     </div>
-                                </Col>
-                            </Row>
+                                </div>
+                            </Col>
+                        </Row>
                     </form>
                 </div>
 
@@ -551,7 +573,7 @@ const NewStudentAdd = ({ isOpen, onClose, }) => {
                         Clear
                     </button>
 
-                    <button className="newstudentadd-btn newstudentadd-btn-primary">Save</button>
+                    <button className="newstudentadd-btn newstudentadd-btn-primary" onClick={handleSave}>Save</button>
                 </div>
             </div>
         </div>

@@ -39,6 +39,7 @@ const NewFacultyDashboard = () => {
     const fetchFaculty = async () => {
         try {
             const response = await axios.get(`${APIURL}/api/teacherdetails/${admin_id}`);
+            
             if (response.data && Array.isArray(response.data)) {
                 setFacultyList(response.data);
             } else {

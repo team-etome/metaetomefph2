@@ -21,10 +21,14 @@ import NewMyClassStudentView from "./NewMyClassStudentView";
 import image from "../../../assets/messi-ronaldo-1593920966.jpg";
 import exportimage from "../../../assets/export.png"
 import NewStudentViewTimeTable from "./NewStudentViewTimeTable";
+import axios from "axios";
 
 
 const NewStudentDashboard = () => {
-    const admininfo = useSelector((state) => state.admininfo);
+    const APIURL = useSelector((state) => state.APIURL.url);
+    const teacher = useSelector((state) => state.teacherinfo);
+    const teacher_id = teacher.teacherinfo?.teacher_id;
+    const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
     const navigate = useNavigate();
     const [search, setSearch] = useState('');
     const [showPopup, setShowPopup] = useState(false);
@@ -34,10 +38,25 @@ const NewStudentDashboard = () => {
     const [showPromote, setShowPromote] = useState(false);
     const [showAddTT, setShowAddTT] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
+    const [error, setError] = useState(false); // Track API failure
+    const [studentlist, setStudentList] = useState([]);
+    const [loading, setLoading] = useState(false); // Loading state for data refresh
+    console.log(studentlist, "studentliststudentliststudentliststudentlist")
 
     const handlenavigate = () => {
-        navigate('/adminprofile', { state: { admininfo: admininfo.admininfo } });
+        navigate("/teacherprofile");
     };
+
+    // Wrapper function for refreshing student data with delay
+    const refreshStudentData = () => {
+        setTimeout(() => {
+            fetchFacultyData();
+        }, 500); // Small delay to show the success message first
+    };
+
+    // const handlenavigate = () => {
+    //     navigate('/adminprofile', { state: { admininfo: admininfo.admininfo } });
+    // };
 
     const [allStudents, setAllStudents] = useState([]);
     const [showViewTT, setShowViewTT] = useState(false);
@@ -98,32 +117,27 @@ const NewStudentDashboard = () => {
             }
         }),
     };
-    const dummyStudents = [
-        { student_name: "Ananthu", class_name: "Class 7 A", roll_no: 1, image_url: "https://via.placeholder.com/70?text=A" },
-        { student_name: "Arjun", class_name: "Class 7 A", roll_no: 2, image_url: "https://via.placeholder.com/70?text=Ar" },
-        { student_name: "Priya", class_name: "Class 7 A", roll_no: 3, image_url: "https://via.placeholder.com/70?text=P" },
-        { student_name: "Vikram", class_name: "Class 7 A", roll_no: 4, image_url: "https://via.placeholder.com/70?text=V" },
-        { student_name: "Sneha", class_name: "Class 7 A", roll_no: 5, image_url: "https://via.placeholder.com/70?text=S" },
-        { student_name: "Ravi", class_name: "Class 7 A", roll_no: 6, image_url: "https://via.placeholder.com/70?text=R" },
-        { student_name: "Neha", class_name: "Class 7 A", roll_no: 7, image_url: "https://via.placeholder.com/70?text=N" },
-        { student_name: "Karan", class_name: "Class 7 A", roll_no: 8, image_url: "https://via.placeholder.com/70?text=K" },
-        { student_name: "Aditi", class_name: "Class 7 A", roll_no: 9, image_url: "https://via.placeholder.com/70?text=Ad" },
-        { student_name: "Siddharth", class_name: "Class 7 A", roll_no: 10, image_url: "https://via.placeholder.com/70?text=Si" },
-        { student_name: "Meera", class_name: "Class 7 A", roll_no: 11, image_url: "https://via.placeholder.com/70?text=Me" },
-        { student_name: "Rahul", class_name: "Class 7 A", roll_no: 12, image_url: "https://via.placeholder.com/70?text=Ra" },
-        { student_name: "Ananthu", class_name: "Class 7 A", roll_no: 1, image_url: "https://via.placeholder.com/70?text=A" },
-        { student_name: "Arjun", class_name: "Class 7 A", roll_no: 2, image_url: "https://via.placeholder.com/70?text=Ar" },
-        { student_name: "Priya", class_name: "Class 7 A", roll_no: 3, image_url: "https://via.placeholder.com/70?text=P" },
-        { student_name: "Vikram", class_name: "Class 7 A", roll_no: 4, image_url: "https://via.placeholder.com/70?text=V" },
-        { student_name: "Sneha", class_name: "Class 7 A", roll_no: 5, image_url: "https://via.placeholder.com/70?text=S" },
-        { student_name: "Ravi", class_name: "Class 7 A", roll_no: 6, image_url: "https://via.placeholder.com/70?text=R" },
-        { student_name: "Neha", class_name: "Class 7 A", roll_no: 7, image_url: "https://via.placeholder.com/70?text=N" },
-        { student_name: "Karan", class_name: "Class 7 A", roll_no: 8, image_url: "https://via.placeholder.com/70?text=K" },
-        { student_name: "Aditi", class_name: "Class 7 A", roll_no: 9, image_url: "https://via.placeholder.com/70?text=Ad" },
-        { student_name: "Siddharth", class_name: "Class 7 A", roll_no: 10, image_url: "https://via.placeholder.com/70?text=Si" },
-        { student_name: "Meera", class_name: "Class 7 A", roll_no: 11, image_url: "https://via.placeholder.com/70?text=Me" },
-        { student_name: "Rahul", class_name: "Class 7 A", roll_no: 12, image_url: "https://via.placeholder.com/70?text=Ra" },
-    ];
+
+    const fetchFacultyData = async () => {
+        setError(false); // Reset error before fetching
+        setLoading(true); // Start loading
+        try {
+            const response = await axios.get(`${APIURL}/api/addstudent/${teacher_id}`);
+            if (response.data.length === 0) {
+                setError(true);
+            } else {
+                setStudentList(response.data);
+            }
+        } catch (error) {
+            console.error("Failed to fetch faculty data:", error);
+            setError(true); // Mark API failure
+        } finally {
+            setLoading(false); // End loading
+        }
+    };
+    useEffect(() => {
+        fetchFacultyData();
+    }, [APIURL, teacher_id]);
     const toggleMenu = () => {
         setShowMenu((prev) => !prev);
     };
@@ -135,6 +149,11 @@ const NewStudentDashboard = () => {
         setShowMenuExcel(false);
         setShowPopupExcel(true);
     };
+    const filteredStudents = studentlist.filter(student =>
+        student.student_name?.toLowerCase().includes(search.toLowerCase()) 
+        // student.roll_no?.toString().includes(search) ||
+        // student.email?.toLowerCase().includes(search.toLowerCase())
+    );
 
     return (
         <div className="newStudent_dashboard">
@@ -147,25 +166,25 @@ const NewStudentDashboard = () => {
                             </div>
                         </Col>
                         <Col md={6} className="newStudent_header_right_profilepic">
-                            <div className="newStudent_header_institution">
-                                <div className="newteachersubject_hd_title">
-                                    <p style={{ color: "#222222", }}>
-                                        {/* {admininfo.admininfo?.email} */}
-                                    </p>
+                            {/* <div className="newStudent_header_institution"> */}
+                                <div className="newStudent-userinfo">
+                                    <span className="newStudent-email">{teacherInfo?.email || " "}</span>
+                                    <span className="newStudent-avatar-profile">
+                                        <img
+                                            onClick={handlenavigate}
+                                            src={teacherInfo?.image || " "}
+                                            alt="Profile"
+                                            style={{
+                                                width: "42px",
+                                                height: "42px",
+                                                borderRadius: "50%",
+                                                marginRight: "24px",
+                                                cursor: "pointer",
+                                            }}
+                                        />
+                                    </span>
                                 </div>
-                                <img
-                                    // onClick={handlenavigate}
-                                    // src={admininfo.admininfo?.logo}
-                                    alt="Profile"
-                                    style={{
-                                        width: "42px",
-                                        height: "42px",
-                                        borderRadius: "50%",
-                                        marginRight: "24px",
-                                        cursor: "pointer",
-                                    }}
-                                />
-                            </div>
+                            {/* </div> */}
                         </Col>
                     </Row>
                 </div>
@@ -175,13 +194,13 @@ const NewStudentDashboard = () => {
                             className="newStudent_main_header_container"
                         // style={{ border: "2px solid green" }}
                         >
-                            {/*** First Row: “Total Students (40)” on the left — Search + View Time Table + +Add on the right ***/}
+                            {/*** First Row: "Total Students (40)" on the left — Search + View Time Table + +Add on the right ***/}
                             <div className="newStudent-header-row d-flex justify-content-between align-items-center">
                                 {/* ── Left: Total Students + count bubble */}
                                 <div className="newStudent-header-left d-flex align-items-center">
                                     <p className="newStudent-title">
                                         Total Students
-                                        <span className="newStudent-count">40</span>
+                                        <span className="newStudent-count">{studentlist.length}</span>
                                     </p>
                                 </div>
 
@@ -191,9 +210,8 @@ const NewStudentDashboard = () => {
                                         <input
                                             type="text"
                                             className="form-control form-control-sm newStudent_search-input"
-                                            placeholder="      Search Student"
+                                            placeholder=" Search Student"
                                             value={search}
-
                                             onChange={(e) => setSearch(e.target.value)}
                                         />
 
@@ -216,19 +234,19 @@ const NewStudentDashboard = () => {
                                     />
                                 )}
                                 {showMenu && (
-                                    <div className="newStudentdashboard_dropdown-menu" style={{border:"2px solid red"}}>
+                                    <div className="newStudentdashboard_dropdown-menu">
                                         <div className="newStudentdashboard_dropdown-item" onClick={handleAddStudent}>
-                                            <span style={{fontSize:"24px"}}>+</span>  &nbsp;&nbsp;Add Student
+                                            <span style={{ fontSize: "24px" }}>+</span>  &nbsp;&nbsp;Add Student
                                         </div>
                                         <div className="newStudentdashboard_dropdown-item" onClick={handleUploadExcel}>
-                                            <img src={exportimage} 
-                                            alt="exportimage"
-                                            className="newStudentdashboard-dropdown-item-icon"
+                                            <img src={exportimage}
+                                                alt="exportimage"
+                                                className="newStudentdashboard-dropdown-item-icon"
                                             />Upload Through Excel
                                         </div>
                                         <div className="newStudentdashboard_dropdown-item"
                                             onClick={() => { setShowAddTT(true); setShowMenu(false); }}>
-                                            <span style={{fontSize:"24px"}}>+</span>  &nbsp;&nbsp;Add Time Table
+                                            <span style={{ fontSize: "24px" }}>+</span>  &nbsp;&nbsp;Add Time Table
                                         </div>
                                     </div>
                                 )}
@@ -236,10 +254,10 @@ const NewStudentDashboard = () => {
                                     <NewStudentAdd
                                         isOpen={showPopup}
                                         onClose={() => setShowPopup(false)}
-                                    // onStudentAdded={fetchstudent}
+                                        onStudentAdded={refreshStudentData}
                                     />
                                 )}
-                                {showPopupexcel && <NewStudentAddThroughExcel isOpen={showPopupexcel} onClose={() => setShowPopupExcel(false)} />}
+                                {showPopupexcel && <NewStudentAddThroughExcel isOpen={showPopupexcel} onClose={() => setShowPopupExcel(false)} onStudentAdded={refreshStudentData} />}
                                 {showAddTT && (
                                     <NewStudentAddTimeTable
                                         isOpen={showAddTT}
@@ -248,7 +266,7 @@ const NewStudentDashboard = () => {
                                 )}
                             </div>
 
-                            {/*** Second Row: “Promote Options” button aligned left ***/}
+                            {/*** Second Row: "Promote Options" button aligned left ***/}
                             <div className="newStudent-promote-row">
                                 <button type="button" className="newStudent-promote-button"
                                     onClick={() => setShowPromote(true)}>
@@ -266,40 +284,53 @@ const NewStudentDashboard = () => {
 
                         <div className="newStudent_classes_box">
                             <div className="newStudent_container">
-                                <div className="newStudent-grid-container">
-                                    {dummyStudents.map(student => (
-                                        <div key={student.roll_no} className="newStudent-card"
-                                            onClick={() => setSelectedStudent(student)}
-                                            style={{ cursor: "pointer" }}>
-                                            <img
-                                                src={student.image_url ? image : student.image_url}
-                                                className="newStudent-avatar"
-                                            />
-                                            <div className="newStudent-info">
-                                                <div className="newStudent-name">
-                                                    {student.student_name}
+                                {loading ? (
+                                    <div className="newStudent-loading">
+                                        <div className="newStudent-loading-spinner"></div>
+                                        <p>Refreshing student list...</p>
+                                    </div>
+                                ) : (
+                                    <div className="newStudent-grid-container">
+                                        {filteredStudents.length > 0 ? (
+                                            filteredStudents.map(student => (
+                                                <div key={student.roll_no} className="newStudent-card"
+                                                    onClick={() => setSelectedStudent(student)}
+                                                    style={{ cursor: "pointer" }}>
+                                                    <img
+                                                        src={student.image ? student.image : image}
+                                                        className="newStudent-avatar"
+                                                    />
+                                                    <div className="newStudent-info">
+                                                        <div className="newStudent-name">
+                                                            {student.student_name}
+                                                        </div>
+                                                        <div className="newStudent-info-classrollno">
+                                                            <span className="newStudent-class">
+                                                                {student.class_name} {student.division}
+                                                            </span>
+                                                            <span className="newStudent-roll">
+                                                                Roll no: {student.roll_no}
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="newStudent-info-classrollno">
-                                                    <span className="newStudent-class">
-                                                        {student.class_name} {student.division}
-                                                    </span>
-                                                    <span className="newStudent-roll">
-                                                        Roll no: {student.roll_no}
-                                                    </span>
-                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className="no-students-found">
+                                                <p>No students found</p>
                                             </div>
-                                        </div>
-                                    ))}
+                                        )}
 
 
-                                    {selectedStudent && (
-                                        <NewMyClassStudentView
-                                            student={selectedStudent}
-                                            onClose={() => setSelectedStudent(null)}
-                                        />
-                                    )}
+                                        {selectedStudent && (
+                                            <NewMyClassStudentView
+                                                student={selectedStudent}
+                                                onClose={() => setSelectedStudent(null)}
+                                            />
+                                        )}
 
-                                </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div >

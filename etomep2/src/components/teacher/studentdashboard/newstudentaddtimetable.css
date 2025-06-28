@@ -156,6 +156,9 @@
   border-radius: 8px;
   background: transparent;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Footer */
@@ -181,3 +184,20 @@
   width: 100px;
 }
 .nstt-save:enabled { opacity:1; }
+
+
+
+
+.subject-dropdown {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  padding: 6px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  height: 100%;
+}
+

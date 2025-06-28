@@ -1,5 +1,5 @@
 /* Overlay for the modal */
-.studentaddthroughexcel-overlay {
+.newstudentaddthroughexcel-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -13,7 +13,7 @@
 }
 
 /* Modal popup styling */
-.studentaddthroughexcel-popup {
+.newstudentaddthroughexcel-popup {
     background-color: white;
     padding: 20px;
     padding-top: 24px;
@@ -23,14 +23,14 @@
     position: relative;
 }
 
-.studentaddthroughexcel_upload-icon-section {
+.newstudentaddthroughexcel_upload-icon-section {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 16px;
 }
 
-.studentaddthroughexcel_upload-icon {
+.newstudentaddthroughexcel_upload-icon {
     background-color: #DEFFF7;
     /* Background color for the circle */
     border-radius: 50%;
@@ -42,7 +42,7 @@
     padding: 6px;
 }
 
-.studentaddthroughexcel-close-button {
+.newstudentaddthroughexcel-close-button {
     position: absolute; /* Keep it positioned within its parent */
     top: 10px; /* Distance from the top of the parent */
     right: 10px; /* Distance from the right of the parent */
@@ -54,18 +54,18 @@
 }
 
 /* Header section */
-.studentaddthroughexcel-header {
+.newstudentaddthroughexcel-header {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.studentaddthroughexcel-header-text {
+.newstudentaddthroughexcel-header-text {
     font-size: 18px;
     font-weight: 600;
 }
 
 /* Body section */
-.studentaddthroughexcel-body {
+.newstudentaddthroughexcel-body {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -73,27 +73,39 @@
 }
 
 /* File upload section */
-.studentaddthroughexcel-upload-section {
-    height: 100px;
+.newstudentaddthroughexcel-upload-section {
+    height: 120px;
     width: 100%;
     border: 2px dashed #ccc;
     border-radius: 8px;
     padding: 15px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
-.studentaddthroughexcel-file-input {
+.newstudentaddthroughexcel-file-input {
     display: none;
 }
 
-.studentaddthroughexcel-upload-label {
+.newstudentaddthroughexcel-upload-label {
     font-size: 16px;
     color: #666;
     cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.newstudentaddthroughexcel-upload-label:hover {
+    background-color: #f5f5f5;
 }
 
 /* Upload button */
-.studentaddthroughexcel-upload-btn {
+.newstudentaddthroughexcel-upload-btn {
     background-color: #2162B2;
     color: white;
     font-size: 16px;
@@ -104,25 +116,34 @@
     width: 100px;
     height: 40px;
     margin-top: 15px;
+    transition: background-color 0.3s ease;
 }
 
+.newstudentaddthroughexcel-upload-btn:hover:not(:disabled) {
+    background-color: #1a4f8a;
+}
+
+.newstudentaddthroughexcel-upload-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
 
 /* Footer section */
-.studentaddthroughexcel-footer {
+.newstudentaddthroughexcel-footer {
     text-align: center;
     margin-top: 20px;
     /* margin-bottom: 24px; */
     /* border: 2px solid red; */
 }
 
-.studentaddthroughexcel-footer-text {
+.newstudentaddthroughexcel-footer-text {
     margin-left: 52px;
     width: 250px;
     font-size: 14px;
     color: #666;
 }
 
-.studentaddthroughexcel-download-btn {
+.newstudentaddthroughexcel-download-btn {
     background-color: transparent;
     color: #2162B2;
     font-size: 16px;
@@ -132,4 +153,10 @@
     cursor: pointer;
     margin-top: 16px;
     width: 352px;
+    transition: all 0.3s ease;
+}
+
+.newstudentaddthroughexcel-download-btn:hover {
+    background-color: #2162B2;
+    color: white;
 }

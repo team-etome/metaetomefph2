@@ -107,8 +107,10 @@ function AddCustomer() {
             reject(new Error("Canvas cropping failed"));
             return;
           }
+          const file = new File([blob], "cropped_image.png", { type: "image/png" });
+          setImageFile(file);
           resolve(URL.createObjectURL(blob));
-        }, "image/png");  // PNG keeps transparency
+        }, "image/png"); 
       };
       image.onerror = (error) => reject(error);
     });
@@ -620,14 +622,14 @@ function AddCustomer() {
                     </>
                   )}
                   <input
-      ref={fileInputRef}
-      id="image-upload"
-      type="file"
-      accept="image/*"
-      className="upload-input"
-      style={{ display: "none" }}
-      onChange={handleImageUpload}
-    />
+                    ref={fileInputRef}
+                    id="image-upload"
+                    type="file"
+                    accept="image/*"
+                    className="upload-input"
+                    style={{ display: "none" }}
+                    onChange={handleImageUpload}
+                  />
                 </div>
               </div>
 
