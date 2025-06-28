@@ -25,7 +25,7 @@ const dummyTasks = [
   { type: 'Evaluation', class: 'Text', due: 'Text', status: 'Completed' },
 ];
 
-export default function NewTeacherAssignTask({ onClose }) {
+export default function NewTeacherAssignTask({ onClose ,tasks}) {
   return (
     <div className="newteacherassigntasks-popup-overlay">
       <div className="newteacherassigntasks-popup">
@@ -44,7 +44,7 @@ export default function NewTeacherAssignTask({ onClose }) {
               </tr>
             </thead>
             <tbody>
-              {dummyTasks.map((task, idx) => (
+          {tasks.map((task, idx) => (
                 <tr key={idx}>
                   <td>{task.type}</td>
                   <td>{task.class}</td>

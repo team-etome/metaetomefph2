@@ -39,7 +39,7 @@ import { BarChart } from '@mui/x-charts';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
+import { formatDistanceToNow } from 'date-fns';
 
 
 function AdminDashboard() {
@@ -103,6 +103,36 @@ function AdminDashboard() {
 
   const [teacherShowPopup, setTeacherShowPopup] = useState(false);
 
+  const [notifications, setNotifications] = useState([]);
+
+  console.log(notifications, "notifications")
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get(`${APIURL}/api/notification`, {
+          params: {
+            admin_id: admin_id,
+          },
+        });
+
+        if (response.data && response.data.status) {
+          setNotifications(response.data.data || []);
+          console.log("✅ Notifications fetched:", response.data.data);
+        }
+      } catch (error) {
+        console.error("❌ Error fetching notifications:", error);
+      }
+    };
+
+    if (admin_id) {
+      fetchNotifications();
+    }
+  }, [admin_id, APIURL]);
+
+
+
+
   const handleTeacherViewAll = () => {
 
     setTeacherShowPopup(true)
@@ -123,6 +153,12 @@ function AdminDashboard() {
   const [active, setActive] = useState("pending");
   const [allActions, setAllActions] = useState([]);
 
+  const [evaluations, setEvaluations] = useState([]);
+  const [questions, setQuestions] = useState([]);
+
+
+  console.log(evaluations, "evaluations")
+
   const handleTeacherActionViewAll = () => {
     setTeacherActionViewAll(true)
   }
@@ -139,23 +175,21 @@ function AdminDashboard() {
   const fetchTeacherActions = async () => {
     try {
       const response = await axios.get(`${APIURL}/api/teacheraction/${admin_id}`);
-      const data = response.data.data;
+      const data = response.data.data[0]; // Extract the first object
 
-      const formatted = data.map(item => ({
-        Name: item.teacher_name,
-        DueDate: item.due_date,
-        Status: item.status
-      }));
-
-      setAllActions(formatted);
+      setEvaluations(data.evaluation || []);
+      setQuestions(data.questions || []);
     } catch (error) {
       console.error("Error fetching teacher actions:", error);
     }
   };
 
+
   useEffect(() => {
-    fetchTeacherActions();
-  }, []);
+    if (admin_id) {
+      fetchTeacherActions();
+    }
+  }, [admin_id])
 
 
   // ------------------------------Toggle--------------------------------------------
@@ -185,6 +219,25 @@ function AdminDashboard() {
   const [isOpen, setIsOpen] = useState(false);
   const [showTodoPopup, setShowTodoPopup] = useState(false);
 
+  const [selectedTodo, setSelectedTodo] = useState(null);
+
+
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+
+
+  useEffect(() => {
+    if (selectedTodo) {
+      setTitle(selectedTodo.title || "");
+      setSelectedDate(selectedTodo.date ? new Date(selectedTodo.date) : null);
+      setSelectedTime(selectedTodo.time ? new Date(`1970-01-01T${selectedTodo.time}`) : null);
+      setLink(selectedTodo.link || "");
+      setDescription(selectedTodo.description || "");
+      setIsPriority(selectedTodo.priority || false);
+    }
+  }, [selectedTodo]);
+
+
+
 
 
   const [title, setTitle] = useState('');
@@ -207,9 +260,17 @@ function AdminDashboard() {
 
 
   const handleTodoclose = () => {
-    setShowTodoPopup(false)
-  }
+    setShowTodoPopup(false);
+    setSelectedTodo(null); // clear selected todo
 
+    // reset form fields
+    setTitle("");
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setLink("");
+    setDescription("");
+    setIsPriority(false);
+  };
 
   const [todoViewAll, setTodoViewAll] = useState(false)
 
@@ -267,7 +328,9 @@ function AdminDashboard() {
     };
 
     try {
-      const response = await axios.post(`${APIURL}/api/todo}`, data);
+      const response = await axios.post(`${APIURL}/api/todo`, data);
+
+      console.log(data, "aisussdfgasidf")
 
       if (response.status === 200) {
         Swal.fire({
@@ -298,6 +361,8 @@ function AdminDashboard() {
     try {
       const response = await axios.get(`${APIURL}/api/todo/${admin_id}`);
       const todos = response.data.todos;
+
+      console.log(todos, "todossss")
 
       // Extract latest priority todo
       const priority = todos.find(todo => todo.priority === true);
@@ -1407,7 +1472,7 @@ function AdminDashboard() {
             {showTodoPopup && (
               <div style={{
                 position: "absolute",
-                top: "80px", // distance from top of screen (adjust as needed)
+                top: "80px",
                 left: "50%",
                 transform: "translateX(-50%)",
                 width: "700px",
@@ -1417,14 +1482,14 @@ function AdminDashboard() {
                 backgroundColor: "#fff",
                 zIndex: 999,
                 boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
-                overflow: "auto", // in case content overflows
+                overflow: "auto",
               }}>
 
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: "space-between", // pushes items to start and end
-                    alignItems: "center", // vertically center the items
+                    justifyContent: "space-between",
+                    alignItems: "center",
                     width: "100%",
                     borderBottom: "2px solid #DFDFDF",
                     color: "#FFFFFF",
@@ -1764,7 +1829,9 @@ function AdminDashboard() {
                       borderRadius: "7px",
                     }}
                   >
-                    Clear
+                    {(title.trim() || description.trim() || selectedDate || selectedTime || link.trim())
+                      ? "Delete"
+                      : "Clear"}
                   </div>
 
                   <div
@@ -1844,9 +1911,10 @@ function AdminDashboard() {
                       justifyContent: "space-between",
                       gap: "16px",
                       borderBottom: "1px solid #ccc",
-                      width: "652px",
+                      width: "1010px",
                       height: "56px",
                       marginLeft: "24px",
+
                     }}
                   >
                     <div>
@@ -1856,6 +1924,8 @@ function AdminDashboard() {
                           fontWeight: "400",
                           color: "black",
                           margin: 0,
+
+                          width: "200px"
                         }}
                       >
                         {todo.title || 'Untitled Task'}
@@ -1907,10 +1977,21 @@ function AdminDashboard() {
                       </h1>
                     </div>
 
-                    <div>
-                      <IoIosArrowForward size={20} />
+                    <div onClick={() => {
+                      setSelectedTodo(todo); // store the current todo
+                      setShowTodoPopup(true); // show the popup
+                      setTodoViewAll(false)
+
+                    }}>
+                      <IoIosArrowForward size={20} style={{ cursor: "pointer" }} />
                     </div>
+
+
+
                   </div>
+
+
+
                 ))}
 
 
@@ -1923,14 +2004,15 @@ function AdminDashboard() {
 
           {/* <-----------------------Notification-----------------------------------> */}
 
-          <div className="notification" >
+          <div style={{
+            border:"2px solid black"
+          }}  className="notification" >
 
             <div style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
               width: "100%",
-
             }}>
               <div>
                 <h1 className="text_font">Notification</h1>
@@ -1940,20 +2022,94 @@ function AdminDashboard() {
                 <h1 onClick={handleTeacherViewAll} className="view-all">View All</h1>
               </div>
             </div>
+            {notifications.length === 0 ? (
+              <div style={{ marginLeft: "25px", marginTop: "12px", color: "#888" }}>
+                No notifications found.
+              </div>
+            ) : (
+              notifications.slice(0, 2).map((notif, index) => (
+                <div
+                  key={index}
+                  style={{
+                    width: "calc(100% - 130px)", 
+                    height: "80px",
+                    backgroundColor: "#F4F4F4",
+                    borderRadius: "10px",
+                    marginLeft: "25px",
+                    marginTop: "12px",
+                    boxSizing: "border-box", 
+                  }}
+                >
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    height: "68px",
+                    paddingLeft: "4px",
+                    paddingRight: "8px",
+                    width: "100%", // Full width of parent container
+                    boxSizing: "border-box"
+                  }}>
+                    <div style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      flexShrink: 0
+                    }}>
+                      <img
+                        src={notif?.profile_photo || "https://via.placeholder.com/40"}
+                        alt="Profile"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </div>
+
+                    <div style={{
+                      flexGrow: 1,
+                      paddingBottom: "12px",
+                      cursor: "pointer",
+                      overflow: "hidden"
+                    }}>
+                      <h1 className="notification-cotent" style={{
+                        margin: 0,
+                        fontSize: "14px",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis"
+                      }}>
+                        {notif.message || "New notification"}
+                      </h1>
+                      <p style={{ fontSize: "11.5px", margin: 0 }}>
+                        {formatDistanceToNow(new Date(notif.created_at), { addSuffix: true })}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
 
 
             {teacherShowPopup && (
               <div
                 style={{
-                  position: "absolute", // Use fixed if you want it to stay in place when scrolling
-                  top: "0", // Or use negative margin to lift it above
+                  position: "absolute",
+                  top: "0",
                   left: "50%",
                   transform: "translateX(-50%)",
                   backgroundColor: "white",
                   borderRadius: "16px",
                   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                  zIndex: 9999, // Make sure it sits above other elements
-                  paddingBottom: "16px"
+                  zIndex: 9999,
+                  paddingBottom: "16px",
+                  width: "1060px", // set a fixed width for consistency
+                  maxHeight: "80vh", // prevent popup from going off-screen
+                  overflow: "hidden",
+                  display: "flex",
+                  flexDirection: "column"
                 }}
                 className="report_alert_view_all"
               >
@@ -1966,11 +2122,7 @@ function AdminDashboard() {
                     borderBottom: "2px solid #DFDFDF",
                   }}
                 >
-                  <h1 className="text_font" style={{ margin: 0 }}>
-
-                    Notifications
-
-                  </h1>
+                  <h1 className="text_font" style={{ margin: 0 }}>Notifications</h1>
 
                   <RxCross2
                     onClick={closeTeacherView}
@@ -1983,68 +2135,74 @@ function AdminDashboard() {
                   />
                 </div>
 
-                <div
-                  style={{
-                    width: "652px",
-                    height: "67px",
-                    backgroundColor: "#F4F4F4",
-                    marginTop: "12px",
-                    marginLeft: "24px",
-                    borderRadius: "16px",
-                    padding: "0 12px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <div
-                      style={{
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
-                        overflow: "hidden",
-                      }}
-                    >
-                      <img
-                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000"
-                        alt="Profile"
+                {/* Notification List */}
+                {notifications.map((notification, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      width: "1010px",
+                      height: "67px",
+                      backgroundColor: "#F4F4F4",
+                      marginTop: "12px",
+                      marginLeft: "24px",
+                      borderRadius: "16px",
+                      padding: "0 12px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px", }}>
+                      <div
                         style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
+                          width: "40px",
+                          height: "40px",
+                          borderRadius: "50%",
+                          overflow: "hidden",
                         }}
-                      />
+                      >
+                        <img
+                          src={notification.profile_photo || "https://via.placeholder.com/40"}
+                          alt="Profile"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <h1
+                          style={{
+                            fontSize: "14px",
+                            color: "black",
+                            fontWeight: "400",
+                            margin: 0,
+                          }}
+                        >
+                          {notification.message}
+                        </h1>
+                      </div>
                     </div>
+
                     <div>
                       <h1
                         style={{
                           fontSize: "14px",
-                          color: "black",
+                          color: "#959595",
                           fontWeight: "400",
                           margin: 0,
                         }}
                       >
-                        James Victor Reported Malpractise for Harry
+                        {new Date(notification.created_at).toLocaleString()}
                       </h1>
                     </div>
                   </div>
-
-                  <div>
-                    <h1
-                      style={{
-                        fontSize: "14px",
-                        color: "#959595",
-                        fontWeight: "400",
-                        margin: 0,
-                      }}
-                    >
-                      1 hour ago
-                    </h1>
-                  </div>
-                </div>
+                ))}
               </div>
             )}
+
 
 
 
@@ -2163,44 +2321,34 @@ function AdminDashboard() {
 
 
             <div className="tabs">
-
-
-              <div style={{
-                height: "37px",
-                width: "108px",
-              }} onClick={() => setActiveTab("pending")}>
-                <h1 className={`action ${activeTab === "pending" ? "active" : ""}`}>QuestionPaper</h1>
+              <div
+                style={{ height: "37px", width: "108px" }}
+                onClick={() => setActive("pending")}
+              >
+                <h1 className={`action ${active === "pending" ? "active" : ""}`}>QuestionPaper</h1>
               </div>
 
-              <div style={{
-                height: "37px",
-                width: "110px",
-              }} onClick={() => setActiveTab("complete")}>
-                <h1 className={`complete ${activeTab === "complete" ? "active" : ""}`}>Evaluation</h1>
+              <div
+                style={{ height: "37px", width: "110px" }}
+                onClick={() => setActive("complete")}
+              >
+                <h1 className={`complete ${active === "complete" ? "active" : ""}`}>Evaluation</h1>
               </div>
-
             </div>
 
 
-            <DataTable value={dummyData}
-
-              className="custom-datatable" style={
-                {
-
-                  marginTop: "15px",
-                  marginLeft: "24px",
-
-                }
-              }>
-              <Column style={{
-                height: "52px",
-              }} field="Name" header="Name"></Column>
-              <Column field="DueDate" header="DueDate"></Column>
-              <Column field="Class" header="Class"></Column>
-              <Column field="Subject" header="Subject"></Column>
-
-
+            <DataTable
+              value={active === "complete" ? evaluations : questions}
+              className="custom-datatable"
+              style={{ marginTop: '15px', marginLeft: '24px', borderBottom: "1px solid #DFDFDF" }}
+            >
+              <Column field="teacher_name" header="Teacher Name" />
+              <Column field="due_date" header="Due Date" />
+              <Column field="status" header="Status" />
+              <Column field="class" header="Class" />
+              <Column field="subject" header="Subject" />
             </DataTable>
+
 
           </div>
 
@@ -2216,7 +2364,8 @@ function AdminDashboard() {
                 boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                 zIndex: 9999, // Make sure it sits above other elements
                 paddingBottom: "16px",
-                border: "2px solid rgb(249, 0, 0)"
+
+
               }}
               className="report_alert_view_all"
             >
@@ -2246,10 +2395,12 @@ function AdminDashboard() {
 
 
               <div style={{
-                width: "653px",
+                width: "1010px",
                 height: "492px",
                 marginTop: "8px",
-                
+
+
+
               }} >
 
 
@@ -2271,30 +2422,15 @@ function AdminDashboard() {
 
 
                 <DataTable
-                  value={dummyData}
+                  value={active === "complete" ? evaluations : questions}
                   className="custom-datatable"
-                  style={{
-                    marginTop: '15px',
-                    marginLeft: '24px',
-
-                  }}
+                  style={{ marginTop: '15px', marginLeft: '24px', borderBottom: "1px solid #DFDFDF" }}
                 >
-                  <Column
-                    field="Name"
-                    header="Name"
-                    style={{ height: '52px', color: '#8D8A95 !important' }}
-                  />
-                  <Column
-                    field="DueDate"
-                    header="Due Date"
-                  />
-                  <Column
-                    field="Status"
-                    header="Status"
-                  />
-
-                  <Column field="Class" header="Class"></Column>
-                  <Column field="Subject" header="Subject"></Column>
+                  <Column field="teacher_name" header="Name" />
+                  <Column field="due_date" header="Due Date" />
+                  <Column field="status" header="Status" />
+                  <Column field="class" header="Class" />
+                  <Column field="subject" header="Subject" />
 
                 </DataTable>
 

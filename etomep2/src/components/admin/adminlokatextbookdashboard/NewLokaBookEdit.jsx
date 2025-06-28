@@ -216,7 +216,7 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
                 const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`);
                 const formatted = response.data.map(cls => ({
                     value: cls.class,
-                    label: `${cls.class_name} ${cls.division}`,
+                    label: `${cls.class_name} `,
                     subjectList: cls.curriculum,
                 }));
                 setClassOptions(formatted);
