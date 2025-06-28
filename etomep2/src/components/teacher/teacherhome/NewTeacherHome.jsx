@@ -107,6 +107,8 @@ export default function NewTeacherHome() {
 
   const [notifications, setNotifications] = useState([]);
 
+  console.log(notifications,"dffbldsgf")
+
 
   useEffect(() => {
     const fetchNotifications = async () => {
