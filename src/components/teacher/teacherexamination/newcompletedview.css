@@ -1,0 +1,284 @@
+/* src/components/newcompletedview.css */
+/* .newcompletedview-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.newcompletedview-modal {
+    width: 1056px;
+    height: 650px;
+    background: #fff;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+} */
+
+
+.newpendingdetail-container {
+    display: flex;
+    flex-direction: column;
+    background: #F9F9F9;
+    border-radius: 16px;
+    height: 100%;
+    width: 100%;
+}
+
+/* fixed header */
+.newcompletedview-header {
+    /* flex: 0 0 60px; */
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    background: #FFF;
+    justify-content: space-between;
+    /* border-bottom: 1px solid #DFDFDF; */
+    margin-bottom: 24px;
+    border-radius: 16px;
+}
+
+.newcompletedview-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+.newcompletedview-title {
+    margin: 0px;
+    padding: 0px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #222222;
+}
+
+.newcompletedview-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #000;
+}
+
+.newcompletedview-userinfo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.newcompletedview-email {
+    font-size: 1rem;
+    color: #222;
+}
+
+.newcompletedview-avatar img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+/* scrollable body */
+.newcompletedview-body {
+    flex: 1 1 auto;
+    /* margin: 16px 24px; */
+    padding: 40px 24px;
+    overflow-y: auto;
+    /* border-radius: 16px; */
+    background: #FFF;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+
+    /* Make sure the bottom corners stay square: */
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.newcompletedview-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 48px;
+    /* tweak this until it matches your mock exactly */
+    /* row-gap: 32px;          */
+    align-items: start;
+    /* top-align each cell’s contents */
+    justify-items: start;
+    /* left-align inside each cell */
+    width: 100%;
+    margin: 0;
+    /* reset all margins */
+    padding: 0;
+    margin-bottom: 32px;
+}
+
+.newcompletedview-row_label {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 400;
+    color: #767676;
+    margin-bottom: 4px;
+}
+
+.newcompletedview-row p {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 500;
+    color: #222222;
+}
+
+/* the new “View Questions” wrapper so it aligns under the grid */
+.newcompletedview-create-questions-wrapper {
+
+    margin-bottom: 40px;
+    margin-top: 8px;
+    padding-left: 0;
+    /* flush with the rows above */
+}
+
+/* style the button */
+.newcompletedview-create-questions {
+    width: 192px;
+    height: 40px;
+    background-color: #2162B2;
+    color: white;
+    border: none;
+    /* padding: 8px 24px; */
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* upload area */
+.newcompletedview-upload {
+    margin-top: 16px;
+}
+
+.newcompletedview-upload-heading {
+    font-size: 16px;
+    color: #767676;
+    margin-bottom: 16px;
+}
+
+.newcompletedview-dropzone {
+    height: 224px;
+    width: 476px;
+    border: 2px dashed #757575;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* gap: 8px; */
+    cursor: pointer;
+}
+
+.newcompletedview-dropzone-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.newcompletedview-dropzone_clickp {
+    font-size: 16px;
+    font-weight: 400;
+    color: #222222;
+}
+
+.newcompletedview-dropzone_maxp {
+    font-size: 16px;
+    font-weight: 400;
+    color: #757575;
+}
+
+.newcompletedview-upload-btn {
+    background-color: #2162B2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 24px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.newcompletedview-file-info {
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    width: 476px;
+    height: 40px;
+    /* match dropzone width */
+    background: #fff;
+    border: 1px solid #BFBFBF;
+    border-radius: 30px;
+    padding: 8px 12px;
+    gap: 8px;
+}
+
+.newcompletedview-file-icon {
+    width: 24px;
+    height: 24px;
+    color: red;
+}
+
+.newcompletedview-file-name {
+    flex: 1;
+    font-size: 16px;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.newcompletedview-file-remove {
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    color: #000;
+    padding: 0 4px;
+}
+
+/* on hover, make the ✕ a bit more obvious */
+/* .newcompletedview-file-remove:hover {
+    color: #000;
+} */
+
+/* fixed footer */
+.newcompletedview-footer {
+    flex: 0 0 60px;
+    padding: 24px;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #fff;
+    align-items: center;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    /* Make sure the bottom corners stay square: */
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.newcompletedview-submit {
+    background: #2162B2;
+    color: white;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}

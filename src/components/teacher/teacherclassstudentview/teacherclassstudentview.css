@@ -1,0 +1,240 @@
+.teacher_student_view_container {
+    height: 100vh;
+    padding-top: 100px;
+    background-color: #DDE6ED;
+    width: 100%;
+    padding-left: 80px;
+}
+
+.teacher_student_view_form {
+    height: 80%;
+    width: 100%;
+    background-color: #fff;
+    padding-top: 1%;
+    border-radius: 15px;
+    padding-bottom: 100px;
+    overflow: hidden;
+}
+
+/* Header with shadow */
+.teacher_student_header {
+    height: 70px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 2.5vw !important;
+    padding-bottom: 10px;
+}
+
+/* Scrollable body */
+.teacher_student_scrollable {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: calc(100vh - 250px);
+    /* adjust if needed */
+    padding-bottom: 50px;
+}
+
+/* Back arrow */
+.teacher_student_view_back {
+    color: #526D82;
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+/* Title in header */
+.teaher_student_view_title {
+    font-weight: 500;
+    color: #526D82;
+    font-size: 30px;
+    width: 500px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* Personal info styling */
+.teacher_personal_info {
+    padding-left: 3%;
+    padding-top: 30px !important;
+    /* or 0 if you want no space from the header */
+    /* Remove or reduce if needed:
+     padding-top: 20px -> padding-top: 10px or 0
+  */
+}
+.teacher_personal_info_image{
+    padding-left: 15%;
+    padding-top: 30px !important;
+}
+
+/* A row label + input pair */
+.teacher_personal_info_field {
+    display: flex;
+    padding-top: 20px;
+    padding-left: 30px;
+}
+
+.teacher_personal_info_field label {
+    width: 50%;
+    color: #526D82;
+}
+
+.teacher_personal_info_field input {
+    border: none;
+    width: 100%;
+    color: #9B9B9B;
+}
+
+/* School info styling */
+.teacher_school_section {
+    /* Remove top padding so there's no gap from personal info */
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.teacher_student_heading {
+    padding-left: 3%;
+    margin-top: 20px;
+}
+
+.teacher_student_title {
+    font-weight: 500;
+    color: #526D82;
+    font-size: 30px;
+    margin-left: 25px;
+}
+
+.teacher_school_info {
+    display: flex;
+    gap: 0px;
+    padding-left: 0px;
+    padding-top: 10px;
+    /* reduce or remove if you want even less space */
+    padding-right: 0px;
+}
+
+.teacher_school_info label {
+    margin-left: 30px;
+    width: 90%;
+    color: #526D82;
+}
+
+.teacher_school_info input {
+    width: 90%;
+    height: 30px;
+    border: none;
+    color: #9B9B9B;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+/* Profile picture on the right */
+.teacher_profile_picture {
+    width: 175px;
+    height: 211px;
+    margin-left: 50px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+/* The "Edit" button on the right */
+.teacher_student_edit {
+    width: 80px;
+    height: 35px;
+    background-color: white;
+    border: 1px solid #526D82;
+    border-radius: 8px;
+    color: #526D82;
+    cursor: pointer;
+}
+
+/* Dot menu hidden on large screens, shown on small screens */
+.teacher_student_verticaldot {
+    display: none;
+    background-color: transparent;
+    color: #526D82;
+    font-size: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Table or other content inside the modal */
+.teacher_result_view_scrollable {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+    padding-bottom: 10px;
+}
+
+/* Scrollbar styles */
+.teacher_student_scrollable::-webkit-scrollbar {
+    width: 8px;
+}
+
+.teacher_student_scrollable::-webkit-scrollbar-track {
+    background-color: #fff;
+}
+
+.teacher_student_scrollable::-webkit-scrollbar-thumb {
+    background-color: #A8BFD1;
+    border-radius: 4px;
+}
+
+.teacher_student_scrollable::-webkit-scrollbar-thumb:hover {
+    background-color: #8FA2B6;
+}
+
+.view-progress-btn {
+    background-color: #526D82;
+    /* or whatever color matches your design */
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    /* pill shape, adjust if needed */
+    padding: 8px 20px;
+    font-size: 18px;
+    margin-left: 50px;
+    height: 50px;
+    width: 200px;
+    /* to align it left with some spacing */
+    margin-top: 20px;
+    /* space above if needed */
+    cursor: pointer;
+}
+
+.view-progress-btn:hover {
+    background-color: #40596F;
+    /* slightly darker on hover */
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 800px) {
+    .teacher_student_view_container {
+        padding-left: 10px;
+    }
+    /* .teacher_personal_info_field {
+        padding-left: 20px;
+    } */
+
+    .teacher_profile_picture {
+        margin-top: 10px;
+    }
+
+    .teacher_school_info {
+        padding-left: 0px !important;
+        padding-right: 10px;
+    }
+
+    .teacher_student_verticaldot {
+        display: flex;
+    }
+
+    .teacher_student_edit {
+        display: none;
+        /* Hide the "Edit" button on small screens; only show the dots */
+    }
+}

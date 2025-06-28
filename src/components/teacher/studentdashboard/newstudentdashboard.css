@@ -1,0 +1,445 @@
+.newStudent_dashboard {
+    background-color: #f9f9f9;
+    height: 100vh;
+    margin-left: 132px;
+    padding-top: 24px !important;
+    padding-right: 24px;
+}
+
+.newStudent_main_container {
+    /* padding-top: 10vh; */
+    /* background-color: #fff; */
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    margin-left: 0px;
+    padding-left: 0px;
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0px;
+    height: 100%;
+}
+
+.newStudent_row_main {
+    flex: 0 0 auto;
+    height: 90px !important;
+    padding: 24px;
+    width: 100%;
+    border-radius: 16px;
+    background-color: #fff;
+    overflow: hidden;
+    padding-right: 0px;
+}
+
+.newStudent_row_header {
+    margin: 0px;
+}
+
+.newStudent_header_left_heading {
+    padding-left: 0px !important;
+}
+
+.newStudent_title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #000;
+    margin-left: 0px;
+    padding: 0px !important;
+}
+
+.newStudent_title p {
+    padding-left: 0px;
+}
+
+.newStudent_header_right_profilepic {
+    display: flex;
+    justify-content: flex-end;
+    /* Aligns content to the right */
+    align-items: center;
+  padding-right: 0px !important;
+    /* Centers content vertically */
+    /* padding-right: 24px; */
+}
+.newStudent-userinfo{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.newStudent-email{
+  font-size: 1rem;
+  color: #222;
+}
+
+.newStudent_header_institution {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.newStudent_dashboard_container {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    margin-top: 24px;
+    border-radius: 16px;
+    background-color: white;
+}
+
+
+/* Main container and header styling */
+.newStudent_main_bodycontainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.newStudent_main_header_container {
+    flex: 0 0 auto;
+    /* padding-top: 24px; */
+    margin: 24px;
+}
+
+.newStudent-header-right{
+    gap:8px;
+}
+
+  .newStudent-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .newStudent-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #111; /* nearly black */
+    display: flex;
+    align-items: center;
+  }
+  
+  .newStudent-count {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 8px;
+    width: 29px;
+    height: 28px;
+    border: 1px solid #2162b2;
+    border-radius: 8px;
+    color: #2162b2;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+.newStudent_search-input {
+    width: 100%;
+    padding: 8px 8px 8px 35px; /* Add left padding for the search icon */
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #BCBCBC;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.newStudent_search-input::placeholder {
+    color: #999;
+    font-size: 14px;
+}
+  
+  /* ─────────────────────────────────────────────────────────────
+     RIGHT SIDE: SEARCH + BUTTONS
+  ───────────────────────────────────────────────────────────── */
+  .newStudent-search-wrapper {
+    position: relative;
+    width: 318px; /* adjust as needed (the screenshot is about 250–270px wide) */
+  }
+  
+  .newStudent-search-input:focus {
+    border-color: #2162b2;
+    box-shadow: 0 0 0 0.2rem rgba(33, 98, 178, 0.25);
+    outline: none;
+  }
+  
+  .newStudent_search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #aaa;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.newStudent_search-icon.hidden {
+    display: none;
+}
+  
+  /* BUTTON STYLES — Outline + Primary */
+  .newStudent-addbutton {
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+    /* border: 1px solid #BCBCBC; */
+    background-color: #2162B2;
+    color: #fff;
+    border-radius: 8px;
+  }
+
+  
+  .newStudent-viewtable-button {
+    height: 40px;
+    width: 154px;
+    font-size: 16px;
+    border: 1px solid #BCBCBC;
+    background-color: transparent;
+    color: #222222;
+    border-radius: 8px;
+    
+  }
+ 
+  
+
+  .newStudent-promote-row {
+    display: flex;
+    margin-left: 0;
+    margin-top: 40px !important;
+  }
+  
+  .newStudent-promote-button{
+    width: 159px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 4oo;
+    border: 1px solid #2162b2;
+    background-color: transparent;
+    color: #2162b2;
+    border-radius: 8px;
+  }
+/* Wrapper for tables */
+.newStudent_classes_box {
+    flex: 1 1 auto;
+    /* margin-left: 24px; */
+    /* margin-top: 24px; */
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.newStudent_container {
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+
+
+.newStudent-grid-container {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    display: grid;
+    /* grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); */
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    gap: 16px;
+  }
+  .newStudent-card {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #CFCFCF;
+    border-radius: 16px;
+    padding: 12px;
+    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); */
+    /* width: 310px; */
+    width: 100%;
+    height: 102px;
+  }
+  .newStudent-avatar-profile img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+  .newStudent-avatar{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+  }
+  .newStudent-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .newStudent-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #222222;
+}
+.newStudent-info-classrollno {
+    display: flex;
+    justify-content: space-between; /* Distribute space between class and roll number */
+    width: 100%;
+  }
+  
+  .newStudent-class,
+  .newStudent-roll {
+    font-size: 14px;
+    color: #000000;
+  }
+
+  .newStudentdashboard_dropdown-menu {
+    position: absolute;
+    /* margin-top: 5px; */
+    top:28%;
+    right: 3%;
+    background-color: #fff;
+    height: 192px;
+    width: 252px;
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Dropdown menu items */
+  .newStudentdashboard_dropdown-item {
+    margin: 8px;
+    margin-top: 0px !important;
+    margin-right: 0px;
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 16px;
+    height: 48px;
+    color: #222222;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    /* vertical-align: middle !important; */
+  }
+  .newStudentdashboard-dropdown-item-icon{
+    width: 24px;
+  height: 24px;
+  object-fit: contain;  /* preserves aspect ratio */
+  margin-right: 8px;   
+  vertical-align: middle;
+  }
+
+/* No results styling */
+.newStudent-no-results {
+    grid-column: 1 / -1; /* Span all columns */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    width: 100%;
+}
+
+.newStudent-no-data,
+.newStudent-no-search-results {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    border: 2px dashed #dee2e6;
+    max-width: 400px;
+    width: 100%;
+}
+
+.newStudent-no-data-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #6c757d;
+    margin: 0 0 8px 0;
+}
+
+.newStudent-no-data-subtext {
+    font-size: 14px;
+    color: #adb5bd;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Hover effects for dropdown items */
+.newStudentdashboard_dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .newStudent-search-wrapper {
+        width: 250px;
+    }
+    
+    .newStudent-header-right {
+        gap: 6px;
+    }
+    
+    .newStudent-viewtable-button {
+        width: 120px;
+        font-size: 14px;
+    }
+    
+    .newStudent-addbutton {
+        width: 80px;
+        font-size: 14px;
+    }
+}
+
+
+
+/* No students found message styling */
+.no-students-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  padding: 40px 20px;
+}
+
+.no-students-found p {
+  color: #526D82;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Loading indicator styles */
+.newStudent-loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    gap: 16px;
+}
+
+.newStudent-loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #2563eb;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.newStudent-loading p {
+    color: #666;
+    font-size: 16px;
+    margin: 0;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

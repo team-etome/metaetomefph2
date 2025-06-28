@@ -1,0 +1,125 @@
+.newteacherassigntasks-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.newteacherassigntasks-popup {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+    width: 1058px;
+    padding: 0 0 24px 0;
+    position: relative;
+    height: 600px;
+   
+}
+
+.newteacherassigntasks-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #DFDFDF;
+}
+
+.newteacherassigntasks-title {
+    margin: 24px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #222;
+}
+
+.newteacherassigntasks-close-btn {
+    font-size: 2rem;
+    margin-right: 24px;
+    cursor: pointer;
+    color: #222222;
+}
+
+.newteacherassigntasks-table-container {
+    padding: 24px;
+    overflow: hidden;
+    height: calc(100% - 80px);
+    display: flex;
+    flex-direction: column;
+}
+
+.newteacherassigntasks-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 1.1rem;
+    border-left: none;
+    border-right: none;
+}
+
+.newteacherassigntasks-table th,
+.newteacherassigntasks-table td {
+    padding: 18px 16px;
+    text-align: left;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.newteacherassigntasks-table th {
+    background: #F6F6F6;
+    color: #8D8A95;
+    font-weight: 400;
+    font-size: 14px;
+    border-left: none;
+}
+
+.newteacherassigntasks-table tr:not(:last-child) {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.newteacherassigntasks-status {
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 2px solid;
+}
+
+.newteacherassigntasks-status.pending {
+    color: #f87171;
+    border-color: #f87171;
+    background: #fff;
+}
+
+.newteacherassigntasks-status.completed {
+    color: #22c55e;
+    border-color: #22c55e;
+    background: #fff;
+}
+
+.newteacherassigntasks-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.newteacherassigntasks-table tbody {
+    overflow-y: auto;
+    display: block;
+    max-height: calc(100vh - 250px);
+}
+
+.newteacherassigntasks-table thead tr,
+.newteacherassigntasks-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}

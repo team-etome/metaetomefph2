@@ -1,0 +1,302 @@
+/* facultyedit.css */
+.facultyedit-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050 !important;
+}
+
+.facultyedit-modal-content {
+    background: white;
+    border-radius: 16px;
+    width: 700px;
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+}
+
+.facultyedit-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+.facultyedit-modal-header-heading{
+    font-size: 20px;
+    font-weight: 600;
+    color: #222222;
+}
+
+.facultyedit-close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.facultyedit-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 8px;
+    row-gap: 24px;
+    margin-bottom: 24px;
+}
+.facultyedit-form-group--full {
+    grid-column: span 2;
+}
+
+.facultyedit-modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.facultyedit-form-group {
+    margin-bottom: 15px;
+}
+
+.facultyedit-form-control {
+    width: 100%;
+    height: 48px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.facultyedit-form-label {
+    padding-bottom: 8px;
+    font-size: 16px;
+}
+
+.facultyedit-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin: 24px;
+    /* padding: 20px; */
+    border-top: 1px solid #eee;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.facultyedit-btn {
+    padding: 10px 20px;
+    /* margin-left: 10px; */
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.facultyedit-btn-secondary {
+    background-color: #fff;
+    color: #2162B2;
+    border: 1px solid #2162B2;
+    width: 100px;
+    height: 40px;
+
+}
+
+.facultyedit-btn-danger {
+    background-color: #fff;
+    color: red;
+    border: 1px solid red;
+    width: 100px;
+    height: 40px;
+}
+
+.facultyedit-btn-primary {
+    background-color: #2162B2;
+    color: white;
+    width: 100px;
+    height: 40px;
+}
+
+.custom-input:focus {
+    border-color: #526D82 !important;
+    box-shadow: 0 0 5px rgba(82, 109, 130, 0.6);
+    /* outline: none; */
+}
+
+.admin_faculty_image_upload_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 233px;
+    width: 100%;
+    border: 2px dashed #526D82;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    position: relative;
+    background-color: #fff;
+}
+
+.admin_faculty_upload_placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.admin_faculty_upload_label {
+    background-color: #DAE2E9;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.admin_faculty_upload_label:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.admin_faculty_upload_input {
+    display: none;
+}
+
+.facultyedit_chapter-upload-wrapper {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.facultyedit_chapter-upload-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    color: #767676;
+    margin-bottom: 8px;
+}
+
+.facultyedit_chapter-upload-input {
+    width: 208px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #767676;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.facultyedit_chapter-upload-scroll-area {
+    border-radius: 8px;
+    /* background: #fff; */
+    padding: 10px;
+    /* box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1); */
+    border: none !important;
+}
+.facultyedit_chapter-upload-row:not(:last-child) {
+    border-bottom: 2px solid #e0e0e0;
+  }
+  
+
+.facultyedit_chapter-upload-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+
+.facultyedit_chapter-upload-text {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    width: 300px;
+    /* min-width: 300px; */
+    /* max-width: 400px; */
+}
+
+.facultyedit_chapter-upload-file {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #2162B2;
+    color: #2162B2;
+    border-radius: 8px;
+}
+
+.facultyedit_chapter-upload-delete {
+    background: none;
+    border: 1px solid red;
+    color: red;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.facultyedit_custom-file-upload {
+    position: relative;
+}
+
+.lokabook_upload-btn {
+    width:116px;
+    color: #2162B2;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid #2162B2;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+}
+
+.facultyedit_hidden-file {
+    display: none;
+}
+
+.facultyedit_file-name-display {
+    width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #555;
+    font-size: 14px;
+}
+.facultyedit_required {
+    color: red;
+}
+
+.facultyedit-phone-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.facultyedit-phone-select {
+  height: 48px;
+  border: 1px solid #757575;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  background: #fff;
+  font-size: 16px;
+  color: #526D82;
+  padding: 0 12px;
+  min-width: 70px;
+  outline: none;
+}
+
+.facultyedit-phone-input {
+  height: 48px;
+  border: 1px solid #757575;
+  border-radius: 0 8px 8px 0;
+  font-size: 16px;
+  color: #526D82;
+  padding: 0 10px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+.facultyedit_clear-image-btn{
+    background: transparent;
+}
+
+

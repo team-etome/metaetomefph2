@@ -1,0 +1,583 @@
+import React, { useEffect, useState } from 'react';
+import { Row, Col } from 'react-bootstrap';
+import Select from 'react-select';
+import './newstudentadd.css';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import { FaTrash, FaRedo } from "react-icons/fa";
+import { useDispatch } from 'react-redux';
+
+// onStudentAdded
+
+const NewStudentAdd = ({ isOpen, onClose, onStudentAdded }) => {
+    if (!isOpen) return null;
+
+    const APIURL = useSelector((state) => state.APIURL.url);
+    const teacher = useSelector((state) => state.teacherinfo);
+    console.log(teacher, "teacher")
+    const teacher_id = teacher.teacherinfo?.teacher_id;
+    console.log(teacher_id, "teacher_idteacher_idteacher_idteacher_id")
+
+
+
+    const [formData, setFormData] = useState({
+        studentname: "",
+        rollno: "",
+        employeeid: "",
+        dateofbirth: "",
+        joiningdate: "",
+        admissionno: "",
+        fathername: "",
+        mothername: "",
+        guardian: "",
+        address: "",
+        gender: null,
+        phoneno: "",
+        email: "",
+        password: "",
+        imageFile: null
+    });
+
+    const [phoneCode, setPhoneCode] = useState("+91");
+
+    const resetForm = () => {
+        setFormData({
+            studentname: "",
+            rollno: "",
+            employeeid: "",
+            dateofbirth: "",
+            joiningdate: "",
+            admissionno: "",
+            fathername: "",
+            mothername: "",
+            guardian: "",
+            address: "",
+            gender: null,
+            phoneno: "",
+            email: "",
+            password: "",
+            imageFile: null
+        });
+    };
+
+    // const handleInputChange = (field, value) => {
+    //     if (field === 'firstname' || field === 'lastname') {
+    //         value = value.charAt(0).toUpperCase() + value.slice(1);
+    //     }
+    //     setFormData(prev => ({
+    //         ...prev,
+    //         [field]: value
+    //     }));
+    // };
+
+
+    const handleSave = async () => {
+        const validationErrors = [];
+
+        if (!formData.studentname) validationErrors.push("Student name is required.");
+        if (!formData.rollno) validationErrors.push("Roll number is required.");
+        if (!formData.phoneno) validationErrors.push("Phone number is required.");
+        if (!formData.email) validationErrors.push("Email is required.");
+        if (!formData.gender?.value) validationErrors.push("Gender is required.");
+        if (!formData.dateofbirth) validationErrors.push("Date of birth is required.");
+        if (!formData.joiningdate) validationErrors.push("Joining date is required.");
+        if (!formData.admissionno) validationErrors.push("Admission number is required.");
+        if (!formData.fathername) validationErrors.push("Father's name is required.");
+        if (!formData.mothername) validationErrors.push("Mother's name is required.");
+        if (!formData.guardian) validationErrors.push("Guardian name is required.");
+        if (!formData.address) validationErrors.push("Address is required.");
+
+        // Email format validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (formData.email && !emailRegex.test(formData.email)) {
+            validationErrors.push("Please enter a valid email address.");
+        }
+
+        // Phone number length
+        if (formData.phoneno && formData.phoneno.length !== 10) {
+            validationErrors.push("Phone number must be 10 digits.");
+        }
+
+        if (validationErrors.length > 0) {
+            Swal.fire("Validation Error", validationErrors[0], "warning");
+            return;
+        }
+
+        // Submit form
+        const formDataToSend = new FormData();
+        formDataToSend.append("teacher", teacher_id);
+        formDataToSend.append("student_name", formData.studentname);
+        formDataToSend.append("roll_no", formData.rollno);
+        formDataToSend.append("number", formData.phoneno);
+        formDataToSend.append("email", formData.email);
+        formDataToSend.append("gender", formData.gender?.value);
+        formDataToSend.append("dob", formData.dateofbirth);
+        formDataToSend.append("start_date", formData.joiningdate);
+        formDataToSend.append("admission_no", formData.admissionno);
+        formDataToSend.append("fathers_name", formData.fathername);
+        formDataToSend.append("mothers_name", formData.mothername);
+        formDataToSend.append("guardian", formData.guardian);
+        formDataToSend.append("address", formData.address);
+        if (formData.imageFile) {
+            formDataToSend.append("image", formData.imageFile);
+        }
+
+        try {
+            const response = await axios.post(`${APIURL}/api/addstudent`, formDataToSend, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            if (response.data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registration Successful',
+                    text: 'Student has been added successfully!'
+                });
+                onClose();
+                if (onStudentAdded) {
+                    onStudentAdded();
+                }
+            }
+        } catch (error) {
+            Swal.fire("Error", error.response?.data?.message || "Server error occurred", "error");
+        }
+    };
+
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                Swal.fire("Error", "Image size should be less than 5MB", "error");
+                return;
+            }
+            setFormData(prev => ({
+                ...prev,
+                imageFile: file
+            }));
+        }
+    };
+
+    const clearImageFile = () => {
+        setFormData(prev => ({
+            ...prev,
+            imageFile: null
+        }));
+    };
+
+
+    const customStyles = {
+        control: (base, state) => ({
+            ...base,
+            minHeight: '48px',
+            height: '48px',
+            borderRadius: '8px',
+            borderColor: '#757575',
+            boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
+            '&:hover': { borderColor: '#526D82' }
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px'
+            }
+        }),
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '150px',
+            overflowY: 'auto',
+            fontSize: '14px',
+        }),
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#f0f0f0' : '#fff',
+            color: '#526D82',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+
+    };
+
+    // const handleImageUpload = (e) => setImageFile(e.target.files[0]);
+    // const clearImageFile = () => setImageFile(null);
+
+    return (
+        <div className="newstudentadd-backdrop">
+            <div className="newstudentadd-modal-content">
+                <div className="newstudentadd-modal-header">
+                    <p className="newstudentadd-modal-header-heading">Add Student</p>
+                    <button onClick={onClose} className="newstudentadd-close-button">&times;</button>
+                </div>
+
+                <div className="newstudentadd-modal-body">
+
+                    <form onSubmit={(e) => e.preventDefault()}>
+                        <div className="newstudentadd-form-grid">
+                            <div className="newstudentadd-form-group">
+                                <label className="newstudentadd-form-label">
+                                    Student Name <span className="newstudentadd_required">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    value={formData.studentname}
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
+                                    onChange={(e) => setFormData({ ...formData, studentname: e.target.value })}
+                                />
+                            </div>
+                            <div className="newstudentadd-form-group">
+                                <label className="newstudentadd-form-label">
+                                    Roll No <span className="newstudentadd_required">*</span></label>
+                                <input
+                                    type="Number"
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
+                                    value={formData.rollno}
+                                    onChange={(e) => setFormData({ ...formData, rollno: e.target.value })}
+                                />
+                            </div>
+                            <div className="newstudentadd-form-group">
+                                <label className="newstudentadd-form-label">
+                                    Phone Number <span className="newstudentadd_required">*</span>
+                                </label>
+                                <div className="newstudentadd-phone-container">
+                                    <select
+                                        className="newstudentadd-phone-select"
+                                        value={phoneCode}
+                                        onChange={(e) => setPhoneCode(e.target.value)}
+                                    >
+                                        <option value="+91">+91</option>
+                                        <option value="+1">+1</option>
+                                        <option value="+44">+44</option>
+                                        {/* Add more country codes as needed */}
+                                    </select>
+                                    <input
+                                        type="text"
+                                        className="newstudentadd-phone-input"
+                                        value={formData.phoneno}
+                                        onChange={(e) => setFormData({ ...formData, phoneno: e.target.value })}
+                                        maxLength={10}
+                                        style={{ borderLeft: 'none' }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="newstudentadd-form-group">
+                                <label className="newstudentadd-form-label">
+                                    Email ID <span className="newstudentadd_required">*</span>
+                                </label>
+                                <input
+                                    type="email"
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }} value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                />
+                            </div>
+                            <div className="newstudentadd-form-group">
+                                <label className="newstudentadd-form-label">
+                                    Gender <span className="newstudentadd_required">*</span>
+                                </label>
+                                <Select
+                                    styles={customStyles}
+                                    placeholder="Select Gender"
+                                    isClearable={true}
+                                    value={formData.gender}
+                                    onChange={(option) => setFormData({ ...formData, gender: option })}
+                                    options={[
+                                        { value: "Male", label: "Male" },
+                                        { value: "Female", label: "Female" },
+                                        { value: "Other", label: "Other" }
+                                    ]}
+                                />
+                            </div>
+                            <div className="newstudentadd-form-group">
+                                <label className="newstudentadd-form-label">Date of Birth</label>
+                                <input
+                                    type="date"
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
+                                    value={formData.dateofbirth}
+                                    onChange={(e) => setFormData({ ...formData, dateofbirth: e.target.value })}
+                                />
+                            </div>
+                            <div className="newstudentadd-form-group">
+                                <label className="newstudentadd-form-label">Joining Date</label>
+                                <input
+                                    type="date"
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
+                                    value={formData.joiningdate}
+                                    onChange={(e) => setFormData({ ...formData, joiningdate: e.target.value })}
+                                />
+                            </div>
+                            <div className="newstudentadd-form-group">
+                                <label className="newstudentadd-form-label">
+                                    Admission No
+                                </label>
+                                <input
+                                    type="text"
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
+                                    value={formData.admissionno}
+                                    onChange={(e) => setFormData({ ...formData, admissionno: e.target.value })}
+                                />
+                            </div>
+                            <div className="newstudentadd-form-group">
+                                <label className="newstudentadd-form-label">
+                                    Father's Name
+                                </label>
+                                <input
+                                    type="text"
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
+                                    value={formData.fathername}
+                                    onChange={(e) => setFormData({ ...formData, fathername: e.target.value })}
+                                />
+                            </div>
+                            <div className="newstudentadd-form-group">
+                                <label className="newstudentadd-form-label">
+                                    Mother's Name
+                                </label>
+                                <input
+                                    type="text"
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
+                                    value={formData.mothername}
+                                    onChange={(e) => setFormData({ ...formData, mothername: e.target.value })}
+                                />
+                            </div>
+                            <div className="newstudentadd-form-group">
+                                <label className="newstudentadd-form-label">
+                                    Gaurdian Name
+                                </label>
+                                <input
+                                    type="text"
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
+                                    value={formData.guardian}
+                                    onChange={(e) => setFormData({ ...formData, guardian: e.target.value })}
+                                />
+                            </div>
+                            <div className="newstudentadd-form-group">
+                                <label className="newstudentadd-form-label">
+                                    Address
+                                </label>
+                                <input
+                                    type="text"
+                                    className="custom-input"
+                                    style={{
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
+                                        padding: '0 10px',
+                                        fontSize: '16px',
+                                        color: '#526D82',
+                                        width: '100%',
+                                        boxSizing: 'border-box',
+                                        outline: "none"
+                                    }}
+                                    value={formData.address}
+                                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                                />
+                            </div>
+
+                        </div>
+                        <Row>
+                            <Col md={12}>
+                                <div className="facultyadd-form-group">
+
+                                    <label className="facultyadd-form-label">Add cover Photo</label>
+                                    <div>
+                                        <div className="admin_faculty_image_upload_container">
+                                            <div className="admin_faculty_upload_placeholder">
+                                                {formData.imageFile ? (
+                                                    <div className="image-preview-container">
+                                                        <img
+                                                            src={URL.createObjectURL(formData.imageFile)}
+                                                            alt="Uploaded Image"
+                                                            className="uploaded_image"
+                                                            style={{
+                                                                maxWidth: '100%',
+                                                                maxHeight: '200px',
+                                                                objectFit: 'contain'
+                                                            }}
+                                                        />
+                                                        <button
+                                                            className="clear-image-btn"
+                                                            onClick={clearImageFile}
+                                                            title="Remove Image"
+                                                        >
+                                                            <FaTrash />
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    <>
+                                                        <label
+                                                            htmlFor="image-upload"
+                                                            className="admin_faculty_upload_label"
+                                                        >
+                                                            Upload Image
+                                                        </label>
+                                                        <input
+                                                            id="image-upload"
+                                                            type="file"
+                                                            accept="image/*"
+                                                            className="admin_faculty_upload_input"
+                                                            onChange={handleImageUpload}
+                                                        />
+                                                    </>
+                                                )}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                    </form>
+                </div>
+
+                <div className="newstudentadd-modal-footer">
+
+                    <button
+                        onClick={() => {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: "All entered data will be lost!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, clear it',
+                                cancelButtonText: 'Cancel'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    resetForm();
+                                    onClose();
+                                }
+                            });
+                        }}
+                        className="newstudentadd-btn newstudentadd-btn-secondary"
+                    >
+                        Clear
+                    </button>
+
+                    <button className="newstudentadd-btn newstudentadd-btn-primary" onClick={handleSave}>Save</button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default NewStudentAdd;

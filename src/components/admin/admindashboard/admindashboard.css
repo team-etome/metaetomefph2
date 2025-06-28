@@ -1,0 +1,770 @@
+/* .admin_dashboard {
+  background-color: #FCFEFF;
+  height: 100vh;
+  padding-top: 14vh;
+  padding-left: 10vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.dashboard_content_row {
+
+  border-radius: 8px;
+  height: 82vh;
+  display: flex;
+  flex-direction: column;
+}
+.admin_dash_cl_1{
+  display: flex;
+  justify-content: center;
+ 
+  flex-direction: row;
+}
+.dash_grt_headr {
+  font-size: 32px;
+  font-weight: 400;
+  color: #526D82;
+
+  margin-top: 16px;
+}
+
+.dash_snd_Col {
+  height: 480px;
+}
+
+.rw_cl_nt {
+  height: 480px;
+  
+  display: flex;
+  justify-content: center;
+  padding: 0px 20px 0 20px;
+}
+.notes_section{
+  margin-left: 0px !important;
+}
+.notes-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  max-height: 462px;
+}
+
+.dash_student_card {
+  width: 160px;
+  height: 160px;
+  border-radius: 8px;
+  background-color: #E7E6FB;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px;
+  margin-right: 6px;
+}
+
+.dash_teacher_card {
+  width: 160px;
+  height: 160px;
+  border-radius: 8px;
+  background-color: #DFEDF8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px;
+  margin-left: 5%;
+}
+
+.student_icon_dash {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 10px;
+}
+
+.teacher_icon_dash {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 10px;
+}
+
+.notes_header {
+  color: #526D82;
+  font-weight: 400;
+  padding-bottom: 10PX;
+}
+
+.custom_calendar {
+  border: 1px solid #ffffff !important;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(44, 43, 43, 0.1);
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.dash_note_min_div {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-bottom: 10px;
+  border: 1px solid #dcbbbc;
+  height: 300px;
+  border-radius: 8px;
+}
+
+.notes-container::-webkit-scrollbar {
+  width: 0px;
+}
+
+.notes-container::-webkit-scrollbar-thumb {
+  background-color: #d1d1d1;
+  border-radius: 10px;
+}
+
+.notes-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.note_item {
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  min-height: 50px;
+}
+
+.fixed_footer {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.txt_form {
+  flex-grow: 1;
+  height: 50px; 
+  padding: 10px;
+  font-size: 16px; 
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  resize: none;
+}
+
+.dash_noteadd_btn {
+
+  width: 50px; 
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid #657d8f;
+  background-color: transparent;
+  color: #526D82;
+  font-size: 24px; 
+  margin-left: 10px;
+}
+
+.dash_noteadd_btn:hover {
+  background-color: #526D82;
+  color: #fff;
+}
+
+.note_item p {
+  margin: 0;
+  font-size: 14px;
+  flex-grow: 1;
+}
+
+.note_date {
+  font-size: 12px;
+  color: #6c757d;
+  margin-right: 10px;
+}
+
+.delete_note {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #d9534f;
+}
+
+.notification_content_1 {
+  width: 450px;
+  justify-content: flex-start;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  padding-left: 16px;
+}
+
+.notification_section {
+  display: flex;
+  justify-content: center;
+  margin-top: 1%;
+  max-height: 550px;
+}
+
+.notification_bar {
+  text-align: center;
+  gap: 5%;
+  display: flex;
+  padding-top: 2vh;
+}
+
+.notification_bell {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 1vh;
+}
+
+.notification_bar h5 {
+  color: #727272;
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 0.5vh;
+}
+
+.notification_body {
+  max-height: calc(90vh - 140px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.notification_body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.notification_body::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+.notification_body::-webkit-scrollbar-thumb {
+  background-color: #A8BFD1;
+  border-radius: 4px;
+}
+
+.notification_body::-webkit-scrollbar-thumb:hover {
+  background-color: #8FA2B6;
+}
+.notification_content_1 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  padding: 0 16px;
+}
+
+.notification_body {
+  flex-grow: 1; 
+  overflow-y: auto;
+}
+
+.notification_footer {
+  text-align: center;
+  padding: 10px;
+  
+}
+
+.see_all_button {
+  background-color: #f1c40f;
+  color: #000000;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  font-weight: 400;
+
+
+}
+
+.see_all_button:hover {
+  background-color: #d4ac0d;
+}
+
+.see_all_button:focus {
+  outline: none;
+}
+@media (max-width: 1000px) {
+
+  .admin_dashboard {
+    background-color: #FCFEFF;
+    height: 100vh;
+    padding-top:12vh;
+    padding-left: 0;
+    width: 100%;
+ 
+    display: flex;
+    justify-content: center;
+   align-items: flex-start;
+    overflow:auto;
+  }
+  .dashboard_content_row {
+    border: none;
+    border-radius: 8px;
+    height: 82vh;
+   width: 100%;
+   height: auto;
+  
+   
+   
+  }
+  .dash_grt_headr {
+    font-size: 32px;
+    font-weight: 400;
+    color: #526D82;
+    padding-left: 18px;
+    margin-top: 0px;
+  }
+  
+  .admin_dash_cl_1{
+    display: flex;
+    justify-content: center;
+   
+    flex-direction: row;
+  }
+
+  .notification_section {
+   
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard_content_row {
+    padding: 1rem;
+  }
+
+  .dash_note_min_div,
+  .notification_content_1 {
+    width: 100%;
+  }
+
+  .notification_section {
+    display: none;
+  }
+  .admin_dash_cl_1{
+    display: flex;
+    justify-content: center;
+   
+    flex-direction: column;
+  }
+  .rw_cl_nt {
+  
+    padding: 0px 00px 0 0px;
+  }
+  .admin_dash_cl_1 {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center; 
+  }
+  .dash_grt_headr{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center; 
+  }
+
+  .dsh_clnd,
+  .rw_cl_nt {
+    width: 100%;
+    margin-top: 25px;
+  }
+
+}
+
+
+.edit_note_input {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.edit_buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit_buttons button {
+  margin: 0 4px;
+}
+
+.note_actions {
+  display: flex;
+  gap: 8px;
+}
+@media (max-width: 768px) {
+  .dash_noteadd_btn{
+    margin-left:8px ;
+  }
+} */
+
+
+.admin_dashboard{
+  /* border: 2px solid black; */
+  margin-left: 110px;
+
+  /* height: calc(100vh - 102px); */
+;
+  width: calc(100% - 110px);
+  display: flex; /* Ensure child elements can stretch */
+  flex-direction: column; 
+  margin-top: 10px;
+ 
+
+
+ 
+
+}
+
+
+.dash_main{
+  display: flex;
+  gap: 24px;
+  align-items: first baseline;
+
+
+
+  
+  
+}
+
+
+.student_overview{
+  /* border: 2px solid #e0bfbf; */
+  width: 393px;
+  /* height: 393px; */
+  height: 370px;
+  border-radius: 16px;
+  background-color: #FFFFFF;
+
+  /* margin-left: 24px; */
+
+
+
+}
+
+
+
+.report_alert{
+
+  width: 416px;
+  height: 169px;
+  /* border: 2px solid #F9F9F9; */
+  /* border: 2px solid #e0bfbf; */
+  border-radius: 16px;
+  background-color: #FFFFFF;
+ 
+
+}
+
+.todo_list{
+  /* border: 2px solid #F9F9F9; */
+  /* border: 2px solid #e0bfbf; */
+  width: 416px;
+  height: 184px;
+  margin-top: 16px;
+  border-radius: 16px;
+  background-color: #FFFFFF;
+}
+
+
+
+
+
+.text_font {
+ font-size: 20px;
+ padding-left: 24px;
+ /* margin-top: px; */
+ color: black;
+ font-weight: 600;
+ /* border: 2px solid black; */
+}
+
+
+
+
+
+
+
+.parent_container {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  padding-left: 24px;
+  flex-grow: 1; 
+}
+
+
+.exam_performance {
+
+
+  width: 628px;
+  height: 318px;
+  border-radius: 16px;
+  background-color: #FFFFFF;
+
+  
+
+
+}
+
+
+
+
+
+.notification{
+ 
+  width: 424px;
+  height: 370px;
+  border-radius: 16px;
+  background-color: #FFFFFF;
+
+}
+
+
+@media (min-width: 1207px) {
+  .notification {
+    width: 640px;  
+    height: 370px;
+    border-radius: 16px;
+
+  }
+}
+
+
+
+@media (max-width: 1207px) {
+  .notification {
+    width: 90%; 
+    height: auto;
+    padding: 16px; 
+    
+  }   
+}
+
+
+
+.report{
+  width: 369px;
+  height: 75px;
+  border-radius: 16px;
+  background-color: #F8F6E8;
+  margin-left:18px ;
+
+ 
+}
+
+
+/* @media (min-width: 1207px) {
+  .teacher_action {
+    width: 47%; 
+    height: 277px; 
+    border-radius: 16px;
+    background-color: #FFFFFF;
+  }
+} */
+
+
+
+.view-all {
+  font-size: 14px;
+  color:#2162B2 ;
+  margin: 0;
+  cursor: pointer;
+  margin-right: 24px;
+  font-weight: 400;
+
+}
+
+
+.notification-cotent{
+
+  font-size: 11.5px;
+  color: #222222;
+  width: 100%;
+  height: 40px;
+
+
+ 
+
+}
+
+
+
+@media (min-width: 1350px) {
+  .notification-cotent {
+    font-size: 18px !important; 
+    color: #222222;
+  }   
+}
+
+
+.cursor-pointer{
+  
+  
+  cursor: pointer;
+
+
+}
+
+
+
+.complete{
+ 
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out; /* Smooth transition */
+  width: 78px;
+  height: 49px;
+}
+
+
+.action{
+
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out; /* Smooth transition */
+  width: 108px;
+  height: 49px;
+}
+
+
+
+/* .complete:hover,
+.action:hover {
+  color: #2162B2;
+  border-bottom: 2px solid #2162B2;
+} */
+
+
+
+.tabs .complete:hover,
+.tabs .action:hover,
+.tabs .active {
+  color: #2162B2;
+  border-bottom: 2px solid #2162B2;
+  cursor: pointer;
+}
+
+/* Add specific styles for active tabs */
+.tabs .action.active,
+.tabs .complete.active {
+  color: #2162B2;
+  border-bottom: 2px solid #2162B2;
+  font-weight: 500;
+}
+
+/* Ensure the tab container has proper spacing */
+.tabs {
+  display: flex;
+  gap: 32px;
+  margin-left: 34px;
+  height: 37px;
+  align-items: center;
+  margin-top: 15px;
+  /* width: 108px; */
+  padding-bottom: 5px;
+  width: 213px;
+}
+
+
+
+
+
+.name-due-status{
+
+  color: #8D8A95;
+  font-size: 14px;
+  font-weight: 400;
+
+}
+
+
+.p-datatable .p-datatable-thead > tr > th {
+  background-color: #FFFFFF !important;
+  box-shadow: none; 
+  border: none;
+  padding-left: 10px;
+
+} 
+
+
+
+/* Style only the data rows */
+.custom-datatable .p-datatable-tbody > tr {
+  border-bottom: 1px solid #ccc; /* Light grey border on bottom */
+}
+
+/* Remove default row border & hover shadow if needed */
+.custom-datatable .p-datatable-tbody > tr:last-child {
+  border-bottom: none; /* Optional: Remove border on last row */
+}
+
+.custom-datatable .p-datatable-tbody > tr td {
+  border: none; /* Remove default cell borders */
+}
+
+/* Target header text color */
+.custom-datatable .p-datatable-thead > tr > th {
+  color: #8D8A95 !important;
+  font-weight: 500; /* Optional for semi-bold */
+  background-color: transparent; /* Optional */
+}
+
+
+.teacher{
+
+  width: 628px;
+  height: 319;
+  background-color: #FFFFFF;
+  
+              
+
+  
+}
+
+
+
+@media (min-width: 1350px) {
+  .teacher {
+
+    width: 845px;
+    height: 319;
+    border-radius: 16px;
+    background-color: #FFFFFF;
+
+  }   
+}
+
+
+
+.report_alert_view_all{
+ 
+  width: 1058px;
+  height: 600px;
+  background-color: #FFFFFF;
+  margin-top: 80px;
+}
+
+
+
+

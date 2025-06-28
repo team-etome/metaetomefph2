@@ -1,0 +1,928 @@
+/* Main container and header styling */
+.seating_main_container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.seating_main_header_container {
+    flex: 0 0 auto;
+    padding: 0px;
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-top: 24px;
+}
+
+.seating_header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    padding-right: 0px !important;
+    margin-right: 0px;
+}
+
+.seating_left-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.seating_search_button {
+    width: 100px;
+    height: 40px;
+    color: #2162B2;
+    background: transparent;
+    border: 1px solid #2162B2;
+    border-radius: 8px;
+    transition: left 0.5s ease;
+}
+
+.seating_result_add_button {
+    width: 100px;
+    height: 40px;
+    color: #fff;
+    background: #2162B2;
+    /* border: 1px solid #2162B2; */
+    border-radius: 8px;
+    /* margin-left: 630px; */
+    transition: left 0.5s ease;
+}
+
+/* Form select styling */
+.seating_select_exam {
+    width: 300px;
+    height: 40px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #4A4A4A;
+}
+
+.seating_select_year {
+    width: 200px;
+    height: 40px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #4A4A4A;
+}
+
+.seating_filter_button {
+    width: 100px;
+    height: 40px;
+    color: black;
+    background: #fff;
+    border: 1px solid #222222;
+    border-radius: 8px;
+    transition: left 0.5s ease;
+}
+.seating_filter-popup {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background: #fff;
+    border-radius: 16px;
+    
+    color: #000;
+    z-index: 100;
+    width: 191px;
+    height: 248px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+}
+
+.seating_filter-popup-inner {
+    color: #000;
+    margin: 16px;
+    /* gap:8px; */
+}
+.seating_filter-option {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    transition: background 0.2s;
+    border-radius: 14px;
+    width: 159px;
+    height: 40px;
+    padding-left: 20px;
+    /* padding: 0px !important; */
+}
+
+.seating_filter-option.active,
+.seating_filter-option:hover {
+    border: 2px solid #2162B2;
+}
+.seating_filter-list-popup {
+    left: auto !important;
+    right: 105px !important;
+    position: absolute;
+    top: 40;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+    color: #000;
+    z-index: 101;
+    width: 180px;
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+}
+
+.seating_filter-list-popup-inner {
+    color: #000;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.seating_filter-list {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 16px;
+}
+
+.seating_filter-list-item {
+    padding:12px;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 2px solid transparent;
+}
+
+.seating_filter-list-item.select {
+    border: 2px solid #2162B2;
+}
+
+.seating_filter-list-item:hover {
+    border: 2px solid #2162B2;
+}
+
+.seating_search_container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 16px;
+}
+.seating_search-icon.hidden {
+    display: none;
+}
+
+.seating_filter-search {
+    width: 100%;
+    padding: 8px 8px 8px 24px;
+    border-radius: 8px;
+    border: 1px solid #BCBCBC;
+    flex-shrink: 0;
+}
+.seating_apply-btn {
+    padding: 8px 0;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.seating_apply-btn:disabled {
+    background: #BCBCBC;
+    cursor: not-allowed;
+}
+
+/* Wrapper for tables */
+.seating_classes_box {
+    flex: 1 1 auto;
+    margin-left: 24px;
+    margin-top: 40px;
+    max-height: 100%;
+    overflow-y: auto;
+    margin-right: 24px;
+}
+
+
+/* Container that holds all the boxes in a grid with 3 columns */
+/* Container for the seating grid */
+.seating_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    /* Flexible columns with a minimum width */
+    gap: 16px;
+    /* Fixed 16px gap between items */
+}
+
+/* Each individual box (card) */
+.seating_classes_box_inner {
+    border-radius: 16px;
+    background-color: #fff;
+    border: 1px solid #B2B2B2;
+    padding: 16px;
+    /* Width will be flexible based on screen size */
+    width: 100%;
+    /* Ensure the cards take up the full width of their grid cell */
+    height: 147.47px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+/* Optional styling for an icon or image at the top */
+.seating_box_icon_wrapper {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.seating_box_icon {
+    width: 88px;
+    height: 88px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.seating_exam_title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: black;
+}
+
+.seating_exam_date {
+    margin: 0.25rem 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: black;
+}
+
+.seating_faculties {
+    margin: 0.25rem 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: black;
+}
+
+.seating_classes {
+    margin: 0.25rem 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: black;
+}
+
+.seating_classes_input {
+    margin: 0.25rem 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+}
+
+/* Top row: flex alignment for icon + text details */
+.seating_top_row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    /* space between the icon and text block */
+}
+
+/* Text details on top row (right side) */
+.seating_exam_details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    word-wrap: break-word;
+    /* Forces long text to wrap within the container */
+}
+
+/* Typography for top-row text */
+.seating_room_no {
+    /* margin: 0.5rem 0 0.25rem 0; */
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    /* Bold or semibold for emphasis */
+}
+
+/* Bottom row: faculties left, classes right */
+.seating_bottom_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+
+/* step 1*/
+.seating-form-label {
+    /* margin-top: 16px; */
+    font-size: 16px;
+    font-weight: 500;
+    /* margin-bottom: 6px; */
+    display: inline-block;
+    color: #767676;
+}
+
+.seating_required {
+    color: red;
+}
+
+.seating_stepone_select_exam {
+    width: 1010px;
+    height: 48px;
+    font-size: 1rem;
+    border: 1px solid #757575;
+    border-radius: 8px;
+}
+
+.seating_stepone_select_year {
+    width: 100% !important;
+    height: 48px;
+    font-size: 1rem;
+    border: 1px solid #757575 !important;
+    border-radius: 8px;
+}
+
+.seating_stepone_form-control {
+    width: 100%;
+    height: 48px;
+    margin-bottom: 16px;
+    border: 1px solid #757575;
+    border-radius: 8px;
+    padding: 0 10px;
+    font-size: 14px;
+    color: black;
+    outline: none;
+}
+
+
+.seating_steptwo_faculties-assigned {
+    width: 100% !important;
+    height: 48px;
+    font-size: 1rem;
+    border: 1px solid #757575;
+    border-radius: 8px;
+    padding: 0 12px;
+    background-color: white;
+}
+
+
+.seating_form-control {
+    width: 100%;
+    height: 48px;
+    margin-bottom: 16px;
+    border: 1px solid #757575;
+    border-radius: 8px;
+    padding: 0 10px;
+    font-size: 14px;
+    outline: none;
+}
+
+.seating_form-control:focus {
+    border: 1px solid #2162B2;
+}
+
+.seating_form-control_steptwo {
+    box-sizing: border-box;
+    width: 100%;
+    height: 48px;
+    /* margin-bottom: 16px; */
+    border: 1px solid #757575;
+    border-radius: 8px;
+    padding: 0 10px;
+    font-size: 14px;
+    outline: none;
+}
+
+.seating-custom-modal-content_header_main {
+    height: 48px;
+}
+
+.seating-custom-modal-content_header {
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+}
+
+.seating_form-select {
+    width: 100%;
+    height: 48px;
+    /* margin-bottom: 16px; */
+    border: 1px solid #757575;
+    border-radius: 8px;
+    padding: 0 10px;
+    font-size: 14px;
+    outline: none;
+}
+
+
+
+/* Step row/column layout for multiple fields side by side */
+.seating_step-row {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 16px;
+    gap: 8px;
+}
+
+.seating_row-with-delete {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.seating_row-with-delete:not(.seating_first-row):hover {
+    transform: scale(0.96);
+}
+
+.seating_delete-row-btn {
+    position: absolute;
+    top: 40%;
+    right: -20px;
+    transform: translateY(-50%);
+    background: transparent;
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: none;
+    height: 0px !important;
+    width: 0px !important;
+    transition: all 0.3s ease;
+}
+
+.seating_row-with-delete:not(.seating_first-row):hover .seating_delete-row-btn {
+    display: block;
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.seating_first-row {
+    pointer-events: none;
+}
+
+.seating_first-row .seating_step-column {
+    pointer-events: auto;
+}
+
+.seating_step-row_stepone {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 16px;
+    margin-top: 40px;
+    gap: 8px;
+}
+
+.seating_step-column {
+    flex: 1;
+}
+
+.seating_step-column_Faculties-assigned {
+    position: relative;
+    width: 100%;
+    min-width: 300px;
+    /* margin-left: 16px; */
+}
+
+.seating_step-column_Faculties-assigned select {
+    width: 100% !important;
+}
+
+.seating_step-column_steptwo {
+    box-sizing: border-box;
+    height: 75px;
+    width: 242px !important;
+}
+
+/* + Add Next button example */
+.add-next-btn {
+    background-color: white;
+    margin: 16px auto;
+    /* auto left and right centers the button */
+    color: #2162B2;
+    width: 120px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    border: 1px solid #2162B2;
+}
+
+.row-with-delete {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-right: 40px;
+    /* Space for the delete icon */
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.remove-row-btn {
+    position: absolute;
+    right: 10px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
+}
+
+.row-with-delete:hover .remove-row-btn {
+    display: block;
+}
+
+/* For rows except the first, position at 50% */
+.row-with-delete:not(.first-row) .remove-row-btn {
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+.row-with-delete.first-row .remove-row-btn {
+    top: 60%;
+    /* Adjust this value until the cross aligns with the input */
+    transform: translateY(-60%);
+}
+
+
+.add-next-btn-container {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.add-next-btn {
+    background-color: white;
+    margin: 16px auto;
+    /* auto left and right centers the button */
+    color: #2162B2;
+    width: 120px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    border: 1px solid #2162B2;
+}
+
+
+/* The custom modal overlay & content */
+.seating-custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.seating-custom-modal-content {
+    background-color: #fff;
+    width: 1058px;
+    /* adjust as needed */
+    min-height: 650px;
+    border-radius: 8px;
+    padding: 24px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.seating-modal-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Step indicators row */
+.seating-step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    margin-bottom: 16px;
+}
+
+.seating-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+/* 
+   Add arrow '>' after each step, except the last one
+   You can use any symbol or even an icon font if desired
+*/
+.seating-step:not(:last-child)::after {
+    content: ">";
+    display: inline-block;
+    /* Make sure the arrow is rendered inline */
+    color: #A1A1A1;
+    /* Adjust arrow color as needed */
+    margin-left: 24px;
+    font-size: 24px;
+    /* Increase if the arrow is too small */
+    line-height: 1;
+}
+
+/* Step circle/number */
+.seating-step-number {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}
+
+.seating-step-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: #BABABA;
+}
+
+/* Active step highlight */
+.seating-step.active .seating-step-number {
+    background-color: #2162B2;
+}
+
+.seating-step.active .seating-step-label {
+    color: black;
+}
+
+/* Completed step highlight (optional style) */
+.seating-step.completed .seating-step-number {
+    background-color: #2162B2;
+    /* green or any color indicating "done" */
+}
+
+.seating-step-label.completed-label {
+    color: black;
+}
+
+.seating-step-label.active-label {
+    color: #007bff;
+}
+
+/* Step content area inside the modal */
+.seating-modal-step-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+}
+
+.seating-modal-step-content_steptwo_entrytable {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+    max-height: 300px;
+    overflow-y: auto;
+    /* border-bottom: 2px solid white !important; */
+}
+
+/* Modal footer (Back, Clear, Next, Assign) */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    gap: 8px;
+}
+
+/* Container for the back button on the left */
+.modal-footer-left {
+    display: flex;
+    align-items: center;
+}
+
+/* Container for the clear/next/assign buttons on the right */
+.modal-footer-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.seating_popup_btn-back {
+    background-color: white;
+    color: #444444;
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    border: 1px solid #444444;
+}
+
+.seating_popup_btn-clear {
+    background-color: white;
+    color: #2162B2;
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    border: 1px solid #2162B2;
+}
+
+.seating_popup_btn-next {
+    background-color: #2162B2;
+    color: white;
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    border: 1px solid #2162B2;
+}
+
+/* Layout selection example (Step 3) */
+.layout-grid {
+    display: flex;
+    gap: 1rem;
+    margin-top: 8px;
+    height: 185px;
+}
+
+.layout-option {
+    cursor: pointer;
+    border: 1px solid #E4E4E4;
+    border-radius: 8px;
+    width: 207px;
+    height: 185px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.layout-option.selected {
+    border-color: #2162B2;
+    background-color: #f4f4f4;
+    margin: 0px;
+}
+
+.layout-option img {
+    width: 207px;
+    height: 185px;
+    object-fit: cover;
+}
+
+
+
+
+
+
+
+/* The custom modal overlay & content */
+.seatingview-custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.seatingview-custom-modal-content {
+    background-color: #fff;
+    width: 1058px;
+    /* Adjust modal width as needed */
+    height: 650px;
+    /* Adjust height as needed */
+    border-radius: 16px;
+    padding: 0px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+
+.seating_faculty-tags {
+    display: inline-flex;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #E9E9E9;
+    border-radius: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    /* padding-top: 5px; */
+    font-size: 14px;
+    color: #212529;
+    cursor: default;
+    height: 28px;
+}
+
+.seating_faculty-remove-icon {
+    margin-left: 12px;
+    cursor: pointer;
+    font-weight: normal;
+    color: black;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid black;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    padding: 0;
+    background: none;
+}
+
+/* .faculty-remove-icon:hover {
+    background-color: #f8f9fa;
+    color: #dc3545;
+} */
+
+/* Container styling */
+.seating_step-column_Faculties-assigned {
+    flex: 1;
+    min-width: 300px;
+}
+
+.faculty-selected-display {
+    padding: 0 !important;
+    height: auto !important;
+    min-height: 32px;
+}
+
+
+
+
+
+
+
+
+.seating_faculty-tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-height: 48px;
+    padding: 10px;
+    border: 1px solid #757575;
+    border-radius: 8px;
+}
+
+.seating_dropdown-icon {
+    position: absolute;
+    top: 65%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.seating_options-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 4px;
+    padding: 8px 0;
+    list-style: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.seating_options-list li {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.seating_options-list li:hover {
+    background: #f0f0f0;
+}
+
+

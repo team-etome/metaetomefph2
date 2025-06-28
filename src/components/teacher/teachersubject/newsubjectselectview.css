@@ -1,0 +1,142 @@
+.newsubjectselectview-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.newsubjectselectview-modal-container {
+    background: #fff;
+    width: 1058px;
+    height: 650px;
+    /* Adjust based on preference */
+    /* max-width: 90vw; */
+    border-radius: 16px;
+    overflow: hidden;
+    /* So the corners are rounded nicely */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+.newsubjectselectview-backdrop {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .newsubjectselectview-modal {
+    background: #fff;
+    width:100%;
+    height: 100%;
+    border-radius: 8px;
+    position: relative;
+    padding: 24px;
+    padding-top: 0px;
+    
+  }
+  
+  .newsubjectselectview-topbar {
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+    padding: 0px;
+    margin-bottom: 0px;
+    height: 128px !important;
+    border-bottom: 1px solid #CDCDCD;
+  }
+  
+  /* The header block stays avatar + text */
+  .newsubjectselectview-header-left {
+    display: flex;
+    align-items: center;
+  }
+  .newsubjectselectview-header-right{
+    padding-top: 24px;
+  }
+  
+  .newsubjectselectview-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .newsubjectselectview-header-text {
+    margin-left: 16px;
+  }
+  .newsubjectselectview-close-btn {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .newsubjectselectview-name {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000;
+  }
+  
+  .newsubjectselectview-email {
+    font-size: 16px;
+    color: #666;
+    margin-top: 4px;
+  }
+  
+  /* Divider */
+  .newsubjectselectview-divider {
+    border: none;
+    border-bottom: 2px solid #CDCDCD;
+    /* margin: 0 24px; */
+    margin-top: 0px !important;
+  }
+  
+  /* Section title */
+  .newsubjectselectview-section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 32px;
+    color: #222;
+    padding: 0px;
+  }
+  
+  /* Personal Info Grid */
+  .newsubjectselectview-personal-info,
+  .newsubjectselectview-school-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    /* padding: 0 24px; */
+    /* margin-bottom: 16px; */
+    margin-top: 24px;
+  }
+  .newsubjectselectview-personal-info{
+     padding-bottom: 24px;
+     border-bottom: 1px solid #CDCDCD;
+
+  }
+  
+  .newsubjectselectview-info-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .newsubjectselectview-info-label {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 4px;
+  }
+  
+  .newsubjectselectview-info-value {
+    font-size: 16px;
+    color: #000;
+    font-weight: 500;
+  }  

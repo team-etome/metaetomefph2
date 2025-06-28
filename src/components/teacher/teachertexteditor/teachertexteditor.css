@@ -1,0 +1,31 @@
+.ck-editor__editable_inline {
+    min-height: 110px !important;
+
+ border-radius: 8px !important;
+    /* border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important; */
+    z-index: 10 !important;
+  }
+  .ck-toolbar {
+    display: none !important;
+  }
+  
+  .show-toolbar .ck-toolbar {
+    display: flex !important; 
+    
+  }
+
+
+.editor-container .ck.ck-editor__main > .ck-editor__editable {
+  border: none;
+  box-shadow: none; 
+}
+.ck-content {
+  font-size: 22px; /* Increase this value to make the text larger */
+}
+.ck-content .wrs_formula,
+.ck-content .wrs_container,
+.ck-content math,
+.ck-content mrow {
+  font-size: 2.5em; /* Increase this value to make the equations larger */
+}

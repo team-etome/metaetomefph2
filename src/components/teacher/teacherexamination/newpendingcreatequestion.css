@@ -1,0 +1,257 @@
+/* overlay & modal sizing (same 1056×650) */
+.newpendingcreatequestion-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.newpendingcreatequestion-modal {
+    background: #fff;
+    width: 1056px;
+    height: 650px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* header */
+.newpendingcreatequestion-header {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #DFDFDF;
+}
+
+.newpendingcreatequestion-header-heading {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #222222;
+}
+
+/* .newpendingcreatequestion-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+} */
+
+.newpendingcreatequestion-header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #222222;
+}
+
+/* body */
+/* container for body + toolbar */
+.newpendingcreatequestion-content {
+    display: flex;
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+
+
+
+.newpendingcreatequestion-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    /* border-left: 1px solid #DFDFDF; */
+}
+
+.newpendingcreatequestion-toolbar-btn {
+    width: 48px;
+    height: 48px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.newpendingcreatequestion-block {
+    border: 1px solid #DFDFDF;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+/* override the existing body to allow space for the toolbar */
+.newpendingcreatequestion-body-wrapper {
+    flex: 1 1 auto;
+    /* overflow: hidden; */
+    overflow-y: auto;
+    margin-left: 24px;
+    margin-top: 16px;
+    /* padding: 24px; */
+    /* margin-right: 24px; */
+}
+.newpendingcreatequestion-bodys {
+    /* height: 100%; */
+    overflow-y: auto;
+    /* only this scrolls */
+    padding: 24px;
+    /* margin: ; */
+    box-sizing: border-box;
+    border: 1px solid #757575;
+    border-radius: 8px;
+}
+
+.newpendingcreatequestion-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    height: 71px;
+}
+
+.newpendingcreatequestion-section-title {
+    flex: 1;
+    height: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 16px;
+}
+
+.newpendingcreatequestion-btn-trash {
+    background: none;
+    border: none;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+/* question block */
+.newpendingcreatequestion-question-block {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    margin-bottom: 16px;
+}
+.newpendingcreatequestion-q-area {
+    display: flex;
+    align-items: flex-start;   /* important! top-align the children */
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+.newpendingcreatequestion-q-prefix {
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-right: 8px;
+    font-weight: 500;
+}
+
+.newpendingcreatequestion-q-input {
+    flex: 1;
+    min-height: 120px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    resize: none;
+}
+
+/* answer toggle */
+.newpendingcreatequestion-answer-toggle {
+    background: none;
+    border: none;
+    color: #0066cc;
+    font-size: 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+/* answer block */
+.newpendingcreatequestion-answer-block {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.newpendingcreatequestion-answer-input {
+    flex: 1;
+    min-height: 120px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    resize: none;
+}
+
+.newpendingcreatequestion-answer-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-left: 8px;
+}
+
+.newpendingcreatequestion-btn-mark {
+    width: 48px;
+    height: 48px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+}
+
+/* add row button */
+.newpendingcreatequestion-add-row {
+    text-align: center;
+    margin-top: 8px;
+}
+
+.newpendingcreatequestion-add-row button {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+/* footer */
+.newpendingcreatequestion-footer {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #DFDFDF;
+}
+
+.newpendingcreatequestion-clear,
+.newpendingcreatequestion-save {
+    padding: 8px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.newpendingcreatequestion-clear {
+    background: #fff;
+    border: 1px solid #2162B2;
+    color: #2162B2;
+}
+
+.newpendingcreatequestion-save {
+    background: #2162B2;
+    border: none;
+    color: #fff;
+}

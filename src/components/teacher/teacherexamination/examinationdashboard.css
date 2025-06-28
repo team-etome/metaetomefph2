@@ -1,0 +1,310 @@
+.teacher_examination_dashboard{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-top: 10vh;
+  padding-left: 15vh;
+  padding-bottom: 1vh;
+  height: 100vh;
+}
+.teacher_examination_container {
+    /* overflow-y: auto;
+    height: 75vh;
+    width:150vw ; */
+    overflow-y: auto;
+    /* height: 75vh; */
+    width:100% ;
+    
+}
+
+  .teacher_examination_container::-webkit-scrollbar {
+    width: 6px; 
+  }
+  
+  .teacher_examination_container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .teacher_examination_container::-webkit-scrollbar-thumb {
+    background: #A8BFD1;
+  }
+
+
+.examination_list{
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  margin-top: 5px;
+}
+.examination_rectangle{
+    width: 100%;
+    /* height: 170px; */
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    position: relative;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+.examiantion_term{
+    display: flex;
+    /* align-items: center;
+    justify-content: center; */
+    padding-left: 20px;
+    padding-top: 10px;
+    color: #4A4A4A;
+    font-size: 18px;
+    font-weight: bold;
+    width: 100%;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:170px;
+}
+.examination_class_date {
+    display: flex;
+    justify-content: space-between; /* This will place the term and date on opposite ends */
+    padding: 5px 20px; /* Adjusted padding for better spacing */
+    color: #727272;
+    font-size: 14px;
+    padding-top: 15px;
+}
+
+.examination_class, .qpaper_date {
+    flex: 1; /* This ensures that both the term and the date can grow and take up equal space if needed */
+}
+.examination_class{
+    display: flex;
+    justify-content: flex-start;
+    color: #727272;
+    /* font-size: 14px; */
+    width: 70%;
+}
+.examination_date{
+    display: flex;
+    /* justify-content: space-between; */
+    color: #727272;
+    /* font-size: 14px; */
+    padding-left: 30%;
+    /* padding-right: 3%; */
+    width: 70%;
+}
+.examination_subject {
+    background-color: #9DB2BF;
+    width: 90%; 
+    color: #fff;
+    border-radius: 18px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin: auto;
+    font-size: 14px; 
+    margin-top: 15px;
+}
+.examdashboard_search_filter_main{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  /* border: 1px solid red; */
+}
+
+.examdashboard_search_filter {
+  display: flex;
+  align-items: center;
+  width: 10%;
+  display: flex;
+  justify-content: flex-end;
+}
+.examdashboard_search_icon{
+z-index: 2;
+height: 20px;
+width: 20px;
+color: #D8D4D4;
+right: 15px;
+} 
+.examdashboard_search_icon.hidden {
+  display: none !important;
+}
+.examdashboard_search_filter .form-control {
+  width: 350px !important;
+  border-radius: 17px;
+  color: #767676;
+  padding-left: 30px;
+}
+
+.examdashboard_search_filter .form-control::placeholder {
+  color: #767676;
+}
+
+.examdashboard_search_filter .position-relative {
+  position: relative;
+}
+
+.examdashboard_search_filter .position-relative .position-absolute {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  z-index: 2;
+  height: 20px;
+  width: 20px;
+  color: #D8D4D4;
+}
+.examdashboard_search_input{
+  width: 400px;
+  height: 35px;
+  border-radius: 17px;
+  color: #767676;
+  /* border: 1px solid green; */
+  }
+  .examdashboard_search_input:focus {
+    outline: none; /* Ensures that no outline appears on focus */
+    box-shadow: none; /* Removes any box-shadow */
+    /* border: 0.5px solid #526D82; */
+  }
+  .my-button {
+    background-color: #526D82;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    font-size: 16px;
+    border-radius: 50%;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .my-button:after {
+    content: "";
+    background-color: rgba(255, 255, 255, 0.374);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+  
+  .my-button.active:after {
+    animation: ripple_401 3s ease-out;
+  }
+  
+  @keyframes ripple_401 {
+    0% {
+      width: 5px;
+      height: 5px;
+      opacity: 1;
+    }
+  
+    100% {
+      width: 200px;
+      height: 200px;
+      opacity: 0;
+    }
+  }
+  @media (max-width:700px) {
+   
+    .examination_rectangle{
+      width: 500px !important;
+      /* height: 120px !important; */
+    }
+  .class_number{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+  .pagination-wrapper{
+    top:33vh
+  }
+    .examination_list{
+      padding:4px;
+      padding-top: 16px;
+      margin-top: 8px;
+    }
+    .teacher_examination_container{
+      /* overflow-y: auto; */
+      height: 70vh;
+      width:100% ;
+     padding-right: 50px;
+     padding-left: 30px;
+      
+    }
+    .teacher_examination_dashboard{
+      padding-top: 10vh;
+      padding-left: 1vh;
+      padding-right: 1vh;
+      }
+      .examiantion_term{
+        width: 100%;
+    }
+    .examination_class_date {
+      padding: 5px 10px;
+      padding-top: 10px;
+      padding-bottom: 0px;
+  }
+    .examination_class{
+      width: 100%;
+      padding-left: 0%;
+  }
+  .examination_date{
+    width: 70%;
+    padding-right: 0%;
+    padding-left: 30%;
+  }
+  .examination_subject {
+      width: 70%; 
+      height: 30px;
+      padding-bottom: 0%;
+  }
+  .examdashboard_search_filter_main {
+    /* width: 100%;
+    justify-content: flex-start;
+    padding-left: 0; */
+    width: 100%;
+    /* padding-left: 10%; */
+    /* gap: 5px; */
+    padding-right: 0px;
+    padding-left: 90px;
+    margin-right: 0px;
+  }
+
+  .examdashboard_search_icon {
+    /* margin-left: 5px; */
+    /* padding-left: 5%; */
+    padding-right: 0px;
+    width: 40px;
+    margin-right: 0px;
+  }
+
+  .examdashboard_search_input {
+    width: 250px;
+    margin-right: 0px;
+  }
+    }
+    @media (min-width: 710px) and (max-width:1024px) {
+    .teacher_examination_dashboard{
+      padding-top: 10vh;
+      padding-left: 8vh;
+      padding-right: 1vh;
+      }
+      .examdashboard_search_filter_main {
+        width: 100%;
+      }
+    
+      .examdashboard_search_icon {
+        width: 40px;
+      }
+    
+      .examdashboard_search_input {
+        width: 250px;
+      }
+  }

@@ -1,0 +1,28 @@
+.App {
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        background-color: #DDE6ED;
+        /* height: 100vh; */
+
+
+}
+
+
+     
+::-webkit-scrollbar {
+        width: 0px; /* or any desired width */
+        height: 2px; /* For horizontal scrollbars */
+    }
+    
+   
+    ::-webkit-scrollbar-thumb {
+        background: #526D82; 
+        border-radius: 4px; 
+    }
+    
+    /* This styles the scrollbar track */
+    ::-webkit-scrollbar-track {
+        background: #DDE6ED; /* or any color you prefer */
+        border-radius: 4px; /* Optional: if you want rounded track */
+    }

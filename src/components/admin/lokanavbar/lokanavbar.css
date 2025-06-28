@@ -1,0 +1,275 @@
+.loka_dashboard{
+    height: 100vh;
+    padding-top: 12vh;
+    background-color: #F8FEFF;
+    
+ 
+  }
+  .loka_navbar_row{
+    padding-left: 3vw;
+    padding-top: 1vw;
+  }
+.loka_dashboard_tab .nav-link {
+    padding: 10px 15px;
+    border: none;
+
+  }
+  
+  .loka_dashboard_tab .nav-link.active {
+    font-weight: bold;
+    border-bottom: 2px solid #526D82;
+  }
+  /* .textbook_search{
+    border: 1px solid #0e84de;
+  } */
+  .search_filter {
+    display: flex;
+    align-items: center;
+
+  }
+  /* .search_dropdwon_textbook{
+    border: 1px solid blue;
+  } */
+  .search_filter .form-control {
+    width: 250px;
+    border-radius: 17px;
+    color: #767676;
+    padding-left: 30px;
+  }
+  
+  .search_filter .form-control::placeholder {
+    color: #767676;
+  }
+  
+  .search_filter .position-relative {
+    position: relative;
+  }
+  
+  .search_filter .position-relative .position-absolute {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+    z-index: 2;
+    height: 20px;
+    width: 20px;
+    color: #D8D4D4;
+  }
+  
+  .search_filter .bs-filter-right {
+    height: 40px;
+    width: 40px;
+    margin-left: 20px;
+    margin-right: 1px;
+  }
+  /* button css */
+  .Btn_faculty {
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    margin-right: 15px;
+    width: 48px;
+    height: 40px;
+    border: none;
+    border-radius:16px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+    background-color: #DEEAF3;
+    color: #526D82;
+    
+  }
+  
+
+  .faculty_dwnld {
+    width: 100%;
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .faculty_dwnld{
+    width: 32px;
+    height: 32px;
+  }
+ 
+  /* text */
+  .text_dwnld {
+    position: absolute;
+    right: 0%;
+    width: 0%;
+    opacity: 0;
+    color: #526D82;
+    font-size: 10px;
+    font-weight: 500;
+    transition-duration: .3s;
+  }
+  /* hover effect on button width */
+  .Btn_faculty:hover {
+    width: 130px;
+    border-radius: 16px;
+    transition-duration: .3s;
+  }
+  
+  .Btn_faculty:hover .faculty_dwnld {
+    width: 20%;
+    
+   
+  }
+  /* hover effect button's text */
+  .Btn_faculty:hover .text_dwnld {
+    opacity: 1;
+    width: 75%;
+    transition-duration: .3s;
+    padding-right: 20px;
+  }
+  .loka_mob_subhead_one{
+    text-decoration: none;
+    color: #526D82 !important;
+    font-size: 15px;
+    margin-right: 20px;
+  }
+  .inputgroup_search{
+    width: 100%;
+    /* border: 1px solid green !important; */
+    /* margin-left: 0vw; */
+  }
+  .book_search_input{
+    border-radius: 6px !important;
+    height: 30px;
+    /* left: 2%; */
+    top: 10%;
+    /* margin-right: 1rem; */
+    border: transparent !important;
+    /* border: 1px solid red !important; */
+  }
+  .book_searchbar_icon{
+    z-index: 2;
+    height: 20px;
+    width: 20px;
+    color: #D8D4D4;
+  }
+  .book_search_col{
+    background-color: #ffff;
+    /* padding:0px; */
+    border-radius: 8px;
+    height: 40px;
+    border: 0.5px solid #9DB2BF;
+    display: flex;
+    margin-left: 125px;
+    width: 80%;
+  }
+  .separator {
+    width: 1px;
+    height: 100%;
+    background-color: #ccc; 
+    margin: 0 10px; 
+  }
+  .dropdown_tb{
+    background-color: #ffffff;
+    /* border: none; */
+    margin-top: 0px;
+    width: 150px;
+    border-radius: 6px;
+    height: 30px;
+    /* border: 1px solid red !important; */
+    top: 10%;
+    /* margin-left: 1rem; */
+    border: none;
+  }
+  .dropdown_tb_toggle{
+    background-color: #ffffff;
+    border: none;
+    /* margin-top: 0px; */
+    width: 100px;
+    border-radius: 6px;
+    height: 30px;
+    /* border: 1px solid blue; */
+    top: 0%;
+  }
+  .dropdown_tb_toggle:hover{
+    background-color: transparent;
+    color:#526D82 ;
+  }
+  .lib_search_nav{
+    left: 5%;
+    /* border: 1px solid red; */
+  }
+  .lib_inputgroup_search{
+    width: 100%;
+  }
+  .library_search_input{
+    border-radius: 6px !important;
+    height: 30px;
+  }
+  .library_searchbar_icon{
+    z-index: 2;
+    height: 20px;
+    width: 20px;
+    color: #D8D4D4;
+    /* right: 1%;
+    left: 90%; */
+  }
+  .search_col{
+    background-color: transparent;
+    padding: 5px;
+    border-radius: 8px;
+    width: 70%;
+    /* margin-right: 20px; */
+    margin-left: 30%;
+    /* border: 1px solid blue; */
+  }
+  @media (max-width:700px) {
+    .loka_navbar_row{
+      padding-top: 3vw;
+    }
+    .loka_dashboard_tab{
+      display: flex;
+      align-items: center;
+      padding-top: 0px;
+     justify-content: flex-start;
+     margin-top: 10px;
+     padding-left: 5%;
+     
+     }
+      .loka_mob_subhead_one{
+        /* background-color: #E2E0E0; */
+        color: #9DB2BF!important;
+        width: 100% !important;
+        height:30px !important;
+        border-radius: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #9DB2BF !important;
+      }
+      .loka_mob_subhead_one:hover{
+        background-color: #9DB2BF !important;
+        color: #ffff !important;
+        font-size: 15px;
+      }
+      .loka_dashboard_tab .nav-link.active {
+        font-weight:400;
+        border-bottom: none ;
+        color: #ffff !important;
+        background-color: #9DB2BF;
+      }
+      .loka_dashboard{
+        /* display: flex;
+        justify-content: center;
+        align-items: center; */
+        padding-top: 20% !important;
+      }
+      .textbook_search{
+        padding-top: 2vh;
+      }
+      .lib_search_nav{
+        padding-top: 2vh;
+      }
+      .search_col{
+        margin-left: 0%;
+      }
+
+  }

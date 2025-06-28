@@ -1,0 +1,113 @@
+/* Overlay */
+.newstudentsettime-overlay {
+  position: fixed; top:0; left:0;
+  width:100vw; height:100vh;
+  background: rgba(0,0,0,0.3);
+  display:flex; justify-content:center; align-items:center;
+  z-index:3000;
+}
+
+/* Modal */
+.newstudentsettime-modal {
+  width: 400px;
+  /* height: 350px; */
+  background: #fff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header */
+.newstudentsettime-header {
+  position: relative;
+  padding-top: 24px;          
+  /* padding-bottom: 16px; */
+  /* border-bottom: 1px solid #e6e6e6; */
+}
+.newstudentsettime-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #222222;
+}
+.newstudentsettime-header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:16px;
+}
+.newstudentsettime-icon {
+  width: 32px;
+  height: 32px;
+  /* padding: 12px;               */
+  background: #E9F3FF;    
+  border-radius: 50%;
+  /* margin-bottom: 16px;         */
+}
+
+/* Body */
+.newstudentsettime-body {
+  /* padding: 16px 24px; */
+  margin: 24px;
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.nststv-label {
+  font-size: 16px;
+  color: #767676;
+  /* margin-bottom: 8px; */
+  font-weight: 400;
+}
+.nststv-input-wrapper {
+  position: relative;
+}
+.nststv-input {
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  border: 1px solid #757575;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.nststv-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #767676;
+}
+
+/* Footer */
+.newstudentsettime-footer {
+  padding: 16px 24px;
+  display: flex;
+  /* justify-content: flex-end; */
+  gap: 8px;
+  /* border-top: 1px solid #e6e6e6; */
+}
+.nststv-cancel {
+  background: #fff;
+  border: 1px solid #C5C5C5;
+  color: #8E8E8E;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 172px;
+  height: 40px;
+}
+.nststv-save {
+  background: #2162b2;
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+   width: 172px;
+  height: 40px;
+}
+/* .nststv-save:disabled {
+  background: #a0c4f6;
+  cursor: not-allowed;
+} */

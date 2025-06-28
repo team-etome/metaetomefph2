@@ -1,0 +1,279 @@
+/* lokalibraryedit.css */
+.lokalibraryedit-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050 !important;
+}
+
+.lokalibraryedit-modal-content {
+    background: white;
+    border-radius: 16px;
+    width: 700px;
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
+
+.lokalibraryedit-modal-header {
+    padding: 24px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    margin-bottom: 1px solid #DFDFDF;
+}
+
+.lokalibraryedit-modal-header p {
+    font-size: 20px;
+    font-weight: 600;
+    color: #222222;
+    margin: 0;
+}
+
+.lokalibraryedit-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 8px;
+    row-gap: 24px;
+    margin-bottom: 24px;
+}
+.lokalibraryedit-close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.lokalibraryedit-modal-body {
+    margin-top: 16px;
+    padding: 24px;
+    padding-top: 0px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.lokalibraryedit-form-group {
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.lokalibraryedit-form-group--full {
+    grid-column: 1 / -1;
+}
+
+.lokalibraryedit-form-label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.lokalibraryedit_required {
+    color: red;
+    margin-left: 2px;
+}
+
+.custom-input {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 0 12px;
+    box-sizing: border-box;
+    margin-bottom: 0;
+    color: #526D82;
+    outline: none;
+}
+
+.custom-input:focus {
+    border-color: #526D82 !important;
+    box-shadow: 0 0 5px rgba(82, 109, 130, 0.6);
+}
+
+.lokalibraryedit-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    margin-right: 24px;
+}
+
+.lokalibraryedit-btn {
+    width: 100px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.lokalibraryedit-btn-secondary {
+    background-color: #fff;
+    color: #2162B2;
+    border: 1px solid #2162B2;
+}
+
+.lokalibraryedit-btn-primary {
+    background-color: #2162B2;
+    color: white;
+}
+.admin_library_image_upload_container_div{
+    padding: 0px;
+}
+
+.admin_library_image_upload_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 233px;
+    width: 100%;
+    border: 2px dashed #757575;
+    margin-top: 0px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    position: relative;
+    background-color: #fff;
+}
+
+.admin_library_upload_placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.admin_library_upload_label {
+    background-color: #DAE2E9;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.admin_library_upload_label:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.admin_library_upload_input {
+    display: none;
+}
+
+.lokalibraryedit_chapter-upload-wrapper {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.lokalibraryedit_chapter-upload-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    color: #767676;
+    margin-bottom: 8px;
+}
+
+.lokalibraryedit_chapter-upload-input {
+    width: 208px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #767676;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.lokalibraryedit_chapter-upload-scroll-area {
+    border-radius: 10px;
+    /* background: #fff; */
+    padding: 10px;
+    /* box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1); */
+    border: none !important;
+}
+.lokalibraryedit_chapter-upload-row:not(:last-child) {
+    border-bottom: 2px solid #e0e0e0;
+  }
+  
+
+.lokalibraryedit_chapter-upload-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+
+.lokalibraryedit_chapter-upload-text {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    width: 300px;
+    /* min-width: 300px; */
+    /* max-width: 400px; */
+}
+
+.lokalibraryedit_chapter-upload-file {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #2162B2;
+    color: #2162B2;
+    border-radius: 8px;
+}
+
+.lokalibraryedit_chapter-upload-delete {
+    width: 116px;
+    color: red;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid red;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    width: 100px;
+    height: 40px;
+    line-height: 20px;
+    box-sizing: border-box;
+    background: transparent;
+}
+
+.lokalibraryedit_custom-file-upload {
+    position: relative;
+}
+
+.lokabookedit_upload-btn {
+    width: 116px;
+    color: #2162B2;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #2162B2;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    height: 40px;
+    line-height: 20px;
+    box-sizing: border-box;
+    /* text-align: center; */
+    white-space: nowrap;
+}
+
+.lokalibraryedit_hidden-file {
+    display: none;
+}
+
+.lokalibraryedit_file-name-display {
+    width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #555;
+    font-size: 14px;
+}
