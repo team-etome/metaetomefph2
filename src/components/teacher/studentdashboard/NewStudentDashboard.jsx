@@ -162,7 +162,7 @@ const NewStudentDashboard = () => {
                     <Row className="newStudent_row_header">
                         <Col md={6} className="newStudent_header_left_heading">
                             <div className="newStudent_title">
-                                <p>Class 7 A</p>
+                                <p>Class 9 A</p>
                             </div>
                         </Col>
                         <Col md={6} className="newStudent_header_right_profilepic">
