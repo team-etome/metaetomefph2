@@ -318,7 +318,8 @@ export default function NewStudentViewTimeTable({ isOpen, onClose }) {
 
                 {/* Footer */}
                 <div className="nsttview-footer">
-                    <button className="nsttview-delete" onClick={handleDelete}>                        Delete
+                    <button className="nsttview-delete" onClick={handleDelete}>
+                        Delete
                     </button>
                     {editMode ? (
                         <button className="nsttview-edit" disabled={!(D && P)} onClick={handleSaveClick}>
