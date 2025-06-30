@@ -139,4 +139,44 @@
     font-size: 16px;
     color: #000;
     font-weight: 500;
-  }  
+  }
+
+.newmyclassstudentview-action-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    /* margin-top: 32px; */
+    /* margin-bottom: 8px; */
+    padding-right: 24px;
+    padding-bottom: 24px;
+}
+
+.newmyclassstudentview-delete-btn, .newmyclassstudentview-edit-btn {
+    width: 100px;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    background: #fff;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    border: 1.5px solid;
+}
+
+.newmyclassstudentview-delete-btn {
+    color: #E53935;
+    border-color: #E53935;
+}
+.newmyclassstudentview-delete-btn:hover {
+    background: #ffeaea;
+}
+
+.newmyclassstudentview-edit-btn {
+    color: #1976D2;
+    border-color: #1976D2;
+}
+.newmyclassstudentview-edit-btn:hover {
+    background: #eaf3ff;
+}  

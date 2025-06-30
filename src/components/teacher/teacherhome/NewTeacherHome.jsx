@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './newteacherhome.css';
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import NewTeacherAssignTask from './NewTeacherAssignTask';
@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import medal1 from "../../../assets/Award1.png";
 import medal2 from "../../../assets/Award2.png";
 import medal3 from "../../../assets/Award3.png";
-import axios from "axios";
 
 const dummyRankList = [
   { name: 'Neha Katherine Jose', avatar: '', rank: 1 },
@@ -41,104 +40,18 @@ export default function NewTeacherHome() {
   const [showAssignTaskPopup, setShowAssignTaskPopup] = useState(false);
   const [showRankListPopup, setShowRankListPopup] = useState(false);
   const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
-
-
   console.log(teacherInfo, "dataaaa")
   const navigate = useNavigate();
   const handlenavigate = () => {
     navigate("/teacherprofile",);
   };
 
-  const APIURL = useSelector((state) => state.APIURL.url);
-
-
-
-  const [rankList, setRankList] = useState([]);
-  const [passCount, setPassCount] = useState(0);
-  const [failCount, setFailCount] = useState(0);
-
-  const [assignedTasks, setAssignedTasks] = useState([]);
-
-
-
-  console.log(assignedTasks, 'assigned task')
-
-  useEffect(() => {
-    const fetchAssignedTasks = async () => {
-      try {
-        const response = await axios.get(`${APIURL}/api/assignedtaskteacher/${teacherInfo?.teacher_id}`);
-
-        const data = response.data?.data?.[0];
-        const formattedTasks = [];
-
-        if (data) {
-          data.evaluation.forEach(task => {
-            formattedTasks.push({
-              type: 'Evaluation',
-              due: task.due_date,
-              class: task.class,
-              subject: task.subject,
-              status: task.status,
-            });
-          });
-
-          data.questions.forEach(task => {
-            formattedTasks.push({
-              type: 'Question Paper',
-              due: task.due_date,
-              class: task.class,
-              subject: task.subject,
-              status: task.status,
-            });
-          });
-        }
-
-        setAssignedTasks(formattedTasks);
-      } catch (error) {
-        console.error('Error fetching assigned tasks:', error);
-      }
-    };
-
-    if (teacherInfo?.teacher_id) {
-      fetchAssignedTasks();
-    }
-  }, [teacherInfo]);
-
-
-  const [notifications, setNotifications] = useState([]);
-
-  console.log(notifications,"dffbldsgf")
-
-
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await axios.get(`${APIURL}/api/notification?teacher_id=${teacherInfo?.teacher_id}`);
-        if (response.data?.status) {
-          setNotifications(response.data.data);
-        }
-      } catch (err) {
-        console.error('Error fetching notifications:', err);
-      }
-    };
-
-    if (teacherInfo?.teacher_id) {
-      fetchNotifications();
-    }
-  }, [teacherInfo]);
-
-
-
-
-
   return (
     <div className="newteacherhome-root">
       <div className="newteacherhome-header-row">
         <p className="newteacherhome-welcome">Welcome!</p>
         <div className="newteacherhome-userinfo">
-
           <span className="newteacherhome-email">{teacherInfo?.email || " "}</span>
-
           <span className="newteacherhome-avatar">
             <img
               onClick={handlenavigate}
@@ -210,16 +123,14 @@ export default function NewTeacherHome() {
                   </tr>
                 </thead>
                 <tbody>
-                  {assignedTasks.map((task, idx) => (
+                  {dummyTasks.map((task, idx) => (
                     <tr key={idx}>
                       <td>{task.type}</td>
                       <td>{task.due}</td>
                       <td>{task.class}</td>
                       <td>{task.subject}</td>
                       <td>
-                        <span className={`newteacherhome-status ${task.status === 'Completed' ? 'completed' : 'pending'}`}>
-                          {task.status}
-                        </span>
+                        <span className={`newteacherhome-status ${task.status === 'Completed' ? 'completed' : 'pending'}`}>{task.status}</span>
                       </td>
                     </tr>
                   ))}
@@ -232,23 +143,12 @@ export default function NewTeacherHome() {
           <div className="newteacherhome-notification-section">
             <div className="newteacherhome-notification-title">Notification</div>
             <div className="newteacherhome-notification-list">
-              {notifications.map((notif, idx) => (
+              {dummyNotifications.map((notif, idx) => (
                 <div className="newteacherhome-notification-item" key={idx}>
-                  <span className="newteacherhome-notif-avatar">
-                    <img
-                      src={notif.profile_photo || "https://via.placeholder.com/40"}
-                      alt="Avatar"
-                      style={{ width: "40px", height: "40px", borderRadius: "50%" }}
-                    />
-                  </span>
+                  <span className="newteacherhome-notif-avatar" />
                   <div className="newteacherhome-notif-content">
-                    <span className="newteacherhome-notif-name">
-                      {/* {notif.teacher_name} <span className="newteacherhome-notif-action">{notif.message}</span> */}
-                      <span className="newteacherhome-notif-action">{notif.message}</span>
-                    </span>
-                    <span className="newteacherhome-notif-time">
-                      {new Date(notif.created_at).toLocaleString()}
-                    </span>
+                    <span className="newteacherhome-notif-name">{notif.name} <span className="newteacherhome-notif-action">{notif.action}</span></span>
+                    <span className="newteacherhome-notif-time">{notif.time}</span>
                   </div>
                   <span className="newteacherhome-notif-dot" />
                 </div>
@@ -258,10 +158,7 @@ export default function NewTeacherHome() {
         </div>
       </div>
       {showAssignTaskPopup && (
-        <NewTeacherAssignTask
-          onClose={() => setShowAssignTaskPopup(false)}
-          tasks={assignedTasks}
-        />
+        <NewTeacherAssignTask onClose={() => setShowAssignTaskPopup(false)} />
       )}
       {showRankListPopup && (
         <NewTeacherRankList onClose={() => setShowRankListPopup(false)} />

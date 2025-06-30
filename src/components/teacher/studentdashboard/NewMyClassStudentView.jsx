@@ -1,11 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import "./newmyclassstudentview.css";
 import studentDefault from '../../../assets/student.jpg'
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
-const NewMyClassStudentView = ({ student, onClose }) => {
+const NewMyClassStudentView = ({ student, onClose, onEdit, onStatusChange }) => {
     if (!student) return null;
 
- 
+    const APIURL = useSelector((state) => state.APIURL.url);
+    const [isBlocked, setIsBlocked] = useState(student.blocked);
+
+    const handleBlockToggle = async () => {
+        const action = isBlocked ? 'unblock' : 'block';
+        const confirmText = isBlocked ? 'Do you want to unblock this student?' : 'Do you want to block this student?';
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: confirmText,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: isBlocked ? 'Yes, unblock' : 'Yes, block',
+            cancelButtonText: 'Cancel'
+        });
+        if (result.isConfirmed) {
+            try {
+                await axios.post(`${APIURL}/api/studentblock`, { id: student.id, data: !isBlocked });
+                Swal.fire(
+                    isBlocked ? 'Unblocked!' : 'Blocked!',
+                    `The student has been ${isBlocked ? 'unblocked' : 'blocked'}.`,
+                    'success'
+                );
+                setIsBlocked(!isBlocked);
+                if (onStatusChange) onStatusChange();
+                if (onClose) onClose();
+            } catch (error) {
+                Swal.fire('Error', error.response?.data?.message || `Failed to ${action} student`, 'error');
+            }
+        }
+    };
 
     return (
         <div className="newmyclassstudentview-backdrop">
@@ -80,6 +114,15 @@ const NewMyClassStudentView = ({ student, onClose }) => {
                             </div>
                         ))}
                     </div>
+                </div>
+                {/* Action Buttons */}
+                <div className="newmyclassstudentview-action-buttons">
+                    <button className="newmyclassstudentview-delete-btn" onClick={handleBlockToggle}>
+                        {isBlocked ? 'Unblock' : 'Block'}
+                    </button>
+                    <button className="newmyclassstudentview-edit-btn" onClick={() => onEdit(student)}>
+                        Edit
+                    </button>
                 </div>
             </div>
         </div>

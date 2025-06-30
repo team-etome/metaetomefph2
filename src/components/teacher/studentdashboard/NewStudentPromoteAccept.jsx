@@ -3,36 +3,21 @@ import "./newstudentpromoteaccept.css";
 import { RiSearchLine } from "react-icons/ri";
 import image from "../../../assets/messi-ronaldo-1593920966.jpg"
 
-const dummyStudents = [
-    { id: 1, name: "Ananthu", class: "Class 1 A", roll: 1, avatar: "https://via.placeholder.com/70?text=A" },
-    { id: 2, name: "Arjun", class: "Class 1 A", roll: 2, avatar: "https://via.placeholder.com/70?text=Ar" },
-    { id: 3, name: "Priya", class: "Class 1 A", roll: 3, avatar: "https://via.placeholder.com/70?text=P" },
-    { id: 4, name: "Vikram", class: "Class 1 A", roll: 4, avatar: "https://via.placeholder.com/70?text=V" },
-    { id: 5, name: "Sneha", class: "Class 1 A", roll: 5, avatar: "https://via.placeholder.com/70?text=S" },
-      { id: 6, name: "Ravi",    class: "Class 1 A", roll: 6, avatar: "https://via.placeholder.com/70?text=R" },
-      { id: 7, name: "Ananthu", class: "Class 1 A", roll: 1, avatar: "https://via.placeholder.com/70?text=A" },
-      { id: 8, name: "Arjun",   class: "Class 1 A", roll: 2, avatar: "https://via.placeholder.com/70?text=Ar" },
-      { id: 9, name: "Priya",   class: "Class 1 A", roll: 3, avatar: "https://via.placeholder.com/70?text=P" },
-      { id: 10, name: "Vikram",  class: "Class 1 A", roll: 4, avatar: "https://via.placeholder.com/70?text=V" },
-      { id: 11, name: "Sneha",   class: "Class 1 A", roll: 5, avatar: "https://via.placeholder.com/70?text=S" },
-      { id: 12, name: "Ravi",    class: "Class 1 A", roll: 6, avatar: "https://via.placeholder.com/70?text=R" },
-
-];
-
-export default function NewStudentPromoteAccept({ isOpen, onClose }) {
-    const [activeTab, setActiveTab] = useState("promote");
+export default function NewStudentPromoteAccept({ studentList = [] }) {
     const [search, setSearch] = useState("");
     const [selected, setSelected] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
 
+    // Filter out blocked students
+    const unblockedStudents = studentList.filter(student => !student.blocked);
+
     useEffect(() => {
         if (selectAll) {
-            setSelected(dummyStudents.map((s) => s.id));
+            setSelected(unblockedStudents.map((s) => s.id || s.roll_no));
         } else {
             setSelected([]);
         }
-    }, [selectAll]);
-
+    }, [selectAll, unblockedStudents]);
 
     const toggleStudent = (id) => {
         setSelected(prev =>
@@ -40,9 +25,8 @@ export default function NewStudentPromoteAccept({ isOpen, onClose }) {
         );
     };
 
-
-    const filtered = dummyStudents.filter((s) =>
-        s.name.toLowerCase().includes(search.toLowerCase())
+    const filtered = unblockedStudents.filter((s) =>
+        s.student_name?.toLowerCase().includes(search.toLowerCase())
     );
 
     return (
@@ -50,7 +34,7 @@ export default function NewStudentPromoteAccept({ isOpen, onClose }) {
                 {/* Action Bar */}
                 <div className="newstudentpromoteaccept-actions">
                     <label>
-                        <p className="newstudentpromoteaccept-actions-para">Ankit All</p>
+                        <p className="newstudentpromoteaccept-actions-para">Accept All</p>
                         <input
                             type="checkbox"
                             checked={selectAll}
@@ -62,7 +46,7 @@ export default function NewStudentPromoteAccept({ isOpen, onClose }) {
                         className="newstudentpromoteaccept-promote-btn"
                         disabled={!selected.length}
                     >
-                        Promote
+                        Accept
                     </button>
 
                     {/* Search at right */}
@@ -81,25 +65,26 @@ export default function NewStudentPromoteAccept({ isOpen, onClose }) {
                 <div className="newstudentpromoteaccept-grid">
                     {filtered.map((s) => (
                         <div
+                            key={s.id || s.roll_no}
                             className={
                                 "newstudentpromoteaccept-grid-card" +
-                                (selected.includes(s.id) ? " selected" : "")
+                                (selected.includes(s.id || s.roll_no) ? " selected" : "")
                             }
-                            onClick={() => toggleStudent(s.id)}
+                            onClick={() => toggleStudent(s.id || s.roll_no)}
                         >
                             <label>
                                 {/* <input
                   type="checkbox"
-                  checked={selected.includes(s.id)}
-                  onChange={() => toggleStudent(s.id)}
+                  checked={selected.includes(s.id || s.roll_no)}
+                  onChange={() => toggleStudent(s.id || s.roll_no)}
                 /> */}
                             </label>
-                            <img src={image} alt={s.name} />
+                            <img src={s.image || image} alt={s.student_name} />
                             <div className="info">
-                                <h4>{s.name}</h4>
-                                <p>{s.class}</p>
+                                <h4>{s.student_name}</h4>
+                                <p>{s.class_name} {s.division}</p>
                             </div>
-                            <span className="roll">Roll no : {s.roll}</span>
+                            <span className="roll">Roll no : {s.roll_no}</span>
                         </div>
                     ))}
                 </div>
