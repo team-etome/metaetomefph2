@@ -3,36 +3,21 @@ import "./newstudentpromoteselect.css";
 import { RiSearchLine } from "react-icons/ri";
 import image from "../../../assets/messi-ronaldo-1593920966.jpg"
 
-const dummyStudents = [
-    { id: 1, name: "Ananthu", class: "Class 1 A", roll: 1, avatar: "https://via.placeholder.com/70?text=A" },
-    { id: 2, name: "Arjun", class: "Class 1 A", roll: 2, avatar: "https://via.placeholder.com/70?text=Ar" },
-    { id: 3, name: "Priya", class: "Class 1 A", roll: 3, avatar: "https://via.placeholder.com/70?text=P" },
-    { id: 4, name: "Vikram", class: "Class 1 A", roll: 4, avatar: "https://via.placeholder.com/70?text=V" },
-    { id: 5, name: "Sneha", class: "Class 1 A", roll: 5, avatar: "https://via.placeholder.com/70?text=S" },
-      { id: 6, name: "Ravi",    class: "Class 1 A", roll: 6, avatar: "https://via.placeholder.com/70?text=R" },
-      { id: 7, name: "Ananthu", class: "Class 1 A", roll: 1, avatar: "https://via.placeholder.com/70?text=A" },
-      { id: 8, name: "Arjun",   class: "Class 1 A", roll: 2, avatar: "https://via.placeholder.com/70?text=Ar" },
-      { id: 9, name: "Priya",   class: "Class 1 A", roll: 3, avatar: "https://via.placeholder.com/70?text=P" },
-      { id: 10, name: "Vikram",  class: "Class 1 A", roll: 4, avatar: "https://via.placeholder.com/70?text=V" },
-      { id: 11, name: "Sneha",   class: "Class 1 A", roll: 5, avatar: "https://via.placeholder.com/70?text=S" },
-      { id: 12, name: "Ravi",    class: "Class 1 A", roll: 6, avatar: "https://via.placeholder.com/70?text=R" },
-
-];
-
-export default function NewStudentPromoteSelect({ isOpen, onClose }) {
-    const [activeTab, setActiveTab] = useState("promote");
+export default function NewStudentPromoteSelect({ studentList = [] }) {
     const [search, setSearch] = useState("");
     const [selected, setSelected] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
 
+    console.log(studentList,"studentListstudentList")
+    
+
     useEffect(() => {
         if (selectAll) {
-            setSelected(dummyStudents.map((s) => s.id));
+            setSelected(studentList.map((s) => s.student_id || s.roll_no));
         } else {
             setSelected([]);
         }
-    }, [selectAll]);
-
+    }, [selectAll, studentList]);
 
     const toggleStudent = (id) => {
         setSelected(prev =>
@@ -40,9 +25,8 @@ export default function NewStudentPromoteSelect({ isOpen, onClose }) {
         );
     };
 
-
-    const filtered = dummyStudents.filter((s) =>
-        s.name.toLowerCase().includes(search.toLowerCase())
+    const filtered = studentList.filter((s) =>
+        s.student_name?.toLowerCase().includes(search.toLowerCase())
     );
 
     return (
@@ -81,25 +65,26 @@ export default function NewStudentPromoteSelect({ isOpen, onClose }) {
                 <div className="newstudentpromoteselect-grid">
                     {filtered.map((s) => (
                         <div
+                            key={s.student_id || s.roll_no}
                             className={
                                 "newstudentpromoteselect-grid-card" +
-                                (selected.includes(s.id) ? " selected" : "")
+                                (selected.includes(s.student_id || s.roll_no) ? " selected" : "")
                             }
-                            onClick={() => toggleStudent(s.id)}
+                            onClick={() => toggleStudent(s.student_id || s.roll_no)}
                         >
                             <label>
                                 {/* <input
                   type="checkbox"
-                  checked={selected.includes(s.id)}
-                  onChange={() => toggleStudent(s.id)}
+                  checked={selected.includes(s.student_id || s.roll_no)}
+                  onChange={() => toggleStudent(s.student_id || s.roll_no)}
                 /> */}
                             </label>
-                            <img src={image} alt={s.name} />
+                            <img src={s.image || image} alt={s.student_name} />
                             <div className="info">
-                                <h4>{s.name}</h4>
-                                <p>{s.class}</p>
+                                <h4>{s.student_name}</h4>
+                                <p>{s.class_name} {s.division}</p>
                             </div>
-                            <span className="roll">Roll no : {s.roll}</span>
+                            <span className="roll">Roll no : {s.roll_no}</span>
                         </div>
                     ))}
                 </div>

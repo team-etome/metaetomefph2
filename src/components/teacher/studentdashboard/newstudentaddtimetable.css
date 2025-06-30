@@ -177,13 +177,21 @@
   width: 100px;
 }
 .nstt-save {
-  background:#2162b2; border:none; color:#fff;
-  padding:8px 16px; border-radius:8px; cursor:pointer;
+  background:#2162b2; 
+  border:none; 
+  color:#fff;
+  padding:8px 16px; 
+  border-radius:8px; 
+  cursor:pointer;
   opacity:0.6;
   height:40px;
   width: 100px;
 }
-.nstt-save:enabled { opacity:1; }
+.nstt-save:enabled { 
+  /* opacity:1; */
+  background:#BCBCBC; 
+  
+ }
 
 
 

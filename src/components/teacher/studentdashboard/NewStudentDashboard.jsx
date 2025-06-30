@@ -41,6 +41,7 @@ const NewStudentDashboard = () => {
     const [error, setError] = useState(false); // Track API failure
     const [studentlist, setStudentList] = useState([]);
     const [loading, setLoading] = useState(false); // Loading state for data refresh
+    const [studentToEdit, setStudentToEdit] = useState(null);
     console.log(studentlist, "studentliststudentliststudentliststudentlist")
 
     const handlenavigate = () => {
@@ -253,8 +254,9 @@ const NewStudentDashboard = () => {
                                 {showPopup && (
                                     <NewStudentAdd
                                         isOpen={showPopup}
-                                        onClose={() => setShowPopup(false)}
+                                        onClose={() => { setShowPopup(false); setStudentToEdit(null); }}
                                         onStudentAdded={refreshStudentData}
+                                        studentToEdit={studentToEdit}
                                     />
                                 )}
                                 {showPopupexcel && <NewStudentAddThroughExcel isOpen={showPopupexcel} onClose={() => setShowPopupExcel(false)} onStudentAdded={refreshStudentData} />}
@@ -277,7 +279,7 @@ const NewStudentDashboard = () => {
                                 <NewStudentPromote
                                     isOpen={showPromote}
                                     onClose={() => setShowPromote(false)}
-                                // you could pass selectedStudentIDs or other props here
+                                    studentList={studentlist}
                                 />
                             )}
                         </div>
@@ -326,6 +328,11 @@ const NewStudentDashboard = () => {
                                             <NewMyClassStudentView
                                                 student={selectedStudent}
                                                 onClose={() => setSelectedStudent(null)}
+                                                onEdit={(student) => {
+                                                    setStudentToEdit(student);
+                                                    setShowPopup(true);
+                                                    setSelectedStudent(null);
+                                                }}
                                             />
                                         )}
 

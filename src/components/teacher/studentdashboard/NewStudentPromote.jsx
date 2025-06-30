@@ -6,10 +6,11 @@ import "./newstudentpromote.css";
 import NewStudentPromoteSelect from "./NewStudentPromoteSelect";
 import NewStudentPromoteAccept from "./NewStudentPromoteAccept";
 
-export default function NewStudentPromote({ isOpen, onClose }) {
+export default function NewStudentPromote({ isOpen, onClose, studentList }) {
   const [activeTab, setActiveTab] = useState("promote");
 
   if (!isOpen) return null;
+   const unblockedStudents = studentList.filter(student => !student.blocked);
 
   return (
     <div className="newstudentpromote-overlay">
@@ -32,8 +33,8 @@ export default function NewStudentPromote({ isOpen, onClose }) {
 
         {/* ─── Content (swapped based on activeTab) ─── */}
         <div className="newstudentpromote-content">
-          {activeTab === "promote" && <NewStudentPromoteSelect />}
-          {activeTab === "accept" && <NewStudentPromoteAccept />}
+          {activeTab === "promote" && <NewStudentPromoteSelect studentList={unblockedStudents} />}
+          {activeTab === "accept" && <NewStudentPromoteAccept studentList={studentList} />}
         </div>
 
         {/* ─── Close Button ─── */}
