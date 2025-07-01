@@ -11,21 +11,38 @@ import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBinLine } from 'react-icons/ri';
 import NewTeacherAddAssignment from './NewTeacherAddAssignment';
 
-const NewTeacherAssignments = () => {
+const NewTeacherAssignments = ({ class_name, division, subject }) => {
     const APIURL = useSelector((state) => state.APIURL.url);
-    const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+    const teacher = useSelector((state) => state.teacherinfo);
+    const teacher_id = teacher.teacherinfo?.teacher_id;
     const [showPopup, setShowPopup] = useState(false);
-    const dummyAssignments = Array.from({ length: 12 }, (_, i) => ({
-        id: i + 1,
-        title: `Science Assignment`,
-        postedOn: `0${5 + i}/08/2025`
-    }));
-
-
-    console.log(admin_id, "admin eeee")
+    const [assignments, setAssignments] = useState([]);
     const navigate = useNavigate();
+    console.log(class_name, division, subject,teacher_id,"class_name, division, subject,teacher_id")
 
-
+    useEffect(() => {
+        const fetchAssignments = async () => {
+            try {
+                const params = new URLSearchParams({
+                    teacher_id,
+                    standard: class_name,
+                    division,
+                    subject
+                });
+                const response = await axios.get(`${APIURL}/api/assignment?${params.toString()}`);
+                setAssignments(response.data);
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to fetch assignments.'
+                });
+            }
+        };
+        if (teacher_id && class_name && division && subject) {
+            fetchAssignments();
+        }
+    }, [APIURL, teacher_id, class_name, division, subject, showPopup]);
 
     const dashboardsmallcustomStyles = {
         control: (base, state) => ({
@@ -82,8 +99,12 @@ const NewTeacherAssignments = () => {
         }),
     };
 
-
-
+    // Robust assignment list extraction
+    const assignmentList = (assignments && Array.isArray(assignments.assignments))
+      ? assignments.assignments
+      : Array.isArray(assignments)
+        ? assignments
+        : [];
 
     return (
         <div className="newteacherassignments_main_container">
@@ -120,6 +141,9 @@ const NewTeacherAssignments = () => {
                         {showPopup && (
                             <NewTeacherAddAssignment
                                 onClose={() => setShowPopup(false)}
+                                class_name={class_name}
+                                division={division}
+                                subject={subject}
                             />
                         )}
                     </div>
@@ -127,34 +151,42 @@ const NewTeacherAssignments = () => {
             </div>
             <div className="newteacherassignments_classes_box" >
                 <div className="newteacherassignments_table_wrapper">
-                    <table className="newteacherassignments_table">
-                        <colgroup>
-                            <col style={{ width: '45%' }} />
-                            <col style={{ width: '45%' }} />
-                            <col style={{ width: '10%' }} />
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Posted on</th>
-                                <th className="newteacherassignments_actions_col_head">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {dummyAssignments.map(a => (
-                                <tr key={a.id}>
-                                    <td>{a.title}</td>
-                                    <td>{a.postedOn}</td>
-                                    <td className="newteacherassignments_actions_col">
-                                        <div className="newteacherassignments_actions_wrapper">
-                                            <MdOutlineEdit size={24} color="#9F7BFF" />
-                                            <RiDeleteBinLine size={24} color="#FF6C6C" />
-                                        </div>
-                                    </td>
+                    {assignmentList && assignmentList.length > 0 ? (
+                        <table className="newteacherassignments_table">
+                            <colgroup>
+                                <col style={{ width: '45%' }} />
+                                <col style={{ width: '45%' }} />
+                                <col style={{ width: '10%' }} />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Posted on</th>
+                                    <th className="newteacherassignments_actions_col_head">Actions</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {assignmentList.map(a => (
+                                    <tr key={a.id}>
+                                        <td>{a.title}</td>
+                                        <td>{a.postedOn || a.dueDate || a.due_date}</td>
+                                        <td className="newteacherassignments_actions_col">
+                                            <div className="newteacherassignments_actions_wrapper">
+                                                <MdOutlineEdit size={24} color="#9F7BFF" />
+                                                <RiDeleteBinLine size={24} color="#FF6C6C" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        <div>
+                            <p style={{ textAlign: 'center', color: '#888', fontWeight: 500 }}>
+                                No assignment is assigned
+                            </p>
+                        </div>
+                    )}
                 </div>
 
             </div>
