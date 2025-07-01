@@ -18,7 +18,7 @@ import NewStudentAddThroughExcel from "./NewStudentAddThroughExcel";
 import NewStudentPromote from "./NewStudentPromote";
 import NewStudentAddTimeTable from "./NewStudentAddTimeTable";
 import NewMyClassStudentView from "./NewMyClassStudentView";
-import image from "../../../assets/messi-ronaldo-1593920966.jpg";
+import image from "../../../assets/messi-ronaldo-1593920966.jpg"
 import exportimage from "../../../assets/export.png"
 import NewStudentViewTimeTable from "./NewStudentViewTimeTable";
 import axios from "axios";
@@ -55,69 +55,65 @@ const NewStudentDashboard = () => {
         }, 500); // Small delay to show the success message first
     };
 
-    // const handlenavigate = () => {
-    //     navigate('/adminprofile', { state: { admininfo: admininfo.admininfo } });
-    // };
-
     const [allStudents, setAllStudents] = useState([]);
     const [showViewTT, setShowViewTT] = useState(false);
 
 
     console.log(allStudents, 'all students')
-    const dashboardcustomStyles = {
-        control: (base, state) => ({
-            ...base,
-            width: '300px',
-            height: '40px',
-            borderRadius: '8px',
-            borderColor: state.isFocused ? '#86b7fe' : '#757575',
-            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
-        }),
+    // const dashboardcustomStyles = {
+    //     control: (base, state) => ({
+    //         ...base,
+    //         width: '300px',
+    //         height: '40px',
+    //         borderRadius: '8px',
+    //         borderColor: state.isFocused ? '#86b7fe' : '#757575',
+    //         boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+    //     }),
 
-        dropdownIndicator: (base) => ({
-            ...base,
-            color: '#292D32',
-            padding: '0 8px',
-            alignItems: 'center',
-            svg: {
-                width: '24px',
-                height: '24px',
-            }
-        }),
+    //     dropdownIndicator: (base) => ({
+    //         ...base,
+    //         color: '#292D32',
+    //         padding: '0 8px',
+    //         alignItems: 'center',
+    //         svg: {
+    //             width: '24px',
+    //             height: '24px',
+    //         }
+    //     }),
 
-        indicatorSeparator: () => ({
-            display: 'none'
-        }),
+    //     indicatorSeparator: () => ({
+    //         display: 'none'
+    //     }),
 
-        placeholder: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px'
-        }),
+    //     placeholder: (base) => ({
+    //         ...base,
+    //         color: '#526D82',
+    //         fontSize: '16px'
+    //     }),
 
-        singleValue: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px'
-        }),
+    //     singleValue: (base) => ({
+    //         ...base,
+    //         color: '#526D82',
+    //         fontSize: '16px'
+    //     }),
 
-        menu: (base) => ({
-            ...base,
-            zIndex: 1000,
-            maxHeight: '200px',
-            overflowY: 'auto',
-            fontSize: '14px',
-        }),
+    //     menu: (base) => ({
+    //         ...base,
+    //         zIndex: 1000,
+    //         maxHeight: '200px',
+    //         overflowY: 'auto',
+    //         fontSize: '14px',
+    //     }),
 
-        option: (base, state) => ({
-            ...base,
-            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
-            color: state.isFocused ? '#fff' : '#222222',
-            '&:active': {
-                backgroundColor: '#e6e6e6',
-            }
-        }),
-    };
+    //     option: (base, state) => ({
+    //         ...base,
+    //         backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+    //         color: state.isFocused ? '#fff' : '#222222',
+    //         '&:active': {
+    //             backgroundColor: '#e6e6e6',
+    //         }
+    //     }),
+    // };
 
     const fetchFacultyData = async () => {
         setError(false); // Reset error before fetching
@@ -201,7 +197,7 @@ const NewStudentDashboard = () => {
                                 <div className="newStudent-header-left d-flex align-items-center">
                                     <p className="newStudent-title">
                                         Total Students
-                                        <span className="newStudent-count">{studentlist.length}</span>
+                                        <span className="newStudent-count">{filteredStudents.filter(student => !student.blocked).length}</span>
                                     </p>
                                 </div>
 
@@ -292,9 +288,10 @@ const NewStudentDashboard = () => {
                                         <p>Refreshing student list...</p>
                                     </div>
                                 ) : (
+                                    <>
                                     <div className="newStudent-grid-container">
                                         {filteredStudents.length > 0 ? (
-                                            filteredStudents.map(student => (
+                                            filteredStudents.filter(student => !student.blocked).map(student => (
                                                 <div key={student.roll_no} className="newStudent-card"
                                                     onClick={() => setSelectedStudent(student)}
                                                     style={{ cursor: "pointer" }}>
@@ -308,7 +305,7 @@ const NewStudentDashboard = () => {
                                                         </div>
                                                         <div className="newStudent-info-classrollno">
                                                             <span className="newStudent-class">
-                                                                {student.class_name} {student.division}
+                                                                {student.standard} {student.division}
                                                             </span>
                                                             <span className="newStudent-roll">
                                                                 Roll no: {student.roll_no}
@@ -323,7 +320,6 @@ const NewStudentDashboard = () => {
                                             </div>
                                         )}
 
-
                                         {selectedStudent && (
                                             <NewMyClassStudentView
                                                 student={selectedStudent}
@@ -333,10 +329,52 @@ const NewStudentDashboard = () => {
                                                     setShowPopup(true);
                                                     setSelectedStudent(null);
                                                 }}
+                                                onStatusChange={fetchFacultyData}
                                             />
                                         )}
-
                                     </div>
+
+                                    {/* Blocked Students Section */}
+                                    <div className="blocked-students-section">
+                                        <div className="blocked-students-header d-flex align-items-center">
+                                            <p className="newStudent-title">
+                                                Blocked Students
+                                                <span className="newStudent-count">{studentlist.filter(student => student.blocked).length}</span>
+                                            </p>
+                                        </div>
+                                        <div className="newStudent-grid-container">
+                                            {studentlist.filter(student => student.blocked).length > 0 ? (
+                                                studentlist.filter(student => student.blocked).map(student => (
+                                                    <div key={student.roll_no} className="newStudent-card"
+                                                        onClick={() => setSelectedStudent(student)}
+                                                        style={{ cursor: "pointer" }}>
+                                                        <img
+                                                            src={student.image ? student.image : image}
+                                                            className="newStudent-avatar"
+                                                        />
+                                                        <div className="newStudent-info">
+                                                            <div className="newStudent-name">
+                                                                {student.student_name}
+                                                            </div>
+                                                            <div className="newStudent-info-classrollno">
+                                                                <span className="newStudent-class">
+                                                                    {student.class_name} {student.division}
+                                                                </span>
+                                                                <span className="newStudent-roll">
+                                                                    Roll no: {student.roll_no}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <div className="no-students-found">
+                                                    <p>No blocked students</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                    </>
                                 )}
                             </div>
                         </div>

@@ -244,7 +244,7 @@
     overflow-y: auto;
     display: grid;
     /* grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); */
-    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(310px, 320px));
     gap: 16px;
   }
   .newStudent-card {
@@ -442,4 +442,12 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* Blocked Students Section */
+.blocked-students-section {
+  margin-top: 40px;
+}
+.blocked-students-header {
+  margin-bottom: 16px;
 }

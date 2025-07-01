@@ -4,6 +4,7 @@ import studentDefault from '../../../assets/student.jpg'
 
 const NewSubjectSelectView = ({ student, onClose }) => {
     if (!student) return null;
+    console.log(student,"studentstudentstudentstudent")
 
  
 
@@ -15,8 +16,7 @@ const NewSubjectSelectView = ({ student, onClose }) => {
                         {/* Left: avatar + name/email */}
                         <div className="newsubjectselectview-header-left">
                             <img
-                                src={student.image_url ? student.image_url : studentDefault}
-                           
+                                src={student.image ? student.image : studentDefault}
                                 className="newsubjectselectview-avatar"
                             />
                             <div className="newsubjectselectview-header-text">
@@ -47,9 +47,9 @@ const NewSubjectSelectView = ({ student, onClose }) => {
                         {[
                              ["DOB", student.dob || "N/A"],
                              ["Gender", student.gender || "N/A"],
-                             ["Father Name", student.fathers_name || "N/A"],
-                             ["Mother Name", student.mothers_name || "N/A"],
-                             ["Guardian Name", student.guardian || "N/A"],
+                             ["Father Name", student.father_name || "N/A"],
+                             ["Mother Name", student.mother_name || "N/A"],
+                             ["Guardian Name", student.guardian_name || "N/A"],
                              ["Phone No", student.number || "N/A"],
                              ["Address", student.address || "N/A"],
                         ].map(([label, value]) => (
@@ -65,14 +65,12 @@ const NewSubjectSelectView = ({ student, onClose }) => {
                     </div>
                     <div className="newsubjectselectview-school-info">
                         {[
-                             ["Class", student.class_name || "N/A"],
+                             ["Class", student.standard || "N/A"],
                              ["Division", student.division || "N/A"],
                              ["Roll No", student.roll_no || "N/A"],
-                             ["Joining Date", student.start_date || "N/A"],
+                             ["Joining Date", student.joining_date || "N/A"],
                              ["Admission No", student.admission_no || "N/A"],
-                             ["Academic Year", student.accademic_year|| "N/A"],   
-
-
+                             ["Category", student.category || "N/A"],
                         ].map(([label, value]) => (
                             <div className="newsubjectselectview-info-item" key={label}>
                                 <div className="newsubjectselectview-info-label">{label}</div>

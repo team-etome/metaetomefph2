@@ -12,20 +12,26 @@ import "./newteachersubject.css";
 import { useSelector } from "react-redux";
 import NewTeacherSubjectSelect from "./NewTeacherSubjectSelect";
 import { IoArrowBack } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const NewTeacherSubject = () => {
     const admininfo = useSelector((state) => state.admininfo);
     console.log(admininfo, "admin info");
     const [subjects, setSubjects] = useState([]);
-    const APIURL = useSelector(state => state.APIURL.url);
+    // const APIURL = useSelector(state => state.APIURL.url);
     const teacherinfo = useSelector((state) => state.teacherinfo);
-    const teacher_id = teacherinfo.teacherinfo?.teacher_id
+    // const teacher_id = teacherinfo.teacherinfo?.teacher_id
     console.log(subjects, "subjectssubjects")
     const [activeSubject, setActiveSubject] = useState(null);
 
     // handler to leave detail view
     const handleBack = () => setActiveSubject(null);
+
+    const APIURL = useSelector((state) => state.APIURL.url);
+    const teacher = useSelector((state) => state.teacherinfo);
+    const teacher_id = teacher.teacherinfo?.teacher_id;
+    const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
 
 
     useEffect(() => {
@@ -44,6 +50,10 @@ const NewTeacherSubject = () => {
     }, [APIURL, teacher_id]);
 
 
+    const navigate = useNavigate();
+    const handlenavigate = () => {
+        navigate("/teacherprofile");
+    };
 
 
     return (
@@ -62,12 +72,12 @@ const NewTeacherSubject = () => {
                                     <div className="newteachersubject_header_institution">
                                         <div className="newteachersubject_hd_title">
                                             <p style={{ color: "#222222", }}>
-                                                {/* {admininfo.admininfo?.email} */}
+                                                {teacherInfo?.email || " "}
                                             </p>
                                         </div>
                                         <img
-                                            // onClick={handlenavigate}
-                                            // src={admininfo.admininfo?.logo}
+                                            onClick={handlenavigate}
+                                            src={teacherInfo?.image || " "}
                                             alt="Profile"
                                             style={{
                                                 width: "42px",
