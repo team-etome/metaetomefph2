@@ -19,6 +19,7 @@ import classIcon from '../../../assets/class.jpg';
 import subjectIcon from '../../../assets/subject.jpg';
 import facultyIcon from '../../../assets/faculty.jpg';
 import deadlineIcon from '../../../assets/deadline.jpg';
+import Swal from 'sweetalert2';
 
 
 const NewSeatingDashboard = () => {
@@ -217,14 +218,14 @@ const NewSeatingDashboard = () => {
         layoutSelected: '',
     });
 
-    const [facultyOptions] = useState([
-        { id: '1', name: 'Rajesh Chandrasekhar' },
-        { id: '2', name: 'Ramya K P' },
-        { id: '3', name: 'Lijo Jose' },
-        { id: '4', name: 'Ankit Kumar' },
-        { id: '5', name: 'Amal Jose' },
-        { id: '6', name: 'Deepak Singh' }
-    ]);
+    // const [facultyOptions] = useState([
+    //     { id: '1', name: 'Rajesh Chandrasekhar' },
+    //     { id: '2', name: 'Ramya K P' },
+    //     { id: '3', name: 'Lijo Jose' },
+    //     { id: '4', name: 'Ankit Kumar' },
+    //     { id: '5', name: 'Amal Jose' },
+    //     { id: '6', name: 'Deepak Singh' }
+    // ]);
 
     // Handle faculty selection
     const handleFacultySelect = (facultyId) => {
@@ -347,12 +348,30 @@ const NewSeatingDashboard = () => {
         try {
             const response = await axios.post(`${APIURL}/api/seating`, payload);
             console.log("Successfully saved:", response.data);
-            closeModal(); // Close modal after successful post
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Seating Assigned',
+                text: 'The seating arrangement has been successfully saved!',
+                confirmButtonColor: '#3085d6'
+            }).then(() => {
+                closeModal(); // Close modal after alert is dismissed
+            });
+
         } catch (error) {
             console.error("Error saving seating data:", error);
-            alert("Failed to assign seating. Please try again.");
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.response?.data?.message || 'Failed to assign seating. Please try again.',
+                confirmButtonColor: '#d33'
+            });
         }
     };
+
+
+
 
     // UI for step indicators
     const renderStepIndicator = () => {
@@ -469,7 +488,7 @@ const NewSeatingDashboard = () => {
                                 }
                             }}
                         >
-                            <option value="">Select Date</option>
+                            <option value="">Select     Date</option>
                             {[...new Set(
                                 filteredExamData
                                     .flatMap(e => e.papers)
@@ -1327,7 +1346,7 @@ const NewSeatingDashboard = () => {
                 </div>
                 <div className="seating_classes_box" >
                     <div className="seating_container" >
-                    {seatingDetails.map((item) => (
+                        {seatingDetails.map((item) => (
                             <div
                                 className="seating_classes_box_inner"
                                 key={item.id}
@@ -1339,8 +1358,8 @@ const NewSeatingDashboard = () => {
                                         <h3 className="seating_room_no">ROOM NO: {item.hall_name}</h3>
                                         <p className="seating_exam_title">{item.examName}</p>
                                         <p className="seating_exam_date">Date of exam: {new Date(item.exam_date).toLocaleDateString('en-GB', {
-                  day: '2-digit', month: 'short', year: 'numeric'
-                })}</p>
+                                            day: '2-digit', month: 'short', year: 'numeric'
+                                        })}</p>
                                     </div>
                                 </div>
                                 <div className="seating_bottom_row">

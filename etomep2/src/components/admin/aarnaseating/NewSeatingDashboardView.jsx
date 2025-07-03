@@ -70,7 +70,7 @@ const NewSeatingDashboardView = ({ selectedItem, onBack }) => {
                                 <p>End Time</p>
                             </div>
                             <div className="seatingview_info_row data">
-                                <p>Ankit</p>
+                                <p></p>
                                 <p>{new Date(exam_date).toLocaleDateString("en-GB", {
                                     day: "2-digit",
                                     month: "short",
@@ -125,7 +125,7 @@ const NewSeatingDashboardView = ({ selectedItem, onBack }) => {
                                     <tr key={idx}>
                                         <td>{stu.name || stu.student_name || "—"}</td>
                                         <td>{stu.regNo || stu.reg_no || "—"}</td>
-                                        <td>{stu.subject} EnglishAnkit</td>
+                                        <td>{stu.subject}</td>
                                     </tr>
                                 ))}
                             </tbody>

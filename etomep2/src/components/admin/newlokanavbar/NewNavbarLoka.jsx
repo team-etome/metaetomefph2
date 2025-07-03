@@ -45,7 +45,7 @@ function NewNavbarLoka() {
   useEffect(() => {
     localStorage.setItem("currentTab", currentTab);
   }, [currentTab]);
-
+  
 const handlenavigate = () => {
   navigate('/adminprofile', { state: { admininfo: admininfo.admininfo } });
 };

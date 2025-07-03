@@ -52,7 +52,7 @@ function NewLokaLibraryDashboard() {
 
   const fetchTextbooks = async () => {
     try {
-      const response = await axios.get(`${APIURL}/api/create-textbook/${admin_id}`);
+      const response = await axios.get(`${APIURL}/api/create-library/${admin_id}`);
       if (response.data && response.data.data) {
         setLokaBookListData(response.data.data);
       }
@@ -176,12 +176,12 @@ function NewLokaLibraryDashboard() {
             <Select
               isClearable
               value={
-                categories.find(cat => cat === selectedCategory)
+                categories?.find(cat => cat === selectedCategory)
                   ? { label: selectedCategory, value: selectedCategory }
                   : null
               }
               onChange={handleCategoryChange}
-              options={categories.map(cat => ({ label: cat, value: cat }))}
+              options={categories?.map(cat => ({ label: cat, value: cat }))}
               styles={dashboardcustomStyles}
               placeholder="Select Categories"
             />

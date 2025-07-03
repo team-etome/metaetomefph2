@@ -16,6 +16,7 @@ const AdminClassAddStepTwo = ({
   admininfo,
   stepOneData,
   onSave,
+  fetchClassData,
 }) => {
   useEffect(() => {
     console.log("AdminClassAddStepTwo - admininfo3");
@@ -96,6 +97,9 @@ const AdminClassAddStepTwo = ({
           icon: "success",
           confirmButtonText: "OK",
         });
+        if (typeof fetchClassData === "function") {
+          fetchClassData();
+        }
         closeModal();
 
       } else {

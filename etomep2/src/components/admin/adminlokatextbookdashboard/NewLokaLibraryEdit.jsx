@@ -102,7 +102,7 @@ const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
         try {
             // 3) Send multipart/form-d
             await axios.put(
-                `${APIURL}/api/create-textbook/${selected.id}`,
+                `${APIURL}/api/create-library/${selected.id}`,
                 formData,
                 {
                     headers: {
@@ -143,7 +143,7 @@ const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
         if (!result.isConfirmed) return;
 
         try {
-            await axios.delete(`${APIURL}/api/create-textbook/${selected.id}`);
+            await axios.delete(`${APIURL}/api/create-library/${selected.id}`);
             await Swal.fire('Deleted!', 'The book has been removed.', 'success');
             //   onClose();
             onUpdated();
