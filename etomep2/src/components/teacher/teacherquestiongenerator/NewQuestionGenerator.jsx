@@ -14,7 +14,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { IoChevronBackSharp } from "react-icons/io5";
 
-function NewQuestionGenerator() {
+function NewQuestionGenerator({ onClose, selectedFile, selectedItem, onRefresh }) {
+    console.log("NewQuestionGenerator received selectedFile:", selectedFile);
+    console.log("NewQuestionGenerator received selectedItem:", selectedItem);
     const [subsections, setSubsections] = useState([
         {
             name: "Main Section",
@@ -36,6 +38,14 @@ function NewQuestionGenerator() {
 
     const APIURL = useSelector((state) => state.APIURL.url);
     const exampaperinfo = useSelector((state) => state.exampaperinfo);
+
+    const handleBackClick = () => {
+        if (onClose) {
+            onClose();
+        } else {
+            navigate("/teacherexamination");
+        }
+    };
 
     const exam_id = exampaperinfo.exampaperinfo?.id;
 
@@ -308,15 +318,62 @@ function NewQuestionGenerator() {
     };
 
     const sendToBackend = async (sectionsWithImages) => {
-        const data = {
-            question_id: exam_id,
-            data: sectionsWithImages,
-        };
+        // Create FormData to handle file upload
+        const formData = new FormData();
+        formData.append('questionpaper', selectedItem.questionpaper);
+        formData.append('data', JSON.stringify(sectionsWithImages));
+ 
+        // Handle PDF file upload similar to NewTeacherAddAssignment
+        if (selectedFile) {
+            console.log("Selected file details:", {
+                name: selectedFile.name,
+                type: selectedFile.type,
+                size: selectedFile.size,
+                isExistingFile: selectedFile.isExistingFile
+            });
+            
+            // Check if it's an existing file (from edit mode) or new file
+            if (selectedFile.isExistingFile) {
+                // If it's an existing file, we don't need to append it again
+                // The backend should handle keeping the existing file
+                formData.append('keep_existing_instruction', 'true');
+                formData.append('existing_instruction_url', selectedFile.url);
+                console.log("Appending existing instruction file info");
+            } else {
+                // New file selected - append it directly
+                formData.append('instruction', selectedFile);
+                console.log("Appending new instruction file:", selectedFile.name);
+            }
+        } else {
+            console.log("No selected file found");
+        }
+
+        // Debug: Log FormData contents
+        console.log("FormData contents:");
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
 
         try {
+            // Show loading spinner for submission
+            Swal.fire({
+                title: "Exporting Questions",
+                text: "Please wait while we process your questions...",
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
             const response = await axios.post(
                 `${APIURL}/api/questionpapersetting`,
-                data
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
             );
             setSuccessMessage("Export successful!");
             console.log("Data successfully sent to the backend:", response.data);
@@ -327,16 +384,35 @@ function NewQuestionGenerator() {
                 showConfirmButton: false,
                 timer: 1500,
             }).then(() => {
+                // Call refresh callback if provided
+                if (onRefresh) {
+                    console.log("Calling refresh callback from NewQuestionGenerator");
+                    onRefresh();
+                }
+                // Navigate back to examination page
                 navigate("/teacherexamination");
             });
         } catch (error) {
             setSuccessMessage("Export failed!");
             console.error("Error sending data to the backend:", error);
             Swal.close(); // Close the loader
+            
+            // More detailed error message
+            let errorMessage = "There was an issue exporting the questions.";
+            if (error.response) {
+                if (error.response.status === 413) {
+                    errorMessage = "File size too large. Please use a smaller file.";
+                } else if (error.response.status === 400) {
+                    errorMessage = error.response.data?.message || "Invalid data provided.";
+                } else if (error.response.status === 500) {
+                    errorMessage = "Server error. Please try again later.";
+                }
+            }
+            
             Swal.fire({
                 icon: "error",
                 title: "Export failed!",
-                text: "There was an issue exporting the questions.",
+                text: errorMessage,
                 showConfirmButton: true,
             });
         } finally {
@@ -354,6 +430,22 @@ function NewQuestionGenerator() {
 
 
     const handleExport = () => {
+        // Validate that we have questions to export
+        const totalQuestions = subsections.reduce(
+            (acc, section) => acc + section.questions.length,
+            0
+        );
+
+        if (totalQuestions === 0) {
+            Swal.fire({
+                icon: "error",
+                title: "No Questions",
+                text: "Please add at least one question before exporting.",
+            });
+            return;
+        }
+
+        // Validate marks allocation
         const totalAllocatedMarks = subsections.reduce(
             (acc, subsection) =>
                 acc +
@@ -370,6 +462,36 @@ function NewQuestionGenerator() {
             return;
         }
 
+        // if (!selectedFile) {
+        //     Swal.fire({
+        //         icon: "warning",
+        //         title: "PDF Required",
+        //         text: "Please upload a PDF instruction file before creating questions.",
+        //     });
+        //     return;
+        // }
+
+        // if (selectedFile && !selectedFile.isExistingFile) {
+        //     const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        //     if (!allowedTypes.includes(selectedFile.type)) {
+        //         Swal.fire({
+        //             icon: "error",
+        //             title: "Invalid File Type",
+        //             text: "Please upload a PDF, DOC, or DOCX file only.",
+        //         });
+        //         return;
+        //     }
+        //     const maxSize = 25 * 1024 * 1024; 
+        //     if (selectedFile.size > maxSize) {
+        //         Swal.fire({
+        //             icon: "error",
+        //             title: "File Too Large",
+        //             text: "File size must be less than 25MB.",
+        //         });
+        //         return;
+        //     }
+        // }
+
         setProgress(0); // Reset progress
         setIsExporting(true); // Start exporting
         exportQuestionsToJson();
@@ -380,24 +502,12 @@ function NewQuestionGenerator() {
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <div className="new-question_generator">
-                {/* <Row xs={2} className="question_generator_header">
-          <Col className="question_generator_header_title">
-            <IoChevronBackSharp onClick={handleBackClick}className="teacher_question_back" />
-            <h6>Subject Namerrrrrrrrr</h6>
-          </Col>
-          <Col className="question_generator_header_submit">
-            <button onClick={handleExport} disabled={isExporting}>
-              {isExporting ? `Exporting... ${progress}%` : "Export Questions"}
-            </button>
-          </Col>
-        </Row>
-        {isExporting && (
-          <Row className="my-3">
-            <Col>
-              <ProgressBar now={progress} label={`${progress}%`} />
-            </Col>
-          </Row>
-        )} */}
+                <Row xs={2} className="question_generator_header">
+                    <Col className="question_generator_header_title">
+                        <IoChevronBackSharp onClick={handleBackClick} className="teacher_question_back" />
+                        <h6>Question Generator</h6>
+                    </Col>
+                </Row>
 
                 {/* <Row className="new-qs_gn_bdy" style={{border:"2px solid green"}}> */}
                 <div className="new-text-editor" >

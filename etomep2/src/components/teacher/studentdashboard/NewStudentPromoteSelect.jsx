@@ -15,7 +15,8 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
     const [showPopup, setShowPopup] = useState(false);
     const [selectedClass, setSelectedClass] = useState("");
     const [selectedDivision, setSelectedDivision] = useState("");
-    const [divisions, setDivisions] = useState(["A", "B", "C"]); // Example divisions
+    const [divisions, setDivisions] = useState(["A", "B", "C"]);
+    const [showRepeatModal, setShowRepeatModal] = useState(false);
 
     console.log(studentList, "studentListstudentList")
 
@@ -53,7 +54,7 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
 
     // Find previous_class_id and current_class_id for API
     const getClassIds = () => {
-        
+
         const selectedStudents = studentList.filter(s => selected.includes(s.student_id || s.roll_no));
         const previous_class_id = selectedStudents[0]?.class_name || "";
         // For demo, increment class_name for current_class_id
@@ -82,27 +83,37 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
         <>
             {filtered.length > 0 ? (
                 <div>
-
-
                     {/* Action Bar */}
-                    <div className="newstudentpromoteselect-actions">
-                        <label>
-                            <p className="newstudentpromoteselect-actions-para">Select All</p>
-                            <input
-                                type="checkbox"
-                                checked={selectAll}
-                                onChange={(e) => setSelectAll(e.target.checked)}
-                            />
+                    <div
+                        className="newstudentpromoteselect-actions"
+                    >
+                        {/* LEFT SIDE */}
+                        <div className="newstudentpromoteselect-left">
+                            <label>
+                                <p className="newstudentpromoteselect-actions-para">Select All</p>
+                                <input
+                                    type="checkbox"
+                                    checked={selectAll}
+                                    onChange={(e) => setSelectAll(e.target.checked)}
+                                />
+                            </label>
+                            <button
+                                className="newstudentpromoteselect-promote-btn"
+                                disabled={!selected.length}
+                                onClick={() => setShowPopup(true)}
+                            >
+                                Promote
+                            </button>
+                            <button
+                                className="newstudentpromoteselect-repeat-btn"
+                                disabled={!selected.length}
+                                onClick={() => setShowRepeatModal(true)}
+                            >
+                                Repeat Class
+                            </button>
+                        </div>
 
-                        </label>
-                        <button
-                            className="newstudentpromoteselect-promote-btn"
-                            disabled={!selected.length}
-                            onClick={() => setShowPopup(true)}
-                        >
-                            Promote
-                        </button>
-                        {/* Search at right */}
+                        {/* RIGHT SIDE */}
                         <div className="newstudentpromoteselect-search-wrapper">
                             <RiSearchLine className="icon" size={16} />
                             <input
@@ -113,6 +124,7 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
                             />
                         </div>
                     </div>
+
 
                     {/* Student Grid */}
                     <div className="newstudentpromoteselect-grid">
@@ -188,6 +200,32 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
                         <div className="promote-popup-footer">
                             <button className="promote-popup-cancel" onClick={() => setShowPopup(false)}>Cancel</button>
                             <button className="promote-popup-save" onClick={handlePromoteSave}>Save</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showRepeatModal && (
+                <div className="promote-popup-overlay">
+                    <div className="promote-popup-modal">
+                        <div className="promote-popup-header">
+                            <p className="promote-popup-title">Confirm Repeat Class</p>
+                        </div>
+                        <div className="promote-popup-body">
+                            <p>
+                                Are you sure you want the selected students to remain in the current class for the next academic year?
+                            </p>
+                        </div>
+                        <div className="promote-popup-footer">
+                            <button className="promote-popup-cancel" onClick={() => setShowRepeatModal(false)}>Cancel</button>
+                            <button
+                                className="promote-popup-save"
+                                onClick={() => {
+                                    setShowRepeatModal(false);
+                                    // Ask user for confirmation before proceeding
+                                    // No API call or success modal yet
+                                }}
+                            >Confirm</button>
                         </div>
                     </div>
                 </div>
