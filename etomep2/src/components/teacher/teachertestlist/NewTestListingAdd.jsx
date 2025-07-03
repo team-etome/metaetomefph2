@@ -3,7 +3,7 @@ import { IoArrowBack } from "react-icons/io5";
 import "./newtestlistingadd.css";
 import NewTeacherMockTest from "./NewTeacherMockTest";
 
-export default function NewTestListingAdd({ onBack: onParentBack }) {
+export default function NewTestListingAdd({ onBack: onParentBack, class_name, division, subject, onTestAdded }) {
     const [step, setStep] = useState(1);
     const [formValues, setFormValues] = useState({
       examName: "",
@@ -26,6 +26,26 @@ export default function NewTestListingAdd({ onBack: onParentBack }) {
     const goBack = () => {
       if (step === 1) return onParentBack?.();
       setStep(1);
+    };
+
+    const handleTestAdded = () => {
+      // Reset form values
+      setFormValues({
+        examName: "",
+        topic: "",
+        duration: "",
+        examDate: "",
+        outOfMarks: "",
+        teacherCode: "",
+      });
+      // Go back to step 1
+      setStep(1);
+      // Call the parent's onTestAdded to refresh the list
+      if (onTestAdded) {
+        onTestAdded();
+      }
+      // Go back to the main listing
+      onParentBack?.();
     };
 
   return (
@@ -64,6 +84,8 @@ export default function NewTestListingAdd({ onBack: onParentBack }) {
               id="examName"
               type="text"
               className="newtestlistingadd_input"
+              value={formValues.examName}
+              onChange={handleChange}
             />
           </div>
           <div className="newtestlistingadd_field">
@@ -74,6 +96,8 @@ export default function NewTestListingAdd({ onBack: onParentBack }) {
               id="topic"
               type="text"
               className="newtestlistingadd_input"
+              value={formValues.topic}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -84,14 +108,14 @@ export default function NewTestListingAdd({ onBack: onParentBack }) {
             <label htmlFor="duration">
               Duration <span className="required">*</span>
             </label>
-            <select
+            <input
               id="duration"
+              type="number"
+              placeholder="in minutes"
               className="newtestlistingadd_input"
-            >
-              <option value="">Select duration</option>
-              <option>10 min</option>
-              <option>20 min</option>
-            </select>
+              value={formValues.duration}
+              onChange={handleChange}
+            />
           </div>
           <div className="newtestlistingadd_field">
             <label htmlFor="examDate">
@@ -101,6 +125,8 @@ export default function NewTestListingAdd({ onBack: onParentBack }) {
               id="examDate"
               type="date"
               className="newtestlistingadd_input"
+              value={formValues.examDate}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -115,6 +141,8 @@ export default function NewTestListingAdd({ onBack: onParentBack }) {
               id="outOfMarks"
               type="number"
               className="newtestlistingadd_input"
+              value={formValues.outOfMarks}
+              onChange={handleChange}
             />
           </div>
           <div className="newtestlistingadd_field">
@@ -125,6 +153,8 @@ export default function NewTestListingAdd({ onBack: onParentBack }) {
               id="teacherCode"
               type="text"
               className="newtestlistingadd_input"
+              value={formValues.teacherCode}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -158,7 +188,13 @@ export default function NewTestListingAdd({ onBack: onParentBack }) {
       </div>
       </>
       )}
-      {step === 2 && <NewTeacherMockTest formData={formValues} />}
+      {step === 2 && <NewTeacherMockTest 
+        formData={formValues} 
+        class_name={class_name}
+        division={division}
+        subject={subject}
+        onTestAdded={handleTestAdded}
+      />}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './newteacherresult.css';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -12,36 +12,116 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 
 const NewTeacherResult = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
-    const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
-    const [selectedType, setSelectedType] = useState(null)
-    console.log(selectedType, "selectedTypeselectedType")
-    const [selectedExam, setSelectedExam] = useState(null)
-    const [selectedYear, setSelectedYear] = useState(null)
-    const typeOptions = [
-        { value: 'exam_result', label: 'Exam Result' },
-        { value: 'assignment', label: 'Assignment' },
-        { value: 'mock_test', label: 'Mock Test' },
-        { value: 'mcq', label: 'MCQ' },
-    ]
+    const teacher = useSelector((state) => state.teacherinfo);
+    const teacher_id = teacher.teacherinfo?.teacher_id;
+    const [selectedType, setSelectedType] = useState(null);
+    const [selectedExam, setSelectedExam] = useState(null);
+    const [selectedYear, setSelectedYear] = useState(null);
+    const [resultData, setResultData] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [typeOptions, setTypeOptions] = useState([]);
+    const [examOptions, setExamOptions] = useState([]);
+    const [yearOptions, setYearOptions] = useState([]);
+    const teacher_subject = useSelector((state) => state?.teachersubjectinfo);
+
+    const classid = teacher_subject.teachersubjectinfo?.class
+    const subjectid = teacher_subject.teachersubjectinfo?.subject_id
+    // console.log(classid,"classid",subjectid,"subjectid")
 
 
-    console.log(admin_id, "admin eeee")
+    console.log(teacher_id, "teacher_id");
     const navigate = useNavigate();
 
+    // Fetch result data from API
+    const fetchResultData = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get(`${APIURL}/api/resultteacher`, {
+                params: {
+                    class_id: classid,
+                    subject: subjectid
+                }
+            });
 
+            console.log('API Response:', response.data);
+            setResultData(response.data);
 
+            // Extract unique types, exams, and years from the data
+            if (response.data) {
+                const types = [...new Set(response.data.map(item => item.type))].map(type => ({
+                    value: type,
+                    label: type.charAt(0).toUpperCase() + type.slice(1).replace('_', ' ')
+                }));
+                setTypeOptions(types);
 
+                const exams = [...new Set(response.data.map(item => item.exam_name))].map(exam => ({
+                    value: exam,
+                    label: exam
+                }));
+                setExamOptions(exams);
 
-    const examOptions = [
-        { value: 'annual', label: 'Annual Examination' },
-        { value: 'midterm', label: 'Mid Term Examination' },
-    ]
+                const years = [...new Set(response.data.map(item => item.year))].map(year => ({
+                    value: year,
+                    label: year
+                }));
+                setYearOptions(years);
+            }
+        } catch (error) {
+            console.error('Error fetching result data:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to fetch result data.'
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const yearOptions = [
-        { value: '2025', label: '2025' },
-        { value: '2024', label: '2024' },
-        { value: '2023', label: '2023' },
-    ]
+    // Handle type selection change
+    const handleTypeChange = (selectedOption) => {
+        setSelectedType(selectedOption);
+        setSelectedExam(null);
+        setSelectedYear(null);
+    };
+
+    // Handle exam selection change
+    const handleExamChange = (selectedOption) => {
+        setSelectedExam(selectedOption);
+    };
+
+    // Handle year selection change
+    const handleYearChange = (selectedOption) => {
+        setSelectedYear(selectedOption);
+    };
+
+    // Filter data based on selected options
+    const getFilteredData = () => {
+        if (!resultData) return [];
+
+        let filtered = resultData;
+
+        if (selectedType) {
+            filtered = filtered.filter(item => item.type === selectedType.value);
+        }
+
+        if (selectedExam) {
+            filtered = filtered.filter(item => item.exam_name === selectedExam.value);
+        }
+
+        if (selectedYear) {
+            filtered = filtered.filter(item => item.year === selectedYear.value);
+        }
+
+        return filtered;
+    };
+
+    // Fetch data when component mounts
+    useEffect(() => {
+        if (teacher_id) {
+            fetchResultData();
+        }
+    }, [teacher_id]);
 
     // dummy students/results
     const dummyResults = [
@@ -242,7 +322,7 @@ const NewTeacherResult = () => {
                 assignment6: 1,
                 assignment7: 1,
             },
-        },{
+        }, {
             rollNo: '8',
             name: 'Krishna',
             marks: {
@@ -331,7 +411,8 @@ const NewTeacherResult = () => {
                             placeholder="Select Type"
                             options={typeOptions}
                             value={selectedType}
-                            onChange={setSelectedType}
+                            onChange={handleTypeChange}
+                            isLoading={loading}
                         />
                     </div>
                     {selectedType && (
@@ -339,20 +420,33 @@ const NewTeacherResult = () => {
                             <Select
                                 isClearable
                                 styles={dashboardsmallcustomStyles}
-                                placeholder="Select Month"
+                                placeholder="Select Exam"
+                                options={examOptions}
+                                value={selectedExam}
+                                onChange={handleExamChange}
+                                isLoading={loading}
                             />
                             <Select
                                 isClearable
                                 styles={dashboardsmallcustomStyles}
                                 placeholder="Select Year"
+                                options={yearOptions}
+                                value={selectedYear}
+                                onChange={handleYearChange}
+                                isLoading={loading}
                             />
-
                         </div>
                     )}
                 </div>
             </div>
             <div className="newteacherresult_classes_box" >
-                {selectedType?.value === "exam_result" && (
+                {loading && (
+                    <div style={{ textAlign: 'center', padding: '20px' }}>
+                        <p>Loading results...</p>
+                    </div>
+                )}
+
+                {!loading && selectedType?.value === "exam_result" && (
                     <div className="newteacherresult_content">
                         <p className="newteacherresult_title">
                             Ankit
@@ -369,26 +463,34 @@ const NewTeacherResult = () => {
                                     <tr className="newteacherresult_table_headrow1">
                                         <th rowSpan="2">Roll No</th>
                                         <th rowSpan="2">Name</th>
-                                        <th>Science</th>
+                                        <th>{selectedExam?.label || 'Subject'}</th>
                                     </tr>
                                     <tr className="newteacherresult_table_headrow2">
-                                        <th className="newteacherresult_subtotal">Total: 100</th>
+                                        <th className="newteacherresult_subtotal">
+                                            Total: {getFilteredData()[0]?.total_marks || 100}
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {dummyResults.map(r => (
-                                        <tr key={r.roll}>
-                                            <td>{r.roll}</td>
-                                            <td>{r.name}</td>
-                                            <td>{r.score}</td>
+                                    {getFilteredData().map((result, index) => (
+                                        <tr key={index}>
+                                            <td>{result.roll_no || result.student_roll}</td>
+                                            <td>{result.student_name}</td>
+                                            <td>{result.marks || result.score}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
+
+                        {getFilteredData().length === 0 && (
+                            <div style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
+                                <p>No results found for the selected criteria.</p>
+                            </div>
+                        )}
                     </div>
                 )}
-                {selectedType?.value === 'assignment' && (
+                {!loading && selectedType?.value === 'assignment' && (
                     <>
                         <div className="newteacherresult_content">
 
@@ -452,7 +554,7 @@ const NewTeacherResult = () => {
                                     </table>
                                 </div>
 
-                                
+
                                 <div
                                     className="newteacherresult-table-body-container"
                                     ref={bodyRef}

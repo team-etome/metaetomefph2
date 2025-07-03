@@ -11,18 +11,135 @@ import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBinLine } from 'react-icons/ri';
 import NewTeacherAddReference from './NewTeacherAddReference';
 
-const NewTeacherReferenceList = () => {
+const NewTeacherReferenceList = ({ class_name, division, subject }) => {
     const APIURL = useSelector((state) => state.APIURL.url);
-    const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+    const teacher = useSelector((state) => state.teacherinfo);
+    const teacher_id = teacher.teacherinfo?.teacher_id;
     const [showPopup, setShowPopup] = useState(false);
-    const dummyAssignments = Array.from({ length: 12 }, (_, i) => ({
-        id: i + 1,
-        title: `Science Assignment`,
-        postedOn: `0${5 + i}/08/2025`
-    }));
+    const [references, setReferences] = useState([]);
+    const [selectedMonth, setSelectedMonth] = useState(null);
+    const [selectedYear, setSelectedYear] = useState(null);
+    const [editData, setEditData] = useState(null);
+    const [isEditMode, setIsEditMode] = useState(false);
 
+    useEffect(() => {
+        const fetchReferences = async () => {
+            try {
+                const params = new URLSearchParams({
+                    teacher_id,
+                    standard: class_name,
+                    division,
+                    subject
+                });
+                const response = await axios.get(`${APIURL}/api/reference?${params.toString()}`);
+                setReferences(response.data);
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to fetch references.'
+                });
+            }
+        };
+        if (teacher_id && class_name && division && subject) {
+            fetchReferences();
+        }
+    }, [APIURL, teacher_id, class_name, division, subject, showPopup]);
 
-    console.log(admin_id, "admin eeee")
+    // Edit handler for references
+    const handleEditReference = (reference) => {
+        // Use the existing reference data from the references array
+        setEditData(reference);
+        setIsEditMode(true);
+        setShowPopup(true);
+    };
+
+    // Delete handler for references
+    const handleDeleteReference = async (id) => {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this deletion!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+          cancelButtonText: "No, cancel"
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              await axios.delete(`${APIURL}/api/testdelete/${id}/`, {
+                params: { type: "reference" }
+              });
+              // Remove the deleted reference from state
+              setReferences(prevReferences => {
+                const newReferences = { ...prevReferences };
+                if (newReferences.reference) {
+                  newReferences.reference = newReferences.reference.filter(ref => ref.id !== id);
+                }
+                return newReferences;
+              });
+              Swal.fire("Deleted!", "Your reference has been deleted.", "success");
+            } catch (error) {
+              console.error("Error deleting reference:", error);
+              Swal.fire("Error!", "Failed to delete reference.", "error");
+            }
+          }
+        });
+    };
+
+    // Extract unique months and years from references
+    const getUniqueMonthsAndYears = (referenceList) => {
+        const months = new Set();
+        const years = new Set();
+        
+        referenceList.forEach(ref => {
+            if (ref.date) {
+                const date = new Date(ref.date);
+                const month = date.toLocaleString('default', { month: 'long' });
+                const year = date.getFullYear().toString();
+                months.add(month);
+                years.add(year);
+            }
+        });
+        
+        return {
+            months: Array.from(months).sort(),
+            years: Array.from(years).sort((a, b) => b - a) // Sort years descending
+        };
+    };
+
+    // Filter references based on selected month and year
+    const getFilteredReferences = (referenceList) => {
+        if (!selectedMonth && !selectedYear) return referenceList;
+        
+        return referenceList.filter(ref => {
+            if (!ref.date) return false;
+            const date = new Date(ref.date);
+            const month = date.toLocaleString('default', { month: 'long' });
+            const year = date.getFullYear().toString();
+            
+            const monthMatch = !selectedMonth || month === selectedMonth.value;
+            const yearMatch = !selectedYear || year === selectedYear.value;
+            
+            return monthMatch && yearMatch;
+        });
+    };
+
+    // Robust reference list extraction
+    console.log(references,"referencesreferencesreferences")
+    const referenceList = (references && Array.isArray(references.reference))
+        ? references.reference
+        : Array.isArray(references)
+            ? references
+            : [];
+
+    const { months, years } = getUniqueMonthsAndYears(referenceList);
+    const filteredReferences = getFilteredReferences(referenceList);
+
+    console.log(referenceList, "referenceListreferenceListreferenceList")
+
+    console.log(teacher_id, "teacher eeee")
     const navigate = useNavigate();
 
 
@@ -93,18 +210,18 @@ const NewTeacherReferenceList = () => {
 
                         <Select
                             isClearable
-                            // value={examTypes.find((type) => type === selectedExamType) ? { label: selectedExamType, value: selectedExamType } : null}
-                            // onChange={handleExamTypeChange}
-                            // options={examTypes.map((type) => ({ label: type, value: type }))}
+                            value={selectedMonth}
+                            onChange={setSelectedMonth}
+                            options={months.map(month => ({ label: month, value: month }))}
                             styles={dashboardsmallcustomStyles}
                             placeholder="Select Month"
                         />
 
                         <Select
                             isClearable
-                            // value={examYears.find((year) => year === selectedFilterYear) ? { label: selectedFilterYear, value: selectedFilterYear } : null}
-                            // onChange={handleYearChange}
-                            // options={examYears.map((year) => ({ label: year, value: year }))}
+                            value={selectedYear}
+                            onChange={setSelectedYear}
+                            options={years.map(year => ({ label: year, value: year }))}
                             styles={dashboardsmallcustomStyles}
                             placeholder="Select Year"
                         />
@@ -119,7 +236,16 @@ const NewTeacherReferenceList = () => {
                         </button>
                         {showPopup && (
                             <NewTeacherAddReference
-                                onClose={() => setShowPopup(false)}
+                                onClose={() => {
+                                    setShowPopup(false);
+                                    setEditData(null);
+                                    setIsEditMode(false);
+                                }}
+                                class_name={class_name}
+                                division={division}
+                                subject={subject}
+                                editData={editData}
+                                isEditMode={isEditMode}
                             />
                         )}
                     </div>
@@ -127,34 +253,52 @@ const NewTeacherReferenceList = () => {
             </div>
             <div className="newteacherreferencelist_classes_box">
                 <div className="newteacherreferencelist_table_wrapper">
-                    <table className="newteacherreferencelist_table">
-                        <colgroup>
-                            <col style={{ width: '45%' }} />
-                            <col style={{ width: '45%' }} />
-                            <col style={{ width: '10%' }} />
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Posted on</th>
-                                <th className="newteacherreferencelist_actions_col_head">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {dummyAssignments.map(a => (
-                                <tr key={a.id}>
-                                    <td>{a.title}</td>
-                                    <td>{a.postedOn}</td>
-                                    <td className="newteacherreferencelist_actions_col">
-                                        <div className="newteacherreferencelist_actions_wrapper">
-                                            <MdOutlineEdit size={24} color="#9F7BFF" />
-                                            <RiDeleteBinLine size={24} color="#FF6C6C" />
-                                        </div>
-                                    </td>
+                    {filteredReferences && filteredReferences.length > 0 ? (
+                        <table className="newteacherreferencelist_table">
+                            <colgroup>
+                                <col style={{ width: '45%' }} />
+                                <col style={{ width: '45%' }} />
+                                <col style={{ width: '10%' }} />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Posted on</th>
+                                    <th className="newteacherreferencelist_actions_col_head">Actions</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {filteredReferences.map(a => (
+                                    <tr key={a.id}>
+                                        <td>{a.title}</td>
+                                        <td>{a.date || a.postedOn || a.dueDate || a.due_date}</td>
+                                        <td className="newteacherreferencelist_actions_col">
+                                            <div className="newteacherreferencelist_actions_wrapper">
+                                                <MdOutlineEdit 
+                                                    size={24} 
+                                                    color="#9F7BFF" 
+                                                    onClick={() => handleEditReference(a)}
+                                                    style={{ cursor: 'pointer' }}
+                                                />
+                                                <RiDeleteBinLine 
+                                                    size={24} 
+                                                    color="#FF6C6C" 
+                                                    onClick={() => handleDeleteReference(a.id)}
+                                                    style={{ cursor: 'pointer' }}
+                                                />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        <div>
+                            <p style={{ textAlign: 'center', color: '#888', fontWeight: 500 }}>
+                                No reference is assigned
+                            </p>
+                        </div>
+                    )}
                 </div>
 
             </div>
