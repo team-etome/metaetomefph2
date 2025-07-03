@@ -21,7 +21,11 @@ const NewAdminClassDashboard = () => {
     // Get teacher info and admin info from Redux store
     const teacherinfo = useSelector((state) => state.adminteacherinfo);
     const admininfo = useSelector((state) => state.admininfo);
+
+
     const teachers = teacherinfo?.adminteacherinfo || [];
+
+
     console.log(teacherinfo, "teacher info");
     console.log(admininfo, "admin info2");
 
@@ -327,6 +331,7 @@ const NewAdminClassDashboard = () => {
                                 teachers={teacherinfo.adminteacherinfo}
                                 admininfo={admininfo}
                                 stepOneData={stepOneData}
+                                fetchClassData={fetchClassData} 
                             // onSave={handleSave}
                             />
                         )}

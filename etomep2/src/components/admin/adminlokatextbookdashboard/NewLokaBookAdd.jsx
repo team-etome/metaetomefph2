@@ -31,6 +31,15 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
     const [chapterCount, setChapterCount] = useState(0);
     const [chapters, setChapters] = useState([]);
 
+
+
+
+    console.log(subjectOptions, "subject option")
+
+
+
+
+
     const handleCountChange = (e) => {
         const count = parseInt(e.target.value, 10);
         setChapterCount(count);
@@ -134,43 +143,78 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
         }
     };
 
-    const handleNumberInput = (e) => {
-        const value = e.target.value;
-        if (/^\d*$/.test(value)) {
-            setTotalMarks(value);
-        }
-    };
+    // const handleNumberInput = (e) => {
+    //     const value = e.target.value;
+    //     if (/^\d*$/.test(value)) {
+    //         setTotalMarks(value);
+    //     }
+    // };
 
 
     useEffect(() => {
         const fetchClassData = async () => {
             try {
                 const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`);
-                const formatted = response.data.map(cls => ({
-                    value: cls.class,
-                    label: `${cls.class_name} ${cls.division}`,
-                    subjectList: cls.curriculum,
-                }));
+
+                const formatted = response.data.map(cls => {
+                    const classDetails = cls.classes[0]; // Get the inner class object
+                    return {
+                        value: classDetails.class_id,
+                        label: cls.class_name,
+                        subjectList: classDetails.curriculum || []  // Correct access
+                    };
+                });
+
                 setClassOptions(formatted);
             } catch (error) {
-                console.error('Failed to fetch class data');
+                console.error('Failed to fetch class data', error);
                 Swal.fire({ icon: 'error', title: 'Error', text: 'Unable to load class list.' });
             }
         };
+
         fetchClassData();
     }, [APIURL, admin_id]);
+
+
+
+
     // console.log(setSelectedClass,"setSubjectOptionssetSubjectOptionssetSubjectOptionssetSubjectOptions")
+
+
+
 
     const handleClassChange = (selected) => {
         setSelectedClass(selected);
-        if (selected?.subjectList) {
-            setSubjectOptions(selected.subjectList.map(s => ({ value: s.subject_id, label: s.subject })));
-            // console.log(setSubjectOptions,"setSubjectOptionssetSubjectOptionssetSubjectOptionssetSubjectOptions")
+
+        if (selected?.subjectList?.length) {
+            const subjects = selected.subjectList.map(c => ({
+                subject: c.subject,
+                subject_id: c.subject_id
+            }));
+
+            const uniqueSubjectsMap = new Map();
+            subjects.forEach(s => {
+                if (!uniqueSubjectsMap.has(s.subject_id)) {
+                    uniqueSubjectsMap.set(s.subject_id, s.subject);
+                }
+            });
+
+            const uniqueSubjectOptions = Array.from(uniqueSubjectsMap, ([value, label]) => ({
+                value,
+                label
+            }));
+
+            setSubjectOptions(uniqueSubjectOptions);
         } else {
             setSubjectOptions([]);
         }
+
         setSelectedSubject(null);
     };
+
+
+
+
     const handleChapterCountChange = e => {
         const count = parseInt(e.target.value, 10);
         setChapterCount(count);
@@ -188,7 +232,7 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
             minHeight: '50px',
             height: '50px',
             borderColor: '#ccc',
-            borderRadius:'8px',
+            borderRadius: '8px',
             boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
             '&:hover': {
                 borderColor: '#526D82',
@@ -239,12 +283,14 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
         }),
     };
     const handleImageUpload = (e) => {
-        console.log(e.target.files[0],"e.target.files[0]e.target.files[0]")
+        console.log(e.target.files[0], "e.target.files[0]e.target.files[0]")
         setImageFile(e.target.files[0]);
     };
     const clearImageFile = () => {
         setImageFile(null);
     };
+
+
 
     return (
         <div className="lokatextbookadd-backdrop">
@@ -259,7 +305,7 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
                             <div className="lokatextbookadd-form-group">
                                 <label className="lokatextbookadd-form-label">
                                     Select Class <span className="lokatextbookadd_required">*</span>
-                                    </label>
+                                </label>
                                 <Select
                                     options={classOptions}
                                     styles={customStyles}
@@ -280,15 +326,18 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
                             </div>
                             <div className="lokatextbookadd-form-group">
                                 <label className="lokatextbookadd-form-label">
-                                    Select Subject 
+                                    Select Subject
                                     <span className="lokatextbookadd_required">*</span></label>
                                 <Select
                                     options={subjectOptions}
+                                    value={selectedSubject}
                                     styles={customStyles}
-                                    placeholder=""
+                                    placeholder=""  
                                     isClearable={true}
                                     onChange={setSelectedSubject}
                                 />
+
+
                             </div>
                             <div className="lokatextbookadd-form-group">
                                 <label className="lokatextbookadd-form-label">Textbook Name</label>
@@ -306,7 +355,7 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
                                         width: '100%',
                                         boxSizing: 'border-box',
                                         outline: "none"
-                                        
+
                                     }}
                                     onChange={e => setTextBookName(e.target.value)}
                                 />

@@ -11,7 +11,7 @@ import { FaCircle } from "react-icons/fa";
 import { RiTriangleLine } from "react-icons/ri";
 import { BsFillTriangleFill } from "react-icons/bs";
 import "./Newsidebar.css"
-import etomelogo from "../../../assets/etomelogo.png" 
+import etomelogo from "../../../assets/etomelogo.png"
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { adminteacherinfo } from "../../../Redux/Actions/AdminTeacherInfoAction";
@@ -122,10 +122,10 @@ function Newsidebar({ setActiveItemLabel }) {
 
   return (
     <div className="newsidenav_fstdiv">
-      <div  className="newsidebar_header">
+      <div className="newsidebar_header">
         <img src={etomelogo} alt="Logo" style={{ width: "70px", height: "28px" }} />
       </div>
-      <Row style={{ display: "flex",  height: "60%", justifyContent: "space-between", marginTop: "50px" }} >
+      <Row style={{ display: "flex", height: "60%", justifyContent: "space-between", marginTop: "50px" }} >
         {itemsToDisplay.map((item, index) => (
           <Link
             key={index}
@@ -138,15 +138,18 @@ function Newsidebar({ setActiveItemLabel }) {
 
               // Clear institution tab state when going to Institution
               if (item.path === "/institutionadding") {
+                fetchTeacherDetails();
                 localStorage.removeItem("currentTab");
               }
-              
+
               // Fetch teacher details when clicking on Aarna navbar
               if (item.path === "/aarnanavbar") {
                 fetchTeacherDetails();
               }
             }}
-            style={{ textDecoration: "none", color: "inherit" }}> 
+
+
+            style={{ textDecoration: "none", color: "inherit" }}>
             <Col className={`newsidebar_menu_item_col ${activeItem.startsWith(item.path) ? "active" : ""}`}>
               <div className="newsidebar_icon_container_div">
                 <span className={`newsidebar_icon_img ${activeItem === item.path ? "active_icon" : ""}`}>
