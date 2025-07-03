@@ -3,15 +3,17 @@ import React, { useRef, useState } from 'react';
 import './newpendingview.css';
 import { AiOutlineFilePdf } from 'react-icons/ai';
 import { FaArrowLeft } from "react-icons/fa6";
-import NewPendingCreateQuestion from './NewPendingCreateQuestion';
+// import NewPendingCreateQuestion from './NewPendingCreateQuestion';
 import NewQuestionGenerator from '../teacherquestiongenerator/NewQuestionGenerator';
 import { useSelector } from 'react-redux';
+import Swal from "sweetalert2";
 
-const NewPendingView = ({ selectedItem, onBack }) => {
+const NewPendingView = ({ selectedItem, onBack, onRefresh }) => {
     console.log(selectedItem,"selectedItemselectedItemankit")
     const [selectedFile, setSelectedFile] = useState(null);
     const [showCreateQ, setShowCreateQ] = useState(false);
     const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
+    console.log(selectedFile,"selectedFileselectedFileselectedFileankit ")
     const handlenavigate = () => {
         navigate("/teacherprofile",);
     };
@@ -26,6 +28,19 @@ const NewPendingView = ({ selectedItem, onBack }) => {
         setSelectedFile(null);
         // reset the input so you can re-pick the same file if needed
         fileInputRef.current.value = "";
+    };
+
+    const handleCreateQuestion = () => {
+        if (!selectedFile) {
+            Swal.fire({
+                icon: "warning",
+                title: "PDF Required",
+                text: "Please upload a PDF file first before creating questions.",
+                showConfirmButton: true,
+            });
+            return;
+        }
+        setShowCreateQ(true);
     };
 
     return (
@@ -71,11 +86,11 @@ const NewPendingView = ({ selectedItem, onBack }) => {
                         <div className="newpendingview-row">
                             <div><span className="newpendingview-row_label">Start Time</span><p>{selectedItem.start_time}</p></div>
                             <div><span className="newpendingview-row_label">End Time</span><p>{selectedItem.end_time}</p></div>
-                            <div><span className="newpendingview-row_label">Out of Marks</span><p>{selectedItem.class_name}</p></div>
+                            <div><span className="newpendingview-row_label">Out of Marks</span><p>{selectedItem.out_of_marks}</p></div>
                             <div><span className="newpendingview-row_label">Term</span><p>{selectedItem.term}</p></div>
                         </div>
                         <div className="newpendingview-create-questions-wrapper" >
-                            <button className="newpendingview-create-questions" onClick={() => setShowCreateQ(true)}>
+                            <button className="newpendingview-create-questions" onClick={handleCreateQuestion}>
                                 Create Question
                             </button>
                         </div>
@@ -114,7 +129,7 @@ const NewPendingView = ({ selectedItem, onBack }) => {
 
 
 
-                            {/* <=== the new “chip” that appears once a file is selected=== */}
+                            {/* <=== the new "chip" that appears once a file is selected=== */}
                             {selectedFile && (
                                 <div className="newpendingview-file-info">
 
@@ -139,13 +154,18 @@ const NewPendingView = ({ selectedItem, onBack }) => {
                     </div>
 
                     {/* Footer */}
-                    <div className="newpendingview-footer">
+                    {/* <div className="newpendingview-footer">
                         <button className="newpendingview-submit">Submit</button>
-                    </div>
+                    </div> */}
                 </>
             ) : (
-                /* If showCreateQ is true, render the “create question” screen instead */
-                <NewQuestionGenerator onClose={() => setShowCreateQ(false)} />
+                /* If showCreateQ is true, render the "create question" screen instead */
+                <NewQuestionGenerator 
+                    onClose={() => setShowCreateQ(false)} 
+                    selectedFile={selectedFile}
+                    selectedItem={selectedItem}
+                    onRefresh={onRefresh}
+                />
             )}
         </div>
     );

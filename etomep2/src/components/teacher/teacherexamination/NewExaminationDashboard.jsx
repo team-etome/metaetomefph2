@@ -38,12 +38,22 @@ function NewExaminationDashboard() {
     
     const [selectedItem, setSelectedItem] = useState(null);
     const [selectedItemCompleted, setSelectedItemCompleted] = useState(null);
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     const handleBackFromDetail = () => {
         setSelectedItem(null);
     };
     const handleBackFromDetailCompleted = () => {
         setSelectedItemCompleted(null);
+    };
+
+    // Function to refresh the pending examinations data
+    const handleRefreshPendingData = () => {
+        console.log("Refreshing pending examinations data...");
+        // Increment refresh trigger to force NewExaminationPending to re-fetch data
+        setRefreshTrigger(prev => prev + 1);
+        // Reset selected item to go back to the list view
+        setSelectedItem(null);
     };
 
     if (selectedItem) {
@@ -53,6 +63,7 @@ function NewExaminationDashboard() {
                     <NewPendingView
                         selectedItem={selectedItem}
                         onBack={handleBackFromDetail}
+                        onRefresh={handleRefreshPendingData}
                     />
                 </Container>
             </div>
@@ -135,7 +146,7 @@ function NewExaminationDashboard() {
                     </Row>
                 </div>
                 <div className="newexaminationdashboard_dashboard_container" >
-                    {activeTab === "Pending" && <NewExaminationPending onSelectItem={setSelectedItem} />}
+                    {activeTab === "Pending" && <NewExaminationPending onSelectItem={setSelectedItem} refreshTrigger={refreshTrigger} />}
                     {activeTab === "Completed" && <NewExaminationCompleted onSelectItem={setSelectedItemCompleted} />}
 
                 </div>

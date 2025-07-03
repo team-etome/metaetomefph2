@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import './newcompletedview.css';
 import { AiOutlineFilePdf } from 'react-icons/ai';
 import { FaArrowLeft } from "react-icons/fa6";
-import NewPendingCreateQuestion from './NewPendingCreateQuestion';
+// import NewPendingCreateQuestion from './NewPendingCreateQuestion';
 import NewQuestionGenerator from '../teacherquestiongenerator/NewQuestionGenerator';
 import { useSelector } from 'react-redux';
 
