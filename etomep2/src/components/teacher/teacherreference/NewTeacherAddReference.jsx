@@ -1,17 +1,45 @@
 // src/components/newteacheraddreference.jsx
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './newteacheraddreference.css';
 import { AiOutlineFilePdf } from 'react-icons/ai';
 import { IoClose } from 'react-icons/io5';
 import { BsCalendar3 } from 'react-icons/bs';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
 
-const NewTeacherAddReference = ({ onClose }) => {
+const NewTeacherAddReference = ({ onClose, class_name, division, subject, editData, isEditMode }) => {
+    const APIURL = useSelector((state) => state.APIURL.url);
+    const teacher = useSelector((state) => state.teacherinfo);
+    const teacher_id = teacher.teacherinfo?.teacher_id;
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef();
     const [title, setTitle] = useState('');
-    const [dueDate, setDueDate] = useState('');
-    const [mark, setMark] = useState('');
+    const [url, setUrl] = useState('');
     const [urlMode, setUrlMode] = useState(false);
+
+    // Populate form when in edit mode
+    useEffect(() => {
+        if (isEditMode && editData) {
+            setTitle(editData.title || '');
+            
+            // Determine if it's a file or URL reference
+            if (editData.pdf) {
+                // If there's a PDF, it's a file reference
+                setUrlMode(false);
+                const fileName = editData.pdf.split('/').pop().split('?')[0]; // Remove query parameters
+                setSelectedFile({ 
+                    name: fileName,
+                    isExistingFile: true,
+                    url: editData.pdf 
+                });
+            } else if (editData.url) {
+                // If there's a URL, it's a URL reference
+                setUrlMode(true);
+                setUrl(editData.url);
+            }
+        }
+    }, [isEditMode, editData]);
 
     const handleFileChange = e => {
         const file = e.target.files[0];
@@ -20,8 +48,76 @@ const NewTeacherAddReference = ({ onClose }) => {
 
     const clearFile = () => {
         setSelectedFile(null);
-        // reset the input so you can re-pick the same file if needed
         fileInputRef.current.value = "";
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const requestMethod = isEditMode ? 'put' : 'post';
+            const requestUrl = isEditMode ? `${APIURL}/api/reference/${editData.id}` : `${APIURL}/api/reference`;
+            
+            if (urlMode) {
+                // Send URL data as JSON
+                const urlData = {
+                    class_name,
+                    division,
+                    subject,
+                    teacher: teacher_id,
+                    title,
+                    url
+                };
+                
+                // Add ID for edit mode
+                if (isEditMode && editData) {
+                    urlData.id = editData.id;
+                }
+                
+                await axios[requestMethod](requestUrl, urlData);
+            } else {
+                // Send file data as FormData
+                const formData = new FormData();
+                formData.append('class_name', class_name);
+                formData.append('division', division);
+                formData.append('subject', subject);
+                formData.append('teacher', teacher_id);
+                formData.append('title', title);
+                
+                // Add ID for edit mode
+                if (isEditMode && editData) {
+                    formData.append('id', editData.id);
+                }
+                
+                if (selectedFile) {
+                    if (selectedFile.isExistingFile) {
+                        // If it's an existing file, we don't need to append it again
+                        formData.append('keep_existing_pdf', 'true');
+                        formData.append('existing_pdf_url', selectedFile.url);
+                    } else {
+                        // New file selected
+                        formData.append('pdf', selectedFile);
+                    }
+                }
+                
+                await axios[requestMethod](requestUrl, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+            }
+            Swal.fire({
+                icon: 'success',
+                title: isEditMode ? 'Reference Updated' : 'Reference Added',
+                text: isEditMode ? 'The reference was updated successfully!' : 'The reference was added successfully!'
+            });
+            onClose();
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to add reference.'
+            });
+        }
     };
 
     return (
@@ -29,7 +125,9 @@ const NewTeacherAddReference = ({ onClose }) => {
             <div className="newteacheraddreference-modal" >
                 {/* Header */}
                 <div className="newteacheraddreference-header">
-                    <p className="newteacheraddreference-title">Add Assignments</p>
+                    <p className="newteacheraddreference-title">
+                        {isEditMode ? 'Edit Reference' : 'Add Reference'}
+                    </p>
                     <button className="newteacheraddreference-close" onClick={onClose}>
                         <IoClose size={24} />
                     </button>
@@ -104,7 +202,7 @@ const NewTeacherAddReference = ({ onClose }) => {
 
 
 
-                        {/* <=== the new “chip” that appears once a file is selected=== */}
+                        {/* <=== the new "chip" that appears once a file is selected=== */}
                         {selectedFile && (
                             <div className="newteacheraddreference-file-info">
 
@@ -115,6 +213,11 @@ const NewTeacherAddReference = ({ onClose }) => {
 
                                 <span className="newteacheraddreference-file-name">
                                     {selectedFile.name}
+                                    {selectedFile.isExistingFile && (
+                                        <span style={{ color: '#666', fontSize: '12px', marginLeft: '8px' }}>
+                                            (Existing file)
+                                        </span>
+                                    )}
                                 </span>
                                 <button
                                     className="newteacheraddreference-file-remove"
@@ -133,6 +236,8 @@ const NewTeacherAddReference = ({ onClose }) => {
                           <input
                             type="text"
                             placeholder="Link"
+                            value={url}
+                            onChange={e => setUrl(e.target.value)}
                             className="newteacheraddreference-input"
                           />
                         </div>
@@ -144,12 +249,16 @@ const NewTeacherAddReference = ({ onClose }) => {
                 <div className="newteacheraddreference-footer">
                     <button
                         className="newaddassignmentmanually-clear-btn"
-                        onClick={() => {/* clear the textarea here */ }}
+                        onClick={() => {
+                            setTitle('');
+                            setUrl('');
+                            clearFile();
+                        }}
                     >
                         Clear
                     </button>
-                    <button className="newaddassignmentmanually-submit-btn">
-                        Submit
+                    <button className="newaddassignmentmanually-submit-btn" onClick={handleSubmit}>
+                        {isEditMode ? 'Update' : 'Submit'}
                     </button>
                 </div>
             </div>

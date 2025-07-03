@@ -17,6 +17,10 @@ const NewTeacherAssignments = ({ class_name, division, subject }) => {
     const teacher_id = teacher.teacherinfo?.teacher_id;
     const [showPopup, setShowPopup] = useState(false);
     const [assignments, setAssignments] = useState([]);
+    const [selectedMonth, setSelectedMonth] = useState(null);
+    const [selectedYear, setSelectedYear] = useState(null);
+    const [editData, setEditData] = useState(null);
+    const [isEditMode, setIsEditMode] = useState(false);
     const navigate = useNavigate();
     console.log(class_name, division, subject,teacher_id,"class_name, division, subject,teacher_id")
 
@@ -43,6 +47,88 @@ const NewTeacherAssignments = ({ class_name, division, subject }) => {
             fetchAssignments();
         }
     }, [APIURL, teacher_id, class_name, division, subject, showPopup]);
+
+    console.log(assignments,"response.dataresponse.dataresponse.data")
+
+    // Edit handler for assignments
+    const handleEditAssignment = (assignment) => {
+        // Use the existing assignment data from the assignments array
+        setEditData(assignment);
+        setIsEditMode(true);
+        setShowPopup(true);
+    };
+
+    // Delete handler for assignments
+    const handleDeleteAssignment = async (id) => {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this deletion!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+          cancelButtonText: "No, cancel"
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              await axios.delete(`${APIURL}/api/testdelete/${id}/`, {
+                params: { type: "assignment" }
+              });
+              // Remove the deleted assignment from state
+              setAssignments(prevAssignments => {
+                const newAssignments = { ...prevAssignments };
+                if (newAssignments.assignments) {
+                  newAssignments.assignments = newAssignments.assignments.filter(assignment => assignment.id !== id);
+                }
+                return newAssignments;
+              });
+              Swal.fire("Deleted!", "Your assignment has been deleted.", "success");
+            } catch (error) {
+              console.error("Error deleting assignment:", error);
+              Swal.fire("Error!", "Failed to delete assignment.", "error");
+            }
+          }
+        });
+    };
+
+    // Extract unique months and years from assignments
+    const getUniqueMonthsAndYears = (assignmentList) => {
+        const months = new Set();
+        const years = new Set();
+        
+        assignmentList.forEach(assignment => {
+            if (assignment.postedOn || assignment.dueDate || assignment.due_date || assignment.date) {
+                const date = new Date(assignment.postedOn || assignment.dueDate || assignment.due_date || assignment.date);
+                const month = date.toLocaleString('default', { month: 'long' });
+                const year = date.getFullYear().toString();
+                months.add(month);
+                years.add(year);
+            }
+        });
+        
+        return {
+            months: Array.from(months).sort(),
+            years: Array.from(years).sort((a, b) => b - a) // Sort years descending
+        };
+    };
+
+    // Filter assignments based on selected month and year
+    const getFilteredAssignments = (assignmentList) => {
+        if (!selectedMonth && !selectedYear) return assignmentList;
+        
+        return assignmentList.filter(assignment => {
+            if (!assignment.postedOn && !assignment.dueDate && !assignment.due_date && !assignment.date) return false;
+            const date = new Date(assignment.postedOn || assignment.dueDate || assignment.due_date || assignment.date);
+            const month = date.toLocaleString('default', { month: 'long' });
+            const year = date.getFullYear().toString();
+            
+            const monthMatch = !selectedMonth || month === selectedMonth.value;
+            const yearMatch = !selectedYear || year === selectedYear.value;
+            
+            return monthMatch && yearMatch;
+        });
+    };
 
     const dashboardsmallcustomStyles = {
         control: (base, state) => ({
@@ -106,6 +192,9 @@ const NewTeacherAssignments = ({ class_name, division, subject }) => {
         ? assignments
         : [];
 
+    const { months, years } = getUniqueMonthsAndYears(assignmentList);
+    const filteredAssignments = getFilteredAssignments(assignmentList);
+
     return (
         <div className="newteacherassignments_main_container">
             <div className="newteacherassignments_main_header_container">
@@ -114,18 +203,18 @@ const NewTeacherAssignments = ({ class_name, division, subject }) => {
 
                         <Select
                             isClearable
-                            // value={examTypes.find((type) => type === selectedExamType) ? { label: selectedExamType, value: selectedExamType } : null}
-                            // onChange={handleExamTypeChange}
-                            // options={examTypes.map((type) => ({ label: type, value: type }))}
+                            value={selectedMonth}
+                            onChange={setSelectedMonth}
+                            options={months.map(month => ({ label: month, value: month }))}
                             styles={dashboardsmallcustomStyles}
                             placeholder="Select Month"
                         />
 
                         <Select
                             isClearable
-                            // value={examYears.find((year) => year === selectedFilterYear) ? { label: selectedFilterYear, value: selectedFilterYear } : null}
-                            // onChange={handleYearChange}
-                            // options={examYears.map((year) => ({ label: year, value: year }))}
+                            value={selectedYear}
+                            onChange={setSelectedYear}
+                            options={years.map(year => ({ label: year, value: year }))}
                             styles={dashboardsmallcustomStyles}
                             placeholder="Select Year"
                         />
@@ -140,10 +229,16 @@ const NewTeacherAssignments = ({ class_name, division, subject }) => {
                         </button>
                         {showPopup && (
                             <NewTeacherAddAssignment
-                                onClose={() => setShowPopup(false)}
+                                onClose={() => {
+                                    setShowPopup(false);
+                                    setEditData(null);
+                                    setIsEditMode(false);
+                                }}
                                 class_name={class_name}
                                 division={division}
                                 subject={subject}
+                                editData={editData}
+                                isEditMode={isEditMode}
                             />
                         )}
                     </div>
@@ -151,7 +246,7 @@ const NewTeacherAssignments = ({ class_name, division, subject }) => {
             </div>
             <div className="newteacherassignments_classes_box" >
                 <div className="newteacherassignments_table_wrapper">
-                    {assignmentList && assignmentList.length > 0 ? (
+                    {filteredAssignments && filteredAssignments.length > 0 ? (
                         <table className="newteacherassignments_table">
                             <colgroup>
                                 <col style={{ width: '45%' }} />
@@ -166,14 +261,24 @@ const NewTeacherAssignments = ({ class_name, division, subject }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {assignmentList.map(a => (
+                                {filteredAssignments.map(a => (
                                     <tr key={a.id}>
                                         <td>{a.title}</td>
                                         <td>{a.postedOn || a.dueDate || a.due_date}</td>
                                         <td className="newteacherassignments_actions_col">
                                             <div className="newteacherassignments_actions_wrapper">
-                                                <MdOutlineEdit size={24} color="#9F7BFF" />
-                                                <RiDeleteBinLine size={24} color="#FF6C6C" />
+                                                <MdOutlineEdit 
+                                                    size={24} 
+                                                    color="#9F7BFF" 
+                                                    onClick={() => handleEditAssignment(a)}
+                                                    style={{ cursor: 'pointer' }}
+                                                />
+                                                <RiDeleteBinLine 
+                                                    size={24} 
+                                                    color="#FF6C6C" 
+                                                    onClick={() => handleDeleteAssignment(a.id)}
+                                                    style={{ cursor: 'pointer' }}
+                                                />
                                             </div>
                                         </td>
                                     </tr>

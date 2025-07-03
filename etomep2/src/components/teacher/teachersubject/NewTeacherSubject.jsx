@@ -9,11 +9,12 @@ import {
     Dropdown,
 } from "react-bootstrap";
 import "./newteachersubject.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import NewTeacherSubjectSelect from "./NewTeacherSubjectSelect";
 import { IoArrowBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { teachersubjectinfo } from "../../../Redux/Actions/TeacherSubjectInfoAction";
 
 const NewTeacherSubject = () => {
     const admininfo = useSelector((state) => state.admininfo);
@@ -39,6 +40,8 @@ const NewTeacherSubject = () => {
             try {
                 const response = await axios.get(`${APIURL}/api/subject_list/${teacher_id}`);
                 setSubjects(response.data);
+                // Don't dispatch here - we'll dispatch when a subject is selected
+                
             } catch (error) {
                 console.error('Failed to fetch subjects:', error);
             }
@@ -51,9 +54,18 @@ const NewTeacherSubject = () => {
 
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    
     const handlenavigate = () => {
         navigate("/teacherprofile");
     };
+
+    const handleSubjectSelect = (subject) => {
+        dispatch(teachersubjectinfo(subject));
+        setActiveSubject(subject);
+    };
+
+    
 
 
     return (
@@ -95,7 +107,7 @@ const NewTeacherSubject = () => {
                             <div className="newteachersubject-card-grid">
                                 {subjects.map((s, i) => (
                                     <div key={i} className="newteachersubject-card"
-                                        onClick={() => setActiveSubject(s)}>
+                                        onClick={() => handleSubjectSelect(s)}>
                                         <div className="newteachersubject-card-header" >
                                             <div className="newteachersubject-card-circle">
                                                 {s.class} {s.division}

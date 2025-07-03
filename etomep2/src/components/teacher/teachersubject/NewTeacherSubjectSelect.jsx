@@ -160,15 +160,25 @@ function NewTeacherSubjectSelect({ subject, onBack }) {
 
                 ) : (
                     <div className="newteachersubjectselect_dashboard_container">
-                        {activeTab === "Assignments" && <NewTeacherAssignments 
+                        {activeTab === "Assignments" && <NewTeacherAssignments
                             class_name={subject.class}
                             division={subject.division}
-                            teacher={teacher_id}
                             subject={subject.subject}
                         />}
-                        {activeTab === "Reference" && <NewTeacherReferenceList />}
-                        {activeTab === "Mock Tests" && <NewTestListing />}
-                        {activeTab === "MCQ" && <NewTeacherMcq />}
+                        {activeTab === "Reference" && <NewTeacherReferenceList
+                            class_name={subject.class}
+                            division={subject.division}
+                            subject={subject.subject}
+                        />}
+                        {activeTab === "Mock Tests" && <NewTestListing
+                            class_name={subject.class}
+                            division={subject.division}
+                            subject={subject.subject}
+                        />}
+                        {activeTab === "MCQ" && <NewTeacherMcq
+                            class_name={subject.class}
+                            division={subject.division}
+                            subject={subject.subject} />}
                         {activeTab === "Result" && <NewTeacherResult />}
 
 
