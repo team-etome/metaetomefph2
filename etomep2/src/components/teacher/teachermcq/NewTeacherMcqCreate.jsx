@@ -14,19 +14,14 @@ import { TbSection } from "react-icons/tb";
 import { PiDotsSix } from "react-icons/pi";
 import TeacherTextEditor from "../teachertexteditor/TeacherTextEditor";
 import "./newteachermcqcreate.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-function NewTeacherMcqCreate() {
-    const location = useLocation();
-    const formData = location.state;
-
+function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdded }) {
     const teacher_subject = useSelector((state) => state?.teachersubjectinfo);
-
-    console.log(teacher_subject, "teacher subjecttttttt");
     const APIURL = useSelector((state) => state.APIURL.url);
 
     console.log(formData, "formdat");
@@ -68,8 +63,6 @@ function NewTeacherMcqCreate() {
             console.error("Question element not found");
             return null;
         }
-
-        captureQuestionImage;
 
         try {
             const canvas = await html2canvas(questionElement, { scale: 1 });
@@ -138,7 +131,6 @@ function NewTeacherMcqCreate() {
         // Prepare the request data
         const requestData = {
             test: "MCQ", // You can adjust this value
-            // formData: formData,
             duration: formData.duration,
             exam_name: formData.examName,
             out_of_mark: formData.outOfMarks,
@@ -146,9 +138,9 @@ function NewTeacherMcqCreate() {
             topic: formData.topic,
             negative_marks: formData.negativeMark,
             individual_mark: formData.individualMark,
-            class: teacher_subject.teachersubjectinfo?.class,
-            division: teacher_subject.teachersubjectinfo?.division,
-            subject: teacher_subject.teachersubjectinfo?.subject,
+            class: class_name || teacher_subject.teachersubjectinfo?.class,
+            division: division || teacher_subject.teachersubjectinfo?.division,
+            subject: subject || teacher_subject.teachersubjectinfo?.subject,
             admin: teacher_subject.teachersubjectinfo?.admin,
             questions: exportedData,
         };
@@ -161,14 +153,31 @@ function NewTeacherMcqCreate() {
 
             // Handle successful export
             if (response.status === 200) {
-                // alert("Export completed successfully!");
-                navigate("/teachermcqlist");
+                Swal.fire({
+                    icon: "success",
+                    title: "Export successful!",
+                    timer: 1500,
+                }).then(() => {
+                    if (onMcqAdded) {
+                        onMcqAdded(); // This will handle going back to the listing
+                    }
+                });
             } else {
-                alert("Failed to export questions.");
+                Swal.fire({
+                    icon: "error",
+                    title: "Export failed!",
+                    text: "Failed to export questions.",
+                    showConfirmButton: true,
+                });
             }
         } catch (error) {
             console.error("Error exporting questions:", error);
-            alert("Failed to export questions. Please try again.");
+            Swal.fire({
+                icon: "error",
+                title: "Export failed!",
+                text: "Failed to export questions. Please try again.",
+                showConfirmButton: true,
+            });
         } finally {
             // Reset progress and exporting state
             setIsExporting(false);
@@ -286,31 +295,6 @@ function NewTeacherMcqCreate() {
             value;
         setSections(newSections);
     };
-
-    // const handleNumberOfOptionsChange = (
-    //   sectionIndex,
-    //   questionIndex,
-    //   numberOfOptions
-    // ) => {
-    //   setSections((prev) => {
-    //     const updatedSections = [...prev];
-    //     const question = updatedSections[sectionIndex].questions[questionIndex];
-    //     const currentOptions = question.options.slice(0, numberOfOptions);
-
-    //     while (currentOptions.length < numberOfOptions) {
-    //       currentOptions.push(
-    //         `Option ${String.fromCharCode(65 + currentOptions.length)}`
-    //       );
-    //     }
-
-    //     if (question.answerKey >= numberOfOptions) {
-    //       question.answerKey = null;
-    //     }
-
-    //     question.options = currentOptions;
-    //     return updatedSections;
-    //   });
-    // };
 
     const handleNumberOfOptionsChange = (
         sectionIndex,

@@ -3,7 +3,7 @@ import { IoArrowBack } from "react-icons/io5";
 import "./newteachermcqadd.css";
 import NewTeacherMcqCreate from "./NewTeacherMcqCreate";
 
-export default function NewTeacherMcqAdd({ onBack: onParentBack }) {
+export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, division, subject, onMcqAdded }) {
   const [step, setStep] = useState(1);
   const [formValues, setFormValues] = useState({
     examName: "",
@@ -27,6 +27,27 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack }) {
   const goBack = () => {
     if (step === 1) return onParentBack?.();
     setStep(1);
+  };
+
+  const handleMcqAdded = () => {
+    // Reset form values
+    setFormValues({
+      examName: "",
+      outOfMarks: "",
+      negativeMark: "",
+      individualMark: "",
+      duration: "",
+      topic: "",
+      teacherCode: "",
+    });
+    // Go back to step 1
+    setStep(1);
+    // Call the parent's onMcqAdded to refresh the list
+    if (onMcqAdded) {
+      onMcqAdded();
+    }
+    // Go back to the main listing
+    onParentBack?.();
   };
 
   return (
@@ -96,16 +117,13 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack }) {
                 <label htmlFor="duration">
                   Duration <span className="required">*</span>
                 </label>
-                <select
-                  id="duration"
-                  value={formValues.duration}
-                  onChange={handleChange}
-                  className="newteachermcqadd_input"
-                >
-                  <option value="">Select duration</option>
-                  <option>10 min</option>
-                  <option>20 min</option>
-                </select>
+                <input
+                    id="duration"
+                    type="number"
+                    value={formValues.duration}
+                    onChange={handleChange}
+                    className="newteachermcqadd_input"
+                  />
               </div>
               <div className="newteachermcqadd_field">
                 <label htmlFor="topic">
@@ -165,7 +183,15 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack }) {
       )}
 
       {/* Step 2 would go here */}
-      {step === 2 && <NewTeacherMcqCreate formData={formValues} />}
+      {step === 2 && (
+        <NewTeacherMcqCreate 
+          formData={formValues} 
+          class_name={class_name}
+          division={division}
+          subject={subject}
+          onMcqAdded={handleMcqAdded}
+        />
+      )}
     </div>
   );
 }

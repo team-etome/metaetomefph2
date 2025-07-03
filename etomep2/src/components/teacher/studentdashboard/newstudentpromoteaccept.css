@@ -80,7 +80,7 @@
     /* flex: 1 1 auto; */
     overflow-y: auto;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 320px));
     gap: 16px;
     /* padding-right: 8px; */
 }

@@ -21,54 +21,28 @@ import NewTestListing from "../teachertestlist/NewTestListing";
 import NewTeacherMcq from "../teachermcq/NewTeacherMcq";
 
 
-function NewTeacherSubjectSelect({ subject,onBack }) {
+function NewTeacherSubjectSelect({ subject, onBack }) {
     // const [activeTab, setActiveTab] = useState("Assignments");
-    const admininfo = useSelector((state) => state.admininfo);
-    // const [activeSubject, setActiveSubject] = useState(null);
-    console.log(admininfo, "admin info");
+    const APIURL = useSelector((state) => state.APIURL.url);
+    const teacher = useSelector((state) => state.teacherinfo);
+    const teacher_id = teacher.teacherinfo?.teacher_id;
+    const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [activeTab, setActiveTab] = useState(null);
     const handleTabSelect = (k) => {
         setActiveTab(prev => prev === k ? null : k);
     };
+    console.log(subject, "subjectsubjectsubject seleeeeee")
 
 
     const navigate = useNavigate();
+    const handlenavigate = () => {
+        navigate("/teacherprofile");
+    };
     // const [activeTab, setActiveTab] = useState(() => {
     //     return localStorage.getItem("aarnaActiveTab") || " ";
     // });
-    const dummyStudents = [
-        {
-            rollNo: 1,
-            studentName: "Ananthu",
-            classSection: subject.classSection,
-            imageUrl: "https://i.pravatar.cc/100?img=32",
-        },
-        {
-            rollNo: 2,
-            studentName: "Arjun",
-            classSection: subject.classSection,
-            imageUrl: "https://i.pravatar.cc/100?img=12",
-        },
-        {
-            rollNo: 3,
-            studentName: "Priya",
-            classSection: subject.classSection,
-            imageUrl: "https://i.pravatar.cc/100?img=56",
-        },
-        {
-            rollNo: 4,
-            studentName: "Vikram",
-            classSection: subject.classSection,
-            imageUrl: "https://i.pravatar.cc/100?img=5",
-        },
-        {
-            rollNo: 5,
-            studentName: "Sneha",
-            classSection: subject.classSection,
-            imageUrl: "https://i.pravatar.cc/100?img=27",
-        },
-    ];
+    const students = subject.students || [];
 
     useEffect(() => {
         localStorage.setItem("aarnaActiveTab", activeTab);
@@ -81,10 +55,6 @@ function NewTeacherSubjectSelect({ subject,onBack }) {
         localStorage.setItem("activeTab", activeTab);
     }, [activeTab]);
 
-    const handlenavigate = () => {
-        navigate('/adminprofile', { state: { admininfo: admininfo.admininfo } });
-    };
-
     return (
         <div className="newteachersubjectselect_dashboard">
             <Container className="newteachersubjectselect_main_container" >
@@ -95,19 +65,19 @@ function NewTeacherSubjectSelect({ subject,onBack }) {
                                 <button className="newteachersubjectselect_back-btn" onClick={onBack}>
                                     <IoArrowBack size={24} />
                                 </button>
-                                <p>science</p>
+                                <p>{subject.subject}</p>
                             </div>
                         </Col>
                         <Col md={6} className="newteachersubjectselect_header_right_profilepic">
                             <div className="newteachersubjectselect_header_institution">
                                 <div className="newteachersubjectselect_hd_title">
                                     <p style={{ color: "#222222", }}>
-                                        {admininfo.admininfo?.email}
+                                        {teacherInfo?.email || " "}
                                     </p>
                                 </div>
                                 <img
                                     onClick={handlenavigate}
-                                    src={admininfo.admininfo?.logo}
+                                    src={teacherInfo?.image || " "}
                                     alt="Profile"
                                     style={{
                                         width: "42px",
@@ -154,26 +124,24 @@ function NewTeacherSubjectSelect({ subject,onBack }) {
                             </div>
                             <div className="newteachersubjectselect_classes_box">
                                 <div className="newteachersubjectselect-grid-container">
-                                    {dummyStudents.map((student) => (
-                                        <div key={student.rollNo} className="newteachersubjectselect-card"
+                                    {students.map((student) => (
+                                        <div key={student.id || student.rollNo} className="newteachersubjectselect-card"
                                             onClick={() => setSelectedStudent(student)}
                                             style={{ cursor: "pointer" }}>
                                             <img
-                                                // src={student.image_url ? student.image_url : studentDefault}  
-                                                src={student.imageUrl}
+                                                src={student.imageUrl || student.image || "https://i.pravatar.cc/100?img=32"}
                                                 className="newteachersubjectselect-avatar"
                                             />
                                             <div className="newteachersubjectselect-info">
                                                 <div className="newteachersubjectselect-name">
-                                                    {student.studentName}
+                                                    {student.studentName || student.student_name}
                                                 </div>
                                                 <div className="newteachersubjectselect-info-classrollno">
                                                     <span className="newteachersubjectselect-class">
-                                                        {/* {student.class_name} {student.division} */}
-                                                        Class {student.classSection}
+                                                        Class {student.classSection || student.class}
                                                     </span>
                                                     <span className="newteachersubjectselect-roll">
-                                                        Roll no: {student.rollNo}
+                                                        Roll no: {student.rollNo || student.roll_no}
                                                     </span>
                                                 </div>
                                             </div>
@@ -192,12 +160,27 @@ function NewTeacherSubjectSelect({ subject,onBack }) {
 
                 ) : (
                     <div className="newteachersubjectselect_dashboard_container">
-                        {activeTab === "Assignments" && <NewTeacherAssignments />}
-                        {activeTab === "Reference" && <NewTeacherReferenceList />}
-                        {activeTab === "Mock Tests" && <NewTestListing />}
-                        {activeTab === "MCQ" && <NewTeacherMcq/>}
+                        {activeTab === "Assignments" && <NewTeacherAssignments
+                            class_name={subject.class}
+                            division={subject.division}
+                            subject={subject.subject}
+                        />}
+                        {activeTab === "Reference" && <NewTeacherReferenceList
+                            class_name={subject.class}
+                            division={subject.division}
+                            subject={subject.subject}
+                        />}
+                        {activeTab === "Mock Tests" && <NewTestListing
+                            class_name={subject.class}
+                            division={subject.division}
+                            subject={subject.subject}
+                        />}
+                        {activeTab === "MCQ" && <NewTeacherMcq
+                            class_name={subject.class}
+                            division={subject.division}
+                            subject={subject.subject} />}
                         {activeTab === "Result" && <NewTeacherResult />}
-                        
+
 
                         {/* {activeTab === "Mock Tests" && <NewTeacherAssignments />}
                         {activeTab === "MCQ" && <NewTeacherAssignments />}

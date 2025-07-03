@@ -15,7 +15,7 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import "./newteachermocktest.css";
 import { useLocation } from "react-router-dom";
 
-function NewTeacherMockTest() {
+function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdded }) {
   const [subsections, setSubsections] = useState([
     {
       name: "Main Section",
@@ -33,35 +33,37 @@ function NewTeacherMockTest() {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [lastQuestionId, setLastQuestionId] = useState(1);
+  const teacher_subject = useSelector((state) => state?.teachersubjectinfo);
+  console.log(teacher_subject,"teacher_subjectteacher_subjectteacher_subjectteacher_subject")
+  const admin = teacher_subject.teachersubjectinfo?.admin
+  console.log(admin,"adminadminadminadminadmin  ")
+  
+  // Fallback: try to get admin from admininfo if not available in teachersubjectinfo
+  const admininfo = useSelector((state) => state.admininfo);
+  const admin_id = admininfo.admininfo?.admin_id;
+  console.log(admin_id, "admin_id from admininfo")
+
   const navigate = useNavigate();
 
   const APIURL = useSelector((state) => state.APIURL.url);
 
   console.log(APIURL, "api")
-  const teacher_subject = useSelector((state) => state?.teachersubjectinfo);
+  
 
-  console.log(teacher_subject, "teacher subject");
+  const duration = formData?.duration
+  const examDate = formData?.examDate
+  const examName = formData?.examName
+  const outOfMarks = formData?.outOfMarks
+  const teacherCode = formData?.teacherCode
+  const topic = formData?.topic
 
-  const location = useLocation();
-  const formData = location?.state || {};
+  const className = class_name
+  const divisionName = division
+  const subjectName = subject
 
-  const duration = formData.duration
-  const examDate = formData.examDate
-  const examName = formData.examName
-  const outOfMarks = formData.outOfMarks
-  const teacherCode = formData.teacherCode
-  const topic = formData.topic
-
-  const className = teacher_subject.teachersubjectinfo?.class
-  const division = teacher_subject.teachersubjectinfo?.division
-  const subject = teacher_subject.teachersubjectinfo?.subject
-  const admin = teacher_subject.teachersubjectinfo?.admin
-
-
-  console.log(admin, "adminnnnn")
+  // console.log(adminId, "adminnnnn")
 
   console.log(outOfMarks, "outOfMarks")
-
 
   console.log(formData, "form dataaaaaa");
 
@@ -73,16 +75,6 @@ function NewTeacherMockTest() {
       }, 500);
     }
   }, [triggerExport]);
-
-
-
-  // const handlePointsChange = (subsectionIndex, questionIndex, event) => {
-  //   const newSubsections = [...subsections];
-  //   newSubsections[subsectionIndex].questions[questionIndex].points =
-  //     event.target.value;
-  //   setSubsections(newSubsections);
-  // };
-
 
   const handlePointsChange = (subsectionIndex, questionIndex, event) => {
     const newPoints = parseInt(event.target.value, 10);
@@ -124,8 +116,6 @@ function NewTeacherMockTest() {
       setSubsections(newSubsections); // Update state if within limit
     }
   };
-
-
 
   const addQuestion = () => {
     const newSubsections = [...subsections];
@@ -288,9 +278,6 @@ function NewTeacherMockTest() {
     }
   };
 
-
-
-
   const sendToBackend = async (sectionsWithImages, APIURL) => {
     const data = {
       // question_id: exam_id,
@@ -302,9 +289,9 @@ function NewTeacherMockTest() {
       teacher_code: teacherCode || "default_teacherCode",
       topic: topic || "default_topic",
       class: className,
-      division: division,
-      subject: subject,
-      admin: admin,
+      division: divisionName,
+      subject: subjectName,
+      admin: admin || admin_id, // Use admin from teachersubjectinfo or fallback to admin_id
       test: "Mock Test",
     };
 
@@ -318,7 +305,9 @@ function NewTeacherMockTest() {
         // showConfirmButton: false,
         timer: 1500,
       }).then(() => {
-        navigate("/teachertestlist");
+        if (onTestAdded) {
+          onTestAdded(); // This will handle going back to the listing
+        }
       });
     } catch (error) {
       console.error("Error sending data to the backend:", error);
@@ -529,13 +518,13 @@ function NewTeacherMockTest() {
             </Row>
 
             <div className="new-mock_test_generator_header">
-                <button className="new-mock_test_generator_header-button"onClick={handleExport} disabled={loading}>
-                  {loading ? (
-                    <Spinner animation="border" size="sm" />
-                  ) : (
-                    "Submit"
-                  )}
-                </button>
+              <button className="new-mock_test_generator_header-button" onClick={handleExport} disabled={loading}>
+                {loading ? (
+                  <Spinner animation="border" size="sm" />
+                ) : (
+                  "Submit"
+                )}
+              </button>
             </div>
           </div>
         </Row>

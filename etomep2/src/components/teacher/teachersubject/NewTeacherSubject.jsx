@@ -9,23 +9,30 @@ import {
     Dropdown,
 } from "react-bootstrap";
 import "./newteachersubject.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import NewTeacherSubjectSelect from "./NewTeacherSubjectSelect";
 import { IoArrowBack } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { teachersubjectinfo } from "../../../Redux/Actions/TeacherSubjectInfoAction";
 
 const NewTeacherSubject = () => {
     const admininfo = useSelector((state) => state.admininfo);
     console.log(admininfo, "admin info");
     const [subjects, setSubjects] = useState([]);
-    const APIURL = useSelector(state => state.APIURL.url);
+    // const APIURL = useSelector(state => state.APIURL.url);
     const teacherinfo = useSelector((state) => state.teacherinfo);
-    const teacher_id = teacherinfo.teacherinfo?.teacher_id
+    // const teacher_id = teacherinfo.teacherinfo?.teacher_id
     console.log(subjects, "subjectssubjects")
     const [activeSubject, setActiveSubject] = useState(null);
 
     // handler to leave detail view
     const handleBack = () => setActiveSubject(null);
+
+    const APIURL = useSelector((state) => state.APIURL.url);
+    const teacher = useSelector((state) => state.teacherinfo);
+    const teacher_id = teacher.teacherinfo?.teacher_id;
+    const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
 
 
     useEffect(() => {
@@ -33,6 +40,8 @@ const NewTeacherSubject = () => {
             try {
                 const response = await axios.get(`${APIURL}/api/subject_list/${teacher_id}`);
                 setSubjects(response.data);
+                // Don't dispatch here - we'll dispatch when a subject is selected
+                
             } catch (error) {
                 console.error('Failed to fetch subjects:', error);
             }
@@ -44,6 +53,19 @@ const NewTeacherSubject = () => {
     }, [APIURL, teacher_id]);
 
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    
+    const handlenavigate = () => {
+        navigate("/teacherprofile");
+    };
+
+    const handleSubjectSelect = (subject) => {
+        dispatch(teachersubjectinfo(subject));
+        setActiveSubject(subject);
+    };
+
+    
 
 
     return (
@@ -62,12 +84,12 @@ const NewTeacherSubject = () => {
                                     <div className="newteachersubject_header_institution">
                                         <div className="newteachersubject_hd_title">
                                             <p style={{ color: "#222222", }}>
-                                                {/* {admininfo.admininfo?.email} */}
+                                                {teacherInfo?.email || " "}
                                             </p>
                                         </div>
                                         <img
-                                            // onClick={handlenavigate}
-                                            // src={admininfo.admininfo?.logo}
+                                            onClick={handlenavigate}
+                                            src={teacherInfo?.image || " "}
                                             alt="Profile"
                                             style={{
                                                 width: "42px",
@@ -85,7 +107,7 @@ const NewTeacherSubject = () => {
                             <div className="newteachersubject-card-grid">
                                 {subjects.map((s, i) => (
                                     <div key={i} className="newteachersubject-card"
-                                        onClick={() => setActiveSubject(s)}>
+                                        onClick={() => handleSubjectSelect(s)}>
                                         <div className="newteachersubject-card-header" >
                                             <div className="newteachersubject-card-circle">
                                                 {s.class} {s.division}

@@ -8,7 +8,7 @@ import NewQuestionGenerator from '../teacherquestiongenerator/NewQuestionGenerat
 import { useSelector } from 'react-redux';
 
 const NewPendingView = ({ selectedItem, onBack }) => {
-    console.log(selectedItem,"selectedItemselectedItem")
+    console.log(selectedItem,"selectedItemselectedItemankit")
     const [selectedFile, setSelectedFile] = useState(null);
     const [showCreateQ, setShowCreateQ] = useState(false);
     const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
@@ -61,18 +61,18 @@ const NewPendingView = ({ selectedItem, onBack }) => {
                         <div className="newpendingview-row">
                             <div>
                                 <span className="newpendingview-row_label">Exam Name</span>
-                                <p>{selectedItem.examName}</p>
+                                <p>{selectedItem.exam_name}</p>
                             </div>
                             <div><span className="newpendingview-row_label">Subject</span><p>{selectedItem.subject}</p></div>
-                            <div><span className="newpendingview-row_label">Exam Date</span><p>{selectedItem.examDate}</p></div>
-                            <div><span className="newpendingview-row_label">Class</span><p>{selectedItem.class}</p></div>
+                            <div><span className="newpendingview-row_label">Exam Date</span><p>{selectedItem.exam_date}</p></div>
+                            <div><span className="newpendingview-row_label">Class</span><p>{selectedItem.class_name}</p></div>
                         </div>
                         {/* Second row of four */}
                         <div className="newpendingview-row">
-                            <div><span className="newpendingview-row_label">Start Time</span><p>10:00</p></div>
-                            <div><span className="newpendingview-row_label">End Time</span><p>12:30</p></div>
-                            <div><span className="newpendingview-row_label">Out of Marks</span><p>100</p></div>
-                            <div><span className="newpendingview-row_label">Term</span><p>Term I</p></div>
+                            <div><span className="newpendingview-row_label">Start Time</span><p>{selectedItem.start_time}</p></div>
+                            <div><span className="newpendingview-row_label">End Time</span><p>{selectedItem.end_time}</p></div>
+                            <div><span className="newpendingview-row_label">Out of Marks</span><p>{selectedItem.class_name}</p></div>
+                            <div><span className="newpendingview-row_label">Term</span><p>{selectedItem.term}</p></div>
                         </div>
                         <div className="newpendingview-create-questions-wrapper" >
                             <button className="newpendingview-create-questions" onClick={() => setShowCreateQ(true)}>

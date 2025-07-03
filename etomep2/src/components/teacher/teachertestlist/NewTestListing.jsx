@@ -11,18 +11,140 @@ import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBinLine } from 'react-icons/ri';
 import NewTestListingAdd from './NewTestListingAdd';
 
-const NewTestListing = () => {
+const NewTestListing = ({ class_name, division, subject }) => {
+    console.log(class_name, division, subject,"class_name, division, subject, admin")
     const APIURL = useSelector((state) => state.APIURL.url);
+    const teacher = useSelector((state) => state.teacherinfo);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+    const teacher_id = teacher.teacherinfo?.teacher_id;
     const [adding, setAdding] = useState(false);
-    const dummyAssignments = Array.from({ length: 12 }, (_, i) => ({
-        id: i + 1,
-        title: `Science Assignment`,
-        postedOn: `0${5 + i}/08/2025`
-    }));
+    const [tests, setTests] = useState([]);
+    const [selectedMonth, setSelectedMonth] = useState(null);
+    const [selectedYear, setSelectedYear] = useState(null);
 
+    // Fetch tests from API
+    const fetchTests = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/api/test`, {
+                params: {
+                    teacher_id: teacher_id,
+                    class_name: class_name,
+                    division: division,
+                    subject: subject,
+                    type:"MOCK"
+                }
+            });
+            console.log('Fetched tests data:', response.data);
+            setTests(response.data);
+        } catch (error) {
+            console.error('Failed to fetch tests:', error);
+        }
+    };
 
-    console.log(admin_id, "admin eeee")
+    useEffect(() => {
+        if (teacher_id && class_name && division && subject) {
+            fetchTests();
+        }
+    }, [APIURL, teacher_id, class_name, division, subject]);
+
+    // Delete handler for tests
+    const handleDeleteTest = async (id) => {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this deletion!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+          cancelButtonText: "No, cancel"
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              await axios.delete(`${APIURL}/api/testdelete/${id}/`, {
+                params: { type: "mock" }
+              });
+              // Remove the deleted test from state
+              setTests(prevTests => {
+                console.log('Previous tests state:', prevTests);
+                console.log('Deleting test with ID:', id);
+                
+                // Handle different possible data structures
+                if (prevTests && Array.isArray(prevTests.test)) {
+                  const filteredTests = prevTests.test.filter(test => test.id !== id);
+                  console.log('Filtered tests (object structure):', filteredTests);
+                  return {
+                    ...prevTests,
+                    test: filteredTests
+                  };
+                } else if (Array.isArray(prevTests)) {
+                  const filteredTests = prevTests.filter(test => test.id !== id);
+                  console.log('Filtered tests (array structure):', filteredTests);
+                  return filteredTests;
+                }
+                console.log('No matching structure found, returning original state');
+                return prevTests;
+              });
+              Swal.fire("Deleted!", "Your test has been deleted.", "success");
+            } catch (error) {
+              console.error("Error deleting test:", error);
+              Swal.fire("Error!", "Failed to delete test.", "error");
+            }
+          }
+        });
+    };
+
+    // Extract unique months and years from tests
+    const getUniqueMonthsAndYears = (testList) => {
+        const months = new Set();
+        const years = new Set();
+        
+        testList.forEach(test => {
+            if (test.exam_date || test.date) {
+                const date = new Date(test.exam_date || test.date);
+                const month = date.toLocaleString('default', { month: 'long' });
+                const year = date.getFullYear().toString();
+                months.add(month);
+                years.add(year);
+            }
+        });
+        
+        return {
+            months: Array.from(months).sort(),
+            years: Array.from(years).sort((a, b) => b - a) // Sort years descending
+        };
+    };
+
+    // Filter tests based on selected month and year
+    const getFilteredTests = (testList) => {
+        if (!selectedMonth && !selectedYear) return testList;
+        
+        return testList.filter(test => {
+            if (!test.exam_date && !test.date) return false;
+            const date = new Date(test.exam_date || test.date);
+            const month = date.toLocaleString('default', { month: 'long' });
+            const year = date.getFullYear().toString();
+            
+            const monthMatch = !selectedMonth || month === selectedMonth.value;
+            const yearMatch = !selectedYear || year === selectedYear.value;
+            
+            return monthMatch && yearMatch;
+        });
+    };
+
+    // Robust test list extraction
+    console.log('Current tests state:', tests);
+    const testList = (tests && Array.isArray(tests.test))
+        ? tests.test
+        : Array.isArray(tests)
+            ? tests
+            : [];
+    console.log('Extracted testList:', testList);
+
+    const { months, years } = getUniqueMonthsAndYears(testList);
+    const filteredTests = getFilteredTests(testList);
+
+    console.log(teacher_id, "admin eeee")
     const navigate = useNavigate();
 
 
@@ -95,18 +217,18 @@ const NewTestListing = () => {
 
                                 <Select
                                     isClearable
-                                    // value={examTypes.find((type) => type === selectedExamType) ? { label: selectedExamType, value: selectedExamType } : null}
-                                    // onChange={handleExamTypeChange}
-                                    // options={examTypes.map((type) => ({ label: type, value: type }))}
+                                    value={selectedMonth}
+                                    onChange={setSelectedMonth}
+                                    options={months.map(month => ({ label: month, value: month }))}
                                     styles={dashboardsmallcustomStyles}
                                     placeholder="Select Month"
                                 />
 
                                 <Select
                                     isClearable
-                                    // value={examYears.find((year) => year === selectedFilterYear) ? { label: selectedFilterYear, value: selectedFilterYear } : null}
-                                    // onChange={handleYearChange}
-                                    // options={examYears.map((year) => ({ label: year, value: year }))}
+                                    value={selectedYear}
+                                    onChange={setSelectedYear}
+                                    options={years.map(year => ({ label: year, value: year }))}
                                     styles={dashboardsmallcustomStyles}
                                     placeholder="Select Year"
                                 />
@@ -138,18 +260,31 @@ const NewTestListing = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {dummyAssignments.map(a => (
-                                        <tr key={a.id}>
-                                            <td>{a.title}</td>
-                                            <td>{a.postedOn}</td>
-                                            <td className="newtestlisting_actions_col">
-                                                <div className="newtestlisting_actions_wrapper">
-                                                    <MdOutlineEdit size={24} color="#9F7BFF" />
-                                                    <RiDeleteBinLine size={24} color="#FF6C6C" />
-                                                </div>
+                                    {filteredTests && filteredTests.length > 0 ? (
+                                        filteredTests.map(a => (
+                                            <tr key={a.id}>
+                                                <td>{a.exam_name || a.title}</td>
+                                                <td>{a.exam_date || a.postedOn || a.date}</td>
+                                                <td className="newtestlisting_actions_col">
+                                                    <div className="newtestlisting_actions_wrapper">
+                                                        <MdOutlineEdit size={24} color="#9F7BFF" />
+                                                        <RiDeleteBinLine 
+                                                            size={24} 
+                                                            color="#FF6C6C" 
+                                                            onClick={() => handleDeleteTest(a.id)}
+                                                            style={{ cursor: 'pointer' }}
+                                                        />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="3" style={{ textAlign: 'center', color: '#888', fontWeight: 500 }}>
+                                                No tests found
                                             </td>
                                         </tr>
-                                    ))}
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -157,7 +292,13 @@ const NewTestListing = () => {
                     </div>
                 </>
             ) : (
-                <NewTestListingAdd onBack={() => setAdding(false)} />
+                <NewTestListingAdd 
+                    onBack={() => setAdding(false)} 
+                    class_name={class_name}
+                    division={division}
+                    subject={subject}
+                    onTestAdded={fetchTests}
+                />
             )}
         </div >
     );
