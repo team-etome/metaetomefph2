@@ -65,7 +65,7 @@ function NewTeacherSubjectSelect({ subject, onBack }) {
                                 <button className="newteachersubjectselect_back-btn" onClick={onBack}>
                                     <IoArrowBack size={24} />
                                 </button>
-                                <p>{subject.subject}</p>
+                                <p>{subject.class}{subject.division} {subject.subject}</p>
                             </div>
                         </Col>
                         <Col md={6} className="newteachersubjectselect_header_right_profilepic">

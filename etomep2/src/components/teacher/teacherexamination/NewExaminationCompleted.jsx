@@ -11,8 +11,19 @@ const  NewExaminationCompleted = ({ onSelectItem }) => {
     const teacher = useSelector((state) => state.teacherinfo);
     const teacher_id = teacher.teacherinfo?.teacher_id;
     const [examinationListData, setExaminationListData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selectedItemCompleted, setSelectedItemCompleted] = useState(null);
+
+    // Filter states
+    const [selectedExamName, setSelectedExamName] = useState(null);
+    const [selectedClass, setSelectedClass] = useState(null);
+    const [selectedSubject, setSelectedSubject] = useState(null);
+
+    // Unique values for dropdowns
+    const [examNames, setExamNames] = useState([]);
+    const [classes, setClasses] = useState([]);
+    const [subjects, setSubjects] = useState([]);
       
         const handleBoxClick = (item) => {
             setSelectedItemCompleted(item);
@@ -31,16 +42,63 @@ const  NewExaminationCompleted = ({ onSelectItem }) => {
                     // Filter for completed exams (status === "completed")
                     const completedExams = response.data.filter(exam => exam.status === "completed");
                     setExaminationListData(completedExams);
+                    setFilteredData(completedExams);
+                    
+                    // Extract unique values for dropdowns
+                    const uniqueExamNames = [...new Set(completedExams.map(exam => exam.exam_name))].map(name => ({
+                        value: name,
+                        label: name
+                    }));
+                    const uniqueClasses = [...new Set(completedExams.map(exam => exam.class_name))].map(className => ({
+                        value: className,
+                        label: className
+                    }));
+                    const uniqueSubjects = [...new Set(completedExams.map(exam => exam.subject_name))].map(subject => ({
+                        value: subject,
+                        label: subject
+                    }));
+
+                    setExamNames(uniqueExamNames);
+                    setClasses(uniqueClasses);
+                    setSubjects(uniqueSubjects);
                 } else {
                     console.error("Expected an array, received:", response.data);
                     setExaminationListData([]);
+                    setFilteredData([]);
                 }
             } catch (error) {
                 console.error("Failed to fetch examination data:", error);
                 setExaminationListData([]);
+                setFilteredData([]);
             } finally {
                 setLoading(false);
             }
+        };
+
+        // Apply filters
+        useEffect(() => {
+            let filtered = examinationListData;
+
+            if (selectedExamName) {
+                filtered = filtered.filter(exam => exam.exam_name === selectedExamName.value);
+            }
+
+            if (selectedClass) {
+                filtered = filtered.filter(exam => exam.class_name === selectedClass.value);
+            }
+
+            if (selectedSubject) {
+                filtered = filtered.filter(exam => exam.subject_name === selectedSubject.value);
+            }
+
+            setFilteredData(filtered);
+        }, [selectedExamName, selectedClass, selectedSubject, examinationListData]);
+
+        // Clear all filters
+        const clearFilters = () => {
+            setSelectedExamName(null);
+            setSelectedClass(null);
+            setSelectedSubject(null);
         };
 
         // Fetch data when component mounts
@@ -170,16 +228,41 @@ const  NewExaminationCompleted = ({ onSelectItem }) => {
                             <Select
                                 styles={dashboardcustomStyles}
                                 placeholder="Select Exam Name"
+                                options={examNames}
+                                value={selectedExamName}
+                                onChange={(option) => setSelectedExamName(option)}
                             />
-                           
+
                             <Select
                                 styles={dashboardsmallcustomStyles}  
                                 placeholder="Select Class"
+                                options={classes}
+                                value={selectedClass}
+                                onChange={(option) => setSelectedClass(option)}
                             />
                             <Select
                                 styles={dashboardsmallcustomStyles}  
                                 placeholder="Select Subject"
+                                options={subjects}
+                                value={selectedSubject}
+                                onChange={(option) => setSelectedSubject(option)}
                             />
+
+                            {(selectedExamName || selectedClass || selectedSubject) && (
+                                <button 
+                                    onClick={clearFilters}
+                                    style={{
+                                        padding: '8px 16px',
+                                        backgroundColor: '#f8f9fa',
+                                        border: '1px solid #dee2e6',
+                                        borderRadius: '8px',
+                                        cursor: 'pointer',
+                                        fontSize: '14px'
+                                    }}
+                                >
+                                    Clear Filters
+                                </button>
+                            )}
                             
                         </div>
                     </div>
@@ -199,7 +282,7 @@ const  NewExaminationCompleted = ({ onSelectItem }) => {
                     
                     {!loading && examinationListData.length > 0 && (
                         <div className="newexaminationcompleted_container" >
-                            {examinationListData.map((item, index) => (
+                            {filteredData.map((item, index) => (
                                 <div
                                     className="newexaminationcompleted_classes_box_inner"
                                     key={item.id || index}

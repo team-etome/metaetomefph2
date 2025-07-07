@@ -146,10 +146,18 @@ const NewStudentDashboard = () => {
         setShowMenuExcel(false);
         setShowPopupExcel(true);
     };
+    
+    // Filter students based on promoted status and search
     const filteredStudents = studentlist.filter(student =>
-        student.student_name?.toLowerCase().includes(search.toLowerCase()) 
-        // student.roll_no?.toString().includes(search) ||
-        // student.email?.toLowerCase().includes(search.toLowerCase())
+        student.student_name?.toLowerCase().includes(search.toLowerCase()) &&
+        !student.blocked && 
+        !student.promoted // Only show students who are not promoted
+    );
+
+    // Get students for promotion (not promoted and not blocked)
+    const studentsForPromotion = studentlist.filter(student => 
+        !student.blocked && 
+        !student.promoted
     );
 
     return (
@@ -159,7 +167,7 @@ const NewStudentDashboard = () => {
                     <Row className="newStudent_row_header">
                         <Col md={6} className="newStudent_header_left_heading">
                             <div className="newStudent_title">
-                                <p>Class 9 A</p>
+                                <p>Class 10 A</p>
                             </div>
                         </Col>
                         <Col md={6} className="newStudent_header_right_profilepic">
@@ -197,7 +205,7 @@ const NewStudentDashboard = () => {
                                 <div className="newStudent-header-left d-flex align-items-center">
                                     <p className="newStudent-title">
                                         Total Students
-                                        <span className="newStudent-count">{filteredStudents.filter(student => !student.blocked).length}</span>
+                                        <span className="newStudent-count">{filteredStudents.length}</span>
                                     </p>
                                 </div>
 
@@ -291,7 +299,7 @@ const NewStudentDashboard = () => {
                                     <>
                                     <div className="newStudent-grid-container">
                                         {filteredStudents.length > 0 ? (
-                                            filteredStudents.filter(student => !student.blocked).map(student => (
+                                            filteredStudents.map(student => (
                                                 <div key={student.roll_no} className="newStudent-card"
                                                     onClick={() => setSelectedStudent(student)}
                                                     style={{ cursor: "pointer" }}>

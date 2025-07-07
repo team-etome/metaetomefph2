@@ -10,7 +10,17 @@ export default function NewStudentPromote({ isOpen, onClose, studentList }) {
   const [activeTab, setActiveTab] = useState("promote");
 
   if (!isOpen) return null;
-   const unblockedStudents = studentList.filter(student => !student.blocked);
+  
+  // Filter students based on promoted status
+  const studentsForPromotion = studentList.filter(student => 
+    !student.blocked && 
+    !student.promoted // Students who can be promoted
+  );
+  
+  const studentsForAcceptance = studentList.filter(student => 
+    !student.blocked && 
+    student.promoted // Students who have been promoted and need acceptance
+  );
 
   return (
     <div className="newstudentpromote-overlay">
@@ -33,8 +43,8 @@ export default function NewStudentPromote({ isOpen, onClose, studentList }) {
 
         {/* ─── Content (swapped based on activeTab) ─── */}
         <div className="newstudentpromote-content">
-          {activeTab === "promote" && <NewStudentPromoteSelect studentList={unblockedStudents} />}
-          {activeTab === "accept" && <NewStudentPromoteAccept studentList={studentList} />}
+          {activeTab === "promote" && <NewStudentPromoteSelect studentList={studentsForPromotion} />}
+          {activeTab === "accept" && <NewStudentPromoteAccept studentList={studentsForAcceptance} />}
         </div>
 
         {/* ─── Close Button ─── */}

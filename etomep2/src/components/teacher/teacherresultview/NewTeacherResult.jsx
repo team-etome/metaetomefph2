@@ -24,9 +24,11 @@ const NewTeacherResult = () => {
     const [yearOptions, setYearOptions] = useState([]);
     const teacher_subject = useSelector((state) => state?.teachersubjectinfo);
 
-    const classid = teacher_subject.teachersubjectinfo?.class
+    const classname = teacher_subject.teachersubjectinfo?.class
     const subjectid = teacher_subject.teachersubjectinfo?.subject_id
-    // console.log(classid,"classid",subjectid,"subjectid")
+    const division = teacher_subject.teachersubjectinfo?.division
+
+    console.log(classname,"classname",subjectid,"subjectid",division,"division")
 
 
     console.log(teacher_id, "teacher_id");
@@ -38,33 +40,96 @@ const NewTeacherResult = () => {
             setLoading(true);
             const response = await axios.get(`${APIURL}/api/resultteacher`, {
                 params: {
-                    class_id: classid,
-                    subject: subjectid
+                    class_name: classname,
+                    subject: subjectid,
+                    division:division
                 }
             });
 
             console.log('API Response:', response.data);
-            setResultData(response.data);
+            setResultData(response.data.data);
 
-            // Extract unique types, exams, and years from the data
-            if (response.data) {
-                const types = [...new Set(response.data.map(item => item.type))].map(type => ({
+            // Extract unique types, exams, and years from the nested data
+            if (response.data && response.data.data) {
+                const allResults = [];
+                
+                // Flatten the nested data structure
+                response.data.data.forEach(student => {
+                    // Add main exam results
+                    if (student.main_exam && student.main_exam.length > 0) {
+                        student.main_exam.forEach(exam => {
+                            allResults.push({
+                                student_id: student.student_roll,
+                                student_name: student.student_name,
+                                type: 'exam_result',
+                                exam_name: exam.exam_name || 'Main Exam',
+                                exam_date: exam.exam_date,
+                                year: new Date(exam.exam_date).getFullYear(),
+                                marks: exam.obtained_marks,
+                                total_marks: exam.total_marks || 100,
+                                roll_no: student.student_roll
+                            });
+                        });
+                    }
+                    
+                    // Add assignment results
+                    if (student.assignments && student.assignments.length > 0) {
+                        student.assignments.forEach(assignment => {
+                            allResults.push({
+                                student_id: student.student_roll,
+                                student_name: student.student_name,
+                                type: 'assignment',
+                                exam_name: assignment.assignment_name || 'Assignment',
+                                exam_date: assignment.assigned_date,
+                                year: new Date(assignment.assigned_date).getFullYear(),
+                                marks: assignment.obtained_mark,
+                                total_marks: assignment.total_mark || 10,
+                                roll_no: student.student_roll
+                            });
+                        });
+                    }
+                    
+                    // Add MCQ test results
+                    if (student.mcq_tests && student.mcq_tests.length > 0) {
+                        student.mcq_tests.forEach(mcq => {
+                            allResults.push({
+                                student_id: student.student_roll,
+                                student_name: student.student_name,
+                                type: 'mcq_test',
+                                exam_name: mcq.mcq_name || 'MCQ Test',
+                                exam_date: mcq.date,
+                                year: new Date(mcq.date).getFullYear(),
+                                marks: mcq.obtained_mark,
+                                total_marks: mcq.total_mark || 100,
+                                roll_no: student.student_roll
+                            });
+                        });
+                    }
+
+                    // Add Mock test results
+                    if (student.mock_tests && student.mock_tests.length > 0) {
+                        student.mock_tests.forEach(mock => {
+                            allResults.push({
+                                student_id: student.student_roll,
+                                student_name: student.student_name,
+                                type: 'mock_test',
+                                exam_name: mock.mock_name || 'Mock Test',
+                                exam_date: mock.date,
+                                year: new Date(mock.date).getFullYear(),
+                                marks: mock.obtained_mark,
+                                total_marks: mock.total_mark || 100,
+                                roll_no: student.student_roll
+                            });
+                        });
+                    }
+                });
+
+                // Extract unique types
+                const types = [...new Set(allResults.map(item => item.type))].map(type => ({
                     value: type,
                     label: type.charAt(0).toUpperCase() + type.slice(1).replace('_', ' ')
                 }));
                 setTypeOptions(types);
-
-                const exams = [...new Set(response.data.map(item => item.exam_name))].map(exam => ({
-                    value: exam,
-                    label: exam
-                }));
-                setExamOptions(exams);
-
-                const years = [...new Set(response.data.map(item => item.year))].map(year => ({
-                    value: year,
-                    label: year
-                }));
-                setYearOptions(years);
             }
         } catch (error) {
             console.error('Error fetching result data:', error);
@@ -77,6 +142,91 @@ const NewTeacherResult = () => {
             setLoading(false);
         }
     };
+
+    // Update exam and year options when type changes
+    useEffect(() => {
+        if (!resultData || !selectedType) {
+            setExamOptions([]);
+            setYearOptions([]);
+            return;
+        }
+
+        const allResults = [];
+        
+        // Flatten the nested data structure for the selected type
+        resultData.forEach(student => {
+            if (selectedType.value === 'exam_result' && student.main_exam && student.main_exam.length > 0) {
+                student.main_exam.forEach(exam => {
+                    allResults.push({
+                        exam_name: exam.exam_name || 'Main Exam',
+                        exam_date: exam.exam_date,
+                        year: new Date(exam.exam_date).getFullYear(),
+                        unique_id: `${exam.exam_name || 'Main Exam'}_${exam.exam_date}`
+                    });
+                });
+            }
+            
+            if (selectedType.value === 'assignment' && student.assignments && student.assignments.length > 0) {
+                student.assignments.forEach(assignment => {
+                    allResults.push({
+                        exam_name: assignment.assignment_name || 'Assignment',
+                        exam_date: assignment.assigned_date,
+                        year: new Date(assignment.assigned_date).getFullYear(),
+                        unique_id: `${assignment.assignment_name || 'Assignment'}_${assignment.assigned_date}`
+                    });
+                });
+            }
+            
+            if (selectedType.value === 'mcq_test' && student.mcq_tests && student.mcq_tests.length > 0) {
+                student.mcq_tests.forEach(mcq => {
+                    allResults.push({
+                        exam_name: mcq.mcq_name || 'MCQ Test',
+                        exam_date: mcq.date,
+                        year: new Date(mcq.date).getFullYear(),
+                        unique_id: `${mcq.mcq_name || 'MCQ Test'}_${mcq.date}`
+                    });
+                });
+            }
+
+            if (selectedType.value === 'mock_test' && student.mock_tests && student.mock_tests.length > 0) {
+                student.mock_tests.forEach(mock => {
+                    allResults.push({
+                        exam_name: mock.mock_name || 'Mock Test',
+                        exam_date: mock.date,
+                        year: new Date(mock.date).getFullYear(),
+                        unique_id: `${mock.mock_name || 'Mock Test'}_${mock.date}`
+                    });
+                });
+            }
+        });
+
+        // Create unique exam options with date for same names
+        const uniqueExams = [];
+        const seenExams = new Set();
+        
+        allResults.forEach(result => {
+            if (!seenExams.has(result.unique_id)) {
+                seenExams.add(result.unique_id);
+                const dateStr = new Date(result.exam_date).toLocaleDateString();
+                uniqueExams.push({
+                    value: result.unique_id,
+                    label: `${result.exam_name} (${dateStr})`,
+                    exam_name: result.exam_name,
+                    exam_date: result.exam_date,
+                    year: result.year
+                });
+            }
+        });
+
+        // Create unique year options
+        const uniqueYears = [...new Set(allResults.map(item => item.year))].map(year => ({
+            value: year,
+            label: year
+        }));
+
+        setExamOptions(uniqueExams);
+        setYearOptions(uniqueYears);
+    }, [resultData, selectedType]);
 
     // Handle type selection change
     const handleTypeChange = (selectedOption) => {
@@ -97,21 +247,100 @@ const NewTeacherResult = () => {
 
     // Filter data based on selected options
     const getFilteredData = () => {
-        if (!resultData) return [];
+        if (!resultData || !selectedType) return [];
 
-        let filtered = resultData;
+        let filtered = [];
 
-        if (selectedType) {
-            filtered = filtered.filter(item => item.type === selectedType.value);
-        }
+        // Flatten and filter the nested data structure
+        resultData.forEach(student => {
+            // Filter main exam results
+            if (selectedType.value === 'exam_result' && student.main_exam && student.main_exam.length > 0) {
+                student.main_exam.forEach(exam => {
+                    const examUniqueId = `${exam.exam_name || 'Main Exam'}_${exam.exam_date}`;
+                    const examYear = new Date(exam.exam_date).getFullYear();
+                    
+                    if (selectedExam && examUniqueId !== selectedExam.value) return;
+                    if (selectedYear && examYear !== selectedYear.value) return;
+                    
+                    filtered.push({
+                        student_id: student.student_roll,
+                        student_name: student.student_name,
+                        type: 'exam_result',
+                        exam_name: exam.exam_name || 'Main Exam',
+                        year: examYear,
+                        marks: exam.obtained_marks,
+                        total_marks: exam.total_marks || 100,
+                        roll_no: student.student_roll
+                    });
+                });
+            }
+            
+            // Filter assignment results
+            if (selectedType.value === 'assignment' && student.assignments && student.assignments.length > 0) {
+                student.assignments.forEach(assignment => {
+                    const assignmentUniqueId = `${assignment.assignment_name || 'Assignment'}_${assignment.assigned_date}`;
+                    const assignmentYear = new Date(assignment.assigned_date).getFullYear();
+                    
+                    if (selectedExam && assignmentUniqueId !== selectedExam.value) return;
+                    if (selectedYear && assignmentYear !== selectedYear.value) return;
+                    
+                    filtered.push({
+                        student_id: student.student_roll,
+                        student_name: student.student_name,
+                        type: 'assignment',
+                        exam_name: assignment.assignment_name || 'Assignment',
+                        year: assignmentYear,
+                        marks: assignment.obtained_mark,
+                        total_marks: assignment.total_mark || 10,
+                        roll_no: student.student_roll
+                    });
+                });
+            }
+            
+            // Filter MCQ test results
+            if (selectedType.value === 'mcq_test' && student.mcq_tests && student.mcq_tests.length > 0) {
+                student.mcq_tests.forEach(mcq => {
+                    const mcqUniqueId = `${mcq.mcq_name || 'MCQ Test'}_${mcq.date}`;
+                    const mcqYear = new Date(mcq.date).getFullYear();
+                    
+                    if (selectedExam && mcqUniqueId !== selectedExam.value) return;
+                    if (selectedYear && mcqYear !== selectedYear.value) return;
+                    
+                    filtered.push({
+                        student_id: student.student_roll,
+                        student_name: student.student_name,
+                        type: 'mcq_test',
+                        exam_name: mcq.mcq_name || 'MCQ Test',
+                        year: mcqYear,
+                        marks: mcq.obtained_mark,
+                        total_marks: mcq.total_mark || 100,
+                        roll_no: student.student_roll
+                    });
+                });
+            }
 
-        if (selectedExam) {
-            filtered = filtered.filter(item => item.exam_name === selectedExam.value);
-        }
-
-        if (selectedYear) {
-            filtered = filtered.filter(item => item.year === selectedYear.value);
-        }
+            // Filter Mock test results
+            if (selectedType.value === 'mock_test' && student.mock_tests && student.mock_tests.length > 0) {
+                student.mock_tests.forEach(mock => {
+                    const mockUniqueId = `${mock.mock_name || 'Mock Test'}_${mock.date}`;
+                    const mockYear = new Date(mock.date).getFullYear();
+                    
+                    if (selectedExam && mockUniqueId !== selectedExam.value) return;
+                    if (selectedYear && mockYear !== selectedYear.value) return;
+                    
+                    filtered.push({
+                        student_id: student.student_roll,
+                        student_name: student.student_name,
+                        type: 'mock_test',
+                        exam_name: mock.mock_name || 'Mock Test',
+                        year: mockYear,
+                        marks: mock.obtained_mark,
+                        total_marks: mock.total_mark || 100,
+                        roll_no: student.student_roll
+                    });
+                });
+            }
+        });
 
         return filtered;
     };
@@ -123,21 +352,101 @@ const NewTeacherResult = () => {
         }
     }, [teacher_id]);
 
-    // dummy students/results
-    const dummyResults = [
-        { roll: 1, name: 'Siddharth', score: 78 },
-        { roll: 2, name: 'Vihaan', score: 16 },
-        { roll: 3, name: 'Aarav', score: 83 },
-        { roll: 4, name: 'Karan', score: 75 },
-        { roll: 5, name: 'Rohan', score: 91 },
-        { roll: 6, name: 'Krishna', score: 50 },
-        { roll: 7, name: 'Reyansh', score: 58 },
-        { roll: 8, name: 'Aditya', score: 52 },
-        { roll: 9, name: 'Vivaan', score: 57 },
-        { roll: 10, name: 'Aadhil', score: 66 },
+    // Get unique assignments from the data
+    const getUniqueAssignments = () => {
+        if (!resultData || selectedType?.value !== 'assignment') return [];
+        
+        const assignments = [];
+        const seenAssignments = new Set();
+        
+        resultData.forEach(student => {
+            if (student.assignments && student.assignments.length > 0) {
+                student.assignments.forEach(assignment => {
+                    const uniqueId = `${assignment.assignment_name}_${assignment.assigned_date}`;
+                    const assignmentYear = new Date(assignment.assigned_date).getFullYear();
+                    
+                    // Apply filters
+                    if (selectedExam && uniqueId !== selectedExam.value) return;
+                    if (selectedYear && assignmentYear !== selectedYear.value) return;
+                    
+                    if (!seenAssignments.has(uniqueId)) {
+                        seenAssignments.add(uniqueId);
+                        assignments.push({
+                            assignment_name: assignment.assignment_name,
+                            assigned_date: assignment.assigned_date,
+                            total_mark: assignment.total_mark,
+                            unique_id: uniqueId
+                        });
+                    }
+                });
+            }
+        });
+        return assignments;
+    };
 
-    ]
+    // Get unique MCQ tests from the data
+    const getUniqueMcqTests = () => {
+        if (!resultData || selectedType?.value !== 'mcq_test') return [];
+        
+        const mcqTests = [];
+        const seenMcqTests = new Set();
+        
+        resultData.forEach(student => {
+            if (student.mcq_tests && student.mcq_tests.length > 0) {
+                student.mcq_tests.forEach(mcq => {
+                    const uniqueId = `${mcq.mcq_name}_${mcq.date}`;
+                    const mcqYear = new Date(mcq.date).getFullYear();
+                    
+                    // Apply filters
+                    if (selectedExam && uniqueId !== selectedExam.value) return;
+                    if (selectedYear && mcqYear !== selectedYear.value) return;
+                    
+                    if (!seenMcqTests.has(uniqueId)) {
+                        seenMcqTests.add(uniqueId);
+                        mcqTests.push({
+                            mcq_name: mcq.mcq_name,
+                            date: mcq.date,
+                            total_mark: mcq.total_mark,
+                            unique_id: uniqueId
+                        });
+                    }
+                });
+            }
+        });
+        return mcqTests;
+    };
 
+    // Get unique Mock tests from the data
+    const getUniqueMockTests = () => {
+        if (!resultData || selectedType?.value !== 'mock_test') return [];
+        
+        const mockTests = [];
+        const seenMockTests = new Set();
+        
+        resultData.forEach(student => {
+            if (student.mock_tests && student.mock_tests.length > 0) {
+                student.mock_tests.forEach(mock => {
+                    const uniqueId = `${mock.mock_name}_${mock.date}`;
+                    const mockYear = new Date(mock.date).getFullYear();
+                    
+                    // Apply filters
+                    if (selectedExam && uniqueId !== selectedExam.value) return;
+                    if (selectedYear && mockYear !== selectedYear.value) return;
+                    
+                    if (!seenMockTests.has(uniqueId)) {
+                        seenMockTests.add(uniqueId);
+                        mockTests.push({
+                            mock_name: mock.mock_name,
+                            date: mock.date,
+                            total_mark: mock.total_mark,
+                            unique_id: uniqueId
+                        });
+                    }
+                });
+            }
+        });
+        return mockTests;
+    };
 
     const headerRef = useRef(null);
     const bodyRef = useRef(null);
@@ -173,173 +482,6 @@ const NewTeacherResult = () => {
         if (bodyRef.current) bodyRef.current.scrollLeft = scrollLeft;
         window.requestAnimationFrame(() => { isSyncingRef.current = false; });
     };
-
-    const assignments = [
-        {
-            key: 'assignment1',
-            name: 'Assignment 1',
-            postedOn: '14/04/2025',
-            total: 10,
-        },
-        {
-            key: 'assignment2',
-            name: 'Assignment 2',
-            postedOn: '14/04/2025',
-            total: 10,
-        },
-        {
-            key: 'assignment3',
-            name: 'Assignment 3',
-            postedOn: '14/04/2025',
-            total: 10,
-        },
-        {
-            key: 'assignment4',
-            name: 'Assignment 4',
-            postedOn: '14/04/2025',
-            total: 10,
-        },
-        {
-            key: 'assignment5',
-            name: 'Assignment 5',
-            postedOn: '14/04/2025',
-            total: 10,
-        },
-        {
-            key: 'assignment6',
-            name: 'Assignment 6',
-            postedOn: '14/04/2025',
-            total: 10,
-        },
-        {
-            key: 'assignment7',
-            name: 'Assignment 7',
-            postedOn: '14/04/2025',
-            total: 10,
-        },
-        {
-            key: 'assignment8',
-            name: 'Assignment 8',
-            postedOn: '14/04/2025',
-            total: 10,
-        },
-        {
-            key: 'assignment9',
-            name: 'Assignment 9',
-            postedOn: '14/04/2025',
-            total: 10,
-        },
-    ];
-
-    const dummyStudents = [
-        {
-            rollNo: '1',
-            name: 'Siddharth',
-            marks: {
-                assignment1: 5,
-                assignment2: 5,
-                assignment3: 5,
-                assignment4: 5,
-                assignment5: 5,
-                assignment6: 5,
-                assignment7: 5,
-            },
-        },
-        {
-            rollNo: '2',
-            name: 'Vihaan',
-            marks: {
-                assignment1: 2,
-                assignment2: 2,
-                assignment3: 2,
-                assignment4: 2,
-                assignment5: 2,
-                assignment6: 2,
-                assignment7: 2,
-            },
-        },
-        {
-            rollNo: '3',
-            name: 'Aarav',
-            marks: {
-                assignment1: 6,
-                assignment2: 6,
-                assignment3: 6,
-                assignment4: 6,
-                assignment5: 6,
-                assignment6: 6,
-                assignment7: 6,
-            },
-        },
-        {
-            rollNo: '4',
-            name: 'Karan',
-            marks: {
-                assignment1: 7,
-                assignment2: 7,
-                assignment3: 7,
-                assignment4: 7,
-                assignment5: 7,
-                assignment6: 7,
-                assignment7: 7,
-            },
-        },
-        {
-            rollNo: '5',
-            name: 'Rohan',
-            marks: {
-                assignment1: 8,
-                assignment2: 8,
-                assignment3: 8,
-                assignment4: 8,
-                assignment5: 8,
-                assignment6: 8,
-                assignment7: 8,
-            },
-        },
-        {
-            rollNo: '6',
-            name: 'Krishna',
-            marks: {
-                assignment1: 1,
-                assignment2: 1,
-                assignment3: 1,
-                assignment4: 1,
-                assignment5: 1,
-                assignment6: 1,
-                assignment7: 1,
-            },
-        },
-        {
-            rollNo: '7',
-            name: 'Krishna',
-            marks: {
-                assignment1: 1,
-                assignment2: 1,
-                assignment3: 1,
-                assignment4: 1,
-                assignment5: 1,
-                assignment6: 1,
-                assignment7: 1,
-            },
-        }, {
-            rollNo: '8',
-            name: 'Krishna',
-            marks: {
-                assignment1: 1,
-                assignment2: 1,
-                assignment3: 1,
-                assignment4: 1,
-                assignment5: 1,
-                assignment6: 1,
-                assignment7: 1,
-            },
-        },
-    ];
-
-
-
-
 
 
     const dashboardsmallcustomStyles = {
@@ -474,9 +616,9 @@ const NewTeacherResult = () => {
                                 <tbody>
                                     {getFilteredData().map((result, index) => (
                                         <tr key={index}>
-                                            <td>{result.roll_no || result.student_roll}</td>
+                                            <td>{result.roll_no}</td>
                                             <td>{result.student_name}</td>
-                                            <td>{result.marks || result.score}</td>
+                                            <td>{result.marks}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -490,7 +632,7 @@ const NewTeacherResult = () => {
                         )}
                     </div>
                 )}
-                {!loading && selectedType?.value === 'assignment' && (
+                {!loading && (selectedType?.value === 'assignment' || selectedType?.value === 'mcq_test' || selectedType?.value === 'mock_test') && (
                     <>
                         <div className="newteacherresult_content">
 
@@ -518,42 +660,89 @@ const NewTeacherResult = () => {
                                                     Name
                                                 </th>
 
-                                                {/* ASSIGNMENT NAMES: row 1 */}
-                                                {assignments.map((a) => (
+                                                {/* Get unique items based on selected type */}
+                                                {selectedType?.value === 'assignment' && getUniqueAssignments().map((assignment, index) => (
                                                     <th
-                                                        key={a.key}
+                                                        key={assignment.unique_id}
                                                         className="newteacherresult_th assignment-header-row1"
                                                     >
-                                                        {a.name}
+                                                        {assignment.assignment_name}
+                                                    </th>
+                                                ))}
+                                                {selectedType?.value === 'mcq_test' && getUniqueMcqTests().map((mcq, index) => (
+                                                    <th
+                                                        key={mcq.unique_id}
+                                                        className="newteacherresult_th assignment-header-row1"
+                                                    >
+                                                        {mcq.mcq_name}
+                                                    </th>
+                                                ))}
+                                                {selectedType?.value === 'mock_test' && getUniqueMockTests().map((mock, index) => (
+                                                    <th
+                                                        key={mock.unique_id}
+                                                        className="newteacherresult_th assignment-header-row1"
+                                                    >
+                                                        {mock.mock_name}
                                                     </th>
                                                 ))}
                                             </tr>
                                             <tr>
-                                                {/* “Posted On” (row 2) under each assignment */}
-                                                {assignments.map((a) => (
+                                                {/* "Posted On" (row 2) under each item */}
+                                                {selectedType?.value === 'assignment' && getUniqueAssignments().map((assignment) => (
                                                     <th
-                                                        key={a.key + '_postedOn'}
+                                                        key={assignment.unique_id + '_postedOn'}
                                                         className="newteacherresult_th assignment-header-row2"
                                                     >
-                                                        Posted On: {a.postedOn}
+                                                        Posted On: {new Date(assignment.assigned_date).toLocaleDateString()}
+                                                    </th>
+                                                ))}
+                                                {selectedType?.value === 'mcq_test' && getUniqueMcqTests().map((mcq) => (
+                                                    <th
+                                                        key={mcq.unique_id + '_postedOn'}
+                                                        className="newteacherresult_th assignment-header-row2"
+                                                    >
+                                                        Date: {new Date(mcq.date).toLocaleDateString()}
+                                                    </th>
+                                                ))}
+                                                {selectedType?.value === 'mock_test' && getUniqueMockTests().map((mock) => (
+                                                    <th
+                                                        key={mock.unique_id + '_postedOn'}
+                                                        className="newteacherresult_th assignment-header-row2"
+                                                    >
+                                                        Date: {new Date(mock.date).toLocaleDateString()}
                                                     </th>
                                                 ))}
                                             </tr>
                                             <tr>
-                                                {/* “Total: XX” (row 3) under each assignment */}
-                                                {assignments.map((a) => (
+                                                {/* "Total: XX" (row 3) under each item */}
+                                                {selectedType?.value === 'assignment' && getUniqueAssignments().map((assignment) => (
                                                     <th
-                                                        key={a.key + '_total'}
+                                                        key={assignment.unique_id + '_total'}
                                                         className="newteacherresult_th assignment-header-row3"
                                                     >
-                                                        Total: {a.total}
+                                                        Total: {assignment.total_mark}
+                                                    </th>
+                                                ))}
+                                                {selectedType?.value === 'mcq_test' && getUniqueMcqTests().map((mcq) => (
+                                                    <th
+                                                        key={mcq.unique_id + '_total'}
+                                                        className="newteacherresult_th assignment-header-row3"
+                                                    >
+                                                        Total: {mcq.total_mark}
+                                                    </th>
+                                                ))}
+                                                {selectedType?.value === 'mock_test' && getUniqueMockTests().map((mock) => (
+                                                    <th
+                                                        key={mock.unique_id + '_total'}
+                                                        className="newteacherresult_th assignment-header-row3"
+                                                    >
+                                                        Total: {mock.total_mark}
                                                     </th>
                                                 ))}
                                             </tr>
                                         </thead>
                                     </table>
                                 </div>
-
 
                                 <div
                                     className="newteacherresult-table-body-container"
@@ -562,26 +751,91 @@ const NewTeacherResult = () => {
                                 >
                                     <table className="newteacherresult_table">
                                         <tbody>
-                                            {dummyStudents.map((stu, idx) => (
+                                            {resultData.filter(student => {
+                                                // Filter students based on whether they have data for the selected filters
+                                                if (selectedType?.value === 'assignment') {
+                                                    return student.assignments?.some(assignment => {
+                                                        const uniqueId = `${assignment.assignment_name}_${assignment.assigned_date}`;
+                                                        const assignmentYear = new Date(assignment.assigned_date).getFullYear();
+                                                        return (!selectedExam || uniqueId === selectedExam.value) &&
+                                                               (!selectedYear || assignmentYear === selectedYear.value);
+                                                    });
+                                                }
+                                                if (selectedType?.value === 'mcq_test') {
+                                                    return student.mcq_tests?.some(mcq => {
+                                                        const uniqueId = `${mcq.mcq_name}_${mcq.date}`;
+                                                        const mcqYear = new Date(mcq.date).getFullYear();
+                                                        return (!selectedExam || uniqueId === selectedExam.value) &&
+                                                               (!selectedYear || mcqYear === selectedYear.value);
+                                                    });
+                                                }
+                                                if (selectedType?.value === 'mock_test') {
+                                                    return student.mock_tests?.some(mock => {
+                                                        const uniqueId = `${mock.mock_name}_${mock.date}`;
+                                                        const mockYear = new Date(mock.date).getFullYear();
+                                                        return (!selectedExam || uniqueId === selectedExam.value) &&
+                                                               (!selectedYear || mockYear === selectedYear.value);
+                                                    });
+                                                }
+                                                return true; // Show all students for exam_result type
+                                            }).map((student, idx) => (
                                                 <tr className="newteacherresult_tr" key={idx}>
                                                     {/* ROLL NO (sticky) */}
                                                     <td className="newteacherresult_td sticky-left">
-                                                        {stu.rollNo}
+                                                        {student.student_roll}
                                                     </td>
                                                     {/* NAME (sticky) */}
                                                     <td className="newteacherresult_td sticky-left-2">
-                                                        {stu.name}
+                                                        {student.student_name}
                                                     </td>
 
-                                                    {/* ASSIGNMENT SCORES */}
-                                                    {assignments.map((a) => (
-                                                        <td
-                                                            key={stu.rollNo + '_' + a.key}
-                                                            className="newteacherresult_td assignment-body-cell"
-                                                        >
-                                                            {stu.marks[a.key] ?? '-'}
-                                                        </td>
-                                                    ))}
+                                                    {/* Assignment Scores */}
+                                                    {selectedType?.value === 'assignment' && getUniqueAssignments().map((assignment) => {
+                                                        const studentAssignment = student.assignments?.find(a => 
+                                                            a.assignment_name === assignment.assignment_name && 
+                                                            a.assigned_date === assignment.assigned_date
+                                                        );
+                                                        return (
+                                                            <td
+                                                                key={student.student_roll + '_' + assignment.unique_id}
+                                                                className="newteacherresult_td assignment-body-cell"
+                                                            >
+                                                                {studentAssignment ? studentAssignment.obtained_mark : '-'}
+                                                            </td>
+                                                        );
+                                                    })}
+
+                                                    {/* MCQ Test Scores */}
+                                                    {selectedType?.value === 'mcq_test' && getUniqueMcqTests().map((mcq) => {
+                                                        const studentMcq = student.mcq_tests?.find(m => 
+                                                            m.mcq_name === mcq.mcq_name && 
+                                                            m.date === mcq.date
+                                                        );
+                                                        return (
+                                                            <td
+                                                                key={student.student_roll + '_' + mcq.unique_id}
+                                                                className="newteacherresult_td assignment-body-cell"
+                                                            >
+                                                                {studentMcq ? studentMcq.obtained_mark : '-'}
+                                                            </td>
+                                                        );
+                                                    })}
+
+                                                    {/* Mock Test Scores */}
+                                                    {selectedType?.value === 'mock_test' && getUniqueMockTests().map((mock) => {
+                                                        const studentMock = student.mock_tests?.find(m => 
+                                                            m.mock_name === mock.mock_name && 
+                                                            m.date === mock.date
+                                                        );
+                                                        return (
+                                                            <td
+                                                                key={student.student_roll + '_' + mock.unique_id}
+                                                                className="newteacherresult_td assignment-body-cell"
+                                                            >
+                                                                {studentMock ? studentMock.obtained_mark : '-'}
+                                                            </td>
+                                                        );
+                                                    })}
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -593,7 +847,7 @@ const NewTeacherResult = () => {
                                 ref={scrollbarRef}
                                 onScroll={handleScrollbarScroll}
                             >
-                                {/* The inner div’s width must match the full scrollWidth of headerRef */}
+                                {/* The inner div's width must match the full scrollWidth of headerRef */}
                                 <div
                                     style={{
                                         width: headerRef.current

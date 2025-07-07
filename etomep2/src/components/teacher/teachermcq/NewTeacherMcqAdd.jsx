@@ -3,7 +3,7 @@ import { IoArrowBack } from "react-icons/io5";
 import "./newteachermcqadd.css";
 import NewTeacherMcqCreate from "./NewTeacherMcqCreate";
 
-export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, division, subject, onMcqAdded }) {
+export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, division, subject, onMcqAdded, editData, isEditMode }) {
   const [step, setStep] = useState(1);
   const [formValues, setFormValues] = useState({
     examName: "",
@@ -15,7 +15,25 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
     teacherCode: "",
   });
 
+  // Populate form when in edit mode
+  React.useEffect(() => {
+    if (isEditMode && editData) {
+      setFormValues({
+        examName: editData.exam_name || "",
+        outOfMarks: editData.out_of_mark?.toString() || "",
+        negativeMark: editData.negative_mark?.toString() || "",
+        individualMark: editData.individual_mark?.toString() || "",
+        duration: editData.duration?.toString() || "",
+        topic: editData.topic || "",
+        teacherCode: editData.teacher_code || "",
+      });
+    }
+  }, [isEditMode, editData]);
+
   const handleChange = (e) => {
+    // In edit mode, don't allow changes
+    if (isEditMode) return;
+    
     const { id, value } = e.target;
     setFormValues((fv) => ({ ...fv, [id]: value }));
   };
@@ -61,11 +79,13 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
         />
         <div className="newteachermcqadd_steps">
           <div className="step-circle active">1</div>
-          <span className="step-text active">MCQ Details</span>
+          <span className="step-text active">
+            {isEditMode ? 'MCQ Details' : 'MCQ Details'}
+          </span>
           <span className="step-divider">&gt;</span>
           <div className={`step-circle ${step === 2 ? "active" : ""}`}>2</div>
           <span className={`step-text ${step === 2 ? "active" : ""}`}>
-            Create Question
+            {isEditMode ? 'View Questions' : 'Create Question'}
           </span>
         </div>
       </div>
@@ -77,7 +97,7 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
             <div className="newteachermcqadd_row">
               <div className="newteachermcqadd_field full">
                 <label htmlFor="examName">
-                  Exam Name <span className="required">*</span>
+                  Exam Name {!isEditMode && <span className="required">*</span>}
                 </label>
                 <input
                   id="examName"
@@ -85,6 +105,8 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
                   value={formValues.examName}
                   onChange={handleChange}
                   className="newteachermcqadd_input"
+                  readOnly={isEditMode}
+                  style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
                 />
               </div>
             </div>
@@ -98,7 +120,7 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
               ].map(([id, label]) => (
                 <div key={id} className="newteachermcqadd_field">
                   <label htmlFor={id}>
-                    {label} <span className="required">*</span>
+                    {label} {!isEditMode && <span className="required">*</span>}
                   </label>
                   <input
                     id={id}
@@ -106,6 +128,8 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
                     value={formValues[id]}
                     onChange={handleChange}
                     className="newteachermcqadd_input"
+                    readOnly={isEditMode}
+                    style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
                   />
                 </div>
               ))}
@@ -115,7 +139,7 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
             <div className="newteachermcqadd_row">
               <div className="newteachermcqadd_field">
                 <label htmlFor="duration">
-                  Duration <span className="required">*</span>
+                  Duration {!isEditMode && <span className="required">*</span>}
                 </label>
                 <input
                     id="duration"
@@ -123,11 +147,13 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
                     value={formValues.duration}
                     onChange={handleChange}
                     className="newteachermcqadd_input"
+                    readOnly={isEditMode}
+                    style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
                   />
               </div>
               <div className="newteachermcqadd_field">
                 <label htmlFor="topic">
-                  Topic <span className="required">*</span>
+                  Topic {!isEditMode && <span className="required">*</span>}
                 </label>
                 <input
                   id="topic"
@@ -135,11 +161,13 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
                   value={formValues.topic}
                   onChange={handleChange}
                   className="newteachermcqadd_input"
+                  readOnly={isEditMode}
+                  style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
                 />
               </div>
               <div className="newteachermcqadd_field">
                 <label htmlFor="teacherCode">
-                  Teacher Code <span className="required">*</span>
+                  Teacher Code {!isEditMode && <span className="required">*</span>}
                 </label>
                 <input
                   id="teacherCode"
@@ -147,6 +175,8 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
                   value={formValues.teacherCode}
                   onChange={handleChange}
                   className="newteachermcqadd_input"
+                  readOnly={isEditMode}
+                  style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
                 />
               </div>
             </div>
@@ -154,29 +184,31 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
 
           {/* ▶ Sticky Footer */}
           <div className="newteachermcqadd_footer">
+            {!isEditMode && (
+              <button
+                type="reset"
+                className="newteachermcqadd_clear"
+                onClick={() =>
+                  setFormValues({
+                    examName: "",
+                    outOfMarks: "",
+                    negativeMark: "",
+                    individualMark: "",
+                    duration: "",
+                    topic: "",
+                    teacherCode: "",
+                  })
+                }
+              >
+                Clear
+              </button>
+            )}
             <button
-              type="reset"
-              className="newteachermcqadd_clear"
-              onClick={() =>
-                setFormValues({
-                  examName: "",
-                  outOfMarks: "",
-                  negativeMark: "",
-                  individualMark: "",
-                  duration: "",
-                  topic: "",
-                  teacherCode: "",
-                })
-              }
-            >
-              Clear
-            </button>
-            <button
-              type="submit"
+              type="button"
               className="newteachermcqadd_next"
               onClick={goNext}
             >
-              Next
+              {isEditMode ? 'View Questions' : 'Next'}
             </button>
           </div>
         </>
@@ -190,6 +222,8 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
           division={division}
           subject={subject}
           onMcqAdded={handleMcqAdded}
+          editData={editData}
+          isEditMode={isEditMode}
         />
       )}
     </div>

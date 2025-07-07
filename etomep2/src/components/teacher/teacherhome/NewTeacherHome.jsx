@@ -147,7 +147,7 @@ export default function NewTeacherHome() {
                 <div className="newteacherhome-notification-item" key={idx}>
                   <span className="newteacherhome-notif-avatar" />
                   <div className="newteacherhome-notif-content">
-                    <span className="newteacherhome-notif-name">{notif.name} <span className="newteacherhome-notif-action">{notif.action}</span></span>
+                    <span className="newteacherhome-notif-action">{notif.name} <span className="newteacherhome-notif-action">{notif.action}</span></span>
                     <span className="newteacherhome-notif-time">{notif.time}</span>
                   </div>
                   <span className="newteacherhome-notif-dot" />
