@@ -110,7 +110,7 @@
     /* tweak this until it matches your mock exactly */
     /* row-gap: 32px;          */
     align-items: start;
-    /* top-align each cell’s contents */
+    /* top-align each cell's contents */
     justify-items: start;
     /* left-align inside each cell */
     width: 100%;
@@ -139,7 +139,7 @@
     color: #222222;
 }
 
-/* the new “View Questions” wrapper so it aligns under the grid */
+/* the new "View Questions" wrapper so it aligns under the grid */
 .newcompletedview-create-questions-wrapper {
 
     margin-bottom: 40px;
@@ -199,86 +199,311 @@
 .newcompletedview-dropzone_maxp {
     font-size: 16px;
     font-weight: 400;
-    color: #757575;
+    color: #767676;
 }
 
 .newcompletedview-upload-btn {
-    background-color: #2162B2;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 24px;
-    font-size: 14px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.newcompletedview-file-info {
-    display: flex;
-    align-items: center;
-    margin-top: 40px;
-    width: 476px;
+    width: 192px;
     height: 40px;
-    /* match dropzone width */
-    background: #fff;
-    border: 1px solid #BFBFBF;
-    border-radius: 30px;
-    padding: 8px 12px;
-    gap: 8px;
-}
-
-.newcompletedview-file-icon {
-    width: 24px;
-    height: 24px;
-    color: red;
-}
-
-.newcompletedview-file-name {
-    flex: 1;
-    font-size: 16px;
-    color: #222;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.newcompletedview-file-remove {
-    background: none;
-    border: none;
-    font-size: 24px;
-    line-height: 1;
-    cursor: pointer;
-    color: #000;
-    padding: 0 4px;
-}
-
-/* on hover, make the ✕ a bit more obvious */
-/* .newcompletedview-file-remove:hover {
-    color: #000;
-} */
-
-/* fixed footer */
-.newcompletedview-footer {
-    flex: 0 0 60px;
-    padding: 24px;
-    display: flex;
-    justify-content: flex-end;
-    background-color: #fff;
-    align-items: center;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-
-    /* Make sure the bottom corners stay square: */
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-}
-
-.newcompletedview-submit {
-    background: #2162B2;
+    background-color: #2162B2;
     color: white;
     border: none;
     padding: 8px 24px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
+}
+
+.newcompletedview-file-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: #FFF;
+    border-radius: 30px;
+    margin-top: 8px;
+    width: 476px;
+    border: 1px solid #BFBFBF;
+}
+
+.newcompletedview-file-icon {
+    color: #D32F2F;
+}
+
+.newcompletedview-file-name {
+    font-size: 14px;
+    color: #222222;
+    flex: 1;
+}
+
+.newcompletedview-file-remove {
+    background: none;
+    border: none;
+    color: #D32F2F;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* fixed footer */
+.newcompletedview-footer {
+    flex: 0 0 80px;
+    padding: 20px 24px;
+    background: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-top: 1px solid #DFDFDF;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.newcompletedview-submit {
+    width: 192px;
+    height: 40px;
+    background-color: #2162B2;
+    color: white;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* PDF Modal Styles */
+.newcompletedview-pdf-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.newcompletedview-pdf-modal-content {
+    width: 90%;
+    height: 90%;
+    background: #fff;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.newcompletedview-pdf-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    z-index: 10;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.newcompletedview-pdf-modal-close:hover {
+    background: rgba(255, 255, 255, 1);
+    color: #333;
+}
+
+.newcompletedview-pdf-modal-header {
+    padding: 24px 24px 16px 24px;
+    border-bottom: 1px solid #DFDFDF;
+}
+
+.newcompletedview-pdf-modal-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #222222;
+}
+
+.newcompletedview-pdf-modal-body {
+    flex: 1;
+    padding: 16px 24px 24px 24px;
+    overflow: hidden;
+}
+
+.newcompletedview-pdf-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+}
+
+/* Questions Modal Styles */
+.newcompletedview-questions-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.newcompletedview-questions-modal-content {
+    width: 90%;
+    height: 90%;
+    background: #fff;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.newcompletedview-questions-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    z-index: 10;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.newcompletedview-questions-modal-close:hover {
+    background: rgba(255, 255, 255, 1);
+    color: #333;
+}
+
+.newcompletedview-questions-modal-header {
+    padding: 24px 24px 16px 24px;
+    border-bottom: 1px solid #DFDFDF;
+}
+
+.newcompletedview-questions-modal-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #222222;
+}
+
+.newcompletedview-questions-modal-body {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.newcompletedview-questions-section {
+    margin-bottom: 32px;
+}
+
+.newcompletedview-questions-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222222;
+    margin: 0 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #2162B2;
+}
+
+.newcompletedview-questions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.newcompletedview-question-item {
+    background: #F9F9F9;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #E0E0E0;
+}
+
+.newcompletedview-question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.newcompletedview-question-number {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2162B2;
+}
+
+.newcompletedview-question-marks {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    background: #E3F2FD;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.newcompletedview-question-content {
+    margin-bottom: 16px;
+}
+
+.newcompletedview-question-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #E0E0E0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.newcompletedview-question-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #222222;
+    margin: 0;
+}
+
+.newcompletedview-question-answer {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px;
+    background: #F5F5F5;
+    border-radius: 8px;
+    border-left: 4px solid #2162B2;
+}
+
+.newcompletedview-answer-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2162B2;
+    min-width: 60px;
+}
+
+.newcompletedview-answer-text {
+    font-size: 14px;
+    color: #222222;
+    flex: 1;
 }

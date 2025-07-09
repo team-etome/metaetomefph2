@@ -3,7 +3,7 @@ import { IoArrowBack } from "react-icons/io5";
 import "./newtestlistingadd.css";
 import NewTeacherMockTest from "./NewTeacherMockTest";
 
-export default function NewTestListingAdd({ onBack: onParentBack, class_name, division, subject, onTestAdded }) {
+export default function NewTestListingAdd({ onBack: onParentBack, class_name, division, subject, onTestAdded, editData, isEditMode }) {
     const [step, setStep] = useState(1);
     const [formValues, setFormValues] = useState({
       examName: "",
@@ -14,7 +14,24 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
       teacherCode: "",
     });
   
+    // Populate form when in edit mode
+    React.useEffect(() => {
+        if (isEditMode && editData) {
+            setFormValues({
+                examName: editData.exam_name || "",
+                topic: editData.topic || "",
+                duration: editData.duration?.toString() || "",
+                examDate: editData.exam_date || "",
+                outOfMarks: editData.out_of_mark?.toString() || "",
+                teacherCode: editData.teacher_code || "",
+            });
+        }
+    }, [isEditMode, editData]);
+  
     const handleChange = (e) => {
+      // In edit mode, don't allow changes
+      if (isEditMode) return;
+      
       const { id, value } = e.target;
       setFormValues((fv) => ({ ...fv, [id]: value }));
     };
@@ -60,12 +77,12 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
         <div className="newtestlistingadd_steps">
           <div className="step-circle active">1</div>
           <span className="step-text active">
-            Mock Details
+            {isEditMode ? 'Test Details' : 'Mock Details'}
           </span>
           <span className="step-divider">&gt;</span>
           <div className={`step-circle ${step === 2 ? "active" : ""}`}>2</div>
           <span className={`step-text ${step === 2 ? "active" : ""}`}>
-            Create Question
+            {isEditMode ? 'View Questions' : 'Create Question'}
           </span>
         </div>
       </div>
@@ -78,7 +95,7 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
         <div className="newtestlistingadd_row">
           <div className="newtestlistingadd_field">
             <label htmlFor="examName">
-              Exam Name <span className="required">*</span>
+              Exam Name {!isEditMode && <span className="required">*</span>}
             </label>
             <input
               id="examName"
@@ -86,11 +103,13 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
               className="newtestlistingadd_input"
               value={formValues.examName}
               onChange={handleChange}
+              readOnly={isEditMode}
+              style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
             />
           </div>
           <div className="newtestlistingadd_field">
             <label htmlFor="topic">
-              Topic <span className="required">*</span>
+              Topic {!isEditMode && <span className="required">*</span>}
             </label>
             <input
               id="topic"
@@ -98,6 +117,8 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
               className="newtestlistingadd_input"
               value={formValues.topic}
               onChange={handleChange}
+              readOnly={isEditMode}
+              style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
             />
           </div>
         </div>
@@ -106,7 +127,7 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
         <div className="newtestlistingadd_row">
           <div className="newtestlistingadd_field">
             <label htmlFor="duration">
-              Duration <span className="required">*</span>
+              Duration {!isEditMode && <span className="required">*</span>}
             </label>
             <input
               id="duration"
@@ -115,11 +136,13 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
               className="newtestlistingadd_input"
               value={formValues.duration}
               onChange={handleChange}
+              readOnly={isEditMode}
+              style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
             />
           </div>
           <div className="newtestlistingadd_field">
             <label htmlFor="examDate">
-              Exam Date <span className="required">*</span>
+              Exam Date {!isEditMode && <span className="required">*</span>}
             </label>
             <input
               id="examDate"
@@ -127,6 +150,8 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
               className="newtestlistingadd_input"
               value={formValues.examDate}
               onChange={handleChange}
+              readOnly={isEditMode}
+              style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
             />
           </div>
         </div>
@@ -135,7 +160,7 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
         <div className="newtestlistingadd_row">
           <div className="newtestlistingadd_field">
             <label htmlFor="outOfMarks">
-              Out of Marks <span className="required">*</span>
+              Out of Marks {!isEditMode && <span className="required">*</span>}
             </label>
             <input
               id="outOfMarks"
@@ -143,11 +168,13 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
               className="newtestlistingadd_input"
               value={formValues.outOfMarks}
               onChange={handleChange}
+              readOnly={isEditMode}
+              style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
             />
           </div>
           <div className="newtestlistingadd_field">
             <label htmlFor="teacherCode">
-              Teacher Code <span className="required">*</span>
+              Teacher Code {!isEditMode && <span className="required">*</span>}
             </label>
             <input
               id="teacherCode"
@@ -155,6 +182,8 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
               className="newtestlistingadd_input"
               value={formValues.teacherCode}
               onChange={handleChange}
+              readOnly={isEditMode}
+              style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
             />
           </div>
         </div>
@@ -162,28 +191,30 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
 
       {/* ▶ Sticky Footer */}
       <div className="newtestlistingadd_footer">
-        <button
-          type="button"
-          className="newtestlistingadd_clear"
-          onClick={() =>
-            setFormValues({
-              examName: "",
-              topic: "",
-              duration: "",
-              examDate: "",
-              outOfMarks: "",
-              teacherCode: "",
-            })
-          }
-        >
-          Clear
-        </button>
+        {!isEditMode && (
+          <button
+            type="button"
+            className="newtestlistingadd_clear"
+            onClick={() =>
+              setFormValues({
+                examName: "",
+                topic: "",
+                duration: "",
+                examDate: "",
+                outOfMarks: "",
+                teacherCode: "",
+              })
+            }
+          >
+            Clear
+          </button>
+        )}
         <button
           type="button"
           className="newtestlistingadd_next"
           onClick={goNext}
         >
-          Next
+          {isEditMode ? 'View Questions' : 'Next'}
         </button>
       </div>
       </>
@@ -194,6 +225,8 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
         division={division}
         subject={subject}
         onTestAdded={handleTestAdded}
+        editData={editData}
+        isEditMode={isEditMode}
       />}
     </div>
   );

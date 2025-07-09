@@ -1,0 +1,211 @@
+/* MCQ Questions Viewer Modal Styles */
+.newmcqquestionsviewer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.newmcqquestionsviewer-modal {
+    width: 90%;
+    height: 90%;
+    background: #fff;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.newmcqquestionsviewer-header {
+    padding: 24px 24px 16px 24px;
+    border-bottom: 1px solid #DFDFDF;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.newmcqquestionsviewer-header-left {
+    flex: 1;
+}
+
+.newmcqquestionsviewer-title {
+    margin: 0 0 4px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #222222;
+}
+
+.newmcqquestionsviewer-subtitle {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.newmcqquestionsviewer-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.newmcqquestionsviewer-close:hover {
+    background: rgba(255, 255, 255, 1);
+    color: #333;
+}
+
+.newmcqquestionsviewer-body {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.newmcqquestionsviewer-section {
+    margin-bottom: 32px;
+}
+
+.newmcqquestionsviewer-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222222;
+    margin: 0 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #2162B2;
+}
+
+.newmcqquestionsviewer-questions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.newmcqquestionsviewer-question-item {
+    background: #F9F9F9;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #E0E0E0;
+}
+
+.newmcqquestionsviewer-question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.newmcqquestionsviewer-question-number {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2162B2;
+}
+
+.newmcqquestionsviewer-question-content {
+    margin-bottom: 16px;
+}
+
+.newmcqquestionsviewer-question-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #E0E0E0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.newmcqquestionsviewer-question-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #222222;
+    margin: 0;
+}
+
+.newmcqquestionsviewer-options {
+    margin-bottom: 16px;
+}
+
+.newmcqquestionsviewer-options-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2162B2;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.newmcqquestionsviewer-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.newmcqquestionsviewer-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #F5F5F5;
+    border-radius: 6px;
+    border-left: 3px solid #E0E0E0;
+}
+
+.newmcqquestionsviewer-option-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    min-width: 20px;
+}
+
+.newmcqquestionsviewer-option-text {
+    font-size: 14px;
+    color: #222222;
+    flex: 1;
+}
+
+.newmcqquestionsviewer-answer {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px;
+    background: #E8F5E8;
+    border-radius: 8px;
+    border-left: 4px solid #4CAF50;
+}
+
+.newmcqquestionsviewer-answer-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4CAF50;
+    min-width: 100px;
+}
+
+.newmcqquestionsviewer-answer-text {
+    font-size: 14px;
+    color: #222222;
+    flex: 1;
+    font-weight: 500;
+}
+
+.newmcqquestionsviewer-empty {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.newmcqquestionsviewer-empty p {
+    margin: 0;
+    font-size: 16px;
+} 

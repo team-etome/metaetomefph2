@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
     Container,
     Row,
@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdded }) {
+function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdded, editData, isEditMode }) {
     const teacher_subject = useSelector((state) => state?.teachersubjectinfo);
     const APIURL = useSelector((state) => state.APIURL.url);
 
@@ -54,6 +54,24 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
     const [isExporting, setIsExporting] = useState(false);
 
     const [lastQuestionId, setLastQuestionId] = useState(1);
+
+    // Load existing questions when in edit mode
+    useEffect(() => {
+        if (isEditMode && editData && editData.questions) {
+            const existingSections = editData.questions.map((section, sectionIndex) => ({
+                name: section.name || `Section ${sectionIndex + 1}`,
+                questions: section.questions.map((q, questionIndex) => ({
+                    id: q.id || questionIndex + 1,
+                    question: q.question || "",
+                    questionImage: q.questionImage || null,
+                    answerKey: q.answerKey || null,
+                    options: q.options || [],
+                }))
+            }));
+            setSections(existingSections);
+            setLastQuestionId(Math.max(...existingSections.flatMap(s => s.questions.map(q => q.id)), 1));
+        }
+    }, [isEditMode, editData]);
 
     const captureQuestionImage = async (sectionIndex, questionIndex) => {
         const questionElement = questionRefs.current[sectionIndex]?.[questionIndex];
@@ -186,6 +204,9 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
     };
 
     const addQuestion = (sectionIndex) => {
+        // In edit mode, don't allow adding questions
+        if (isEditMode) return;
+
         const totalQuestions = sections.reduce(
             (acc, section) => acc + section.questions.length,
             0
@@ -231,12 +252,18 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
     };
     // Function to update question text
     const updateQuestionText = (sectionIndex, questionIndex, value) => {
+        // In edit mode, don't allow changes
+        if (isEditMode) return;
+
         const updatedSections = [...sections];
         updatedSections[sectionIndex].questions[questionIndex].question = value;
         setSections(updatedSections);
     };
 
     const addSection = () => {
+        // In edit mode, don't allow adding sections
+        if (isEditMode) return;
+
         const defaultOptionCount = 4;
         const generateOptions = () =>
             Array.from(
@@ -262,11 +289,17 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
     };
 
     const removeSection = (sectionIndex) => {
+        // In edit mode, don't allow removing sections
+        if (isEditMode) return;
+
         const newSections = sections.filter((_, i) => i !== sectionIndex);
         setSections(newSections);
     };
 
     const removeQuestion = (sectionIndex, questionIndex) => {
+        // In edit mode, don't allow removing questions
+        if (isEditMode) return;
+
         const newSections = [...sections];
 
         // Remove the selected question
@@ -290,6 +323,9 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
         optionIndex,
         value
     ) => {
+        // In edit mode, don't allow changes
+        if (isEditMode) return;
+
         const newSections = [...sections];
         newSections[sectionIndex].questions[questionIndex].options[optionIndex] =
             value;
@@ -301,6 +337,9 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
         questionIndex,
         numberOfOptions
     ) => {
+        // In edit mode, don't allow changes
+        if (isEditMode) return;
+
         setSections((prev) => {
             const updatedSections = [...prev];
             const question = updatedSections[sectionIndex].questions[questionIndex];
@@ -327,12 +366,18 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
     };
 
     const handleSectionNameChange = (index, newName) => {
+        // In edit mode, don't allow changes
+        if (isEditMode) return;
+
         const newSections = [...sections];
         newSections[index].name = newName;
         setSections(newSections);
     };
 
     const onDragEnd = (result) => {
+        // In edit mode, don't allow drag and drop
+        if (isEditMode) return;
+
         if (!result.destination) return;
 
         const { source, destination } = result;
@@ -383,11 +428,15 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
                                                     handleSectionNameChange(sectionIndex, e.target.value)
                                                 }
                                                 placeholder="Section Name"
+                                                readOnly={isEditMode}
+                                                style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
                                             />
-                                            <MdOutlineDelete
-                                                style={{ width: "32px", height: "32px" }}
-                                                onClick={() => removeSection(sectionIndex)}
-                                            />
+                                            {!isEditMode && (
+                                                <MdOutlineDelete
+                                                    style={{ width: "32px", height: "32px" }}
+                                                    onClick={() => removeSection(sectionIndex)}
+                                                />
+                                            )}
                                         </div>
 
                                         {section.questions.map((question, questionIndex) => (
@@ -418,23 +467,38 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
                                                                 {...provided.dragHandleProps}
                                                                 className="mock-editor-wrapper"
                                                             >
-                                                                <TeacherTextEditor
-                                                                    placeholder="Type question here..."
-                                                                    editorData={question.question}
-                                                                    setEditorData={(data) => {
-                                                                        const updatedSections = [...sections];
-                                                                        updatedSections[sectionIndex].questions[
-                                                                            questionIndex
-                                                                        ].question = data;
-                                                                        setSections(updatedSections);
-                                                                    }}
-                                                                    onBlur={() =>
-                                                                        saveQuestionImage(
-                                                                            sectionIndex,
-                                                                            questionIndex
-                                                                        )
-                                                                    }
-                                                                />
+                                                                {isEditMode && question.questionImage && question.questionImage.startsWith('data:image') ? (
+                                                                    <img 
+                                                                        src={question.questionImage} 
+                                                                        alt={`Question ${question.id}`}
+                                                                        style={{
+                                                                            maxWidth: '100%',
+                                                                            height: 'auto',
+                                                                            border: '1px solid #ddd',
+                                                                            borderRadius: '8px',
+                                                                            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                                                        }}
+                                                                    />
+                                                                ) : (
+                                                                    <TeacherTextEditor
+                                                                        placeholder="Type question here..."
+                                                                        editorData={question.question}
+                                                                        setEditorData={(data) => {
+                                                                            const updatedSections = [...sections];
+                                                                            updatedSections[sectionIndex].questions[
+                                                                                questionIndex
+                                                                            ].question = data;
+                                                                            setSections(updatedSections);
+                                                                        }}
+                                                                        onBlur={() =>
+                                                                            saveQuestionImage(
+                                                                                sectionIndex,
+                                                                                questionIndex
+                                                                            )
+                                                                        }
+                                                                        readOnly={isEditMode}
+                                                                    />
+                                                                )}
                                                             </div>
                                                         </div>
 
@@ -443,27 +507,29 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
                                                                 <Col>
                                                                     <h6>Answer Key</h6>
                                                                 </Col>
-                                                                <Col xs={3}>
-                                                                    <Form.Select
-                                                                        onChange={(e) =>
-                                                                            handleNumberOfOptionsChange(
-                                                                                sectionIndex,
-                                                                                questionIndex,
-                                                                                parseInt(e.target.value)
-                                                                            )
-                                                                        }
-                                                                        value={question.options.length}
-                                                                    >
-                                                                        <option>Select Options</option>
-                                                                        <option value={2}>Add 2 options</option>
-                                                                        <option value={3}>Add 3 options</option>
-                                                                        <option value={4}>Add 4 options</option>
-                                                                        <option value={5}>Add 5 options</option>
-                                                                        <option value={6}>Add 6 options</option>
-                                                                        <option value={7}>Add 7 options</option>
-                                                                        <option value={8}>Add 8 options</option>
-                                                                    </Form.Select>
-                                                                </Col>
+                                                                {!isEditMode && (
+                                                                    <Col xs={3}>
+                                                                        <Form.Select
+                                                                            onChange={(e) =>
+                                                                                handleNumberOfOptionsChange(
+                                                                                    sectionIndex,
+                                                                                    questionIndex,
+                                                                                    parseInt(e.target.value)
+                                                                                )
+                                                                            }
+                                                                            value={question.options.length}
+                                                                        >
+                                                                            <option>Select Options</option>
+                                                                            <option value={2}>Add 2 options</option>
+                                                                            <option value={3}>Add 3 options</option>
+                                                                            <option value={4}>Add 4 options</option>
+                                                                            <option value={5}>Add 5 options</option>
+                                                                            <option value={6}>Add 6 options</option>
+                                                                            <option value={7}>Add 7 options</option>
+                                                                            <option value={8}>Add 8 options</option>
+                                                                        </Form.Select>
+                                                                    </Col>
+                                                                )}
                                                             </Row>
                                                             <Row xs={2}>
                                                                 <Col>
@@ -487,6 +553,9 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
                                                                                             question.answerKey === option
                                                                                         }
                                                                                         onChange={() => {
+                                                                                            // In edit mode, don't allow changes
+                                                                                            if (isEditMode) return;
+                                                                                            
                                                                                             const newSections = [...sections];
                                                                                             newSections[
                                                                                                 sectionIndex
@@ -496,30 +565,33 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
                                                                                             setSections(newSections);
                                                                                         }}
                                                                                         className="mcq-radio"
+                                                                                        disabled={isEditMode}
                                                                                     />
                                                                                 </div>
                                                                             )
                                                                         )}
                                                                     </div>
                                                                 </Col>
-                                                                <Col
-                                                                    style={{
-                                                                        display: "flex",
-                                                                        justifyContent: "flex-end",
-                                                                    }}
-                                                                >
-                                                                    <button
-                                                                        className="mk_delete_question_button"
-                                                                        onClick={() =>
-                                                                            removeQuestion(
-                                                                                sectionIndex,
-                                                                                questionIndex
-                                                                            )
-                                                                        }
+                                                                {!isEditMode && (
+                                                                    <Col
+                                                                        style={{
+                                                                            display: "flex",
+                                                                            justifyContent: "flex-end",
+                                                                        }}
                                                                     >
-                                                                        <MdOutlineDelete className="mk_icon" />
-                                                                    </button>
-                                                                </Col>
+                                                                        <button
+                                                                            className="mk_delete_question_button"
+                                                                            onClick={() =>
+                                                                                removeQuestion(
+                                                                                    sectionIndex,
+                                                                                    questionIndex
+                                                                                )
+                                                                            }
+                                                                        >
+                                                                            <MdOutlineDelete className="mk_icon" />
+                                                                        </button>
+                                                                    </Col>
+                                                                )}
                                                             </Row>
                                                         </Row>
                                                     </div>
@@ -532,28 +604,31 @@ function NewTeacherMcqCreate({ formData, class_name, division, subject, onMcqAdd
                             </Droppable>
                         ))}
 
-                        <Row className="mk_action_buttons">
-                            <Col onClick={() => addQuestion(sections.length - 1)}>
-                                {" "}
-                                {/* Pass the section index */}
-                                <IoAddCircleOutline className="mk_icon" />
-                            </Col>
-                            <hr className="mk_divider" />
-                            <Col onClick={addSection}>
-                                <TbSection className="mk_icon" />
-                            </Col>
-                        </Row>
+                        {!isEditMode && (
+                            <Row className="mk_action_buttons">
+                                <Col onClick={() => addQuestion(sections.length - 1)}>
+                                    {" "}
+                                    {/* Pass the section index */}
+                                    <IoAddCircleOutline className="mk_icon" />
+                                </Col>
+                                <hr className="mk_divider" />
+                                <Col onClick={addSection}>
+                                    <TbSection className="mk_icon" />
+                                </Col>
+                            </Row>
+                        )}
 
-
-                        <div className="new-mcq_test_generator_header">
-                            <button
-                                className="new-mcq_test_generator_header-button"
-                                onClick={exportQuestions}
-                                disabled={isExporting}
-                            >
-                                {isExporting ? `Exporting... ${progress}%` : "Export Questions"}
-                            </button>{" "}
-                        </div>
+                        {!isEditMode && (
+                            <div className="new-mcq_test_generator_header">
+                                <button
+                                    className="new-mcq_test_generator_header-button"
+                                    onClick={exportQuestions}
+                                    disabled={isExporting}
+                                >
+                                    {isExporting ? `Exporting... ${progress}%` : "Export Questions"}
+                                </button>{" "}
+                            </div>
+                        )}
 
                         {isExporting && (
                             <Row className="my-3">

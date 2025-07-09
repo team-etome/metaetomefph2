@@ -10,6 +10,7 @@ import Select from 'react-select';
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBinLine } from 'react-icons/ri';
 import NewTestListingAdd from './NewTestListingAdd';
+import NewTestQuestionsViewer from './NewTestQuestionsViewer';
 
 const NewTestListing = ({ class_name, division, subject }) => {
     console.log(class_name, division, subject,"class_name, division, subject, admin")
@@ -21,6 +22,10 @@ const NewTestListing = ({ class_name, division, subject }) => {
     const [tests, setTests] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState(null);
     const [selectedYear, setSelectedYear] = useState(null);
+    const [selectedTest, setSelectedTest] = useState(null);
+    const [showQuestionsViewer, setShowQuestionsViewer] = useState(false);
+    const [editData, setEditData] = useState(null);
+    const [isEditMode, setIsEditMode] = useState(false);
 
     // Fetch tests from API
     const fetchTests = async () => {
@@ -46,6 +51,19 @@ const NewTestListing = ({ class_name, division, subject }) => {
             fetchTests();
         }
     }, [APIURL, teacher_id, class_name, division, subject]);
+
+    // Edit handler for tests
+    const handleEditTest = (test) => {
+        setEditData(test);
+        setIsEditMode(true);
+        setAdding(true);
+    };
+
+    // View questions handler
+    const handleViewQuestions = (test) => {
+        setSelectedTest(test);
+        setShowQuestionsViewer(true);
+    };
 
     // Delete handler for tests
     const handleDeleteTest = async (id) => {
@@ -147,7 +165,12 @@ const NewTestListing = ({ class_name, division, subject }) => {
     console.log(teacher_id, "admin eeee")
     const navigate = useNavigate();
 
-
+    const handleTestAdded = () => {
+        fetchTests();
+        setAdding(false);
+        setEditData(null);
+        setIsEditMode(false);
+    };
 
     const dashboardsmallcustomStyles = {
         control: (base, state) => ({
@@ -203,9 +226,6 @@ const NewTestListing = ({ class_name, division, subject }) => {
             }
         }),
     };
-
-
-
 
     return (
         <div className="newtestlisting_main_container">
@@ -267,7 +287,12 @@ const NewTestListing = ({ class_name, division, subject }) => {
                                                 <td>{a.exam_date || a.postedOn || a.date}</td>
                                                 <td className="newtestlisting_actions_col">
                                                     <div className="newtestlisting_actions_wrapper">
-                                                        <MdOutlineEdit size={24} color="#9F7BFF" />
+                                                        <MdOutlineEdit 
+                                                            size={24} 
+                                                            color="#9F7BFF" 
+                                                            onClick={() => handleEditTest(a)}
+                                                            style={{ cursor: 'pointer' }}
+                                                        />
                                                         <RiDeleteBinLine 
                                                             size={24} 
                                                             color="#FF6C6C" 
@@ -290,14 +315,31 @@ const NewTestListing = ({ class_name, division, subject }) => {
                         </div>
 
                     </div>
+
+                    {/* Questions Viewer Modal */}
+                    {showQuestionsViewer && selectedTest && (
+                        <NewTestQuestionsViewer
+                            test={selectedTest}
+                            onClose={() => {
+                                setShowQuestionsViewer(false);
+                                setSelectedTest(null);
+                            }}
+                        />
+                    )}
                 </>
             ) : (
                 <NewTestListingAdd 
-                    onBack={() => setAdding(false)} 
+                    onBack={() => {
+                        setAdding(false);
+                        setEditData(null);
+                        setIsEditMode(false);
+                    }} 
                     class_name={class_name}
                     division={division}
                     subject={subject}
-                    onTestAdded={fetchTests}
+                    onTestAdded={handleTestAdded}
+                    editData={editData}
+                    isEditMode={isEditMode}
                 />
             )}
         </div >

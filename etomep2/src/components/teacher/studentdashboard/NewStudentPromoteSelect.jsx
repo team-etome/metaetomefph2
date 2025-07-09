@@ -18,11 +18,11 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
     const [divisions, setDivisions] = useState(["A", "B", "C"]);
     const [showRepeatModal, setShowRepeatModal] = useState(false);
 
-    console.log(studentList, "studentListstudentList")
+    console.log(studentList, "studentListstudentList ankit ")
 
     useEffect(() => {
         if (selectAll) {
-            setSelected(studentList.map((s) => s.student_id || s.roll_no));
+            setSelected(studentList.map((s) => s.id));
         } else {
             setSelected([]);
         }
@@ -30,7 +30,7 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
 
     useEffect(() => {
         if (selected.length > 0) {
-            const selectedStudents = studentList.filter(s => selected.includes(s.student_id || s.roll_no));
+            const selectedStudents = studentList.filter(s => selected.includes(s.id));
             const uniqueClasses = [...new Set(selectedStudents.map(s => s.standard))];
             setSelectedClass(uniqueClasses.length === 1 ? uniqueClasses[0] : "");
             // Optionally, set division to first student's division
@@ -47,15 +47,15 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
         );
     };
 
-    // Only show students with blocked: false
+    // Filter based on search - studentList is already filtered for promotion
     const filtered = studentList.filter((s) =>
-        !s.blocked && s.student_name?.toLowerCase().includes(search.toLowerCase())
+        s.student_name?.toLowerCase().includes(search.toLowerCase())
     );
 
     // Find previous_class_id and current_class_id for API
     const getClassIds = () => {
 
-        const selectedStudents = studentList.filter(s => selected.includes(s.student_id || s.roll_no));
+        const selectedStudents = studentList.filter(s => selected.includes(s.id));
         const previous_class_id = selectedStudents[0]?.class_name || "";
         // For demo, increment class_name for current_class_id
         const current_class_id = previous_class_id ? (parseInt(previous_class_id) + 1).toString() : "";
@@ -76,6 +76,19 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
         } catch (error) {
             // Optionally, show an error message
             console.error("Promotion failed", error);
+        }
+    };
+
+    const handleRepeatClass = async () => {
+        try {
+            await axios.post(`${APIURL}/api/repeatstudent`, {
+                students: selected,
+                division: selectedDivision
+            });
+            setShowRepeatModal(false);
+            // Optionally, show a success message or refresh data
+        } catch (error) {
+            console.error("Repeat class failed", error);
         }
     };
 
@@ -130,12 +143,12 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
                     <div className="newstudentpromoteselect-grid">
                         {filtered.map((s) => (
                             <div
-                                key={s.student_id || s.roll_no}
+                                key={s.id}
                                 className={
                                     "newstudentpromoteselect-grid-card" +
-                                    (selected.includes(s.student_id || s.roll_no) ? " selected" : "")
+                                    (selected.includes(s.id) ? " selected" : "")
                                 }
-                                onClick={() => toggleStudent(s.student_id || s.roll_no)}
+                                onClick={() => toggleStudent(s.id)}
                             >
                                 <label>
                                     {/* <input
@@ -220,11 +233,7 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
                             <button className="promote-popup-cancel" onClick={() => setShowRepeatModal(false)}>Cancel</button>
                             <button
                                 className="promote-popup-save"
-                                onClick={() => {
-                                    setShowRepeatModal(false);
-                                    // Ask user for confirmation before proceeding
-                                    // No API call or success modal yet
-                                }}
+                                onClick={handleRepeatClass}
                             >Confirm</button>
                         </div>
                     </div>

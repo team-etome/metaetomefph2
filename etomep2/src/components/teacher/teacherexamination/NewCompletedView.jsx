@@ -8,9 +8,11 @@ import NewQuestionGenerator from '../teacherquestiongenerator/NewQuestionGenerat
 import { useSelector } from 'react-redux';
 
 const NewCompletedView = ({ selectedItemCompleted, onBack }) => {
-    console.log(selectedItemCompleted,"selectedItemCompletedselectedItemCompleted")
+    console.log(selectedItemCompleted, "selectedItemCompletedselectedItemCompleted")
     const [selectedFile, setSelectedFile] = useState(null);
     const [showCreateQ, setShowCreateQ] = useState(false);
+    const [showPdf, setShowPdf] = useState(false);
+    const [showQuestions, setShowQuestions] = useState(false);
     const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
     const handlenavigate = () => {
         navigate("/teacherprofile",);
@@ -28,13 +30,75 @@ const NewCompletedView = ({ selectedItemCompleted, onBack }) => {
         fileInputRef.current.value = "";
     };
 
+    // Questions Modal Component
+    const QuestionsModal = () => {
+        if (!showQuestions) return null;
+
+        return (
+            <div className="newcompletedview-questions-modal-overlay" onClick={() => setShowQuestions(false)}>
+                <div className="newcompletedview-questions-modal-content" onClick={e => e.stopPropagation()}>
+                    <button
+                        className="newcompletedview-questions-modal-close"
+                        onClick={() => setShowQuestions(false)}
+                        aria-label="Close"
+                    >
+                        ×
+                    </button>
+                    <div className="newcompletedview-questions-modal-header">
+                        <h3>Exam Questions</h3>
+                    </div>
+                    <div className="newcompletedview-questions-modal-body">
+                        {selectedItemCompleted?.questions?.map((section, sectionIndex) => (
+                            <div key={sectionIndex} className="newcompletedview-questions-section">
+                                <h4 className="newcompletedview-questions-section-title">
+                                    {section.sectionName || `Section ${sectionIndex + 1}`}
+                                </h4>
+                                <div className="newcompletedview-questions-list">
+                                    {section.questions?.map((question, questionIndex) => (
+                                        <div key={questionIndex} className="newcompletedview-question-item">
+                                            <div className="newcompletedview-question-header">
+                                                <span className="newcompletedview-question-number">
+                                                    Question {question.question_number || questionIndex + 1}
+                                                </span>
+                                                <span className="newcompletedview-question-marks">
+                                                    ({question.marks} marks)
+                                                </span>
+                                            </div>
+                                            <div className="newcompletedview-question-content">
+                                                {question.question && question.question.startsWith('data:image') ? (
+                                                    <img 
+                                                        src={question.question} 
+                                                        alt={`Question ${question.question_number || questionIndex + 1}`}
+                                                        className="newcompletedview-question-image"
+                                                    />
+                                                ) : (
+                                                    <p className="newcompletedview-question-text">{question.question}</p>
+                                                )}
+                                            </div>
+                                            {question.answer && (
+                                                <div className="newcompletedview-question-answer">
+                                                    <span className="newcompletedview-answer-label">Answer:</span>
+                                                    <span className="newcompletedview-answer-text">{question.answer}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     return (
         <div className="newpendingdetail-container">
             {/* Header */}
             <div className="newcompletedview-header">
-            <div className="newcompletedview-header-left">
+                <div className="newcompletedview-header-left">
                     <button className="newcompletedview-close" onClick={onBack}>
-                        <FaArrowLeft size={24}/>
+                        <FaArrowLeft size={24} />
                     </button>
                     <p className="newcompletedview-title">Exam Details</p>
 
@@ -61,90 +125,81 @@ const NewCompletedView = ({ selectedItemCompleted, onBack }) => {
                         <div className="newcompletedview-row">
                             <div>
                                 <span className="newcompletedview-row_label">Exam Name</span>
-                                <p>{selectedItemCompleted?.examName}</p>
+                                <p>{selectedItemCompleted?.exam_name}</p>
                             </div>
-                            <div><span className="newcompletedview-row_label">Subject</span><p>{selectedItemCompleted?.subject}</p></div>
-                            <div><span className="newcompletedview-row_label">Exam Date</span><p>{selectedItemCompleted?.examDate}</p></div>
-                            <div><span className="newcompletedview-row_label">Class</span><p>{selectedItemCompleted?.class}</p></div>
+                            <div><span className="newcompletedview-row_label">Subject</span><p>{selectedItemCompleted?.subject_name}</p></div>
+                            <div><span className="newcompletedview-row_label">Exam Date</span><p>{selectedItemCompleted?.exam_date}</p></div>
+                            <div><span className="newcompletedview-row_label">Class</span><p>{selectedItemCompleted?.class_name}</p></div>
                         </div>
                         {/* Second row of four */}
                         <div className="newcompletedview-row">
-                            <div><span className="newcompletedview-row_label">Start Time</span><p>10:00</p></div>
-                            <div><span className="newcompletedview-row_label">End Time</span><p>12:30</p></div>
-                            <div><span className="newcompletedview-row_label">Out of Marks</span><p>100</p></div>
-                            <div><span className="newcompletedview-row_label">Term</span><p>Term I</p></div>
+                            <div><span className="newcompletedview-row_label">Start Time</span><p>{selectedItemCompleted?.start_time}</p></div>
+                            <div><span className="newcompletedview-row_label">End Time</span><p>{selectedItemCompleted?.end_time}</p></div>
+                            <div><span className="newcompletedview-row_label">Out of Marks</span><p>{selectedItemCompleted?.out_of_marks}</p></div>
+                            <div><span className="newcompletedview-row_label">Term</span><p>{selectedItemCompleted?.term}</p></div>
                         </div>
                         <div className="newcompletedview-create-questions-wrapper" >
-                            <button className="newcompletedview-create-questions" onClick={() => setShowCreateQ(true)}>
+                            <button className="newcompletedview-create-questions" onClick={() => setShowQuestions(true)}>
                                 View Question
                             </button>
                         </div>
 
-                        {/* Upload area */}
-                        <div className="newcompletedview-upload">
-                            <p className="newcompletedview-upload-heading">Upload Instruction</p>
-
-                            <div
-                                className="newcompletedview-dropzone"
-                                onClick={() => fileInputRef.current.click()}
-                            >
-                                <p className="newcompletedview-dropzone_clickp">
-                                    Click to Upload or Drag PDF/DOC here </p>
-                                <p className="newcompletedview-dropzone_maxp">Max. file size 25MB</p>
-
-                                <button
-                                    type="button"
-                                    className="newcompletedview-upload-btn"
-                                    onClick={e => {
-                                        e.stopPropagation();
-                                        fileInputRef.current.click();
-                                    }}
+                        {/* PDF icon and file name, click to toggle viewer */}
+                        {selectedItemCompleted?.instruction && (
+                            <div className="newcompletedview-upload">
+                                <p className="newcompletedview-upload-heading">Instruction PDF</p>
+                                <div
+                                    className="newcompletedview-file-info"
+                                    style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
+                                    onClick={() => setShowPdf(true)}
                                 >
-                                    Upload File
-                                </button>
-                                <input
-                                    type="file"
-                                    accept=".pdf,.doc,.docx"
-                                    ref={fileInputRef}
-                                    style={{ display: 'none' }}
-                                    onChange={handleFileChange}
-                                />
-
-                            </div>
-
-
-
-                            {/* <=== the new “chip” that appears once a file is selected=== */}
-                            {selectedFile && (
-                                <div className="newcompletedview-file-info">
-
-                                    <AiOutlineFilePdf
-                                        className="newcompletedview-file-icon"
-                                        size={20}
-                                    />
-
+                                    <AiOutlineFilePdf className="newcompletedview-file-icon" size={20} />
                                     <span className="newcompletedview-file-name">
-                                        {selectedFile.name}
+                                        {(() => {
+                                            const url = selectedItemCompleted.instruction;
+                                            const file = url.split('/').pop().split('?')[0];
+                                            return file;
+                                        })()}
                                     </span>
-                                    <button
-                                        className="newcompletedview-file-remove"
-                                        onClick={clearFile}
-                                        aria-label="Remove file"
-                                    >
-                                        ×
-                                    </button>
                                 </div>
-                            )}
-                        </div>
+                                {/* Modal for PDF */}
+                                {showPdf && (
+                                    <div className="newcompletedview-pdf-modal-overlay" onClick={() => setShowPdf(false)}>
+                                        <div className="newcompletedview-pdf-modal-content" onClick={e => e.stopPropagation()}>
+                                            <button
+                                                className="newcompletedview-pdf-modal-close"
+                                                onClick={() => setShowPdf(false)}
+                                                aria-label="Close"
+                                            >
+                                                ×
+                                            </button>
+                                            <div className="newcompletedview-pdf-modal-header">
+                                                <h3>Instruction PDF</h3>
+                                            </div>
+                                            <div className="newcompletedview-pdf-modal-body">
+                                                <iframe
+                                                    src={selectedItemCompleted.instruction}
+                                                    title="Instruction PDF"
+                                                    className="newcompletedview-pdf-iframe"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     {/* Footer */}
                     <div className="newcompletedview-footer">
-                        <button className="newcompletedview-submit">Submit</button>
+                        {/* <button className="newcompletedview-submit">Submit</button> */}
                     </div>
+
+                    {/* Questions Modal */}
+                    <QuestionsModal />
                 </>
             ) : (
-                /* If showCreateQ is true, render the “create question” screen instead */
+                /* If showCreateQ is true, render the "create question" screen instead */
                 <NewQuestionGenerator onClose={() => setShowCreateQ(false)} />
             )}
         </div>

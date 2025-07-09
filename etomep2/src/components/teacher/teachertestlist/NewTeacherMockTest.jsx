@@ -15,7 +15,7 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import "./newteachermocktest.css";
 import { useLocation } from "react-router-dom";
 
-function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdded }) {
+function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdded, editData, isEditMode }) {
   const [subsections, setSubsections] = useState([
     {
       name: "Main Section",
@@ -67,6 +67,24 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
 
   console.log(formData, "form dataaaaaa");
 
+  // Load existing questions when in edit mode
+  useEffect(() => {
+    if (isEditMode && editData && editData.questions) {
+      const existingSubsections = editData.questions.map((section, sectionIndex) => ({
+        name: section.sectionName || `Section ${sectionIndex + 1}`,
+        questions: section.questions.map((q, questionIndex) => ({
+          id: q.question_number || questionIndex + 1,
+          question: q.question,
+          answer: q.answer,
+          points: q.marks || 0,
+          showAnswer: q.answer && q.answer !== 'Image not captured',
+        }))
+      }));
+      setSubsections(existingSubsections);
+      setLastQuestionId(Math.max(...existingSubsections.flatMap(s => s.questions.map(q => q.id)), 1));
+    }
+  }, [isEditMode, editData]);
+
   useEffect(() => {
     if (triggerExport) {
       setTimeout(() => {
@@ -77,6 +95,9 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
   }, [triggerExport]);
 
   const handlePointsChange = (subsectionIndex, questionIndex, event) => {
+    // In edit mode, don't allow changes
+    if (isEditMode) return;
+
     const newPoints = parseInt(event.target.value, 10);
 
     if (isNaN(newPoints) && event.target.value !== "") {
@@ -118,6 +139,9 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
   };
 
   const addQuestion = () => {
+    // In edit mode, don't allow adding questions
+    if (isEditMode) return;
+
     const newSubsections = [...subsections];
     const newQuestionId = lastQuestionId + 1;
     newSubsections[currentSubsectionIndex].questions.push({
@@ -132,16 +156,25 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
   };
 
   const addSubsection = () => {
+    // In edit mode, don't allow adding subsections
+    if (isEditMode) return;
+
     setSubsections([...subsections, { name: "New Section", questions: [] }]);
     setCurrentSubsectionIndex(subsections.length);
   };
 
   const removeSubsection = (index) => {
+    // In edit mode, don't allow removing subsections
+    if (isEditMode) return;
+
     const newSubsections = subsections.filter((_, i) => i !== index);
     setSubsections(newSubsections);
   };
 
   const removeQuestion = (subsectionIndex, questionIndex) => {
+    // In edit mode, don't allow removing questions
+    if (isEditMode) return;
+
     const newSubsections = [...subsections];
     newSubsections[subsectionIndex].questions = newSubsections[
       subsectionIndex
@@ -150,6 +183,9 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
   };
 
   const toggleAnswerKey = (subsectionIndex, questionIndex) => {
+    // In edit mode, don't allow toggling answer key
+    if (isEditMode) return;
+
     const newSubsections = [...subsections];
     newSubsections[subsectionIndex].questions[questionIndex].showAnswer =
       !newSubsections[subsectionIndex].questions[questionIndex].showAnswer;
@@ -157,6 +193,9 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
   };
 
   const onDragEnd = (result) => {
+    // In edit mode, don't allow drag and drop
+    if (isEditMode) return;
+
     if (!result.destination) return;
 
     const { source, destination } = result;
@@ -183,6 +222,9 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
 
   const handleEditorData = useCallback(
     (subsectionIndex, questionIndex, key, data) => {
+      // In edit mode, don't allow editing
+      if (isEditMode) return;
+
       const updatedSubsections = subsections.map((sub, idx) => {
         if (idx === subsectionIndex) {
           const updatedQuestions = sub.questions.map((q, qIdx) => {
@@ -197,7 +239,7 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
       });
       setSubsections(updatedSubsections);
     },
-    [subsections]
+    [subsections, isEditMode]
   );
 
   const captureElement = async (element) => {
@@ -367,17 +409,24 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
                         type="text"
                         value={subsection.name}
                         onChange={(e) => {
+                          // In edit mode, don't allow changes
+                          if (isEditMode) return;
+                          
                           const newSubsections = [...subsections];
                           newSubsections[subsectionIndex].name = e.target.value;
                           setSubsections(newSubsections);
                         }}
                         placeholder="Subsection Name"
+                        readOnly={isEditMode}
+                        style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
                       />
-                      <div onClick={() => removeSubsection(subsectionIndex)}>
-                        <MdOutlineDelete
-                          style={{ width: "32px", height: "32px" }}
-                        />
-                      </div>
+                      {!isEditMode && (
+                        <div onClick={() => removeSubsection(subsectionIndex)}>
+                          <MdOutlineDelete
+                            style={{ width: "32px", height: "32px" }}
+                          />
+                        </div>
+                      )}
                     </div>
                     {subsection.questions.map((q, questionIndex) => {
                       // Initialize refs array for the subsection if not already initialized
@@ -405,24 +454,39 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
                                   <h6 style={{ fontSize: "20px" }}>{q.id})</h6>
                                 </div>
                                 <div className="mock-editor-wrapper">
-                                  <TeacherTextEditor
-                                    ref={(el) =>
-                                    (questionRefs.current[subsectionIndex][
-                                      questionIndex
-                                    ] = el)
-                                    }
-                                    placeholder="Type question here..."
-                                    // style={{textTransform: "capitalize"}}
-                                    editorData={q.question}
-                                    setEditorData={(data) =>
-                                      handleEditorData(
-                                        subsectionIndex,
-                                        questionIndex,
-                                        "question",
-                                        data
-                                      )
-                                    }
-                                  />
+                                  {isEditMode && q.question && q.question.startsWith('data:image') ? (
+                                    <img 
+                                      src={q.question} 
+                                      alt={`Question ${q.id}`}
+                                      style={{
+                                        maxWidth: '100%',
+                                        height: 'auto',
+                                        border: '1px solid #ddd',
+                                        borderRadius: '8px',
+                                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                      }}
+                                    />
+                                  ) : (
+                                    <TeacherTextEditor
+                                      ref={(el) =>
+                                      (questionRefs.current[subsectionIndex][
+                                        questionIndex
+                                      ] = el)
+                                      }
+                                      placeholder="Type question here..."
+                                      // style={{textTransform: "capitalize"}}
+                                      editorData={q.question}
+                                      setEditorData={(data) =>
+                                        handleEditorData(
+                                          subsectionIndex,
+                                          questionIndex,
+                                          "question",
+                                          data
+                                        )
+                                      }
+                                      readOnly={isEditMode}
+                                    />
+                                  )}
                                 </div>
                               </div>
 
@@ -443,23 +507,38 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
                               {q.showAnswer && (
                                 <div className="mk_answer_editor_container">
                                   <div className="mock-editor-wrapper">
-                                    <TeacherTextEditor
-                                      ref={(el) =>
-                                      (answerRefs.current[subsectionIndex][
-                                        questionIndex
-                                      ] = el)
-                                      }
-                                      placeholder="Type answer here..."
-                                      editorData={q.answer}
-                                      setEditorData={(data) =>
-                                        handleEditorData(
-                                          subsectionIndex,
-                                          questionIndex,
-                                          "answer",
-                                          data
-                                        )
-                                      }
-                                    />
+                                    {isEditMode && q.answer && q.answer.startsWith('data:image') ? (
+                                      <img 
+                                        src={q.answer} 
+                                        alt={`Answer ${q.id}`}
+                                        style={{
+                                          maxWidth: '100%',
+                                          height: 'auto',
+                                          border: '1px solid #ddd',
+                                          borderRadius: '8px',
+                                          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                        }}
+                                      />
+                                    ) : (
+                                      <TeacherTextEditor
+                                        ref={(el) =>
+                                        (answerRefs.current[subsectionIndex][
+                                          questionIndex
+                                        ] = el)
+                                        }
+                                        placeholder="Type answer here..."
+                                        editorData={q.answer}
+                                        setEditorData={(data) =>
+                                          handleEditorData(
+                                            subsectionIndex,
+                                            questionIndex,
+                                            "answer",
+                                            data
+                                          )
+                                        }
+                                        readOnly={isEditMode}
+                                      />
+                                    )}
                                   </div>
                                   <div className="mk-points-input">
                                     <span>Mark</span>
@@ -473,30 +552,34 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
                                           e
                                         )
                                       }
+                                      readOnly={isEditMode}
+                                      style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
                                     />
                                   </div>
                                 </div>
                               )}
 
-                              <div className="mk_question_actions">
-                                <div
-                                  {...provided.dragHandleProps}
-                                  className="mk_drag_handle"
-                                >
-                                  <PiDotsSix className="mk_icon" />
+                              {!isEditMode && (
+                                <div className="mk_question_actions">
+                                  <div
+                                    {...provided.dragHandleProps}
+                                    className="mk_drag_handle"
+                                  >
+                                    <PiDotsSix className="mk_icon" />
+                                  </div>
+                                  <button
+                                    className="mk_delete_question_button"
+                                    onClick={() =>
+                                      removeQuestion(
+                                        subsectionIndex,
+                                        questionIndex
+                                      )
+                                    }
+                                  >
+                                    <MdOutlineDelete className="mk_icon" />
+                                  </button>
                                 </div>
-                                <button
-                                  className="mk_delete_question_button"
-                                  onClick={() =>
-                                    removeQuestion(
-                                      subsectionIndex,
-                                      questionIndex
-                                    )
-                                  }
-                                >
-                                  <MdOutlineDelete className="mk_icon" />
-                                </button>
-                              </div>
+                              )}
                             </div>
                           )}
                         </Draggable>
@@ -507,25 +590,29 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
                 )}
               </Droppable>
             ))}
-            <Row className="mk_action_buttons">
-              <Col onClick={addQuestion}>
-                <IoAddCircleOutline className="mk_icon" />
-              </Col>
-              <hr className="mk_divider"></hr>
-              <Col onClick={addSubsection}>
-                <TbSection className="mk_icon" />
-              </Col>
-            </Row>
+            {!isEditMode && (
+              <Row className="mk_action_buttons">
+                <Col onClick={addQuestion}>
+                  <IoAddCircleOutline className="mk_icon" />
+                </Col>
+                <hr className="mk_divider"></hr>
+                <Col onClick={addSubsection}>
+                  <TbSection className="mk_icon" />
+                </Col>
+              </Row>
+            )}
 
-            <div className="new-mock_test_generator_header">
-              <button className="new-mock_test_generator_header-button" onClick={handleExport} disabled={loading}>
-                {loading ? (
-                  <Spinner animation="border" size="sm" />
-                ) : (
-                  "Submit"
-                )}
-              </button>
-            </div>
+            {!isEditMode && (
+              <div className="new-mock_test_generator_header">
+                <button className="new-mock_test_generator_header-button" onClick={handleExport} disabled={loading}>
+                  {loading ? (
+                    <Spinner animation="border" size="sm" />
+                  ) : (
+                    "Submit"
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         </Row>
       </div>
