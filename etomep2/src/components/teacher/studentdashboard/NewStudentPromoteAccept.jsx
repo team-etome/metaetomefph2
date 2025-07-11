@@ -4,14 +4,21 @@ import { RiSearchLine } from "react-icons/ri";
 import image from "../../../assets/messi-ronaldo-1593920966.jpg"
 import axios from "axios";
 import { useSelector } from "react-redux";
+import smile from "../../../assets/annoyed.png"
+import CustomModal, { WarningIcon, SuccessIcon } from "./CustomModal";
 
-export default function NewStudentPromoteAccept({ studentList = [] }) {
+export default function NewStudentPromoteAccept({ studentList = [], fetchStudentList, onClose }) {
     const APIURL = useSelector((state) => state.APIURL.url);
     const [search, setSearch] = useState("");
     const [selected, setSelected] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
-    const [showSendBackModal, setShowSendBackModal] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    // Modal states
+    const [showAcceptConfirm, setShowAcceptConfirm] = useState(false);
+    const [showAcceptSuccess, setShowAcceptSuccess] = useState(false);
+    const [showDeclineConfirm, setShowDeclineConfirm] = useState(false);
+    const [showDeclineSuccess, setShowDeclineSuccess] = useState(false);
 
     // studentList is already filtered to only include promoted students
     const promotedStudents = studentList;
@@ -37,60 +44,85 @@ export default function NewStudentPromoteAccept({ studentList = [] }) {
     // Handle Accept Promotion
     const handleAcceptPromotion = async () => {
         if (selected.length === 0) return;
-
         setLoading(true);
         try {
-            const formData = new FormData();
-            formData.append("action", "accept");
-            formData.append("studentdata_id", JSON.stringify(selected));
-
-            const response = await axios.post(`${APIURL}/api/studentpromote`, formData);
-            
+            const requestData = {
+                action: "accept",
+                studentdata_id: selected
+            };
+            const response = await axios.post(`${APIURL}/api/studentpromote`, requestData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             if (response.status === 200) {
-                // Success - you might want to refresh the data or show success message
-                console.log("Students accepted successfully");
-                // Clear selection after successful acceptance
                 setSelected([]);
                 setSelectAll(false);
+                setShowAcceptSuccess(true);
+                if (fetchStudentList) fetchStudentList();
             }
         } catch (error) {
             console.error("Failed to accept students:", error);
-            // Handle error - show error message to user
         } finally {
             setLoading(false);
         }
     };
 
-    // Handle Send Back
+    // Handle Decline/Send Back
     const handleSendBack = async () => {
         if (selected.length === 0) return;
-
         setLoading(true);
         try {
-            const formData = new FormData();
-            formData.append("action", "send_back");
-            formData.append("studentdata_id", JSON.stringify(selected));
-
-            const response = await axios.post(`${APIURL}/api/studentpromote`, formData);
-            
+            const requestData = {
+                action: "decline",
+                studentdata_id: selected
+            };
+            const response = await axios.post(`${APIURL}/api/studentpromote`, requestData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             if (response.status === 200) {
-                // Success - you might want to refresh the data or show success message
-                console.log("Students sent back successfully");
-                // Clear selection after successful send back
                 setSelected([]);
                 setSelectAll(false);
-                setShowSendBackModal(false);
+                setShowDeclineSuccess(true);
+                if (fetchStudentList) fetchStudentList();
             }
         } catch (error) {
             console.error("Failed to send back students:", error);
-            // Handle error - show error message to user
         } finally {
             setLoading(false);
         }
     };
 
+    // Auto-hide and refresh after success modals
+    useEffect(() => {
+        let timer;
+        if (showAcceptSuccess) {
+            timer = setTimeout(() => {
+                setShowAcceptSuccess(false);
+                if (fetchStudentList) fetchStudentList();
+                if (onClose) onClose();
+            }, 1500);
+        }
+        return () => clearTimeout(timer);
+    }, [showAcceptSuccess, fetchStudentList, onClose]);
+
+    useEffect(() => {
+        let timer;
+        if (showDeclineSuccess) {
+            timer = setTimeout(() => {
+                setShowDeclineSuccess(false);
+                if (fetchStudentList) fetchStudentList();
+                if (onClose) onClose();
+            }, 1500);
+        }
+        return () => clearTimeout(timer);
+    }, [showDeclineSuccess, fetchStudentList, onClose]);
+
     return (
         <>
+        {filtered.length > 0 ? (
             <div>
                 {/* Action Bar */}
                 <div className="newstudentpromoteaccept-actions">
@@ -103,25 +135,22 @@ export default function NewStudentPromoteAccept({ studentList = [] }) {
                                 checked={selectAll}
                                 onChange={(e) => setSelectAll(e.target.checked)}
                             />
-                            
                         </label>
                         <button
                             className="newstudentpromoteaccept-promote-btn"
                             disabled={!selected.length || loading}
-                            onClick={handleAcceptPromotion}
+                            onClick={() => setShowAcceptConfirm(true)}
                         >
                             Accept
                         </button>
-
                         <button
                             className="newstudentpromoteaccept-sendback-btn"
                             disabled={!selected.length || loading}
-                            onClick={() => setShowSendBackModal(true)}
+                            onClick={() => setShowDeclineConfirm(true)}
                         >
                             Send Back
                         </button>
                     </div>
-
                     {/* RIGHT SIDE */}
                     <div className="newstudentpromoteaccept-search-wrapper">
                         <RiSearchLine className="icon" size={16} />
@@ -133,7 +162,6 @@ export default function NewStudentPromoteAccept({ studentList = [] }) {
                         />
                     </div>
                 </div> 
-
                 {/* Student Grid */}
                 <div className="newstudentpromoteaccept-grid">
                     {filtered.map((s) => (
@@ -145,61 +173,81 @@ export default function NewStudentPromoteAccept({ studentList = [] }) {
                             }
                             onClick={() => toggleStudent(s.id || s.roll_no)}
                         >
-                            <label>
-                                {/* <input
-                  type="checkbox"
-                  checked={selected.includes(s.id || s.roll_no)}
-                  onChange={() => toggleStudent(s.id || s.roll_no)}
-                /> */}
-                            </label>
+                            <label></label>
                             <img src={s.image || image} alt={s.student_name} />
                             <div className="info">
                                 <h4>{s.student_name}</h4>
-                                <p>{s.class_name} {s.division}</p>
+                                <p>{s.standard} {s.division}</p>
                             </div>
                             <span className="roll">Roll no : {s.roll_no}</span>
                         </div>
                     ))}
                 </div>
-
-                {/* Close */}
-                {/* <button className="newstudentpromoteaccept-close" onClick={onClose}>
-                    &times;
-                </button> */}
             </div>
+            ) : (
+                            <div className="newstudentpromoteaccept-empty">
+            
+                                <img
+                                    src={smile}
+                                    alt="Annoyed face"
+                                    style={{ width: "65px", height: "65px", objectFit: "contain" }}
+                                />
+                                <p style={{ textAlign: 'center', fontSize: '16px', marginTop: '20px' }}>
+                                   No Students have been promoted to your class
+                                </p>
+                            </div>
+                        )}
 
-            {/* Send Back Confirmation Modal */}
-            {showSendBackModal && (
-                <div className="sendback-modal-overlay">
-                    <div className="sendback-modal">
-                        <div className="sendback-modal-header">
-                            <h3>Confirm Send Back</h3>
-                        </div>
-                        <div className="sendback-modal-body">
-                            <p>
-                                Are you sure you want to send back the selected students? 
-                                This will move them back to the promotion queue.
-                            </p>
-                        </div>
-                        <div className="sendback-modal-footer">
-                            <button 
-                                className="sendback-modal-cancel" 
-                                onClick={() => setShowSendBackModal(false)}
-                                disabled={loading}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                className="sendback-modal-confirm"
-                                onClick={handleSendBack}
-                                disabled={loading}
-                            >
-                                {loading ? "Processing..." : "Confirm"}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {/* Accept Confirmation Modal */}
+            <CustomModal
+                open={showAcceptConfirm}
+                icon={<WarningIcon />}
+                title="Confirm Acceptance"
+                message="Are you sure you want to accept the selected students into the class?"
+                onCancel={() => setShowAcceptConfirm(false)}
+                onConfirm={() => {
+                    setShowAcceptConfirm(false);
+                    handleAcceptPromotion();
+                }}
+                cancelText="Cancel"
+            />
+            {/* Accept Success Modal */}
+            <CustomModal
+                open={showAcceptSuccess}
+                icon={<SuccessIcon />}
+                title="Accepted Successfully"
+                message="The selected students have been successfully accepted into the class."
+                onConfirm={() => {
+                    setShowAcceptSuccess(false);
+                    if (fetchStudentList) fetchStudentList();
+                }}
+                onlyConfirm
+            />
+            {/* Decline Confirmation Modal */}
+            <CustomModal
+                open={showDeclineConfirm}
+                icon={<WarningIcon />}
+                title="Confirm Send Back"
+                message="Are you sure you want to move the selected students back to their previously promoted class?"
+                onCancel={() => setShowDeclineConfirm(false)}
+                onConfirm={() => {
+                    setShowDeclineConfirm(false);
+                    handleSendBack();
+                }}
+                cancelText="Cancel"
+            />
+            {/* Decline Success Modal */}
+            <CustomModal
+                open={showDeclineSuccess}
+                icon={<SuccessIcon />}
+                title="Students Sent Back Successfully"
+                message="The selected students have been moved back to their previous class."
+                onConfirm={() => {
+                    setShowDeclineSuccess(false);
+                    if (fetchStudentList) fetchStudentList();
+                }}
+                onlyConfirm
+            />
         </>
     );
 }

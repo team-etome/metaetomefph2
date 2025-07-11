@@ -11,6 +11,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBinLine } from 'react-icons/ri';
 import NewTeacherMcqAdd from './NewTeacherMcqAdd';
 import NewMcqQuestionsViewer from './NewMcqQuestionsViewer';
+import { PiEye } from "react-icons/pi";
 
 const NewTeacherMcq = ({ class_name, division, subject }) => {
     const APIURL = useSelector((state) => state.APIURL.url);
@@ -285,9 +286,9 @@ const NewTeacherMcq = ({ class_name, division, subject }) => {
                                                 <td>{a.exam_date || a.postedOn || a.date || a.created_date}</td>
                                                 <td className="newteachermcq_actions_col">
                                                     <div className="newteachermcq_actions_wrapper">
-                                                        <MdOutlineEdit 
+                                                        <PiEye 
                                                             size={24} 
-                                                            color="#9F7BFF" 
+                                                            color="#1E88E5" 
                                                             onClick={() => handleEditMcq(a)}
                                                             style={{ cursor: 'pointer' }}
                                                         />

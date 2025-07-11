@@ -18,7 +18,7 @@ import NewStudentAddThroughExcel from "./NewStudentAddThroughExcel";
 import NewStudentPromote from "./NewStudentPromote";
 import NewStudentAddTimeTable from "./NewStudentAddTimeTable";
 import NewMyClassStudentView from "./NewMyClassStudentView";
-import image from "../../../assets/messi-ronaldo-1593920966.jpg"
+import image from "../../../assets/student.jpg";
 import exportimage from "../../../assets/export.png"
 import NewStudentViewTimeTable from "./NewStudentViewTimeTable";
 import axios from "axios";
@@ -284,6 +284,7 @@ const NewStudentDashboard = () => {
                                     isOpen={showPromote}
                                     onClose={() => setShowPromote(false)}
                                     studentList={studentlist}
+                                    refreshStudentList={refreshStudentData}
                                 />
                             )}
                         </div>
@@ -366,7 +367,7 @@ const NewStudentDashboard = () => {
                                                             </div>
                                                             <div className="newStudent-info-classrollno">
                                                                 <span className="newStudent-class">
-                                                                    {student.class_name} {student.division}
+                                                                    {student.standard} {student.division}
                                                                 </span>
                                                                 <span className="newStudent-roll">
                                                                     Roll no: {student.roll_no}

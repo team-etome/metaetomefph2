@@ -3,8 +3,10 @@ import "./newseatingdashboardview.css";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import image from "../../../assets/arrow-swap.jpg"
+import axios from "axios";
 
-const NewSeatingDashboardView = ({ selectedItem, onBack }) => {
+const NewSeatingDashboardView = ({ selectedItem, onBack, fetchSeatingData }) => {
+    console.log(selectedItem,"selectedItemselectedItemselectedItemselectedItem")
     const APIURL = useSelector((s) => s.APIURL.url);
     const {
         hall_name,
@@ -41,6 +43,7 @@ const NewSeatingDashboardView = ({ selectedItem, onBack }) => {
                 title: "Deleted",
                 text: "Seating slot removed successfully.",
             });
+            if (fetchSeatingData) fetchSeatingData(); // Refresh parent list
             onBack();  // close the modal and refresh list
         } catch (err) {
             console.error("Delete failed:", err);
@@ -64,13 +67,13 @@ const NewSeatingDashboardView = ({ selectedItem, onBack }) => {
                     <div className="seatingview_info_area">
                         <div>
                             <div className="seatingview_info_row heading">
-                                <p>Subject</p>
+                                <p>Classes Assigned</p>
                                 <p>Exam Date</p>
                                 <p>Start Time</p>
                                 <p>End Time</p>
                             </div>
                             <div className="seatingview_info_row data">
-                                <p></p>
+                                <p>{classes.join(' , ')}</p>
                                 <p>{new Date(exam_date).toLocaleDateString("en-GB", {
                                     day: "2-digit",
                                     month: "short",
@@ -87,7 +90,7 @@ const NewSeatingDashboardView = ({ selectedItem, onBack }) => {
 
                             {/* Faculties data */}
                             <div className="seatingview_info_row facultiesData">
-                                <p>{teacher}</p>
+                                <p>{Array.isArray(teacher) ? teacher.join(' , ') : teacher}</p>
                             </div>
                         </div>
                     </div>

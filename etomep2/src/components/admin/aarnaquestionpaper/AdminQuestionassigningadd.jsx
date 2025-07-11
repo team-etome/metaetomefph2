@@ -89,6 +89,23 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose, onSuccess }) => {
     }, [selectedClass, selectedExam, selectedSubject, selectedYear, timetableData]);
 
 
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        if (!selectedData) {
+            return false;
+        }
+        if (!selectedTeacher) {
+            return false;
+        }
+        if (!totalMarks || totalMarks.trim() === '') {
+            return false;
+        }
+        if (!passMarks || passMarks.trim() === '') {
+            return false;
+        }
+        return true;
+    };
+
     const handleSave = async () => {
         if (!selectedData || !selectedTeacher || !totalMarks) {
             Swal.fire({
@@ -484,7 +501,19 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose, onSuccess }) => {
                 </div>
                 <div className="AdminQuestionAssigning-modal-footer">
                     <button onClick={onClose} className="AdminQuestionAssigning-btn AdminQuestionAssigning-btn-secondary">Clear</button>
-                    <button onClick={handleSave} className="AdminQuestionAssigning-btn AdminQuestionAssigning-btn-primary">Save</button>
+                    <button 
+                        onClick={handleSave} 
+                        className="AdminQuestionAssigning-btn"
+                        style={{
+                            backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                            color: isFormComplete() ? '#fff' : '#fff',
+                            border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: isFormComplete() ? 'pointer' : 'not-allowed'
+                        }}
+                        disabled={!isFormComplete()}
+                    >
+                        Save
+                    </button>
                 </div>
             </div>
         </div>

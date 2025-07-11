@@ -179,10 +179,10 @@ const AdminStudentDashboard = () => {
                                     </div>
                                     <div className="adminstudentdashboard-info-classrollno">
                                         <span className="adminstudentdashboard-class">
-                                            {student.class_name} {student.division}
+                                            Class {student.class_name} {student.division}
                                         </span>
                                         <span className="adminstudentdashboard-roll">
-                                            Roll no: {student.roll_no}
+                                            Roll no : {student.roll_no}
                                         </span>
                                     </div>
                                 </div>

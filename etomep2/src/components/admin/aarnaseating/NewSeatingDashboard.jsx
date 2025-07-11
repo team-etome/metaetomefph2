@@ -37,11 +37,11 @@ const NewSeatingDashboard = () => {
     const [facultyDropdownOpen, setFacultyDropdownOpen] = useState(false);
 
 
-    const [showFilterPopup, setShowFilterPopup] = useState(false);
-    const [activeFilter, setActiveFilter] = useState(null);
-    const [showFilterList, setShowFilterList] = useState(false);
-    const [selectedFilterValue, setSelectedFilterValue] = useState('');
-    const [searchTerm, setSearchTerm] = useState('');
+    // const [showFilterPopup, setShowFilterPopup] = useState(false);
+    // const [activeFilter, setActiveFilter] = useState(null);
+    // const [showFilterList, setShowFilterList] = useState(false);
+    // const [selectedFilterValue, setSelectedFilterValue] = useState('');
+    // const [searchTerm, setSearchTerm] = useState('');
 
 
     useEffect(() => {
@@ -89,6 +89,7 @@ const NewSeatingDashboard = () => {
 
 
     const [seatingDetails, setSeatingDetails] = useState([])
+    const [filteredSeatingDetails, setFilteredSeatingDetails] = useState([])
 
 
     const fetchSeatingData = async () => {
@@ -98,6 +99,7 @@ const NewSeatingDashboard = () => {
 
             // Store the fetched data in state
             setSeatingDetails(response.data);
+            setFilteredSeatingDetails(response.data);
         } catch (error) {
             console.error("Error fetching seating data", error);
         }
@@ -130,19 +132,19 @@ const NewSeatingDashboard = () => {
 
 
 
-    const classNames = [...new Set(
-        examData
-            .flatMap(exam => exam.papers)
-            .map(paper => paper.class_name)
-            .filter(Boolean)
-    )];
+    // const classNames = [...new Set(
+    //     examData
+    //         .flatMap(exam => exam.papers)
+    //         .map(paper => paper.class_name)
+    //         .filter(Boolean)
+    // )];
 
-    const divisions = [...new Set(
-        examData
-            .flatMap(exam => exam.papers)
-            .map(paper => paper.division)
-            .filter(Boolean)
-    )];
+    // const divisions = [...new Set(
+    //     examData
+    //         .flatMap(exam => exam.papers)
+    //         .map(paper => paper.division)
+    //         .filter(Boolean)
+    // )];
 
     console.log(exampaper, "exam paper")
 
@@ -210,11 +212,11 @@ const NewSeatingDashboard = () => {
         className: '',
         division: '',
         student_left: '',
-        numberOfColumns: 5,
-        numberOfTables: 4,
-        studentsPerBench: 2,
-        startTime: '09:00 AM',
-        endTime: '12:00 PM',
+        numberOfColumns: '',
+        numberOfTables: '',
+        studentsPerBench: '',
+        startTime: '',
+        endTime: '',
         layoutSelected: '',
     });
 
@@ -252,10 +254,14 @@ const NewSeatingDashboard = () => {
     const openModal = () => {
         setShowModal(true);
         setCurrentStep(1);
+        // Clear form when opening modal to ensure fresh start
+        clearForm();
     };
 
     const closeModal = () => {
         setShowModal(false);
+        // Clear form when closing modal
+        clearForm();
     };
     const nextStep = () => {
         if (currentStep < 3) {
@@ -279,13 +285,20 @@ const NewSeatingDashboard = () => {
             className: '',
             division: '',
             student_left: '',
-            numberOfColumns: 5,
-            numberOfTables: 4,
-            studentsPerBench: 2,
-            startTime: '09:00 AM',
-            endTime: '12:00 PM',
+            numberOfColumns:'' ,
+            numberOfTables: '',
+            studentsPerBench:'' ,
+            startTime: '',
+            endTime: '',
             layoutSelected: '',
         });
+        // Also clear step-related states
+        setSelectedExamName("");
+        setSelectedExamYear("");
+        setSelectedExamDate("");
+        setSelectedLayout("");
+        setEntries([{ className: "", division: "", student_left: "" }]);
+        setCurrentStep(1);
     };
 
     useEffect(() => {
@@ -355,7 +368,11 @@ const NewSeatingDashboard = () => {
                 text: 'The seating arrangement has been successfully saved!',
                 confirmButtonColor: '#3085d6'
             }).then(() => {
+                // Clear all form data after successful submission
+                clearForm();
+                
                 closeModal(); // Close modal after alert is dismissed
+                fetchSeatingData(); // Refresh list
             });
 
         } catch (error) {
@@ -928,164 +945,14 @@ const NewSeatingDashboard = () => {
     };
 
 
-    const DummySeatingData = [
-        {
-            id: 1,
-            roomNo: '201',
-            examName: 'Second Terminal Exam',
-            examDate: '22/07/2025',
-            faculties: 5,
-            classes: ['10E', '8D', '5B'],
-        },
-        {
-            id: 2,
-            roomNo: '305',
-            examName: 'Quarterly Exam',
-            examDate: '01/09/2025',
-            faculties: 3,
-            classes: ['9A', '9B'],
-        },
-        {
-            id: 3,
-            roomNo: '110',
-            examName: 'Annual Exam',
-            examDate: '15/11/2025',
-            faculties: 4,
-            classes: ['12A', '12B', '12C'],
-        },
-        {
-            id: 1,
-            roomNo: '201',
-            examName: 'Second Terminal Exam',
-            examDate: '22/07/2025',
-            faculties: 5,
-            classes: ['10E', '8D', '5B'],
-        },
-        {
-            id: 2,
-            roomNo: '305',
-            examName: 'Quarterly Exam',
-            examDate: '01/09/2025',
-            faculties: 3,
-            classes: ['9A', '9B'],
-        },
-        {
-            id: 3,
-            roomNo: '110',
-            examName: 'Annual Exam',
-            examDate: '15/11/2025',
-            faculties: 4,
-            classes: ['12A', '12B', '12C'],
-        },
-        {
-            id: 1,
-            roomNo: '201',
-            examName: 'Second Terminal Exam',
-            examDate: '22/07/2025',
-            faculties: 5,
-            classes: ['10E', '8D', '5B'],
-        },
-        {
-            id: 2,
-            roomNo: '305',
-            examName: 'Quarterly Exam',
-            examDate: '01/09/2025',
-            faculties: 3,
-            classes: ['9A', '9B'],
-        },
-        {
-            id: 3,
-            roomNo: '110',
-            examName: 'Annual Exam',
-            examDate: '15/11/2025',
-            faculties: 4,
-            classes: ['12A', '12B', '12C'],
-        },
-        {
-            id: 1,
-            roomNo: '201',
-            examName: 'Second Terminal Exam',
-            examDate: '22/07/2025',
-            faculties: 5,
-            classes: ['10E', '8D', '5B'],
-        },
-        {
-            id: 2,
-            roomNo: '305',
-            examName: 'Quarterly Exam',
-            examDate: '01/09/2025',
-            faculties: 3,
-            classes: ['9A', '9B'],
-        },
-        {
-            id: 3,
-            roomNo: '110',
-            examName: 'Annual Exam',
-            examDate: '15/11/2025',
-            faculties: 4,
-            classes: ['12A', '12B', '12C'],
-        },
-        {
-            id: 1,
-            roomNo: '201',
-            examName: 'Second Terminal Exam',
-            examDate: '22/07/2025',
-            faculties: 5,
-            classes: ['10E', '8D', '5B'],
-        },
-        {
-            id: 2,
-            roomNo: '305',
-            examName: 'Quarterly Exam',
-            examDate: '01/09/2025',
-            faculties: 3,
-            classes: ['9A', '9B'],
-        },
-        {
-            id: 3,
-            roomNo: '110',
-            examName: 'Annual Exam',
-            examDate: '15/11/2025',
-            faculties: 4,
-            classes: ['12A', '12B', '12C'],
-        },
-        {
-            id: 1,
-            roomNo: '201',
-            examName: 'Second Terminal Exam',
-            examDate: '22/07/2025',
-            faculties: 5,
-            classes: ['10E', '8D', '5B'],
-        },
-        {
-            id: 2,
-            roomNo: '305',
-            examName: 'Quarterly Exam',
-            examDate: '01/09/2025',
-            faculties: 3,
-            classes: ['9A', '9B'],
-        },
-        {
-            id: 3,
-            roomNo: '110',
-            examName: 'Annual Exam',
-            examDate: '15/11/2025',
-            faculties: 4,
-            classes: ['12A', '12B', '12C'],
-        },
-    ];
+    // const filterOptions = {
+    //     Class: ['7A', '7B', '7C', '7D'],
+    //     Subject: ['Chemistry', 'Physics', 'Mathematics', 'Biology'],
+    //     Faculty: ['Lonappan', 'Bindu Panicker', 'Sasikuttan', 'Damodar', 'Ubaid'],
+    //     Deadline: ['12/09/2025', '22/09/2025', '07/09/2025'],
+    // };
 
-    const filterOptions = {
-        Class: ['7A', '7B', '7C', '7D'],
-        Subject: ['Chemistry', 'Physics', 'Mathematics', 'Biology'],
-        Faculty: ['Lonappan', 'Bindu Panicker', 'Sasikuttan', 'Damodar', 'Ubaid'],
-        Deadline: ['12/09/2025', '22/09/2025', '07/09/2025'],
-    };
 
-    // Filter data based on dropdown selection
-    const handleSearch = () => {
-
-    };
 
 
     const dashboardcustomStyles = {
@@ -1197,12 +1064,42 @@ const NewSeatingDashboard = () => {
         }),
     };
     const handleExamTypeChange = (selectedOption) => {
-        setSelectedExamType(selectedOption ? selectedOption.value : '');
+        const examVal = selectedOption ? selectedOption.value : '';
+        setSelectedExamType(examVal);
+        setFilteredSeatingDetails(seatingDetails.filter(item => {
+            const examMatch = !examVal || item.exam_name === examVal;
+            const yearMatch = !selectedFilterYear || (
+                (item.examYear && item.examYear === selectedFilterYear) ||
+                (item.exam_date && new Date(item.exam_date).getFullYear().toString() === selectedFilterYear)
+            );
+            return examMatch && yearMatch;
+        }));
     };
 
     const handleYearChange = (selectedOption) => {
-        setSelectedFilterYear(selectedOption ? selectedOption.value : '');
+        const yearVal = selectedOption ? selectedOption.value : '';
+        setSelectedFilterYear(yearVal);
+        setFilteredSeatingDetails(seatingDetails.filter(item => {
+            const examMatch = !selectedExamType || item.exam_name === selectedExamType;
+            const yearMatch = !yearVal || (
+                (item.examYear && item.examYear === yearVal) ||
+                (item.exam_date && new Date(item.exam_date).getFullYear().toString() === yearVal)
+            );
+            return examMatch && yearMatch;
+        }));
     };
+
+    // Compute unique exam names and years from seatingDetails
+    const examNameOptions = [...new Set(seatingDetails.map(item => item.exam_name).filter(Boolean))];
+    const yearOptions = [...new Set(seatingDetails.map(item => {
+        // Try to extract year from exam_date or from a year property
+        if (item.examYear) return item.examYear;
+        if (item.exam_date) return new Date(item.exam_date).getFullYear().toString();
+        return '';
+    }).filter(Boolean))];
+
+
+
     return (
         <>
 
@@ -1212,39 +1109,24 @@ const NewSeatingDashboard = () => {
                         <div className="seating_left-controls" >
                             {/* Exam Type Dropdown */}
                             <Select
-                                // value={examTypes.find((option) => option === selectedExamType) ? { label: selectedExamType, value: selectedExamType } : null}
+                                isClearable
+                                value={examNameOptions.find((option) => option === selectedExamType) ? { label: selectedExamType, value: selectedExamType } : null}
                                 onChange={handleExamTypeChange}
-                                // options={examTypes.map((option) => ({ label: option, value: option }))}
+                                options={examNameOptions.map((option) => ({ label: option, value: option }))}
                                 styles={dashboardcustomStyles}  // Using custom style for Exam Type
                                 placeholder="Select Examination"
                             />
-                            {/* Exam Year Dropdown */}
-                            {/* <select
-                                className="form-select form-select-sm seating_select_year"
-                                value={selectedFilterYear}
-                                onChange={(e) => setSelectedFilterYear(e.target.value)}
-                            >
-                                <option value="">Select Year</option>
-                                {examYears.map((year, i) => (
-                                    <option key={i} value={year}>{year}</option>
-                                ))}
-                            </select> */}
                             <Select
-                                value={examYears.find((year) => year === selectedFilterYear) ? { label: selectedFilterYear, value: selectedFilterYear } : null}
+                                isClearable
+                                value={yearOptions.find((year) => year === selectedFilterYear) ? { label: selectedFilterYear, value: selectedFilterYear } : null}
                                 onChange={handleYearChange}
-                                options={examYears.map((year) => ({ label: year, value: year }))}
+                                options={yearOptions.map((year) => ({ label: year, value: year }))}
                                 styles={dashboardsmallcustomStyles}  // Using custom style for Year
                                 placeholder="Select Year"
                             />
-                            <button
-                                className="btn-primary btn-sm seating_search_button"
-                                onClick={handleSearch}
-                            >
-                                Search
-                            </button>
                         </div>
                         <div className="seating_left-controls">
-                            <div style={{ position: 'relative', display: 'inline-block' }}>
+                            {/* <div style={{ position: 'relative', display: 'inline-block' }}>
                                 <button
                                     className="btn-primary btn-sm seating_filter_button"
                                     onClick={() => {
@@ -1338,7 +1220,7 @@ const NewSeatingDashboard = () => {
                                         </div>
                                     </div>
                                 )}
-                            </div>
+                            </div> */}
                             <button className="btn-primary btn-sm seating_result_add_button" onClick={openModal}>+ Add</button>
 
                         </div>
@@ -1346,7 +1228,7 @@ const NewSeatingDashboard = () => {
                 </div>
                 <div className="seating_classes_box" >
                     <div className="seating_container" >
-                        {seatingDetails.map((item) => (
+                        {filteredSeatingDetails.map((item) => (
                             <div
                                 className="seating_classes_box_inner"
                                 key={item.id}
@@ -1356,7 +1238,7 @@ const NewSeatingDashboard = () => {
                                 <div className="seating_top_row">
                                     <div className="seating_exam_details">
                                         <h3 className="seating_room_no">ROOM NO: {item.hall_name}</h3>
-                                        <p className="seating_exam_title">{item.examName}</p>
+                                        <p className="seating_exam_title">{item.exam_name}</p>
                                         <p className="seating_exam_date">Date of exam: {new Date(item.exam_date).toLocaleDateString('en-GB', {
                                             day: '2-digit', month: 'short', year: 'numeric'
                                         })}</p>
@@ -1403,7 +1285,7 @@ const NewSeatingDashboard = () => {
                     <div className="seatingview-custom-modal-overlay" onClick={handleCloseModal}>
                         {/* Stop event propagation so clicking inside modal doesn't close it */}
                         <div className="seatingview-custom-modal-content" onClick={(e) => e.stopPropagation()}>
-                            <NewSeatingDashboardView selectedItem={selectedItem} onBack={handleCloseModal} />
+                            <NewSeatingDashboardView selectedItem={selectedItem} onBack={handleCloseModal} fetchSeatingData={fetchSeatingData} />
                         </div>
                     </div>
                 )}

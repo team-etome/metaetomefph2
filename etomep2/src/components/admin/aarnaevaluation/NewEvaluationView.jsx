@@ -9,7 +9,8 @@ import { Weight } from 'lucide-react';
 
 
 
-const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
+const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation, onDeleteSuccess }) => {
+    
     if (!isOpen) return null;
     const APIURL = useSelector(s => s.APIURL.url);
     const admin_id = useSelector(s => s.admininfo.admininfo?.admin_id);
@@ -35,10 +36,16 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
         if (!selectedEvaluation) return;
         const { exam_name, year, subject_name, class_name, division, teacher_name } = selectedEvaluation;
       
-        // ← find the matching teacher record by name
+        // ← find the matching teacher record by name (try both full name and first name only)
         const match = teacherinfo.find(
-          t => `${t.first_name} ${t.last_name}` === teacher_name
+          t => `${t.first_name} ${t.last_name}` === teacher_name || t.first_name === teacher_name
         );
+      
+        console.log('Teacher matching debug:', {
+          teacher_name,
+          teacherinfo: teacherinfo.map(t => ({ id: t.id, name: `${t.first_name} ${t.last_name}` })),
+          match: match ? { id: match.id, name: `${match.first_name} ${match.last_name}` } : null
+        });
       
         setFormValues({
           exam: exam_name,
@@ -49,6 +56,59 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
           teacher: match ? String(match.id) : ''
         });
       }, [selectedEvaluation, teacherinfo, isEditMode]);
+
+    // Add delete function
+    const handleDelete = async () => {
+        if (!selectedEvaluation?.id) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No evaluation selected for deletion.'
+            });
+            return;
+        }
+
+        // Show confirmation dialog
+        const result = await Swal.fire({
+            icon: 'warning',
+            title: 'Are you sure?',
+            text: 'This evaluation will be permanently deleted. This action cannot be undone.',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const response = await axios.delete(`${APIURL}/api/evaluationadding/${selectedEvaluation.id}`);
+                
+                if (response.status === 200 || response.status === 204) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: 'Evaluation has been deleted successfully.'
+                    });
+                    
+                    // Close the modal
+                    onClose();
+                    
+                    // Call the refresh function passed from parent
+                    if (onDeleteSuccess) {
+                        onDeleteSuccess();
+                    }
+                }
+            } catch (error) {
+                console.error("Error deleting evaluation:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Delete Failed',
+                    text: error.response?.data?.message || 'Failed to delete evaluation. Please try again.'
+                });
+            }
+        }
+    };
 
     // 3. Flatten exampaper into an array like [{ exam, year, subject_name, class_name, division, … }, …]
     const normalized = useMemo(() => {
@@ -112,10 +172,16 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
         });
     }, [normalized, formValues.exam, formValues.year, formValues.subject]);
 
+    console.log(teacherinfo,"teacherinfoteacherinfo")
+
     const facultyOptions = teacherinfo.map(t => ({
         value: String(t.id),
         label: `${t.first_name} ${t.last_name}`
     }));
+    
+    console.log('Faculty options:', facultyOptions);
+    console.log('Current formValues.teacher:', formValues.teacher);
+    console.log('Selected faculty option:', facultyOptions.find(o => o.value === formValues.teacher));
 
     // 5. Handlers that clear downstream fields
     const handleExamChange = o =>
@@ -183,11 +249,6 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
             });
         }
     };
-
-
-
-
-
 
     const customStyles = {
         control: (base, state) => ({
@@ -357,7 +418,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                         className="custom-input"
                                         style={{
                                             height: '50px',
-                                            border: '1px solid #757575',
+                                            border: '1px solid #ccc',
                                             borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
@@ -425,7 +486,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                     </form>
                 </div>
                 <div className="evaluationview-modal-footer">
-                    <button className="evaluationview-btn evaluationview-btn-danger">Delete</button>
+                    <button className="evaluationview-btn evaluationview-btn-danger" onClick={handleDelete}>Delete</button>
 
                     <button
 

@@ -7,7 +7,7 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { BsFillTelephoneFill, BsEnvelopeFill } from "react-icons/bs";
 import { FiPhone } from "react-icons/fi";
 import { CiSquareChevDown } from "react-icons/ci";
-import image from "../../../assets/student.jpg"
+import image from "../../../assets/student.jpg";
 import NewFacultyAdd from './NewFacultyAdd';
 import NewFacultyView from './NewFacultyView';
 import NewFacultyAddThroughExcel from './NewFacultyAddThroughExcel';
@@ -27,6 +27,7 @@ const NewFacultyDashboard = () => {
     const [showMenuexcel, setShowMenuExcel] = useState(false); // Not used visibly but safe to keep
     const [selectedFaculty, setSelectedFaculty] = useState(null); // Selected card view
     const [selectedSubject, setSelectedSubject] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState({ value: 'active', label: 'Active' }); // Default to Active
 
 
     const [facultySearch, setFacultySearch] = useState('');
@@ -144,6 +145,61 @@ const NewFacultyDashboard = () => {
         }),
 
     };
+    const smalldashboardcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            // minHeight: '48px',
+            width: '200px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+            // '&:hover': { borderColor: '#86b7fe' }
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px'
+            }
+        }),
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+        clearIndicator: () => ({
+            display: 'none'
+        }),
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',
+            overflowY: 'auto',
+            fontSize: '14px',
+        }),
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+
+    };
 
     const handleChange = (option) => {
         if (!option) {
@@ -157,11 +213,28 @@ const NewFacultyDashboard = () => {
         }
     };
 
+    const handleStatusChange = (option) => {
+        setSelectedStatus(option || { value: 'active', label: 'Active' });
+    };
+
+    const statusOptions = [
+        { value: 'active', label: 'Active' },
+        { value: 'inactive', label: 'Inactive' }
+    ];
+
     return (
         <div className="facultydashboard_main_container" >
             <div className="facultydashboard_main_header_container">
                 <div className="facultydashboard_header-controls d-flex justify-content-between align-items-center">
                     <div className="facultydashboard_left-controls">
+                        <Select
+                            isClearable
+                            value={selectedStatus}
+                            onChange={handleStatusChange}
+                            options={statusOptions}
+                            styles={smalldashboardcustomStyles}
+                            placeholder="Select Status"
+                        />
                         <Select
                             isClearable
                             value={
@@ -233,7 +306,12 @@ const NewFacultyDashboard = () => {
                                 )
                                 : true;
 
-                            return nameMatch && subjectMatch;
+                            // Status filter
+                            const statusMatch = selectedStatus.value === 'active' 
+                                ? faculty.status === false 
+                                : faculty.status === true;
+
+                            return nameMatch && subjectMatch && statusMatch;
                         })
                         .map((faculty) => (
                             <div className="facultydashboard_classes_box_inner" key={faculty.id} onClick={() => handleCardClick(faculty)}>

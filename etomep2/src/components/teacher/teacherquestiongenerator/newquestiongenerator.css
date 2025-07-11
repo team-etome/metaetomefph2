@@ -77,6 +77,15 @@
     background-color: #2162B2;
     font-size: 16px;
 }
+.newquestion_generator_back {
+    width: 100px;
+    height: 40px;
+    border-radius: 8px;
+    color: #444444;
+    border: 1px solid #444444 ;
+    background-color: transparent;
+    font-size: 16px;
+}
 
 .newsubsection_header {
     margin: 24px;
@@ -156,6 +165,56 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+.newquestion_generator_header_back {
+    width: 100px;
+    height: 40px;
+    background-color: #fff;
+    position: fixed;
+    bottom: 24px;
+    padding-left: 24px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Fixed Footer Styles */
+.newquestion_generator_footer {
+    background-color: #fff;
+    /* border-top: 1px solid #e0e0e0; */
+    /* padding: 16px 24px; */
+    padding-bottom: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 24px ;
+    margin-bottom: 0px;
+    flex-shrink: 0;
+}
+
+.footer_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    /* max-width: 1200px; */
+    margin-right:32px;
+}
+
+.footer_left {
+    display: flex;
+    align-items: center;
+}
+
+.footer_right {
+    display: flex;
+    align-items: center;
+}
+
+.progress_container {
+    margin-top: 12px;
+    padding: 0 24px;
 }
 
 .new-action_buttons {

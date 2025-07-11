@@ -7,12 +7,15 @@ import { FaArrowLeft } from "react-icons/fa6";
 import NewQuestionGenerator from '../teacherquestiongenerator/NewQuestionGenerator';
 import { useSelector } from 'react-redux';
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+// import { useSelector } from "react-redux";
 
 const NewPendingView = ({ selectedItem, onBack, onRefresh }) => {
     console.log(selectedItem,"selectedItemselectedItemankit")
     const [selectedFile, setSelectedFile] = useState(null);
     const [showCreateQ, setShowCreateQ] = useState(false);
     const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
+    const navigate = useNavigate();
     console.log(selectedFile,"selectedFileselectedFileselectedFileankit ")
     const handlenavigate = () => {
         navigate("/teacherprofile",);

@@ -9,14 +9,13 @@ import { CloudCog, Weight } from 'lucide-react';
 import { exampaperinfo } from '../../../Redux/Actions/ExamPaperInfoAction';
 
 
-const NewEvaluationAdd = ({ isOpen, onClose }) => {
+const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
 
     const dispatch = useDispatch()
 
     const APIURL = useSelector((state) => state.APIURL.url);
     const admininfo = useSelector((state) => state.admininfo);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
-    
     
 
 
@@ -119,9 +118,14 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
         }),
     };
 
-    const examNameOptions = Object.keys(exampaper || {}).map((examName) => ({
-        label: examName,
-        value: examName
+    const examNameOptions = [...new Set(
+        Object.keys(exampaper || {}).map((examName) => {
+            // Extract exam name without year (remove the year part)
+            return examName.replace(/\s+\d{4}$/, '');
+        })
+    )].map((examNameWithoutYear) => ({
+        label: examNameWithoutYear,
+        value: examNameWithoutYear
     }));
 
     // Get all exams in one flat list
@@ -162,13 +166,14 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
         try {
             const data = {
                 admin: admin_id,
+                exam_name: formData.examName,
+                year: formData.examYear,
                 class_name: formData.className,
                 division: formData.division,
-                subject: formData.subject,
-                teacher: formData.facultyId,
-                exam_date: formData.examDate,
+                subject_name: formData.subject,
+                teacher_id: formData.facultyId,
+                start_date: formData.examDate,
                 end_date: formData.deadline
-
             };
 
 
@@ -181,6 +186,7 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                     title: 'Success',
                     text: 'Evaluation scheduled successfully!'
                 });
+                if (onAddSuccess) onAddSuccess();
                 onClose();
             }
         } catch (error) {
@@ -220,7 +226,7 @@ const NewEvaluationAdd = ({ isOpen, onClose }) => {
                                         options={examNameOptions}
                                         styles={customStyles}
                                         isClearable={true}
-                                        placeholder=""      // ✅ Added to remove "Select..." text
+                                        placeholder=""   
                                         onChange={(selected) => handleInputChange('examName', selected?.value)}
                                         value={examNameOptions.find(option => option.value === formData.examName)}
                                     />

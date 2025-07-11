@@ -76,16 +76,77 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
         setChapters(updated);
         setChapterCount(updated.length);
     };
-    const handleDeleteChapter = index => {
-        const updated = chapters.filter((_, i) => i !== index);
-        setChapters(updated);
-        setChapterCount(updated.length);
+    // const handleDeleteChapter = index => {
+    //     const updated = chapters.filter((_, i) => i !== index);
+    //     setChapters(updated);
+    //     setChapterCount(updated.length);
+    // };
+
+
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        if (!selectedClass || !selectedSubject || !selectedMedium || !selectedPublisher) {
+            return false;
+        }
+        if (!textbookname || textbookname.trim() === '') {
+            return false;
+        }
+        if (!imageFile) {
+            return false;
+        }
+        if (chapterCount === 0 || chapters.length === 0) {
+            return false;
+        }
+        
+        // Check if chapters have names and files
+        const invalidChapters = chapters.filter((chapter, index) => {
+            return !chapter.name || chapter.name.trim() === '' || !chapter.file;
+        });
+        
+        return invalidChapters.length === 0;
     };
 
-
     const handleSave = async () => {
-        if (!selectedClass || !selectedSubject || !selectedMedium || !selectedPublisher) {
-            Swal.fire({ icon: 'warning', title: 'Missing Fields', text: 'Please select all fields.' });
+        // Validate all required fields except volume
+        const missingFields = [];
+        
+        if (!selectedClass) {
+            missingFields.push('Class');
+        }
+        if (!selectedSubject) {
+            missingFields.push('Subject');
+        }
+        if (!selectedMedium) {
+            missingFields.push('Medium');
+        }
+        if (!selectedPublisher) {
+            missingFields.push('Publisher Name');
+        }
+        if (!textbookname || textbookname.trim() === '') {
+            missingFields.push('Textbook Name');
+        }
+        if (!imageFile) {
+            missingFields.push('Cover Photo');
+        }
+        if (chapterCount === 0 || chapters.length === 0) {
+            missingFields.push('Chapters');
+        }
+        
+        // Check if chapters have names and files
+        const invalidChapters = chapters.filter((chapter, index) => {
+            return !chapter.name || chapter.name.trim() === '' || !chapter.file;
+        });
+        
+        if (invalidChapters.length > 0) {
+            missingFields.push('Chapter details (names and files)');
+        }
+        
+        if (missingFields.length > 0) {
+            Swal.fire({ 
+                icon: 'warning', 
+                title: 'Missing Required Fields', 
+                text: `Please fill in the following fields: ${missingFields.join(', ')}.` 
+            });
             return;
         }
 
@@ -506,7 +567,19 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
                 </div>
                 <div className="lokatextbookadd-modal-footer">
                     <button onClick={onClose} className="lokatextbookadd-btn lokatextbookadd-btn-secondary">Clear</button>
-                    <button onClick={handleSave} className="lokatextbookadd-btn lokatextbookadd-btn-primary">Save</button>
+                    <button 
+                        onClick={handleSave} 
+                        className="lokatextbookadd-btn"
+                        style={{
+                            backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                            color: isFormComplete() ? '#fff' : '#fff',
+                            border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: isFormComplete() ? 'pointer' : 'not-allowed'
+                        }}
+                        disabled={!isFormComplete()}
+                    >
+                        Save
+                    </button>
                 </div>
             </div>
         </div>

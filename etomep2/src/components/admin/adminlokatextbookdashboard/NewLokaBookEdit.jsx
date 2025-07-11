@@ -127,18 +127,49 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
 
 
     const handleSave = async () => {
-        if (!selectedClass || !selectedSubject || !selectedMedium || !selectedPublisher) {
-            Swal.fire({ icon: 'warning', title: 'Missing Fields', text: 'Please select all fields.' });
-            return;
-        }
-        const missingChapters = chapters.some(chapter => !chapter.name || (!chapter.file && !chapter.previewUrl));
-        if (missingChapters) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Missing Chapter Data',
-                text: 'Each chapter must have a name and a PDF file (either uploaded or existing).'
+        // Validate all required fields except volume when in edit mode
+        if (isEditMode) {
+            const missingFields = [];
+            
+            if (!selectedClass) {
+                missingFields.push('Class');
+            }
+            if (!selectedSubject) {
+                missingFields.push('Subject');
+            }
+            if (!selectedMedium) {
+                missingFields.push('Medium');
+            }
+            if (!selectedPublisher) {
+                missingFields.push('Publisher Name');
+            }
+            if (!textbookname || textbookname.trim() === '') {
+                missingFields.push('Textbook Name');
+            }
+            if (!imageData.preview && !imageData.file) {
+                missingFields.push('Cover Photo');
+            }
+            if (chapterCount === 0 || chapters.length === 0) {
+                missingFields.push('Chapters');
+            }
+            
+            // Check if chapters have names and files (either uploaded or existing)
+            const invalidChapters = chapters.filter((chapter, index) => {
+                return !chapter.name || chapter.name.trim() === '' || (!chapter.file && !chapter.previewUrl);
             });
-            return;
+            
+            if (invalidChapters.length > 0) {
+                missingFields.push('Chapter details (names and files)');
+            }
+            
+            if (missingFields.length > 0) {
+                Swal.fire({ 
+                    icon: 'warning', 
+                    title: 'Missing Required Fields', 
+                    text: `Please fill in the following fields: ${missingFields.join(', ')}.` 
+                });
+                return;
+            }
         }
 
         const formData = new FormData();

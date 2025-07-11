@@ -42,6 +42,7 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
     const [phoneCode, setPhoneCode] = useState("+91");
 
     const [initialData, setInitialData] = useState(null);
+    const [isFormComplete, setIsFormComplete] = useState(false);
 
     useEffect(() => {
         if (studentToEdit) {
@@ -83,8 +84,15 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
         } else {
             setImageUrl("");
             setInitialData(null);
+            setIsFormComplete(false);
         }
     }, [studentToEdit]);
+
+    // Monitor form changes and update completion status
+    useEffect(() => {
+        const isComplete = checkFormCompletion(formData);
+        setIsFormComplete(isComplete);
+    }, [formData]);
 
     const resetForm = () => {
         setFormData({
@@ -104,6 +112,39 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
             password: "",
             imageFile: null
         });
+        setIsFormComplete(false);
+    };
+
+    // Function to check if all required fields are filled
+    const checkFormCompletion = (data) => {
+        const requiredFields = [
+            'studentname',
+            'rollno', 
+            'phoneno',
+            'email',
+            'gender',
+            'dateofbirth',
+            'joiningdate',
+            'admissionno',
+            'fathername',
+            'mothername',
+            'guardian',
+            'address'
+        ];
+
+        const isComplete = requiredFields.every(field => {
+            if (field === 'gender') {
+                return data[field] && data[field].value;
+            }
+            return data[field] && data[field].toString().trim() !== '';
+        });
+
+        // Additional validation for email format and phone number length
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isEmailValid = data.email && emailRegex.test(data.email);
+        const isPhoneValid = data.phoneno && data.phoneno.length === 10;
+
+        return isComplete && isEmailValid && isPhoneValid;
     };
 
     // const handleInputChange = (field, value) => {
@@ -175,7 +216,19 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
         }
 
         if (validationErrors.length > 0) {
-            Swal.fire("Validation Error", validationErrors[0], "warning");
+            Swal.fire({
+                icon: "warning",
+                title: "Validation Error",
+                html: `
+                    <div style="text-align: left;">
+                        <p style="margin-bottom: 10px; font-weight: bold;">Please fill in the following required fields:</p>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            ${validationErrors.map(error => `<li style="margin-bottom: 5px;">${error}</li>`).join('')}
+                        </ul>
+                    </div>
+                `,
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
@@ -685,31 +738,37 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                 </div>
 
                 <div className="newstudentadd-modal-footer">
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        <button
+                            onClick={() => {
+                                Swal.fire({
+                                    title: 'Are you sure?',
+                                    text: "All entered data will be lost!",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Yes, clear it',
+                                    cancelButtonText: 'Cancel'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        resetForm();
+                                        onClose();
+                                    }
+                                });
+                            }}
+                            className="newstudentadd-btn newstudentadd-btn-secondary"
+                        >
+                            Clear
+                        </button>
 
-                    <button
-                        onClick={() => {
-                            Swal.fire({
-                                title: 'Are you sure?',
-                                text: "All entered data will be lost!",
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33',
-                                confirmButtonText: 'Yes, clear it',
-                                cancelButtonText: 'Cancel'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    resetForm();
-                                    onClose();
-                                }
-                            });
-                        }}
-                        className="newstudentadd-btn newstudentadd-btn-secondary"
-                    >
-                        Clear
-                    </button>
-
-                    <button className="newstudentadd-btn newstudentadd-btn-primary" onClick={handleSave}>Save</button>
+                        <button 
+                            className={`newstudentadd-btn ${isFormComplete ? 'newstudentadd-btn-complete' : 'newstudentadd-btn-primary'}`}
+                            onClick={handleSave}
+                        >
+                            Save
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

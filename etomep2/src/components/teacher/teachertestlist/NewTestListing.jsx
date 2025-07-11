@@ -7,13 +7,13 @@ import { BsFillPersonFill } from "react-icons/bs";
 import student from "../../../assets/student.jpg"
 import Swal from 'sweetalert2';
 import Select from 'react-select';
-import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBinLine } from 'react-icons/ri';
 import NewTestListingAdd from './NewTestListingAdd';
 import NewTestQuestionsViewer from './NewTestQuestionsViewer';
+import { PiEye } from "react-icons/pi";
 
 const NewTestListing = ({ class_name, division, subject }) => {
-    console.log(class_name, division, subject,"class_name, division, subject, admin")
+    console.log(class_name, division, subject, "class_name, division, subject, admin")
     const APIURL = useSelector((state) => state.APIURL.url);
     const teacher = useSelector((state) => state.teacherinfo);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
@@ -36,7 +36,7 @@ const NewTestListing = ({ class_name, division, subject }) => {
                     class_name: class_name,
                     division: division,
                     subject: subject,
-                    type:"MOCK"
+                    type: "MOCK"
                 }
             });
             console.log('Fetched tests data:', response.data);
@@ -68,47 +68,47 @@ const NewTestListing = ({ class_name, division, subject }) => {
     // Delete handler for tests
     const handleDeleteTest = async (id) => {
         Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this deletion!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
-          cancelButtonText: "No, cancel"
+            title: "Are you sure?",
+            text: "You won't be able to revert this deletion!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel"
         }).then(async (result) => {
-          if (result.isConfirmed) {
-            try {
-              await axios.delete(`${APIURL}/api/testdelete/${id}/`, {
-                params: { type: "mock" }
-              });
-              // Remove the deleted test from state
-              setTests(prevTests => {
-                console.log('Previous tests state:', prevTests);
-                console.log('Deleting test with ID:', id);
-                
-                // Handle different possible data structures
-                if (prevTests && Array.isArray(prevTests.test)) {
-                  const filteredTests = prevTests.test.filter(test => test.id !== id);
-                  console.log('Filtered tests (object structure):', filteredTests);
-                  return {
-                    ...prevTests,
-                    test: filteredTests
-                  };
-                } else if (Array.isArray(prevTests)) {
-                  const filteredTests = prevTests.filter(test => test.id !== id);
-                  console.log('Filtered tests (array structure):', filteredTests);
-                  return filteredTests;
+            if (result.isConfirmed) {
+                try {
+                    await axios.delete(`${APIURL}/api/testdelete/${id}/`, {
+                        params: { type: "mock" }
+                    });
+                    // Remove the deleted test from state
+                    setTests(prevTests => {
+                        console.log('Previous tests state:', prevTests);
+                        console.log('Deleting test with ID:', id);
+
+                        // Handle different possible data structures
+                        if (prevTests && Array.isArray(prevTests.test)) {
+                            const filteredTests = prevTests.test.filter(test => test.id !== id);
+                            console.log('Filtered tests (object structure):', filteredTests);
+                            return {
+                                ...prevTests,
+                                test: filteredTests
+                            };
+                        } else if (Array.isArray(prevTests)) {
+                            const filteredTests = prevTests.filter(test => test.id !== id);
+                            console.log('Filtered tests (array structure):', filteredTests);
+                            return filteredTests;
+                        }
+                        console.log('No matching structure found, returning original state');
+                        return prevTests;
+                    });
+                    Swal.fire("Deleted!", "Your test has been deleted.", "success");
+                } catch (error) {
+                    console.error("Error deleting test:", error);
+                    Swal.fire("Error!", "Failed to delete test.", "error");
                 }
-                console.log('No matching structure found, returning original state');
-                return prevTests;
-              });
-              Swal.fire("Deleted!", "Your test has been deleted.", "success");
-            } catch (error) {
-              console.error("Error deleting test:", error);
-              Swal.fire("Error!", "Failed to delete test.", "error");
             }
-          }
         });
     };
 
@@ -116,7 +116,7 @@ const NewTestListing = ({ class_name, division, subject }) => {
     const getUniqueMonthsAndYears = (testList) => {
         const months = new Set();
         const years = new Set();
-        
+
         testList.forEach(test => {
             if (test.exam_date || test.date) {
                 const date = new Date(test.exam_date || test.date);
@@ -126,7 +126,7 @@ const NewTestListing = ({ class_name, division, subject }) => {
                 years.add(year);
             }
         });
-        
+
         return {
             months: Array.from(months).sort(),
             years: Array.from(years).sort((a, b) => b - a) // Sort years descending
@@ -136,16 +136,16 @@ const NewTestListing = ({ class_name, division, subject }) => {
     // Filter tests based on selected month and year
     const getFilteredTests = (testList) => {
         if (!selectedMonth && !selectedYear) return testList;
-        
+
         return testList.filter(test => {
             if (!test.exam_date && !test.date) return false;
             const date = new Date(test.exam_date || test.date);
             const month = date.toLocaleString('default', { month: 'long' });
             const year = date.getFullYear().toString();
-            
+
             const monthMatch = !selectedMonth || month === selectedMonth.value;
             const yearMatch = !selectedYear || year === selectedYear.value;
-            
+
             return monthMatch && yearMatch;
         });
     };
@@ -287,15 +287,15 @@ const NewTestListing = ({ class_name, division, subject }) => {
                                                 <td>{a.exam_date || a.postedOn || a.date}</td>
                                                 <td className="newtestlisting_actions_col">
                                                     <div className="newtestlisting_actions_wrapper">
-                                                        <MdOutlineEdit 
-                                                            size={24} 
-                                                            color="#9F7BFF" 
+                                                        <PiEye
+                                                            size={24}
+                                                            color="#1E88E5"
                                                             onClick={() => handleEditTest(a)}
                                                             style={{ cursor: 'pointer' }}
                                                         />
-                                                        <RiDeleteBinLine 
-                                                            size={24} 
-                                                            color="#FF6C6C" 
+                                                        <RiDeleteBinLine
+                                                            size={24}
+                                                            color="#FF6C6C"
                                                             onClick={() => handleDeleteTest(a.id)}
                                                             style={{ cursor: 'pointer' }}
                                                         />
@@ -328,12 +328,12 @@ const NewTestListing = ({ class_name, division, subject }) => {
                     )}
                 </>
             ) : (
-                <NewTestListingAdd 
+                <NewTestListingAdd
                     onBack={() => {
                         setAdding(false);
                         setEditData(null);
                         setIsEditMode(false);
-                    }} 
+                    }}
                     class_name={class_name}
                     division={division}
                     subject={subject}

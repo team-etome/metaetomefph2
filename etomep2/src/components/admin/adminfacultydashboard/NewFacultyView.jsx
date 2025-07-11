@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './newfacultyview.css';
 import defaultImage from "../../../assets/default.jpg";
-import image from "../../../assets/messi-ronaldo-1593920966.jpg"
+import image from "../../../assets/student.jpg";
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import amritha from "../../../assets/amritha.png";
 import { RiEdit2Fill } from "react-icons/ri";
@@ -13,33 +13,33 @@ import { teacherinfo } from "../../../Redux/Actions/TeacherInfoAction";
 
 
 function TeacherProfile() {
-  const teacherinfo = useSelector((state) => state.teacherinfo);
+  const teacher = useSelector((state) => state.teacherinfo);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedFileName, setSelectedFileName] = useState("");
   const APIURL = useSelector((state) => state.APIURL.url);
   const [firstName, setFirstName] = useState(
-    teacherinfo.teacherinfo?.first_name || ""
+    teacher.teacherinfo?.first_name || ""
   );
   const [lastName, setLastName] = useState(
-    teacherinfo.teacherinfo?.last_name || ""
+    teacher.teacherinfo?.last_name || ""
   );
-  const [email, setEmail] = useState(teacherinfo.teacherinfo?.email || "");
+  const [email, setEmail] = useState(teacher.teacherinfo?.email || "");
   const [phoneNumber, setPhoneNumber] = useState(
-    teacherinfo.teacherinfo?.phone_number || ""
+    teacher.teacherinfo?.phone_number || ""
   );
   const [institutionCode, setInstitutionCode] = useState(""); // Add default values if available
   const [region, setRegion] = useState("");
   const [boardOfEducation, setBoardOfEducation] = useState("");
   const [profileImage, setProfileImage] = useState(
-    teacherinfo.teacherinfo?.image
+    teacher.teacherinfo?.image
   );
-  console.log(teacherinfo.teacherinfo?.image ,"imagee")
+  console.log(teacher.teacherinfo?.image, "imagee")
   const [imageSrc, setImageSrc] = useState(null);  // Holds the uploaded image as a DataURL
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [showCropper, setShowCropper] = useState(false);
-  const [teacherId, SetTeacherId] = useState(teacherinfo.teacherinfo?.teacher_id || "")
+  const [teacherId, SetTeacherId] = useState(teacher.teacherinfo?.teacher_id || "")
 
 
   const navigate = useNavigate();
@@ -49,6 +49,7 @@ function TeacherProfile() {
   const handleback = () => {
     navigate("/teacherhome");
   };
+
 
   const handleLogout = () => {
     document.cookie.split(";").forEach((c) => {
@@ -63,7 +64,7 @@ function TeacherProfile() {
     navigate("/teacherlogin");
   };
 
-  console.log(teacherinfo, "teacher info");
+  console.log(teacher, "teacher info");
 
   const handleEditToggle = () => {
     if (isEditing) {
@@ -99,7 +100,7 @@ function TeacherProfile() {
   // };
 
   // useEffect(() => {
-    // Update the profileImage state whenever teacherData changes
+  // Update the profileImage state whenever teacherData changes
   //   setProfileImage(teacherinfo?.image);
   // }, [teacherinfo]);
 
@@ -109,22 +110,27 @@ function TeacherProfile() {
     formData.append("last_name", lastName);
     formData.append("email", email);
     formData.append("phone_number", phoneNumber);
-    formData.append("institution_code", institutionCode);
-    formData.append("region", region);
-    formData.append("board_of_education", boardOfEducation);
-    if (profileImage !== amritha) {
-      formData.append("image", profileImage);
-    }
-    if (profileImage !== amritha) {
+    // formData.append("institution_code", institutionCode);
+    // formData.append("region", region);
+    // formData.append("board_of_education", boardOfEducation);
+
+    // Handle image upload only if it's not the default image
+    if (profileImage && profileImage !== amritha) {
       try {
-        // Convert the blob URL to a Blob
-        const response = await fetch(profileImage);
-        const blob = await response.blob();
-        // Create a File object from the blob
-        const file = new File([blob], "profile.png", { type: blob.type });
-        formData.append("image", file);
+        // Check if profileImage is a blob URL (from cropped image)
+        if (profileImage.startsWith('blob:')) {
+          // Convert the blob URL to a Blob
+          const response = await fetch(profileImage);
+          const blob = await response.blob();
+          // Create a File object from the blob
+          const file = new File([blob], "profile.png", { type: blob.type });
+          formData.append("image", file);
+        } else {
+          // If it's a regular file or URL, append directly
+          formData.append("image", profileImage);
+        }
       } catch (error) {
-        console.error("Error converting image:", error);
+        console.error("Error processing image:", error);
         Swal.fire({
           icon: "error",
           title: "Error",
@@ -133,17 +139,12 @@ function TeacherProfile() {
         return;
       }
     }
-    console.log(profileImage, "sjdfhgusdgfiuhshid")
 
     axios
       .put(`${APIURL}/api/addteacher/${teacherId}`, formData)
       .then((response) => {
-        const updatedTeacher = response.data.teacher;
-        if (updatedTeacher) {
-          // Update Redux using your teacherinfo action
-          dispatch(teacherinfo(updatedTeacher));
-          // Persist the updated teacher info in localStorage so it persists on refresh
-          localStorage.setItem("teacherinfo", JSON.stringify(updatedTeacher));
+        if (response.data.teacher) {
+              dispatch(teacherinfo(response.data.teacher));
         }
         Swal.fire({
           icon: "success",
@@ -244,6 +245,15 @@ function TeacherProfile() {
       reader.readAsDataURL(file);
     }
   };
+
+
+//   useEffect(() => {
+//   setFirstName(teacherinfo.teacherinfo?.first_name);
+//   setLastName(teacherinfo.teacherinfo?.last_name);
+//   setEmail(teacherinfo.teacherinfo?.email);
+//   setPhoneNumber(teacherinfo.teacherinfo?.phone_number);
+//   setProfileImage(teacherinfo.teacherinfo?.image);
+// }, [teacherinfo]); 
 
 
 

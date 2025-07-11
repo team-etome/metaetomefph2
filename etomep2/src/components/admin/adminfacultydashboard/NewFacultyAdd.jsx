@@ -52,6 +52,35 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
     };
 
 
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        if (!formData.firstname || formData.firstname.trim() === '') {
+            return false;
+        }
+        if (!formData.gender?.value) {
+            return false;
+        }
+        if (!formData.email || formData.email.trim() === '') {
+            return false;
+        }
+        if (!formData.password || formData.password.trim() === '') {
+            return false;
+        }
+        
+        // Check email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (formData.email && !emailRegex.test(formData.email)) {
+            return false;
+        }
+        
+        // Check phone number format (optional field)
+        if (formData.phoneno && formData.phoneno.length !== 10) {
+            return false;
+        }
+        
+        return true;
+    };
+
     const handleSave = async () => {
         const validationErrors = [];
 
@@ -439,7 +468,19 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                         Clear
                     </button>
 
-                    <button onClick={handleSave} className="facultyadd-btn facultyadd-btn-primary">Save</button>
+                    <button 
+                        onClick={handleSave} 
+                        className="facultyadd-btn"
+                        style={{
+                            backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                            color: isFormComplete() ? '#fff' : '#fff',
+                            border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: isFormComplete() ? 'pointer' : 'not-allowed'
+                        }}
+                        disabled={!isFormComplete()}
+                    >
+                        Save
+                    </button>
                 </div>
             </div>
         </div>

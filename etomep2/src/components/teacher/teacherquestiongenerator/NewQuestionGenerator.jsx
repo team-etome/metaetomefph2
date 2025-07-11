@@ -502,12 +502,12 @@ function NewQuestionGenerator({ onClose, selectedFile, selectedItem, onRefresh }
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <div className="new-question_generator">
-                <Row xs={2} className="question_generator_header">
+                {/* <Row xs={2} className="question_generator_header">
                     <Col className="question_generator_header_title">
                         <IoChevronBackSharp onClick={handleBackClick} className="teacher_question_back" />
                         <h6>Question Generator</h6>
                     </Col>
-                </Row>
+                </Row> */}
 
                 {/* <Row className="new-qs_gn_bdy" style={{border:"2px solid green"}}> */}
                 <div className="new-text-editor" >
@@ -680,20 +680,27 @@ function NewQuestionGenerator({ onClose, selectedFile, selectedItem, onRefresh }
                     
                 </div>
                 {/* </Row> */}
-                <div className="newquestion_generator_header">
-                        {/* <div className="newquestion_generator_header_submit"> */}
+                
+                {/* Fixed Footer */}
+                <div className="newquestion_generator_footer">
+                    <div className="footer_content">
+                        <div className="footer_left">
+                            <button className="newquestion_generator_back" onClick={handleBackClick}>
+                                Back
+                            </button>
+                        </div>
+                        <div className="footer_right">
                             <button className="newquestion_generator_submit" onClick={handleExport} disabled={isExporting}>
                                 {isExporting ? `Submiting... ${progress}%` : "Submit"}
                             </button>
-                        {/* </div> */}
+                        </div>
                     </div>
                     {isExporting && (
-                        <div className="my-3">
-                            <div>
-                                <ProgressBar now={progress} label={`${progress}%`} />
-                            </div>
+                        <div className="progress_container">
+                            <ProgressBar now={progress} label={`${progress}%`} />
                         </div>
                     )}
+                </div>
             </div>
         </DragDropContext>
     );
