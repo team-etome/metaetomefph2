@@ -367,11 +367,10 @@ const Examtimetableadding = ({ onClose, onSuccess }) => {
                         className="examtimetable-adding_save_button"
                         style={{
                             backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
-                            color: isFormComplete() ? '#fff' : '#fff',
+                            color: '#fff',
                             border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
-                            cursor: isFormComplete() ? 'pointer' : 'not-allowed'
+                            cursor: 'pointer'
                         }}
-                        disabled={!isFormComplete()}
                         onClick={handleSave}
                     >
                         Save

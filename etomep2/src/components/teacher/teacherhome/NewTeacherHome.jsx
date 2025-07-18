@@ -11,6 +11,9 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import medal1 from "../../../assets/Award1.png";
 import medal2 from "../../../assets/Award2.png";
 import medal3 from "../../../assets/Award3.png";
+import student from "../../../assets/student.jpg";
+
+
 
 
 export default function NewTeacherHome() {
@@ -327,7 +330,7 @@ export default function NewTeacherHome() {
                     placeholder="select Examination"
                   />
                 </div>
-                <div className="newteacherhome-exam-filters" >
+                <div className="newteacherhome-exam-filters">
                   <div className="newteacherhome-filter-dropdown">
                     <Select
                       value={selectedClass ? { label: selectedClass, value: selectedClass } : null}
@@ -362,7 +365,7 @@ export default function NewTeacherHome() {
                   <div style={{
                     display: "flex",
                     alignItems: "center",
-                    paddingLeft: "50px"
+                    paddingLeft: "50px",
                   }}>
                     <PieChart
                       series={[
@@ -381,8 +384,8 @@ export default function NewTeacherHome() {
                           ],
                         },
                       ]}
-                      height={210}
-                      width={325}
+                      height={180}
+                      width={295}
                     />
                   </div>
                   <div className="newteacherhome-pie-legend">
@@ -399,7 +402,15 @@ export default function NewTeacherHome() {
                     {rankList.length > 0 ? (
                       rankList.slice(0, 3).map((item, idx) => (
                       <li key={idx} className="newteacherhome-rankitem">
-                        <span className="newteacherhome-rank-avatar" />
+                        <div className="newteacherhome-rank-avatar">
+                          <img
+                            src={item.image || student}
+                            alt={item.name}
+                            onError={(e) => {
+                              e.target.src = student;
+                            }}
+                          />
+                        </div>
                         <span className="newteacherhome-rank-name">{item.name}</span>
                         <img
                           src={idx === 0 ? medal1 : idx === 1 ? medal2 : medal3}
@@ -421,8 +432,8 @@ export default function NewTeacherHome() {
             </div>
           </div>
           <div className="newteacherhome-tasks-section">
-            <div className="newteacherhome-tasks-section-main" >
-              <div className="newteacherhome-tasks-header" >
+            <div className="newteacherhome-tasks-section-main">
+              <div className="newteacherhome-tasks-header">
                 <span className="newteacherhome-tasks-header-heading">Assigned Tasks</span>
                 <span className="newteacherhome-tasks-viewall" onClick={() => setShowAssignTaskPopup(true)}>View All</span>
               </div>
@@ -480,7 +491,7 @@ export default function NewTeacherHome() {
               ) : notifications.length > 0 ? (
                 notifications.map((notif, idx) => (
                 <div className="newteacherhome-notification-item" key={idx}>
-                  <span className="newteacherhome-notif-avatar" />
+                  {/* <span className="newteacherhome-notif-avatar" /> */}
                   <div className="newteacherhome-notif-content">
                       <span className="newteacherhome-notif-action">
                         {notif.teacher_name || notif.student_name || notif.name}

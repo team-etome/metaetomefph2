@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./adminclasseditstepone.css";
 import Select from "react-select";
 import { Grid } from "lucide-react";
+import Swal from "sweetalert2";
 
 const AdminClassEditStepOne = ({ nextStep, closeModal, teachers, faculty }) => {
 
@@ -79,6 +80,20 @@ const AdminClassEditStepOne = ({ nextStep, closeModal, teachers, faculty }) => {
         return isValid;
     };
 
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        if (!formData.className || formData.className.trim() === '') {
+            return false;
+        }
+        if (!formData.division || formData.division.trim() === '') {
+            return false;
+        }
+        if (!formData.classTeacher) {
+            return false;
+        }
+        return true;
+    };
+
     const handleClear = () => {
         setFormData({
             className: "",
@@ -103,7 +118,12 @@ const AdminClassEditStepOne = ({ nextStep, closeModal, teachers, faculty }) => {
             };
             nextStep(formattedData);  // Send formattedData instead of raw formData
         } else {
-            alert("Please fill in all required fields");
+            Swal.fire({
+                title: 'Required Fields Missing',
+                text: 'Please fill in all required fields before proceeding.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
         }
     };
 
@@ -127,69 +147,68 @@ const AdminClassEditStepOne = ({ nextStep, closeModal, teachers, faculty }) => {
 
 
     const steponeeditcustomStyles = {
-        control: (base, state) => ({
-            ...base,
-            // width: '501px',
-            height: '48px',
-            borderRadius: '8px',
-            borderColor: state.isFocused ? '#86b7fe' : '#757575',
-            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
-            display: 'flex',
-            alignItems: 'center',
-            paddingLeft: 8,
-            paddingRight: 8,
-            Grid: 0,
-            padding: 0,
-            marginTop: '4px',
-        }),
-
-        dropdownIndicator: (base) => ({
-            ...base,
-            color: '#292D32',
-            padding: '0 8px',
-            alignItems: 'center',
-            svg: {
-                width: '24px',
-                height: '24px',
-            }
-        }),
-
-        indicatorSeparator: () => ({
-            display: 'none'
-        }),
-
-        placeholder: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px',
-            margin: 0,           // remove any extra top/bottom margins
-            lineHeight: '48px',
-        }),
-
-
-        singleValue: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px'
-        }),
-
-        menu: (base) => ({
-            ...base,
-            zIndex: 1000,
-            maxHeight: '200px',  // Limit the height of the dropdown list
-            overflowY: 'auto',   // Enable scrolling when the options exceed the height
-            fontSize: '14px',
-        }),
-
-        option: (base, state) => ({
-            ...base,
-            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
-            color: state.isFocused ? '#fff' : '#222222',
-            '&:active': {
-                backgroundColor: '#e6e6e6',
-            }
-        }),
-    };
+    control: (base, state) => ({
+      ...base,
+      height: '48px',
+      borderRadius: '8px',
+      borderColor: state.isFocused ? '#86b7fe' : '#757575',
+      boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+      display: 'flex',
+      alignItems: 'center',
+      paddingLeft: 8,
+      paddingRight: 8,
+      Grid: 0,
+      padding: 0,
+      marginTop: '4px',
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      height: '48px',
+      padding: '0 6px'
+    }),
+    dropdownIndicator: (base) => ({
+      ...base,
+      color: '#292D32',
+      padding: '0 8px',
+      alignItems: 'center',
+      svg: {
+        width: '24px',
+        height: '24px'
+      }
+    }),
+    indicatorSeparator: () => ({
+      display: 'none'
+    }),
+    placeholder: (base) => ({
+      ...base,
+      color: '#526D82',
+      fontSize: '16px'
+    }),
+    menu: (base) => ({
+      ...base,
+      zIndex: 1000,
+      maxHeight: '150px',
+      overflowY: 'auto',
+      fontSize: '14px',
+      backgroundColor: 'white',
+      borderRadius: '8px',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+      marginTop: '4px'
+    }),
+    menuList: (base) => ({
+      ...base,
+      maxHeight: '150px',
+      padding: '4px 0'
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+      color: state.isFocused ? '#fff' : '#222222',
+      '&:active': {
+        backgroundColor: '#e6e6e6',
+      }
+    }),
+  };
     const teacherOptions = teachers.map(t => ({
         value: t.id.toString(),
         label: `${t.first_name} ${t.last_name}`
@@ -394,6 +413,12 @@ const AdminClassEditStepOne = ({ nextStep, closeModal, teachers, faculty }) => {
                             type="button"
                             className="adminclasseditstepone_btn-next"
                             onClick={handleNext}
+                            style={{
+                                backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                                color: isFormComplete() ? '#fff' : '#fff',
+                                border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                                cursor: 'pointer'
+                            }}
                         >
                             Next
                         </button>

@@ -24,7 +24,21 @@ const NewPendingView = ({ selectedItem, onBack, onRefresh }) => {
 
     const handleFileChange = e => {
         const file = e.target.files[0];
-        if (file) setSelectedFile(file);
+        if (file) {
+            // Check if the file is a PDF
+            if (file.type !== 'application/pdf') {
+                Swal.fire({
+                    icon: "error",
+                    title: "Invalid File Type",
+                    text: "Please upload only PDF files.",
+                    showConfirmButton: true,
+                });
+                // Clear the file input
+                e.target.value = "";
+                return;
+            }
+            setSelectedFile(file);
+        }
     };
 
     const clearFile = () => {
@@ -107,7 +121,7 @@ const NewPendingView = ({ selectedItem, onBack, onRefresh }) => {
                                 onClick={() => fileInputRef.current.click()}
                             >
                                 <p className="newpendingview-dropzone_clickp">
-                                    Click to Upload or Drag PDF/DOC here </p>
+                                    Click to Upload or Drag PDF here </p>
                                 <p className="newpendingview-dropzone_maxp">Max. file size 25MB</p>
 
                                 <button
@@ -122,7 +136,7 @@ const NewPendingView = ({ selectedItem, onBack, onRefresh }) => {
                                 </button>
                                 <input
                                     type="file"
-                                    accept=".pdf,.doc,.docx"
+                                    accept=".pdf"
                                     ref={fileInputRef}
                                     style={{ display: 'none' }}
                                     onChange={handleFileChange}

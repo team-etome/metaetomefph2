@@ -43,6 +43,7 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
 
     const [initialData, setInitialData] = useState(null);
     const [isFormComplete, setIsFormComplete] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
         if (studentToEdit) {
@@ -189,6 +190,8 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
     }
 
     const handleSave = async () => {
+        setIsSaving(true);
+        
         const validationErrors = [];
 
         if (!formData.studentname) validationErrors.push("Student name is required.");
@@ -229,6 +232,7 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                 `,
                 confirmButtonText: 'OK'
             });
+            setIsSaving(false);
             return;
         }
 
@@ -237,6 +241,7 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
             const changedFields = getChangedFields(formData, initialData);
             if (Object.keys(changedFields).length === 0) {
                 Swal.fire("No changes detected", "You haven't changed any fields.", "info");
+                setIsSaving(false);
                 return;
             }
             // If imageFile is present, handle it as FormData, else send JSON
@@ -268,6 +273,8 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                 if (onStudentAdded) onStudentAdded();
             } catch (error) {
                 Swal.fire("Error", error.response?.data?.message || "Server error occurred", "error");
+            } finally {
+                setIsSaving(false);
             }
         } else {
             // Submit form
@@ -308,6 +315,8 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                 }
             } catch (error) {
                 Swal.fire("Error", error.response?.data?.message || "Server error occurred", "error");
+            } finally {
+                setIsSaving(false);
             }
         }
     };
@@ -445,6 +454,7 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                                     }}
                                     value={formData.rollno}
                                     onChange={(e) => setFormData({ ...formData, rollno: e.target.value })}
+                                    onWheel={(e) => e.target.blur()}
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
@@ -511,7 +521,9 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
-                                <label className="newstudentadd-form-label">Date of Birth</label>
+                                <label className="newstudentadd-form-label">
+                                    Date of Birth <span className="newstudentadd_required">*</span>
+                                    </label>
                                 <input
                                     type="date"
                                     className="custom-input"
@@ -531,7 +543,9 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                                 />
                             </div>
                             <div className="newstudentadd-form-group">
-                                <label className="newstudentadd-form-label">Joining Date</label>
+                                <label className="newstudentadd-form-label">
+                                    Joining Date <span className="newstudentadd_required">*</span>
+                                    </label>
                                 <input
                                     type="date"
                                     className="custom-input"
@@ -552,7 +566,7 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                             </div>
                             <div className="newstudentadd-form-group">
                                 <label className="newstudentadd-form-label">
-                                    Admission No
+                                    Admission No <span className="newstudentadd_required">*</span>
                                 </label>
                                 <input
                                     type="text"
@@ -574,7 +588,7 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                             </div>
                             <div className="newstudentadd-form-group">
                                 <label className="newstudentadd-form-label">
-                                    Father's Name
+                                    Father's Name <span className="newstudentadd_required">*</span>
                                 </label>
                                 <input
                                     type="text"
@@ -596,7 +610,7 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                             </div>
                             <div className="newstudentadd-form-group">
                                 <label className="newstudentadd-form-label">
-                                    Mother's Name
+                                    Mother's Name <span className="newstudentadd_required">*</span>
                                 </label>
                                 <input
                                     type="text"
@@ -618,7 +632,7 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                             </div>
                             <div className="newstudentadd-form-group">
                                 <label className="newstudentadd-form-label">
-                                    Gaurdian Name
+                                    Gaurdian Name <span className="newstudentadd_required">*</span>
                                 </label>
                                 <input
                                     type="text"
@@ -640,7 +654,7 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                             </div>
                             <div className="newstudentadd-form-group">
                                 <label className="newstudentadd-form-label">
-                                    Address
+                                    Address <span className="newstudentadd_required">*</span>
                                 </label>
                                 <input
                                     type="text"
@@ -763,10 +777,17 @@ const NewStudentAdd = ({ isOpen, onClose, onStudentAdded, studentToEdit }) => {
                         </button>
 
                         <button 
-                            className={`newstudentadd-btn ${isFormComplete ? 'newstudentadd-btn-complete' : 'newstudentadd-btn-primary'}`}
+                            className="newstudentadd-btn"
+                            style={{
+                                backgroundColor: isFormComplete && !isSaving ? '#2162B2' : '#bcbcbc',
+                                color: '#fff',
+                                border: isFormComplete && !isSaving ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                                cursor: isSaving ? 'not-allowed' : 'pointer'
+                            }}
                             onClick={handleSave}
+                            disabled={isSaving}
                         >
-                            Save
+                            {isSaving ? 'Saving...' : 'Save'}
                         </button>
                     </div>
                 </div>

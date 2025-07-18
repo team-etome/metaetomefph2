@@ -17,6 +17,7 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
     const admininfo = useSelector((state) => state.admininfo);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
     
+    
 
 
     useEffect(() => {
@@ -118,9 +119,15 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
         }),
     };
 
+    // Get all exam entries from exampaper
+    const getAllExamEntries = () => {
+        if (!exampaper) return [];
+        return Object.values(exampaper).flat();
+    };
+
+    // Step 1: Exam Name Options (all available exam names)
     const examNameOptions = [...new Set(
         Object.keys(exampaper || {}).map((examName) => {
-            // Extract exam name without year (remove the year part)
             return examName.replace(/\s+\d{4}$/, '');
         })
     )].map((examNameWithoutYear) => ({
@@ -128,32 +135,82 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
         value: examNameWithoutYear
     }));
 
-    // Get all exams in one flat list
-    const allExamEntries = Object.values(exampaper || {}).flat();
+    // Step 2: Year Options (filtered based on selected exam name)
+    const getYearOptions = () => {
+        if (!formData.examName) return [];
+        
+        const filteredEntries = getAllExamEntries().filter(entry => {
+            const entryExamName = Object.keys(exampaper).find(key => 
+                exampaper[key].some(item => item.id === entry.id)
+            );
+            return entryExamName && entryExamName.replace(/\s+\d{4}$/, '') === formData.examName;
+        });
 
-    // Year options
-    const yearOptions = [...new Set(allExamEntries.map(entry =>
+        return [...new Set(filteredEntries.map(entry =>
         new Date(entry.exam_date).getFullYear()
     ))].map(year => ({ label: year.toString(), value: year.toString() }));
+    };
 
-    // Subject options
-    const subjectOptions = [...new Set(allExamEntries.map(entry => entry.subject_name))]
+    // Step 3: Subject Options (filtered based on selected exam name and year)
+    const getSubjectOptions = () => {
+        if (!formData.examName || !formData.examYear) return [];
+        
+        const filteredEntries = getAllExamEntries().filter(entry => {
+            const entryExamName = Object.keys(exampaper).find(key => 
+                exampaper[key].some(item => item.id === entry.id)
+            );
+            const examNameMatches = entryExamName && entryExamName.replace(/\s+\d{4}$/, '') === formData.examName;
+            const yearMatches = new Date(entry.exam_date).getFullYear().toString() === formData.examYear;
+            return examNameMatches && yearMatches;
+        });
+
+        return [...new Set(filteredEntries.map(entry => entry.subject_name))]
         .map(subject => ({ label: subject, value: subject }));
+    };
 
-    // Class options
-    const classOptions = allExamEntries.map(entry => ({
+    // Step 4: Class Options (filtered based on selected exam name, year, and subject)
+    const getClassOptions = () => {
+        if (!formData.examName || !formData.examYear || !formData.subject) return [];
+        
+        const filteredEntries = getAllExamEntries().filter(entry => {
+            const entryExamName = Object.keys(exampaper).find(key => 
+                exampaper[key].some(item => item.id === entry.id)
+            );
+            const examNameMatches = entryExamName && entryExamName.replace(/\s+\d{4}$/, '') === formData.examName;
+            const yearMatches = new Date(entry.exam_date).getFullYear().toString() === formData.examYear;
+            const subjectMatches = entry.subject_name === formData.subject;
+            return examNameMatches && yearMatches && subjectMatches;
+        });
+
+        return filteredEntries.map(entry => ({
         label: `Class ${entry.class_name} - ${entry.division}`,
         value: `${entry.class_name}|${entry.division}`
-    }))
+        }));
+    };
 
+    // Step 5: Exam Date Options (filtered based on all previous selections)
+    const getExamDateOptions = () => {
+        if (!formData.examName || !formData.examYear || !formData.subject || !formData.className) return [];
+        
+        const filteredEntries = getAllExamEntries().filter(entry => {
+            const entryExamName = Object.keys(exampaper).find(key => 
+                exampaper[key].some(item => item.id === entry.id)
+            );
+            const examNameMatches = entryExamName && entryExamName.replace(/\s+\d{4}$/, '') === formData.examName;
+            const yearMatches = new Date(entry.exam_date).getFullYear().toString() === formData.examYear;
+            const subjectMatches = entry.subject_name === formData.subject;
+            const classMatches = entry.class_name === formData.className && entry.division === formData.division;
+            return examNameMatches && yearMatches && subjectMatches && classMatches;
+        });
 
-    const examDateOptions = [...new Set(allExamEntries.map(entry => entry.exam_date))]
+        return [...new Set(filteredEntries.map(entry => entry.exam_date))]
         .map(date => ({
             label: new Date(date).toLocaleDateString("en-GB", {
                 day: "2-digit", month: "short", year: "numeric"
             }),
             value: date
         }));
+    };
 
     // Faculty options from Redux
     const facultyOptions = teacherinfo?.adminteacherinfo?.map((teacher) => ({
@@ -164,6 +221,25 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
     const handleSubmit = async () => {
 
         try {
+            // Check if all required fields are filled
+            const requiredFields = [];
+            if (!formData.examName) requiredFields.push("Name of Examination");
+            if (!formData.examYear) requiredFields.push("Year");
+            if (!formData.subject) requiredFields.push("Subject");
+            if (!formData.className) requiredFields.push("Class");
+            if (!formData.examDate) requiredFields.push("Date of Examination");
+            if (!formData.facultyId) requiredFields.push("Select Faculty");
+
+            if (requiredFields.length > 0) {
+                Swal.fire({
+                    title: 'Required Fields Missing',
+                    text: `Please fill in the following required fields: ${requiredFields.join(', ')}`,
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
             const data = {
                 admin: admin_id,
                 exam_name: formData.examName,
@@ -172,7 +248,7 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
                 division: formData.division,
                 subject_name: formData.subject,
                 teacher_id: formData.facultyId,
-                start_date: formData.examDate,
+                exam_date: formData.examDate,
                 end_date: formData.deadline
             };
 
@@ -201,10 +277,64 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
 
 
     const handleInputChange = (field, value) => {
-        setFormData(prev => ({
-            ...prev,
-            [field]: value
-        }));
+        // Clear dependent fields when a parent field changes
+        let newFormData = { ...formData, [field]: value };
+        
+        if (field === 'examName') {
+            newFormData = {
+                ...newFormData,
+                examYear: '',
+                subject: '',
+                className: '',
+                division: '',
+                examDate: ''
+            };
+        } else if (field === 'examYear') {
+            newFormData = {
+                ...newFormData,
+                subject: '',
+                className: '',
+                division: '',
+                examDate: ''
+            };
+        } else if (field === 'subject') {
+            newFormData = {
+                ...newFormData,
+                className: '',
+                division: '',
+                examDate: ''
+            };
+        } else if (field === 'className') {
+            newFormData = {
+                ...newFormData,
+                examDate: ''
+            };
+        }
+        
+        setFormData(newFormData);
+    };
+
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        if (!formData.examName || formData.examName.trim() === '') {
+            return false;
+        }
+        if (!formData.examYear || formData.examYear.trim() === '') {
+            return false;
+        }
+        if (!formData.subject || formData.subject.trim() === '') {
+            return false;
+        }
+        if (!formData.className || formData.className.trim() === '') {
+            return false;
+        }
+        if (!formData.examDate || formData.examDate.trim() === '') {
+            return false;
+        }
+        if (!formData.facultyId || formData.facultyId === '') {
+            return false;
+        }
+        return true;
     };
 
     return (
@@ -228,7 +358,7 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
                                         isClearable={true}
                                         placeholder=""   
                                         onChange={(selected) => handleInputChange('examName', selected?.value)}
-                                        value={examNameOptions.find(option => option.value === formData.examName)}
+                                        value={formData.examName ? examNameOptions.find(option => option.value === formData.examName) : null}
                                     />
                                 </div>
                             </div>
@@ -239,12 +369,12 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
                                         Year <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
-                                        options={yearOptions}
+                                        options={getYearOptions()}
                                         styles={customStyles}
                                         isClearable={true}
                                         placeholder=""
                                         onChange={(selected) => handleInputChange('examYear', selected?.value)}
-                                        value={yearOptions.find(option => option.value === formData.examYear)}
+                                        value={formData.examYear ? getYearOptions().find(option => option.value === formData.examYear) : null}
                                     />
                                 </div>
                             </div>
@@ -256,12 +386,12 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
                                         Subject <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
-                                        options={subjectOptions}
+                                        options={getSubjectOptions()}
                                         styles={customStyles}
                                         isClearable={true}
                                         placeholder=""
                                         onChange={(selected) => handleInputChange('subject', selected?.value)}
-                                        value={subjectOptions.find(option => option.value === formData.subject)}
+                                        value={formData.subject ? getSubjectOptions().find(option => option.value === formData.subject) : null}
                                     />
                                 </div>
                             </div>
@@ -271,10 +401,10 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
                                         Class <span className="evaluationadd_required">*</span>
                                     </label>
                                     <Select
-                                        options={classOptions}
+                                        options={getClassOptions()}
                                         styles={customStyles}
                                         isClearable={true}
-                                        placeholder=""     // ✅ Add this line to remove "Select..." placeholder
+                                        placeholder=""
                                         onChange={(selected) => {
                                             if (selected?.value) {
                                                 const [cls, div] = selected.value.split('|');
@@ -291,10 +421,10 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
                                                 }));
                                             }
                                         }}
-                                        value={classOptions.find(option => {
+                                        value={formData.className && formData.division ? getClassOptions().find(option => {
                                             const [cls, div] = option.value.split('|');
                                             return cls === formData.className && div === formData.division;
-                                        })}
+                                        }) : null}
                                     />
 
                                 </div>
@@ -308,34 +438,13 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
                                     </label>
 
                                     <Select
-                                        options={examDateOptions}
+                                        options={getExamDateOptions()}
                                         styles={customStyles}
                                         isClearable={true}
                                         placeholder=""
                                         onChange={(selected) => handleInputChange('examDate', selected?.value)}
-                                        value={examDateOptions.find(option => option.value === formData.examDate)}
+                                        value={formData.examDate ? getExamDateOptions().find(option => option.value === formData.examDate) : null}
                                     />
-                                    {/* <input
-
-                                        type="date"
-                                        min="0"
-                                        className="custom-input"
-                                        style={{
-                                            height: '50px',
-                                            border: '1px solid #ccc',
-                                            borderRadius: '8px',
-                                            padding: '0 10px',
-                                            fontSize: '16px',
-                                            color: '#526D82',
-                                            width: '100%',
-                                            boxSizing: 'border-box',
-                                            outline: "none"
-                                        }}
-
-                                    // onChange={e => setVolume(e.target.value)}
-                                    /
-                             
-                                    /> */}
                                 </div>
                             </div>
                             <div>
@@ -345,7 +454,7 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
                                         type="date"
                                         min="0"
                                         value={formData.deadline}   
-                                        onChange={(e) => handleInputChange('deadline', e.target.value)}  // ✅ correct way for input field
+                                        onChange={(e) => handleInputChange('deadline', e.target.value)}
                                         className="custom-input"
                                         style={{
                                             height: '50px',
@@ -392,7 +501,18 @@ const NewEvaluationAdd = ({ isOpen, onClose, onAddSuccess }) => {
                         className: '',
                         facultyId: '',
                     })}>Clear</button>
-                    <button className="evaluationadd-btn evaluationadd-btn-primary" onClick={handleSubmit}>Save</button>
+                    <button 
+                        className="evaluationadd-btn evaluationadd-btn-primary" 
+                        onClick={handleSubmit}
+                        style={{
+                            backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                            color: isFormComplete() ? '#fff' : '#fff',
+                            border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        Save
+                    </button>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, } from 'react';
 import './newfacultydashboard.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { BsFillPersonFill } from "react-icons/bs";
@@ -14,6 +14,7 @@ import NewFacultyAddThroughExcel from './NewFacultyAddThroughExcel';
 import avatar from '../../../assets/default.jpg'
 import { RiSearchLine } from "react-icons/ri";
 import Select from 'react-select';
+import { adminteacherinfo } from '../../../Redux/Actions/AdminTeacherInfoAction';
 
 
 
@@ -21,6 +22,7 @@ const NewFacultyDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [showPopup, setShowPopup] = useState(false); // For Add Faculty
     const [showPopupexcel, setShowPopupExcel] = useState(false); // For Excel Upload
     const [showMenu, setShowMenu] = useState(false); // Dropdown menu toggle
@@ -43,6 +45,8 @@ const NewFacultyDashboard = () => {
             
             if (response.data && Array.isArray(response.data)) {
                 setFacultyList(response.data);
+                // Also update the Redux store with the latest teacher data
+                dispatch(adminteacherinfo(response.data));
             } else {
                 console.warn("Unexpected response structure", response.data);
             }
@@ -294,7 +298,6 @@ const NewFacultyDashboard = () => {
             </div>
             <div className="facultydashboard_classes_box">
                 <div className="facultydashboard_container" >
-
                     {facultyList
                         .filter((faculty) => {
                             const fullName = `${faculty.first_name} ${faculty.last_name}`.toLowerCase();
@@ -330,9 +333,32 @@ const NewFacultyDashboard = () => {
                                     <CiSquareChevDown className="info-icon" />
                                     <span>{faculty.email}</span>
                                 </div>
+                            </div>                            
+                        ))
+                        }
+                    
+                    
+                    {/* {facultyList.filter((faculty) => {
+                        const fullName = `${faculty.first_name} ${faculty.last_name}`.toLowerCase();
+                        const nameMatch = fullName.includes(facultySearch.toLowerCase());
 
-                            </div>
-                        ))}
+                        const subjectMatch = selectedSubject
+                            ? faculty.curriculam?.some(
+                                (item) => item.subject_name.toLowerCase() === selectedSubject.toLowerCase()
+                            )
+                            : true;
+
+                        const statusMatch = selectedStatus.value === 'active' 
+                            ? faculty.status === false 
+                            : faculty.status === true;
+
+                        return nameMatch && subjectMatch && statusMatch;
+                    }).length === 0 && facultyList.length > 0 && (
+                        <div className="no-faculty-message text-center">
+                            <h4>No faculty match the current filters.</h4>
+                        </div>
+                    )} */}
+                    
                     {/* {showPopupview && <NewEvaluationView isOpen={showPopupview} onClose={() => setShowPopupView(false)} />} */}
                     {/* Conditionally render the FacultyModal when a faculty is selected */}
                     {selectedFaculty && (
@@ -344,6 +370,21 @@ const NewFacultyDashboard = () => {
                         />
                     )}
                 </div>
+                {/* No data found messages */}
+                    {selectedSubject && !facultyList.some(faculty => 
+                        faculty.curriculam?.some(item => item.subject_name.toLowerCase() === selectedSubject.toLowerCase())
+                    ) && (
+                        <div className="no-faculty-message text-center">
+                            <h4>No faculty available for selected subject.</h4>
+                        </div>
+                    )}
+                    {facultySearch && !facultyList.some(faculty => 
+                        `${faculty.first_name} ${faculty.last_name}`.toLowerCase().includes(facultySearch.toLowerCase())
+                    ) && (
+                        <div className="no-faculty-message text-center">
+                            <h4>No faculty found for "{facultySearch}".</h4>
+                        </div>
+                    )}
             </div>
         </div >
     );

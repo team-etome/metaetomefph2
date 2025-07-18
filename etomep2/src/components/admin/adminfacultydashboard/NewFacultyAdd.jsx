@@ -45,6 +45,13 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         if (field === 'firstname' || field === 'lastname') {
             value = value.charAt(0).toUpperCase() + value.slice(1);
         }
+        
+        // For phone number, only allow numbers
+        if (field === 'phoneno') {
+            // Remove any non-numeric characters
+            value = value.replace(/\D/g, '');
+        }
+        
         setFormData(prev => ({
             ...prev,
             [field]: value
@@ -66,6 +73,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         if (!formData.password || formData.password.trim() === '') {
             return false;
         }
+        if (!formData.phoneno || formData.phoneno.trim() === '') {
+            return false;
+        }
         
         // Check email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -73,7 +83,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
             return false;
         }
         
-        // Check phone number format (optional field)
+        // Check phone number format (required field)
         if (formData.phoneno && formData.phoneno.length !== 10) {
             return false;
         }
@@ -89,6 +99,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         if (!formData.gender?.value) validationErrors.push("Gender is required.");
         if (!formData.email) validationErrors.push("Email is required.");
         if (!formData.password) validationErrors.push("Password is required.");
+        if (!formData.phoneno) validationErrors.push("Phone number is required.");
 
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -97,14 +108,18 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
         }
 
 
-        // Phone number format (optional field)
+        // Phone number format (required field)
         if (formData.phoneno && formData.phoneno.length !== 10) {
-
-            validationErrors.push("Phone number must be 10 digits.");
+            validationErrors.push("Phone number must be exactly 10 digits.");
         }
 
         if (validationErrors.length > 0) {
-            Swal.fire("Validation Error", validationErrors[0], "warning");
+            Swal.fire({
+                title: 'Required Fields Missing',
+                text: validationErrors[0],
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
@@ -312,7 +327,9 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                                 />
                             </div>
                             <div className="facultyadd-form-group">
-                                <label className="facultyadd-form-label">Phone Number</label>
+                                <label className="facultyadd-form-label">
+                                    Phone Number <span className="facultyadd_required">*</span>
+                                    </label>
                                 <div className="facultyadd-phone-container">
                                     <select
                                         className="facultyadd-phone-select"
@@ -475,9 +492,8 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                             backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
                             color: isFormComplete() ? '#fff' : '#fff',
                             border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
-                            cursor: isFormComplete() ? 'pointer' : 'not-allowed'
+                            cursor: 'pointer'
                         }}
-                        disabled={!isFormComplete()}
                     >
                         Save
                     </button>

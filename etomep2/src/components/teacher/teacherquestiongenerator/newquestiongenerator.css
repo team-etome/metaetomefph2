@@ -363,3 +363,58 @@
     text-transform: capitalize;
     max-width: 700px;
 }
+
+/* Marks Allocation Indicator Styles */
+.marks_allocation_indicator {
+    margin-top: 12px;
+    padding: 0 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.marks_status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.marks_status.over-allocated {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.marks_status.under-allocated {
+    background-color: #fef3c7;
+    color: #d97706;
+    border: 1px solid #fed7aa;
+}
+
+.marks_status.perfect {
+    background-color: #dcfce7;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+}
+
+.marks_text {
+    font-weight: 600;
+}
+
+.marks_warning {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.marks_info {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.marks_success {
+    font-size: 12px;
+    font-weight: 400;
+}

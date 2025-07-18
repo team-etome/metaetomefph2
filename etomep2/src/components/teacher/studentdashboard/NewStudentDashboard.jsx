@@ -42,6 +42,7 @@ const NewStudentDashboard = () => {
     const [studentlist, setStudentList] = useState([]);
     const [loading, setLoading] = useState(false); // Loading state for data refresh
     const [studentToEdit, setStudentToEdit] = useState(null);
+    const [className, setClassName] = useState('10');
     console.log(studentlist, "studentliststudentliststudentliststudentlist")
 
     const handlenavigate = () => {
@@ -124,6 +125,7 @@ const NewStudentDashboard = () => {
                 setError(true);
             } else {
                 setStudentList(response.data);
+                setClassName(`${response.data[0].standard}` + `${response.data[0].division}`)
             }
         } catch (error) {
             console.error("Failed to fetch faculty data:", error);
@@ -134,6 +136,7 @@ const NewStudentDashboard = () => {
     };
     useEffect(() => {
         fetchFacultyData();
+         
     }, [APIURL, teacher_id]);
     const toggleMenu = () => {
         setShowMenu((prev) => !prev);
@@ -159,6 +162,7 @@ const NewStudentDashboard = () => {
         !student.blocked && 
         !student.promoted
     );
+    
 
     return (
         <div className="newStudent_dashboard">
@@ -167,7 +171,7 @@ const NewStudentDashboard = () => {
                     <Row className="newStudent_row_header">
                         <Col md={6} className="newStudent_header_left_heading">
                             <div className="newStudent_title">
-                                <p>Class 10 A</p>
+                                <p>Class {className}</p>
                             </div>
                         </Col>
                         <Col md={6} className="newStudent_header_right_profilepic">

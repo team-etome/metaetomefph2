@@ -264,6 +264,32 @@ const NewSeatingDashboard = () => {
         clearForm();
     };
     const nextStep = () => {
+        if (!isStepComplete()) {
+            let missingFields = [];
+            
+            if (currentStep === 1) {
+                if (!selectedExamName.trim()) missingFields.push("Exam Name");
+                if (!selectedExamYear.trim()) missingFields.push("Year");
+                if (!selectedExamDate.trim()) missingFields.push("Date of Examination");
+            } else if (currentStep === 2) {
+                if (!formData.roomNumber.trim()) missingFields.push("Room Number");
+                if (formData.facultiesAssigned.length === 0) missingFields.push("Faculties Assigned");
+                
+                entries.forEach((entry, index) => {
+                    if (!entry.className.trim() || !entry.division.trim()) {
+                        missingFields.push(`Row ${index + 1} (Class/Division)`);
+                    }
+                });
+            }
+            
+            Swal.fire({
+                icon: "error",
+                title: "Missing Required Information",
+                text: `Please complete the following fields: ${missingFields.join(", ")}`,
+            });
+            return;
+        }
+        
         if (currentStep < 3) {
             setCurrentStep(currentStep + 1);
         }
@@ -336,6 +362,22 @@ const NewSeatingDashboard = () => {
 
 
     const assignSlot = async () => {
+        if (!isStepComplete()) {
+            let missingFields = [];
+            
+            if (!formData.numberOfColumns || formData.numberOfColumns.trim() === '') missingFields.push("Number of Columns");
+            if (!formData.numberOfTables || formData.numberOfTables.trim() === '') missingFields.push("Number of Tables");
+            if (!formData.studentsPerBench || formData.studentsPerBench.trim() === '') missingFields.push("Students Per Bench");
+            if (!selectedLayout.trim()) missingFields.push("Layout Selection");
+            
+            Swal.fire({
+                icon: "error",
+                title: "Missing Required Information",
+                text: `Please complete the following fields: ${missingFields.join(", ")}`,
+            });
+            return;
+        }
+
         const payload = {
             exam_name: selectedExamName,
             exam_year: selectedExamYear,
@@ -898,6 +940,37 @@ const NewSeatingDashboard = () => {
         return null;
     };
 
+    // Function to check if all required fields are filled for current step
+    const isStepComplete = () => {
+        if (currentStep === 1) {
+            // Step 1: Exam Details
+            if (!selectedExamName.trim()) return false;
+            if (!selectedExamYear.trim()) return false;
+            if (!selectedExamDate.trim()) return false;
+            return true;
+        } else if (currentStep === 2) {
+            // Step 2: Room Details
+            if (!formData.roomNumber.trim()) return false;
+            if (formData.facultiesAssigned.length === 0) return false;
+            
+            // Check if all entries have required fields
+            for (let entry of entries) {
+                if (!entry.className.trim() || !entry.division.trim()) {
+                    return false;
+                }
+            }
+            return true;
+        } else if (currentStep === 3) {
+            // Step 3: Seating arrangement
+            if (!formData.numberOfColumns || formData.numberOfColumns.trim() === '') return false;
+            if (!formData.numberOfTables || formData.numberOfTables.trim() === '') return false;
+            if (!formData.studentsPerBench || formData.studentsPerBench.trim() === '') return false;
+            if (!selectedLayout.trim()) return false;
+            return true;
+        }
+        return false;
+    };
+
     // Footer buttons in modal
     const renderModalFooter = () => {
         return (
@@ -925,6 +998,12 @@ const NewSeatingDashboard = () => {
                         <button
                             type="button"
                             className="seating_popup_btn-next"
+                            style={{
+                                backgroundColor: isStepComplete() ? '#2162B2' : '#bcbcbc',
+                                color: '#fff',
+                                border: isStepComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                                cursor: 'pointer'
+                            }}
                             onClick={nextStep}
                         >
                             Next
@@ -934,6 +1013,12 @@ const NewSeatingDashboard = () => {
                         <button
                             type="button"
                             className="seating_popup_btn-next"
+                            style={{
+                                backgroundColor: isStepComplete() ? '#2162B2' : '#bcbcbc',
+                                color: '#fff',
+                                border: isStepComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                                cursor: 'pointer'
+                            }}
                             onClick={assignSlot}
                         >
                             Assign

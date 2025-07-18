@@ -111,6 +111,15 @@ const NewAdminClassDashboard = () => {
         setCurrentStep(1);
         // Reset entries when opening modal
         setEntries([{ subject: "", publishername: "", facultyname: "" }]);
+        // Reset stepOneData when opening a new modal
+        setStepOneData({
+            class_name: "",
+            division: "",
+            medium: "",
+            stream: "",
+            level: "",
+            class_teacher: null
+        });
     };
 
     const closeModal = () => {
@@ -319,7 +328,8 @@ const NewAdminClassDashboard = () => {
                             <AdminClassAddStepOne
                                 nextStep={nextStep}
                                 closeModal={closeModal}
-                                teachers={teacherinfo.adminteacherinfo}
+                                teachers={teachers}
+                                initialData={stepOneData}
                             />
                         ) : (
                             <AdminClassAddStepTwo
@@ -328,7 +338,7 @@ const NewAdminClassDashboard = () => {
                                 entries={entries}
                                 addEntry={addEntry}
                                 removeEntry={removeEntry}
-                                teachers={teacherinfo.adminteacherinfo}
+                                teachers={teachers}
                                 admininfo={admininfo}
                                 stepOneData={stepOneData}
                                 fetchClassData={fetchClassData} 
@@ -346,7 +356,7 @@ const NewAdminClassDashboard = () => {
                         <AdminClassView
                             faculty={selectedSection}
                             onClose={() => setShowAdminClassView(false)}
-
+                            onUpdateClass={fetchClassData}
                         />
                     </div>
                 </div>

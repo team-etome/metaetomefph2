@@ -97,6 +97,8 @@
     border-radius: 8px;
     border: none;
     cursor: pointer;
+    width: 100px;
+    height: 40px;
 }
 
 .newstudentadd-btn-secondary {

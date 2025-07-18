@@ -98,44 +98,50 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
     // In edit mode, don't allow changes
     if (isEditMode) return;
 
-    const newPoints = parseInt(event.target.value, 10);
-
-    if (isNaN(newPoints) && event.target.value !== "") {
-      // Allow the user to enter valid numbers, or leave empty (backspace).
-      return;
-    }
-
-    // If the user backspaces and the value becomes empty, we allow it.
-    if (event.target.value === "") {
-      const newSubsections = [...subsections];
-      newSubsections[subsectionIndex].questions[questionIndex].points = 0;
-      setSubsections(newSubsections);
-      return;
-    }
-
-    // Temporarily update the question's points value
-    const newSubsections = [...subsections];
-    const currentQuestion = newSubsections[subsectionIndex].questions[questionIndex];
-    currentQuestion.points = newPoints;
-
-    // Calculate the total points for the subsection
-    const totalPoints = newSubsections[subsectionIndex].questions.reduce(
-      (sum, question) => sum + question.points,
+    const newPoints = parseInt(event.target.value, 10) || 0;
+    
+    // Calculate current total allocated marks (excluding the current question being edited)
+    const currentTotalAllocatedMarks = subsections.reduce(
+      (acc, subsection) =>
+        acc +
+        subsection.questions.reduce((sum, q, qIdx) => {
+          // Skip the current question being edited
+          if (subsection === subsections[subsectionIndex] && qIdx === questionIndex) {
+            return sum;
+          }
+          return sum + q.points;
+        }, 0),
       0
     );
 
-    if (totalPoints > outOfMarks) {
-      // If total points exceed outOfMarks, reset the question's points to the previous value
-      currentQuestion.points = parseInt(event.target.defaultValue, 10); // use default value if the new value exceeds max
+    // Calculate what the new total would be
+    const newTotalAllocatedMarks = currentTotalAllocatedMarks + newPoints;
+
+    if (newTotalAllocatedMarks > outOfMarks) {
+      const remainingMarks = outOfMarks - currentTotalAllocatedMarks;
       Swal.fire({
         icon: "error",
-        title: "Exceeds Maximum Marks!",
-        text: `Total marks cannot exceed the maximum limit of ${outOfMarks}`,
-        showConfirmButton: true,
+        title: "Exceeds Total Marks",
+        text: `Total allocated marks (${newTotalAllocatedMarks}) cannot exceed the exam total (${outOfMarks}). You have ${remainingMarks} marks remaining.`,
+        confirmButtonText: "OK"
       });
-    } else {
-      setSubsections(newSubsections); // Update state if within limit
+      return;
     }
+
+    // Validate that points are not negative
+    if (newPoints < 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Marks",
+        text: "Marks cannot be negative. Please enter a valid number.",
+        confirmButtonText: "OK"
+      });
+      return;
+    }
+
+    const newSubsections = [...subsections];
+    newSubsections[subsectionIndex].questions[questionIndex].points = newPoints;
+    setSubsections(newSubsections);
   };
 
   const addQuestion = () => {
@@ -366,8 +372,86 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
   };
 
   const handleExport = () => {
-    setLoading(true); // Start loading as soon as export is initiated
-    setTriggerExport(true); // Set the trigger to initiate the export
+    // Calculate total allocated marks
+    const totalAllocatedMarks = subsections.reduce(
+      (acc, subsection) =>
+        acc +
+        subsection.questions.reduce((sum, q) => sum + q.points, 0),
+      0
+    );
+
+    // Check if marks are properly allocated
+    if (totalAllocatedMarks === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "No Marks Allocated",
+        text: "Please allocate marks to at least one question before submitting.",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#d97706"
+      });
+      return;
+    }
+
+    if (totalAllocatedMarks < outOfMarks) {
+      const remainingMarks = outOfMarks - totalAllocatedMarks;
+      Swal.fire({
+        icon: "warning",
+        title: "Marks Not Fully Allocated",
+        html: `
+          <div style="text-align: left;">
+            <p><strong>Total allocated:</strong> ${totalAllocatedMarks} marks</p>
+            <p><strong>Exam total:</strong> ${outOfMarks} marks</p>
+            <p><strong>Remaining:</strong> ${remainingMarks} marks</p>
+            <br>
+            <p>Do you want to submit with ${remainingMarks} marks unallocated?</p>
+          </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: "Yes, Submit",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#d97706",
+        cancelButtonColor: "#6b7280"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setLoading(true);
+          setTriggerExport(true);
+        }
+      });
+      return;
+    }
+
+    if (totalAllocatedMarks > outOfMarks) {
+      const exceededMarks = totalAllocatedMarks - outOfMarks;
+      Swal.fire({
+        icon: "error",
+        title: "Marks Exceeded",
+        html: `
+          <div style="text-align: left;">
+            <p><strong>Total allocated:</strong> ${totalAllocatedMarks} marks</p>
+            <p><strong>Exam total:</strong> ${outOfMarks} marks</p>
+            <p><strong>Exceeded by:</strong> ${exceededMarks} marks</p>
+            <br>
+            <p>Please reduce the allocated marks before submitting.</p>
+          </div>
+        `,
+        confirmButtonText: "OK",
+        confirmButtonColor: "#dc2626"
+      });
+      return;
+    }
+
+    // If all validations pass, proceed with export
+    Swal.fire({
+      icon: "success",
+      title: "Perfect Allocation!",
+      text: "All marks are properly allocated. Submitting your test...",
+      timer: 1500,
+      showConfirmButton: false,
+      confirmButtonColor: "#16a34a"
+    }).then(() => {
+      setLoading(true);
+      setTriggerExport(true);
+    });
   };
   const handleBackClick = () => {
     navigate("/teachertestadd");
@@ -602,17 +686,17 @@ function NewTeacherMockTest({ formData, class_name, division, subject, onTestAdd
               </Row>
             )}
 
-            {!isEditMode && (
-              <div className="new-mock_test_generator_header">
-                <button className="new-mock_test_generator_header-button" onClick={handleExport} disabled={loading}>
-                  {loading ? (
-                    <Spinner animation="border" size="sm" />
-                  ) : (
-                    "Submit"
-                  )}
-                </button>
-              </div>
-            )}
+                         {!isEditMode && (
+               <div className="new-mock_test_generator_header">
+                 <button className="new-mock_test_generator_header-button" onClick={handleExport} disabled={loading}>
+                   {loading ? (
+                     <Spinner animation="border" size="sm" />
+                   ) : (
+                     "Submit"
+                   )}
+                 </button>
+               </div>
+             )}
           </div>
         </Row>
       </div>

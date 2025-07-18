@@ -22,6 +22,7 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
     const [classOptions, setClassOptions] = useState([]);
     const [subjectOptions, setSubjectOptions] = useState([]);
     const [id, setId] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const [isEditMode, setIsEditMode] = useState(false);
 
@@ -125,8 +126,43 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
         setChapterCount(updated.length);
     };
 
+    // Function to validate PDF file
+    const validatePDFFile = (file) => {
+        if (!file) return false;
+        return file.type === 'application/pdf';
+    };
+
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        if (!isEditMode) return true; // If not in edit mode, consider form complete
+        
+        if (!selectedClass || !selectedSubject || !selectedMedium || !selectedPublisher) {
+            return false;
+        }
+        if (!textbookname || textbookname.trim() === '') {
+            return false;
+        }
+        if (!imageData.preview && !imageData.file) {
+            return false;
+        }
+        if (chapterCount === 0 || chapters.length === 0) {
+            return false;
+        }
+        
+        // Check if chapters have names and files (either uploaded or existing)
+        const invalidChapters = chapters.filter((chapter, index) => {
+            return !chapter.name || chapter.name.trim() === '' || (!chapter.file && !chapter.previewUrl) || (chapter.file && !validatePDFFile(chapter.file));
+        });
+        
+        return invalidChapters.length === 0;
+    };
 
     const handleSave = async () => {
+        // Prevent multiple submissions
+        if (isLoading) {
+            return;
+        }
+
         // Validate all required fields except volume when in edit mode
         if (isEditMode) {
             const missingFields = [];
@@ -155,28 +191,31 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
             
             // Check if chapters have names and files (either uploaded or existing)
             const invalidChapters = chapters.filter((chapter, index) => {
-                return !chapter.name || chapter.name.trim() === '' || (!chapter.file && !chapter.previewUrl);
+                return !chapter.name || chapter.name.trim() === '' || (!chapter.file && !chapter.previewUrl) || (chapter.file && !validatePDFFile(chapter.file));
             });
             
             if (invalidChapters.length > 0) {
-                missingFields.push('Chapter details (names and files)');
+                missingFields.push('Chapter details (names and PDF files)');
             }
             
             if (missingFields.length > 0) {
-                Swal.fire({ 
-                    icon: 'warning', 
-                    title: 'Missing Required Fields', 
-                    text: `Please fill in the following fields: ${missingFields.join(', ')}.` 
+                Swal.fire({
+                    title: 'Required Fields Missing',
+                    text: `Please fill in the following fields: ${missingFields.join(', ')}.`,
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
                 });
                 return;
             }
         }
 
+        setIsLoading(true);
+
         const formData = new FormData();
         const classNameOnly = selectedClass.label.split(' ')[0];
         formData.append("class_name", classNameOnly);
         formData.append("text_name", textbookname);
-        const subjectNameOnly = selectedSubject?.label || selectedSubject?.value;
+        const subjectNameOnly = selectedClass.subjectList[0].subject;
         formData.append("subject", subjectNameOnly);
         formData.append("medium", selectedMedium.value);
         formData.append("publisher_name", selectedPublisher.value);
@@ -215,7 +254,7 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
             Swal.fire({
                 icon: "success",
                 title: "Success",
-                text: "Textbook added successfully!",
+                text: "Textbook updated successfully!",
                 confirmButtonText: "OK"
             }).then(() => {
                 onClose();
@@ -230,6 +269,8 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
                 text: error.response?.data?.error || "Something went wrong while saving.",
                 confirmButtonText: "OK"
             });
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -245,27 +286,52 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
         const fetchClassData = async () => {
             try {
                 const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`);
-                const formatted = response.data.map(cls => ({
-                    value: cls.class,
-                    label: `${cls.class_name} ${cls.division}`,
-                    subjectList: cls.curriculum,
-                }));
+
+                const formatted = response.data.map(cls => {
+                    const classDetails = cls.classes[0]; // Get the inner class object
+                    return {
+                        value: classDetails.class_id,
+                        label: cls.class_name,
+                        subjectList: classDetails.curriculum || []  // Correct access
+                    };
+                });
+
                 setClassOptions(formatted);
             } catch (error) {
-                console.error('Failed to fetch class data');
+                console.error('Failed to fetch class data', error);
                 Swal.fire({ icon: 'error', title: 'Error', text: 'Unable to load class list.' });
             }
         };
+
         fetchClassData();
     }, [APIURL, admin_id]);
 
-    const handleClassChange = selected => {
+    const handleClassChange = (selected) => {
         setSelectedClass(selected);
-        if (selected?.subjectList) {
-            setSubjectOptions(selected.subjectList.map(s => ({ value: s.subject_id, label: s.subject })));
+
+        if (selected?.subjectList?.length) {
+            const subjects = selected.subjectList.map(c => ({
+                subject: c.subject,
+                subject_id: c.subject_id
+            }));
+
+            const uniqueSubjectsMap = new Map();
+            subjects.forEach(s => {
+                if (!uniqueSubjectsMap.has(s.subject_id)) {
+                    uniqueSubjectsMap.set(s.subject_id, s.subject);
+                }
+            });
+
+            const uniqueSubjectOptions = Array.from(uniqueSubjectsMap, ([value, label]) => ({
+                value,
+                label
+            }));
+
+            setSubjectOptions(uniqueSubjectOptions);
         } else {
             setSubjectOptions([]);
         }
+
         setSelectedSubject(null);
     };
     const handleChapterCountChange = (e) => {
@@ -281,61 +347,68 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
         });
     };
 
-    const customStyles = {
-        control: (base, state) => ({
-            ...base,
-            minHeight: '50px',
-            height: '50px',
-            borderColor: '#ccc',
-            boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
-            '&:hover': {
-                borderColor: '#526D82',
-            }
-        }),
-        valueContainer: (base) => ({
-            ...base,
-            height: '50px',
-            padding: '0 6px'
-        }),
-        dropdownIndicator: (base) => ({
-            ...base,
-            color: '#292D32', // Change the color of the dropdown arrow
-            padding: '0 8px',
-            alignItems: 'center',
-            svg: {
-                width: '24px',
-                height: '24px'
-            }
-        }),
-        indicatorSeparator: () => ({
-            display: 'none' // This removes the line (separator) before the dropdown arrow
-        }),
-        placeholder: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px'
-        }),
-        singleValue: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px'
-        }),
-        menu: (base) => ({
-            ...base,
-            zIndex: 1000,
-            maxHeight: '150px',
-            overflowY: 'auto',
-            fontSize: '14px',
-        }),
-        option: (base, state) => ({
-            ...base,
-            backgroundColor: state.isFocused ? '#f0f0f0' : '#fff',
-            color: '#526D82',
-            '&:active': {
-                backgroundColor: '#e6e6e6',
-            }
-        }),
-    };
+    const lokaeditcustomStyles = {
+    control: (base, state) => ({
+      ...base,
+      height: '48px',
+      borderRadius: '8px',
+      borderColor: state.isFocused ? '#86b7fe' : '#757575',
+      boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+      display: 'flex',
+      alignItems: 'center',
+      paddingLeft: 8,
+      paddingRight: 8,
+      Grid: 0,
+      padding: 0,
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      height: '48px',
+      padding: '0 6px'
+    }),
+    dropdownIndicator: (base) => ({
+      ...base,
+      color: '#292D32',
+      padding: '0 8px',
+      alignItems: 'center',
+      svg: {
+        width: '24px',
+        height: '24px'
+      }
+    }),
+    indicatorSeparator: () => ({
+      display: 'none'
+    }),
+    placeholder: (base) => ({
+      ...base,
+      color: '#526D82',
+      fontSize: '16px'
+    }),
+    menu: (base) => ({
+      ...base,
+      zIndex: 1000,
+      maxHeight: '150px',
+      overflowY: 'auto',
+      fontSize: '14px',
+      backgroundColor: 'white',
+      borderRadius: '8px',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+      marginTop: '4px'
+    }),
+    menuList: (base) => ({
+      ...base,
+      maxHeight: '150px',
+      padding: '4px 0'
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+      color: state.isFocused ? '#fff' : '#222222',
+      '&:active': {
+        backgroundColor: '#e6e6e6',
+      }
+    }),
+  };
 
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
@@ -404,6 +477,25 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
         }
     };
 
+    // Function to handle PDF file upload for chapters
+    const handleChapterFileUpload = (index, file) => {
+        if (!file) return;
+        
+        if (file.type !== 'application/pdf') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid File Type',
+                text: 'Please upload only PDF files for chapters.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+        
+        const updated = [...chapters];
+        updated[index].file = file;
+        setChapters(updated);
+    };
+
 
     return (
         <div className="lokatextbookedit-backdrop">
@@ -423,7 +515,7 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
                                 </label>
                                 <Select
                                     options={classOptions}
-                                    styles={customStyles}
+                                    styles={lokaeditcustomStyles}
                                     placeholder=""
                                     isClearable={true}
                                     readOnly={!isEditMode}  
@@ -436,7 +528,7 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
                                 <label className="lokatextbookedit-form-label">Select Medium</label>
                                 <Select
                                     options={mediumOptions}
-                                    styles={customStyles}
+                                    styles={lokaeditcustomStyles}
                                     placeholder=""
                                     isClearable={true}
                                     readOnly={!isEditMode}  
@@ -452,7 +544,7 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
                                     )}</label>
                                 <Select
                                     options={subjectOptions}
-                                    styles={customStyles}
+                                    styles={lokaeditcustomStyles}
                                     placeholder=""
                                     isClearable={true}
                                     readOnly={!isEditMode}  
@@ -469,10 +561,10 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
                                     min="0"
                                     className="custom-input"
                                     style={{
-                                        height: '50px',
-                                        border: '1px solid #ccc',
+                                        height: '48px',
+                                        border: '1px solid #757575',
                                         borderRadius: '8px',
-                                        padding: '0 10px',
+                                        padding: '0 8px',
                                         fontSize: '16px',
                                         color: '#526D82',
                                         width: '100%',
@@ -492,9 +584,9 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
                                     min="0"
                                     className="custom-input"
                                     style={{
-                                        height: '50px',
-                                        border: '1px solid #ccc',
-                                        borderRadius: '4px',
+                                        height: '48px',
+                                        border: '1px solid #757575',
+                                        borderRadius: '8px',
                                         padding: '0 10px',
                                         fontSize: '16px',
                                         color: '#526D82',
@@ -512,7 +604,7 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
                                 <label className="lokatextbookedit-form-label">Publisher Name</label>
                                 <Select
                                     options={publisherOptions}
-                                    styles={customStyles}
+                                    styles={lokaeditcustomStyles}
                                     placeholder=""
                                     value={selectedPublisher}
                                     readOnly={!isEditMode}  
@@ -613,13 +705,13 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
                                                     <input
                                                         id={`file-upload-${index}`}
                                                         type="file"
+                                                        accept=".pdf"
                                                         className="lokatextbookedit_hidden-file"
                                                         readOnly={!isEditMode}  
                                                         onChange={(e) => {
-                                                            const file = e.target.files[0];
-                                                            const updated = [...chapters];
-                                                            updated[index].file = file;
-                                                            setChapters(updated);
+                                                            if (isEditMode) {
+                                                                handleChapterFileUpload(index, e.target.files[0]);
+                                                            }
                                                         }}
                                                     />
                                                 </div>
@@ -712,6 +804,7 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
                     <button
                         type="button"
                         className="lokatextbookedit-btn lokatextbookedit-btn-primary"
+                        disabled={isLoading}
                         onClick={() => {
                             if (isEditMode) {
                                 handleSave();
@@ -719,8 +812,14 @@ const NewLokaBookEdit = ({ isOpen, onClose, onSuccess }) => {
                                 setIsEditMode(true);
                             }
                         }}
+                        style={{
+                            backgroundColor: isEditMode && isFormComplete() && !isLoading ? '#2162B2' : '#bcbcbc',
+                            color: '#fff',
+                            border: isEditMode && isFormComplete() && !isLoading ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: isEditMode && isFormComplete() && !isLoading ? 'pointer' : 'not-allowed'
+                        }}
                     >
-                        {isEditMode ? 'Save' : 'Edit'}
+                        {isEditMode ? (isLoading ? 'Saving...' : 'Save') : 'Edit'}
                     </button>
 
                 </div>

@@ -18,6 +18,7 @@ const AdminStudentDashboard = () => {
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [selectedClass, setSelectedClass] = useState('');
     const [classList, setClassList] = useState([]);
+    const [selectedStatus, setSelectedStatus] = useState({ value: 'active', label: 'Active' }); // Default to Active
 
 
     console.log(allStudents, 'all students')
@@ -53,11 +54,17 @@ const AdminStudentDashboard = () => {
         }
     }, [admin_id, APIURL]);
 
-    // 🎯 Filter students based on Search and Class selection
+    // 🎯 Filter students based on Search, Class selection, and Status
     const filteredStudents = allStudents.filter(student => {
         const matchName = student.student_name?.toLowerCase().includes(search.toLowerCase());
         const matchClass = selectedClass ? `${student.class_name} ${student.division}` === selectedClass : true;
-        return matchName && matchClass;
+        
+        // Status filter - blocked: false = active, blocked: true = inactive
+        const statusMatch = selectedStatus.value === 'active' 
+            ? student.blocked === false 
+            : student.blocked === true;
+        
+        return matchName && matchClass && statusMatch;
     });
     const dashboardcustomStyles = {
         control: (base, state) => ({
@@ -120,7 +127,71 @@ const AdminStudentDashboard = () => {
         } else {
           setSelectedClass(selectedOption.value);
         }
-      };
+    };
+
+    const handleStatusChange = (option) => {
+        setSelectedStatus(option || { value: 'active', label: 'Active' });
+    };
+
+    const statusOptions = [
+        { value: 'active', label: 'Active' },
+        { value: 'inactive', label: 'Inactive' }
+    ];
+      const smalldashboardcustomStyles = {
+        control: (base, state) => ({
+            ...base,
+            // minHeight: '48px',
+            width: '200px',
+            height: '40px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+            // '&:hover': { borderColor: '#86b7fe' }
+        }),
+
+        dropdownIndicator: (base) => ({
+            ...base,
+            color: '#292D32',
+            padding: '0 8px',
+            alignItems: 'center',
+            svg: {
+                width: '24px',
+                height: '24px'
+            }
+        }),
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+        clearIndicator: () => ({
+            display: 'none'
+        }),
+        placeholder: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+        singleValue: (base) => ({
+            ...base,
+            color: '#526D82',
+            fontSize: '16px'
+        }),
+        menu: (base) => ({
+            ...base,
+            zIndex: 1000,
+            maxHeight: '200px',
+            overflowY: 'auto',
+            fontSize: '14px',
+        }),
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
+            '&:active': {
+                backgroundColor: '#e6e6e6',
+            }
+        }),
+
+    };
 
     return (
         <div className="adminstudentdashboard_main_container">
@@ -133,6 +204,14 @@ const AdminStudentDashboard = () => {
                 </div>
                 <div className="adminstudentdashboard-header-controls d-flex justify-content-between align-items-center">
                     <div className="adminstudentdashboard-left-controls" >
+                        <Select
+                            isClearable
+                            value={selectedStatus}
+                            onChange={handleStatusChange}
+                            options={statusOptions}
+                            styles={smalldashboardcustomStyles}
+                            placeholder="Select Status"
+                        />
                         <Select
                             isClearable
                             value={
@@ -170,7 +249,7 @@ const AdminStudentDashboard = () => {
                                 onClick={() => setSelectedStudent(student)}
                                 style={{ cursor: "pointer" }}>
                                 <img
-                                    src={student.image_url ? student.image_url : studentDefault}  // ✅ Check if image_url exists
+                                    src={student.image_url ? student.image_url : studentDefault}
                                     className="adminstudentdashboard-avatar"
                                 />
                                 <div className="adminstudentdashboard-info">
@@ -190,7 +269,28 @@ const AdminStudentDashboard = () => {
                         ))}
                     </div>
                 </div>
+                {/* No data found messages */}
+            {selectedClass && !allStudents.some(student => `${student.class_name} ${student.division}` === selectedClass) && (
+                <div className="no-students-message text-center">
+                    <h4>No students available for selected class.</h4>
+                </div>
+            )}
+            {search && !allStudents.some(student => 
+                student.student_name?.toLowerCase().includes(search.toLowerCase())
+            ) && (
+                <div className="no-students-message text-center">
+                    <h4>No students found for "{search}".</h4>
+                </div>
+            )}
             </div>
+            
+            
+            {/* {filteredStudents.length === 0 && allStudents.length > 0 && (
+                <div className="no-students-message text-center">
+                    <h4>No students match the current filters.</h4>
+                </div>
+            )} */}
+            
             {selectedStudent && (
                 <AdminStudentDashboardView
                     student={selectedStudent}

@@ -86,6 +86,7 @@ const NewFacultyView = ({ faculty, onClose, setSelectedFaculty, fetchFaculty }) 
     const handleAfterUpdate = () => {
         setShowEdit(false);
         fetchFaculty();    // refresh list
+        onClose();         // close the entire modal chain
     };
 
     return (

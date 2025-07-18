@@ -261,6 +261,24 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
         }
     };
 
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        // Check basic required fields
+        if (!title.trim()) return false;
+        if (!dueDate) return false;
+        if (!mark || mark.trim() === '') return false;
+        
+        // Check content requirement (either file or manual content)
+        const hasFile = selectedFile !== null;
+        const hasManualContent = (manualMode && textContent && textContent.trim() !== '') || 
+                                (isEditMode && editData?.image && showExistingImage);
+        
+        // Must have either file or manual content
+        if (!hasFile && !hasManualContent) return false;
+        
+        return true;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -842,7 +860,16 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
                 {/* Footer */}
                 {!manualMode ? (
                     <div className="newteacheraddassignment-footer">
-                        <button className="newaddassignmentmanually-submit-btn" onClick={handleSubmit}>
+                        <button 
+                            className="newaddassignmentmanually-submit-btn" 
+                            style={{
+                                backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                                color: '#fff',
+                                border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                                cursor: 'pointer'
+                            }}
+                            onClick={handleSubmit}
+                        >
                             {isEditMode ? 'Update' : 'Submit'}
                         </button>
                     </div>
@@ -864,7 +891,16 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
                             >
                                 Clear
                             </button>
-                            <button className="newaddassignmentmanually-submit-btn" onClick={handleSubmit}>
+                            <button 
+                                className="newaddassignmentmanually-submit-btn" 
+                                style={{
+                                    backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                                    color: '#fff',
+                                    border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={handleSubmit}
+                            >
                                 {isEditMode ? 'Update' : 'Submit'}
                             </button>
                         </div>

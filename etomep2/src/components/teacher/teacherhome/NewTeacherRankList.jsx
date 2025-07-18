@@ -3,6 +3,7 @@ import './newteacherranklist.css';
 import medal1 from "../../../assets/Award1.png";
 import medal2 from "../../../assets/Award2.png";
 import medal3 from "../../../assets/Award3.png";
+import students from "../../../assets/student.jpg";
 
 export default function NewTeacherRankList({ onClose, rankList = [] }) {
     return (
@@ -20,7 +21,15 @@ export default function NewTeacherRankList({ onClose, rankList = [] }) {
                                     <tr key={idx}>
                                         <td>
                                             <div className="teacherranklist-student">
-                                                <span className="teacherranklist-avatar" />
+                                                <div className="teacherranklist-avatar">
+                                                    <img
+                                                        src={student.image || students}
+                                                        alt={student.name}
+                                                        onError={(e) => {
+                                                            e.target.src = students;
+                                                        }}
+                                                    />
+                                                </div>
                                                 <span className="teacherranklist-name">
                                                     {student.student_name || student.name}
                                                 </span>

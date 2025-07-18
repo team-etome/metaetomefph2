@@ -145,8 +145,19 @@ const AdminQuestionAssigningView = ({ isOpen, onClose, selectedItem, onDeleted }
         formValues.subject
       ]);
       
-      
-
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        if (!selectedData) {
+            return false;
+        }
+        if (!formValues.teacher) {
+            return false;
+        }
+        if (!formValues.totalMarks || formValues.totalMarks.trim() === '') {
+            return false;
+        }
+        return true;
+    };
 
     const handleSave = async () => {
         if (!isEditMode) {
@@ -544,6 +555,13 @@ const AdminQuestionAssigningView = ({ isOpen, onClose, selectedItem, onDeleted }
                     <button onClick={handleDelete} className="AdminQuestionAssigning-edit-btn AdminQuestionAssigning-edit-btn-danger">Delete</button>
                     <button
                         className="AdminQuestionAssigning-edit-btn AdminQuestionAssigning-edit-btn-primary"
+                        style={{
+                            backgroundColor: isEditMode && isFormComplete() ? '#2162B2' : isEditMode ? '#bcbcbc' : '#2162B2',
+                            color: '#fff',
+                            border: isEditMode && isFormComplete() ? '1px solid #2162B2' : isEditMode ? '1px solid #bcbcbc' : '1px solid #2162B2',
+                            cursor: isEditMode && !isFormComplete() ? 'not-allowed' : 'pointer'
+                        }}
+                        disabled={isEditMode && !isFormComplete()}
                         onClick={() => {
                             if (isEditMode) {
                                 handleSave();

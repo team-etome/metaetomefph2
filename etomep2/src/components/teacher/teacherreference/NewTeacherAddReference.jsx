@@ -127,6 +127,27 @@ const NewTeacherAddReference = ({ onClose, class_name, division, subject, editDa
         }
     };
 
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        // Check title
+        if (!title.trim()) return false;
+        
+        if (urlMode) {
+            // URL mode - check if URL is provided and valid
+            if (!url.trim()) return false;
+            try {
+                new URL(url);
+            } catch {
+                return false; // Invalid URL
+            }
+        } else {
+            // File mode - check if file is selected
+            if (!selectedFile) return false;
+        }
+        
+        return true;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -402,7 +423,16 @@ const NewTeacherAddReference = ({ onClose, class_name, division, subject, editDa
                     >
                         Clear
                     </button>
-                    <button className="newaddassignmentmanually-submit-btn" onClick={handleSubmit}>
+                    <button 
+                        className="newaddassignmentmanually-submit-btn" 
+                        style={{
+                            backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                            color: '#fff',
+                            border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: 'pointer'
+                        }}
+                        onClick={handleSubmit}
+                    >
                         {isEditMode ? 'Update' : 'Submit'}
                     </button>
                 </div>
