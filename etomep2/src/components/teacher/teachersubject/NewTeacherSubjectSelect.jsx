@@ -138,7 +138,7 @@ function NewTeacherSubjectSelect({ subject, onBack }) {
                                                 </div>
                                                 <div className="newteachersubjectselect-info-classrollno">
                                                     <span className="newteachersubjectselect-class">
-                                                        Class {student.classSection || student.class}
+                                                        Class {student.standard || student.class}
                                                     </span>
                                                     <span className="newteachersubjectselect-roll">
                                                         Roll no: {student.rollNo || student.roll_no}

@@ -71,22 +71,39 @@ const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
 
 
     const handleEditSubmit = async () => {
-        // 1) Validate all required fields
-        // if (
-        //     !categoryValue?.value ||
-        //     !title ||
-        //     !author ||
-        //     !publisher ||
-        //     !coverFile ||
-        //     !documentFile
-        // ) {
-        //     Swal.fire({
-        //         icon: 'warning',
-        //         title: 'Missing Fields',
-        //         text: 'Please fill out all fields and select both files.',
-        //     });
-        //     return;
-        // }
+        // Check if all required fields are filled when in edit mode
+        if (isEditMode) {
+            const missingFields = [];
+            
+            if (!categoryValue?.value) {
+                missingFields.push('Category');
+            }
+            if (!title || title.trim() === '') {
+                missingFields.push('Title');
+            }
+            if (!author || author.trim() === '') {
+                missingFields.push('Author Name');
+            }
+            if (!publisher || publisher.trim() === '') {
+                missingFields.push('Publisher Name');
+            }
+            if (!coverFile) {
+                missingFields.push('Cover Photo');
+            }
+            if (!documentFile) {
+                missingFields.push('Document File');
+            }
+            
+            if (missingFields.length > 0) {
+                Swal.fire({
+                    title: 'Required Fields Missing',
+                    text: `Please fill in the following fields: ${missingFields.join(', ')}.`,
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+        }
 
         // 2) Build FormData
         const formData = new FormData();
@@ -165,25 +182,48 @@ const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
         setDocumentFile(null);
     };
 
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        if (!isEditMode) return true; // If not in edit mode, consider form complete
+        
+        if (!categoryValue?.value) {
+            return false;
+        }
+        if (!title || title.trim() === '') {
+            return false;
+        }
+        if (!author || author.trim() === '') {
+            return false;
+        }
+        if (!publisher || publisher.trim() === '') {
+            return false;
+        }
+        if (!coverFile) {
+            return false;
+        }
+        if (!documentFile) {
+            return false;
+        }
+        return true;
+    };
 
-    const customStyles = {
+    const libraryeditcustomStyles = {
         control: (base, state) => ({
             ...base,
-            minHeight: '50px',
-            height: '50px',
-            borderColor: '#ccc',
+            height: '48px',
             borderRadius: '8px',
-            pointerEvents: isEditMode 
-                ? "auto"
-                : "none",
-            boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
-            '&:hover': {
-                borderColor: '#526D82',
-            }
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+            display: 'flex',
+            alignItems: 'center',
+            paddingLeft: 8,
+            paddingRight: 8,
+            Grid: 0,
+            padding: 0,
         }),
         valueContainer: (base) => ({
             ...base,
-            height: '50px',
+            height: '48px',
             padding: '0 6px'
         }),
         dropdownIndicator: (base) => ({
@@ -194,18 +234,12 @@ const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
             svg: {
                 width: '24px',
                 height: '24px'
-            },
-            display: isEditMode ? 'flex' : 'none',
+            }
         }),
         indicatorSeparator: () => ({
             display: 'none'
         }),
         placeholder: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px'
-        }),
-        singleValue: (base) => ({
             ...base,
             color: '#526D82',
             fontSize: '16px'
@@ -216,16 +250,26 @@ const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
             maxHeight: '150px',
             overflowY: 'auto',
             fontSize: '14px',
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            marginTop: '4px'
+        }),
+        menuList: (base) => ({
+            ...base,
+            maxHeight: '150px',
+            padding: '4px 0'
         }),
         option: (base, state) => ({
             ...base,
-            backgroundColor: state.isFocused ? '#f0f0f0' : '#fff',
-            color: '#526D82',
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
             '&:active': {
                 backgroundColor: '#e6e6e6',
             }
         }),
     };
+
 
 
     const getFileNameFromUrl = (input) => {
@@ -264,7 +308,7 @@ const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
                                     value={categoryValue}
                                     inputValue={inputValue}
                                     options={apicomingcatogory.map((c) => ({ label: c, value: c }))}
-                                    styles={customStyles}
+                                    styles={libraryeditcustomStyles}
                                     placeholder=""
                                     readOnly={!isEditMode}
                                     isClearable
@@ -299,7 +343,7 @@ const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
                                 </label>
                                 <input
                                     type="text"
-                                    className="custom-input"
+                                    className="lokalibraryeditcustom-input"
                                     readOnly={!isEditMode}
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
@@ -312,7 +356,7 @@ const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
                                 </label>
                                 <input
                                     type="text"
-                                    className="custom-input"
+                                    className="lokalibraryeditcustom-input"
                                     value={author}
                                     readOnly={!isEditMode}
                                     onChange={(e) => setAuthor(e.target.value)}
@@ -324,7 +368,7 @@ const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
                                 </label>
                                 <input
                                     type="text"
-                                    className="custom-input"
+                                    className="lokalibraryeditcustom-input"
                                     value={publisher}
                                     readOnly={!isEditMode}
                                     onChange={(e) => setPublisher(e.target.value)}
@@ -471,6 +515,10 @@ const NewLokaLibraryEdit = ({ isOpen, onClose, onUpdated }) => {
                             } else {
                                 setIsEditMode(true);
                             }
+                        }}
+                        style={{
+                            backgroundColor: isFormComplete() ? '#2162B2' : '#ccc',
+                            borderColor: isFormComplete() ? '#2162B2' : '#ccc',
                         }}
                     >
                         {isEditMode ? 'Save' : 'Edit'}

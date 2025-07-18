@@ -97,6 +97,8 @@
     border-radius: 8px;
     border: none;
     cursor: pointer;
+    width: 100px;
+    height: 40px;
 }
 
 .newstudentadd-btn-secondary {
@@ -106,6 +108,13 @@
     width: 100px;
     height: 40px;
 
+}
+.newstudentadd-btn-complete{
+    background-color: #2162B2;
+    color: #fff;
+    /* border: 1px solid #2162B2; */
+    width: 100px;
+    height: 40px;
 }
 
 .newstudentadd-btn-danger {

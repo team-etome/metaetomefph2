@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./newtestlistingadd.css";
 import NewTeacherMockTest from "./NewTeacherMockTest";
+import Swal from 'sweetalert2';
 
 export default function NewTestListingAdd({ onBack: onParentBack, class_name, division, subject, onTestAdded, editData, isEditMode }) {
     const [step, setStep] = useState(1);
@@ -36,8 +37,38 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
       setFormValues((fv) => ({ ...fv, [id]: value }));
     };
   
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+      if (!formValues.examName.trim()) return false;
+      if (!formValues.topic.trim()) return false;
+      if (!formValues.duration || formValues.duration.trim() === '') return false;
+      if (!formValues.examDate) return false;
+      if (!formValues.outOfMarks || formValues.outOfMarks.trim() === '') return false;
+      if (!formValues.teacherCode.trim()) return false;
+      return true;
+    };
+  
     const goNext = (e) => {
       e.preventDefault();
+      
+      if (!isFormComplete()) {
+        let missingFields = [];
+        
+        if (!formValues.examName.trim()) missingFields.push("Exam Name");
+        if (!formValues.topic.trim()) missingFields.push("Topic");
+        if (!formValues.duration || formValues.duration.trim() === '') missingFields.push("Duration");
+        if (!formValues.examDate) missingFields.push("Exam Date");
+        if (!formValues.outOfMarks || formValues.outOfMarks.trim() === '') missingFields.push("Out of Marks");
+        if (!formValues.teacherCode.trim()) missingFields.push("Teacher Code");
+        
+        Swal.fire({
+          icon: "error",
+          title: "Missing Required Information",
+          text: `Please complete the following fields: ${missingFields.join(", ")}`,
+        });
+        return;
+      }
+      
       setStep(2);
     };
     const goBack = () => {
@@ -138,6 +169,7 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
               onChange={handleChange}
               readOnly={isEditMode}
               style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
+              onWheel={(e) => e.target.blur()}
             />
           </div>
           <div className="newtestlistingadd_field">
@@ -170,6 +202,7 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
               onChange={handleChange}
               readOnly={isEditMode}
               style={isEditMode ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
+              onWheel={(e) => e.target.blur()}
             />
           </div>
           <div className="newtestlistingadd_field">
@@ -212,6 +245,12 @@ export default function NewTestListingAdd({ onBack: onParentBack, class_name, di
         <button
           type="button"
           className="newtestlistingadd_next"
+          style={{
+            backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+            color: '#fff',
+            border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+            cursor: 'pointer'
+          }}
           onClick={goNext}
         >
           {isEditMode ? 'View Questions' : 'Next'}

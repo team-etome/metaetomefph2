@@ -116,6 +116,12 @@
     height: 40px;
     cursor: pointer;
     width: 140px;
+    transition: all 0.3s ease;
+}
+
+.newteacheraddreference-upload-btn-primary.active {
+    background-color: #1a4f8a;
+    box-shadow: 0 2px 4px rgba(33, 98, 178, 0.3);
 }
 
 .newteacheraddreference-manual-btn {
@@ -128,6 +134,14 @@
     height: 40px;
     width: 140px;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.newteacheraddreference-manual-btn.active {
+    background-color: #2162B2;
+    color: #fff;
+    border-color: #2162B2;
+    box-shadow: 0 2px 4px rgba(33, 98, 178, 0.3);
 }
 
 /* upload area */

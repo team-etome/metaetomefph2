@@ -49,9 +49,10 @@ function NewQuestionGenerator({ onClose, selectedFile, selectedItem, onRefresh }
 
     const exam_id = exampaperinfo.exampaperinfo?.id;
 
-    const total_marks = exampaperinfo.exampaperinfo?.total_marks;
+    // Use out_of_marks from selectedItem instead of total_marks from Redux
+    const total_marks = selectedItem?.out_of_marks || 0;
 
-    console.log(total_marks, "total marks")
+    console.log(total_marks, "total marks from selectedItem")
 
     const [progress, setProgress] = useState(0); // Track export progress
     const [isExporting, setIsExporting] = useState(false); // Exporting status
@@ -77,18 +78,42 @@ function NewQuestionGenerator({ onClose, selectedFile, selectedItem, onRefresh }
     const handlePointsChange = (subsectionIndex, questionIndex, event) => {
         const newSubsections = [...subsections];
         const newPoints = parseInt(event.target.value, 10) || 0;
-        const totalAllocatedMarks = newSubsections.reduce(
+        
+        // Calculate current total allocated marks (excluding the current question being edited)
+        const currentTotalAllocatedMarks = newSubsections.reduce(
             (acc, subsection) =>
                 acc +
-                subsection.questions.reduce((sum, q) => sum + q.points, 0),
+                subsection.questions.reduce((sum, q, qIdx) => {
+                    // Skip the current question being edited
+                    if (subsection === newSubsections[subsectionIndex] && qIdx === questionIndex) {
+                        return sum;
+                    }
+                    return sum + q.points;
+                }, 0),
             0
         );
 
-        if (totalAllocatedMarks - newSubsections[subsectionIndex].questions[questionIndex].points + newPoints > total_marks) {
+        // Calculate what the new total would be
+        const newTotalAllocatedMarks = currentTotalAllocatedMarks + newPoints;
+
+        if (newTotalAllocatedMarks > total_marks) {
+            const remainingMarks = total_marks - currentTotalAllocatedMarks;
             Swal.fire({
                 icon: "error",
                 title: "Exceeds Total Marks",
-                text: `Total allocated marks cannot exceed ${total_marks}.`,
+                text: `Total allocated marks (${newTotalAllocatedMarks}) cannot exceed the exam total (${total_marks}). You have ${remainingMarks} marks remaining.`,
+                confirmButtonText: "OK"
+            });
+            return;
+        }
+
+        // Validate that points are not negative
+        if (newPoints < 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Invalid Marks",
+                text: "Marks cannot be negative. Please enter a valid number.",
+                confirmButtonText: "OK"
             });
             return;
         }
@@ -209,20 +234,40 @@ function NewQuestionGenerator({ onClose, selectedFile, selectedItem, onRefresh }
             destination.droppableId.split("-")[1]
         );
 
-        const sourceQuestions = Array.from(
-            subsections[sourceSubsectionIndex].questions
-        );
-        const [removed] = sourceQuestions.splice(source.index, 1);
-        const destinationQuestions = Array.from(
-            subsections[destinationSubsectionIndex].questions
-        );
-        destinationQuestions.splice(destination.index, 0, removed);
-
-        const newSubsections = [...subsections];
-        newSubsections[sourceSubsectionIndex].questions = sourceQuestions;
-        newSubsections[destinationSubsectionIndex].questions = destinationQuestions;
-
-        setSubsections(newSubsections);
+        // If dragging within the same subsection
+        if (sourceSubsectionIndex === destinationSubsectionIndex) {
+            const newSubsections = [...subsections];
+            const questions = Array.from(newSubsections[sourceSubsectionIndex].questions);
+            const [removed] = questions.splice(source.index, 1);
+            questions.splice(destination.index, 0, removed);
+            newSubsections[sourceSubsectionIndex].questions = questions;
+            
+            // Recalculate global IDs after drag operation
+            recalculateGlobalIds(newSubsections);
+            setSubsections(newSubsections);
+        } else {
+            // If dragging between different subsections
+            const newSubsections = [...subsections];
+            const sourceQuestions = Array.from(
+                newSubsections[sourceSubsectionIndex].questions
+            );
+            const destinationQuestions = Array.from(
+                newSubsections[destinationSubsectionIndex].questions
+            );
+            
+            // Remove from source
+            const [removed] = sourceQuestions.splice(source.index, 1);
+            // Add to destination
+            destinationQuestions.splice(destination.index, 0, removed);
+            
+            // Update both subsections
+            newSubsections[sourceSubsectionIndex].questions = sourceQuestions;
+            newSubsections[destinationSubsectionIndex].questions = destinationQuestions;
+            
+            // Recalculate global IDs after drag operation
+            recalculateGlobalIds(newSubsections);
+            setSubsections(newSubsections);
+        }
     };
 
     const handleEditorData = useCallback(
@@ -429,7 +474,7 @@ function NewQuestionGenerator({ onClose, selectedFile, selectedItem, onRefresh }
     // };
 
 
-    const handleExport = () => {
+    const handleExport = async () => {
         // Validate that we have questions to export
         const totalQuestions = subsections.reduce(
             (acc, section) => acc + section.questions.length,
@@ -454,12 +499,31 @@ function NewQuestionGenerator({ onClose, selectedFile, selectedItem, onRefresh }
         );
 
         if (totalAllocatedMarks > total_marks) {
+            const excessMarks = totalAllocatedMarks - total_marks;
             Swal.fire({
                 icon: "error",
                 title: "Cannot Export",
-                text: `Total allocated marks (${totalAllocatedMarks}) exceed the allowed total of ${total_marks}. Please adjust the marks.`,
+                text: `Total allocated marks (${totalAllocatedMarks}) exceed the exam total (${total_marks}) by ${excessMarks} marks. Please reduce the marks to continue.`,
+                confirmButtonText: "OK"
             });
             return;
+        }
+
+        // Check if marks are under-allocated (optional warning)
+        if (totalAllocatedMarks < total_marks) {
+            const remainingMarks = total_marks - totalAllocatedMarks;
+            const shouldContinue = await Swal.fire({
+                icon: "warning",
+                title: "Under-allocated Marks",
+                text: `You have allocated ${totalAllocatedMarks} out of ${total_marks} total marks. ${remainingMarks} marks are unallocated. Do you want to continue?`,
+                showCancelButton: true,
+                confirmButtonText: "Continue",
+                cancelButtonText: "Go Back"
+            });
+            
+            if (!shouldContinue.isConfirmed) {
+                return;
+            }
         }
 
         // if (!selectedFile) {
@@ -502,12 +566,12 @@ function NewQuestionGenerator({ onClose, selectedFile, selectedItem, onRefresh }
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <div className="new-question_generator">
-                <Row xs={2} className="question_generator_header">
+                {/* <Row xs={2} className="question_generator_header">
                     <Col className="question_generator_header_title">
                         <IoChevronBackSharp onClick={handleBackClick} className="teacher_question_back" />
                         <h6>Question Generator</h6>
                     </Col>
-                </Row>
+                </Row> */}
 
                 {/* <Row className="new-qs_gn_bdy" style={{border:"2px solid green"}}> */}
                 <div className="new-text-editor" >
@@ -680,20 +744,64 @@ function NewQuestionGenerator({ onClose, selectedFile, selectedItem, onRefresh }
                     
                 </div>
                 {/* </Row> */}
-                <div className="newquestion_generator_header">
-                        {/* <div className="newquestion_generator_header_submit"> */}
-                            <button className="newquestion_generator_submit" onClick={handleExport} disabled={isExporting}>
-                                {isExporting ? `Submiting... ${progress}%` : "Submit"}
+                
+                {/* Fixed Footer */}
+                <div className="newquestion_generator_footer">
+                    <div className="footer_content">
+                        <div className="footer_left">
+                            <button className="newquestion_generator_back" onClick={handleBackClick}>
+                                Back
                             </button>
-                        {/* </div> */}
+                        </div>
+                        <div className="marks_allocation_indicator">
+                        {(() => {
+                            const totalAllocatedMarks = subsections.reduce(
+                                (acc, subsection) =>
+                                    acc +
+                                    subsection.questions.reduce((sum, q) => sum + q.points, 0),
+                                0
+                            );
+                            const remainingMarks = total_marks - totalAllocatedMarks;
+                            const isOverAllocated = totalAllocatedMarks > total_marks;
+                            const isUnderAllocated = totalAllocatedMarks < total_marks;
+                            
+                            return (
+                                <div className={`marks_status ${isOverAllocated ? 'over-allocated' : isUnderAllocated ? 'under-allocated' : 'perfect'}`}>
+                                    <span className="marks_text">
+                                        Marks: {totalAllocatedMarks} / {total_marks}
+                                    </span>
+                                    {isOverAllocated && (
+                                        <span className="marks_warning">
+                                            (Exceeds by {Math.abs(remainingMarks)})
+                                        </span>
+                                    )}
+                                    {isUnderAllocated && (
+                                        <span className="marks_info">
+                                            ({remainingMarks} remaining)
+                                        </span>
+                                    )}
+                                    {!isOverAllocated && !isUnderAllocated && (
+                                        <span className="marks_success">
+                                            (Perfect!)
+                                        </span>
+                                    )}
+                                </div>
+                            );
+                        })()}
                     </div>
+                        <div className="footer_right">
+                            <button className="newquestion_generator_submit" onClick={handleExport} disabled={isExporting}>
+                                {isExporting ? `Submit... ${progress}%` : "Submit"}
+                            </button>
+                        </div>
+                    </div>
+                    
                     {isExporting && (
-                        <div className="my-3">
-                            <div>
+                        <div className="progress_container">
                                 <ProgressBar now={progress} label={`${progress}%`} />
-                            </div>
                         </div>
                     )}
+                    </div>
             </div>
         </DragDropContext>
     );

@@ -43,7 +43,34 @@ const NewTeacherAddReference = ({ onClose, class_name, division, subject, editDa
 
     const handleFileChange = e => {
         const file = e.target.files[0];
-        if (file) setSelectedFile(file);
+        if (file) {
+            // If currently in URL mode and URL has content, show confirmation
+            if (urlMode && url.trim()) {
+                Swal.fire({
+                    title: 'Switch to File Mode?',
+                    text: 'You have entered a URL. Selecting a file will clear the URL. Do you want to continue?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#2162B2',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, switch',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        setSelectedFile(file);
+                        setUrlMode(false);
+                        setUrl('');
+                    } else {
+                        // Reset file input
+                        fileInputRef.current.value = '';
+                    }
+                });
+            } else {
+                setSelectedFile(file);
+                setUrlMode(false);
+                setUrl('');
+            }
+        }
     };
 
     const clearFile = () => {
@@ -51,8 +78,123 @@ const NewTeacherAddReference = ({ onClose, class_name, division, subject, editDa
         fileInputRef.current.value = "";
     };
 
+    // Handle mode switching
+    const switchToFileMode = () => {
+        // If currently in URL mode and URL has content, show confirmation
+        if (urlMode && url.trim()) {
+            Swal.fire({
+                title: 'Switch to File Mode?',
+                text: 'You have entered a URL. Switching to file mode will clear the URL. Do you want to continue?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#2162B2',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, switch',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setUrlMode(false);
+                    setUrl('');
+                }
+            });
+        } else {
+            setUrlMode(false);
+            setUrl('');
+        }
+    };
+
+    const switchToUrlMode = () => {
+        // If currently in file mode and file is selected, show confirmation
+        if (!urlMode && selectedFile) {
+            Swal.fire({
+                title: 'Switch to URL Mode?',
+                text: 'You have selected a file. Switching to URL mode will clear the file. Do you want to continue?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#2162B2',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, switch',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setUrlMode(true);
+                    clearFile();
+                }
+            });
+        } else {
+            setUrlMode(true);
+            clearFile();
+        }
+    };
+
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        // Check title
+        if (!title.trim()) return false;
+        
+        if (urlMode) {
+            // URL mode - check if URL is provided and valid
+            if (!url.trim()) return false;
+            try {
+                new URL(url);
+            } catch {
+                return false; // Invalid URL
+            }
+        } else {
+            // File mode - check if file is selected
+            if (!selectedFile) return false;
+        }
+        
+        return true;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        // Validation
+        if (!title.trim()) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                text: 'Please enter a title for the reference.'
+            });
+            return;
+        }
+
+        if (urlMode) {
+            // URL mode validation
+            if (!url.trim()) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'Please enter a URL for the reference.'
+                });
+                return;
+            }
+            
+            // Basic URL validation
+            try {
+                new URL(url);
+            } catch {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid URL',
+                    text: 'Please enter a valid URL (e.g., https://example.com)'
+                });
+                return;
+            }
+        } else {
+            // File mode validation
+            if (!selectedFile) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'Please select a file to upload.'
+                });
+                return;
+            }
+        }
+
         try {
             const requestMethod = isEditMode ? 'put' : 'post';
             const requestUrl = isEditMode ? `${APIURL}/api/reference/${editData.id}` : `${APIURL}/api/reference`;
@@ -112,10 +254,11 @@ const NewTeacherAddReference = ({ onClose, class_name, division, subject, editDa
             });
             onClose();
         } catch (error) {
+            console.error('Error:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Failed to add reference.'
+                text: error.response?.data?.message || 'Failed to add reference.'
             });
         }
     };
@@ -142,27 +285,27 @@ const NewTeacherAddReference = ({ onClose, class_name, division, subject, editDa
                                 type="text"
                                 value={title}
                                 onChange={e => setTitle(e.target.value)}
-                                // placeholder="Enter title"
+                                // placeholder="Enter reference title"
                                 className="newteacheraddreference-input"
                             />
                         </div>
                     </div>
                     <div className="newteacheraddreference-add-question-row">
                         <p className="newteacheraddreference-add-question-heading">
-                            Add Question
+                            Add Reference
                         </p>
                         <div className="newteacheraddreference-btn-row">
                             <button
                                 type="button"
-                                className="newteacheraddreference-upload-btn-primary"
-                                onClick={() => setUrlMode(false)}
+                                className={`newteacheraddreference-manual-btn ${!urlMode ? 'active' : ''}`}
+                                onClick={switchToFileMode}
                             >
                                 Upload File
                             </button>
                             <button
                                 type="button"
-                                className="newteacheraddreference-manual-btn"
-                                onClick={() => setUrlMode(true)}
+                                className={`newteacheraddreference-manual-btn ${urlMode ? 'active' : ''}`}
+                                onClick={switchToUrlMode}
                             >
                                 Upload URL
                             </button>
@@ -237,7 +380,30 @@ const NewTeacherAddReference = ({ onClose, class_name, division, subject, editDa
                             type="text"
                             placeholder="Link"
                             value={url}
-                            onChange={e => setUrl(e.target.value)}
+                            onChange={e => {
+                                const newUrl = e.target.value;
+                                // If currently in file mode and file is selected, show confirmation
+                                if (!urlMode && selectedFile && newUrl.trim()) {
+                                    Swal.fire({
+                                        title: 'Switch to URL Mode?',
+                                        text: 'You have selected a file. Entering a URL will clear the file. Do you want to continue?',
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#2162B2',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes, switch',
+                                        cancelButtonText: 'Cancel'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            setUrl(newUrl);
+                                            setUrlMode(true);
+                                            clearFile();
+                                        }
+                                    });
+                                } else {
+                                    setUrl(newUrl);
+                                }
+                            }}
                             className="newteacheraddreference-input"
                           />
                         </div>
@@ -257,7 +423,16 @@ const NewTeacherAddReference = ({ onClose, class_name, division, subject, editDa
                     >
                         Clear
                     </button>
-                    <button className="newaddassignmentmanually-submit-btn" onClick={handleSubmit}>
+                    <button 
+                        className="newaddassignmentmanually-submit-btn" 
+                        style={{
+                            backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                            color: '#fff',
+                            border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: 'pointer'
+                        }}
+                        onClick={handleSubmit}
+                    >
                         {isEditMode ? 'Update' : 'Submit'}
                     </button>
                 </div>

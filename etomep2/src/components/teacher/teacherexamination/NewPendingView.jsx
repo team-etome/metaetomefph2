@@ -7,12 +7,15 @@ import { FaArrowLeft } from "react-icons/fa6";
 import NewQuestionGenerator from '../teacherquestiongenerator/NewQuestionGenerator';
 import { useSelector } from 'react-redux';
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+// import { useSelector } from "react-redux";
 
 const NewPendingView = ({ selectedItem, onBack, onRefresh }) => {
     console.log(selectedItem,"selectedItemselectedItemankit")
     const [selectedFile, setSelectedFile] = useState(null);
     const [showCreateQ, setShowCreateQ] = useState(false);
     const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
+    const navigate = useNavigate();
     console.log(selectedFile,"selectedFileselectedFileselectedFileankit ")
     const handlenavigate = () => {
         navigate("/teacherprofile",);
@@ -21,7 +24,21 @@ const NewPendingView = ({ selectedItem, onBack, onRefresh }) => {
 
     const handleFileChange = e => {
         const file = e.target.files[0];
-        if (file) setSelectedFile(file);
+        if (file) {
+            // Check if the file is a PDF
+            if (file.type !== 'application/pdf') {
+                Swal.fire({
+                    icon: "error",
+                    title: "Invalid File Type",
+                    text: "Please upload only PDF files.",
+                    showConfirmButton: true,
+                });
+                // Clear the file input
+                e.target.value = "";
+                return;
+            }
+            setSelectedFile(file);
+        }
     };
 
     const clearFile = () => {
@@ -104,7 +121,7 @@ const NewPendingView = ({ selectedItem, onBack, onRefresh }) => {
                                 onClick={() => fileInputRef.current.click()}
                             >
                                 <p className="newpendingview-dropzone_clickp">
-                                    Click to Upload or Drag PDF/DOC here </p>
+                                    Click to Upload or Drag PDF here </p>
                                 <p className="newpendingview-dropzone_maxp">Max. file size 25MB</p>
 
                                 <button
@@ -119,7 +136,7 @@ const NewPendingView = ({ selectedItem, onBack, onRefresh }) => {
                                 </button>
                                 <input
                                     type="file"
-                                    accept=".pdf,.doc,.docx"
+                                    accept=".pdf"
                                     ref={fileInputRef}
                                     style={{ display: 'none' }}
                                     onChange={handleFileChange}

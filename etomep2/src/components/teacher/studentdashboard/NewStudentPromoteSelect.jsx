@@ -6,8 +6,9 @@ import smile from "../../../assets/annoyed.png"
 import frame from "../../../assets/Frame 1000008.png"
 import axios from "axios";
 import { useSelector } from "react-redux";
+import CustomModal, { SuccessIcon } from "./CustomModal";
 
-export default function NewStudentPromoteSelect({ studentList = [] }) {
+export default function NewStudentPromoteSelect({ studentList = [], fetchStudentList, onClose }) {
     const APIURL = useSelector((state) => state.APIURL.url);
     const [search, setSearch] = useState("");
     const [selected, setSelected] = useState([]);
@@ -17,6 +18,8 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
     const [selectedDivision, setSelectedDivision] = useState("");
     const [divisions, setDivisions] = useState(["A", "B", "C"]);
     const [showRepeatModal, setShowRepeatModal] = useState(false);
+    const [showPromoteSuccess, setShowPromoteSuccess] = useState(false);
+    const [showRepeatSuccess, setShowRepeatSuccess] = useState(false);
 
     console.log(studentList, "studentListstudentList ankit ")
 
@@ -72,25 +75,51 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
                 division: selectedDivision
             });
             setShowPopup(false);
-            // Optionally, show a success message or refresh data
+            setShowPromoteSuccess(true);
         } catch (error) {
-            // Optionally, show an error message
             console.error("Promotion failed", error);
         }
     };
 
     const handleRepeatClass = async () => {
+        const { previous_class_id, current_class_id } = getClassIds();
         try {
-            await axios.post(`${APIURL}/api/repeatstudent`, {
+            await axios.post(`${APIURL}/api/promotingstudent`, {
                 students: selected,
-                division: selectedDivision
+                previous_class_id,
+                current_class_id :previous_class_id,
             });
             setShowRepeatModal(false);
-            // Optionally, show a success message or refresh data
+            setShowRepeatSuccess(true);
         } catch (error) {
             console.error("Repeat class failed", error);
         }
     };
+
+    // Auto-hide and refresh after success modals
+    useEffect(() => {
+        let timer;
+        if (showPromoteSuccess) {
+            timer = setTimeout(() => {
+                setShowPromoteSuccess(false);
+                if (fetchStudentList) fetchStudentList();
+                if (onClose) onClose();
+            }, 1500);
+        }
+        return () => clearTimeout(timer);
+    }, [showPromoteSuccess, fetchStudentList, onClose]);
+
+    useEffect(() => {
+        let timer;
+        if (showRepeatSuccess) {
+            timer = setTimeout(() => {
+                setShowRepeatSuccess(false);
+                if (fetchStudentList) fetchStudentList();
+                if (onClose) onClose();
+            }, 1500);
+        }
+        return () => clearTimeout(timer);
+    }, [showRepeatSuccess, fetchStudentList, onClose]);
 
     return (
         <>
@@ -239,6 +268,34 @@ export default function NewStudentPromoteSelect({ studentList = [] }) {
                     </div>
                 </div>
             )}
+
+            {/* Promote Success Modal */}
+            <CustomModal
+                open={showPromoteSuccess}
+                icon={<SuccessIcon />}
+                title="Promotion Successful"
+                message="Selected students have been successfully promoted to the selected class."
+                onConfirm={() => {
+                    setShowPromoteSuccess(false);
+                    if (fetchStudentList) fetchStudentList();
+                    if (onClose) onClose();
+                }}
+                onlyConfirm
+                confirmText="OK"
+            />
+            {/* Repeat Success Modal */}
+            <CustomModal
+                open={showRepeatSuccess}
+                icon={<SuccessIcon />}
+                title="Students Retained"
+                message="The selected students have been successfully marked to repeat the current class."
+                onConfirm={() => {
+                    setShowRepeatSuccess(false);
+                    if (fetchStudentList) fetchStudentList();
+                    if (onClose) onClose();
+                }}
+                onlyConfirm
+            />
         </>
 
     );

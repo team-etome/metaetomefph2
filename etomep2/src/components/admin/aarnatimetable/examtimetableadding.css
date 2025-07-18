@@ -185,7 +185,7 @@ select {
     color: #2162B2;
     background: transparent;
     border: 1px solid #2162B2;
-    border-radius: 10px;
+    border-radius: 8px;
     transition: left 0.5s ease;
 }
 
@@ -196,7 +196,7 @@ select {
     color: white;
     background: #2162B2;
     border: 1px solid #2162B2;
-    border-radius: 10px;
+    border-radius: 8px;
     transition: left 0.5s ease;
 }
 

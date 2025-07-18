@@ -9,6 +9,7 @@ export default function NewStudentAddTimeTable({ isOpen, onClose }) {
     const APIURL = useSelector((state) => state.APIURL.url);
     const teacher = useSelector((state) => state.teacherinfo);
     const teacher_id = teacher.teacherinfo?.teacher_id;
+    const class_id = teacher.teacherinfo?.class_id;
     const [days, setDays] = useState("");
     const [periods, setPeriods] = useState("");
     const [timeModal, setTimeModal] = useState(false);
@@ -43,7 +44,7 @@ export default function NewStudentAddTimeTable({ isOpen, onClose }) {
 
     const fetchSubjects = async () => {
         try {
-            const res = await axios.get(`${APIURL}/api/selectsubject/${teacher_id}`);
+            const res = await axios.get(`${APIURL}/api/selectsubject/${class_id}`);
             console.log("Subject API:", res.data);
             setSubjectOptions(res.data.subjects || []);
         } catch (error) {
@@ -53,9 +54,53 @@ export default function NewStudentAddTimeTable({ isOpen, onClose }) {
 
     useEffect(() => {
         fetchSubjects();
-    }, [APIURL, teacher_id]);
+    }, [APIURL, class_id]);
+
+    // Function to check if form is complete
+    const isFormComplete = () => {
+        // Check if days and periods are set
+        if (!days || !periods || days.trim() === '' || periods.trim() === '') {
+            return false;
+        }
+
+        // Check if at least one subject and time slot is filled
+        let hasData = false;
+        for (let pi = 0; pi < P; pi++) {
+            for (let di = 0; di < D; di++) {
+                const key = `${pi}_${di}`;
+                const subject = selectedSubjects[key];
+                const time = timeData[key];
+
+                if (subject && time) {
+                    hasData = true;
+                    break;
+                }
+            }
+            if (hasData) break;
+        }
+
+        return hasData;
+    };
 
     const handleSave = async () => {
+        if (!isFormComplete()) {
+            let missingFields = [];
+
+            if (!days || days.trim() === '') missingFields.push("Number of Days");
+            if (!periods || periods.trim() === '') missingFields.push("Number of Periods");
+
+            if (days && periods) {
+                missingFields.push("At least one subject and time slot");
+            }
+
+            Swal.fire({
+                icon: "error",
+                title: "Missing Required Information",
+                text: `Please complete the following: ${missingFields.join(", ")}`,
+            });
+            return;
+        }
+
         const timetableData = {};
 
         for (let pi = 0; pi < P; pi++) {
@@ -130,12 +175,14 @@ export default function NewStudentAddTimeTable({ isOpen, onClose }) {
                         placeholder="Number of Days"
                         value={days}
                         onChange={e => setDays(e.target.value)}
+                        onWheel={(e) => e.target.blur()}
                     />
                     <input
                         type="number" min="1"
                         placeholder="Number of Periods"
                         value={periods}
                         onChange={e => setPeriods(e.target.value)}
+                        onWheel={(e) => e.target.blur()}
                     />
                 </div>
                 {D > 0 && (
@@ -232,7 +279,16 @@ export default function NewStudentAddTimeTable({ isOpen, onClose }) {
                     <button className="nstt-clear" onClick={() => { setDays(""); setPeriods(""); }}>
                         Clear
                     </button>
-                    <button className="nstt-save" disabled={!(D && P)} onClick={handleSave} >
+                    <button
+                        className="nstt-save"
+                        style={{
+                            backgroundColor: isFormComplete ? '#2162B2' : '#bcbcbc',
+                            color: '#fff',
+                            border: isFormComplete ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: 'pointer'
+                        }}
+                        onClick={handleSave}
+                    >
                         Save
                     </button>
                 </div>

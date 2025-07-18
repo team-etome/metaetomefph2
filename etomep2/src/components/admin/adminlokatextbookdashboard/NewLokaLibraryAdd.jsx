@@ -9,7 +9,7 @@ import { FaTrash, FaRedo } from "react-icons/fa";
 import CreatableSelect from 'react-select/creatable';
 import { BiBorderRadius } from 'react-icons/bi';
 
-const NewLokaLibraryAdd = ({ isOpen, onClose, onUpdated  }) => {
+const NewLokaLibraryAdd = ({ isOpen, onClose, onUpdated }) => {
     if (!isOpen) return null;
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
@@ -39,16 +39,39 @@ const NewLokaLibraryAdd = ({ isOpen, onClose, onUpdated  }) => {
         setDocumentFile(null);
     };
 
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        if (!category) {
+            return false;
+        }
+        if (!title || title.trim() === '') {
+            return false;
+        }
+        if (!authorName || authorName.trim() === '') {
+            return false;
+        }
+        if (!publisherName || publisherName.trim() === '') {
+            return false;
+        }
+        if (!coverPhoto) {
+            return false;
+        }
+        if (!documentFile) {
+            return false;
+        }
+        return true;
+    };
+
     useEffect(() => {
         const fetchCategory = async () => {
             try {
                 const response = await axios.get(`${APIURL}/api/category/${admin_id}`);
                 const catOptions = response.data.categories.map((cat) =>
                     typeof cat === 'string'
-                      ? { value: cat, label: cat }
-                      : { value: cat.id, label: cat.name }
-                  );
-                  setApiComingCatogory(catOptions);
+                        ? { value: cat, label: cat }
+                        : { value: cat.id, label: cat.name }
+                );
+                setApiComingCatogory(catOptions);
             } catch (err) {
                 setError(err);
             } finally {
@@ -60,12 +83,34 @@ const NewLokaLibraryAdd = ({ isOpen, onClose, onUpdated  }) => {
     }, [APIURL, admin_id]);
 
     const handleSave = async () => {
-        if (!category || !title || !authorName || !publisherName || !coverPhoto || !documentFile) {
+        // Check if all required fields are filled
+        const missingFields = [];
+
+        if (!category) {
+            missingFields.push('Category');
+        }
+        if (!title || title.trim() === '') {
+            missingFields.push('Title');
+        }
+        if (!authorName || authorName.trim() === '') {
+            missingFields.push('Author Name');
+        }
+        if (!publisherName || publisherName.trim() === '') {
+            missingFields.push('Publisher Name');
+        }
+        if (!coverPhoto) {
+            missingFields.push('Cover Photo');
+        }
+        if (!documentFile) {
+            missingFields.push('Document File');
+        }
+
+        if (missingFields.length > 0) {
             Swal.fire({
-                icon: "warning",
-                title: "Missing Fields",
-                text: "Please select all fields before submitting.",
-                confirmButtonText: "OK",
+                title: 'Required Fields Missing',
+                text: `Please fill in the following fields: ${missingFields.join(', ')}.`,
+                icon: 'warning',
+                confirmButtonText: 'OK'
             });
             return;
         }
@@ -103,21 +148,23 @@ const NewLokaLibraryAdd = ({ isOpen, onClose, onUpdated  }) => {
         }
     };
 
-    const customStyles = {
+    const libraryaddcustomStyles = {
         control: (base, state) => ({
             ...base,
-            minHeight: '50px',
-            height: '50px',
-            borderColor: '#ccc',
-            borderRadius:'8px',
-            boxShadow: state.isFocused ? '0 0 0 1px #526D82' : 0,
-            '&:hover': {
-                borderColor: '#526D82',
-            }
+            height: '48px',
+            borderRadius: '8px',
+            borderColor: state.isFocused ? '#86b7fe' : '#757575',
+            boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+            display: 'flex',
+            alignItems: 'center',
+            paddingLeft: 8,
+            paddingRight: 8,
+            Grid: 0,
+            padding: 0,
         }),
         valueContainer: (base) => ({
             ...base,
-            height: '50px',
+            height: '48px',
             padding: '0 6px'
         }),
         dropdownIndicator: (base) => ({
@@ -138,22 +185,26 @@ const NewLokaLibraryAdd = ({ isOpen, onClose, onUpdated  }) => {
             color: '#526D82',
             fontSize: '16px'
         }),
-        singleValue: (base) => ({
-            ...base,
-            color: '#526D82',
-            fontSize: '16px'
-        }),
         menu: (base) => ({
             ...base,
             zIndex: 1000,
             maxHeight: '150px',
             overflowY: 'auto',
             fontSize: '14px',
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            marginTop: '4px'
+        }),
+        menuList: (base) => ({
+            ...base,
+            maxHeight: '150px',
+            padding: '4px 0'
         }),
         option: (base, state) => ({
             ...base,
-            backgroundColor: state.isFocused ? '#f0f0f0' : '#fff',
-            color: '#000',
+            backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+            color: state.isFocused ? '#fff' : '#222222',
             '&:active': {
                 backgroundColor: '#e6e6e6',
             }
@@ -178,7 +229,7 @@ const NewLokaLibraryAdd = ({ isOpen, onClose, onUpdated  }) => {
                                     value={categoryValue}
                                     inputValue={inputValue}
                                     options={apicomingcatogory}
-                                    styles={customStyles}
+                                    styles={libraryaddcustomStyles}
                                     placeholder=""
                                     isClearable={true}
                                     onInputChange={(newInputValue, actionMeta) => {
@@ -208,22 +259,22 @@ const NewLokaLibraryAdd = ({ isOpen, onClose, onUpdated  }) => {
                             </div>
                             <div className="lokalibraryadd-form-group">
                                 <label className="lokalibraryadd-form-label">
-                                    Title 
+                                    Title
                                 </label>
                                 <input
                                     type="text"
-                                    className="custom-input"
+                                    className="lokalibraryaddcustom-input"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                 />
                             </div>
                             <div className="lokalibraryadd-form-group">
                                 <label className="lokalibraryadd-form-label">
-                                    Author Name 
+                                    Author Name
                                 </label>
                                 <input
                                     type="text"
-                                    className="custom-input"
+                                    className="lokalibraryaddcustom-input"
                                     value={authorName}
                                     onChange={(e) => setAuthorName(e.target.value)}
                                 />
@@ -234,7 +285,7 @@ const NewLokaLibraryAdd = ({ isOpen, onClose, onUpdated  }) => {
                                 </label>
                                 <input
                                     type="text"
-                                    className="custom-input"
+                                    className="lokalibraryaddcustom-input"
                                     value={publisherName}
                                     onChange={(e) => setPublisherName(e.target.value)}
                                 />
@@ -330,7 +381,18 @@ const NewLokaLibraryAdd = ({ isOpen, onClose, onUpdated  }) => {
                 </div>
                 <div className="lokalibraryadd-modal-footer">
                     <button onClick={onClose} className="lokalibraryadd-btn lokalibraryadd-btn-secondary">Clear</button>
-                    <button onClick={handleSave} className="lokalibraryadd-btn lokalibraryadd-btn-primary">Save</button>
+                    <button
+                        onClick={handleSave}
+                        className="lokalibraryadd-btn lokalibraryadd-btn-primary"
+                        style={{
+                            backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                            color: isFormComplete() ? '#fff' : '#fff',
+                            border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        Save
+                    </button>
                 </div>
             </div>
         </div>

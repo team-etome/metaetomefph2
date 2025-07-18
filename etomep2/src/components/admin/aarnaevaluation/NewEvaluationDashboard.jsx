@@ -46,12 +46,18 @@ const NewEvaluationDashboard = () => {
     const [showFilterList, setShowFilterList] = useState(false);
     const [selectedFilterValue, setSelectedFilterValue] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedFilters, setSelectedFilters] = useState({
+        Class: '',
+        Subject: '',
+        Faculty: '',
+        Deadline: '',
+    });
 
     const filterOptions = {
-        Class: ['7A', '7B', '7C', '7D'],
-        Subject: ['Chemistry', 'Physics', 'Mathematics', 'Biology'],
-        Faculty: ['Lonappan', 'Bindu Panicker', 'Sasikuttan', 'Damodar', 'Ubaid'],
-        Deadline: ['12/09/2025', '22/09/2025', '07/09/2025'],
+        Class: Array.from(new Set(evaluationData.map(item => `${item.class_name} ${item.division}`))),
+        Subject: Array.from(new Set(evaluationData.map(item => item.subject_name))),
+        Faculty: Array.from(new Set(evaluationData.map(item => item.teacher_name))),
+        Deadline: Array.from(new Set(evaluationData.map(item => item.end_date))),
     };
 
     const handleCardClick = (item) => {   // ✅ New function
@@ -59,37 +65,44 @@ const NewEvaluationDashboard = () => {
         setShowPopupView(true);            // open the popup
     };
 
+    // Extract fetchEvaluationData function to avoid duplication
+    const fetchEvaluationData = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/api/evaluationadding/${admin_id}`);
+            console.log(response.data, "Fetched Evaluation Data");
+
+            if (response.data && Array.isArray(response.data)) {
+                setEvaluationData(response.data);
+                setFilteredData(response.data);
+                setExamTypes([...new Set(response.data.map(item => `${item.class_name} ${item.division}`))]);
+                setExamYears(
+                    Array.from(
+                        new Set(response.data.map(item => new Date(item.start_date).getFullYear().toString()))
+                    ).sort((a, b) => b - a)
+                );
+            } else {
+                setEvaluationData([]);
+                setFilteredData([]);
+            }
+        } catch (error) {
+            console.error("Error fetching evaluation data:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to load evaluation data. Please try again later.'
+            });
+        }
+    };
+
+    // Add refresh function for the dashboard
+    const refreshDashboard = () => {
+        if (admin_id) {
+            fetchEvaluationData();
+        }
+    };
 
 
     useEffect(() => {
-        const fetchEvaluationData = async () => {
-            try {
-                const response = await axios.get(`${APIURL}/api/evaluationadding/${admin_id}`);
-                console.log(response.data, "Fetched Evaluation Data");
-
-                if (response.data && Array.isArray(response.data)) {
-                    setEvaluationData(response.data);    
-                    setFilteredData(response.data);       
-                    setExamTypes([...new Set(response.data.map(item => `${item.class_name} ${item.division}`))]);
-                    setExamYears(
-                        Array.from(
-                            new Set(response.data.map(item => new Date(item.start_date).getFullYear().toString()))
-                        ).sort((a, b) => b - a)
-                    );
-                } else {
-                    setEvaluationData([]);
-                    setFilteredData([]);
-                }
-            } catch (error) {
-                console.error("Error fetching evaluation data:", error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to load evaluation data. Please try again later.'
-                });
-            }
-        };
-
         if (admin_id) {
             fetchEvaluationData();
         }
@@ -243,6 +256,40 @@ const NewEvaluationDashboard = () => {
         }));
     };
 
+    // Apply all selected filters
+    const handleApplyFilters = () => {
+        let filtered = evaluationData;
+        if (selectedFilters.Class) {
+            const [className, division] = selectedFilters.Class.split(' ');
+            filtered = filtered.filter(item => item.class_name === className && item.division === division);
+        }
+        if (selectedFilters.Subject) {
+            filtered = filtered.filter(item => item.subject_name === selectedFilters.Subject);
+        }
+        if (selectedFilters.Faculty) {
+            filtered = filtered.filter(item => item.teacher_name === selectedFilters.Faculty);
+        }
+        if (selectedFilters.Deadline) {
+            filtered = filtered.filter(item => item.end_date === selectedFilters.Deadline);
+        }
+        setFilteredData(filtered);
+        setShowFilterPopup(false);
+        setShowFilterList(false);
+    };
+
+    // Simple toggle function for filter selection/deselection
+    const handleFilterToggle = (filterType) => {
+        if (selectedFilters[filterType]) {
+            // If already selected, deselect it
+            setSelectedFilters(prev => ({ ...prev, [filterType]: '' }));
+        } else {
+            // If not selected, select it and show list
+            setActiveFilter(filterType);
+            setShowFilterList(true);
+            setSearchTerm('');
+        }
+    };
+
 
     return (
         <div className="evaluationdashboard_main_container">
@@ -317,19 +364,22 @@ const NewEvaluationDashboard = () => {
                                         else if (type === 'Subject') icon = subjectIcon;
                                         else if (type === 'Faculty') icon = facultyIcon;
                                         else if (type === 'Deadline') icon = deadlineIcon;
+                                        
+                                        // Check if this filter is selected
+                                        const isSelected = selectedFilters[type] !== '';
+                                        
                                         return (
                                             <>
                                                 <div className="evaluationdashboard_filter-popup-inner">
                                                     <div
                                                         key={type}
                                                         className={`evaluationdashboard_filter-option${activeFilter === type ? ' active' : ''}`}
-                                                        onClick={() => {
-                                                            setActiveFilter(type);
-                                                            setShowFilterList(true);
-                                                            setSearchTerm('');
-                                                            setSelectedFilterValue('');
+                                                        onClick={() => handleFilterToggle(type)}
+                                                        style={{
+                                                            border: isSelected ? '2px solid #2162B2' : '2px solid transparent',
+                                                            borderRadius: '8px',
+                                                            transition: 'all 0.2s ease'
                                                         }}
-
                                                     >
                                                         <img src={icon} alt={type} style={{ width: 24, height: 24, marginRight: 12, borderRadius: 4 }} />
                                                         {type}
@@ -370,9 +420,8 @@ const NewEvaluationDashboard = () => {
                                                 .map(item => (
                                                     <div
                                                         key={item}
-                                                        className={`evaluationdashboard_filter-list-item${selectedFilterValue === item ? ' select' : ''}`}
-                                                        onClick={() => setSelectedFilterValue(item)}
-
+                                                        className={`evaluationdashboard_filter-list-item${selectedFilters[activeFilter] === item ? ' select' : ''}`}
+                                                        onClick={() => setSelectedFilters(prev => ({ ...prev, [activeFilter]: item }))}
                                                     >
                                                         {item}
                                                     </div>
@@ -380,12 +429,8 @@ const NewEvaluationDashboard = () => {
                                         </div>
                                         <button
                                             className="evaluationdashboard_apply-btn"
-                                            disabled={!selectedFilterValue}
-                                            onClick={() => {
-                                                // You can handle filter logic here if needed
-                                                setShowFilterPopup(false);
-                                                setShowFilterList(false);
-                                            }}
+                                            disabled={Object.values(selectedFilters).every(val => !val)}
+                                            onClick={handleApplyFilters}
                                         >
                                             Apply
                                         </button>
@@ -398,7 +443,8 @@ const NewEvaluationDashboard = () => {
                             onClick={() => setShowPopup(true)} >
                             + Add
                         </button>
-                        {showPopup && <NewEvaluationAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />}
+                        {/* {showPopup && <NewEvaluationAdd isOpen={showPopup} onClose={() => setShowPopup(false)} />} */}
+                        {showPopup && <NewEvaluationAdd isOpen={showPopup} onClose={() => setShowPopup(false)} onAddSuccess={refreshDashboard} />}
                     </div>
                 </div>
             </div>
@@ -440,6 +486,7 @@ const NewEvaluationDashboard = () => {
                             isOpen={showPopupView}
                             onClose={() => setShowPopupView(false)}
                             selectedEvaluation={selectedEvaluation}  // ✅ Pass selectedEvaluation
+                            onDeleteSuccess={refreshDashboard} // Pass the refresh function
                         />
                     )}
 

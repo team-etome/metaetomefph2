@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import './newexaminationpending.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { BsFillPersonFill } from "react-icons/bs";
-import NewPendingView from './NewPendingView';
+// import NewPendingView from './NewPendingView';
 import Select from 'react-select';
 import axios from 'axios';
 

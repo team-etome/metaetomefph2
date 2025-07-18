@@ -70,7 +70,25 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
 
     const handleFileChange = e => {
         const file = e.target.files[0];
-        if (file) setSelectedFile(file);
+        if (file) {
+            // Check if manual content exists (either in manual mode or has existing image)
+            const hasManualContent = manualMode || 
+                                   (isEditMode && editData?.image && showExistingImage) ||
+                                   (textContent && textContent.trim() !== '');
+            
+            if (hasManualContent) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Content Conflict',
+                    text: 'You already have manual content. Please clear the manual content first before uploading a file, or choose one method only.',
+                    confirmButtonText: 'OK'
+                });
+                // Clear the file input
+                e.target.value = '';
+                return;
+            }
+            setSelectedFile(file);
+        }
     };
 
     const clearFile = () => {
@@ -202,8 +220,82 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
         setIsListMode(false);
     };
 
+    const switchToManualMode = () => {
+        // Clear any selected file when switching to manual mode
+        if (selectedFile) {
+            clearFile();
+        }
+        setManualMode(true);
+    };
+
+    const switchToFileMode = () => {
+        // Check if there's manual content that would be lost
+        const hasManualContent = (textContent && textContent.trim() !== '') || 
+                                (isEditMode && editData?.image && showExistingImage);
+        
+        if (hasManualContent) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Unsaved Changes',
+                text: 'Switching back will clear your manual content. Are you sure you want to continue?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Continue',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Clear manual content when switching to file mode
+                    if (manualMode) {
+                        clearManualText();
+                    }
+                    setManualMode(false);
+                    setShowExistingImage(false);
+                }
+            });
+        } else {
+            // No content to lose, switch immediately
+            if (manualMode) {
+                clearManualText();
+            }
+            setManualMode(false);
+            setShowExistingImage(false);
+        }
+    };
+
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        // Check basic required fields
+        if (!title.trim()) return false;
+        if (!dueDate) return false;
+        if (!mark || mark.trim() === '') return false;
+        
+        // Check content requirement (either file or manual content)
+        const hasFile = selectedFile !== null;
+        const hasManualContent = (manualMode && textContent && textContent.trim() !== '') || 
+                                (isEditMode && editData?.image && showExistingImage);
+        
+        // Must have either file or manual content
+        if (!hasFile && !hasManualContent) return false;
+        
+        return true;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        // Check if both PDF and manual content are present
+        const hasFile = selectedFile !== null;
+        const hasManualContent = (manualMode && textContent && textContent.trim() !== '') || 
+                                (isEditMode && editData?.image && showExistingImage);
+        
+        if (hasFile && hasManualContent) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Content Conflict',
+                text: 'You cannot submit both a PDF file and manual content. Please choose only one method.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
         
         // Validation: Either PDF or manual text must be provided
         if (!selectedFile && (!textContent || textContent.trim() === '')) {
@@ -504,7 +596,19 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
                                 <button
                                     type="button"
                                     className="newteacheraddassignment-manual-btn"
-                                    onClick={() => setManualMode(true)}
+                                    onClick={() => {
+                                        // Check if a file is already selected
+                                        if (selectedFile) {
+                                            Swal.fire({
+                                                icon: 'warning',
+                                                title: 'Content Conflict',
+                                                text: 'You already have a file selected. Please remove the file first before creating manual content, or choose one method only.',
+                                                confirmButtonText: 'OK'
+                                            });
+                                            return;
+                                        }
+                                        switchToManualMode();
+                                    }}
                                 >
                                     Create Manually &rarr;
                                 </button>
@@ -515,7 +619,24 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
                         <div className="newteacheraddassignment-upload">
                             <div
                                 className="newteacheraddassignment-dropzone"
-                                onClick={() => fileInputRef.current.click()}
+                                onClick={() => {
+                                    // Check if manual content exists
+                                    const hasManualContent = manualMode || 
+                                                           (isEditMode && editData?.image && showExistingImage) ||
+                                                           (textContent && textContent.trim() !== '');
+                                    
+                                    if (hasManualContent) {
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: 'Content Conflict',
+                                            text: 'You already have manual content. Please clear the manual content first before uploading a file, or choose one method only.',
+                                            confirmButtonText: 'OK'
+                                        });
+                                        return;
+                                    }
+                                    
+                                    fileInputRef.current.click();
+                                }}
                             >
                                 <p className="newteacheraddassignment-dropzone_clickp">
                                     Click to Upload or Drag PDF/DOC here </p>
@@ -526,6 +647,22 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
                                     className="newteacheraddassignment-upload-btn"
                                     onClick={e => {
                                         e.stopPropagation();
+                                        
+                                        // Check if manual content exists
+                                        const hasManualContent = manualMode || 
+                                                               (isEditMode && editData?.image && showExistingImage) ||
+                                                               (textContent && textContent.trim() !== '');
+                                        
+                                        if (hasManualContent) {
+                                            Swal.fire({
+                                                icon: 'warning',
+                                                title: 'Content Conflict',
+                                                text: 'You already have manual content. Please clear the manual content first before uploading a file, or choose one method only.',
+                                                confirmButtonText: 'OK'
+                                            });
+                                            return;
+                                        }
+                                        
                                         fileInputRef.current.click();
                                     }}
                                 >
@@ -723,7 +860,16 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
                 {/* Footer */}
                 {!manualMode ? (
                     <div className="newteacheraddassignment-footer">
-                        <button className="newaddassignmentmanually-submit-btn" onClick={handleSubmit}>
+                        <button 
+                            className="newaddassignmentmanually-submit-btn" 
+                            style={{
+                                backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                                color: '#fff',
+                                border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                                cursor: 'pointer'
+                            }}
+                            onClick={handleSubmit}
+                        >
                             {isEditMode ? 'Update' : 'Submit'}
                         </button>
                     </div>
@@ -745,7 +891,16 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
                             >
                                 Clear
                             </button>
-                            <button className="newaddassignmentmanually-submit-btn" onClick={handleSubmit}>
+                            <button 
+                                className="newaddassignmentmanually-submit-btn" 
+                                style={{
+                                    backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                                    color: '#fff',
+                                    border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={handleSubmit}
+                            >
                                 {isEditMode ? 'Update' : 'Submit'}
                             </button>
                         </div>

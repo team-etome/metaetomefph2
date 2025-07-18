@@ -123,6 +123,28 @@ const Examtimetableediting = ({ onClose, onSuccess,defaultClassOption, defaultEn
         setEntries((prevEntries) => prevEntries.filter((_, index) => index !== indexToRemove));
     };
 
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        if (!examName.trim()) {
+            return false;
+        }
+        if (!year.trim()) {
+            return false;
+        }
+        if (!selectedClass || !selectedClass.value) {
+            return false;
+        }
+        
+        // Check if all entries have required fields
+        for (let entry of entries) {
+            if (!entry.subject || !entry.date || !entry.startTime || !entry.endTime) {
+                return false;
+            }
+        }
+        
+        return true;
+    };
+
     // useEffect(() => {
     //     const fetchClass = async () => {
     //         try {
@@ -423,7 +445,19 @@ const Examtimetableediting = ({ onClose, onSuccess,defaultClassOption, defaultEn
                 </form>
                 <div className="examtimetable-adding_clear_button_main">
                     <button type="button" className="btn-secondary examtimetable-adding_clear_button">Clear</button>
-                    <button type="submit" className="btn-success examtimetable-adding_save_button" onClick={handleSave}>Save</button>
+                    <button 
+                        type="submit" 
+                        className="examtimetable-adding_save_button"
+                        style={{
+                            backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                            color: '#fff',
+                            border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: 'pointer'
+                        }}
+                        onClick={handleSave}
+                    >
+                        Save
+                    </button>
                 </div>
             </div>
         </div>

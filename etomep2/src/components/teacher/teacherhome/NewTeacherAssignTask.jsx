@@ -1,31 +1,7 @@
 import React from 'react';
 import './newteacherassigntask.css';
 
-const dummyTasks = [
-  { type: 'Question Paper', class: 'Class 10A', due: '21-01-2025', status: 'Pending' },
-  { type: 'Evaluation', class: 'Class 10B', due: '30-09-2025', status: 'Pending' },
-  { type: 'Question Paper', class: 'Class 10C', due: 'Text', status: 'Pending' },
-  { type: 'Evaluation', class: 'Text', due: 'Text', status: 'Pending' },
-  { type: 'Question Paper', class: 'Text', due: 'Text', status: 'Completed' },
-  { type: 'Evaluation', class: 'Text', due: 'Text', status: 'Completed' },
-  { type: 'Evaluation', class: 'Text', due: 'Text', status: 'Completed' },
-  { type: 'Question Paper', class: 'Class 10A', due: '21-01-2025', status: 'Pending' },
-  { type: 'Evaluation', class: 'Class 10B', due: '30-09-2025', status: 'Pending' },
-  { type: 'Question Paper', class: 'Class 10C', due: 'Text', status: 'Pending' },
-  { type: 'Evaluation', class: 'Text', due: 'Text', status: 'Pending' },
-  { type: 'Question Paper', class: 'Text', due: 'Text', status: 'Completed' },
-  { type: 'Evaluation', class: 'Text', due: 'Text', status: 'Completed' },
-  { type: 'Evaluation', class: 'Text', due: 'Text', status: 'Completed' },
-  { type: 'Question Paper', class: 'Class 10A', due: '21-01-2025', status: 'Pending' },
-  { type: 'Evaluation', class: 'Class 10B', due: '30-09-2025', status: 'Pending' },
-  { type: 'Question Paper', class: 'Class 10C', due: 'Text', status: 'Pending' },
-  { type: 'Evaluation', class: 'Text', due: 'Text', status: 'Pending' },
-  { type: 'Question Paper', class: 'Text', due: 'Text', status: 'Completed' },
-  { type: 'Evaluation', class: 'Text', due: 'Text', status: 'Completed' },
-  { type: 'Evaluation', class: 'Text', due: 'Text', status: 'Completed' },
-];
-
-export default function NewTeacherAssignTask({ onClose }) {
+export default function NewTeacherAssignTask({ onClose, assignedTasks = [] }) {
   return (
     <div className="newteacherassigntasks-popup-overlay">
       <div className="newteacherassigntasks-popup">
@@ -39,21 +15,33 @@ export default function NewTeacherAssignTask({ onClose }) {
               <tr>
                 <th>Type</th>
                 <th>Class</th>
+                <th>Subject</th>
                 <th>Due Date</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              {dummyTasks.map((task, idx) => (
-                <tr key={idx}>
-                  <td>{task.type}</td>
-                  <td>{task.class}</td>
-                  <td>{task.due}</td>
-                  <td>
-                    <span className={`newteacherassigntasks-status ${task.status === 'Completed' ? 'completed' : 'pending'}`}>{task.status}</span>
+              {assignedTasks.length > 0 ? (
+                assignedTasks.map((task, idx) => (
+                  <tr key={idx}>
+                    <td>{task.task_type || task.type}</td>
+                    <td>{task.class_name || task.class}</td>
+                    <td>{task.subject_name || task.subject}</td>
+                    <td>{task.due_date || task.due}</td>
+                    <td>
+                      <span className={`newteacherassigntasks-status ${(task.status || 'Pending').toLowerCase() === 'completed' ? 'completed' : 'pending'}`}>
+                        {task.status || 'Pending'}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" style={{ textAlign: 'center', color: '#666', padding: '20px' }}>
+                    No assigned tasks found
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

@@ -3,22 +3,9 @@ import './newteacherranklist.css';
 import medal1 from "../../../assets/Award1.png";
 import medal2 from "../../../assets/Award2.png";
 import medal3 from "../../../assets/Award3.png";
+import students from "../../../assets/student.jpg";
 
-
-const dummyRankList = [
-    { name: 'Liam', avatar: '', rank: '1st Rank in class 10' },
-    { name: 'Liam', avatar: '', rank: '2nd Rank in class 10' },
-    { name: 'Liam', avatar: '', rank: '3rd Rank in class 10' },
-    { name: 'Liam', avatar: '', rank: '5th Rank in class 10' },
-    { name: 'Liam', avatar: '', rank: '5th Rank in class 10' },
-    { name: 'Liam', avatar: '', rank: '5th Rank in class 10' },
-    { name: 'Liam', avatar: '', rank: '5th Rank in class 10' },
-    { name: 'Liam', avatar: '', rank: '5th Rank in class 10' },
-    { name: 'Liam', avatar: '', rank: '5th Rank in class 10' },
-    { name: 'Liam', avatar: '', rank: '5th Rank in class 10' },
-];
-
-export default function NewTeacherRankList({ onClose }) {
+export default function NewTeacherRankList({ onClose, rankList = [] }) {
     return (
         <div className="teacherranklist-popup-overlay">
             <div className="teacherranklist-popup">
@@ -29,39 +16,55 @@ export default function NewTeacherRankList({ onClose }) {
                 <div className="teacherranklist-table-container">
                     <table className="teacherranklist-table">
                         <tbody>
-                            {dummyRankList.map((student, idx) => (
-                                <tr key={idx}>
-                                    <td>
-                                        <div className="teacherranklist-student">
-                                            <span className="teacherranklist-avatar" />
-                                            <span className="teacherranklist-name">{student.name}</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="teacherranklist-rank-container">
-                                            {idx < 3 ? (
-                                                <>
-                                                    <span className="teacherranklist-arrow" >&gt;</span>
+                            {rankList.length > 0 ? (
+                                rankList.map((student, idx) => (
+                                    <tr key={idx}>
+                                        <td>
+                                            <div className="teacherranklist-student">
+                                                <div className="teacherranklist-avatar">
                                                     <img
-                                                        src={idx === 0 ? medal1 : idx === 1 ? medal2 : medal3}
-                                                        alt={`Rank ${idx + 1}`}
-                                                        className={`teacherranklist-medal rank${idx + 1}`}
+                                                        src={student.image || students}
+                                                        alt={student.name}
+                                                        onError={(e) => {
+                                                            e.target.src = students;
+                                                        }}
                                                     />
-
-                                                </>
-
-                                            ) : (
-                                                <>
-                                                    <span className="teacherranklist-arrow">&gt;</span>
-                                                    <span className="teacherranklist-text-rank">{student.rank}</span>
-
-                                                </>
-
-                                            )}
-                                        </div>
+                                                </div>
+                                                <span className="teacherranklist-name">
+                                                    {student.student_name || student.name}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="teacherranklist-rank-container">
+                                                {idx < 3 ? (
+                                                    <>
+                                                        <span className="teacherranklist-arrow" >&gt;</span>
+                                                        <img
+                                                            src={idx === 0 ? medal1 : idx === 1 ? medal2 : medal3}
+                                                            alt={`Rank ${idx + 1}`}
+                                                            className={`teacherranklist-medal rank${idx + 1}`}
+                                                        />
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <span className="teacherranklist-arrow">&gt;</span>
+                                                        <span className="teacherranklist-text-rank">
+                                                            {student.rank || `${idx + 1}th Rank in class ${student.class || '10'}`}
+                                                        </span>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="2" style={{ textAlign: 'center', color: '#666', padding: '20px' }}>
+                                        No rank list data available
                                     </td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     </table>
                 </div>

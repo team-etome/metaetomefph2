@@ -74,14 +74,8 @@ const AdminClassView = ({ onClose, faculty, onUpdateClass }) => {
                 teachers={teachers}
                 prevStep={() => setEditStep(1)}             // back to step one
                 closeModal={() => setEditStep(0)}           // abort edit, back to view
-                finishStep={(curriculumEntries) => {
-                    // merge and fire update
-                    onUpdateClass({
-                        ...stepOneData,
-                        entries: curriculumEntries
-                    });
-                    setEditStep(0);
-                }}
+                onUpdateClass={onUpdateClass}               // pass the refresh function
+                onClose={onClose}                           // pass the function to close entire modal
             />
         );
     }

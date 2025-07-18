@@ -7,7 +7,7 @@ import Select from "react-select";
 
 
 
-const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep, closeModal, finishStep }) => {
+const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep, closeModal, onUpdateClass, onClose }) => {
 
 
 
@@ -17,7 +17,7 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
   const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
   const teacherinfo = useSelector((state) => state.adminteacherinfo);
   const admininfo = useSelector((state) => state.admininfo);
-  
+
 
 
   useEffect(() => {
@@ -66,9 +66,9 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
 
       if (incompleteEntries.length > 0) {
         Swal.fire({
-          title: "Validation Error",
-          text: "Please fill in all fields in the curriculum entries",
-          icon: "error",
+          title: "Required Fields Missing",
+          text: "Please fill in all required fields in the curriculum entries before saving.",
+          icon: "warning",
           confirmButtonText: "OK",
         });
         return;
@@ -93,11 +93,23 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
       if (response.status === 201 || response.status === 200) {
         Swal.fire({
           title: "Success",
-          text: "Class added successfully!",
+          text: "Class updated successfully!",
           icon: "success",
           confirmButtonText: "OK",
         });
-        closeModal();
+        
+        // Refresh the dashboard data
+        if (onUpdateClass) {
+          onUpdateClass();
+        }
+        
+        // Close the entire modal chain
+        // This will close AdminClassEditStepTwo -> AdminClassView -> NewAdminClassDashboard
+        if (onClose) {
+          onClose(); // Close the entire modal chain
+        } else {
+          closeModal(); // Fallback to just close current step
+        }
 
       } else {
         Swal.fire({
@@ -126,6 +138,19 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
     setLocalEntries(prev => prev.filter((_, i) => i !== idxToRemove));
   };
 
+  // Function to check if all required fields are filled
+  const isFormComplete = () => {
+    if (!localEntries || localEntries.length === 0) {
+      return false;
+    }
+
+    // Check if all entries have all required fields filled
+    return localEntries.every(entry =>
+      entry.subject &&
+      entry.publishername &&
+      entry.facultyname
+    );
+  };
 
   const handleEntryChange = (index, field, value) => {
     const updated = [...localEntries];
@@ -138,19 +163,23 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
   const steponeeditcustomStyles = {
     control: (base, state) => ({
       ...base,
-      // width: '501px',
       height: '48px',
       borderRadius: '8px',
       borderColor: state.isFocused ? '#86b7fe' : '#757575',
       boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
       display: 'flex',
-      justifyContent: 'center',
       alignItems: 'center',
+      paddingLeft: 8,
+      paddingRight: 8,
       Grid: 0,
       padding: 0,
-      margin: 0,
+      marginTop: '4px',
     }),
-
+    valueContainer: (base) => ({
+      ...base,
+      height: '48px',
+      padding: '0 6px'
+    }),
     dropdownIndicator: (base) => ({
       ...base,
       color: '#292D32',
@@ -158,42 +187,40 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
       alignItems: 'center',
       svg: {
         width: '24px',
-        height: '24px',
+        height: '24px'
       }
     }),
-
     indicatorSeparator: () => ({
       display: 'none'
     }),
-
     placeholder: (base) => ({
       ...base,
       color: '#526D82',
       fontSize: '16px'
     }),
-
-    singleValue: (base) => ({
-      ...base,
-      color: '#526D82',
-      fontSize: '16px'
-    }),
-
     menu: (base) => ({
       ...base,
-      // zIndex: 1000,
-      maxHeight: '200px',  // Limit the height of the dropdown list
-      overflowY: 'auto',   // Enable scrolling when the options exceed the height
+      zIndex: 1000,
+      maxHeight: '150px',
+      overflowY: 'auto',
       fontSize: '14px',
+      backgroundColor: 'white',
+      borderRadius: '8px',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+      marginTop: '4px'
     }),
-
+    menuList: (base) => ({
+      ...base,
+      maxHeight: '150px',
+      padding: '4px 0'
+    }),
     option: (base, state) => ({
       ...base,
       backgroundColor: state.isFocused ? '#2162B2' : '#fff',
       color: state.isFocused ? '#fff' : '#222222',
       '&:active': {
         backgroundColor: '#e6e6e6',
-      },
-      // zIndex: 9999,
+      }
     }),
   };
   const subjectOptions = admininfo?.admininfo?.subjects?.map((s) => ({
@@ -214,8 +241,8 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
     <div className="adminclasseditsteptwo-main" >
       <div className="adminclasseditsteptwo-header" >
 
-        <p className="adminclasseditsteptwo-header-title">Add Class</p>
-        <button className="adminclasseditsteptwo-close-btn" onClick={closeModal}>×</button>
+        <p className="adminclasseditsteptwo-header-title">Edit Class</p>
+        <button className="adminclasseditsteptwo-close-btn" onClick={onClose || closeModal}>×</button>
       </div>
       <div className="adminclasseditsteptwo-step-indicator">
         <div className="adminclasseditsteptwo-step completed">
@@ -259,12 +286,9 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
                     onChange={(opt) => {
                       handleEntryChange(index, 'subject', opt?.value || "");
                     }}
-                    menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
-                    menuPosition="fixed"
-                    styles={{
-                      ...steponeeditcustomStyles,
-                      menuPortal: base => ({ ...base, zIndex: 9999 })
-                    }}
+                    // menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+                    // menuPosition="fixed"
+                    styles={steponeeditcustomStyles}
                     placeholder="Select Subject"
                     isClearable={false}
                   />
@@ -277,12 +301,10 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
                     options={publisherOptions}
                     value={publisherOptions.find(o => o.value === entry.publishername) || null}
                     onChange={(opt) => handleEntryChange(index, 'publishername', opt?.value || "")}
-                    menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
-                    menuPosition="fixed"
-                    styles={{
-                      ...steponeeditcustomStyles,
-                      menuPortal: base => ({ ...base, zIndex: 9999 })
-                    }}
+                    // menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+                    // menuPosition="fixed"
+                    styles={steponeeditcustomStyles
+                    }
                     placeholder="Select Publisher"
                     isClearable={false}
                   />
@@ -295,12 +317,14 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
                     options={facultyOptions}
                     value={facultyOptions.find(o => o.value === entry.facultyname) || null}
                     onChange={(opt) => handleEntryChange(index, 'facultyname', opt?.value || "")}
-                    menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
-                    menuPosition="fixed"
-                    styles={{
-                      ...steponeeditcustomStyles,
-                      menuPortal: base => ({ ...base, zIndex: 9999 })
-                    }}
+                    // menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+                    // menuPosition="fixed"
+                    //   styles={{
+                    //     ...steponeeditcustomStyles,
+                    //     menuPortal: base => ({ ...base, zIndex: 9999 })
+                    //   }
+                    // }
+                    styles={steponeeditcustomStyles}
                     placeholder="Select Faculty"
                     isClearable={false}
                   />
@@ -379,6 +403,12 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
             type="button"
             className="adminclasseditsteptwo_btn-next"
             onClick={handleSave}
+            style={{
+              backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+              color: isFormComplete() ? '#fff' : '#fff',
+              border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+              cursor: 'pointer'
+            }}
           >
             Save
           </button>

@@ -68,9 +68,9 @@ const AdminClassAddStepTwo = ({
 
       if (incompleteEntries.length > 0) {
         Swal.fire({
-          title: "Validation Error",
-          text: "Please fill in all fields in the curriculum entries",
-          icon: "error",
+          title: "Required Fields Missing",
+          text: "Please fill in all required fields in the curriculum entries before saving.",
+          icon: "warning",
           confirmButtonText: "OK",
         });
         return;
@@ -126,6 +126,20 @@ const AdminClassAddStepTwo = ({
     setLocalEntries(prev => prev.filter((_, i) => i !== idxToRemove));
   };
 
+  // Function to check if all required fields are filled
+  const isFormComplete = () => {
+    if (!localEntries || localEntries.length === 0) {
+      return false;
+    }
+    
+    // Check if all entries have all required fields filled
+    return localEntries.every(entry => 
+      entry.subject && 
+      entry.publishername && 
+      entry.facultyname
+    );
+  };
+
   const handleEntryChange = (index, field, value) => {
     const updated = [...localEntries];
     updated[index] = {
@@ -135,22 +149,26 @@ const AdminClassAddStepTwo = ({
     setLocalEntries(updated);
   };
 
-  const steponeeditcustomStyles = {
+  const steponeaddcustomStyles = {
     control: (base, state) => ({
       ...base,
-      // width: '501px',
       height: '48px',
       borderRadius: '8px',
       borderColor: state.isFocused ? '#86b7fe' : '#757575',
       boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
       display: 'flex',
-      justifyContent: 'center',
       alignItems: 'center',
+      paddingLeft: 8,
+      paddingRight: 8,
       Grid: 0,
       padding: 0,
-      margin: 0,
+      marginTop: '4px',
     }),
-
+    valueContainer: (base) => ({
+      ...base,
+      height: '48px',
+      padding: '0 6px'
+    }),
     dropdownIndicator: (base) => ({
       ...base,
       color: '#292D32',
@@ -158,42 +176,40 @@ const AdminClassAddStepTwo = ({
       alignItems: 'center',
       svg: {
         width: '24px',
-        height: '24px',
+        height: '24px'
       }
     }),
-
     indicatorSeparator: () => ({
       display: 'none'
     }),
-
     placeholder: (base) => ({
       ...base,
       color: '#526D82',
       fontSize: '16px'
     }),
-
-    singleValue: (base) => ({
-      ...base,
-      color: '#526D82',
-      fontSize: '16px'
-    }),
-
     menu: (base) => ({
       ...base,
-      // zIndex: 1000,
-      maxHeight: '200px',  // Limit the height of the dropdown list
-      overflowY: 'auto',   // Enable scrolling when the options exceed the height
+      zIndex: 1000,
+      maxHeight: '150px',
+      overflowY: 'auto',
       fontSize: '14px',
+      backgroundColor: 'white',
+      borderRadius: '8px',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+      marginTop: '4px'
     }),
-
+    menuList: (base) => ({
+      ...base,
+      maxHeight: '150px',
+      padding: '4px 0'
+    }),
     option: (base, state) => ({
       ...base,
       backgroundColor: state.isFocused ? '#2162B2' : '#fff',
       color: state.isFocused ? '#fff' : '#222222',
       '&:active': {
         backgroundColor: '#e6e6e6',
-      },
-      // zIndex: 9999,
+      }
     }),
   };
   const subjectOptions = admininfo?.admininfo?.subjects?.map(s => ({
@@ -370,12 +386,13 @@ const AdminClassAddStepTwo = ({
                     onChange={(opt) => {
                       handleEntryChange(index, 'subject', opt?.value || "");
                     }}
-                    menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
-                    menuPosition="fixed"
-                    styles={{
-                      ...steponeeditcustomStyles,
-                      menuPortal: base => ({ ...base, zIndex: 9999 })
-                    }}
+                    // menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+                    // menuPosition="fixed"
+                    // styles={{
+                    //   ...steponeeditcustomStyles,
+                    //   menuPortal: base => ({ ...base, zIndex: 9999 })
+                    // }}
+                    styles={steponeaddcustomStyles}
                     placeholder="Select Subject"
                     isClearable={false}
                   />
@@ -388,12 +405,7 @@ const AdminClassAddStepTwo = ({
                     options={publisherOptions}
                     value={publisherOptions.find(o => o.value === entry.publishername) || null}
                     onChange={(opt) => handleEntryChange(index, 'publishername', opt?.value || "")}
-                    menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
-                    menuPosition="fixed"
-                    styles={{
-                      ...steponeeditcustomStyles,
-                      menuPortal: base => ({ ...base, zIndex: 9999 })
-                    }}
+                    styles={steponeaddcustomStyles}
                     placeholder="Select Publisher"
                     isClearable={false}
                   />
@@ -406,12 +418,7 @@ const AdminClassAddStepTwo = ({
                     options={facultyOptions}
                     value={facultyOptions.find(o => o.value === entry.facultyname) || null}
                     onChange={(opt) => handleEntryChange(index, 'facultyname', opt?.value || "")}
-                    menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
-                    menuPosition="fixed"
-                    styles={{
-                      ...steponeeditcustomStyles,
-                      menuPortal: base => ({ ...base, zIndex: 9999 })
-                    }}
+                    styles={steponeaddcustomStyles}
                     placeholder="Select Faculty"
                     isClearable={false}
                   />
@@ -469,6 +476,12 @@ const AdminClassAddStepTwo = ({
             type="button"
             className="adminclassaddsteptwo_btn-next"
             onClick={handleSave}
+            style={{
+              backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+              color: isFormComplete() ? '#fff' : '#fff',
+              border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+              cursor: 'pointer'
+            }}
           >
             Save
           </button>

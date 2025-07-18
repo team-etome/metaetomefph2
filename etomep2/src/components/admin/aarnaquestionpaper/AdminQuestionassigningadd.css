@@ -17,7 +17,7 @@
   flex-direction: column;
   /* Flexbox layout */
   background: white;
-  border-radius: 12px;
+  border-radius: 16px;
   width: 700px;
   height: 650px;
   padding: 0px;
@@ -121,6 +121,8 @@
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  height: 40px;
+  width: 100px;
 }
 
 .AdminQuestionAssigning-btn-secondary {

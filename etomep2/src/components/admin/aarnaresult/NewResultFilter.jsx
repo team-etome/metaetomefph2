@@ -12,21 +12,70 @@ const NewResultFilter = () => {
 
     console.log(rawData, "rawDatarawDatarawData")
 
-
     const [parsedKeys, setParsedKeys] = useState([])        // [{ full, exam, year }, …]
     const [examOptions, setExamOptions] = useState([])        // [ "Annual Examination", … ]
     const [yearOptions, setYearOptions] = useState([])        // [ "2024", "2025", … ]
     const [classOptions, setClassOptions] = useState([])        // [ "9", "10", … ]
     const [divisionOptions, setDivisionOptions] = useState([])  // [ "A", "B", … ]
 
-
-
-
     const [selectedExam, setSelectedExam] = useState('');
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedClass, setSelectedClass] = useState('');
     const [selectedDivision, setSelectedDivision] = useState('');
 
+    // New state for API response data
+    const [allApiData, setAllApiData] = useState([]); // Store all data from initial API call
+    const [filteredData, setFilteredData] = useState(null); // Store filtered data for display
+    const [subjects, setSubjects] = useState([]);
+    const [students, setStudents] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [initialLoading, setInitialLoading] = useState(true); // For initial API call
+
+    // Initial API call when component mounts
+    useEffect(() => {
+        const fetchInitialData = async () => {
+            setInitialLoading(true);
+            try {
+                const payload = {
+                    admin_id,
+                };
+
+                console.log('Initial API call payload:', payload);
+
+                const response = await axios.post(
+                    `${APIURL}/api/resultarna`,
+                    payload,
+                    {
+                        headers: { 'Content-Type': 'application/json' }
+                    }
+                );
+
+                console.log('Initial API response:', response.data);
+
+                // Check if response has data directly or in a nested structure
+                if (response.data && (response.data.datas || response.data.data)) {
+                    const data = response.data.datas || response.data.data;
+                    console.log(data, "Initial data coming in response");
+                    setAllApiData(Array.isArray(data) ? data : []); // Store all data
+                } else if (response.data && Array.isArray(response.data)) {
+                    // If response.data is directly an array
+                    console.log(response.data, "Initial data is directly an array");
+                    setAllApiData(response.data);
+                } else {
+                    console.error('Initial API returned error:', response.data);
+                }
+
+            } catch (err) {
+                console.error('Initial API call error:', err);
+            } finally {
+                setInitialLoading(false);
+            }
+        };
+
+        if (admin_id) {
+            fetchInitialData();
+        }
+    }, [admin_id, APIURL]);
 
     useEffect(() => {
         if (!rawData || Object.keys(rawData).length === 0) return;
@@ -38,7 +87,6 @@ const NewResultFilter = () => {
                 return m ? { name: m[1].trim(), year: m[2] } : null;
             })
             .filter(Boolean);
-
 
         console.log(parsed, "parsedparsedparsedparsedparsed")
 
@@ -79,7 +127,6 @@ const NewResultFilter = () => {
         setSelectedDivision('');
     }, [selectedExam, selectedYear, rawData]);
 
-
     useEffect(() => {
         if (!selectedExam || !selectedYear || !selectedClass) {
             setDivisionOptions([]);
@@ -96,246 +143,6 @@ const NewResultFilter = () => {
         // wipe
         setSelectedDivision('');
     }, [selectedExam, selectedYear, selectedClass, rawData]);
-
-
-
-
-    const subjects = [
-        { key: 'english', name: 'English', total: 100 },
-        { key: 'malayalam', name: 'Malayalam', total: 100 },
-        { key: 'socialScience', name: 'Social Science', total: 100 },
-        { key: 'physics', name: 'Physics', total: 100 },
-        { key: 'chemistry', name: 'Chemistry', total: 100 },
-        { key: 'mathematics', name: 'Mathematics', total: 100 },
-        { key: 'biology', name: 'Biology', total: 100 },
-        { key: 'art', name: 'Art', total: 100 },
-        { key: 'math', name: 'Math', total: 100 },
-        { key: 'bio', name: 'Bio', total: 100 },
-    ];
-
-
-
-
-    // Dummy student data for demonstration
-    const dummyStudents = [
-        {
-            rollNo: '1',
-            name: 'Siddharth jdghfldfighvejfhulfdhuih',
-            marks: {
-                english: 78,
-                malayalam: 63,
-                socialScience: 70,
-                physics: 30,
-                chemistry: 79,
-                mathematics: 26,
-                biology: 82,
-                art: 33,
-                math: 33,
-                bio: 33,
-            },
-            obtainedMarks: 650,
-            percentage: '92%',
-        },
-        {
-            rollNo: '2',
-            name: 'Vihaan',
-            marks: {
-                english: 85,
-                malayalam: 70,
-                socialScience: 65,
-                physics: 79,
-                chemistry: 28,
-                mathematics: 63,
-                biology: 180,
-                art: 33,
-                math: 33,
-                bio: 33,
-            },
-            obtainedMarks: 620,
-            percentage: '87%',
-        },
-        {
-            rollNo: '3',
-            name: 'Aarav',
-            marks: {
-                english: 73,
-                malayalam: 67,
-                socialScience: 72,
-                physics: 81,
-                chemistry: 65,
-                mathematics: 90,
-                biology: 88,
-                art: 33,
-                math: 33,
-                bio: 33,
-            },
-            obtainedMarks: 650,
-            percentage: '90%',
-        },
-        {
-            rollNo: '1',
-            name: 'Siddharth jdghfldfighvejfhulfdhuih',
-            marks: {
-                english: 78,
-                malayalam: 63,
-                socialScience: 70,
-                physics: 30,
-                chemistry: 79,
-                mathematics: 26,
-                biology: 82,
-                art: 33,
-                math: 33,
-                bio: 33,
-            },
-            obtainedMarks: 650,
-            percentage: '92%',
-        },
-        {
-            rollNo: '2',
-            name: 'Vihaan',
-            marks: {
-                english: 85,
-                malayalam: 70,
-                socialScience: 65,
-                physics: 79,
-                chemistry: 28,
-                mathematics: 63,
-                biology: 180,
-                art: 33,
-                math: 33,
-                bio: 33,
-            },
-            obtainedMarks: 620,
-            percentage: '87%',
-        },
-        {
-            rollNo: '3',
-            name: 'Aarav',
-            marks: {
-                english: 73,
-                malayalam: 67,
-                socialScience: 72,
-                physics: 81,
-                chemistry: 65,
-                mathematics: 90,
-                biology: 88,
-                art: 33,
-                math: 33,
-                bio: 33,
-            },
-            obtainedMarks: 650,
-            percentage: '90%',
-        },
-        {
-            rollNo: '1',
-            name: 'Siddharth',
-            marks: {
-                english: 78,
-                malayalam: 63,
-                socialScience: 70,
-                physics: 30,
-                chemistry: 79,
-                mathematics: 26,
-                biology: 82,
-                art: 33,
-                math: 33,
-                bio: 33,
-            },
-            obtainedMarks: 650,
-            percentage: '92%',
-        },
-        {
-            rollNo: '2',
-            name: 'Vihaan',
-            marks: {
-                english: 85,
-                malayalam: 70,
-                socialScience: 65,
-                physics: 79,
-                chemistry: 28,
-                mathematics: 63,
-                biology: 180,
-                art: 33,
-                math: 33,
-                bio: 33,
-            },
-            obtainedMarks: 620,
-            percentage: '87%',
-        },
-        {
-            rollNo: '3',
-            name: 'Aarav',
-            marks: {
-                english: 73,
-                malayalam: 67,
-                socialScience: 72,
-                physics: 81,
-                chemistry: 65,
-                mathematics: 90,
-                biology: 88,
-                art: 33,
-                math: 33,
-                bio: 33,
-            },
-            obtainedMarks: 650,
-            percentage: '90%',
-        },
-        {
-            rollNo: '1',
-            name: 'Siddharth jdghfldfighvejfhulfdhuih',
-            marks: {
-                english: 78,
-                malayalam: 63,
-                socialScience: 70,
-                physics: 30,
-                chemistry: 79,
-                mathematics: 26,
-                biology: 82,
-                art: 33,
-                math: 33,
-                bio: 33,
-            },
-            obtainedMarks: 650,
-            percentage: '92%',
-        },
-        {
-            rollNo: '2',
-            name: 'Vihaan',
-            marks: {
-                english: 85,
-                malayalam: 70,
-                socialScience: 65,
-                physics: 79,
-                chemistry: 28,
-                mathematics: 63,
-                biology: 180,
-                art: 33,
-                math: 33,
-                bio: 33,
-            },
-            obtainedMarks: 620,
-            percentage: '87%',
-        },
-        {
-            rollNo: '3',
-            name: 'Aarav',
-            marks: {
-                english: 73,
-                malayalam: 67,
-                socialScience: 72,
-                physics: 81,
-                chemistry: 65,
-                mathematics: 90,
-                biology: 88,
-                art: 33,
-                math: 33,
-                bio: 33,
-            },
-            obtainedMarks: 650,
-            percentage: '90%',
-        },
-    ];
-
 
     // Refs for horizontal scroll synchronization (header and body)
     const headerRef = useRef(null);
@@ -375,36 +182,47 @@ const NewResultFilter = () => {
         window.requestAnimationFrame(() => { isSyncingRef.current = false; });
     };
 
-
-    const handleSearch = async () => {
+    const handleSearch = () => {
         if (!selectedExam || !selectedYear || !selectedClass || !selectedDivision) {
             return window.alert('Please select Exam, Year, Class and Division before searching.');
         }
 
+        setLoading(true);
         try {
-            const payload = {
-                admin_id,
-                exam: selectedExam,
-                year: selectedYear,
-                class: selectedClass,
-                division: selectedDivision,
-            };
-
-            console.log(selectedExam,selectedYear,"selectedYearselectedYearselectedYearselectedYear")
-
-            const resp = await axios.post(
-                `${APIURL}/api/resultarna`,
-                payload,
-                {
-                    headers: { 'Content-Type': 'application/json' }
-                }
+            // Filter data from the stored allApiData
+            const filteredResult = allApiData.find(data =>
+                data.exam === selectedExam &&
+                data.year === parseInt(selectedYear) &&
+                data.class === `${selectedClass} ${selectedDivision}`
             );
 
-            console.log('API returned:', resp.data);
+            console.log('Filtered result:', filteredResult);
+
+            if (filteredResult) {
+                setFilteredData(filteredResult);
+
+                // Set subjects from filtered data
+                setSubjects(filteredResult.subjects.map(subject => ({
+                    key: subject.id,
+                    name: subject.name,
+                    total: subject.total_mark
+                })));
+
+                // Set students from filtered data
+                setStudents(filteredResult.results);
+            } else {
+                console.log('No matching data found');
+                setFilteredData(null);
+                setSubjects([]);
+                setStudents([]);
+                window.alert('No data found for the selected criteria.');
+            }
 
         } catch (err) {
             console.error('Search error:', err);
-            window.alert('Search failed. See console for details.');
+            window.alert('Search failed. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -580,81 +398,112 @@ const NewResultFilter = () => {
                         <button
                             className="btn-primary btn-sm search_button"
                             onClick={handleSearch}
+                            disabled={loading || initialLoading || !selectedExam || !selectedYear || !selectedClass || !selectedDivision}
                         >
-                            Search
+                            {loading ? 'Searching...' : initialLoading ? 'Loading...' : 'Search'}
                         </button>
                     </div>
                 </div>
             </div>
-
-            <div className="class-result-container">
-                <span>Class result</span>
-            </div>
-
-            {/* Wrapper for both the header table and body table */}
-            <div className="result_classes_table" style={{ border: "1px solid #CECECE" }} >
-                <div className="result_table_wrapper">
-                    {/* Header Table: only thead */}
-                    <div
-                        className="result-table-header-container"
-                        ref={headerRef}
-                        onScroll={handleHeaderScroll}
-                    >
-                        <table className="result-table">
-                            <thead>
-                                <tr>
-                                    <th className="result-th sticky-left" rowSpan="2">Roll No</th>
-                                    <th className="result-th sticky-left-2" rowSpan="2">
-                                        <div className="name-scroll-container">Name</div>
-                                    </th>
-                                    <th className="result-th-subjectlist_subjectheading" colSpan={subjects.length}>Subjects</th>
-                                    <th className="result-th-marks sticky-right-1" rowSpan="2">Obtained Marks</th>
-                                    <th className="result-th-percentage sticky-right-2" rowSpan="2">Percentage</th>
-                                </tr>
-                                <tr>
-                                    {subjects.map((subject) => (
-                                        <th className="result-th-subjectlist_heading" key={subject.key}>
-                                            <div className="subject-container">
-                                                <div className="subject-name">{subject.name}</div>
-                                                <div className="subject-total">
-                                                    <span className="total-label">Total: </span>
-                                                    <span className="total-value">{subject.total}</span>
-                                                </div>
-                                            </div>
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    {/* Body Table: only tbody with vertical scrolling */}
-                    <div
-                        className="result-table-body-container"
-                        ref={bodyRef}
-                        onScroll={handleBodyScroll}
-                    >
-                        <table className="result-table">
-                            <tbody>
-                                {dummyStudents.map((student, index) => (
-                                    <tr className="result-tr" key={index}>
-                                        <td className="result-td sticky-left">{student.rollNo}</td>
-                                        <td className="result-td sticky-left-2">
-                                            <div className="name-scroll-container">{student.name}</div>
-                                        </td>
-                                        {subjects.map((subject) => (
-                                            <td className="result-th-subjectlist" key={subject.key}>
-                                                {student.marks[subject.key] ?? '-'}
-                                            </td>
-                                        ))}
-                                        <td className="result-td sticky-right-1">{student.obtainedMarks}</td>
-                                        <td className="result-td-percentage sticky-right-2">{student.percentage}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+            {initialLoading ? (
+                <div style={{
+                    padding: '40px',
+                    textAlign: 'center',
+                    color: '#666',
+                    fontSize: '16px'
+                }}>
+                    Loading initial data...
                 </div>
-            </div>
+            ) : students.length > 0 ? (
+                <>
+
+                    <div className="class-result-container">
+                        {filteredData && (
+                            <span>
+                                {filteredData.class} - {filteredData.exam} {filteredData.year}
+                            </span>
+                        )}
+                    </div>
+                    {/* Wrapper for both the header table and body table */}
+                    <div className="result_classes_table" style={{ border: "1px solid #CECECE" }} >
+
+                        <div className="result_table_wrapper">
+                            {/* Header Table: only thead */}
+                            <div
+                                className="result-table-header-container"
+                                ref={headerRef}
+                                onScroll={handleHeaderScroll}
+                            >
+                                <table className="result-table">
+                                    <thead>
+                                        <tr>
+                                            <th className="result-th sticky-left" rowSpan="2">Roll No</th>
+                                            <th className="result-th sticky-left-2" rowSpan="2">
+                                                <div className="name-scroll-container">Name</div>
+                                            </th>
+                                            <th className="result-th-subjectlist_subjectheading" colSpan={subjects.length}>Subjects</th>
+                                            <th className="result-th-marks sticky-right-1" rowSpan="2">Obtained Marks</th>
+                                            <th className="result-th-percentage sticky-right-2" rowSpan="2">Percentage</th>
+                                        </tr>
+                                        <tr>
+                                            {subjects.map((subject) => (
+                                                <th className="result-th-subjectlist_heading" key={subject.key}>
+                                                    <div className="subject-container">
+                                                        <div className="subject-name">{subject.name}</div>
+                                                        <div className="subject-total">
+                                                            <span className="total-label">Total: </span>
+                                                            <span className="total-value">{subject.total}</span>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            {/* Body Table: only tbody with vertical scrolling */}
+                            <div
+                                className="result-table-body-container"
+                                ref={bodyRef}
+                                onScroll={handleBodyScroll}
+                            >
+                                <table className="result-table">
+                                    <tbody>
+                                        {students.map((student, index) => (
+                                            <tr className="result-tr" key={index}>
+                                                <td className="result-td sticky-left">{student.roll_no}</td>
+                                                <td className="result-td sticky-left-2">
+                                                    <div className="name-scroll-container">{student.name}</div>
+                                                </td>
+                                                {subjects.map((subject) => {
+                                                    const subjectMarks = student.subjects[subject.name];
+                                                    return (
+                                                        <td className="result-th-subjectlist" key={subject.key}>
+                                                            {subjectMarks ? subjectMarks.obtained : '-'}
+                                                        </td>
+                                                    );
+                                                })}
+                                                <td className="result-td-marks sticky-right-1">{student.obtained_marks}</td>
+                                                <td className="result-td-percentage sticky-right-2">{student.percentage}%</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </>
+            ) : (
+                <div style={{
+                    padding: '40px',
+                    textAlign: 'center',
+                    color: '#666',
+                    fontSize: '16px'
+                }}>
+                    {loading ? 'Searching...' : 'No results found. Please select criteria and click Search.'}
+                </div>
+            )}
             <div
                 className="result-table-scrollbar-container"
                 ref={scrollbarRef}

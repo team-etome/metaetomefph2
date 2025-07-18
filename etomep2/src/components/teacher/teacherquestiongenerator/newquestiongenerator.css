@@ -77,6 +77,15 @@
     background-color: #2162B2;
     font-size: 16px;
 }
+.newquestion_generator_back {
+    width: 100px;
+    height: 40px;
+    border-radius: 8px;
+    color: #444444;
+    border: 1px solid #444444 ;
+    background-color: transparent;
+    font-size: 16px;
+}
 
 .newsubsection_header {
     margin: 24px;
@@ -156,6 +165,56 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+.newquestion_generator_header_back {
+    width: 100px;
+    height: 40px;
+    background-color: #fff;
+    position: fixed;
+    bottom: 24px;
+    padding-left: 24px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Fixed Footer Styles */
+.newquestion_generator_footer {
+    background-color: #fff;
+    /* border-top: 1px solid #e0e0e0; */
+    /* padding: 16px 24px; */
+    padding-bottom: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 24px ;
+    margin-bottom: 0px;
+    flex-shrink: 0;
+}
+
+.footer_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    /* max-width: 1200px; */
+    margin-right:32px;
+}
+
+.footer_left {
+    display: flex;
+    align-items: center;
+}
+
+.footer_right {
+    display: flex;
+    align-items: center;
+}
+
+.progress_container {
+    margin-top: 12px;
+    padding: 0 24px;
 }
 
 .new-action_buttons {
@@ -303,4 +362,59 @@
     overflow: hidden;
     text-transform: capitalize;
     max-width: 700px;
+}
+
+/* Marks Allocation Indicator Styles */
+.marks_allocation_indicator {
+    margin-top: 12px;
+    padding: 0 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.marks_status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.marks_status.over-allocated {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.marks_status.under-allocated {
+    background-color: #fef3c7;
+    color: #d97706;
+    border: 1px solid #fed7aa;
+}
+
+.marks_status.perfect {
+    background-color: #dcfce7;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+}
+
+.marks_text {
+    font-weight: 600;
+}
+
+.marks_warning {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.marks_info {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.marks_success {
+    font-size: 12px;
+    font-weight: 400;
 }

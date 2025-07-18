@@ -6,6 +6,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 // import NewPendingCreateQuestion from './NewPendingCreateQuestion';
 import NewQuestionGenerator from '../teacherquestiongenerator/NewQuestionGenerator';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const NewCompletedView = ({ selectedItemCompleted, onBack }) => {
     console.log(selectedItemCompleted, "selectedItemCompletedselectedItemCompleted")
@@ -14,6 +15,7 @@ const NewCompletedView = ({ selectedItemCompleted, onBack }) => {
     const [showPdf, setShowPdf] = useState(false);
     const [showQuestions, setShowQuestions] = useState(false);
     const teacherInfo = useSelector((state) => state.teacherinfo.teacherinfo);
+    const navigate = useNavigate();
     const handlenavigate = () => {
         navigate("/teacherprofile",);
     };
@@ -78,7 +80,15 @@ const NewCompletedView = ({ selectedItemCompleted, onBack }) => {
                                             {question.answer && (
                                                 <div className="newcompletedview-question-answer">
                                                     <span className="newcompletedview-answer-label">Answer:</span>
-                                                    <span className="newcompletedview-answer-text">{question.answer}</span>
+                                                    {question.answer && question.answer.startsWith('data:image') ? (
+                                                        <img 
+                                                            src={question.answer} 
+                                                            alt={`Answer ${question.question_number || questionIndex + 1}`}
+                                                            className="newcompletedview-answer-image"
+                                                        />
+                                                    ) : (
+                                                        <span className="newcompletedview-answer-text">{question.answer}</span>
+                                                    )}
                                                 </div>
                                             )}
                                         </div>

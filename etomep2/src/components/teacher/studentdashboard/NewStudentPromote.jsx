@@ -6,7 +6,7 @@ import "./newstudentpromote.css";
 import NewStudentPromoteSelect from "./NewStudentPromoteSelect";
 import NewStudentPromoteAccept from "./NewStudentPromoteAccept";
 
-export default function NewStudentPromote({ isOpen, onClose, studentList }) {
+export default function NewStudentPromote({ isOpen, onClose, studentList, refreshStudentList }) {
   const [activeTab, setActiveTab] = useState("promote");
 
   if (!isOpen) return null;
@@ -23,7 +23,7 @@ export default function NewStudentPromote({ isOpen, onClose, studentList }) {
   );
 
   return (
-    <div className="newstudentpromote-overlay">
+    <div className="newstudentpromote-overlay" >
       <div className="newstudentpromote-modal">
         {/* ─── Tabs ─── */}
         <div className="newstudentpromote-tabs">
@@ -43,8 +43,8 @@ export default function NewStudentPromote({ isOpen, onClose, studentList }) {
 
         {/* ─── Content (swapped based on activeTab) ─── */}
         <div className="newstudentpromote-content">
-          {activeTab === "promote" && <NewStudentPromoteSelect studentList={studentsForPromotion} />}
-          {activeTab === "accept" && <NewStudentPromoteAccept studentList={studentsForAcceptance} />}
+          {activeTab === "promote" && <NewStudentPromoteSelect studentList={studentsForPromotion} fetchStudentList={refreshStudentList} onClose={onClose} />}
+          {activeTab === "accept" && <NewStudentPromoteAccept studentList={studentsForAcceptance} fetchStudentList={refreshStudentList} onClose={onClose} />}
         </div>
 
         {/* ─── Close Button ─── */}

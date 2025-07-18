@@ -49,10 +49,50 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
         if (field === 'firstname' || field === 'lastname') {
             value = value.charAt(0).toUpperCase() + value.slice(1);
         }
+        
+        // For phone number, only allow numbers
+        if (field === 'phoneno') {
+            // Remove any non-numeric characters
+            value = value.replace(/\D/g, '');
+        }
+        
         setFormData(prev => ({
             ...prev,
             [field]: value
         }));
+    };
+
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        if (!formData.firstname || formData.firstname.trim() === '') {
+            return false;
+        }
+        if (!formData.gender?.value) {
+            return false;
+        }
+        if (!formData.email || formData.email.trim() === '') {
+            return false;
+        }
+        // Password is not required for edit operations
+        // if (!formData.password || formData.password.trim() === '') {
+        //     return false;
+        // }
+        if (!formData.phoneno || formData.phoneno.trim() === '') {
+            return false;
+        }
+        
+        // Check email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (formData.email && !emailRegex.test(formData.email)) {
+            return false;
+        }
+        
+        // Check phone number format (required field)
+        if (formData.phoneno && formData.phoneno.length !== 10) {
+            return false;
+        }
+        
+        return true;
     };
 
 
@@ -61,27 +101,33 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
         if (!formData.firstname) validationErrors.push("First name is required.");
         if (!formData.gender?.value) validationErrors.push("Gender is required.");
         if (!formData.email) validationErrors.push("Email is required.");
-        if (!formData.password) validationErrors.push("Password is required.");
+        // if (!formData.password) validationErrors.push("Password is required.");
+        if (!formData.phoneno) validationErrors.push("Phone number is required.");
+        
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (formData.email && !emailRegex.test(formData.email)) {
             validationErrors.push("Please enter a valid email address.");
         }
 
-
-        // Phone number format (optional field)
+        // Phone number format (required field)
         if (formData.phoneno && formData.phoneno.length !== 10) {
-
-            validationErrors.push("Phone number must be 10 digits.");
+            validationErrors.push("Phone number must be exactly 10 digits.");
         }
 
         if (validationErrors.length > 0) {
-            Swal.fire("Validation Error", validationErrors[0], "warning");
+            Swal.fire({
+                title: 'Required Fields Missing',
+                text: validationErrors[0],
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
 
         const formDataToSend = new FormData();
         formDataToSend.append("admin_id", admin_id);
+        formDataToSend.append("action", "edit");
         formDataToSend.append("first_name", formData.firstname);
         formDataToSend.append("last_name", formData.lastname);
         formDataToSend.append("employee_id", formData.employeeid);
@@ -99,12 +145,12 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
             );
 
 
-            if (response.data.message === "Teacher added successfully") {
-                Swal.fire("Success", "Faculty added successfully", "success");
+            if (response.status === 200 || response.status === 201) {
+                Swal.fire("Success", "Faculty updated successfully", "success");
 
                 resetForm();
 
-                onFacultyAdded?.();
+                onFacultyUpdated?.();
                 onClose();
             } else {
                 Swal.fire("Error", response.data.message || "Something went wrong", "error");
@@ -300,7 +346,9 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
                                 />
                             </div>
                             <div className="facultyedit-form-group">
-                                <label className="facultyedit-form-label">Phone Number</label>
+                                <label className="facultyedit-form-label">
+                                    Phone Number <span className="facultyedit_required">*</span>
+                                </label>
                                 <div className="facultyedit-phone-container">
                                     <select
                                         className="facultyedit-phone-select"
@@ -358,6 +406,7 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
                                         type="password"
                                         value={formData.password}
                                         className="custom-input"
+                                        placeholder='*****'
                                         style={{
                                             height: '48px',
                                             border: '1px solid #757575',
@@ -464,7 +513,18 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
                         Clear
                     </button>
 
-                    <button onClick={handleSave} className="facultyedit-btn facultyedit-btn-primary">Save</button>
+                    <button 
+                        onClick={handleSave} 
+                        className="facultyedit-btn facultyedit-btn-primary"
+                        style={{
+                            backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                            color: isFormComplete() ? '#fff' : '#fff',
+                            border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        Save
+                    </button>
                 </div>
             </div>
         </div>

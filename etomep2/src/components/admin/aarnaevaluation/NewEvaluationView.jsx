@@ -9,7 +9,8 @@ import { Weight } from 'lucide-react';
 
 
 
-const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
+const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation, onDeleteSuccess }) => {
+    
     if (!isOpen) return null;
     const APIURL = useSelector(s => s.APIURL.url);
     const admin_id = useSelector(s => s.admininfo.admininfo?.admin_id);
@@ -35,10 +36,16 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
         if (!selectedEvaluation) return;
         const { exam_name, year, subject_name, class_name, division, teacher_name } = selectedEvaluation;
       
-        // ← find the matching teacher record by name
+        // ← find the matching teacher record by name (try both full name and first name only)
         const match = teacherinfo.find(
-          t => `${t.first_name} ${t.last_name}` === teacher_name
+          t => `${t.first_name} ${t.last_name}` === teacher_name || t.first_name === teacher_name
         );
+      
+        console.log('Teacher matching debug:', {
+          teacher_name,
+          teacherinfo: teacherinfo.map(t => ({ id: t.id, name: `${t.first_name} ${t.last_name}` })),
+          match: match ? { id: match.id, name: `${match.first_name} ${match.last_name}` } : null
+        });
       
         setFormValues({
           exam: exam_name,
@@ -49,6 +56,59 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
           teacher: match ? String(match.id) : ''
         });
       }, [selectedEvaluation, teacherinfo, isEditMode]);
+
+    // Add delete function
+    const handleDelete = async () => {
+        if (!selectedEvaluation?.id) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No evaluation selected for deletion.'
+            });
+            return;
+        }
+
+        // Show confirmation dialog
+        const result = await Swal.fire({
+            icon: 'warning',
+            title: 'Are you sure?',
+            text: 'This evaluation will be permanently deleted. This action cannot be undone.',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const response = await axios.delete(`${APIURL}/api/evaluationadding/${selectedEvaluation.id}`);
+                
+                if (response.status === 200 || response.status === 204) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: 'Evaluation has been deleted successfully.'
+                    });
+                    
+                    // Close the modal
+                    onClose();
+                    
+                    // Call the refresh function passed from parent
+                    if (onDeleteSuccess) {
+                        onDeleteSuccess();
+                    }
+                }
+            } catch (error) {
+                console.error("Error deleting evaluation:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Delete Failed',
+                    text: error.response?.data?.message || 'Failed to delete evaluation. Please try again.'
+                });
+            }
+        }
+    };
 
     // 3. Flatten exampaper into an array like [{ exam, year, subject_name, class_name, division, … }, …]
     const normalized = useMemo(() => {
@@ -112,46 +172,112 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
         });
     }, [normalized, formValues.exam, formValues.year, formValues.subject]);
 
+    console.log(teacherinfo,"teacherinfoteacherinfo")
+
     const facultyOptions = teacherinfo.map(t => ({
         value: String(t.id),
         label: `${t.first_name} ${t.last_name}`
     }));
+    
+    console.log('Faculty options:', facultyOptions);
+    console.log('Current formValues.teacher:', formValues.teacher);
+    console.log('Selected faculty option:', facultyOptions.find(o => o.value === formValues.teacher));
 
     // 5. Handlers that clear downstream fields
-    const handleExamChange = o =>
+    const handleExamChange = o => {
+        const newValue = o?.value || '';
         setFormValues(f => ({
             ...f,
-            exam: o?.value || '',
+            exam: newValue,
             year: '',
             subject: '',
-            class: ''
+            class: '',
+            division: ''
         }));
+    };
 
-    const handleYearChange = o =>
+    const handleYearChange = o => {
+        const newValue = o?.value || '';
         setFormValues(f => ({
             ...f,
-            year: o?.value || '',
+            year: newValue,
             subject: '',
-            class: ''
+            class: '',
+            division: ''
         }));
+    };
 
-    const handleSubjectChange = o =>
+    const handleSubjectChange = o => {
+        const newValue = o?.value || '';
         setFormValues(f => ({
             ...f,
-            subject: o?.value || '',
-            class: ''
+            subject: newValue,
+            class: '',
+            division: ''
         }));
+    };
 
-    const handleClassChange = o => setFormValues(f => ({ ...f, class: o?.value || '' }));
+    const handleClassChange = o => {
+        if (o?.value) {
+            const [cls, div] = o.value.split('|');
+            setFormValues(f => ({ 
+                ...f, 
+                class: cls, 
+                division: div 
+            }));
+        } else {
+            setFormValues(f => ({ 
+                ...f, 
+                class: '', 
+                division: '' 
+            }));
+        }
+    };
 
     const handleTeacherChange = o => setFormValues(f => ({ ...f, teacher: o?.value || '' }));
+
+    // Function to check if all required fields are filled
+    const isFormComplete = () => {
+        if (!formValues.exam || formValues.exam.trim() === '') {
+            return false;
+        }
+        if (!formValues.year || formValues.year.trim() === '') {
+            return false;
+        }
+        if (!formValues.subject || formValues.subject.trim() === '') {
+            return false;
+        }
+        if (!formValues.class || formValues.class.trim() === '') {
+            return false;
+        }
+        if (!formValues.teacher || formValues.teacher.trim() === '') {
+            return false;
+        }
+        return true;
+    };
 
     const handleSave = async () => {
         // make sure everything is selected
         const { exam, year, subject, class: cls, division, teacher } = formValues;
-        if (!exam || !year || !subject || !cls || !teacher) {
-            return Swal.fire({ icon: 'warning', title: 'Incomplete', text: '…' });
+        
+        // Check if all required fields are filled
+        const requiredFields = [];
+        if (!exam) requiredFields.push("Name of Examination");
+        if (!year) requiredFields.push("Year");
+        if (!subject) requiredFields.push("Subject");
+        if (!cls) requiredFields.push("Class");
+        if (!teacher) requiredFields.push("Faculty");
+
+        if (requiredFields.length > 0) {
+            Swal.fire({
+                title: 'Required Fields Missing',
+                text: `Please fill in the following required fields: ${requiredFields.join(', ')}`,
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+            return;
         }
+        
         const payload = {
             exam_name: exam,
             year,
@@ -183,11 +309,6 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
             });
         }
     };
-
-
-
-
-
 
     const customStyles = {
         control: (base, state) => ({
@@ -277,7 +398,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                     </label>
                                     <Select
                                         options={examOptions}
-                                        value={examOptions.find(o => o.value === formValues.exam) || null}
+                                        value={formValues.exam ? examOptions.find(o => o.value === formValues.exam) : null}
                                         onChange={handleExamChange}
                                         styles={customStyles}
                                         isDisabled={!isEditMode}
@@ -294,7 +415,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                     </label>
                                     <Select
                                         options={yearOptions}
-                                        value={yearOptions.find(o => o.value === formValues.year) || null}
+                                        value={formValues.year ? yearOptions.find(o => o.value === formValues.year) : null}
                                         onChange={handleYearChange}
                                         styles={customStyles}
                                         isDisabled={!isEditMode}
@@ -312,7 +433,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                     </label>
                                     <Select
                                         options={subjectOptions}
-                                        value={subjectOptions.find(o => o.value === formValues.subject) || null}
+                                        value={formValues.subject ? subjectOptions.find(o => o.value === formValues.subject) : null}
                                         onChange={handleSubjectChange}
                                         styles={customStyles}
                                         isDisabled={!isEditMode}
@@ -327,16 +448,9 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                     </label>
                                     <Select
                                         options={classOptions}
-                                        value={
-                                            classOptions.find(
-                                              o => o.value === `${formValues.class}|${formValues.division}`
-                                            ) || null
-                                          }
-                                          onChange={o => {
-                                            const [cls, div] = (o?.value || '').split('|');
-                                            setFormValues(f => ({ ...f, class: cls, division: div }));
-                                          }}
-                                        
+                                        value={formValues.class && formValues.division ? 
+                                            classOptions.find(o => o.value === `${formValues.class}|${formValues.division}`) : null}
+                                        onChange={handleClassChange}
                                         styles={customStyles}
                                         isDisabled={!isEditMode}
                                         placeholder="Select class..."
@@ -357,7 +471,7 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                                         className="custom-input"
                                         style={{
                                             height: '50px',
-                                            border: '1px solid #757575',
+                                            border: '1px solid #ccc',
                                             borderRadius: '8px',
                                             padding: '0 10px',
                                             fontSize: '16px',
@@ -425,12 +539,18 @@ const NewEvaluationView = ({ isOpen, onClose, selectedEvaluation }) => {
                     </form>
                 </div>
                 <div className="evaluationview-modal-footer">
-                    <button className="evaluationview-btn evaluationview-btn-danger">Delete</button>
+                    <button className="evaluationview-btn evaluationview-btn-danger" onClick={handleDelete}>Delete</button>
 
                     <button
 
                         className="evaluationview-btn evaluationview-btn-primary"
                         onClick={isEditMode ? handleSave : () => setIsEditMode(true)}
+                        style={{
+                            backgroundColor: isEditMode && isFormComplete() ? '#2162B2' : '#bcbcbc',
+                            color: '#fff',
+                            border: isEditMode && isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: 'pointer'
+                        }}
                     >
                         {isEditMode ? 'Save' : 'Edit'}
                     </button>
