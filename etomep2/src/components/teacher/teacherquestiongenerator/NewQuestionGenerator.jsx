@@ -791,16 +791,17 @@ function NewQuestionGenerator({ onClose, selectedFile, selectedItem, onRefresh }
                     </div>
                         <div className="footer_right">
                             <button className="newquestion_generator_submit" onClick={handleExport} disabled={isExporting}>
-                                {isExporting ? `Submit... ${progress}%` : "Submit"}
+                                {/* {isExporting ? `Submit... ${progress}%` : "Submit"} */}
+                                {isExporting ? `Submit...` : "Submit"}
                             </button>
                         </div>
                     </div>
                     
-                    {isExporting && (
+                    {/* {isExporting && (
                         <div className="progress_container">
                                 <ProgressBar now={progress} label={`${progress}%`} />
                         </div>
-                    )}
+                    )} */}
                     </div>
             </div>
         </DragDropContext>

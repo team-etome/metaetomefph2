@@ -317,3 +317,13 @@
     background: #BCBCBC;
     cursor: not-allowed;
 }
+
+.no-books-message {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.no-books-message h3 {
+    color: #526D82;
+}

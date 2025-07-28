@@ -320,7 +320,7 @@ const AdminQuestionAssigningadd = ({ isOpen, onClose, onSuccess }) => {
         }),
         menuList: (base) => ({
             ...base,
-            maxHeight: '200px',
+            maxHeight: '150px',
             padding: '4px 0'
         }),
         option: (base, state) => ({

@@ -3,6 +3,8 @@ import { IoClose } from 'react-icons/io5';
 import './newmcqquestionsviewer.css';
 
 const NewMcqQuestionsViewer = ({ mcq, onClose }) => {
+
+    console.log(mcq,"mcqmcqmcqmcqmcqmcqmcqankit")
     if (!mcq) return null;
 
     return (

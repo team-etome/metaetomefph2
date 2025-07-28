@@ -187,7 +187,7 @@ export default function NewStudentAddTimeTable({ isOpen, onClose }) {
                 </div>
                 {D > 0 && (
                     <>
-                        <div className="nstt-grid-header">
+                        <div className="nstt-grid-header" >
                             <div className="nstt-cell nstt-cell-header nstt-col-periods" >Periods</div>
                             {dayNames.slice(0, D).map((day, i) => (
                                 <div

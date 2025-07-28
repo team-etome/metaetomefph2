@@ -197,6 +197,7 @@ export default function NewStudentViewTimeTable({ isOpen, onClose }) {
                                 value={days}
                                 onChange={e => setDays(e.target.value)}
                                 disabled={!editMode}
+                                onWheel={e => e.target.blur()}
                             />
                             <input
                                 type="number" min="1"
@@ -204,6 +205,7 @@ export default function NewStudentViewTimeTable({ isOpen, onClose }) {
                                 value={periods}
                                 onChange={e => setPeriods(e.target.value)}
                                 disabled={!editMode}
+                                onWheel={e => e.target.blur()}
                             />
                         </div>
                         {D > 0 && (
@@ -214,7 +216,7 @@ export default function NewStudentViewTimeTable({ isOpen, onClose }) {
                                         <div
                                             key={day}
                                             className="nsttview-cell nsttview-cell-header"
-                                            style={{ background: colors[i] }}
+                                            style={{ background: colors[i]}}
                                         >
                                             {day}
                                         </div>

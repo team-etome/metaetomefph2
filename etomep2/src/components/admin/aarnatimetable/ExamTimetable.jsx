@@ -8,6 +8,7 @@ import Examtimetableediting from './Examtimetableediting';
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import { loadExamClasses } from '../../../Redux/Actions/AdminClassListAction';
+import { loadTimetableDataQuestionPaper } from '../../../Redux/Actions/AdminTimetableDataQuestionPaperActions';
 
 
 const Examtimetable = () => {
@@ -118,6 +119,16 @@ const Examtimetable = () => {
             setExamTypes([...typesSet].sort());
             // Sort years in descending order
             setExamYears([...yearsSet].sort((a, b) => b - a));
+
+            // Also fetch and update the timetable data for question paper components
+            try {
+                const timetableResponse = await axios.get(`${APIURL}/api/gettimetable/${admin_id}`);
+                const examsData = timetableResponse.data.exams;
+                console.log('fetched examsData for Redux update', examsData);
+                dispatch(loadTimetableDataQuestionPaper(examsData));
+            } catch (error) {
+                console.error('Error fetching timetable data for Redux update:', error);
+            }
         } catch (error) {
             console.error("Error fetching exam timetable data", error);
         }
@@ -472,7 +483,6 @@ const Examtimetable = () => {
                     ))
                 ) : (
                     <div className="no-books-message">
-
                         <h3>No timetable data found for the selected filters.</h3>
                     </div>
                 )}

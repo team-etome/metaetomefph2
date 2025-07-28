@@ -17,6 +17,7 @@ const NewAdminClassDashboard = () => {
     const [entries, setEntries] = useState([
         { subject: "", publishername: "", facultyname: "" }
     ]);
+    const [isLoading, setIsLoading] = useState(true); // Loading state
 
     // Get teacher info and admin info from Redux store
     const teacherinfo = useSelector((state) => state.adminteacherinfo);
@@ -45,6 +46,7 @@ const NewAdminClassDashboard = () => {
 
 
     const fetchClassData = async () => {
+        setIsLoading(true); // Start loading
         console.log("entersddddddd");
         try {
             const response = await axios.get(`${APIURL}/api/addClassname/${admin_id}`);
@@ -75,6 +77,8 @@ const NewAdminClassDashboard = () => {
             setClassData(sortedData);
         } catch (error) {
             console.error("Error fetching class data:", error);
+        } finally {
+            setIsLoading(false); // Stop loading regardless of success or error
         }
     };
 
@@ -282,42 +286,48 @@ const NewAdminClassDashboard = () => {
 
             {/* Class Sections */}
             <div className="newclassdashboard-class-section">
-                {classData
-                    .filter(item =>
-                        !selectedClass || item.className === selectedClass
-                    )
-                    .map((classItem, idx) => (
-                        <div className="newclassdashboard-class-section-main mb-4" key={idx}>
-                            <p className="newclassdashboard-class-heading">Class {classItem.className}</p>
-                            <div className="newclassdashboard-class-section-row" >
-                                {classItem.sections.map((sec, index) => (
-                                    <div key={index} className="newclassdashboard-card-container">
-                                        <div className="newclassdashboard-card"
-                                            onClick={() => handleCardClick(sec)}
-                                        >
-                                            <div className="newclassdashboard-card-top">
-                                                <div className="newclassdashboard-circle">{sec.class_name} {sec.section}</div>
-                                                <div className="newclassdashboard-teacher-container">
-                                                    <p className="newclassdashboard-info-title">Class Teacher:</p>
-                                                    <p className="newclassdashboard-teacher-name">{sec.teacher}</p>
+                {isLoading ? (
+                    <div className="text-center py-5">
+                        <h3>Data is loading...</h3>
+                    </div>
+                ) : (
+                    classData
+                        .filter(item =>
+                            !selectedClass || item.className === selectedClass
+                        )
+                        .map((classItem, idx) => (
+                            <div className="newclassdashboard-class-section-main mb-4" key={idx}>
+                                <p className="newclassdashboard-class-heading">Class {classItem.className}</p>
+                                <div className="newclassdashboard-class-section-row" >
+                                    {classItem.sections.map((sec, index) => (
+                                        <div key={index} className="newclassdashboard-card-container">
+                                            <div className="newclassdashboard-card"
+                                                onClick={() => handleCardClick(sec)}
+                                            >
+                                                <div className="newclassdashboard-card-top">
+                                                    <div className="newclassdashboard-circle">{sec.class_name} {sec.section}</div>
+                                                    <div className="newclassdashboard-teacher-container">
+                                                        <p className="newclassdashboard-info-title">Class Teacher:</p>
+                                                        <p className="newclassdashboard-teacher-name">{sec.teacher}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="newclassdashboard-card-bottom">
+                                                    <p className="newclassdashboard-info-title">
+                                                        Strength:
+                                                        <span className="newclassdashboard-info-text"> {sec.strength}</span>
+                                                    </p>
+                                                    <p className="newclassdashboard-info-title">
+                                                        Subjects:
+                                                        <span className="newclassdashboard-info-text"> {sec.subjects}</span>
+                                                    </p>
                                                 </div>
                                             </div>
-                                            <div className="newclassdashboard-card-bottom">
-                                                <p className="newclassdashboard-info-title">
-                                                    Strength:
-                                                    <span className="newclassdashboard-info-text"> {sec.strength}</span>
-                                                </p>
-                                                <p className="newclassdashboard-info-title">
-                                                    Subjects:
-                                                    <span className="newclassdashboard-info-text"> {sec.subjects}</span>
-                                                </p>
-                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                )}
             </div>
 
             {/* Modal Popup */}

@@ -361,11 +361,22 @@ const AdminQuestionAssigningView = ({ isOpen, onClose, selectedItem, onDeleted }
             maxHeight: '150px',
             overflowY: 'auto',
             fontSize: '14px',
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            marginTop: '4px'
+        }),
+        menuList: (base) => ({
+            ...base,
+            maxHeight: '150px',
+            padding: '4px 0'
         }),
         option: (base, state) => ({
             ...base,
             backgroundColor: state.isFocused ? '#f0f0f0' : '#fff',
             color: '#526D82',
+            padding: '8px 12px',
+            cursor: 'pointer',
             '&:active': {
                 backgroundColor: '#e6e6e6',
             }

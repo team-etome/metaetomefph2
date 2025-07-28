@@ -102,6 +102,23 @@
     border-radius: 8px;
 }
 
+
+.adminstudentdashboard-no-books-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* width: 100%;
+    height: 200px; */
+    grid-column: 1 / -1;
+}
+
+.adminstudentdashboard-no-books-message h3 {
+    color: #526D82;
+    /* margin: 0; */
+}
+
+
 /* Wrapper for tables */
 .adminstudentdashboard_classes_box {
     flex: 1 1 auto;

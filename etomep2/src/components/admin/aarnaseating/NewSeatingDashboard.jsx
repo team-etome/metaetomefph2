@@ -26,6 +26,7 @@ const NewSeatingDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
 
+    const [isLoading, setIsLoading] = useState(true); // Loading state
     const [selectedExamName, setSelectedExamName] = useState("");
     const [selectedExamYear, setSelectedExamYear] = useState("");
     const [selectedExamDate, setSelectedExamDate] = useState("");
@@ -93,6 +94,7 @@ const NewSeatingDashboard = () => {
 
 
     const fetchSeatingData = async () => {
+        setIsLoading(true); // Start loading
         try {
             const response = await axios.get(`${APIURL}/api/seating/${admin_id}`);
             console.log("Seating Data", response.data);
@@ -102,6 +104,8 @@ const NewSeatingDashboard = () => {
             setFilteredSeatingDetails(response.data);
         } catch (error) {
             console.error("Error fetching seating data", error);
+        } finally {
+            setIsLoading(false); // Stop loading regardless of success or error
         }
     };
     useEffect(() => {
@@ -1313,34 +1317,40 @@ const NewSeatingDashboard = () => {
                 </div>
                 <div className="seating_classes_box" >
                     <div className="seating_container" >
-                        {filteredSeatingDetails.map((item) => (
-                            <div
-                                className="seating_classes_box_inner"
-                                key={item.id}
-                                onClick={() => handleCardClick(item)}
-
-                            >
-                                <div className="seating_top_row">
-                                    <div className="seating_exam_details">
-                                        <h3 className="seating_room_no">ROOM NO: {item.hall_name}</h3>
-                                        <p className="seating_exam_title">{item.exam_name}</p>
-                                        <p className="seating_exam_date">Date of exam: {new Date(item.exam_date).toLocaleDateString('en-GB', {
-                                            day: '2-digit', month: 'short', year: 'numeric'
-                                        })}</p>
-                                    </div>
-                                </div>
-                                <div className="seating_bottom_row">
-                                    <p className="seating_faculties">
-
-                                        <BsFillPersonFill style={{ paddingBottom: "2px", marginRight: "0.5rem" }} />
-                                        {item.teacher_count} Faculties assigned</p>
-                                    <div>
-                                        <span className="seating_classes">Classes: </span>
-                                        <span className="seating_classes_input">{item.classes.join(', ')}</span>
-                                    </div>
-                                </div>
+                        {isLoading ? (
+                            <div className="no-books-message">
+                                <h3>Data is loading...</h3>
                             </div>
-                        ))}
+                        ) : (
+                            filteredSeatingDetails.map((item) => (
+                                <div
+                                    className="seating_classes_box_inner"
+                                    key={item.id}
+                                    onClick={() => handleCardClick(item)}
+
+                                >
+                                    <div className="seating_top_row">
+                                        <div className="seating_exam_details">
+                                            <h3 className="seating_room_no">ROOM NO: {item.hall_name}</h3>
+                                            <p className="seating_exam_title">{item.exam_name}</p>
+                                            <p className="seating_exam_date">Date of exam: {new Date(item.exam_date).toLocaleDateString('en-GB', {
+                                                day: '2-digit', month: 'short', year: 'numeric'
+                                            })}</p>
+                                        </div>
+                                    </div>
+                                    <div className="seating_bottom_row">
+                                        <p className="seating_faculties">
+
+                                            <BsFillPersonFill style={{ paddingBottom: "2px", marginRight: "0.5rem" }} />
+                                            {item.teacher_count} Faculties assigned</p>
+                                        <div>
+                                            <span className="seating_classes">Classes: </span>
+                                            <span className="seating_classes_input">{item.classes.join(', ')}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
 

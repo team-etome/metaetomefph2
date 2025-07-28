@@ -15,6 +15,7 @@ import avatar from '../../../assets/default.jpg'
 import { RiSearchLine } from "react-icons/ri";
 import Select from 'react-select';
 import { adminteacherinfo } from '../../../Redux/Actions/AdminTeacherInfoAction';
+import exportimage from "../../../assets/export.png"
 
 
 
@@ -30,6 +31,7 @@ const NewFacultyDashboard = () => {
     const [selectedFaculty, setSelectedFaculty] = useState(null); // Selected card view
     const [selectedSubject, setSelectedSubject] = useState('');
     const [selectedStatus, setSelectedStatus] = useState({ value: 'active', label: 'Active' }); // Default to Active
+    const [isLoading, setIsLoading] = useState(true); // Loading state
 
 
     const [facultySearch, setFacultySearch] = useState('');
@@ -40,9 +42,10 @@ const NewFacultyDashboard = () => {
     const [facultyList, setFacultyList] = useState([]);
 
     const fetchFaculty = async () => {
+        setIsLoading(true); // Start loading
         try {
             const response = await axios.get(`${APIURL}/api/teacherdetails/${admin_id}`);
-            
+
             if (response.data && Array.isArray(response.data)) {
                 setFacultyList(response.data);
                 // Also update the Redux store with the latest teacher data
@@ -53,6 +56,8 @@ const NewFacultyDashboard = () => {
             // console.log(response.data,"response.dataresponse.dataresponse.data")
         } catch (error) {
             console.error("Error fetching faculty data:", error);
+        } finally {
+            setIsLoading(false); // Stop loading regardless of success or error
         }
     };
 
@@ -276,10 +281,13 @@ const NewFacultyDashboard = () => {
                             {showMenu && (
                                 <div className="facultydashboard_dropdown-menu">
                                     <div className="facultydashboard_dropdown-item" onClick={handleAddFaculty}>
-                                        + Add Faculty
+                                        <span style={{ fontSize: "24px",marginRight:"12px" }}>+</span> Add Faculty
                                     </div>
-                                    <div className="facultydashboard_dropdown-item" onClick={handleUploadExcel}>
-                                        Upload Through Excel
+                                    <div className="facultydashboard_dropdown-item" onClick={handleUploadExcel} >
+                                        <img src={exportimage}
+                                            alt="exportimage"
+                                            className="facultydashboard-dropdown-item-icon"
+                                        />Upload Through Excel
                                     </div>
                                 </div>
                             )}
@@ -291,53 +299,77 @@ const NewFacultyDashboard = () => {
                                 onClose={() => setShowPopup(false)}
                                 onFacultyAdded={fetchFaculty}
                             />
-                        )}                       
-                         {showPopupexcel && <NewFacultyAddThroughExcel isOpen={showPopupexcel} onClose={() => setShowPopupExcel(false)} />}
+                        )}
+                        {showPopupexcel && <NewFacultyAddThroughExcel isOpen={showPopupexcel} onClose={() => setShowPopupExcel(false)} />}
                     </div>
                 </div>
             </div>
             <div className="facultydashboard_classes_box">
-                <div className="facultydashboard_container" >
-                    {facultyList
-                        .filter((faculty) => {
-                            const fullName = `${faculty.first_name} ${faculty.last_name}`.toLowerCase();
-                            const nameMatch = fullName.includes(facultySearch.toLowerCase());
+                <div className="facultydashboard_container">
+                    {isLoading ? (
+                        <div className="facultydashboard_no-books-message">
+                            <h3>Data is loading...</h3>
+                        </div>
+                    ) : (
+                        <>
+                            {facultyList
+                                .filter((faculty) => {
+                                    const fullName = `${faculty.first_name} ${faculty.last_name}`.toLowerCase();
+                                    const nameMatch = fullName.includes(facultySearch.toLowerCase());
 
-                            const subjectMatch = selectedSubject
-                                ? faculty.curriculam?.some(
-                                    (item) => item.subject_name.toLowerCase() === selectedSubject.toLowerCase()
-                                )
-                                : true;
+                                    const subjectMatch = selectedSubject
+                                        ? faculty.curriculam?.some(
+                                            (item) => item.subject_name.toLowerCase() === selectedSubject.toLowerCase()
+                                        )
+                                        : true;
 
-                            // Status filter
-                            const statusMatch = selectedStatus.value === 'active' 
-                                ? faculty.status === false 
-                                : faculty.status === true;
+                                    // Status filter
+                                    const statusMatch = selectedStatus.value === 'active'
+                                        ? faculty.status === false
+                                        : faculty.status === true;
 
-                            return nameMatch && subjectMatch && statusMatch;
-                        })
-                        .map((faculty) => (
-                            <div className="facultydashboard_classes_box_inner" key={faculty.id} onClick={() => handleCardClick(faculty)}>
-                                <div className="faculty-avatar-container">
-                                    <img src={faculty?.image || image} className="faculty-avatar" />
-                                </div>
-                                <div className="faculty-name-id-container">
-                                    <p className="faculty-name">{faculty.first_name} {faculty.last_name}</p>
-                                    <p className="faculty-id">ID: {faculty.employee_id}</p>
-                                </div>
-                                <div className="faculty-info-line">
-                                    <FiPhone className="info-icon" />
-                                    <span>{faculty.phone_number}</span>
-                                </div>
-                                <div className="faculty-info-line">
-                                    <CiSquareChevDown className="info-icon" />
-                                    <span>{faculty.email}</span>
-                                </div>
-                            </div>                            
-                        ))
-                        }
-                    
-                    
+                                    return nameMatch && subjectMatch && statusMatch;
+                                })
+                                .map((faculty) => (
+                                    <div className="facultydashboard_classes_box_inner" key={faculty.id} onClick={() => handleCardClick(faculty)}>
+                                        <div className="faculty-avatar-container">
+                                            <img src={faculty?.image || image} className="faculty-avatar" />
+                                        </div>
+                                        <div className="faculty-name-id-container">
+                                            <p className="faculty-name">{faculty.first_name} {faculty.last_name}</p>
+                                            <p className="faculty-id">ID: {faculty.employee_id}</p>
+                                        </div>
+                                        <div className="faculty-info-line">
+                                            <FiPhone className="info-icon" />
+                                            <span>{faculty.phone_number}</span>
+                                        </div>
+                                        <div className="faculty-info-line">
+                                            <CiSquareChevDown className="info-icon" />
+                                            <span>{faculty.email}</span>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+
+                            {/* No data found messages */}
+                            {selectedSubject && !facultyList.some(faculty =>
+                                faculty.curriculam?.some(item => item.subject_name.toLowerCase() === selectedSubject.toLowerCase())
+                            ) && (
+                                    <div className="no-faculty-message text-center">
+                                        <h4>No faculty available for selected subject.</h4>
+                                    </div>
+                                )}
+                            {facultySearch && !facultyList.some(faculty =>
+                                `${faculty.first_name} ${faculty.last_name}`.toLowerCase().includes(facultySearch.toLowerCase())
+                            ) && (
+                                    <div className="no-faculty-message text-center">
+                                        <h4>No faculty found for "{facultySearch}".</h4>
+                                    </div>
+                                )}
+                        </>
+                    )}
+
+
                     {/* {facultyList.filter((faculty) => {
                         const fullName = `${faculty.first_name} ${faculty.last_name}`.toLowerCase();
                         const nameMatch = fullName.includes(facultySearch.toLowerCase());
@@ -358,7 +390,7 @@ const NewFacultyDashboard = () => {
                             <h4>No faculty match the current filters.</h4>
                         </div>
                     )} */}
-                    
+
                     {/* {showPopupview && <NewEvaluationView isOpen={showPopupview} onClose={() => setShowPopupView(false)} />} */}
                     {/* Conditionally render the FacultyModal when a faculty is selected */}
                     {selectedFaculty && (
@@ -370,21 +402,6 @@ const NewFacultyDashboard = () => {
                         />
                     )}
                 </div>
-                {/* No data found messages */}
-                    {selectedSubject && !facultyList.some(faculty => 
-                        faculty.curriculam?.some(item => item.subject_name.toLowerCase() === selectedSubject.toLowerCase())
-                    ) && (
-                        <div className="no-faculty-message text-center">
-                            <h4>No faculty available for selected subject.</h4>
-                        </div>
-                    )}
-                    {facultySearch && !facultyList.some(faculty => 
-                        `${faculty.first_name} ${faculty.last_name}`.toLowerCase().includes(facultySearch.toLowerCase())
-                    ) && (
-                        <div className="no-faculty-message text-center">
-                            <h4>No faculty found for "{facultySearch}".</h4>
-                        </div>
-                    )}
             </div>
         </div >
     );

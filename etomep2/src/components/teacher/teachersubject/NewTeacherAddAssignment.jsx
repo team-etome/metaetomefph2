@@ -43,7 +43,7 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
         if (isEditMode && editData) {
             setTitle(editData.title || '');
             setDueDate(editData.due_date || editData.dueDate || '');
-            setMark(editData.mark || '');
+            setMark(editData.mark !== undefined && editData.mark !== null ? String(editData.mark) : '');
             
             // Handle content - could be PDF or manual text
             if (editData.pdf) {
@@ -579,6 +579,7 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
                                     onChange={e => setMark(e.target.value)}
                                     // placeholder="0"
                                     className="newteacheraddassignment-input"
+                                    onWheel={e => e.target.blur()}
                                 />
                             </div>
                         </div>
