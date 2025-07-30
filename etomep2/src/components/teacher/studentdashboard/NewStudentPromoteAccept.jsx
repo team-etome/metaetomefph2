@@ -122,7 +122,7 @@ export default function NewStudentPromoteAccept({ studentList = [], fetchStudent
 
     return (
         <>
-        {filtered.length > 0 ? (
+        {promotedStudents.length > 0 ? (
             <div>
                 {/* Action Bar */}
                 <div className="newstudentpromoteaccept-actions">
@@ -162,27 +162,40 @@ export default function NewStudentPromoteAccept({ studentList = [], fetchStudent
                         />
                     </div>
                 </div> 
-                {/* Student Grid */}
-                <div className="newstudentpromoteaccept-grid">
-                    {filtered.map((s) => (
-                        <div
-                            key={s.id || s.roll_no}
-                            className={
-                                "newstudentpromoteaccept-grid-card" +
-                                (selected.includes(s.id || s.roll_no) ? " selected" : "")
-                            }
-                            onClick={() => toggleStudent(s.id || s.roll_no)}
-                        >
-                            <label></label>
-                            <img src={s.image || image} alt={s.student_name} />
-                            <div className="info">
-                                <h4>{s.student_name}</h4>
-                                <p>{s.standard} {s.division}</p>
+                {/* Show filtered results or "no data found" message */}
+                {filtered.length > 0 ? (
+                    <div className="newstudentpromoteaccept-grid">
+                        {filtered.map((s) => (
+                            <div
+                                key={s.id || s.roll_no}
+                                className={
+                                    "newstudentpromoteaccept-grid-card" +
+                                    (selected.includes(s.id || s.roll_no) ? " selected" : "")
+                                }
+                                onClick={() => toggleStudent(s.id || s.roll_no)}
+                            >
+                                <label></label>
+                                <img src={s.image || image} alt={s.student_name} />
+                                <div className="info">
+                                    <h4>{s.student_name}</h4>
+                                    <p>{s.standard} {s.division}</p>
+                                </div>
+                                <span className="roll">Roll no : {s.roll_no}</span>
                             </div>
-                            <span className="roll">Roll no : {s.roll_no}</span>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="newstudentpromoteaccept-empty">
+                        <img
+                            src={smile}
+                            alt="Annoyed face"
+                            style={{ width: "65px", height: "65px", objectFit: "contain" }}
+                        />
+                        <p style={{ textAlign: 'center', fontSize: '16px', marginTop: '20px' }}>
+                            No student data found
+                        </p>
+                    </div>
+                )}
             </div>
             ) : (
                             <div className="newstudentpromoteaccept-empty">

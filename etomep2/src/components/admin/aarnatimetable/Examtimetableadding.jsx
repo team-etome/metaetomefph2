@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './examtimetableadding.css'; // Ensure the CSS is appropriate
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
+import { loadTimetableDataQuestionPaper } from '../../../Redux/Actions/AdminTimetableDataQuestionPaperActions';
 
 const Examtimetableadding = ({ onClose, onSuccess }) => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+    const dispatch = useDispatch();
 
     const [examName, setExamName] = useState("");
     const [year, setYear] = useState("");
@@ -148,6 +150,17 @@ const Examtimetableadding = ({ onClose, onSuccess }) => {
 
         try {
             await axios.post(`${APIURL}/api/examtimetable`, payload);
+            
+            // Also update the Redux store for question paper components
+            try {
+                const timetableResponse = await axios.get(`${APIURL}/api/gettimetable/${admin_id}`);
+                const examsData = timetableResponse.data.exams;
+                console.log('fetched examsData for Redux update after adding timetable', examsData);
+                dispatch(loadTimetableDataQuestionPaper(examsData));
+            } catch (error) {
+                console.error('Error fetching timetable data for Redux update:', error);
+            }
+            
             Swal.fire({
                 icon: "success",
                 title: "Saved!",

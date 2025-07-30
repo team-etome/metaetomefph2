@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import './examtimetableediting.css';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import { useLocation } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import Examtimetable from './ExamTimetable';
 import Select from 'react-select';
+import { loadTimetableDataQuestionPaper } from '../../../Redux/Actions/AdminTimetableDataQuestionPaperActions';
 
 const Examtimetableediting = ({ onClose, onSuccess,defaultClassOption, defaultEntries, defaultExamKey, defaultTerm }) => {
     const navigate = useNavigate();
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
+    const dispatch = useDispatch();
     const location = useLocation();
 
     const classData = location.state?.classData || [];
@@ -237,6 +239,17 @@ const Examtimetableediting = ({ onClose, onSuccess,defaultClassOption, defaultEn
                 `${APIURL}/api/examtimetable`,
                 payload
             );
+            
+            // Also update the Redux store for question paper components
+            try {
+                const timetableResponse = await axios.get(`${APIURL}/api/gettimetable/${admin_id}`);
+                const examsData = timetableResponse.data.exams;
+                console.log('fetched examsData for Redux update after editing timetable', examsData);
+                dispatch(loadTimetableDataQuestionPaper(examsData));
+            } catch (error) {
+                console.error('Error fetching timetable data for Redux update:', error);
+            }
+            
             Swal.fire({
                 icon: "success",
                 title: "Saved!",

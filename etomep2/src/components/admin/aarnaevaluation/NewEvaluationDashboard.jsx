@@ -21,7 +21,7 @@ const NewEvaluationDashboard = () => {
     const APIURL = useSelector((state) => state.APIURL.url);
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
 
-
+    const [isLoading, setIsLoading] = useState(true); // Loading state
     const [showPopupView, setShowPopupView] = useState(false);
 
 
@@ -67,6 +67,7 @@ const NewEvaluationDashboard = () => {
 
     // Extract fetchEvaluationData function to avoid duplication
     const fetchEvaluationData = async () => {
+        setIsLoading(true); // Start loading
         try {
             const response = await axios.get(`${APIURL}/api/evaluationadding/${admin_id}`);
             console.log(response.data, "Fetched Evaluation Data");
@@ -91,6 +92,8 @@ const NewEvaluationDashboard = () => {
                 title: 'Error',
                 text: 'Failed to load evaluation data. Please try again later.'
             });
+        } finally {
+            setIsLoading(false); // Stop loading regardless of success or error
         }
     };
 
@@ -450,46 +453,53 @@ const NewEvaluationDashboard = () => {
             </div>
             <div className="evaluationdashboard_classes_box">
                 <div className="evaluationdashboard_container">
-                    {filteredData.map((item, index) => (
-                        <div style={{
-                            cursor: "pointer"
-                        }}
-                            className="evaluationdashboard_classes_box_inner"
-                            key={item.id}
-                            onClick={() => handleCardClick(item)}
-                        >
-                            <div className="evaluationdashboard_top_row">
-                                <img
-                                    src={item?.teacher_profile || profile}
-
-                                    className="evaluationdashboard_box_icon"
-                                />
-                                <div className="evaluationdashboard_exam_details">
-                                    <p className="evaluationdashboard_class_name">{item.class_name} {item.division}</p>
-                                    <p className="evaluationdashboard_subject">{item.subject_name}</p>
-                                    <p className="evaluationdashboard_exam_title">{item.exam_name} {item.year}</p>
-                                    <p className="evaluationdashboard_deadline">
-                                        Deadline: {item.end_date}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="evaluationdashboard_bottom_row">
-                                <p className="evaluationdashboard_faculty">
-                                    <BsFillPersonFill style={{ paddingBottom: "2px", marginRight: "0.5rem" }} />
-                                    Faculty Assigned: {item.teacher_name}
-                                </p>
-                            </div>
+                    {isLoading ? (
+                        <div className="no-books-message">
+                            <h3>Data is loading...</h3>
                         </div>
-                    ))}
-                    {showPopupView && selectedEvaluation && (
-                        <NewEvaluationView
-                            isOpen={showPopupView}
-                            onClose={() => setShowPopupView(false)}
-                            selectedEvaluation={selectedEvaluation}  // ✅ Pass selectedEvaluation
-                            onDeleteSuccess={refreshDashboard} // Pass the refresh function
-                        />
-                    )}
+                    ) : (
+                        <>
+                            {filteredData.map((item, index) => (
+                                <div style={{
+                                    cursor: "pointer"
+                                }}
+                                    className="evaluationdashboard_classes_box_inner"
+                                    key={item.id}
+                                    onClick={() => handleCardClick(item)}
+                                >
+                                    <div className="evaluationdashboard_top_row">
+                                        <img
+                                            src={item?.teacher_profile || profile}
 
+                                            className="evaluationdashboard_box_icon"
+                                        />
+                                        <div className="evaluationdashboard_exam_details">
+                                            <p className="evaluationdashboard_class_name">{item.class_name} {item.division}</p>
+                                            <p className="evaluationdashboard_subject">{item.subject_name}</p>
+                                            <p className="evaluationdashboard_exam_title">{item.exam_name} {item.year}</p>
+                                            <p className="evaluationdashboard_deadline">
+                                                Deadline: {item.end_date}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="evaluationdashboard_bottom_row">
+                                        <p className="evaluationdashboard_faculty">
+                                            <BsFillPersonFill style={{ paddingBottom: "2px", marginRight: "0.5rem" }} />
+                                            Faculty Assigned: {item.teacher_name}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                            {showPopupView && selectedEvaluation && (
+                                <NewEvaluationView
+                                    isOpen={showPopupView}
+                                    onClose={() => setShowPopupView(false)}
+                                    selectedEvaluation={selectedEvaluation}  // ✅ Pass selectedEvaluation
+                                    onDeleteSuccess={refreshDashboard} // Pass the refresh function
+                                />
+                            )}
+                        </>
+                    )}
                 </div>
             </div>
         </div >

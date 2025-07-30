@@ -200,24 +200,28 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
     }),
     menu: (base) => ({
       ...base,
-      zIndex: 1000,
-      maxHeight: '150px',
+      zIndex: 9999,
+      maxHeight: '200px',
       overflowY: 'auto',
       fontSize: '14px',
       backgroundColor: 'white',
       borderRadius: '8px',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-      marginTop: '4px'
+      boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+      marginTop: '4px',
+      position: 'absolute',
+      width: '100%'
     }),
     menuList: (base) => ({
       ...base,
-      maxHeight: '150px',
+      maxHeight: '200px',
       padding: '4px 0'
     }),
     option: (base, state) => ({
       ...base,
       backgroundColor: state.isFocused ? '#2162B2' : '#fff',
       color: state.isFocused ? '#fff' : '#222222',
+      padding: '8px 12px',
+      cursor: 'pointer',
       '&:active': {
         backgroundColor: '#e6e6e6',
       }
@@ -286,9 +290,12 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
                     onChange={(opt) => {
                       handleEntryChange(index, 'subject', opt?.value || "");
                     }}
-                    // menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
-                    // menuPosition="fixed"
-                    styles={steponeeditcustomStyles}
+                    menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+                    menuPosition="fixed"
+                    styles={{
+                      ...steponeeditcustomStyles,
+                      menuPortal: base => ({ ...base, zIndex: 9999 })
+                    }}
                     placeholder="Select Subject"
                     isClearable={false}
                   />
@@ -301,10 +308,12 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
                     options={publisherOptions}
                     value={publisherOptions.find(o => o.value === entry.publishername) || null}
                     onChange={(opt) => handleEntryChange(index, 'publishername', opt?.value || "")}
-                    // menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
-                    // menuPosition="fixed"
-                    styles={steponeeditcustomStyles
-                    }
+                    menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+                    menuPosition="fixed"
+                    styles={{
+                      ...steponeeditcustomStyles,
+                      menuPortal: base => ({ ...base, zIndex: 9999 })
+                    }}
                     placeholder="Select Publisher"
                     isClearable={false}
                   />
@@ -317,14 +326,12 @@ const AdminClassEditStepTwo = ({ stepOneData, initialEntries, teachers, prevStep
                     options={facultyOptions}
                     value={facultyOptions.find(o => o.value === entry.facultyname) || null}
                     onChange={(opt) => handleEntryChange(index, 'facultyname', opt?.value || "")}
-                    // menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
-                    // menuPosition="fixed"
-                    //   styles={{
-                    //     ...steponeeditcustomStyles,
-                    //     menuPortal: base => ({ ...base, zIndex: 9999 })
-                    //   }
-                    // }
-                    styles={steponeeditcustomStyles}
+                    menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+                    menuPosition="fixed"
+                    styles={{
+                      ...steponeeditcustomStyles,
+                      menuPortal: base => ({ ...base, zIndex: 9999 })
+                    }}
                     placeholder="Select Faculty"
                     isClearable={false}
                   />

@@ -82,16 +82,141 @@ export default function NewTeacherHome() {
 
       // Set default selected values if data exists
       if (dashboardInfo.length > 0) {
-        setSelectedClass(dashboardInfo[0].class_name || '');
-        setSelectedDivision(dashboardInfo[0].division || '');
-        setSelectedSubject(dashboardInfo[0].subject || '');
-        // Auto-select the first examination as default
-        setSelectedQuestion(dashboardInfo[0].question || '');
+        // Set the first available examination as default
+        const firstExam = dashboardInfo[0].question || '';
+        setSelectedQuestion(firstExam);
+        
+        // Set the first available class for this examination
+        const firstClassData = dashboardInfo.find(item => item.question === firstExam);
+        if (firstClassData) {
+          setSelectedClass(firstClassData.class_name || '');
+          setSelectedDivision(firstClassData.division || '');
+          setSelectedSubject(firstClassData.subject || '');
+        }
       }
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
       setDashboardData([]);
     }
+  };
+
+  // Get filtered options based on current selections
+  const getFilteredOptions = () => {
+    let filteredData = dashboardData;
+
+    // Filter by selected examination
+    if (selectedQuestion) {
+      filteredData = filteredData.filter(item => item.question === selectedQuestion);
+    }
+
+    // Filter by selected class
+    if (selectedClass) {
+      filteredData = filteredData.filter(item => item.class_name === selectedClass);
+    }
+
+    // Filter by selected division
+    if (selectedDivision) {
+      filteredData = filteredData.filter(item => item.division === selectedDivision);
+    }
+
+    return filteredData;
+  };
+
+  // Get unique values for dropdowns based on current filters
+  const getUniqueClasses = () => {
+    const filteredData = selectedQuestion 
+      ? dashboardData.filter(item => item.question === selectedQuestion)
+      : dashboardData;
+    return [...new Set(filteredData.map(item => item.class_name))];
+  };
+
+  const getUniqueDivisions = () => {
+    const filteredData = dashboardData.filter(item => 
+      (!selectedQuestion || item.question === selectedQuestion) &&
+      (!selectedClass || item.class_name === selectedClass)
+    );
+    return [...new Set(filteredData.map(item => item.division))];
+  };
+
+  const getUniqueSubjects = () => {
+    const filteredData = dashboardData.filter(item => 
+      (!selectedQuestion || item.question === selectedQuestion) &&
+      (!selectedClass || item.class_name === selectedClass) &&
+      (!selectedDivision || item.division === selectedDivision)
+    );
+    return [...new Set(filteredData.map(item => item.subject))];
+  };
+
+  const uniqueQuestions = [...new Set(dashboardData.map(item => item.question))];
+
+  // Handle examination change
+  const handleExamChange = (option) => {
+    const newExam = option ? option.value : '';
+    setSelectedQuestion(newExam);
+    
+    // Clear dependent dropdowns
+    setSelectedClass('');
+    setSelectedDivision('');
+    setSelectedSubject('');
+    
+    // Set first available class for new examination
+    if (newExam) {
+      const firstClassData = dashboardData.find(item => item.question === newExam);
+      if (firstClassData) {
+        setSelectedClass(firstClassData.class_name || '');
+        setSelectedDivision(firstClassData.division || '');
+        setSelectedSubject(firstClassData.subject || '');
+      }
+    }
+  };
+
+  // Handle class change
+  const handleClassChange = (option) => {
+    const newClass = option ? option.value : '';
+    setSelectedClass(newClass);
+    
+    // Clear dependent dropdowns
+    setSelectedDivision('');
+    setSelectedSubject('');
+    
+    // Set first available division for new class
+    if (newClass && selectedQuestion) {
+      const firstDivisionData = dashboardData.find(item => 
+        item.question === selectedQuestion && 
+        item.class_name === newClass
+      );
+      if (firstDivisionData) {
+        setSelectedDivision(firstDivisionData.division || '');
+        setSelectedSubject(firstDivisionData.subject || '');
+      }
+    }
+  };
+
+  // Handle division change
+  const handleDivisionChange = (option) => {
+    const newDivision = option ? option.value : '';
+    setSelectedDivision(newDivision);
+    
+    // Clear dependent dropdowns
+    setSelectedSubject('');
+    
+    // Set first available subject for new division
+    if (newDivision && selectedQuestion && selectedClass) {
+      const firstSubjectData = dashboardData.find(item => 
+        item.question === selectedQuestion && 
+        item.class_name === selectedClass &&
+        item.division === newDivision
+      );
+      if (firstSubjectData) {
+        setSelectedSubject(firstSubjectData.subject || '');
+      }
+    }
+  };
+
+  // Handle subject change
+  const handleSubjectChange = (option) => {
+    const newSubject = option ? option.value : '';
+    setSelectedSubject(newSubject);
   };
 
   // Fetch notifications
@@ -123,22 +248,13 @@ export default function NewTeacherHome() {
     }
   }, [teacherInfo?.teacher_id, APIURL]);
 
-  // Get unique values for dropdowns
-  const uniqueClasses = [...new Set(dashboardData.map(item => item.class_name))];
-  const uniqueDivisions = [...new Set(dashboardData.map(item => item.division))];
-  const uniqueSubjects = [...new Set(dashboardData.map(item => item.subject))];
-  const uniqueQuestions = [...new Set(dashboardData.map(item => item.question))];
-
-  // Filter dashboard data based on selected filters
-  const filteredDashboardData = dashboardData.filter(item =>
-    (!selectedClass || item.class_name === selectedClass) &&
-    (!selectedDivision || item.division === selectedDivision) &&
-    (!selectedSubject || item.subject === selectedSubject) &&
-    (!selectedQuestion || item.question === selectedQuestion)
-  );
-
   // Get current filtered data for display
-  const currentData = filteredDashboardData.length > 0 ? filteredDashboardData[0] : null;
+  const currentData = selectedQuestion && selectedClass && selectedDivision && selectedSubject ? dashboardData.find(item => 
+    item.question === selectedQuestion && 
+    item.class_name === selectedClass && 
+    item.division === selectedDivision && 
+    item.subject === selectedSubject
+  ) : null;
 
   // Calculate aggregated data when no specific examination is selected
   const aggregatedData = selectedQuestion ? null : dashboardData.filter(item =>
@@ -152,7 +268,7 @@ export default function NewTeacherHome() {
   let failedCount = 0;
   let rankList = [];
 
-  if (selectedQuestion && currentData) {
+  if (selectedQuestion && selectedClass && selectedDivision && selectedSubject && currentData) {
     // Use specific examination data
     passedCount = currentData.pass_students || 0;
     failedCount = currentData.failed_student || 0;
@@ -324,40 +440,44 @@ export default function NewTeacherHome() {
                 <div className="newteacherhome-exam-header">
                   <Select
                     value={selectedQuestion ? { label: selectedQuestion, value: selectedQuestion } : null}
-                    onChange={(option) => setSelectedQuestion(option ? option.value : '')}
+                    onChange={handleExamChange}
                     options={uniqueQuestions.map(question => ({ label: question, value: question }))}
                     styles={dashboardsmallcustomStyles}
                     placeholder="select Examination"
+                    isClearable
                   />
                 </div>
                 <div className="newteacherhome-exam-filters">
                   <div className="newteacherhome-filter-dropdown">
                     <Select
                       value={selectedClass ? { label: selectedClass, value: selectedClass } : null}
-                      onChange={(option) => setSelectedClass(option ? option.value : '')}
-                      options={uniqueClasses.map(className => ({ label: className, value: className }))}
+                      onChange={handleClassChange}
+                      options={getUniqueClasses().map(className => ({ label: className, value: className }))}
                       styles={dashboardcustomStyles}
                       placeholder="Class"
+                      isClearable
                     />
                   </div>
 
                   <div className="newteacherhome-filter-dropdown">
                     <Select
                       value={selectedDivision ? { label: selectedDivision, value: selectedDivision } : null}
-                      onChange={(option) => setSelectedDivision(option ? option.value : '')}
-                      options={uniqueDivisions.map(division => ({ label: division, value: division }))}
+                      onChange={handleDivisionChange}
+                      options={getUniqueDivisions().map(division => ({ label: division, value: division }))}
                       styles={dashboardcustomStyles}
                       placeholder="Division"
+                      isClearable
                     />
                   </div>
 
                   <div className="newteacherhome-filter-dropdown">
                     <Select
                       value={selectedSubject ? { label: selectedSubject, value: selectedSubject } : null}
-                      onChange={(option) => setSelectedSubject(option ? option.value : '')}
-                      options={uniqueSubjects.map(subject => ({ label: subject, value: subject }))}
+                      onChange={handleSubjectChange}
+                      options={getUniqueSubjects().map(subject => ({ label: subject, value: subject }))}
                       styles={dashboardcustomStyles}
                       placeholder="Subject"
+                      isClearable
                     />
                   </div>
                 </div>
@@ -454,7 +574,7 @@ export default function NewTeacherHome() {
                 </thead>
                 <tbody>
                     {assignedTasks.length > 0 ? (
-                      assignedTasks.map((task, idx) => (
+                      assignedTasks.slice(0, 3).map((task, idx) => (
                     <tr key={idx}>
                           <td>{task.task_type || task.type}</td>
                           <td>{task.due_date || task.due}</td>
@@ -526,5 +646,4 @@ export default function NewTeacherHome() {
         />
       )}
     </div>
-  );
-}
+  );}

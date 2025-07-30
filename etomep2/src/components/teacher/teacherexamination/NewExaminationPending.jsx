@@ -232,7 +232,13 @@ const NewExaminationPending = ({ onSelectItem, refreshTrigger }) => {
                                 placeholder="Select Exam Name"
                                 options={examNames}
                                 value={selectedExamName}
-                                onChange={(option) => setSelectedExamName(option)}
+                                onChange={option => {
+                                    if (option && selectedExamName && option.value === selectedExamName.value) {
+                                        setSelectedExamName(null);
+                                    } else {
+                                        setSelectedExamName(option);
+                                    }
+                                }}
                             />
 
                             <Select
@@ -240,17 +246,29 @@ const NewExaminationPending = ({ onSelectItem, refreshTrigger }) => {
                                 placeholder="Select Class"
                                 options={classes}
                                 value={selectedClass}
-                                onChange={(option) => setSelectedClass(option)}
+                                onChange={option => {
+                                    if (option && selectedClass && option.value === selectedClass.value) {
+                                        setSelectedClass(null);
+                                    } else {
+                                        setSelectedClass(option);
+                                    }
+                                }}
                             />
                             <Select
                                 styles={dashboardsmallcustomStyles}
                                 placeholder="Select Subject"
                                 options={subjects}
                                 value={selectedSubject}
-                                onChange={(option) => setSelectedSubject(option)}
+                                onChange={option => {
+                                    if (option && selectedSubject && option.value === selectedSubject.value) {
+                                        setSelectedSubject(null);
+                                    } else {
+                                        setSelectedSubject(option);
+                                    }
+                                }}
                             />
 
-                            {(selectedExamName || selectedClass || selectedSubject) && (
+                            {/* {(selectedExamName || selectedClass || selectedSubject) && (
                                 <button 
                                     onClick={clearFilters}
                                     style={{
@@ -264,21 +282,27 @@ const NewExaminationPending = ({ onSelectItem, refreshTrigger }) => {
                                 >
                                     Clear Filters
                                 </button>
-                            )}
+                            )} */}
 
                         </div>
                     </div>
                 </div>
                 <div className="newexaminationpending_classes_box" >
                     {loading && (
-                        <div style={{ textAlign: 'center', padding: '20px' }}>
-                            <p>Loading pending examinations...</p>
+                        <div style={{ textAlign: 'center', padding: '20px',color: '#666' }}>
+                            <h3>Loading pending examinations...</h3>
                         </div>
                     )}
                     
                     {!loading && examinationListData.length === 0 && (
                         <div style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
-                            <p>No pending examinations found.</p>
+                            <h3>No pending examinations found.</h3>
+                        </div>
+                    )}
+                    
+                    {!loading && examinationListData.length > 0 && filteredData.length === 0 && (
+                        <div style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
+                            <h3>No filtered data found.</h3>
                         </div>
                     )}
                     

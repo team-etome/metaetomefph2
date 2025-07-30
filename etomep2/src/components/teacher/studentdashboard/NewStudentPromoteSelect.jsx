@@ -123,7 +123,7 @@ export default function NewStudentPromoteSelect({ studentList = [], fetchStudent
 
     return (
         <>
-            {filtered.length > 0 ? (
+            {studentList.length > 0 ? (
                 <div>
                     {/* Action Bar */}
                     <div
@@ -167,34 +167,46 @@ export default function NewStudentPromoteSelect({ studentList = [], fetchStudent
                         </div>
                     </div>
 
-
-                    {/* Student Grid */}
-                    <div className="newstudentpromoteselect-grid">
-                        {filtered.map((s) => (
-                            <div
-                                key={s.id}
-                                className={
-                                    "newstudentpromoteselect-grid-card" +
-                                    (selected.includes(s.id) ? " selected" : "")
-                                }
-                                onClick={() => toggleStudent(s.id)}
-                            >
-                                <label>
-                                    {/* <input
+                    {/* Show filtered results or "no data found" message */}
+                    {filtered.length > 0 ? (
+                        <div className="newstudentpromoteselect-grid">
+                            {filtered.map((s) => (
+                                <div
+                                    key={s.id}
+                                    className={
+                                        "newstudentpromoteselect-grid-card" +
+                                        (selected.includes(s.id) ? " selected" : "")
+                                    }
+                                    onClick={() => toggleStudent(s.id)}
+                                >
+                                    <label>
+                                        {/* <input
                   type="checkbox"
                   checked={selected.includes(s.student_id || s.roll_no)}
                   onChange={() => toggleStudent(s.student_id || s.roll_no)}
                 /> */}
-                                </label>
-                                <img src={s.image || image} alt={s.student_name} />
-                                <div className="info">
-                                    <h4>{s.student_name}</h4>
-                                    <p>{s.standard} {s.division}</p>
+                                    </label>
+                                    <img src={s.image || image} alt={s.student_name} />
+                                    <div className="info">
+                                        <h4>{s.student_name}</h4>
+                                        <p>{s.standard} {s.division}</p>
+                                    </div>
+                                    <span className="roll">Roll no : {s.roll_no}</span>
                                 </div>
-                                <span className="roll">Roll no : {s.roll_no}</span>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="newstudentpromoteselect-empty">
+                            <img
+                                src={smile}
+                                alt="Annoyed face"
+                                style={{ width: "65px", height: "65px", objectFit: "contain" }}
+                            />
+                            <p style={{ textAlign: 'center', fontSize: '16px', marginTop: '20px' }}>
+                                No student data found
+                            </p>
+                        </div>
+                    )}
                     {/* Close */}
                     {/* <button className="newstudentpromoteselect-close" onClick={onClose}>
                     &times;

@@ -139,14 +139,20 @@
 
 /* Cells */
 .nsttview-cell {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 8px;
   min-height: 80px;
   gap: 10px;
+  border-radius: 8px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
   border-radius: 8px;
+  /* padding: 0 8px; */
 }
 .nsttview-btn {
   margin-left: 16px;

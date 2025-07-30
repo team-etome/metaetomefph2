@@ -19,6 +19,7 @@ const AdminStudentDashboard = () => {
     const [selectedClass, setSelectedClass] = useState('');
     const [classList, setClassList] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState({ value: 'active', label: 'Active' }); // Default to Active
+    const [isLoading, setIsLoading] = useState(true); // Loading state
 
 
     console.log(allStudents, 'all students')
@@ -27,6 +28,7 @@ const AdminStudentDashboard = () => {
     // Filtered students based on search input
     useEffect(() => {
         const fetchStudents = async () => {
+            setIsLoading(true); // Start loading
             try {
                 const response = await axios.get(`${APIURL}/api/studentlist/${admin_id}`);
                 console.log(response.data, "Fetched student list");
@@ -46,6 +48,8 @@ const AdminStudentDashboard = () => {
                 setClassList(classes);
             } catch (error) {
                 console.error("Error fetching students:", error);
+            } finally {
+                setIsLoading(false); // Stop loading regardless of success or error
             }
         };
 
@@ -244,6 +248,12 @@ const AdminStudentDashboard = () => {
             <div className="adminstudentdashboard_classes_box">
                 <div className="adminstudentdashboard_container">
                     <div className="adminstudentdashboard-grid-container">
+                        {isLoading ? (
+                            <div className="adminstudentdashboard-no-books-message">
+                                <h3>Data is loading...</h3>
+                            </div>
+                        ) : (
+                            <>
                         {filteredStudents.map(student => (
                             <div key={student.rollNo} className="adminstudentdashboard-card"
                                 onClick={() => setSelectedStudent(student)}
@@ -267,8 +277,7 @@ const AdminStudentDashboard = () => {
                                 </div>
                             </div>
                         ))}
-                    </div>
-                </div>
+                                
                 {/* No data found messages */}
             {selectedClass && !allStudents.some(student => `${student.class_name} ${student.division}` === selectedClass) && (
                 <div className="no-students-message text-center">
@@ -282,6 +291,10 @@ const AdminStudentDashboard = () => {
                     <h4>No students found for "{search}".</h4>
                 </div>
             )}
+                            </>
+                        )}
+                    </div>
+                </div>
             </div>
             
             

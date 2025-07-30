@@ -22,7 +22,7 @@ export default function NewTeacherMcqAdd({ onBack: onParentBack, class_name, div
       setFormValues({
         examName: editData.exam_name || "",
         outOfMarks: editData.out_of_mark?.toString() || "",
-        negativeMark: editData.negative_mark?.toString() || "",
+        negativeMark: editData.negative_marks?.toString() || "",
         individualMark: editData.individual_mark?.toString() || "",
         duration: editData.duration?.toString() || "",
         topic: editData.topic || "",
