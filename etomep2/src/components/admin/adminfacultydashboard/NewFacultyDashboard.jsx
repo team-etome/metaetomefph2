@@ -280,8 +280,8 @@ const NewFacultyDashboard = () => {
                             </button>
                             {showMenu && (
                                 <div className="facultydashboard_dropdown-menu">
-                                    <div className="facultydashboard_dropdown-item" onClick={handleAddFaculty}>
-                                        <span style={{ fontSize: "24px",marginRight:"12px" }}>+</span> Add Faculty
+                                    <div className="facultydashboard_dropdown-item" onClick={handleAddFaculty} style={{borderBottom:"1px solid #F8F8F8"}}>
+                                        <span style={{ fontSize: "20px",verticalAlign: "middle" ,marginRight:"8px"}}>+</span> Add Faculty
                                     </div>
                                     <div className="facultydashboard_dropdown-item" onClick={handleUploadExcel} >
                                         <img src={exportimage}

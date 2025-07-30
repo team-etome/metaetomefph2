@@ -40,6 +40,7 @@ function NewLokaLibraryDashboard() {
   const [error, setError] = useState(null);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [isLoading, setIsLoading] = useState(true); // Loading state for books
   const dispatch = useDispatch();
 
   const handleBookClick = (book) => {
@@ -51,6 +52,7 @@ function NewLokaLibraryDashboard() {
   console.log(lokabookListData, "clgggggggggggggggggg")
 
   const fetchTextbooks = async () => {
+    setIsLoading(true); // Start loading
     try {
       const response = await axios.get(`${APIURL}/api/create-library/${admin_id}`);
       if (response.data && response.data.data) {
@@ -59,6 +61,8 @@ function NewLokaLibraryDashboard() {
       // console.log(response.data, "responsedatat coming ")
     } catch (error) {
       console.error("Error fetching textbooks:", error);
+    } finally {
+      setIsLoading(false); // Stop loading regardless of success or error
     }
 
     // if (admin_id) {
@@ -209,7 +213,15 @@ function NewLokaLibraryDashboard() {
       </div>
 
       <div className="admin_loka_library_scroll_container">
-        {Object.keys(groupedBooks).length > 0 ? (
+        {isLoading ? (
+          <div className="no-books-message text-center mt-4">
+            <h3>Data is loading...</h3>
+          </div>
+        ) : lokabookListData.length === 0 ? (
+          <div className="no-books-message text-center mt-4">
+            <h3>No books found.</h3>
+          </div>
+        ) : Object.keys(groupedBooks).length > 0 ? (
           Object.keys(groupedBooks).map((cat) => (
             <div key={cat} className="admin_loka_library_class_section mb-4">
               <p className="admin_loka_library_class_heading">{cat}</p>

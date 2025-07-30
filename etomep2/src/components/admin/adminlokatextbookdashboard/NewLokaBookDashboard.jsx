@@ -25,6 +25,7 @@ const NewLokaBookDashboard = () => {
 
     const [showEditPopup, setShowEditPopup] = useState(false);
     const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(true); // Loading state
 
     const handleEditTextbook = (book) => {
         dispatch(setSelectedTextbook(book));
@@ -88,6 +89,7 @@ const NewLokaBookDashboard = () => {
     }, [APIURL, admin_id]);
 
     const fetchTextbookData = async () => {
+        setIsLoading(true); // Start loading
         try {
             const response = await axios.get(
                 `${APIURL}/api/admin-create-textbook/${admin_id}`
@@ -101,6 +103,8 @@ const NewLokaBookDashboard = () => {
             );
         } catch (error) {
             console.error("Failed to fetch textbooks:", error);
+        } finally {
+            setIsLoading(false); // Stop loading regardless of success or error
         }
     };
 
@@ -240,59 +244,71 @@ const NewLokaBookDashboard = () => {
 
             </div>
             <div className="admin_loka_scroll_container">
-                {(selectedClass ? [selectedClass] : [...Array(12).keys()].map(i => (i + 1).toString())).map((classNum) => {
-                    const booksForClass = lokabookListData.filter(
-                        (book) =>
-                            book.textbook_details.class_name === classNum &&
-                            book.textbook_details.subject.toLowerCase().includes(searchTerm.toLowerCase())
-                    );
-
-                    if (booksForClass.length === 0) return null;
-
-                    return (
-                        <div key={classNum} className="admin_loka_class_section">
-                            <p className="admin_loka_class_heading">Class {classNum}</p>
-                            <div className="admin_loka_book_grid">
-                                {booksForClass.map((item, index) => (
-                                    <div key={index} className="admin_loka_book_col" onClick={() => handleEditTextbook(item)}>
-                                        <div className="admin_loka_book_card">
-                                            <div className="admin_loka_book_img">
-                                                <img src={item.textbook_image} alt="Textbook" />
-                                            </div>
-                                            <div className="admin_loka_book_body">
-                                                <div className="admin_loka_subject_name">{item.textbook_details.subject}</div>
-                                                <div className="admin_loka_book_title">{item.textbook_details.text_name}</div>
-                                                <div className="admin_loka_publisher">{item.textbook_details.publisher_name}</div>
-                                                <div className="admin_loka_class_name">{item.textbook_details.class_name}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                                {showEditPopup &&
-                                    <NewLokaBookEdit
-                                        isOpen={showEditPopup}
-                                        onClose={() => setShowEditPopup(false)}
-                                        onSuccess={fetchTextbookData}
-                                    />
-                                }
-                            </div>
-
-                        </div>
-                    );
-                })}
-                {selectedClass && !lokabookListData.some(book => book.textbook_details.class_name === selectedClass) && (
+                {isLoading ? (
                     <div className="no-books-message text-center mt-4">
-                        <h4>No books available for selected class.</h4>
+                        <h3>Data is loading...</h3>
                     </div>
+                ) : lokabookListData.length === 0 ? (
+                    <div className="no-books-message text-center mt-4">
+                        <h3>No textbook found.</h3>
+                    </div>
+                ) : (
+                    <>
+                        {(selectedClass ? [selectedClass] : [...Array(12).keys()].map(i => (i + 1).toString())).map((classNum) => {
+                            const booksForClass = lokabookListData.filter(
+                                (book) =>
+                                    book.textbook_details.class_name === classNum &&
+                                    book.textbook_details.subject.toLowerCase().includes(searchTerm.toLowerCase())
+                            );
+
+                            if (booksForClass.length === 0) return null;
+
+                            return (
+                                <div key={classNum} className="admin_loka_class_section">
+                                    <p className="admin_loka_class_heading">Class {classNum}</p>
+                                    <div className="admin_loka_book_grid">
+                                        {booksForClass.map((item, index) => (
+                                            <div key={index} className="admin_loka_book_col" onClick={() => handleEditTextbook(item)}>
+                                                <div className="admin_loka_book_card">
+                                                    <div className="admin_loka_book_img">
+                                                        <img src={item.textbook_image} alt="Textbook" />
+                                                    </div>
+                                                    <div className="admin_loka_book_body">
+                                                        <div className="admin_loka_subject_name">{item.textbook_details.subject}</div>
+                                                        <div className="admin_loka_book_title">{item.textbook_details.text_name}</div>
+                                                        <div className="admin_loka_publisher">{item.textbook_details.publisher_name}</div>
+                                                        <div className="admin_loka_class_name">{item.textbook_details.class_name}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {showEditPopup &&
+                                            <NewLokaBookEdit
+                                                isOpen={showEditPopup}
+                                                onClose={() => setShowEditPopup(false)}
+                                                onSuccess={fetchTextbookData}
+                                            />
+                                        }
+                                    </div>
+
+                                </div>
+                            );
+                        })}
+                        {selectedClass && !lokabookListData.some(book => book.textbook_details.class_name === selectedClass) && (
+                            <div className="no-books-message text-center mt-4">
+                                <h4>No books available for selected class.</h4>
+                            </div>
+                        )}
+                        {searchTerm && !lokabookListData.some(
+                            (book) =>
+                                book.textbook_details.subject.toLowerCase().includes(searchTerm.toLowerCase())
+                        ) && (
+                                <div className="no-books-message text-center mt-4">
+                                    <h4>No books found for "{searchTerm}".</h4>
+                                </div>
+                            )}
+                    </>
                 )}
-                {searchTerm && !lokabookListData.some(
-                    (book) =>
-                        book.textbook_details.subject.toLowerCase().includes(searchTerm.toLowerCase())
-                ) && (
-                        <div className="no-books-message text-center mt-4">
-                            <h4>No books found for "{searchTerm}".</h4>
-                        </div>
-                    )}
             </div>
         </div>
     )
