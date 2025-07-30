@@ -426,11 +426,15 @@
   display: flex; /* Ensure child elements can stretch */
   flex-direction: column; 
   margin-top: 10px;
- 
+  max-width: 100%;
+  overflow-x: hidden;
+}
 
-
- 
-
+@media (max-width: 800px) {
+  .admin_dashboard {
+    margin-left: 110px !important;
+    width: calc(100% - 110px) !important;
+  }
 }
 
 
@@ -438,11 +442,9 @@
   display: flex;
   gap: 24px;
   align-items: first baseline;
-
-
-
-  
-  
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 
@@ -763,6 +765,40 @@
   height: 600px;
   background-color: #FFFFFF;
   margin-top: 80px;
+}
+
+.report_alert_view_all {
+  width: 80vw;
+  max-width: 1200px;
+}
+
+@media (max-width: 1200px) {
+  .dash_main {
+    max-width: 100vw;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .report_alert_view_all {
+    width: 96vw;
+    max-width: 100vw;
+  }
+}
+
+@media (max-width: 800px) {
+  .dash_main {
+    flex-direction: column;
+    gap: 12px;
+    max-width: 100vw;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .report_alert_view_all {
+    width: 100vw;
+    max-width: 100vw;
+    left: 0 !important;
+    transform: none !important;
+    border-radius: 0 !important;
+  }
 }
 
 
