@@ -48,6 +48,12 @@ function AdminDashboard() {
   const admininfo = useSelector((state) => state.admininfo);
   const admin_id = admininfo.admininfo?.admin_id;
 
+  // Debug admin data
+  console.log("🔍 Admin Info from Redux:", admininfo);
+  console.log("📧 Admin Email:", admininfo.admininfo?.email);
+  console.log("🖼️ Admin Profile Image:", admininfo.admininfo?.profile_image);
+  console.log("🆔 Admin ID:", admin_id);
+
 
   // ------------------------------Student Overview--------------------------------------------
 
@@ -88,6 +94,7 @@ function AdminDashboard() {
   // ------------------------------Report--------------------------------------------
 
   const [reportShowPopup, setReportShowPopup] = useState(false);
+  const [notifications, setNotifications] = useState([]);
 
   const handleViewAllClick = () => {
     setReportShowPopup(true);
@@ -122,6 +129,8 @@ function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("pending");
   const [active, setActive] = useState("pending");
   const [allActions, setAllActions] = useState([]);
+  const [questionPaperData, setQuestionPaperData] = useState([]);
+  const [evaluationData, setEvaluationData] = useState([]);
 
   const handleTeacherActionViewAll = () => {
     setTeacherActionViewAll(true)
@@ -129,6 +138,26 @@ function AdminDashboard() {
 
   const closeTeacherActionViewAll = () => {
     setTeacherActionViewAll(false)
+  }
+
+  // Handle tab switching for main section
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    if (tab === "pending") {
+      setAllActions(questionPaperData);
+    } else {
+      setAllActions(evaluationData);
+    }
+  }
+
+  // Handle tab switching for popup
+  const handlePopupTabChange = (tab) => {
+    setActive(tab);
+    if (tab === "pending") {
+      setAllActions(questionPaperData);
+    } else {
+      setAllActions(evaluationData);
+    }
   }
 
 
@@ -141,21 +170,50 @@ function AdminDashboard() {
       const response = await axios.get(`${APIURL}/api/teacheraction/${admin_id}`);
       const data = response.data.data;
 
-      const formatted = data.map(item => ({
+      console.log(data, "dataaa q")
+
+      // Extract questions and evaluations from the nested structure
+      const questions = data[0]?.questions || [];
+      const evaluations = data[0]?.evaluation || [];
+      console.log("📋 Extracted questions:", questions);
+      console.log("📋 Extracted evaluations:", evaluations);
+
+      const formattedQuestions = questions.map(item => ({
         Name: item.teacher_name,
         DueDate: item.due_date,
-        Status: item.status
+        Status: item.status,
+        Class: item.class || "N/A",
+        Subject: item.subject || "N/A"
       }));
 
-      setAllActions(formatted);
+      const formattedEvaluations = evaluations.map(item => ({
+        Name: item.teacher_name,
+        DueDate: item.due_date,
+        Status: item.status,
+        Class: item.class || "N/A",
+        Subject: item.subject || "N/A"
+      }));
+
+      setQuestionPaperData(formattedQuestions);
+      setEvaluationData(formattedEvaluations);
+      setAllActions(formattedQuestions); // Default to question paper data
     } catch (error) {
       console.error("Error fetching teacher actions:", error);
     }
   };
 
   useEffect(() => {
-    fetchTeacherActions();
-  }, []);
+    console.log("🔄 useEffect triggered for teacher actions");
+    console.log("🆔 Admin ID available:", !!admin_id);
+    console.log("📡 API URL available:", !!APIURL);
+
+    if (admin_id && APIURL) {
+      console.log("✅ Conditions met, calling fetchTeacherActions");
+      fetchTeacherActions();
+    } else {
+      console.log("❌ Conditions not met - admin_id or APIURL missing");
+    }
+  }, [admin_id, APIURL]);
 
 
   // ------------------------------Toggle--------------------------------------------
@@ -198,7 +256,8 @@ function AdminDashboard() {
   const [priorityTodo, setPriorityTodo] = useState(null)
 
 
-  console.log(todoList, "todo list")
+  console.log("📋 Current todoList state:", todoList)
+  console.log("🎯 Current priorityTodo state:", priorityTodo)
 
 
 
@@ -267,7 +326,7 @@ function AdminDashboard() {
     };
 
     try {
-      const response = await axios.post(`${APIURL}/api/todo}`, data);
+      const response = await axios.post(`${APIURL}/api/todo`, data);
 
       if (response.status === 200) {
         Swal.fire({
@@ -277,6 +336,17 @@ function AdminDashboard() {
           confirmButtonColor: '#3085d6',
         });
         setShowTodoPopup(false);
+
+        // Refresh the todo list after saving
+        fetchTodos();
+
+        // Reset form fields
+        setTitle('');
+        setSelectedDate(null);
+        setSelectedTime(null);
+        setLink('');
+        setDescription('');
+        setIsPriority(false);
       }
     } catch (error) {
       console.error('Save error:', error.response?.data || error.message);
@@ -290,17 +360,20 @@ function AdminDashboard() {
   };
 
 
-  useEffect(() => {
-    fetchTodos();
-  }, []);
+
 
   const fetchTodos = async () => {
     try {
       const response = await axios.get(`${APIURL}/api/todo/${admin_id}`);
       const todos = response.data.todos;
 
+      console.log("📋 Raw todos from API:", todos);
+
       // Extract latest priority todo
       const priority = todos.find(todo => todo.priority === true);
+
+      console.log("🎯 Priority todo:", priority);
+      console.log("📝 All todos:", todos);
 
       setPriorityTodo(priority || null); // if not found, set null
       setTodoList(todos);
@@ -308,6 +381,78 @@ function AdminDashboard() {
       console.error("Failed to fetch todos:", error);
     }
   };
+
+
+  useEffect(() => {
+    if (admin_id && APIURL) {
+      fetchTodos();
+    }
+  }, [admin_id, APIURL]);
+
+  // WebSocket for real-time report alerts
+  useEffect(() => {
+    let socket;
+
+    if (admin_id) {
+      const connectWebSocket = () => {
+        const socketUrl = `ws://192.168.1.40:8000/ws/reports/${admin_id}/`;
+        console.log(`Connecting WebSocket: ${socketUrl}`);
+        socket = new WebSocket(socketUrl);
+
+        socket.onopen = () => {
+          console.log("WebSocket connection established.");
+        };
+
+        socket.onmessage = (event) => {
+          console.log("WebSocket message received:", event);
+          try {
+            const data = JSON.parse(event.data);
+            console.log("Parsed WebSocket message:", data);
+            if (data && data.message) {
+              const newNotification = {
+                id: new Date().getTime(),
+                description: data.message.description,
+                hall_number: data.message.hall_number,
+                teacher_name: data.message.teacher_name,
+                date: data.message.date,
+                time: new Date(),
+              };
+              setNotifications((prevNotifications) => [
+                newNotification,
+                ...prevNotifications,
+              ]);
+            }
+          } catch (error) {
+            console.error("Error parsing WebSocket message:", error);
+          }
+        };
+
+        socket.onerror = (error) => {
+          console.error("WebSocket error:", error);
+        };
+
+        socket.onclose = (event) => {
+          console.log("WebSocket connection closed:", event);
+
+          if (!event.wasClean) {
+            console.log("Attempting to reconnect WebSocket...");
+            setTimeout(() => connectWebSocket(), 5000);
+          }
+        };
+      };
+
+      connectWebSocket();
+
+      return () => {
+        if (socket) {
+          console.log("Closing WebSocket connection.");
+          socket.close();
+        }
+      };
+    }
+  }, [admin_id]);
+
+
 
 
   const getTimeLeft = (dateStr, timeStr) => {
@@ -349,12 +494,7 @@ function AdminDashboard() {
 
 
 
-  const dummyData = [
-    { Name: "Leo", DueDate: "February 14, 2023", Status: "Pending evaluation." },
-    { Name: "Leo", DueDate: "February 14, 2023", Status: "Pending evaluation." },
-    { Name: "Leo", DueDate: "February 14, 2023", Status: "Pending evaluation." },
-
-  ];
+ 
 
 
   // const [selectedDate, setSelectedDate] = useState(new Date());
@@ -827,20 +967,22 @@ function AdminDashboard() {
 
     }}>
 
-      <div style={{
-        width: ' calc(100% - 150px)',
-        height: "70px",
-        marginLeft: '135px',
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "0 24px", // for internal spacing
-        boxSizing: "border-box",
-        borderRadius: "16px",
-        backgroundColor: "#FFFFFF",
-        marginTop: "10px",
-
-      }}>
+      <div
+        className="admin-header"
+        style={{
+          width: ' calc(100% - 150px)',
+          height: "70px",
+          marginLeft: '135px',
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "0 24px", // for internal spacing
+          boxSizing: "border-box",
+          borderRadius: "16px",
+          backgroundColor: "#FFFFFF",
+          marginTop: "10px",
+        }}
+      >
 
         {/* Left - Welcome */}
         <div style={{
@@ -860,17 +1002,20 @@ function AdminDashboard() {
 
 
         {/* Right - Email & Profile */}
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-        }}>
+        <div
+          className="admin-profile"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+          }}
+        >
           <h1 style={{
             fontSize: "16px",
             color: "black",
             fontWeight: "400",
             margin: 0
-          }}>h@gmail.com</h1>
+          }}>{admininfo.admininfo?.email || "admin@example.com"}</h1>
 
           <div style={{
             width: "42px",
@@ -881,12 +1026,15 @@ function AdminDashboard() {
             cursor: "pointer"
           }} onClick={handlenavigate}>
             <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000"
+              src={admininfo.admininfo?.logo || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000"}
               alt="Profile"
               style={{
                 width: "100%",
                 height: "100%",
                 objectFit: "cover"
+              }}
+              onError={(e) => {
+                e.target.src = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000";
               }}
             />
           </div>
@@ -899,19 +1047,22 @@ function AdminDashboard() {
 
 
       <div style={{
-
+        height: "calc(100vh - 90px)",
+        overflow: "hidden"
       }} className="admin_dashboard">
 
         {/* <-----------------------student_overview-----------------------------------> */}
 
         <div style={{
-          paddingTop: "24px",
+          paddingTop: "12px",
           paddingLeft: "24px",
           paddingRight: "24px",
+          height: "60%",
+          overflow: "hidden",
 
         }} className="dash_main">
 
-          <div className="student_overview">
+          <div className="student_overview" style={{ height: "auto", maxHeight: "none" }}>
 
             <div style={{
               display: "flex",
@@ -984,11 +1135,14 @@ function AdminDashboard() {
 
 
             {selectedView === 'today' ? (
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                paddingLeft: "50px"
-              }}>
+              <div
+                className="pie-chart-container"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "50px"
+                }}
+              >
                 <PieChart
                   series={[
                     {
@@ -1006,46 +1160,48 @@ function AdminDashboard() {
                       ],
                     },
                   ]}
-                  height={234}
+                  height={180}
                   width={345}
                 />
               </div>
             ) : (
               <>
                 {attendanceData?.attendance_data && attendanceData?.attendance_data.length > 0 && (
-                  <BarChart
-                    series={[
-                      {
-                        data: attendanceData?.attendance_data.map(item => item.present_students),
-                        color: '#5297FF',
-                      },
-                      {
-                        data: attendanceData?.attendance_data.map(item => item.absent),
-                        color: '#FF6A6A',
-                      },
-                    ]}
-                    xAxis={[
-                      {
-                        scaleType: 'band',
-                        data: attendanceData?.attendance_data.map(item => item.date),
-                      },
-                    ]}
-                    height={234}
-                    width={345}
-                    margin={{ top: 20, bottom: 50, left: 50, right: 20 }}
-                    slotProps={{
-                      legend: {
-                        direction: 'row',
-                        position: { vertical: 'bottom', horizontal: 'middle' },
-                      },
-                    }}
-                    sx={{
-                      '& .MuiChartsBar-rect': {
-                        rx: 12,
-                        ry: 12,
-                      },
-                    }}
-                  />
+                  <div className="bar-chart-container">
+                    <BarChart
+                      series={[
+                        {
+                          data: attendanceData?.attendance_data.map(item => item.present_students),
+                          color: '#5297FF',
+                        },
+                        {
+                          data: attendanceData?.attendance_data.map(item => item.absent),
+                          color: '#FF6A6A',
+                        },
+                      ]}
+                      xAxis={[
+                        {
+                          scaleType: 'band',
+                          data: attendanceData?.attendance_data.map(item => item.date),
+                        },
+                      ]}
+                      height={180}
+                      width={345}
+                      margin={{ top: 20, bottom: 50, left: 50, right: 20 }}
+                      slotProps={{
+                        legend: {
+                          direction: 'row',
+                          position: { vertical: 'bottom', horizontal: 'middle' },
+                        },
+                      }}
+                      sx={{
+                        '& .MuiChartsBar-rect': {
+                          rx: 12,
+                          ry: 12,
+                        },
+                      }}
+                    />
+                  </div>
                 )}
               </>
             )}
@@ -1060,7 +1216,7 @@ function AdminDashboard() {
               alignItems: "center",
               gap: "0px",
 
-              marginTop: "20px"
+              marginTop: "10px"
 
             }}>
 
@@ -1161,7 +1317,7 @@ function AdminDashboard() {
           }}>
 
 
-            <div className="report_alert">
+            <div className="report_alert" style={{ height: "auto", maxHeight: "none" }}>
               <div style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -1180,46 +1336,90 @@ function AdminDashboard() {
                 </h1>
               </div>
 
-              {/* Report box (same as you posted) */}
-              <div className="report" style={{ marginTop: "12px" }}>
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  paddingTop: "5px"
-                }}>
-                  <div style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "50%",
-                    overflow: "hidden",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginLeft: "12px",
-                  }}>
-                    <img
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000"
-                      alt="Profile"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
-                  </div>
-                  <div className="cursor-pointer">
-                    <h1 style={{
-                      fontSize: "14px",
-                      fontFamily: "sans-serif",
-                      color: "black",
-                      margin: '0px',
+              {/* Report box - Display real notifications */}
+              {notifications.length > 0 ? (
+                notifications.slice(0, 1).map((notification) => (
+                  <div key={notification.id} className="report" style={{ marginTop: "12px" }}>
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      paddingTop: "5px"
                     }}>
-                      James Victor Reported Malpractice for Harry
-                    </h1>
+                      <div style={{
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "50%",
+                        overflow: "hidden",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginLeft: "12px",
+                      }}>
+                        <img
+                          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000"
+                          alt="Profile"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </div>
+                      <div className="cursor-pointer">
+                        <h1 style={{
+                          fontSize: "14px",
+                          fontFamily: "sans-serif",
+                          color: "black",
+                          margin: '0px',
+                        }}>
+                          {notification.teacher_name} Reported {notification.description} in Hall {notification.hall_number}
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="report" style={{ marginTop: "12px" }}>
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    paddingTop: "5px"
+                  }}>
+                    <div style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginLeft: "12px",
+                    }}>
+                      <img
+                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000"
+                        alt="Profile"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </div>
+                    <div className="cursor-pointer">
+                      <h1 style={{
+                        fontSize: "14px",
+                        fontFamily: "sans-serif",
+                        color: "black",
+                        margin: '0px',
+                      }}>
+                        No recent reports
+                      </h1>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               {/* Popup at the top */}
               {reportShowPopup && (
@@ -1233,7 +1433,8 @@ function AdminDashboard() {
                     borderRadius: "16px",
                     boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                     zIndex: 9999, // Make sure it sits above other elements
-                    paddingBottom: "16px"
+                    paddingBottom: "16px",
+
                   }}
                   className="report_alert_view_all"
                 >
@@ -1244,6 +1445,7 @@ function AdminDashboard() {
                       alignItems: "center",
                       padding: "8px 12px",
                       borderBottom: "2px solid #DFDFDF",
+
                     }}
                   >
                     <h1 className="text_font" style={{ margin: 0 }}>
@@ -1261,54 +1463,88 @@ function AdminDashboard() {
                     />
                   </div>
 
-                  <div
-                    style={{
-                      width: "652px",
-                      height: "67px",
-                      backgroundColor: "#F8F6E8",
-                      marginTop: "12px",
-                      marginLeft: "24px",
-                      borderRadius: "16px",
-                      padding: "0 12px",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  {notifications.length > 0 ? (
+                    notifications.map((notification) => (
                       <div
+                        key={notification.id}
                         style={{
-                          width: "40px",
-                          height: "40px",
-                          borderRadius: "50%",
-                          overflow: "hidden",
+                          width: "652px",
+                          height: "67px",
+                          backgroundColor: "#F8F6E8",
+                          marginTop: "12px",
+                          marginLeft: "24px",
+                          borderRadius: "16px",
+                          padding: "0 12px",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          border: "2px solid red"
                         }}
                       >
-                        <img
-                          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000"
-                          alt="Profile"
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <h1
-                          style={{
-                            fontSize: "14px",
-                            color: "black",
-                            fontWeight: "400",
-                            margin: 0,
-                          }}
-                        >
-                          James Victor Reported Malpractise for Harry
-                        </h1>
-                      </div>
-                    </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                          <div
+                            style={{
+                              width: "40px",
+                              height: "40px",
+                              borderRadius: "50%",
+                              overflow: "hidden",
 
-                    <div>
+                            }}
+                          >
+                            <img
+                              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000"
+                              alt="Profile"
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                              }}
+                            />
+                          </div>
+                          <div>
+                            <h1
+                              style={{
+                                fontSize: "14px",
+                                color: "black",
+                                fontWeight: "400",
+                                margin: 0,
+                              }}
+                            >
+                              {notification.teacher_name} Reported {notification.description} in Hall {notification.hall_number}
+                            </h1>
+                          </div>
+                        </div>
+
+                        <div>
+                          <h1
+                            style={{
+                              fontSize: "14px",
+                              color: "#959595",
+                              fontWeight: "400",
+                              margin: 0,
+                            }}
+                          >
+                            {notification.date}
+                          </h1>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div
+                      style={{
+                        width: "94%",
+                        height: "67px",
+                        backgroundColor: "#F8F6E8",
+                        marginTop: "12px",
+                        marginLeft: "24px",
+                        borderRadius: "16px",
+                        padding: "0 12px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+
+                      }}
+                    >
                       <h1
                         style={{
                           fontSize: "14px",
@@ -1317,10 +1553,10 @@ function AdminDashboard() {
                           margin: 0,
                         }}
                       >
-                        1 hour ago
+                        No reports available
                       </h1>
                     </div>
-                  </div>
+                  )}
                 </div>
               )}
 
@@ -1335,7 +1571,8 @@ function AdminDashboard() {
             {/* <-----------------------Todo list-----------------------------------> */}
 
             <div style={{
-
+              height: "auto",
+              maxHeight: "none"
             }} className="todo_list">
               <div style={{
                 display: "flex",
@@ -1380,8 +1617,36 @@ function AdminDashboard() {
 
               </div>
 
+              {/* Display Priority Todo */}
               {priorityTodo && (
                 <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "399px",
+                    height: "54px",
+                    borderBottom: "2px solid #D5D5D5",
+                    marginLeft: "8px",
+                    paddingLeft: "16px",
+                    backgroundColor: "#FFF3CD",
+                  }}
+                >
+                  <div>
+                    <h1 style={{ fontSize: "14px", fontWeight: "600" }}>{priorityTodo.title || 'Untitled Task'}</h1>
+                  </div>
+                  <div className="cursor-pointer">
+                    <IoIosArrowForward size={20} />
+                  </div>
+                </div>
+              )}
+
+              {/* Display Regular Todos */}
+              {console.log("🔄 Rendering todos:", todoList.filter(todo => !todo.priority).slice(0, 3))}
+              {todoList.filter(todo => !todo.priority).slice(0, 3).map((todo, index) => (
+                <div
+                  key={index}
+                  className="todo-item"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -1394,31 +1659,53 @@ function AdminDashboard() {
                   }}
                 >
                   <div>
-                    <h1 style={{ fontSize: "14px" }}>{priorityTodo.title || 'Untitled Task'}</h1>
+                    <h1 style={{ fontSize: "14px" }}>{todo.title || 'Untitled Task'}</h1>
                   </div>
                   <div className="cursor-pointer">
                     <IoIosArrowForward size={20} />
                   </div>
+                </div>
+              ))}
+
+              {/* Show message if no todos */}
+              {todoList.length === 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "399px",
+                    height: "54px",
+                    marginLeft: "8px",
+                    paddingLeft: "16px",
+                    color: "#959595",
+                    fontSize: "14px",
+                  }}
+                >
+                  No todos available
                 </div>
               )}
             </div>
 
 
             {showTodoPopup && (
-              <div style={{
-                position: "absolute",
-                top: "80px", // distance from top of screen (adjust as needed)
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "700px",
-                height: "600px",
-                border: "2px solid #D9D9D9",
-                borderRadius: "16px",
-                backgroundColor: "#fff",
-                zIndex: 999,
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
-                overflow: "auto", // in case content overflows
-              }}>
+              <div
+                className="todo-popup"
+                style={{
+                  position: "absolute",
+                  top: "80px", // distance from top of screen (adjust as needed)
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  width: "700px",
+                  height: "600px",
+                  border: "2px solid #D9D9D9",
+                  borderRadius: "16px",
+                  backgroundColor: "#fff",
+                  zIndex: 999,
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+                  overflow: "auto", // in case content overflows
+                }}
+              >
 
                 <div
                   style={{
@@ -1435,7 +1722,8 @@ function AdminDashboard() {
 
                     marginLeft: "24px",
                     height: "72px",
-                    width: "618px"
+                    width: "618px",
+
                   }}>
                     <input
                       type="text"
@@ -1471,12 +1759,14 @@ function AdminDashboard() {
                   </div>
                 </div>
 
-                <div style={{
-                  display: "flex",
-                  gap: "16px",
-                  marginLeft: "24px",
-
-                }}>
+                <div
+                  className="date-time-container"
+                  style={{
+                    display: "flex",
+                    gap: "16px",
+                    marginLeft: "24px",
+                  }}
+                >
 
 
                   <div
@@ -1750,6 +2040,14 @@ function AdminDashboard() {
                   }}
                 >
                   <div
+                    onClick={() => {
+                      setTitle('');
+                      setSelectedDate(null);
+                      setSelectedTime(null);
+                      setLink('');
+                      setDescription('');
+                      setIsPriority(false);
+                    }}
                     style={{
                       width: "100px",
                       height: "40px",
@@ -1816,6 +2114,7 @@ function AdminDashboard() {
                     alignItems: "center",
                     padding: "8px 12px",
                     borderBottom: "2px solid #DFDFDF",
+
                   }}
                 >
                   <h1 className="text_font" style={{ margin: 0 }}>
@@ -1844,18 +2143,23 @@ function AdminDashboard() {
                       justifyContent: "space-between",
                       gap: "16px",
                       borderBottom: "1px solid #ccc",
-                      width: "652px",
+                      width: "95%",
                       height: "56px",
                       marginLeft: "24px",
+                  
                     }}
                   >
-                    <div>
+                    <div style={{
+                        border: "2px solid red",
+                  
+                    }}>
                       <h1
                         style={{
                           fontSize: "14px",
                           fontWeight: "400",
                           color: "black",
                           margin: 0,
+                        
                         }}
                       >
                         {todo.title || 'Untitled Task'}
@@ -1868,6 +2172,7 @@ function AdminDashboard() {
                         alignItems: "center",
                         padding: "4px 8px",
                         gap: "6px",
+                        border: "2px solid red"
                       }}
                     >
                       <MdOutlineTimer />
@@ -1877,6 +2182,7 @@ function AdminDashboard() {
                           fontWeight: "400",
                           color: "#72989C",
                           margin: 0,
+                          
                         }}
                       >
                         {getTimeLeft(todo.date, todo.time)}
@@ -1893,6 +2199,8 @@ function AdminDashboard() {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                          
+                      
                       }}
                     >
                       <h1
@@ -1901,6 +2209,7 @@ function AdminDashboard() {
                           fontSize: "12px",
                           fontWeight: "400",
                           margin: 0,
+                          
                         }}
                       >
                         Pending
@@ -1923,7 +2232,7 @@ function AdminDashboard() {
 
           {/* <-----------------------Notification-----------------------------------> */}
 
-          <div className="notification" >
+          <div className="notification" style={{ height: "auto", maxHeight: "none" }}>
 
             <div style={{
               display: "flex",
@@ -1953,7 +2262,8 @@ function AdminDashboard() {
                   borderRadius: "16px",
                   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                   zIndex: 9999, // Make sure it sits above other elements
-                  paddingBottom: "16px"
+                  paddingBottom: "16px",
+               
                 }}
                 className="report_alert_view_all"
               >
@@ -1985,7 +2295,7 @@ function AdminDashboard() {
 
                 <div
                   style={{
-                    width: "652px",
+                   width: "95%",
                     height: "67px",
                     backgroundColor: "#F4F4F4",
                     marginTop: "12px",
@@ -1995,6 +2305,8 @@ function AdminDashboard() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
+                   
+
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -2043,6 +2355,8 @@ function AdminDashboard() {
                     </h1>
                   </div>
                 </div>
+
+
               </div>
             )}
 
@@ -2126,21 +2440,24 @@ function AdminDashboard() {
 
         {/* <--------------------------Teacher Action-------------------------------> */}
 
-        <div style={{
-          display: "flex",
-          gap: "24px",
-          justifyContent: "space-between",
-          paddingLeft: "24px",
-          paddingTop: "24px",
-          paddingRight: "24px",
+        <div
+          className="dashboard-sections"
+          style={{
+            display: "flex",
+            gap: "24px",
+            justifyContent: "space-between",
+            paddingLeft: "24px",
+            paddingTop: "12px",
+            paddingRight: "24px",
+            height: "50%",
+            overflow: "hidden",
+
+          }}
+        >
 
 
 
-        }}>
-
-
-
-          <div className="teacher">
+          <div className="teacher" style={{ height: "auto", maxHeight: "none" }}>
 
             <div style={{
               display: "flex",
@@ -2168,21 +2485,21 @@ function AdminDashboard() {
               <div style={{
                 height: "37px",
                 width: "108px",
-              }} onClick={() => setActiveTab("pending")}>
+              }} onClick={() => handleTabChange("pending")}>
                 <h1 className={`action ${activeTab === "pending" ? "active" : ""}`}>QuestionPaper</h1>
               </div>
 
               <div style={{
                 height: "37px",
                 width: "110px",
-              }} onClick={() => setActiveTab("complete")}>
+              }} onClick={() => handleTabChange("complete")}>
                 <h1 className={`complete ${activeTab === "complete" ? "active" : ""}`}>Evaluation</h1>
               </div>
 
             </div>
 
 
-            <DataTable value={dummyData}
+            <DataTable value={allActions}
 
               className="custom-datatable" style={
                 {
@@ -2195,9 +2512,10 @@ function AdminDashboard() {
               <Column style={{
                 height: "52px",
               }} field="Name" header="Name"></Column>
-              <Column field="DueDate" header="DueDate"></Column>
+              <Column field="DueDate" header="Due Date"></Column>
               <Column field="Class" header="Class"></Column>
               <Column field="Subject" header="Subject"></Column>
+              <Column field="Status" header="Status"></Column>
 
 
             </DataTable>
@@ -2216,7 +2534,8 @@ function AdminDashboard() {
                 boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                 zIndex: 9999, // Make sure it sits above other elements
                 paddingBottom: "16px",
-                border: "2px solid rgb(249, 0, 0)"
+         
+              
               }}
               className="report_alert_view_all"
             >
@@ -2249,19 +2568,21 @@ function AdminDashboard() {
                 width: "653px",
                 height: "492px",
                 marginTop: "8px",
-                
+
               }} >
 
 
 
-                <div className="tabs"
+                <div 
+                
+                  className="tabs"
                 >
 
-                  <div onClick={() => setActive("pending")}>
+                  <div onClick={() => handlePopupTabChange("pending")}>
                     <h1 className={`action ${active === "pending" ? "active" : ""}`}>QuestionPaper</h1>
                   </div>
 
-                  <div onClick={() => setActive("complete")}>
+                  <div onClick={() => handlePopupTabChange("complete")}>
                     <h1 className={`complete ${active === "complete" ? "active" : ""}`}>Evaluation</h1>
                   </div>
 
@@ -2271,12 +2592,12 @@ function AdminDashboard() {
 
 
                 <DataTable
-                  value={dummyData}
+                  value={allActions}
                   className="custom-datatable"
                   style={{
                     marginTop: '15px',
                     marginLeft: '24px',
-
+                   width: "1150px",
                   }}
                 >
                   <Column
@@ -2289,12 +2610,17 @@ function AdminDashboard() {
                     header="Due Date"
                   />
                   <Column
+                    field="Class"
+                    header="Class"
+                  />
+                  <Column
+                    field="Subject"
+                    header="Subject"
+                  />
+                  <Column
                     field="Status"
                     header="Status"
                   />
-
-                  <Column field="Class" header="Class"></Column>
-                  <Column field="Subject" header="Subject"></Column>
 
                 </DataTable>
 
@@ -2309,7 +2635,8 @@ function AdminDashboard() {
           {/* <-----------------------Exam Performance-------------------------------> */}
 
           <div style={{
-
+            height: "auto",
+            maxHeight: "none"
           }} className="exam_performance">
 
 
@@ -2478,7 +2805,7 @@ function AdminDashboard() {
               padding: "15px 24px",
               borderBottom: "2px solid #DFDFDF",
               height: "52px",
-              marginTop: "65px",
+              marginTop: "20px",
 
             }}>
 
