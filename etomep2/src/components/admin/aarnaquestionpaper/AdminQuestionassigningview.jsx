@@ -540,8 +540,13 @@ const AdminQuestionAssigningView = ({ isOpen, onClose, selectedItem, onDeleted }
                                             width: '100%',
                                             height: '48px',
                                             cursor: 'pointer'
-                                        }} onClick={() => setShowQuestions(true)}>
+                                        }} onClick={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            setShowQuestions(true);
+                                        }}>
                                             <button 
+                                                type="button"
                                                 style={{
                                                     background: 'none',
                                                     border: 'none',
@@ -551,6 +556,11 @@ const AdminQuestionAssigningView = ({ isOpen, onClose, selectedItem, onDeleted }
                                                     cursor: 'pointer',
                                                     padding: '0',
                                                     margin: '0'
+                                                }}
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    setShowQuestions(true);
                                                 }}
                                             >
                                                 View Question

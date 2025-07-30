@@ -14,6 +14,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
 
     const admininfo = useSelector((state) => state.admininfo);
+    const [isSaving, setIsSaving] = useState(false); // Loading state for save button
 
     const [formData, setFormData] = useState({
         firstname: "",
@@ -92,6 +93,8 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
     };
 
     const handleSave = async () => {
+        setIsSaving(true); // Start loading
+        
         const validationErrors = [];
 
 
@@ -120,6 +123,7 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                 icon: 'warning',
                 confirmButtonText: 'OK'
             });
+            setIsSaving(false); // Stop loading on validation error
             return;
         }
 
@@ -155,6 +159,8 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
             }
         } catch (error) {
             Swal.fire("Error", error.response?.data?.message || "Server error occurred", "error");
+        } finally {
+            setIsSaving(false); // Stop loading regardless of success or error
         }
     };
 
@@ -488,14 +494,15 @@ const NewFacultyAdd = ({ isOpen, onClose, onFacultyAdded }) => {
                     <button 
                         onClick={handleSave} 
                         className="facultyadd-btn"
+                        disabled={isSaving}
                         style={{
-                            backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                            backgroundColor: isFormComplete() && !isSaving ? '#2162B2' : '#bcbcbc',
                             color: isFormComplete() ? '#fff' : '#fff',
-                            border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
-                            cursor: 'pointer'
+                            border: isFormComplete() && !isSaving ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: isSaving ? 'not-allowed' : 'pointer'
                         }}
                     >
-                        Save
+                        {isSaving ? 'Saving...' : 'Save'}
                     </button>
                 </div>
             </div>

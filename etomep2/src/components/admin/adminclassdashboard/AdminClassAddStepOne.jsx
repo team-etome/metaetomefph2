@@ -238,7 +238,7 @@ const AdminClassAddStepOne = ({ nextStep, closeModal, teachers, initialData }) =
             </label>
             <input
               id="className"
-              type="text"
+              type="number"
               className={`adminclassaddstepone_form-control ${errors.className ? 'is-invalid' : ''}`}
               placeholder="Enter class name"
               value={formData.className}

@@ -411,7 +411,8 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
                                 />
                             </div>
                             <div className="lokatextbookadd-form-group">
-                                <label className="lokatextbookadd-form-label">Select Medium</label>
+                                <label className="lokatextbookadd-form-label">
+                                    Select Medium <span className="lokatextbookadd_required">*</span></label>
                                 <Select
                                     options={mediumOptions}
                                     styles={lokaaddcustomStyles}
@@ -422,8 +423,7 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
                             </div>
                             <div className="lokatextbookadd-form-group">
                                 <label className="lokatextbookadd-form-label">
-                                    Select Subject
-                                    <span className="lokatextbookadd_required">*</span></label>
+                                    Select Subject <span className="lokatextbookadd_required">*</span></label>
                                 <Select
                                     options={subjectOptions}
                                     value={selectedSubject}
@@ -436,7 +436,8 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
 
                             </div>
                             <div className="lokatextbookadd-form-group">
-                                <label className="lokatextbookadd-form-label">Textbook Name</label>
+                                <label className="lokatextbookadd-form-label">
+                                    Textbook Name <span className="lokatextbookadd_required">*</span></label>
                                 <input
                                     type="text"
                                     min="0"
@@ -477,7 +478,8 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
                                 />
                             </div>
                             <div className="lokatextbookadd-form-group">
-                                <label className="lokatextbookadd-form-label">Publisher Name</label>
+                                <label className="lokatextbookadd-form-label">
+                                    Publisher Name <span className="lokatextbookadd_required">*</span></label>
                                 <Select
                                     options={publisherOptions}
                                     styles={lokaaddcustomStyles}
@@ -487,7 +489,8 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
                                 />
                             </div>
                             <div className="lokatextbookadd-form-group lokatextbookadd-form-group--full">
-                                <label className="lokatextbookadd-form-label">Add cover Photo</label>
+                                <label className="lokatextbookadd-form-label">
+                                    Add cover Photo <span className="lokatextbookadd_required">*</span></label>
                                 <div>
                                     <label htmlFor="photo" style={{}}></label>
                                     <div className="admin_textbook_image_upload_container">
@@ -544,11 +547,19 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
                             </div>
                             <div className="lokatextbookadd-form-group lokatextbookadd-form-group--full">
                                 <div className="lokatextbookadd_chapter-upload-wrapper">
-                                    <label className="lokatextbookadd_chapter-upload-label">Number of Chapters</label>
+                                    <label className="lokatextbookadd_chapter-upload-label">
+                                        Number of Chapters <span className="lokatextbookadd_required">*</span></label>
                                     <input
                                         type="number"
+                                        min="0"
                                         value={chapterCount}
                                         onChange={handleChapterCountChange}
+                                        onWheel={e => e.target.blur()}
+                                        onKeyDown={e => {
+                                            if (['-', '+', '=', '/', '.', 'e', 'E'].includes(e.key)) {
+                                                e.preventDefault();
+                                            }
+                                        }}
                                         className="lokatextbookadd_chapter-upload-input"
                                     />
                                     <div
@@ -588,8 +599,12 @@ const NewLokaBookAdd = ({ isOpen, onClose, onSuccess }) => {
                                                     {chapter.file ? chapter.file.name : <span>&nbsp;</span>}
                                                 </div>
                                                 <button
+                                                    type="button"
                                                     className="lokatextbookadd_chapter-upload-delete"
-                                                    onClick={() => handleDelete(index)}
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        handleDelete(index);
+                                                    }}
                                                 >
                                                     <FaTrash />
                                                 </button>

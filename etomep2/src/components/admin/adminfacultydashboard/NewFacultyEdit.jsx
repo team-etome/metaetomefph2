@@ -14,6 +14,7 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
     const admin_id = useSelector((state) => state.admininfo.admininfo?.admin_id);
 
     const admininfo = useSelector((state) => state.admininfo);
+    const [isSaving, setIsSaving] = useState(false); // Loading state for save button
 
     const [previewUrl, setPreviewUrl] = useState(null);
 
@@ -97,6 +98,8 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
 
 
     const handleSave = async () => {
+        setIsSaving(true); // Start loading
+        
         const validationErrors = [];
         if (!formData.firstname) validationErrors.push("First name is required.");
         if (!formData.gender?.value) validationErrors.push("Gender is required.");
@@ -121,9 +124,9 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
                 icon: 'warning',
                 confirmButtonText: 'OK'
             });
+            setIsSaving(false); // Stop loading on validation error
             return;
         }
-
 
         const formDataToSend = new FormData();
         formDataToSend.append("admin_id", admin_id);
@@ -144,12 +147,9 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
                 { headers: { 'Content-Type': 'multipart/form-data' } }
             );
 
-
             if (response.status === 200 || response.status === 201) {
                 Swal.fire("Success", "Faculty updated successfully", "success");
-
                 resetForm();
-
                 onFacultyUpdated?.();
                 onClose();
             } else {
@@ -157,6 +157,8 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
             }
         } catch (error) {
             Swal.fire("Error", error.response?.data?.message || "Server error occurred", "error");
+        } finally {
+            setIsSaving(false); // Stop loading regardless of success or error
         }
     };
 
@@ -516,14 +518,15 @@ const NewFacultyEdit = ({ isOpen, faculty, onClose, onFacultyUpdated }) => {
                     <button 
                         onClick={handleSave} 
                         className="facultyedit-btn facultyedit-btn-primary"
+                        disabled={isSaving}
                         style={{
-                            backgroundColor: isFormComplete() ? '#2162B2' : '#bcbcbc',
+                            backgroundColor: isFormComplete() && !isSaving ? '#2162B2' : '#bcbcbc',
                             color: isFormComplete() ? '#fff' : '#fff',
-                            border: isFormComplete() ? '1px solid #2162B2' : '1px solid #bcbcbc',
-                            cursor: 'pointer'
+                            border: isFormComplete() && !isSaving ? '1px solid #2162B2' : '1px solid #bcbcbc',
+                            cursor: isSaving ? 'not-allowed' : 'pointer'
                         }}
                     >
-                        Save
+                        {isSaving ? 'Saving...' : 'Save'}
                     </button>
                 </div>
             </div>

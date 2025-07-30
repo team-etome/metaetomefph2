@@ -248,8 +248,8 @@
     font-size: 14px;
   }
   .facultydashboard-dropdown-item-icon{
-    width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;  /* preserves aspect ratio */
   margin-right: 8px;   
   vertical-align: middle;
@@ -260,7 +260,7 @@
 .facultydashboard_dropdown-menu {
     position: absolute;
     /* margin-top: 5px; */
-    right: 35px;
+    right: 45px;
     background-color: #fff;
     height: 136px;
     width: 252px;
@@ -271,10 +271,10 @@
   
   /* Dropdown menu items */
   .facultydashboard_dropdown-item {
-    /* margin: 10px; */
-    margin-top: 0px !important;
+    margin: 16px !important;
+    /* margin-top: 0px !important; */
     cursor: pointer;
-    padding: 0.5rem;
+    /* padding: 0.5rem; */
     font-size: 16px;
     height: 48px;
     color: #222222;

@@ -567,7 +567,7 @@ const NewTeacherAddAssignment = ({ onClose, class_name, division, subject, editD
                                         onChange={e => setDueDate(e.target.value)}
                                         className="newteacheraddassignment-input"
                                     />
-                                    <BsCalendar3 className="calendar-icon" />
+                                    {/* <BsCalendar3 className="calendar-icon" /> */}
                                 </div>
                             </div>
 
