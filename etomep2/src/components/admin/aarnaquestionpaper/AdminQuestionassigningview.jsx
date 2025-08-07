@@ -239,7 +239,7 @@ const AdminQuestionAssigningView = ({ isOpen, onClose, selectedItem, onDeleted }
         if (!showQuestions) return null;
 
         return (
-            <div className="AdminQuestionAssigning-questions-modal-overlay" onClick={() => setShowQuestions(false)}>
+            <div className="AdminQuestionAssigning-questions-modal-overlay-main" onClick={() => setShowQuestions(false)}>
                 <div className="AdminQuestionAssigning-questions-modal-content" onClick={e => e.stopPropagation()}>
                     <button
                         className="AdminQuestionAssigning-questions-modal-close"
