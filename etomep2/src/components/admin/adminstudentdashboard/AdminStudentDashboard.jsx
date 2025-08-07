@@ -65,8 +65,8 @@ const AdminStudentDashboard = () => {
         
         // Status filter - blocked: false = active, blocked: true = inactive
         const statusMatch = selectedStatus.value === 'active' 
-            ? student.blocked === false 
-            : student.blocked === true;
+            ? (student.blocked ===null || student.blocked ===false)
+            : student.blocked ===true;
         
         return matchName && matchClass && statusMatch;
     });

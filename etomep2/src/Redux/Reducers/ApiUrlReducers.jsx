@@ -9,7 +9,7 @@ const initialState = {
 
     // url :"https://www.etomeindia.com"
 
-    url :"http://192.168.1.14:8001"
+    url :"http://192.168.1.23:8000"
 
 
 

@@ -38,6 +38,7 @@ import { MdOutlineTimer } from "react-icons/md";
 import { BarChart } from '@mui/x-charts';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Select from 'react-select';
 
 
 
@@ -477,24 +478,224 @@ function AdminDashboard() {
   // ------------------------------Exam performance--------------------------------------------
 
   const [examViewAll, setexamViewAll] = useState(false)
+  const [examPerformanceData, setExamPerformanceData] = useState([])
+  const [isLoadingExamPerformance, setIsLoadingExamPerformance] = useState(false)
+  const [selectedClass, setSelectedClass] = useState(null)
+  const [selectedDivision, setSelectedDivision] = useState(null)
+  const [filteredStudents, setFilteredStudents] = useState([])
+  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTermPopup, setSearchTermPopup] = useState("")
 
+  // Custom styles for React Select
+  const dashboardcustomStyles = {
+    control: (base, state) => ({
+      ...base,
+      width: '120px',
+      height: '32px',
+      borderRadius: '8px',
+      borderColor: state.isFocused ? '#86b7fe' : '#D9D9D9',
+      boxShadow: state.isFocused ? '0 0 0 .25rem rgb(194, 218, 255)' : 0,
+      minHeight: '32px',
+      border: "2px solid rgb(188, 190, 194)",
+    }),
+
+    dropdownIndicator: (base) => ({
+      ...base,
+      color: '#292D32',
+      padding: '0 8px',
+      alignItems: 'center',
+      svg: {
+        width: '24px',
+        height: '24px',
+      }
+    }),
+
+    indicatorSeparator: () => ({
+      display: 'none'
+    }),
+
+    placeholder: (base) => ({
+      ...base,
+      color: '#526D82',
+      fontSize: '14px'
+    }),
+
+    singleValue: (base) => ({
+      ...base,
+      color: '#526D82',
+      fontSize: '14px'
+    }),
+
+    menu: (base) => ({
+      ...base,
+      zIndex: 1000,
+      maxHeight: '150px',
+      overflowY: 'auto',
+      fontSize: '14px',
+    }),
+
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isFocused ? '#2162B2' : '#fff',
+      color: state.isFocused ? '#fff' : '#222222',
+      '&:active': {
+        backgroundColor: '#e6e6e6',
+      }
+    }),
+  };
+
+  const fetchExamPerformance = async () => {
+    if (!admin_id) {
+      console.log("❌ Admin ID not available");
+      return;
+    }
+
+    setIsLoadingExamPerformance(true);
+    try {
+      const response = await axios.get(`${APIURL}/api/scoreboard/${admin_id}`);
+      console.log("✅ Exam Performance Data:", response.data);
+      const data = response.data.data || response.data || [];
+      setExamPerformanceData(data);
+
+      // Set default selected class and division if data exists
+      if (data.length > 0) {
+        setSelectedClass({ value: data[0].class_name, label: `Class ${data[0].class_name}` });
+        setSelectedDivision({ value: data[0].division, label: data[0].division });
+        setFilteredStudents(data[0].students || []);
+      }
+    } catch (error) {
+      console.error("❌ Error fetching exam performance:", error);
+      setExamPerformanceData([]);
+    } finally {
+      setIsLoadingExamPerformance(false);
+    }
+  };
+
+  // Get unique classes from data
+  const getUniqueClasses = () => {
+    const classes = examPerformanceData.map(item => item.class_name);
+    return [...new Set(classes)];
+  };
+
+  // Create options for React Select
+  // Get unique divisions for selected class
+  const getUniqueDivisions = () => {
+    const divisions = examPerformanceData
+      .filter(item => item.class_name === (selectedClass?.value || selectedClass))
+      .map(item => item.division);
+    return [...new Set(divisions)];
+  };
+
+  const classOptions = getUniqueClasses().map(className => ({
+    value: className,
+    label: `Class ${className}`
+  }));
+
+  const divisionOptions = getUniqueDivisions().map(division => ({
+    value: division,
+    label: division
+  }));
+
+  // Handle class change
+  const handleClassChange = (selectedOption) => {
+    setSelectedClass(selectedOption);
+    if (selectedOption) {
+      const classData = examPerformanceData.find(item => item.class_name === selectedOption.value);
+      if (classData) {
+        setSelectedDivision({ value: classData.division, label: classData.division });
+        setFilteredStudents(classData.students || []);
+      }
+    }
+  };
+
+  // Handle division change
+  const handleDivisionChange = (selectedOption) => {
+    setSelectedDivision(selectedOption);
+    if (selectedOption && selectedClass) {
+      const classData = examPerformanceData.find(
+        item => item.class_name === selectedClass.value && item.division === selectedOption.value
+      );
+      if (classData) {
+        setFilteredStudents(classData.students || []);
+      }
+    }
+  };
+
+  // Get award image based on student rank
+  const getAwardImage = (index) => {
+    if (index === 0) return award1;
+    if (index === 1) return award2;
+    if (index === 2) return award3;
+    return null;
+  };
+
+  // Function to get rank display (badge or number)
+  const getRankDisplay = (index) => {
+    if (index < 3) {
+      // Return badge for top 3
+      return getAwardImage(index);
+    } else {
+      // Return numerical rank for others
+      return index + 1;
+    }
+  };
+
+  // Search functionality for main view
+  const handleSearchChange = (value) => {
+    setSearchTerm(value);
+  };
+
+  // Search functionality for popup view
+  const handleSearchChangePopup = (value) => {
+    setSearchTermPopup(value);
+  };
+
+  // Get actual rank of a student in the original list
+  const getStudentRank = (studentName) => {
+    const originalIndex = filteredStudents.findIndex(student => student.name === studentName);
+    return originalIndex + 1; // +1 because index is 0-based
+  };
+
+  // Get filtered students based on search term (main view)
+  const getFilteredStudentsBySearch = () => {
+    if (!searchTerm.trim()) {
+      return filteredStudents;
+    }
+    return filteredStudents.filter(student =>
+      student.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
+  // Get filtered students based on search term (popup view)
+  const getFilteredStudentsBySearchPopup = () => {
+    if (!searchTermPopup.trim()) {
+      return filteredStudents;
+    }
+    return filteredStudents.filter(student =>
+      student.name.toLowerCase().includes(searchTermPopup.toLowerCase())
+    );
+  };
 
   const handleExamViewAll = () => {
-
-    console.log("jhdfgashuf")
-
-    setexamViewAll(true)
-
-
+    console.log("📊 Opening Exam Performance View All");
+    setexamViewAll(true);
+    fetchExamPerformance(); // Fetch data when opening the popup
   }
 
   const closeExamViewAll = () => {
     setexamViewAll(false)
   }
 
+  // Fetch data on component mount
+  useEffect(() => {
+    if (admin_id && APIURL) {
+      fetchExamPerformance();
+    }
+  }, [admin_id, APIURL]);
 
 
- 
+
+
 
 
   // const [selectedDate, setSelectedDate] = useState(new Date());
@@ -2146,12 +2347,12 @@ function AdminDashboard() {
                       width: "95%",
                       height: "56px",
                       marginLeft: "24px",
-                  
+
                     }}
                   >
                     <div style={{
-                        border: "2px solid red",
-                  
+                      // border: "2px solid red",
+
                     }}>
                       <h1
                         style={{
@@ -2159,7 +2360,7 @@ function AdminDashboard() {
                           fontWeight: "400",
                           color: "black",
                           margin: 0,
-                        
+
                         }}
                       >
                         {todo.title || 'Untitled Task'}
@@ -2172,7 +2373,7 @@ function AdminDashboard() {
                         alignItems: "center",
                         padding: "4px 8px",
                         gap: "6px",
-                        border: "2px solid red"
+                        // border: "2px solid red"
                       }}
                     >
                       <MdOutlineTimer />
@@ -2182,7 +2383,7 @@ function AdminDashboard() {
                           fontWeight: "400",
                           color: "#72989C",
                           margin: 0,
-                          
+
                         }}
                       >
                         {getTimeLeft(todo.date, todo.time)}
@@ -2199,8 +2400,8 @@ function AdminDashboard() {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                          
-                      
+
+
                       }}
                     >
                       <h1
@@ -2209,7 +2410,7 @@ function AdminDashboard() {
                           fontSize: "12px",
                           fontWeight: "400",
                           margin: 0,
-                          
+
                         }}
                       >
                         Pending
@@ -2263,7 +2464,7 @@ function AdminDashboard() {
                   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                   zIndex: 9999, // Make sure it sits above other elements
                   paddingBottom: "16px",
-               
+
                 }}
                 className="report_alert_view_all"
               >
@@ -2295,7 +2496,7 @@ function AdminDashboard() {
 
                 <div
                   style={{
-                   width: "95%",
+                    width: "95%",
                     height: "67px",
                     backgroundColor: "#F4F4F4",
                     marginTop: "12px",
@@ -2305,7 +2506,7 @@ function AdminDashboard() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                   
+
 
                   }}
                 >
@@ -2534,8 +2735,8 @@ function AdminDashboard() {
                 boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                 zIndex: 9999, // Make sure it sits above other elements
                 paddingBottom: "16px",
-         
-              
+
+
               }}
               className="report_alert_view_all"
             >
@@ -2573,8 +2774,8 @@ function AdminDashboard() {
 
 
 
-                <div 
-                
+                <div
+
                   className="tabs"
                 >
 
@@ -2597,7 +2798,7 @@ function AdminDashboard() {
                   style={{
                     marginTop: '15px',
                     marginLeft: '24px',
-                   width: "1150px",
+                    width: "1150px",
                   }}
                 >
                   <Column
@@ -2673,93 +2874,23 @@ function AdminDashboard() {
 
               <div style={{ display: "flex", gap: "16px" }}>
 
-                <div
-                  style={{
-                    width: "115px",
-                    height: "32px",
-                    border: "2px solid rgb(188, 190, 194)",
-                    borderRadius: "8px",
-                    backgroundColor: "white",
-                    position: "relative",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <select
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      border: "none",
-                      outline: "none",
-                      backgroundColor: "transparent",
-                      fontSize: "14px",
-                      cursor: "pointer",
-                      appearance: "none",
-                      paddingLeft: "12px",
-                    }}
-                  >
-                    <option value="" disabled selected>
-                      class 1
-                    </option>
-                    <option value="message1">class 2</option>
-                  </select>
+                <Select
+                  value={selectedClass}
+                  onChange={handleClassChange}
+                  options={classOptions}
+                  styles={dashboardcustomStyles}
+                  placeholder="Select Class"
+                  isClearable={false}
+                />
 
-                  <div
-                    style={{
-                      position: "absolute",
-                      right: "13px",
-                      pointerEvents: "none",
-                      fontSize: "25px",
-                    }}
-                  >
-                    <RiArrowDropDownLine />
-                  </div>
-                </div>
-
-
-                <div
-                  style={{
-                    width: "115px",
-                    height: "32px",
-                    border: "2px solid rgb(188, 190, 194)",
-                    borderRadius: "8px",
-                    backgroundColor: "white",
-                    position: "relative",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <select
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      border: "none",
-                      outline: "none",
-                      backgroundColor: "transparent",
-                      fontSize: "14px",
-                      cursor: "pointer",
-                      appearance: "none",
-                      paddingLeft: "12px",
-                    }}
-                  >
-                    <option value="A" disabled selected>
-                      A
-                    </option>
-                    <option value="B">B</option>
-                  </select>
-
-                  <div
-                    style={{
-                      position: "absolute",
-                      right: "13px",
-                      pointerEvents: "none",
-                      fontSize: "25px",
-
-                    }}
-                  >
-                    <RiArrowDropDownLine />
-                  </div>
-                </div>
+                <Select
+                  value={selectedDivision}
+                  onChange={handleDivisionChange}
+                  options={divisionOptions}
+                  styles={dashboardcustomStyles}
+                  placeholder="Select Division"
+                  isClearable={false}
+                />
               </div>
 
 
@@ -2779,205 +2910,128 @@ function AdminDashboard() {
                 }}
               >
                 <div>
-
                   <CiSearch />
-
                 </div>
-
-                <div>
-                  <h1 style={{ fontSize: "12px", color: "#959595", fontWeight: "400" }}> Find Student</h1>
-                </div>
-
-
-
-              </div>
-
-
-
-            </div>
-
-
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between", // Pushes left and right content apart
-              alignItems: "center",
-              width: "100%",
-              padding: "15px 24px",
-              borderBottom: "2px solid #DFDFDF",
-              height: "52px",
-              marginTop: "20px",
-
-            }}>
-
-              {/* Profile Section */}
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-              }}>
-                <div
+                <input
+                  type="text"
+                  placeholder="Find Student"
+                  value={searchTerm}
+                  onChange={(e) => handleSearchChange(e.target.value)}
                   style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "50%",
-                    overflow: "hidden"
+                    flex: 1,
+                    border: "none",
+                    outline: "none",
+                    backgroundColor: "transparent",
+                    fontSize: "12px",
+                    color: "#959595",
+                    fontWeight: "400"
                   }}
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww"
-                    alt="Profile"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-                <div>
-                  <h1 style={{ fontSize: "16px", fontWeight: "400", color: "black" }}>Liam</h1>
-                </div>
+                />
               </div>
 
-              {/* Badge and Arrow Section */}
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "38px"
-              }}>
-                <div>
-                  <img src={award1} alt="Award" />
-                </div>
-                <div>
-                  <IoIosArrowForward style={{
-                    width: "25px",
-                    height: "25px",
 
-                  }} />
-                </div>
-              </div>
+
             </div>
 
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between", // Pushes left and right content apart
-              alignItems: "center",
-              width: "100%",
-              padding: "15px 24px",
-              borderBottom: "2px solid #DFDFDF",
-              height: "52px",
-              marginTop: "0px",
 
+            {getFilteredStudentsBySearch().length > 0 ? (
+              getFilteredStudentsBySearch().slice(0, 3).map((student, index) => (
+                <div key={index} style={{
+                  display: "flex",
+                  justifyContent: "space-between", // Pushes left and right content apart
+                  alignItems: "center",
+                  width: "100%",
+                  padding: "15px 24px",
+                  borderBottom: "2px solid #DFDFDF",
+                  height: "52px",
+                  marginTop: index === 0 ? "20px" : "0px",
+                  //  border:"2px solid red"
+                }}>
 
-            }}>
+                  {/* Profile Section */}
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                  }}>
+                    <div
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "50%",
+                        overflow: "hidden"
+                      }}
+                    >
+                      <img
+                        src={
+                            student.image ||
+                            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww"
+                          }
+                          alt="Profile"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <h1 style={{ fontSize: "16px", fontWeight: "400", color: "black" }}>{student.name}</h1>
+                    </div>
+                  </div>
 
-              {/* Profile Section */}
+                  {/* Badge and Arrow Section */}
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "38px"
+                  }}>
+                    <div>
+                      {(() => {
+                        const actualRank = getStudentRank(student.name);
+                        if (actualRank <= 3) {
+                          return getAwardImage(actualRank - 1) && <img src={getAwardImage(actualRank - 1)} alt="Award" />;
+                        } else {
+                          return (
+                            <div style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                color:"#2162B2",
+                                fontSize: "14px",
+                                fontWeight: "700",
+                              }}>
+                                {actualRank}th rank in class {selectedClass?.value || ""}
+                              </div>
+                          );
+                        }
+                      })()}
+                    </div>
+                    <div>
+                      <IoIosArrowForward style={{
+                        width: "25px",
+                        height: "25px",
+
+                      }} />
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
               <div style={{
                 display: "flex",
+                justifyContent: "center",
                 alignItems: "center",
-                gap: "10px",
+                width: "100%",
+                padding: "15px 24px",
+                height: "52px",
+                marginTop: "20px",
+                color: "#959595",
+                fontSize: "14px",
               }}>
-                <div
-                  style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "50%",
-                    overflow: "hidden"
-                  }}
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww"
-                    alt="Profile"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-                <div>
-                  <h1 style={{ fontSize: "16px", fontWeight: "400", color: "black" }}>Liam</h1>
-                </div>
+                {searchTerm.trim() ? "No students found matching your search" : "No students available for selected class and division"}
               </div>
-
-              {/* Badge and Arrow Section */}
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "38px"
-              }}>
-                <div>
-                  <img src={award2} alt="Award" />
-                </div>
-                <div>
-                  <IoIosArrowForward style={{
-                    width: "25px",
-                    height: "25px",
-
-                  }} />
-                </div>
-              </div>
-            </div>
-
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between", // Pushes left and right content apart
-              alignItems: "center",
-              width: "100%",
-              padding: "15px 24px",
-              borderBottom: "2px solid #DFDFDF",
-              height: "52px",
-              marginTop: "0px",
-
-
-            }}>
-
-              {/* Profile Section */}
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-              }}>
-                <div
-                  style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "50%",
-                    overflow: "hidden"
-                  }}
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww"
-                    alt="Profile"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-                <div>
-                  <h1 style={{ fontSize: "16px", fontWeight: "400", color: "black" }}>Liam</h1>
-                </div>
-              </div>
-
-              {/* Badge and Arrow Section */}
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "38px"
-              }}>
-                <div>
-                  <img src={award3} alt="Award" />
-                </div>
-                <div>
-                  <IoIosArrowForward style={{
-                    width: "25px",
-                    height: "25px",
-
-                  }} />
-                </div>
-              </div>
-            </div>
+            )}
 
           </div>
 
@@ -3036,93 +3090,23 @@ function AdminDashboard() {
 
                 <div style={{ display: "flex", gap: "16px" }}>
 
-                  <div
-                    style={{
-                      width: "115px",
-                      height: "32px",
-                      border: "2px solid rgb(188, 190, 194)",
-                      borderRadius: "8px",
-                      backgroundColor: "white",
-                      position: "relative",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <select
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        border: "none",
-                        outline: "none",
-                        backgroundColor: "transparent",
-                        fontSize: "14px",
-                        cursor: "pointer",
-                        appearance: "none",
-                        paddingLeft: "12px",
-                      }}
-                    >
-                      <option value="" disabled selected>
-                        Class
-                      </option>
-                      <option value="message1">This Week</option>
-                    </select>
+                  <Select
+                    value={selectedClass}
+                    onChange={handleClassChange}
+                    options={classOptions}
+                    styles={dashboardcustomStyles}
+                    placeholder="Select Class"
+                    isClearable={false}
+                  />
 
-                    <div
-                      style={{
-                        position: "absolute",
-                        right: "13px",
-                        pointerEvents: "none",
-                        fontSize: "25px",
-
-                      }}
-                    >
-                      <RiArrowDropDownLine />
-                    </div>
-                  </div>
-
-
-                  <div
-                    style={{
-                      width: "115px",
-                      height: "32px",
-                      border: "2px solid rgb(188, 190, 194)",
-                      borderRadius: "8px",
-                      backgroundColor: "white",
-                      position: "relative",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <select
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        border: "none",
-                        outline: "none",
-                        backgroundColor: "transparent",
-                        fontSize: "14px",
-                        cursor: "pointer",
-                        appearance: "none",
-                        paddingLeft: "12px",
-                      }}
-                    >
-                      <option value="" disabled selected>
-                        Division
-                      </option>
-                      <option value="A">A</option>
-                    </select>
-
-                    <div
-                      style={{
-                        position: "absolute",
-                        right: "13px",
-                        pointerEvents: "none",
-                        fontSize: "25px",
-                      }}
-                    >
-                      <RiArrowDropDownLine />
-                    </div>
-                  </div>
+                  <Select
+                    value={selectedDivision}
+                    onChange={handleDivisionChange}
+                    options={divisionOptions}
+                    styles={dashboardcustomStyles}
+                    placeholder="Select Division"
+                    isClearable={false}
+                  />
                 </div>
 
 
@@ -3141,80 +3125,125 @@ function AdminDashboard() {
 
                   }}
                 >
-
                   <div>
-
                     <CiSearch />
-
                   </div>
-
-                  <div style={{ fontSize: "12px", }}>
-
-                    <h1 style={{ fontSize: "12px", color: "#959595", fontWeight: "400" }}> Find Student</h1>
-
-                  </div>
-                </div>
-              </div>
-
-              <div style={{
-                display: "flex",
-                justifyContent: "space-between", // Pushes left and right content apart
-                alignItems: "center",
-                width: "100%",
-                padding: "15px 24px",
-                borderBottom: "2px solid #DFDFDF",
-                height: "52px",
-                marginTop: "65px",
-
-              }}>
-
-                {/* Profile Section */}
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                }}>
-                  <div
+                  <input
+                    type="text"
+                    placeholder="Find Student"
+                    value={searchTermPopup}
+                    onChange={(e) => handleSearchChangePopup(e.target.value)}
                     style={{
-                      width: "40px",
-                      height: "40px",
-                      borderRadius: "50%",
-                      overflow: "hidden"
+                      flex: 1,
+                      border: "none",
+                      outline: "none",
+                      backgroundColor: "transparent",
+                      fontSize: "12px",
+                      color: "#959595",
+                      fontWeight: "400"
                     }}
-                  >
-                    <img
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww"
-                      alt="Profile"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <h1 style={{ fontSize: "16px", fontWeight: "400", color: "black" }}>Liam</h1>
-                  </div>
-                </div>
-
-                {/* Badge and Arrow Section */}
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "38px"
-                }}>
-                  <div>
-                    <img src={award1} alt="Award" />
-                  </div>
-                  <div>
-                    <IoIosArrowForward style={{
-                      width: "25px",
-                      height: "25px",
-
-                    }} />
-                  </div>
+                  />
                 </div>
               </div>
+
+              {getFilteredStudentsBySearchPopup().length > 0 ? (
+                getFilteredStudentsBySearchPopup().map((student, index) => (
+                  <div key={index} style={{
+                    display: "flex",
+                    justifyContent: "space-between", // Pushes left and right content apart
+                    alignItems: "center",
+                    width: "100%",
+                    padding: "15px 24px",
+                    borderBottom: "2px solid #DFDFDF",
+                    height: "52px",
+                    marginTop: index === 0 ? "10px" : "0px",
+
+                  }}>
+
+                    {/* Profile Section */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}>
+                      <div
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          borderRadius: "50%",
+                          overflow: "hidden"
+                        }}
+                      >
+                        <img
+                          src={
+                            student.image ||
+                            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww"
+                          } 
+                          alt="Profile"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <h1 style={{ fontSize: "16px", fontWeight: "400", color: "black" }}>{student.name}</h1>
+                      </div>
+                    </div>
+
+                    {/* Badge and Arrow Section */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "38px"
+                    }}>
+                      <div>
+                        {(() => {
+                          const actualRank = getStudentRank(student.name);
+                          if (actualRank <= 3) {
+                            return getAwardImage(actualRank - 1) && <img src={getAwardImage(actualRank - 1)} alt="Award" />;
+                          } else {
+                            return (
+                              <div style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                color:"#2162B2",
+                                fontSize: "14px",
+                                fontWeight: "700",
+                              }}>
+                                {actualRank}th rank in class {selectedClass?.value || ""}
+                              </div>
+                            );
+                          }
+                        })()}
+                      </div>
+                      <div>
+                        <IoIosArrowForward style={{
+                          width: "25px",
+                          height: "25px",
+
+                        }} />
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                  padding: "15px 24px",
+                  height: "52px",
+                  marginTop: "65px",
+                  color: "#959595",
+                  fontSize: "14px",
+                }}>
+                  {searchTermPopup.trim() ? "No students found matching your search" : "No students available for selected class and division"}
+                </div>
+              )}
 
 
 
